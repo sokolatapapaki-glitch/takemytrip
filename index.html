@@ -577,28 +577,44 @@ body {
     <div class="total-overall" id="overall-total">Συνολικό Κόστος Επιλεγμένων Δραστηριοτήτων: 0 €</div>
    
     <!-- ΝΕΑ ΔΟΜΗ ΗΛΙΚΙΩΝ (αντικαθιστά το παλιό age-inputs) -->
-    <div class="family-members-container">
-        <h2>👨‍👩‍👧‍👦 Η Οικογένεια Σας (με ακριβείς ηλικίες)</h2>
-        <div id="family-members-list">
-            <div class="family-member-input">
-                <span>👨</span>
-                <input type="text" placeholder="Όνομα" value="Πατέρας" class="member-name">
-                <input type="number" placeholder="Ηλικία" value="42" class="member-age" min="0" max="120">
-                <span>ετών</span>
-            </div>
-            <div class="family-member-input">
-                <span>👩</span>
-                <input type="text" placeholder="Όνομα" value="Μητέρα" class="member-name">
-                <input type="number" placeholder="Ηλικία" value="40" class="member-age" min="0" max="120">
-                <span>ετών</span>
-            </div>
+    
+        <div class="family-members-container">
+    <h2>👨‍👩‍👧‍👦 Τα Μέλη Της Οικογένειας (με ακριβείς ηλικίες)</h2>
+    <div id="family-members-list">
+        <div class="family-member-input">
+            <span>👨</span>
+            <input type="text" placeholder="Όνομα" value="1ος Ενήλικας" class="member-name">
+            <input type="number" placeholder="Ηλικία" value="" class="member-age" min="18" max="120">
+            <span>ετών</span>
         </div>
-        <button onclick="addFamilyMember()" style="background: #3eb489; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px;">
-            ➕ Προσθήκη Παιδιού
-        </button>
-        <button onclick="updateFamilyMembers()" style="background: #ff7f50; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px; margin-left: 10px;">
+        <div class="family-member-input">
+            <span>👩</span>
+            <input type="text" placeholder="Όνομα" value="2ος Ενήλικας" class="member-name">
+            <input type="number" placeholder="Ηλικία" value="" class="member-age" min="18" max="120">
+            <span>ετών</span>
+        </div>
+    </div>
+            <!-- ΚΟΥΜΠΙΑ ΠΡΟΣΘΗΚΗΣ -->
+    <div style="margin: 20px 0; text-align: center;">
+        <h3 style="color: #3eb489;">➕ Προσθήκη Μελών</h3>
+        <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin: 15px 0;">
+            <button onclick="addAdultMember()" style="background: #3eb489; color: white; padding: 12px 25px; border: none; border-radius: 10px; cursor: pointer; font-size: 16px; font-weight: bold;">
+                👨 Προσθήκη Ενήλικα
+            </button>
+            <button onclick="addChildMember()" style="background: #4c7af0; color: white; padding: 12px 25px; border: none; border-radius: 10px; cursor: pointer; font-size: 16px; font-weight: bold;">
+                🧒 Προσθήκη Παιδιού (6-17)
+            </button>
+            <button onclick="addBabyMember()" style="background: #ff7f50; color: white; padding: 12px 25px; border: none; border-radius: 10px; cursor: pointer; font-size: 16px; font-weight: bold;">
+                👶 Προσθήκη Μωρού (0-5)
+            </button>
+        </div>
+        <button onclick="updateFamilyMembers()" style="background: #ff7f50; color: white; padding: 12px 25px; border: none; border-radius: 10px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 10px;">
             🔄 Ενημέρωση Οικογένειας
         </button>
+        <p style="color: #666; font-size: 0.9em; margin-top: 10px;">
+            💡 <strong>Σημείωση:</strong> Για ηλικίες 60+ συμβουλευτείτε τα επίσημα sites για επιπλέον εκπτώσεις
+        </p>
+    </div>
     </div>
 
     <div id="activities-container-wrapper">
@@ -641,21 +657,63 @@ let familyMembers = [
     { name: "Μητέρα", age: 40 }
 ];
 
-function addFamilyMember() {
+// ==================== ΝΕΕΣ ΣΥΝΑΡΤΗΣΕΙΣ ΠΡΟΣΘΗΚΗΣ ΜΕΛΩΝ ====================
+function addAdultMember() {
     const container = document.getElementById('family-members-list');
-    const count = container.children.length + 1;
+    const adultCount = Array.from(container.querySelectorAll('.family-member-input'))
+        .filter(m => m.querySelector('.member-name').value.includes('Ενήλικας')).length + 1;
    
     const memberDiv = document.createElement('div');
     memberDiv.className = 'family-member-input';
     memberDiv.innerHTML = `
-        <span>🧒</span>
-        <input type="text" placeholder="Όνομα" value="Παιδί ${count}" class="member-name">
-        <input type="number" placeholder="Ηλικία" value="10" class="member-age" min="0" max="120">
+        <span>👨</span>
+        <input type="text" placeholder="Όνομα" value="${adultCount}ος Ενήλικας" class="member-name">
+        <input type="number" placeholder="Ηλικία" value="" class="member-age" min="18" max="120">
         <span>ετών</span>
         <button onclick="removeFamilyMember(this)" class="remove-member-btn">×</button>
     `;
    
     container.appendChild(memberDiv);
+}
+
+function addChildMember() {
+    const container = document.getElementById('family-members-list');
+    const childCount = Array.from(container.querySelectorAll('.family-member-input'))
+        .filter(m => m.querySelector('.member-name').value.includes('Παιδί')).length + 1;
+   
+    const memberDiv = document.createElement('div');
+    memberDiv.className = 'family-member-input';
+    memberDiv.innerHTML = `
+        <span>🧒</span>
+        <input type="text" placeholder="Όνομα" value="Παιδί ${childCount}" class="member-name">
+        <input type="number" placeholder="Ηλικία" value="" class="member-age" min="6" max="17">
+        <span>ετών</span>
+        <button onclick="removeFamilyMember(this)" class="remove-member-btn">×</button>
+    `;
+   
+    container.appendChild(memberDiv);
+}
+
+function addBabyMember() {
+    const container = document.getElementById('family-members-list');
+    const babyCount = Array.from(container.querySelectorAll('.family-member-input'))
+        .filter(m => m.querySelector('.member-name').value.includes('Μωρό')).length + 1;
+   
+    const memberDiv = document.createElement('div');
+    memberDiv.className = 'family-member-input';
+    memberDiv.innerHTML = `
+        <span>👶</span>
+        <input type="text" placeholder="Όνομα" value="Μωρό ${babyCount}" class="member-name">
+        <input type="number" placeholder="Ηλικία" value="" class="member-age" min="0" max="5">
+        <span>ετών</span>
+        <button onclick="removeFamilyMember(this)" class="remove-member-btn">×</button>
+    `;
+   
+    container.appendChild(memberDiv);
+}
+
+function removeFamilyMember(button) {
+    button.parentElement.remove();
 }
 
 function removeFamilyMember(button) {
@@ -717,21 +775,237 @@ const destinations = [
 ];
 
 const activities = [
-  {name:"Schonbrunn Palace & Zoo", desc:"Παλάτι Schönbrunn και ζωολογικός κήπος.", prices:{"0-2":0,"3-5":5,"6-14":12,"15-19":20,"18+":20}, selected:false, lat:48.1845, lng:16.3122, restaurant:"<a href='https://maps.google.com/?q=Cafe+Residenz+Schönbrunn+Vienna' target='_blank'>Café Residenz</a> - μέσα στο Schönbrunn", website:"https://www.schoenbrunn.at/en/"},
-  {name:"Haus des Meeres", desc:"Ενυδρείο και μικρός ζωολογικός κήπος.", prices:{"0-2":0,"3-5":6.5,"6-14":9.8,"15-19":23,"18+":23}, selected:false, lat:48.2050, lng:16.3575, restaurant:"<a href='https://maps.google.com/?q=Cafe+Ritter+Mariahilfer+Straße+Vienna' target='_blank'>Café Ritter</a> - Mariahilfer Straße", website:"https://www.haus-des-meeres.at/en"},
-  {name:"Time Travel Vienna", desc:"Διαδραστικό ταξίδι 2000 χρόνων ιστορίας.", prices:{"0-2":0,"3-5":0,"6-14":18,"15-19":22,"18+":22}, selected:false, lat:48.2084, lng:16.3731, restaurant:"<a href='https://maps.google.com/?q=Figlmüller+Vienna' target='_blank'>Figlmüller</a> - διάσημο για schnitzel", website:"https://www.timetravel-vienna.at/en"},
-  {name:"Sisi's Amazing Journey", desc:"VR εμπειρία για τη ζωή της αυτοκράτειρας Σίσσι.", prices:{"0-2":0,"3-5":0,"6-14":8.5,"15-19":11.5,"18+":11.5}, selected:false, lat:48.2058, lng:16.3698, restaurant:"<a href='https://maps.google.com/?q=Cafe+Central+Vienna' target='_blank'>Café Central</a> - ιστορικό καφέ", website:"https://www.hofburg-wien.at/en/"},
-  {name:"Time+Sisi Combo", desc:"Συνδυαστικό εισιτήριο.", prices:{"0-2":0,"3-5":0,"6-14":24,"15-19":28,"18+":28}, selected:false, lat:48.2071, lng:16.3715, restaurant:"<a href='https://maps.google.com/?q=Bitzinger+Würstelstand+Vienna' target='_blank'>Bitzinger Würstelstand</a> - street food", website:"https://www.timetravel-vienna.at/en"},
-  {name:"House of Music", desc:"Διαδραστικό μουσείο μουσικής.", prices:{"0-2":0,"3-5":7,"6-14":7,"15-19":17,"18+":17}, selected:false, lat:48.2032, lng:16.3738, restaurant:"<a href='https://maps.google.com/?q=Cafe+Schwarzenberg+Vienna' target='_blank'>Café Schwarzenberg</a> - παραδοσιακό", website:"https://www.hausdermusik.com/en"},
-  {name:"Museum der Illusionen", desc:"Οπτικές ψευδαισθήσεις.", prices:{"0-2":0,"3-5":0,"6-14":12,"15-19":12,"18+":12}, selected:false, lat:48.2095, lng:16.3702, restaurant:"<a href='https://maps.google.com/?q=Trześniewski+Vienna' target='_blank'>Trześniewski</a> - διάσημα σάντουιτς", website:"https://www.museumderillusionen.at/wien/"},
-  {name:"Prater Park + Riesenrad", desc:"Διασκεδαστικό πάρκο και τροχόσπιτο.", prices:{"0-2":0,"3-5":5,"6-14":10,"15-19":15,"18+":15}, selected:false, lat:48.2167, lng:16.4003, restaurant:"<a href='https://maps.google.com/?q=Schweizerhaus+Vienna' target='_blank'>Schweizerhaus</a> - πέρδικα και μπύρα", website:"https://www.wiener-prater.at/en/"},
-  {name:"Prater Prater Adventure", desc:"Παιδικό και οικογενειακό πάρκο.", prices:{"0-2":0,"3-5":6,"6-14":12,"15-19":18,"18+":18}, selected:false, lat:48.2165, lng:16.4010, restaurant:"<a href='https://maps.google.com/?q=Würstelprater+Vienna' target='_blank'>Würstelprater</a> - σουβλακιάδα στο Prater", website:"https://www.prater.at/en/"},
-  {name:"Vienna State Opera Tour", desc:"Ξενάγηση στην Όπερα.", prices:{"0-2":0,"3-5":0,"6-14":6,"15-19":12,"18+":12}, selected:false, lat:48.2034, lng:16.3692, restaurant:"<a href='https://maps.google.com/?q=Cafe+Sacher+Vienna' target='_blank'>Café Sacher</a> - για τον αυθεντικό Sachertorte", website:"https://www.wiener-staatsoper.at/en/"},
-  {name:"Belvedere Palace Tour", desc:"Επίσκεψη στο παλάτι και κήπους.", prices:{"0-2":0,"3-5":10,"6-14":14,"15-19":18,"18+":18}, selected:false, lat:48.1910, lng:16.3805, restaurant:"<a href='https://maps.google.com/?q=Salm+Bräu+Vienna' target='_blank'>Salm Bräu</a> - μπύρα και τοπική κουζίνα", website:"https://www.belvedere.at/en"},
-  {name:"Danube Tower (Donauturm)", desc:"Πανοραμική θέα της πόλης.", prices:{"0-2":0,"3-5":4,"6-14":8,"15-19":12,"18+":12}, selected:false, lat:48.2389, lng:16.4103, restaurant:"<a href='https://maps.google.com/?q=Donauturm+Restaurant+Vienna' target='_blank'>Donauturm Restaurant</a> - στροφείο με θέα", website:"https://www.donauturm.at/en/"},
-  {name:"Mozarthaus Vienna", desc:"Σπίτι του Μότσαρτ.", prices:{"0-2":0,"3-5":0,"6-14":6,"15-19":10,"18+":10}, selected:false, lat:48.2086, lng:16.3735, restaurant:"<a href='https://maps.google.com/?q=Cafe+Mozart+Vienna' target='_blank'>Café Mozart</a> - κλασικό βιεννέζικο καφέ", website:"https://www.mozarthausvienna.at/en/"},
-  {name:"St. Stephen's Cathedral Crypt", desc:"Κρύπτη του Καθεδρικού Ναού.", prices:{"0-2":0,"3-5":0,"6-14":3,"15-19":5,"18+":5}, selected:false, lat:48.2085, lng:16.3730, restaurant:"<a href='https://maps.google.com/?q=Do+Co+Stephansplatz+Vienna' target='_blank'>Do & Co</a> - στο Stephansplatz με θέα", website:"https://www.stephanskirche.at/"},
-  {name:"Spanish Riding School", desc:"Προπόνηση ίππων Lipizzaner.", prices:{"0-2":0,"3-5":8,"6-14":14,"15-19":16,"18+":16}, selected:false, lat:48.2068, lng:16.3675, restaurant:"<a href='https://maps.google.com/?q=Griechenbeisl+Vienna' target='_blank'>Griechenbeisl</a> - το παλαιότερο εστιατόριο", website:"https://www.srs.at/en/"}
+    // 1) Palace Ticket (βασικό εισιτήριο)
+    {
+        name: "Palace Ticket - Schönbrunn Palace",
+        desc: "Βασικό εισιτήριο για τα κρατικά/ιδιωτικά διαμερίσματα με audio-guide. Timed entry.",
+        prices: {"0-2":0,"3-5":0,"6-14":28,"15-19":31.5,"18+":38},
+        selected: false,
+        lat: 48.1845, lng: 16.3122,
+        restaurant: "<a href='https://maps.google.com/?q=Cafe+Residenz+Schönbrunn+Vienna' target='_blank'>Café Residenz</a> - μέσα στο Schönbrunn",
+        website: "https://www.schoenbrunn.at/en/",
+        note: "Σχολικές ομάδες (6-18): €18.00"
+    },
+    
+    // 2) State Apartments / Guided Tour Maria Theresia
+    {
+        name: "State Apartments / Guided Tour Maria Theresia",
+        desc: "Σύντομη ξενάγηση ή θεματική ξενάγηση μεγαλύτερης διάρκειας.",
+        prices: {"0-2":0,"3-5":0,"6-14":19,"15-19":29,"18+":39},
+        selected: false,
+        lat: 48.1846, lng: 16.3123,
+        restaurant: "<a href='https://maps.google.com/?q=Figlmüller+Vienna' target='_blank'>Figlmüller</a> - διάσημο για schnitzel",
+        website: "https://www.schoenbrunn.at/en/"
+    },
+    
+    // 3) Sisi Pass (συνδυαστικό)
+    {
+        name: "Sisi Pass (3 αυτοκρατορικά αξιοθέατα)",
+        desc: "Schönbrunn Palace + Sisi Museum (Hofburg) + Vienna Furniture Museum. Χωρίς timeslot για μουσεία.",
+        prices: {"0-2":0,"3-5":0,"6-14":37,"15-19":37,"18+":57},
+        selected: false,
+        lat: 48.2058, lng: 16.3698,
+        restaurant: "<a href='https://maps.google.com/?q=Cafe+Central+Vienna' target='_blank'>Café Central</a> - ιστορικό καφέ",
+        website: "https://www.schoenbrunn.at/en/",
+        note: "Εκπτωτικό combo για 3 αξιοθέατα"
+    },
+    
+    // 4) Winter Pass (εποχικό)
+    {
+        name: "Winter Pass (χειμερινή περίοδος)",
+        desc: "Palace Ticket + Zoo + Desert House + Palm House. Ισχύει 3 Nov 2025–26 Mar 2026.",
+        prices: {"0-2":0,"3-5":0,"6-14":47,"15-19":47,"18+":69},
+        selected: false,
+        lat: 48.1847, lng: 16.3124,
+        restaurant: "<a href='https://maps.google.com/?q=Schweizerhaus+Vienna' target='_blank'>Schweizerhaus</a> - πέρδικα και μπύρα",
+        website: "https://www.schoenbrunn.at/en/",
+        seasonal: true
+    },
+    
+    // 5) Classic Pass & Classic Pass Plus
+    {
+        name: "Classic Pass (καλοκαιρινή περίοδος)",
+        desc: "Palace Ticket + Privy Garden + Maze & Labyrinth + Orangery Garden + Gloriette terrace.",
+        prices: {"0-2":0,"3-5":0,"6-14":28,"15-19":31,"18+":40},
+        selected: false,
+        lat: 48.1848, lng: 16.3125,
+        restaurant: "<a href='https://maps.google.com/?q=Cafe+Gloriette+Vienna' target='_blank'>Café Gloriette</a> - με θέα",
+        website: "https://www.schoenbrunn.at/en/",
+        note: "Ιδανικό για μονοήμερη επίσκεψη"
+    },
+    
+    {
+        name: "Classic Pass Plus (πλήρες πακέτο)",
+        desc: "Classic Pass + Zoo + Desert House + Palm House - σχεδόν όλο το Schönbrunn.",
+        prices: {"0-2":0,"3-5":0,"6-14":53.5,"15-19":53.5,"18+":76},
+        selected: false,
+        lat: 48.1849, lng: 16.3126,
+        restaurant: "<a href='https://maps.google.com/?q=Tiergarten+Restaurant+Vienna' target='_blank'>Tiergarten Restaurant</a> - στο zoo",
+        website: "https://zoovienna.at/",
+        note: "20-30% εξοικονόμηση"
+    },
+    
+    // 6) Children's Museum
+    {
+        name: "Children's Museum (Kindermuseum)",
+        desc: "Διαδραστικό μουσείο για παιδιά 3-18 ετών με συνδυαστικά tickets.",
+        prices: {"0-2":0,"3-5":12,"6-14":12,"15-19":12,"18+":12},
+        selected: false,
+        lat: 48.1850, lng: 16.3127,
+        restaurant: "<a href='https://maps.google.com/?q=Cafe+Kindermuseum+Vienna' target='_blank'>Cafe Kindermuseum</a>",
+        website: "https://www.schoenbrunn.at/en/"
+    },
+    
+    // 7) Zoo Vienna Family Packages
+    {
+        name: "Zoo Vienna - Family Block Ticket",
+        desc: "5 εισιτήρια (2 adults + 3 children/adolescents) - ισχύει 1 χρόνο.",
+        prices: {"0-2":0,"3-5":19.2,"6-14":19.2,"15-19":19.2,"18+":19.2},
+        selected: false,
+        lat: 48.1800, lng: 16.3028,
+        restaurant: "<a href='https://maps.google.com/?q=Tiergarten+Cafe+Vienna' target='_blank'>Tiergarten Cafe</a>",
+        website: "https://zoovienna.at/",
+        note: "Σύνολο: €96 για 5 άτομα"
+    },
+    
+    {
+        name: "Zoo + Palm House + Desert House Combo",
+        desc: "Συνδυαστικό εισιτήριο για μία επίσκεψη σε κάθε αξιοθέατο.",
+        prices: {"0-2":0,"3-5":22.5,"6-14":22.5,"15-19":22.5,"18+":36},
+        selected: false,
+        lat: 48.1801, lng: 16.3029,
+        restaurant: "<a href='https://maps.google.com/?q=Palm+House+Cafe+Vienna' target='_blank'>Palm House Cafe</a>",
+        website: "https://zoovienna.at/",
+        note: "Ιδανικό για οικογενείες"
+    },
+    
+    // 8) Haus des Meeres (Aquarium)
+    {
+        name: "Haus des Meeres (Aqua Terra Zoo)",
+        desc: "Ενυδρείο και μικρός ζωολογικός κήπος στο κέντρο της Βιέννης.",
+        prices: {"0-2":0,"3-5":6.5,"6-14":9.8,"15-19":22.9,"18+":22.9},
+        selected: false,
+        lat: 48.2050, lng: 16.3575,
+        restaurant: "<a href='https://maps.google.com/?q=Cafe+Ritter+Mariahilfer+Straße+Vienna' target='_blank'>Café Ritter</a> - Mariahilfer Straße",
+        website: "https://www.haus-des-meeres.at/en"
+    },
+    
+    // 9) Time Travel Vienna
+    {
+        name: "Time Travel Vienna",
+        desc: "Διαδραστικό ταξίδι 2000 χρόνων ιστορίας της Βιέννης.",
+        prices: {"0-2":0,"3-5":0,"6-14":18,"15-19":22,"18+":22},
+        selected: false,
+        lat: 48.2084, lng: 16.3731,
+        restaurant: "<a href='https://maps.google.com/?q=Time+Travel+Cafe+Vienna' target='_blank'>Time Travel Cafe</a>",
+        website: "https://www.timetravel-vienna.at/en"
+    },
+    
+    // 10) Sisi's Amazing Journey (VR)
+    {
+        name: "Sisi's Amazing Journey (VR Experience)",
+        desc: "VR εμπειρία για τη ζωή της αυτοκράτειρας Σίσσι.",
+        prices: {"0-2":0,"3-5":0,"6-14":14,"15-19":14,"18+":14},
+        selected: false,
+        lat: 48.2058, lng: 16.3698,
+        restaurant: "<a href='https://maps.google.com/?q=VR+Cafe+Vienna' target='_blank'>VR Experience Cafe</a>",
+        website: "https://www.hofburg-wien.at/en/",
+        note: "Combo με Time Travel διαθέσιμο"
+    },
+    
+    // 11) House of Music
+    {
+        name: "House of Music (Haus der Musik)",
+        desc: "Διαδραστικό μουσείο μουσικής για όλες τις ηλικίες.",
+        prices: {"0-2":0,"3-5":10,"6-14":10,"15-19":22,"18+":22},
+        selected: false,
+        lat: 48.2032, lng: 16.3738,
+        restaurant: "<a href='https://maps.google.com/?q=Cafe+Schwarzenberg+Vienna' target='_blank'>Café Schwarzenberg</a>",
+        website: "https://www.hausdermusik.com/en",
+        familyTicket: "2 adults + up to 3 children = 35€"
+    },
+    
+    // 12) Museum der Illusionen
+    {
+        name: "Museum der Illusionen (Μουσείο Ψευδαισθήσεων)",
+        desc: "Οπτικές ψευδαισθήσεις και διαδραστικά εκθέματα.",
+        prices: {"0-2":0,"3-5":0,"6-14":10,"15-19":12,"18+":14},
+        selected: false,
+        lat: 48.2095, lng: 16.3702,
+        restaurant: "<a href='https://maps.google.com/?q=Illusions+Cafe+Vienna' target='_blank'>Illusions Cafe</a>",
+        website: "https://www.museumderillusionen.at/wien/"
+    },
+    
+    // 13) Vienna State Opera Tour
+    {
+        name: "Vienna State Opera - Guided Tour",
+        desc: "Ξενάγηση στο ιστορικό κτήριο της όπερας.",
+        prices: {"0-2":0,"3-5":0,"6-14":9,"15-19":15,"18+":15},
+        selected: false,
+        lat: 48.2034, lng: 16.3692,
+        restaurant: "<a href='https://maps.google.com/?q=Cafe+Sacher+Vienna' target='_blank'>Café Sacher</a> - για Sachertorte",
+        website: "https://www.wiener-staatsoper.at/en/"
+    },
+    
+    // 14) Belvedere Palace
+    {
+        name: "Belvedere Palace (Upper/Lower)",
+        desc: "Αυτοκρατορικό παλάτι με μόνιμη συλλογή τέχνης.",
+        prices: {"0-2":0,"3-5":0,"6-14":0,"15-19":0,"18+":29},
+        selected: false,
+        lat: 48.1910, lng: 16.3805,
+        restaurant: "<a href='https://maps.google.com/?q=Salm+Bräu+Vienna' target='_blank'>Salm Bräu</a> - μπύρα και κουζίνα",
+        website: "https://www.belvedere.at/en",
+        note: "Δωρεάν για κάτω των 19 (μόνιμη συλλογή)"
+    },
+    
+    // 15) Donauturm (Danube Tower)
+    {
+        name: "Donauturm (Danube Tower)",
+        desc: "Πανοραμική θέα της Βιέννης από τον πύργο του Δούναβη.",
+        prices: {"0-2":0,"3-5":4,"6-14":8,"15-19":12,"18+":12},
+        selected: false,
+        lat: 48.2389, lng: 16.4103,
+        restaurant: "<a href='https://maps.google.com/?q=Donauturm+Restaurant+Vienna' target='_blank'>Donauturm Restaurant</a> - στροφείο",
+        website: "https://www.donauturm.at/en/"
+    },
+    
+    // 16) Mozarthaus Vienna
+    {
+        name: "Mozarthaus Vienna",
+        desc: "Το σπίτι όπου έζησε ο Mozart, τώρα μουσείο.",
+        prices: {"0-2":0,"3-5":4.5,"6-14":4.5,"15-19":14,"18+":14},
+        selected: false,
+        lat: 48.2086, lng: 16.3735,
+        restaurant: "<a href='https://maps.google.com/?q=Cafe+Mozart+Vienna' target='_blank'>Café Mozart</a> - κλασικό",
+        website: "https://www.mozarthausvienna.at/en/",
+        familyTicket: "2 adults + up to 3 children = 29€"
+    },
+    
+    // 17) St. Stephen's Cathedral Crypt
+    {
+        name: "St. Stephen's Cathedral Crypt",
+        desc: "Επίσκεψη στην κρύπτη του διάσημου καθεδρικού ναού.",
+        prices: {"0-2":0,"3-5":0,"6-14":3,"15-19":5,"18+":5},
+        selected: false,
+        lat: 48.2085, lng: 16.3730,
+        restaurant: "<a href='https://maps.google.com/?q=Do+Co+Stephansplatz+Vienna' target='_blank'>Do & Co</a> - με θέα",
+        website: "https://www.stephanskirche.at/"
+    },
+    
+    // 18) Spanish Riding School
+    {
+         name: "Spanish Riding School",
+        desc: "Προπόνηση των διάσημων ίππων Lipizzaner. ⚠️ <strong>Ηλικιακοί περιορισμοί:</strong> Παιδιά κάτω 3 ετών: ΑΔΥΝΑΤΗ ΕΙΣΟΔΟΣ | 3-5 ετών: Μόνο σε family performances",
+        prices: {"0-2":"N/A","3-5":8,"6-14":14,"15-19":16,"18+":16},
+        selected: false,
+        lat: 48.2068, lng: 16.3675,
+        restaurant: "<a href='https://maps.google.com/?q=Griechenbeisl+Vienna' target='_blank'>Griechenbeisl</a> - παλαιότερο εστιατόριο",
+        website: "https://www.srs.at/en/",
+        ageRestrictions: true,
+        minAge: 3,
+        ageWarning: "⚠️ Παιδιά κάτω των 3 ετών ΔΕΝ επιτρέπονται. 3-5 ετών: μόνο σε family performances"
+    }
 ];
 
 // ** ΝΕΑ ΛΙΣΤΑ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ ΓΙΑ ΤΟ ΒΕΡΟΛΙΝΟ **
