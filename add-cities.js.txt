@@ -1,1 +1,145 @@
 
+// ==================== ΣΥΣΤΗΜΑ ΠΡΟΣΘΗΚΗΣ ΝΕΩΝ ΠΟΛΕΩΝ ====================
+// Created for Travel Family Planner
+// Μπορείς να προσθέσεις νέες πόλεις ΧΩΡΙΣ να αλλάζεις τον κώδικα!
+
+// ΛΙΣΤΑ ΝΕΩΝ ΠΟΛΕΩΝ - ΜΠΟΡΕΙΣ ΝΑ ΤΙΣ ΑΛΛΑΖΕΙΣ!
+const EXTRA_CITIES_CONFIG = {
+  "Παρίσι": {
+    file: "data/paris.json",
+    enabled: true,
+    emoji: "🗼"
+  },
+  "Αθήνα": {
+    file: "data/athens.json",
+    enabled: true,
+    emoji: "🏛️"
+  },
+  "Ρώμη": {
+    file: "data/rome.json",
+    enabled: true,
+    emoji: "🍕"
+  }
+};
+
+// CACHE ΓΙΑ ΓΡΗΓΟΡΗ ΠΡΟΣΒΑΣΗ
+let extraCitiesCache = {};
+
+// ΚΥΡΙΑ ΣΥΝΑΡΤΗΣΗ: Φορτώνει πόλη από εξωτερικό αρχείο
+async function loadExtraCity(cityName) {
+  console.log(`🔍 Ψάχνω για εξωτερική πόλη: ${cityName}`);
+  
+  // 1. Έλεγχος αν η πόλη υπάρχει στη λίστα μας
+  const cityConfig = EXTRA_CITIES_CONFIG[cityName];
+  if (!cityConfig || !cityConfig.enabled) {
+    console.log(`❌ Η πόλη ${cityName} δεν είναι διαθέσιμη`);
+    return null;
+  }
+  
+  // 2. Έλεγχος cache (για να μην φορτώνουμε ξανά και ξανά)
+  if (extraCitiesCache[cityName]) {
+    console.log(`✅ Βρήκα ${cityName} στο cache!`);
+    return extraCitiesCache[cityName];
+  }
+  
+  // 3. Φόρτωση από αρχείο
+  try {
+    console.log(`📥 Φόρτωση ${cityName} από: ${cityConfig.file}`);
+    const response = await fetch(cityConfig.file);
+    
+    if (!response.ok) {
+      console.error(`❌ Δεν βρέθηκε αρχείο: ${cityConfig.file}`);
+      return null;
+    }
+    
+    const cityData = await response.json();
+    
+    // 4. Αποθήκευση στο cache
+    extraCitiesCache[cityName] = cityData;
+    console.log(`✅ Επιτυχής φόρτωση: ${cityName} (${cityData.activities?.length || 0} δραστηριότητες)`);
+    
+    return cityData;
+    
+  } catch (error) {
+    console.error(`❌ Σφάλμα φόρτωσης ${cityName}:`, error);
+    return null;
+  }
+}
+
+// ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ: Επιστρέφει true αν η πόλη είναι διαθέσιμη
+function isExtraCityAvailable(cityName) {
+  return EXTRA_CITIES_CONFIG[cityName] && EXTRA_CITIES_CONFIG[cityName].enabled;
+}
+
+// ΕΝΗΜΕΡΩΣΗ ΤΗΣ ΛΕΙΤΟΥΡΓΙΑΣ goToStep4 ΣΟΥ
+async function checkAndLoadExtraCity(cityName) {
+  if (isExtraCityAvailable(cityName)) {
+    return await loadExtraCity(cityName);
+  }
+  return null;
+}
+
+// ΕΝΗΜΕΡΩΣΗ ΤΗΣ ΛΕΙΤΟΥΡΓΙΑΣ filterDestinations ΣΟΥ
+function addExtraCitiesToFilter() {
+  const extraCityNames = Object.keys(EXTRA_CITIES_CONFIG).filter(name => EXTRA_CITIES_CONFIG[name].enabled);
+  console.log(`🌍 Εξωτερικές πόλεις διαθέσιμες: ${extraCityNames.join(', ')}`);
+  return extraCityNames;
+}
+
+// ==================== ΠΡΟΕΤΟΙΜΑΣΙΑ ΠΑΡΑΔΕΙΓΜΑΤΟΣ ====================
+
+// Αυτόματα φτιάχνει ένα παράδειγμα αρχείου αν δεν υπάρχει
+async function createExampleFile() {
+  try {
+    // Έλεγχος αν υπάρχει ο φάκελος data
+    const testResponse = await fetch('data/test.txt', { method: 'HEAD' });
+    
+    // Αν ο φάκελος δεν υπάρχει, δημιούργησε το παράδειγμα
+    const exampleData = {
+      "city": "Παρίσι",
+      "country": "Γαλλία",
+      "description": "Η πόλη του φωτός και της αγάπης",
+      "coordinates": { "lat": 48.8566, "lng": 2.3522 },
+      "currency": "€",
+      "activities": [
+        {
+          "name": "Disneyland Paris",
+          "desc": "Το διάσημο θεματικό πάρκο Disney",
+          "emoji": "🏰",
+          "prices": { "0-2": 0, "3-5": 45, "6-14": 55, "15-19": 65, "18+": 75 },
+          "lat": 48.8722, "lng": 2.7758,
+          "restaurant": "<a href='https://maps.google.com/?q=Disneyland+Restaurant+Paris' target='_blank'>Disney Restaurant</a>",
+          "website": "https://www.disneylandparis.com/",
+          "duration": "6-8 ώρες",
+          "bestFor": ["Οικογένειες", "Παιδιά"]
+        }
+      ]
+    };
+    
+    console.log("📝 Παράδειγμα δομής JSON έτοιμο για αντιγραφή");
+    return exampleData;
+    
+  } catch (error) {
+    console.log("ℹ️ Ο φάκελος data υπάρχει ήδη");
+    return null;
+  }
+}
+
+// ΑΥΤΟΜΑΤΗ ΕΚΚΙΝΗΣΗ
+document.addEventListener('DOMContentLoaded', function() {
+  console.log("🚀 Σύστημα εξωτερικών πόλεων έτοιμο!");
+  console.log("💡 Προσθέστε πόλεις στον πίνακα EXTRA_CITIES_CONFIG");
+  
+  // Δημιουργία παραδείγματος αν θέλει ο χρήστης
+  setTimeout(createExampleFile, 1000);
+});
+
+// ==================== ΕΞΑΓΩΓΗ ΣΥΝΑΡΤΗΣΕΩΝ ====================
+// (Για να τις χρησιμοποιήσει ο κύριος κώδικάς σου)
+window.TravelPlannerExtensions = {
+  loadExtraCity,
+  isExtraCityAvailable,
+  checkAndLoadExtraCity,
+  addExtraCitiesToFilter,
+  getExtraCitiesList: () => Object.keys(EXTRA_CITIES_CONFIG).filter(name => EXTRA_CITIES_CONFIG[name].enabled)
+};
