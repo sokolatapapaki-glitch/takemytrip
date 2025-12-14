@@ -2065,12 +2065,22 @@ function calculateAllCosts(activityList = null) {
                     }
                 }
                 
-                if (typeof price !== 'number') {
-                    price = 0;
-                    console.log(`   ⚠️ Δεν βρέθηκε τιμή για ηλικία ${age}`);
-                } else {
-                    console.log(`   💶 Τιμή: ${price}€`);
-                }
+               // Μετατροπή τιμής σε αριθμό (για strings όπως "26-30")
+if (typeof price === 'string') {
+    if (price.includes('-')) {
+        // Πάρε το πρώτο νούμερο από το range (π.χ. "26-30" -> 26)
+        price = parseFloat(price.split('-')[0]);
+    } else {
+        price = parseFloat(price);
+    }
+}
+
+if (typeof price !== 'number' || isNaN(price)) {
+    price = 0;
+    console.log(`   ⚠️ Δεν βρέθηκε τιμή για ηλικία ${age}`);
+} else {
+    console.log(`   💶 Τιμή: ${price}€`);
+}
                 
                 total += price;
             });
