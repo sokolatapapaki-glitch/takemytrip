@@ -1560,7 +1560,6 @@ function searchHotels() {
 async function goToStep4() {
     activateStep('step-activities');
     
-        
     const step4Section = document.getElementById("step-activities");
     const activityContainer = document.getElementById("activities-container");
     const overallTotalDiv = document.getElementById("overall-total");
@@ -1569,7 +1568,7 @@ async function goToStep4() {
     let currentActivities = null;
     let activityTitle = "";
     
-    // 1. ΠΑΛΙΕΣ ΠΟΛΕΙΣ (built-in) - ΟΙ ΙΔΙΕΣ
+    // 1. ΠΑΛΙΕΣ ΠΟΛΕΙΣ (hardcoded στον κώδικα)
     if(selectedDestinationName.includes("Βιέννη")){
         currentActivities = activities;
         activityTitle = "Οικογενειακές Δραστηριότητες στη Βιέννη";
@@ -1587,39 +1586,42 @@ async function goToStep4() {
         activityTitle = "Οικογενειακές Δραστηριότητες στη Μαδρίτη";
     }
     
-    // 2. ΝΕΟ ΣΥΣΤΗΜΑ: Έλεγχος για ΕΞΩΤΕΡΙΚΕΣ ΠΟΛΕΙΣ
-    if (!currentActivities && window.TravelPlannerExtensions) {
-        console.log(`🔍 Έλεγχος για εξωτερική πόλη: ${selectedDestinationName}`);
+    // 2. ΝΕΕΣ ΠΟΛΕΙΣ (από JSON)
+    else if (selectedDestinationName.includes("Λονδίνο") || 
+             selectedDestinationName.includes("Κωνσταντινούπολη") || 
+             selectedDestinationName.includes("Παρίσι") || 
+             selectedDestinationName.includes("Πράγα")) {
         
-        try {
-            const extraCityData = await TravelPlannerExtensions.checkAndLoadExtraCity(selectedDestinationName);
-            
-            if (extraCityData && extraCityData.activities && extraCityData.activities.length > 0) {
-                currentActivities = extraCityData.activities;
-                activityTitle = `Οικογενειακές Δραστηριότητες στην ${selectedDestinationName}`;
-                console.log(`✅ Βρέθηκαν ${currentActivities.length} δραστηριότητες από εξωτερικό αρχείο`);
-                 // 👇 ΑΥΤΗ Η ΓΡΑΜΜΗ ΠΡΟΣΘΕΤΕΙ
-    window.loadedExtraCityActivities = extraCityData.activities;
-    console.log("💾 Αποθηκεύτηκαν στη window.loadedExtraCityActivities");
+        console.log(`🔍 Έλεγχος JSON για: ${selectedDestinationName}`);
+        
+        if (window.loadedExtraCityActivities && window.loadedExtraCityActivities.length > 0) {
+            currentActivities = window.loadedExtraCityActivities;
+            activityTitle = `Οικογενειακές Δραστηριότητες ${selectedDestinationName.includes("στην") || selectedDestinationName.includes("στη") ? "" : "στο/στη"} ${selectedDestinationName}`;
+            console.log(`✅ Βρέθηκαν ${currentActivities.length} δραστηριότητες από JSON`);
+        } else {
+            // Αν δεν έχουν φορτωθεί ακόμα, προσπάθησε να τις φορτώσεις
+            try {
+                const extraCityData = await TravelPlannerExtensions.checkAndLoadExtraCity(selectedDestinationName);
+                if (extraCityData && extraCityData.activities && extraCityData.activities.length > 0) {
+                    currentActivities = extraCityData.activities;
+                    window.loadedExtraCityActivities = extraCityData.activities;
+                    activityTitle = `Οικογενειακές Δραστηριότητες ${selectedDestinationName.includes("στην") || selectedDestinationName.includes("στη") ? "" : "στο/στη"} ${selectedDestinationName}`;
+                    console.log(`✅ Φορτώθηκαν ${currentActivities.length} δραστηριότητες από JSON`);
+                }
+            } catch (error) {
+                console.error("❌ Σφάλμα φόρτωσης:", error);
             }
-        } catch (error) {
-            console.error("❌ Σφάλμα φόρτωσης εξωτερικής πόλης:", error);
         }
     }
     
     // 3. ΕΑΝ ΒΡΕΘΟΥΝ ΔΡΑΣΤΗΡΙΟΤΗΤΕΣ
     if(currentActivities && currentActivities.length > 0){
-        // Επανάληψη των activity cards
         createActivityCards(currentActivities);
-        
         step4Section.querySelector('h1').innerText = activityTitle;
         activityContainer.style.display = 'grid';
         overallTotalDiv.style.display = 'block';
         step5BtnContainer.style.display = 'block';
-        
-        // Υπολογισμός με τα νέα δεδομένα
         calculateAllCosts(currentActivities);
-        
     } else {
         // 4. ΕΑΝ ΔΕΝ ΒΡΕΘΟΥΝ ΔΡΑΣΤΗΡΙΟΤΗΤΕΣ
         step4Section.querySelector('h1').innerText = `Βήμα 4: Προορισμός: ${selectedDestinationName || 'Χωρίς Επιλογή'}`;
