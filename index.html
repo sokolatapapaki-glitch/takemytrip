@@ -2395,12 +2395,15 @@ function preloadLeaflet() {
 }
 
 function initializeSmartMap() {
-const selectedActivities = getSelectedActivities ? getSelectedActivities() : [];    const mapContainer = document.getElementById('map-container');
+    const selectedActivities = getSelectedActivities ? getSelectedActivities() : [];
+    const mapContainer = document.getElementById('map-container');
+    
+    // 1. ΔΗΜΙΟΥΡΓΙΑ ΧΑΡΤΗ
     mapContainer.innerHTML = '<div id="smart-map" style="height: 100%; width: 100%;"></div>';
    
     let mapCenter, mapZoom;
    
-    // Προσδιορισμός κέντρου βάσει πόλης
+    // 2. ΠΡΟΣΔΙΟΡΙΣΜΟΣ ΚΕΝΤΡΟΥ ΒΑΣΕΙ ΠΟΛΗΣ
     if (selectedDestinationName.includes("Βερολίνο")) {
         mapCenter = [52.5200, 13.4050];
         mapZoom = 12;
@@ -2410,16 +2413,19 @@ const selectedActivities = getSelectedActivities ? getSelectedActivities() : [];
     } else if (selectedDestinationName.includes("Βουδαπέστη")) {
         mapCenter = [47.4979, 19.0402];
         mapZoom = 13;
+    } else if (selectedDestinationName.includes("Λονδίνο")) {
+        mapCenter = [51.5074, -0.1278];  // 👈 ΠΡΟΣΘΗΚΗ ΛΟΝΔΙΝΟΥ
+        mapZoom = 12;
     } else {
         // Προεπιλογή για Βιέννη ή άλλες
         mapCenter = [48.2082, 16.3738];
         mapZoom = 13;
     }
    
-    // Δημιουργία χάρτη
+    // 3. ΔΗΜΙΟΥΡΓΙΑ ΧΑΡΤΗ ΜΕ ΣΩΣΤΗ ΑΠΟΘΗΚΕΥΣΗ
     const map = L.map('smart-map').setView(mapCenter, mapZoom);
     
-    // ΑΠΟΘΗΚΕΥΣΗ ΧΑΡΤΗ ΓΙΑ ΠΡΟΣΒΑΣΗ
+    // 👈 ΣΗΜΑΝΤΙΚΟ: ΑΠΟΘΗΚΕΥΣΗ ΣΤΟ window
     window.currentMap = map;
     
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -2427,15 +2433,15 @@ const selectedActivities = getSelectedActivities ? getSelectedActivities() : [];
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
    
-    // ΕΑΝ ΥΠΑΡΧΟΥΝ ΕΠΙΛΕΓΜΕΝΕΣ ΔΡΑΣΤΗΡΙΟΤΗΤΕΣ, Προσθήκη πινεζών
+    // 4. ΠΡΟΣΘΗΚΗ ΠΙΝΕΖΩΝ ΑΝ ΥΠΑΡΧΟΥΝ ΔΡΑΣΤΗΡΙΟΤΗΤΕΣ
     if (selectedActivities.length > 0) {
         addActivityMarkers(map, selectedActivities);
     }
    
-    // Προσθήκη κουμπιού κλεισίματος
+    // 5. ΚΟΥΜΠΙ ΚΛΕΙΣΙΜΑΤΟΣ
     addMapCloseButton(mapContainer, map);
     
-    // ΦΟΡΤΩΣΗ CUSTOM POINTS
+    // 6. ΦΟΡΤΩΣΗ CUSTOM POINTS
     loadCustomPointsOnMap();
 }
    
@@ -2456,25 +2462,30 @@ const selectedActivities = getSelectedActivities ? getSelectedActivities() : [];
             const script = document.createElement('script');
             script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
             script.onload = () => {
-                // Μικρή καθυστέρηση για σίγουρο φόρτωμα
-                setTimeout(() => createSmartMapWithActivities(selectedActivities), 300);
-            };
+    // Μικρή καθυστέρηση για σίγουρο φόρτωμα
+    setTimeout(() => {
+        const activitiesForMap = getSelectedActivities ? getSelectedActivities() : [];
+        createSmartMapWithActivities(activitiesForMap);
+    }, 300);
+};
             document.head.appendChild(script);
+} else {
+    // Το script είναι ήδη φορτωμένο, απλά περιμένουμε
+    setTimeout(() => {
+        if (typeof L !== 'undefined') {
+            const activitiesForMap = getSelectedActivities ? getSelectedActivities() : [];
+            createSmartMapWithActivities(activitiesForMap);
         } else {
-            // Το script είναι ήδη φορτωμένο, απλά περιμένουμε
-            setTimeout(() => {
-                if (typeof L !== 'undefined') {
-                    createSmartMapWithActivities(selectedActivities);
-                } else {
-                    // Αν ακόμα δεν είναι έτοιμο, ξαναπροσπαθούμε
-                    setTimeout(() => initializeSmartMap(), 500);
-                }
-            }, 500);
+            // Αν ακόμα δεν είναι έτοιμο, ξαναπροσπαθούμε
+            setTimeout(() => initializeSmartMap(), 500);
+        }
+    }, 500);
         }
     } else {
-        // Ο Leaflet είναι ΉΔΗ φορτωμένος - δημιουργούμε χάρτη αμέσως
-        createSmartMapWithActivities(selectedActivities);
-    }
+    // Ο Leaflet είναι ΉΔΗ φορτωμένος - δημιουργούμε χάρτη αμέσως
+    const activitiesForMap = getSelectedActivities ? getSelectedActivities() : [];
+    createSmartMapWithActivities(activitiesForMap);
+}
 
 // ΝΕΑ ΣΥΝΑΡΤΗΣΗ: Δημιουργία χάρτη με δραστηριότητες (κοινή για όλες τις πόλεις)
 function createSmartMapWithActivities(activities) {
