@@ -1,0 +1,43 @@
+{
+  "city": "Λονδίνο",
+  "country": "Ηνωμένο Βασίλειο",
+  "description": "Η παγκόσμια μητρόπολη στον Τάμεση",
+  "currency": "€",
+  "activities": [
+    {
+      "name": "Tower of London",
+      "desc": "Ιστορικό κάστρο και φρούριο, παλαιότερο βασιλικό παλάτι και φυλακή. Εδώ φυλάσσονται τα Κράνη των Βρετανών Μοναρχών.",
+      "emoji": "🏰",
+      "prices": {
+        "0-4": 0,
+        "5-15": 20,
+        "18+": 41
+      },
+      "lat": 51.5081,
+      "lng": -0.0759,
+      "restaurant": "<a href='https://maps.google.com/?q=Tower+of+London+cafe' target='_blank'>Cafes near Tower of London</a>",
+      "website": "https://www.hrp.org.uk/tower-of-london/",
+      "duration": "2-3 ώρες",
+      "bestFor": ["Ιστορία", "Αρχιτεκτονική"],
+      "selected": false
+    },
+    {
+      "name": "London Eye",
+      "desc": "Ο γιγαντιαίος τροχός λέγεται, που προσφέρει πανοραμική θέα 360° στο Λονδίνο. Από τα πιο δημοφιλή τουριστικά αξιοθέατα.",
+      "emoji": "🎡",
+      "prices": {
+        "0-2": 0,
+        "2-15": 34,
+        "18+": 37
+      },
+      "lat": 51.5033,
+      "lng": -0.1195,
+      "restaurant": "<a href='https://maps.google.com/?q=London+Eye+restaurants' target='_blank'>Restaurants near London Eye</a>",
+      "website": "https://www.londoneye.com/",
+      "duration": "30-40 λεπτά",
+      "bestFor": ["Θέα", "Ρομαντικό"],
+      "selected": false
+    },
+    // ... εδώ ακολουθούν και τα υπόλοιπα αξιοθέατα (Postal Museum, Warner Bros, κλπ.)
+  ]
+}
