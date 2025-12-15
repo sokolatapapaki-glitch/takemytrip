@@ -1928,6 +1928,14 @@ function createActivityCards(activityList) {
           <td>${formatPrice(act.prices["13-17"])}</td>
           <td>${formatPrice(act.prices["18+"])}</td>
        </tr>` :
+      selectedDestinationName.includes("Λονδίνο") ?
+      // 👇 ΓΙΑ ΛΟΝΔΙΝΟ 👇 (ΠΡΟΣΘΗΚΗ!)
+      `<tr><th>0-4</th><th>5-15</th><th>16+</th></tr>
+       <tr>
+          <td>${formatPrice(act.prices["0-4"])}</td>
+          <td>${formatPrice(act.prices["5-15"])}</td>
+          <td>${formatPrice(act.prices["16+"])}</td>
+       </tr>` :
       // 👇 ΓΙΑ ΟΛΕΣ ΤΙΣ ΑΛΛΕΣ ΠΟΛΕΙΣ 👇
       `<tr><th>0-2</th><th>3-5</th><th>6-14</th><th>15-19</th><th>18+</th></tr>
        <tr>
@@ -1952,6 +1960,7 @@ function createActivityCards(activityList) {
                       selectedDestinationName.includes("Λισαβόνα") ? activitiesLisbon :
                       selectedDestinationName.includes("Βουδαπέστη") ? activitiesBudapest :
                       selectedDestinationName.includes("Μαδρίτη") ? activitiesMadrid : // ΠΡΟΣΘΗΚΗ
+                      selectedDestinationName.includes("Λονδίνο") ? activitiesLondon :
                       activities;
     calculateAllCosts(listToPass);
    
