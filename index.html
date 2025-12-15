@@ -3412,30 +3412,65 @@ function categorizeFamilyMembers() {
         "18+": 0
     };
    
-    familyMembers.forEach(member => {
-        console.log(`   ${member.name} (${member.age} ετών):`);
-       
-        if (member.age <= 2) {
-            categories["0-2"]++;
-            console.log(`     → Κατηγορία: 0-2`);
-        } else if (member.age <= 5) {
-            categories["3-5"]++;
-            console.log(`     → Κατηγορία: 3-5`);
-        } else if (member.age <= 14) {
-            categories["6-14"]++;
-            console.log(`     → Κατηγορία: 6-14`);
-        } else if (member.age <= 19) {
-            categories["15-19"]++;
-            console.log(`     → Κατηγορία: 15-19`);
-        } else {
-            categories["18+"]++;
-            console.log(`     → Κατηγορία: 18+`);
+familyMembers.forEach(member => {
+    let finalPrice = 0;
+    const age = member.age;
+    const priceKeys = Object.keys(act.prices || {});
+    let priceFound = false;
+
+    // 🔍 1. ΑΝΑΖΗΤΗΣΗ ΣΕ ΟΛΑ ΤΑ RANGE (π.χ., "2-15", "0-120")
+    for (const key of priceKeys) {
+        if (key.includes('-')) {
+            const [minStr, maxStr] = key.split('-');
+            const min = parseInt(minStr);
+            const max = parseInt(maxStr);
+            // ΕΛΕΓΧΟΣ: ΑΝ Η ΗΛΙΚΙΑ ΕΙΝΑΙ ΜΕΣΑ ΣΤΟ RANGE
+            if (age >= min && age <= max) {
+                const value = act.prices[key];
+                finalPrice = (typeof value === 'number' && !isNaN(value)) ? value : 0;
+                priceFound = true;
+                console.log(`✅ Βρέθηκε τιμή για ${member.name} (${age}): ${finalPrice}€ (από κλειδί: ${key})`);
+                break; // Σταματάμε τη διερεύνηση, βρήκαμε τιμή
+            }
         }
-    });
-   
-    console.log("📊 Τελικές κατηγορίες:", categories);
-    return categories;
-}
+    }
+    
+    // 🔍 2. ΑΝΑΖΗΤΗΣΗ ΓΙΑ "+" (π.χ., "16+", "18+") - ΜΟΝΟ αν δεν βρέθηκε range
+    if (!priceFound) {
+        for (const key of priceKeys) {
+            if (key.endsWith('+')) {
+                const minAge = parseInt(key.replace('+', ''));
+                if (!isNaN(minAge) && age >= minAge) {
+                    const value = act.prices[key];
+                    finalPrice = (typeof value === 'number' && !isNaN(value)) ? value : 0;
+                    priceFound = true;
+                    console.log(`✅ Βρέθηκε τιμή για ${member.name} (${age}): ${finalPrice}€ (από κλειδί: ${key})`);
+                    break;
+                }
+            }
+        }
+    }
+    
+    // ⚠️ 3. ΠΡΟΕΠΙΛΕΓΜΕΝΗ ΤΙΜΗ αν δεν βρέθηκε ΤΙΠΟΤΑ (αυτό είναι το πρόβλημά σου τώρα)
+    if (!priceFound) {
+        // Προσπάθησε να βρεις την τιμή για ενήλικες ("18+" ή "16+")
+        if (act.prices["18+"] !== undefined) {
+            finalPrice = act.prices["18+"];
+        } else if (act.prices["16+"] !== undefined) {
+            finalPrice = act.prices["16+"];
+        } else if (priceKeys.length > 0) {
+            // Αλλιώς, πάρε την ΤΕΛΕΥΤΑΙΑ τιμή από τη λίστα (συνήθως η υψηλότερη)
+            const lastKey = priceKeys[priceKeys.length - 1];
+            finalPrice = act.prices[lastKey];
+        } else {
+            finalPrice = 0;
+        }
+        console.warn(`⚠️ Χρησιμοποιήθηκε προεπιλογή για ${member.name} (${age}): ${finalPrice}€`);
+    }
+
+    // Προσθήκη στο σύνολο
+    activityTotal += finalPrice;
+});
 function calculateRegularCost(selectedActivities, ageGroups) {
     console.log("🧮 Υπολογισμός κόστους για Κωνσταντινούπολη...");
     console.log("Επιλεγμένες:", selectedActivities.length);
