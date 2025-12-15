@@ -2019,6 +2019,14 @@ function calculateAllCosts(activityList = null) {
                 } else if (age <= 17 && act.prices["13-17"] !== undefined) {
                     price = act.prices["13-17"];
                 }
+                    // 4. ΓΙΑ ΛΟΝΔΙΝΟ (0-4, 5-15, 16+)
+else if (age <= 4 && act.prices["0-4"] !== undefined) {
+    price = act.prices["0-4"];
+} else if (age >= 5 && age <= 15 && act.prices["5-15"] !== undefined) {
+    price = act.prices["5-15"];
+} else if (age >= 16 && act.prices["16+"] !== undefined) {
+    price = act.prices["16+"];
+}
                 // 4. ΤΕΛΙΚΗ ΠΡΟΣΠΑΘΕΙΑ: Βρες οποιαδήποτε ομάδα που ταιριάζει
                 else {
                     const priceKeys = Object.keys(act.prices || {});
