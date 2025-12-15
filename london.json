@@ -8,42 +8,97 @@
     {
       "name": "Tower of London",
       "desc": "Ιστορικό κάστρο με τα κοσμήματα του στέμματος",
-      "prices": {
-        "0-4": 0,
-        "5-15": 20,
-        "16+": 41
-      },
-      "lat": 51.5081,
-      "lng": -0.0759,
+      "prices": {"0-4": 0, "5-15": 20, "16+": 41},
+      "lat": 51.5081, "lng": -0.0759,
       "restaurant": "<a href='https://maps.google.com/?q=New+Armouries+Cafe+Tower+of+London' target='_blank'>New Armouries Café</a>",
       "website": "https://www.hrp.org.uk/tower-of-london/"
     },
     {
       "name": "London Eye",
       "desc": "Ο διάσημος τροχός με πανοραμική θέα του Λονδίνου",
-      "prices": {
-        "0-2": 0,
-        "2-15": 34,
-        "16+": 37
-      },
-      "lat": 51.5033,
-      "lng": -0.1195,
+      "prices": {"0-2": 0, "2-15": 34, "16+": 37},
+      "lat": 51.5033, "lng": -0.1195,
       "restaurant": "<a href='https://maps.google.com/?q=London+Eye+Cafe' target='_blank'>London Eye Café</a>",
       "website": "https://www.londoneye.com/"
     },
     {
       "name": "Warner Bros. Harry Potter Studio Tour",
       "desc": "Παρασκήνια των ταινιών Harry Potter (χωρίς μεταφορά)",
-      "prices": {
-        "0-4": 0,
-        "5-15": 51,
-        "16+": 63
-      },
-      "lat": 51.6900,
-      "lng": -0.4187,
+      "prices": {"0-4": 0, "5-15": 51, "16+": 63},
+      "lat": 51.6900, "lng": -0.4187,
       "restaurant": "<a href='https://maps.google.com/?q=Harry+Potter+Studio+Cafe' target='_blank'>Studio Café</a>",
       "website": "https://www.wbstudiotour.co.uk/",
       "familyDiscount": "Οικογενειακή έκπτωση: 26€ (2 ενήλικες + 2 παιδιά)"
+    },
+    {
+      "name": "ZSL London Zoo",
+      "desc": "Ζωολογικός κήπος στο Regent's Park",
+      "prices": {"0-4": 0, "5-15": 29, "16+": 34},
+      "lat": 51.5353, "lng": -0.1534,
+      "restaurant": "<a href='https://maps.google.com/?q=Zoo+Cafe+London' target='_blank'>Zoo Café</a>",
+      "website": "https://www.zsl.org/zsl-london-zoo"
+    },
+    {
+      "name": "Royal Observatory Greenwich",
+      "desc": "Το σημείο του Prime Meridian (μηδέν μεσημβρινός)",
+      "prices": {"0-4": 0, "5-15": 8, "16+": 16},
+      "lat": 51.4778, "lng": -0.0015,
+      "restaurant": "<a href='https://maps.google.com/?q=Greenwich+Market+Food' target='_blank'>Greenwich Market</a>",
+      "website": "https://www.rmg.co.uk/royal-observatory",
+      "freePart": "Greenwich Park: Δωρεάν"
+    },
+    {
+      "name": "Postal Museum + Mail Rail",
+      "desc": "Ιστορία του ταχυδρομείου και υπόγειο σιδηρόδρομο",
+      "prices": {"0-1": 0, "2-15": 12.5, "16-24": 14.5, "25+": 21},
+      "lat": 51.5275, "lng": -0.1135,
+      "restaurant": "<a href='https://maps.google.com/?q=Cafe+Postal+Museum' target='_blank'>Postal Museum Café</a>",
+      "website": "https://www.postalmuseum.org/"
+    },
+    {
+      "name": "Horniman Museum – Ενυδρείο",
+      "desc": "Μουσείο και ενυδρείο στο νότιο Λονδίνο",
+      "prices": {"0-2": 0, "3-15": 6, "16+": 8},
+      "lat": 51.4403, "lng": -0.0606,
+      "restaurant": "<a href='https://maps.google.com/?q=Horniman+Cafe' target='_blank'>Horniman Café</a>",
+      "website": "https://www.horniman.ac.uk/",
+      "freePart": "Μουσείο & κήποι: Δωρεάν"
+    },
+    {
+      "name": "Natural History Museum",
+      "desc": "Δεινόσαυροι και εκθέματα φυσικής ιστορίας",
+      "prices": {"0-4": 0, "5-15": 0, "16+": 0},
+      "lat": 51.4967, "lng": -0.1764,
+      "restaurant": "<a href='https://maps.google.com/?q=Natural+History+Museum+Cafe' target='_blank'>Museum Café</a>",
+      "website": "https://www.nhm.ac.uk/",
+      "freeActivity": true
+    },
+    {
+      "name": "Science Museum",
+      "desc": "Διαδραστικό μουσείο επιστήμης και τεχνολογίας",
+      "prices": {"0-4": 0, "5-15": 0, "16+": 0},
+      "lat": 51.4975, "lng": -0.1747,
+      "restaurant": "<a href='https://maps.google.com/?q=Science+Museum+Cafe' target='_blank'>Science Museum Café</a>",
+      "website": "https://www.sciencemuseum.org.uk/",
+      "freeActivity": true
+    },
+    {
+      "name": "British Museum",
+      "desc": "Ιστορικό μουσείο με αρχαία τέχνη",
+      "prices": {"0-4": 0, "5-15": 0, "16+": 0},
+      "lat": 51.5194, "lng": -0.1270,
+      "restaurant": "<a href='https://maps.google.com/?q=British+Museum+Cafe' target='_blank'>British Museum Café</a>",
+      "website": "https://www.britishmuseum.org/",
+      "freeActivity": true
+    },
+    {
+      "name": "Madame Tussauds London",
+      "desc": "Κέρινα ομοιώματα διασημοτήτων",
+      "prices": {"0-4": 0, "5-15": 28, "16+": 35},
+      "lat": 51.5229, "lng": -0.1553,
+      "restaurant": "<a href='https://maps.google.com/?q=Madame+Tussauds+Cafe' target='_blank'>Tussauds Café</a>",
+      "website": "https://www.madametussauds.com/london/",
+      "comboNote": "Συμπεριλαμβάνεται σε Combo Passes"
     }
   ]
 }
