@@ -149,97 +149,45 @@ const TravelDataManager = {
   },
   
   // 💰 ΥΠΟΛΟΓΙΣΜΟΣ ΤΙΜΗΣ ΓΙΑ ΜΕΛΟΣ
-  calculatePriceForMember: function(memberAge, activityPrices) {
-    if (!activityPrices) return 0;
+  // Στο travel-data-manager.js, βρες τη συνάρτηση calculatePriceForMember και αντικατέστησέ την με:
+
+TravelDataManager.calculatePriceForMember = function(age, prices) {
+    if (!prices || typeof prices !== 'object') return 0;
     
-    // 1. ΑΚΡΙΒΗΣ ΑΝΤΙΣΤΟΙΧΙΣΗ
-    for (const [ageGroup, price] of Object.entries(activityPrices)) {
-      if (ageGroup.includes('-')) {
-        const [min, max] = ageGroup.split('-').map(Number);
-        if (memberAge >= min && memberAge <= max) {
-          return this.normalizePrice(price);
+    const ageNum = parseInt(age);
+    
+    // 1. Πρώτα δοκίμασε τις συνηθισμένες κατηγορίες (Βιέννη, Βερολίνο, κλπ)
+    const standardRanges = {
+        "0-2": [0, 2], "3-5": [3, 5], "6-14": [6, 14], 
+        "15-19": [15, 19], "18+": [18, 999]
+    };
+    
+    for (const [range, [min, max]] of Object.entries(standardRanges)) {
+        if (prices[range] !== undefined && ageNum >= min && ageNum <= max) {
+            return parseFloat(prices[range]) || 0;
         }
-      } else if (ageGroup === "18+" && memberAge >= 18) {
-        return this.normalizePrice(price);
-      } else if (ageGroup === "17+" && memberAge >= 17) {
-        return this.normalizePrice(price);
-      }
     }
     
-    // 2. ΕΥΡΕΤΗΣΗ ΚΟΝΤΙΝΟΤΕΡΗΣ ΟΜΑΔΑΣ
-    const ageGroups = Object.keys(activityPrices).filter(g => g.includes('-'));
-    if (ageGroups.length > 0) {
-      const closestGroup = ageGroups.sort((a, b) => {
-        const aMin = parseInt(a.split('-')[0]);
-        const bMin = parseInt(b.split('-')[0]);
-        return Math.abs(aMin - memberAge) - Math.abs(bMin - memberAge);
-      })[0];
-      
-      return this.normalizePrice(activityPrices[closestGroup]);
+    // 2. Μετά δοκίμασε τις κατηγορίες του Λονδίνου
+    for (const [range, price] of Object.entries(prices)) {
+        if (range.includes('-')) {
+            const [minStr, maxStr] = range.split('-');
+            const min = parseInt(minStr);
+            const max = maxStr.includes('+') ? 999 : parseInt(maxStr);
+            
+            if (ageNum >= min && ageNum <= max) {
+                return parseFloat(price) || 0;
+            }
+        } else if (range.includes('+')) {
+            const min = parseInt(range.replace('+', ''));
+            if (ageNum >= min) {
+                return parseFloat(price) || 0;
+            }
+        }
     }
     
-    // 3. ΠΡΟΕΠΙΛΟΓΗ
     return 0;
-  },
-  
-  // 🔢 ΜΕΤΑΤΡΟΠΗ ΤΙΜΗΣ ΣΕ ΑΡΙΘΜΟ
-  normalizePrice: function(price) {
-    if (typeof price === 'number') return price;
-    if (typeof price === 'string') {
-      const num = parseFloat(price.replace(/[^0-9.,]/g, '').replace(',', '.'));
-      return isNaN(num) ? 0 : num;
-    }
-    return 0;
-  },
-  
-  // 👨‍👩‍👧‍👦 ΔΗΜΙΟΥΡΓΙΑ ΗΛΙΚΙΑΚΩΝ ΟΜΑΔΩΝ ΓΙΑ ΟΛΟ ΤΗΝ ΟΙΚΟΓΕΝΕΙΑ
-  categorizeFamily: function(familyMembers, cityName) {
-    const cityData = this.getCityData(cityName);
-    const ageGroups = cityData?.ageGroups || ["0-2", "3-5", "6-14", "15-19", "18+"];
-    const categories = {};
-    
-    // Αρχικοποίηση όλων των ομάδων με 0
-    ageGroups.forEach(group => {
-      categories[group] = 0;
-    });
-    
-    // Κατανομή των μελών
-    familyMembers.forEach(member => {
-      let assigned = false;
-      
-      for (const group of ageGroups) {
-        if (group.includes('-')) {
-          const [min, max] = group.split('-').map(Number);
-          if (member.age >= min && member.age <= max) {
-            categories[group]++;
-            assigned = true;
-            break;
-          }
-        } else if (group === "18+" && member.age >= 18) {
-          categories[group]++;
-          assigned = true;
-          break;
-        } else if (group === "17+" && member.age >= 17) {
-          categories[group]++;
-          assigned = true;
-          break;
-        }
-      }
-      
-      // Αν δεν βρέθηκε ομάδα, προσθέτουμε στον μεγαλύτερο
-      if (!assigned) {
-        if (member.age >= 18) {
-          categories["18+"] = (categories["18+"] || 0) + 1;
-        } else {
-          // Για νέους που δεν ταιριάζουν σε άλλη ομάδα
-          const lastGroup = ageGroups[ageGroups.length - 1];
-          categories[lastGroup] = (categories[lastGroup] || 0) + 1;
-        }
-      }
-    });
-    
-    return categories;
-  },
+};
   
   // 🎫 ΔΗΜΙΟΥΡΓΙΑ ΠΙΝΑΚΑ ΤΙΜΩΝ
   generatePriceTable: function(activity) {
