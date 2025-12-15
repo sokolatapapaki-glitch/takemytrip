@@ -1587,21 +1587,14 @@ async function goToStep4() {
         activityTitle = "Οικογενειακές Δραστηριότητες στη Μαδρίτη";
     }
     
-    // 2. ΝΕΟ ΣΥΣΤΗΜΑ: ΧΡΗΣΗ TravelDataManager
-    if (!currentActivities && TravelDataManager) {
-        console.log(`🔍 Έλεγχος στον TravelDataManager: ${selectedDestinationName}`);
+    // 2. ΝΕΟ ΣΥΣΤΗΜΑ: ΕΛΕΓΧΟΣ ΓΙΑ JSON ΠΟΛΕΙΣ
+    if (!currentActivities && EXTRA_CITIES_CONFIG && EXTRA_CITIES_CONFIG[selectedDestinationName]) {
+        console.log(`🔍 Έλεγχος JSON για: ${selectedDestinationName}`);
+        activityTitle = `Οικογενειακές Δραστηριότητες στην ${selectedDestinationName}`;
         
-        try {
-            const cityData = TravelDataManager.getCityData(selectedDestinationName);
-            
-            if (cityData && cityData.activities && cityData.activities.length > 0) {
-                currentActivities = cityData.activities;
-                activityTitle = `Οικογενειακές Δραστηριότητες στην ${selectedDestinationName}`;
-                console.log(`✅ Βρέθηκαν ${currentActivities.length} δραστηριότητες από TravelDataManager`);
-            }
-        } catch (error) {
-            console.error("❌ Σφάλμα:", error);
-        }
+        // Θα φορτώσουμε τις δραστηριότητες όταν ο χρήστης πατήσει το κουμπί
+        showLoadingMessage(selectedDestinationName);
+        return;
     }
     
     // 3. ΕΑΝ ΒΡΕΘΟΥΝ ΔΡΑΣΤΗΡΙΟΤΗΤΕΣ
@@ -1621,7 +1614,136 @@ async function goToStep4() {
     
     saveToLocalStorage();
 }
-
+    function showLoadingMessage(cityName) {
+    const container = document.getElementById('activities-container');
+    const step4Section = document.getElementById("step-activities");
+    
+    container.innerHTML = `
+        <div style="text-align: center; padding: 40px;">
+            <h3>📥 Φόρτωση Δραστηριοτήτων για ${cityName}...</h3>
+            <p>Παρακαλώ περιμένετε ή επιλέξτε άλλη πόλη.</p>
+            <button onclick="loadActivitiesForCity('${cityName}')" 
+                    style="padding: 12px 24px; background: #3eb489; color: white; border: none; border-radius: 8px; cursor: pointer; margin: 15px;">
+                🔄 Φόρτωση Τώρα
+            </button>
+        </div>
+    `;
+    
+    step4Section.querySelector('h1').innerText = `Οικογενειακές Δραστηριότητες στην ${cityName}`;
+}
+async function loadActivitiesForCity(cityName) {
+    const container = document.getElementById('activities-container');
+    const cityConfig = EXTRA_CITIES_CONFIG[cityName];
+    
+    if (!cityConfig) {
+        container.innerHTML = '<p>⚠️ Η πόλη δεν είναι διαθέσιμη.</p>';
+        return;
+    }
+    
+    container.innerHTML = '<p>⏳ Φόρτωση... Παρακαλώ περιμένετε.</p>';
+    
+    try {
+        const response = await fetch(cityConfig.file);
+        if (!response.ok) throw new Error('Δεν βρέθηκε αρχείο');
+        
+        const data = await response.json();
+        window.loadedExtraCityActivities = data.activities || [];
+        
+        // Χρήση της νέας συνάρτησης για JSON πόλεις
+        createActivityCardsFromJSON(window.loadedExtraCityActivities, cityName);
+        
+    } catch (error) {
+        container.innerHTML = `
+            <div style="color: #e74c3c; text-align: center; padding: 20px;">
+                <h4>❌ Σφάλμα Φόρτωσης</h4>
+                <p>Δεν μπορώ να φορτώσω τις δραστηριότητες για ${cityName}.</p>
+                <p>Λάθος: ${error.message}</p>
+            </div>
+        `;
+    }
+}
+   // ==================== ΒΟΗΘΗΤΙΚΗ ΓΙΑ ΔΗΜΙΟΥΡΓΙΑ ΚΑΡΤΩΝ ΑΠΟ JSON ====================
+function createActivityCardsFromJSON(activityList, cityName) {
+    const container = document.getElementById('activities-container');
+    container.innerHTML = "";
+    
+    if (!activityList || activityList.length === 0) {
+        container.innerHTML = '<p>⚠️ Δεν βρέθηκαν δραστηριότητες για αυτήν την πόλη.</p>';
+        return;
+    }
+    
+    activityList.forEach((act, index) => {
+        // EMOJI ανά τύπο
+        let emoji = "📍";
+        if (act.name.includes("Μουσείο") || act.name.includes("Μουσειο")) emoji = "🏛️";
+        else if (act.name.includes("Πάρκο") || act.name.includes("Παρκο")) emoji = "🌳";
+        else if (act.name.includes("Τζαμί") || act.name.includes("Τζαμι")) emoji = "🕌";
+        else if (act.name.includes("Παλάτι") || act.name.includes("Παλατι")) emoji = "🏰";
+        else if (act.name.includes("Αγορά") || act.name.includes("Αγορα")) emoji = "🛍️";
+        else if (act.name.includes("Πύργος") || act.name.includes("Πυργος")) emoji = "🗼";
+        else if (act.name.includes("Εκκλησία") || act.name.includes("Εκκλησια")) emoji = "⛪";
+        else if (act.name.includes("Γέφυρα") || act.name.includes("Γεφυρα")) emoji = "🌉";
+        
+        const card = document.createElement('div');
+        card.className = "activity-card";
+        card.id = `activity-${index}`;
+        card.dataset.index = index;
+        
+        // Δημιουργία πίνακα τιμών
+        let priceTableHTML = '<table class="activity-table"><tr><th>Ηλικία</th><th>Τιμή</th></tr>';
+        
+        if (act.prices) {
+            Object.entries(act.prices).forEach(([ageRange, price]) => {
+                priceTableHTML += `<tr><td>${ageRange} ετών</td><td>${formatPrice(price)}</td></tr>`;
+            });
+        }
+        priceTableHTML += '</table>';
+        
+        card.innerHTML = `
+            <span class="emoji-icon">${emoji}</span>
+            <span class="star">⭐</span>
+            <div class="activity-info">
+                <h3>${act.name}</h3>
+                <p>${act.desc || ''}</p>
+                ${act.website ? `<a href="${act.website}" target="_blank" style="color: #3eb489; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 10px;">🔗 Δείτε περισσότερα</a>` : ''}
+                
+                <div style="margin-top: 10px;">
+                    ${priceTableHTML}
+                </div>
+                
+                ${act.note ? `<p style="color: #e74c3c; font-size: 0.9em; margin-top: 8px;">📝 ${act.note}</p>` : ''}
+                
+                <div class="total" id="total-${index}">Κόστος: 0 €</div>
+            </div>
+        `;
+        
+        card.addEventListener('click', () => {
+            card.classList.toggle('selected');
+            act.selected = !act.selected;
+            
+            // Ενημέρωση του global array
+            if (window.loadedExtraCityActivities) {
+                window.loadedExtraCityActivities[index] = act;
+            }
+            
+            calculateAllCosts(activityList);
+            saveToLocalStorage();
+        });
+        
+        container.appendChild(card);
+    });
+    
+    // Εμφάνιση συνολικού κόστους
+    calculateAllCosts(activityList);
+} 
+  // ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ ΓΙΑ ΜΟΡΦΟΠΟΙΗΣΗ ΤΙΜΩΝ
+function formatPrice(price) {
+    if (price === undefined || price === null) return '-';
+    if (price === 0) return '0€';
+    if (typeof price === 'number') return price + '€';
+    if (typeof price === 'string' && price.toLowerCase() === 'free') return 'ΔΩΡΕΑΝ';
+    return price;
+}  
 function goToStep5(){
     // Προφόρτωση Leaflet για γρηγορότερο χάρτη
     preloadLeaflet();
@@ -4456,6 +4578,45 @@ if ('serviceWorker' in navigator) {
         console.log('❌ Service Worker registration failed: ', error);
       });
   });
+}
+  // ==================== ΣΥΝΑΡΤΗΣΗ ΓΙΑ ΛΗΨΗ ΕΠΙΛΕΓΜΕΝΩΝ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ ====================
+// ==================== ΣΥΝΑΡΤΗΣΗ ΓΙΑ ΛΗΨΗ ΕΠΙΛΕΓΜΕΝΩΝ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ ====================
+function getSelectedActivities() {
+    console.log("🔍 Αναζήτηση επιλεγμένων για:", selectedDestinationName);
+    
+    // 1. ΓΙΑ JSON ΠΟΛΕΙΣ (Κωνσταντινούπολη, Παρίσι, Πράγα, Ρώμη)
+    if (selectedDestinationName && window.loadedExtraCityActivities && window.loadedExtraCityActivities.length > 0) {
+        console.log("🔍 Έλεγχος για JSON πόλη...");
+        const selected = window.loadedExtraCityActivities.filter(act => act.selected === true);
+        console.log(`✅ Βρέθηκαν ${selected.length} επιλεγμένες από JSON`);
+        return selected;
+    }
+    
+    // 2. ΓΙΑ ΠΑΛΙΕΣ ΠΟΛΕΙΣ
+    let currentActivities = null;
+    
+    if (selectedDestinationName && selectedDestinationName.includes("Βιέννη")) {
+        currentActivities = activities;
+    } else if (selectedDestinationName && selectedDestinationName.includes("Βερολίνο")) {
+        currentActivities = activitiesBerlin;
+    } else if (selectedDestinationName && selectedDestinationName.includes("Λισαβόνα")) {
+        currentActivities = activitiesLisbon;
+    } else if (selectedDestinationName && selectedDestinationName.includes("Βουδαπέστη")) {
+        currentActivities = activitiesBudapest;
+    } else if (selectedDestinationName && selectedDestinationName.includes("Μαδρίτη")) {
+        currentActivities = activitiesMadrid;
+    } else {
+        console.log("⚠️ Δεν βρέθηκαν δραστηριότητες για:", selectedDestinationName);
+        return [];
+    }
+    
+    if (currentActivities) {
+        const selected = currentActivities.filter(act => act.selected === true);
+        console.log("✅ Επιλεγμένες δραστηριότητες:", selected.length, selected);
+        return selected;
+    }
+    
+    return [];
 }
 </script>
 </body>
