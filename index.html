@@ -4450,7 +4450,6 @@ const EXTRA_CITIES_CONFIG = {
     emoji: "🍕"
   }
 };
-
 window.TravelPlannerExtensions = {
   checkAndLoadExtraCity: async function(cityName) {
     console.log(`🔍 Έλεγχος για εξωτερική πόλη: ${cityName}`);
@@ -4480,6 +4479,11 @@ window.TravelPlannerExtensions = {
     }
   }
 };
+</script>
+
+<script src="travel-data-manager.js"></script>
+
+<script>
 // ==================== PWA SERVICE WORKER ====================
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
