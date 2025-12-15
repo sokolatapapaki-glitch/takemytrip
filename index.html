@@ -1852,28 +1852,18 @@ window.scrollTo({ top: 0, behavior: 'smooth' });
 
 // ** 4. ΒΗΜΑ 4 - ΔΡΑΣΤΗΡΙΟΤΗΤΕΧ **
 function createActivityCards(activityList) {
-     if (selectedDestinationName.includes("Κωνσταντινούπολη") || 
-        selectedDestinationName.includes("Παρίσι") || 
-        selectedDestinationName.includes("Πράγα")) {
-        window.loadedExtraCityActivities = activityList;
-    }
   const containerActivities = document.getElementById('activities-container');
   containerActivities.innerHTML = "";
  
-  const emojiMap = {
-    "Palace": "🏰", "Zoo": "🐯", "Museum": "🏛️", "Aquarium": "🐠",
-    "Park": "🌳", "Castle": "🏯", "Science": "🔬", "Music": "🎵",
-    "Tower": "🗼", "Theme": "🎡", "History": "📜", "Art": "🎨",
-    "Nature": "🌿", "Adventure": "🧗", "Cruise": "🚢", "Garden": "🌸",
-    "Schonbrunn": "🏰", "Prater": "🎡", "Opera": "🎭", "Danube": "🌉",
-    "Illuseum": "🎭", "Technikmuseum": "⚙️", "Naturkunde": "🦕",
-    "LEGOLAND": "🧱", "Tussauds": "👑", "Fernsehturm": "🗼",
-    "Oceanário": "🐠", "Pavilhão": "🔭", "Belém": "🏰", "Mosteiro": "⛪",
-    "Parliament": "🏛️", "Thermal": "♨️", "Eye": "🎡", "Margaret": "🏝️"
-  };
- 
   activityList.forEach((act, index) => {
-    // Βρίσκουμε κατάλληλο emoji από το όνομα
+    // EMOJI
+    const emojiMap = {
+      "Tower": "🏰", "Eye": "🎡", "Harry": "⚡", "Zoo": "🐯",
+      "Museum": "🏛️", "Observatory": "🔭", "Postal": "📮",
+      "Natural": "🦕", "Science": "🔬", "British": "🏺",
+      "Madame": "👑"
+    };
+    
     let emoji = "📍";
     for (const [key, value] of Object.entries(emojiMap)) {
       if (act.name.includes(key)) {
@@ -1885,6 +1875,10 @@ function createActivityCards(activityList) {
     const card = document.createElement('div');
     card.className = "activity-card";
     card.id = `activity-${index}`;
+    
+    // ΧΡΗΣΗ ΤΟΥ MANAGER ΓΙΑ ΤΟΝ ΠΙΝΑΚΑ
+    const priceTable = TravelDataManager.generatePriceTable(act);
+    
     card.innerHTML = `
       <span class="emoji-icon">${emoji}</span>
       <span class="star">⭐</span>
@@ -1892,49 +1886,23 @@ function createActivityCards(activityList) {
         <h3>${act.name}</h3>
         <p>${act.desc}</p>
         ${act.website ? `<a href="${act.website}" target="_blank" style="color: #3eb489; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 10px;">🔗 Δείτε περισσότερα</a>` : ''}
-        ${act.ageWarning ? `<div style="background: #fff3cd; padding: 5px; border-radius: 6px; margin: 5px 0; font-size: 0.9em; color: #856404;">⚠️ ${act.ageWarning}</div>` : ''}
-        ${act.priceNote ? `<div style="background: #d1ecf1; padding: 5px; border-radius: 6px; margin: 5px 0; font-size: 0.9em; color: #0c5460;">ℹ️ ${act.priceNote}</div>` : ''}
-       <table class="activity-table">
-    ${selectedDestinationName.includes("Κωνσταντινούπολη") || 
-      selectedDestinationName.includes("Παρίσι") || 
-      selectedDestinationName.includes("Πράγα") ?
-      // 👇 ΓΙΑ ΚΩΝΣΤΑΝΤΙΝΟΥΠΟΛΗ, ΠΑΡΙΣΙ, ΠΡΑΓΑ 👇
-      `<tr><th>0-6</th><th>7-12</th><th>13-17</th><th>18+</th></tr>
-       <tr>
-          <td>${formatPrice(act.prices["0-6"])}</td>
-          <td>${formatPrice(act.prices["7-12"])}</td>
-          <td>${formatPrice(act.prices["13-17"])}</td>
-          <td>${formatPrice(act.prices["18+"])}</td>
-       </tr>` :
-      // 👇 ΓΙΑ ΟΛΕΣ ΤΙΣ ΑΛΛΕΣ ΠΟΛΕΙΣ 👇
-      `<tr><th>0-2</th><th>3-5</th><th>6-14</th><th>15-19</th><th>18+</th></tr>
-       <tr>
-          <td>${formatPrice(act.prices["0-2"])}</td>
-          <td>${formatPrice(act.prices["3-5"])}</td>
-          <td>${formatPrice(act.prices["6-14"])}</td>
-          <td>${formatPrice(act.prices["15-19"])}</td>
-          <td>${formatPrice(act.prices["18+"])}</td>
-       </tr>`
-    }
-</table>
+        
+        <!-- ΕΥΕΛΙΚΤΟΣ ΠΙΝΑΚΑΣ ΑΠΟ ΤΟΝ MANAGER -->
+        <div style="margin-top: 10px;">
+          ${priceTable}
+        </div>
+        
         <div class="total" id="total-${index}">Κόστος: 0 €</div>
       </div>
     `;
-   
+    
     card.addEventListener('click', ()=> {
-    card.classList.toggle('selected');
-    activityList[index].selected = !activityList[index].selected;
-   
-    const listToPass = selectedDestinationName.includes("Βιέννη") ? activities :
-                      selectedDestinationName.includes("Βερολίνο") ? activitiesBerlin :
-                      selectedDestinationName.includes("Λισαβόνα") ? activitiesLisbon :
-                      selectedDestinationName.includes("Βουδαπέστη") ? activitiesBudapest :
-                      selectedDestinationName.includes("Μαδρίτη") ? activitiesMadrid : // ΠΡΟΣΘΗΚΗ
-                      activities;
-    calculateAllCosts(listToPass);
-   
-    saveToLocalStorage();
-});
+      card.classList.toggle('selected');
+      act.selected = !act.selected;
+      calculateAllCosts(activityList);
+      saveToLocalStorage();
+    });
+    
     containerActivities.appendChild(card);
   });
 }
