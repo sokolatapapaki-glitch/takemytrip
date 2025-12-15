@@ -2352,6 +2352,9 @@ const selectedActivities = getSelectedActivities ? getSelectedActivities() : [];
     } else if (selectedDestinationName.includes("Βουδαπέστη")) {
         mapCenter = [47.4979, 19.0402];
         mapZoom = 13;
+    } else if (selectedDestinationName.includes("Λονδίνο")) {
+        mapCenter = [51.5074, -0.1278];
+        mapZoom = 12;
     } else {
         // Προεπιλογή για Βιέννη ή άλλες
         mapCenter = [48.2082, 16.3738];
@@ -2394,28 +2397,30 @@ const selectedActivities = getSelectedActivities ? getSelectedActivities() : [];
             document.head.appendChild(link);
         }
        
-        if (!document.querySelector('script[src*="leaflet"]')) {
-            const script = document.createElement('script');
-            script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-            script.onload = () => {
-                // Μικρή καθυστέρηση για σίγουρο φόρτωμα
-                setTimeout(() => createSmartMapWithActivities(selectedActivities), 300);
-            };
-            document.head.appendChild(script);
+if (!document.querySelector('script[src*="leaflet"]')) {
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    script.onload = () => {
+        // Μικρή καθυστέρηση για σίγουρο φόρτωμα
+        setTimeout(() => {
+            createSmartMapWithActivities(getSelectedActivities ? getSelectedActivities() : []);
+        }, 300);
+    };
+    document.head.appendChild(script);
+} else {
+    // Το script είναι ήδη φορτωμένο, απλά περιμένουμε
+    setTimeout(() => {
+        if (typeof L !== 'undefined') {
+            createSmartMapWithActivities(getSelectedActivities ? getSelectedActivities() : []);
         } else {
-            // Το script είναι ήδη φορτωμένο, απλά περιμένουμε
-            setTimeout(() => {
-                if (typeof L !== 'undefined') {
-                    createSmartMapWithActivities(selectedActivities);
-                } else {
-                    // Αν ακόμα δεν είναι έτοιμο, ξαναπροσπαθούμε
-                    setTimeout(() => initializeSmartMap(), 500);
-                }
-            }, 500);
+            // Αν ακόμα δεν είναι έτοιμο, ξαναπροσπαθούμε
+            setTimeout(() => initializeSmartMap(), 500);
         }
-    } else {
-        // Ο Leaflet είναι ΉΔΗ φορτωμένος - δημιουργούμε χάρτη αμέσως
-        createSmartMapWithActivities(selectedActivities);
+    }, 500);
+}
+} else {
+// Ο Leaflet είναι ΉΔΗ φορτωμένος - δημιουργούμε χάρτη αμέσως
+createSmartMapWithActivities(getSelectedActivities ? getSelectedActivities() : []);
     }
 
 // ΝΕΑ ΣΥΝΑΡΤΗΣΗ: Δημιουργία χάρτη με δραστηριότητες (κοινή για όλες τις πόλεις)
