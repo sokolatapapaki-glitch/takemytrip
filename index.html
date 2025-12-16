@@ -4875,7 +4875,94 @@ setTimeout(() => {
     } catch (error) {
         console.log("❌ ΣΦΑΛΜΑ:", error.message);
     }
-}, 2000);    
+}, 2000); 
+// ==================== ΕΠΕΚΤΑΣΗ ΓΙΑ LONDON COMBO ====================
+
+// 1. Αρχειοθετούμε την παλιά συνάρτηση
+const originalCalculateSmartCombos = window.calculateSmartCombos;
+
+// 2. Δημιουργούμε τη νέα, βελτιωμένη
+window.calculateSmartCombos = function() {
+    console.log("🎯 Έξυπνος Υπολογισμός Combo (Βελτιωμένη Έκδοση)...");
+    
+    // Καλούμε την αρχική συνάρτηση πρώτα
+    originalCalculateSmartCombos();
+    
+    // 3. Επιπλέον λογική για Λονδίνο
+    if (selectedDestinationName.includes("Λονδίνο")) {
+        setTimeout(() => {
+            checkLondonCombos();
+        }, 500);
+    }
+};
+
+// 4. Συνάρτηση για combos του Λονδίνου
+function checkLondonCombos() {
+    console.log("🔍 Έλεγχος για London combos...");
+    
+    const selected = getSelectedActivities();
+    if (selected.length === 0) return;
+    
+    // Βρες τα ονόματα των επιλεγμένων δραστηριοτήτων
+    const selectedNames = selected.map(a => a.name);
+    console.log("Επιλεγμένες:", selectedNames);
+    
+    // COMBO 1: 2-Attraction Pass
+    const hasCombo2 = selected.some(a => a.name.includes("2-Attraction Combo Pass"));
+    const hasTower = selected.some(a => a.name.includes("Tower of London"));
+    const hasEye = selected.some(a => a.name.includes("London Eye"));
+    const hasHarryPotter = selected.some(a => a.name.includes("Harry Potter"));
+    
+    let comboMessage = "";
+    
+    if (hasCombo2 && (hasTower || hasEye || hasHarryPotter)) {
+        comboMessage = "🎟️ ΒΡΗΚΕΣ COMBO: 2-Attraction Pass!\n";
+        comboMessage += "✅ Επιλέγεις 2 από: Tower of London, London Eye, Harry Potter\n";
+        comboMessage += "💰 Εξοικονόμηση: ~13€\n";
+        comboMessage += "👉 Αφαίρεσε τις ξεχωριστές εισιτήριες και κράτα μόνο το Combo Pass!";
+        
+        alert(comboMessage);
+        return;
+    }
+    
+    // COMBO 2: 3-Attraction Pass  
+    const hasCombo3 = selected.some(a => a.name.includes("3-Attraction Combo Pass"));
+    if (hasCombo3 && selected.length >= 3) {
+        comboMessage = "🎟️ ΒΡΗΚΕΣ COMBO: 3-Attraction Pass!\n";
+        comboMessage += "✅ Επιλέγεις 3 από τα κορυφαία αξιοθέατα\n";
+        comboMessage += "💰 Εξοικονόμηση: ~25€\n";
+        comboMessage += "👉 Κράτα μόνο το Combo Pass - είναι φθηνότερο!";
+        
+        alert(comboMessage);
+        return;
+    }
+    
+    // COMBO 3: 5-Attraction Pass
+    const hasCombo5 = selected.some(a => a.name.includes("5-Attraction Combo Pass"));
+    if (hasCombo5 && selected.length >= 5) {
+        comboMessage = "🎟️ ΒΡΗΚΕΣ COMBO: 5-Attraction Pass!\n";
+        comboMessage += "✅ Πρόσβαση σε 5 αξιοθέατα\n";
+        comboMessage += "💰 Εξοικονόμηση: ~45€\n";
+        comboMessage += "👉 Το Combo Pass είναι η καλύτερη επιλογή!";
+        
+        alert(comboMessage);
+        return;
+    }
+    
+    // Αν δεν βρέθηκε combo, εμφάνισε γενικές οδηγίες
+    if (selected.length >= 2 && !hasCombo2 && !hasCombo3 && !hasCombo5) {
+        comboMessage = "💡 ΣΥΜΒΟΥΛΗ ΓΙΑ ΛΟΝΔΙΝΟ:\n\n";
+        comboMessage += "Για να εξοικονομήσεις χρήματα:\n";
+        comboMessage += "1. Διάλεξε το '2-Attraction Combo Pass'\n";
+        comboMessage += "2. Επίλεξε 2 από: Tower of London, London Eye, Harry Potter\n";
+        comboMessage += "3. Αφαίρεσε τις ξεχωριστές εισιτήριες\n\n";
+        comboMessage += "💰 Εξοικονόμηση: Έως 13€!";
+        
+        alert(comboMessage);
+    }
+}
+
+console.log("✅ London combo extension loaded!");    
 </script>
 </body>
 </html>
