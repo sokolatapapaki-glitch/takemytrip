@@ -1,104 +1,409 @@
 {
-  "name": "Λονδίνο",
-  "center": [51.5074, -0.1278],
+  "city": "Λονδίνο",
   "emoji": "🇬🇧",
-  "currency": "£",
-  "ageGroups": ["0-4", "5-15", "16+"],
   "activities": [
     {
       "name": "Tower of London",
       "desc": "Ιστορικό κάστρο με τα κοσμήματα του στέμματος",
-      "prices": {"0-4": 0, "5-15": 20, "16+": 41},
-      "lat": 51.5081, "lng": -0.0759,
+      "prices": {
+        "0-2": 0,
+        "3-5": 0,
+        "6-14": 20,
+        "15-19": 41,
+        "18+": 41
+      },
+      "selected": false,
+      "lat": 51.5081,
+      "lng": -0.0759,
       "restaurant": "<a href='https://maps.google.com/?q=New+Armouries+Cafe+Tower+of+London' target='_blank'>New Armouries Café</a>",
-      "website": "https://www.hrp.org.uk/tower-of-london/"
+      "website": "https://www.hrp.org.uk/tower-of-london/",
+      "note": "Πραγματικές τιμές: 0-4: δωρεάν, 5-15: 20€, 16+: 41€"
     },
     {
       "name": "London Eye",
       "desc": "Ο διάσημος τροχός με πανοραμική θέα του Λονδίνου",
-      "prices": {"0-2": 0, "2-15": 34, "16+": 37},
-      "lat": 51.5033, "lng": -0.1195,
+      "prices": {
+        "0-2": 0,
+        "3-5": 34,
+        "6-14": 34,
+        "15-19": 37,
+        "18+": 37
+      },
+      "note": "Πραγματικές τιμές: 0-2: δωρεάν, 2-15: 34€, 16+: 37€. Τα 3-5 πληρώνουν 34€ (αντί για δωρεάν).",
+      "selected": false,
+      "lat": 51.5033,
+      "lng": -0.1195,
       "restaurant": "<a href='https://maps.google.com/?q=London+Eye+Cafe' target='_blank'>London Eye Café</a>",
       "website": "https://www.londoneye.com/"
     },
     {
       "name": "Warner Bros. Harry Potter Studio Tour",
       "desc": "Παρασκήνια των ταινιών Harry Potter (χωρίς μεταφορά)",
-      "prices": {"0-4": 0, "5-15": 51, "16+": 63},
-      "lat": 51.6900, "lng": -0.4187,
+      "prices": {
+        "0-2": 0,
+        "3-5": 0,
+        "6-14": 51,
+        "15-19": 63,
+        "18+": 63
+      },
+      "note": "Πραγματικές τιμές: 0-4: δωρεάν, 5-15: 51€, 16+: 63€. Οικογενειακή έκπτωση: 26€ (2 ενήλικες + 2 παιδιά).",
+      "selected": false,
+      "lat": 51.69,
+      "lng": -0.4187,
       "restaurant": "<a href='https://maps.google.com/?q=Harry+Potter+Studio+Cafe' target='_blank'>Studio Café</a>",
-      "website": "https://www.wbstudiotour.co.uk/",
-      "familyDiscount": "Οικογενειακή έκπτωση: 26€ (2 ενήλικες + 2 παιδιά)"
+      "website": "https://www.wbstudiotour.co.uk/"
     },
     {
       "name": "ZSL London Zoo",
-      "desc": "Ζωολογικός κήπος στο Regent's Park",
-      "prices": {"0-4": 0, "5-15": 29, "16+": 34},
-      "lat": 51.5353, "lng": -0.1534,
+      "desc": "Ζωολογικός κήπος στο Regent's Park. Τιμές Off-Peak/Standard/Peak.",
+      "prices": {
+        "0-2": 0,
+        "3-5": 0,
+        "6-14": 28,
+        "15-19": 34.5,
+        "18+": 34.5
+      },
+      "note": "Πραγματικές τιμές: 0-4: δωρεάν, 5-15: 26-30€, 16+: 32-37€. Επιλέξαμε μεσαίες τιμές (28€ & 34.5€).",
+      "selected": false,
+      "lat": 51.5353,
+      "lng": -0.1534,
       "restaurant": "<a href='https://maps.google.com/?q=Zoo+Cafe+London' target='_blank'>Zoo Café</a>",
       "website": "https://www.zsl.org/zsl-london-zoo"
     },
     {
       "name": "Royal Observatory Greenwich",
       "desc": "Το σημείο του Prime Meridian (μηδέν μεσημβρινός)",
-      "prices": {"0-4": 0, "5-15": 8, "16+": 16},
-      "lat": 51.4778, "lng": -0.0015,
+      "prices": {
+        "0-2": 0,
+        "3-5": 0,
+        "6-14": 8,
+        "15-19": 16,
+        "18+": 16
+      },
+      "note": "Πραγματικές τιμές: 0-4: δωρεάν, 5-15: 8€, 16+: 16€. Το Greenwich Park είναι δωρεάν.",
+      "selected": false,
+      "lat": 51.4778,
+      "lng": -0.0015,
       "restaurant": "<a href='https://maps.google.com/?q=Greenwich+Market+Food' target='_blank'>Greenwich Market</a>",
-      "website": "https://www.rmg.co.uk/royal-observatory",
-      "freePart": "Greenwich Park: Δωρεάν"
+      "website": "https://www.rmg.co.uk/royal-observatory"
     },
     {
       "name": "Postal Museum + Mail Rail",
       "desc": "Ιστορία του ταχυδρομείου και υπόγειο σιδηρόδρομο",
-      "prices": {"0-1": 0, "2-15": 12.5, "16-24": 14.5, "25+": 21},
-      "lat": 51.5275, "lng": -0.1135,
+      "prices": {
+        "0-2": 0,
+        "3-5": 12.5,
+        "6-14": 12.5,
+        "15-19": 14.5,
+        "18+": 21
+      },
+      "note": "Πραγματικές τιμές: 0-1: δωρεάν, 2-15: 12.5€, 16-24: 14.5€, 25+: 21€. Τα 3-5 πληρώνουν 12.5€.",
+      "selected": false,
+      "lat": 51.5275,
+      "lng": -0.1135,
       "restaurant": "<a href='https://maps.google.com/?q=Cafe+Postal+Museum' target='_blank'>Postal Museum Café</a>",
       "website": "https://www.postalmuseum.org/"
     },
     {
       "name": "Horniman Museum – Ενυδρείο",
-      "desc": "Μουσείο και ενυδρείο στο νότιο Λονδίνο",
-      "prices": {"0-2": 0, "3-15": 6, "16+": 8},
-      "lat": 51.4403, "lng": -0.0606,
+      "desc": "Μουσείο και ενυδρείο. Το μουσείο και οι κήποι είναι δωρεάν.",
+      "prices": {
+        "0-2": 0,
+        "3-5": 6,
+        "6-14": 6,
+        "15-19": 8,
+        "18+": 8
+      },
+      "note": "Πραγματικές τιμές: 0-2: δωρεάν, 3-15: ~6€, 16+: ~8€. Το μουσείο & οι κήποι είναι δωρεάν.",
+      "selected": false,
+      "lat": 51.4403,
+      "lng": -0.0606,
       "restaurant": "<a href='https://maps.google.com/?q=Horniman+Cafe' target='_blank'>Horniman Café</a>",
-      "website": "https://www.horniman.ac.uk/",
-      "freePart": "Μουσείο & κήποι: Δωρεάν"
+      "website": "https://www.horniman.ac.uk/"
     },
     {
       "name": "Natural History Museum",
       "desc": "Δεινόσαυροι και εκθέματα φυσικής ιστορίας",
-      "prices": {"0-4": 0, "5-15": 0, "16+": 0},
-      "lat": 51.4967, "lng": -0.1764,
+      "prices": {
+        "0-2": 0,
+        "3-5": 0,
+        "6-14": 0,
+        "15-19": 0,
+        "18+": 0
+      },
+      "note": "Δωρεάν είσοδος για όλες τις ηλικίες.",
+      "selected": false,
+      "freeActivity": true,
+      "lat": 51.4967,
+      "lng": -0.1764,
       "restaurant": "<a href='https://maps.google.com/?q=Natural+History+Museum+Cafe' target='_blank'>Museum Café</a>",
-      "website": "https://www.nhm.ac.uk/",
-      "freeActivity": true
+      "website": "https://www.nhm.ac.uk/"
     },
     {
       "name": "Science Museum",
       "desc": "Διαδραστικό μουσείο επιστήμης και τεχνολογίας",
-      "prices": {"0-4": 0, "5-15": 0, "16+": 0},
-      "lat": 51.4975, "lng": -0.1747,
+      "prices": {
+        "0-2": 0,
+        "3-5": 0,
+        "6-14": 0,
+        "15-19": 0,
+        "18+": 0
+      },
+      "note": "Δωρεάν είσοδος για όλες τις ηλικίες.",
+      "selected": false,
+      "freeActivity": true,
+      "lat": 51.4975,
+      "lng": -0.1747,
       "restaurant": "<a href='https://maps.google.com/?q=Science+Museum+Cafe' target='_blank'>Science Museum Café</a>",
-      "website": "https://www.sciencemuseum.org.uk/",
-      "freeActivity": true
+      "website": "https://www.sciencemuseum.org.uk/"
     },
     {
       "name": "British Museum",
       "desc": "Ιστορικό μουσείο με αρχαία τέχνη",
-      "prices": {"0-4": 0, "5-15": 0, "16+": 0},
-      "lat": 51.5194, "lng": -0.1270,
+      "prices": {
+        "0-2": 0,
+        "3-5": 0,
+        "6-14": 0,
+        "15-19": 0,
+        "18+": 0
+      },
+      "note": "Δωρεάν είσοδος για όλες τις ηλικίες.",
+      "selected": false,
+      "freeActivity": true,
+      "lat": 51.5194,
+      "lng": -0.127,
       "restaurant": "<a href='https://maps.google.com/?q=British+Museum+Cafe' target='_blank'>British Museum Café</a>",
-      "website": "https://www.britishmuseum.org/",
-      "freeActivity": true
+      "website": "https://www.britishmuseum.org/"
     },
     {
       "name": "Madame Tussauds London",
       "desc": "Κέρινα ομοιώματα διασημοτήτων",
-      "prices": {"0-4": 0, "5-15": 28, "16+": 35},
-      "lat": 51.5229, "lng": -0.1553,
+      "prices": {
+        "0-2": 0,
+        "3-5": 28,
+        "6-14": 28,
+        "15-19": 35,
+        "18+": 35
+      },
+      "note": "Πραγματικές τιμές: 0-4: δωρεάν, 5-15: ~28€, 16+: ~35€. Συμπεριλαμβάνεται σε Combo Passes.",
+      "selected": false,
+      "lat": 51.5229,
+      "lng": -0.1553,
       "restaurant": "<a href='https://maps.google.com/?q=Madame+Tussauds+Cafe' target='_blank'>Tussauds Café</a>",
-      "website": "https://www.madametussauds.com/london/",
-      "comboNote": "Συμπεριλαμβάνεται σε Combo Passes"
+      "website": "https://www.madametussauds.com/london/"
+    },
+    {
+      "name": "Tate Modern",
+      "desc": "Μουσείο σύγχρονης τέχνης",
+      "prices": {
+        "0-2": 0,
+        "3-5": 0,
+        "6-14": 0,
+        "15-19": 0,
+        "18+": 0
+      },
+      "note": "Δωρεάν είσοδος για όλες τις ηλικίες.",
+      "selected": false,
+      "freeActivity": true,
+      "lat": 51.5076,
+      "lng": -0.0994,
+      "restaurant": "<a href='https://maps.google.com/?q=Tate+Modern+Cafe' target='_blank'>Tate Modern Café</a>",
+      "website": "https://www.tate.org.uk/visit/tate-modern"
+    },
+    {
+      "name": "Museum of London Docklands",
+      "desc": "Ιστορία του Λονδίνου και του λιμανιού του",
+      "prices": {
+        "0-2": 0,
+        "3-5": 0,
+        "6-14": 0,
+        "15-19": 0,
+        "18+": 0
+      },
+      "note": "Δωρεάν είσοδος για όλες τις ηλικίες.",
+      "selected": false,
+      "freeActivity": true,
+      "lat": 51.5078,
+      "lng": -0.0235,
+      "restaurant": "<a href='https://maps.google.com/?q=Museum+of+London+Docklands+Cafe' target='_blank'>Docklands Café</a>",
+      "website": "https://www.museumoflondon.org.uk/museum-london-docklands"
+    },
+    {
+      "name": "2-Attraction Combo Pass",
+      "desc": "Επιλογή 2 από: London Eye, Madame Tussauds, SEA LIFE, Shrek’s Adventure, κ.ά.",
+      "prices": {
+        "0-2": 0,
+        "3-5": 28,
+        "6-14": 28,
+        "15-19": 30,
+        "18+": 30
+      },
+      "note": "Ενδεικτική τιμή ανά αξιοθέατο (~28-30€). Ισχύει για ~90 ημέρες. Κάτω των 2 συνήθως δωρεάν.",
+      "selected": false,
+      "lat": 51.5033,
+      "lng": -0.1195,
+      "restaurant": "",
+      "website": ""
+    },
+    {
+      "name": "3-Attraction Combo Pass",
+      "desc": "Επιλογή 3 από: London Eye, Madame Tussauds, SEA LIFE, Shrek’s Adventure, κ.ά.",
+      "prices": {
+        "0-2": 0,
+        "3-5": 20,
+        "6-14": 20,
+        "15-19": 22,
+        "18+": 22
+      },
+      "note": "Ενδεικτική τιμή ανά αξιοθέατο (~20-22€). Ισχύει για ~90 ημέρες. Κάτω των 2 συνήθως δωρεάν.",
+      "selected": false,
+      "lat": 51.5033,
+      "lng": -0.1195,
+      "restaurant": "",
+      "website": ""
+    },
+    {
+      "name": "5-Attraction Combo Pass",
+      "desc": "Επιλογή 5 από: London Eye, Madame Tussauds, SEA LIFE, Shrek’s Adventure, κ.ά.",
+      "prices": {
+        "0-2": 0,
+        "3-5": 13,
+        "6-14": 13,
+        "15-19": 15,
+        "18+": 15
+      },
+      "note": "Ενδεικτική τιμή ανά αξιοθέατο (~13-15€). Ισχύει για ~90 ημέρες. Κάτω των 2 συνήθως δωρεάν.",
+      "selected": false,
+      "lat": 51.5033,
+      "lng": -0.1195,
+      "restaurant": "",
+      "website": ""
+    },
+    {
+      "name": "Regent's Park",
+      "desc": "Μεγάλο πάρκο με κήπους, λίμνη και ζωολογικό κήπο",
+      "prices": {
+        "0-2": 0,
+        "3-5": 0,
+        "6-14": 0,
+        "15-19": 0,
+        "18+": 0
+      },
+      "note": "Δωρεάν είσοδος.",
+      "selected": false,
+      "freeActivity": true,
+      "lat": 51.5311,
+      "lng": -0.1586,
+      "restaurant": "<a href='https://maps.google.com/?q=Regents+Park+Cafe' target='_blank'>The Honest Sausage</a>",
+      "website": "https://www.royalparks.org.uk/parks/the-regents-park"
+    },
+    {
+      "name": "Richmond Park",
+      "desc": "Το μεγαλύτερο Βασιλικό Πάρκο, με ελεύθερους ελάφους",
+      "prices": {
+        "0-2": 0,
+        "3-5": 0,
+        "6-14": 0,
+        "15-19": 0,
+        "18+": 0
+      },
+      "note": "Δωρεάν είσοδος.",
+      "selected": false,
+      "freeActivity": true,
+      "lat": 51.4494,
+      "lng": -0.2746,
+      "restaurant": "<a href='https://maps.google.com/?q=Pembroke+Lodge+Richmond+Park' target='_blank'>Pembroke Lodge</a>",
+      "website": "https://www.royalparks.org.uk/parks/richmond-park"
+    },
+    {
+      "name": "Greenwich Park",
+      "desc": "Ιστορικό πάρκο με πανοραμική θέα στο Λονδίνο",
+      "prices": {
+        "0-2": 0,
+        "3-5": 0,
+        "6-14": 0,
+        "15-19": 0,
+        "18+": 0
+      },
+      "note": "Δωρεάν είσοδος. (Το Royal Observatory είναι ξεχωριστό, με είσοδο).",
+      "selected": false,
+      "freeActivity": true,
+      "lat": 51.4769,
+      "lng": -0.0015,
+      "restaurant": "<a href='https://maps.google.com/?q=Greenwich+Pavilion' target='_blank'>Greenwich Pavilion</a>",
+      "website": "https://www.royalparks.org.uk/parks/greenwich-park"
+    },
+    {
+      "name": "Sky Garden",
+      "desc": "Δωρεάν κήποι και πανοραμική θέα από το 35ο όροφο. Απαιτείται κράτηση.",
+      "prices": {
+        "0-2": 0,
+        "3-5": 0,
+        "6-14": 0,
+        "15-19": 0,
+        "18+": 0
+      },
+      "note": "Δωρεάν είσοδος με ΚΡΑΤΗΣΗ από το site. Ντυθείτε κατάλληλα.",
+      "selected": false,
+      "freeActivity": true,
+      "lat": 51.5115,
+      "lng": -0.085,
+      "restaurant": "<a href='https://maps.google.com/?q=Sky+Garden+Restaurant' target='_blank'>Sky Garden Restaurant</a>",
+      "website": "https://skygarden.london/"
+    },
+    {
+      "name": "Borough Market",
+      "desc": "Ιστορική αγορά τροφίμων με ποικιλία φαγητών",
+      "prices": {
+        "0-2": 0,
+        "3-5": 0,
+        "6-14": 0,
+        "15-19": 0,
+        "18+": 0
+      },
+      "note": "Δωρεάν είσοδος. Πληρώστε για φαγητό/ποτά.",
+      "selected": false,
+      "freeActivity": true,
+      "lat": 51.5056,
+      "lng": -0.0912,
+      "restaurant": "Πολλά παστωτήρια στην αγορά",
+      "website": "https://boroughmarket.org.uk/"
+    },
+    {
+      "name": "Camden Market",
+      "desc": "Τεράστια αγορά με βιβλία, ρούχα, street food και εναλλακτική κουλτούρα",
+      "prices": {
+        "0-2": 0,
+        "3-5": 0,
+        "6-14": 0,
+        "15-19": 0,
+        "18+": 0
+      },
+      "note": "Δωρεάν είσοδος. Πληρώστε για αγορές και φαγητό.",
+      "selected": false,
+      "freeActivity": true,
+      "lat": 51.5419,
+      "lng": -0.1469,
+      "restaurant": "Πολλά παστωτήρια στην αγορά",
+      "website": "https://www.camdenmarket.com/"
+    },
+    {
+      "name": "Diana Memorial Playground",
+      "desc": "Θεματική παιδική χαρά προς τιμήν της Πριγκίπισσας Νταϊάνα",
+      "prices": {
+        "0-2": 0,
+        "3-5": 0,
+        "6-14": 0,
+        "15-19": 0,
+        "18+": 0
+      },
+      "note": "Δωρεάν είσοδος. Μόνο με συνοδεία παιδιών.",
+      "selected": false,
+      "freeActivity": true,
+      "lat": 51.5079,
+      "lng": -0.1738,
+      "restaurant": "<a href='https://maps.google.com/?q=Broadwalk+Cafe+Kensington+Gardens' target='_blank'>The Broadwalk Café</a>",
+      "website": "https://www.royalparks.org.uk/parks/kensington-gardens/diana-memorial-playground"
     }
   ]
 }
