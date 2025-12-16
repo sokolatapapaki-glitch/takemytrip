@@ -3881,7 +3881,7 @@ function findAvailableCombos(allActivities, selectedActivities) {
             });
         }
         
-        // Family Discounts detection
+                /* Family Discounts detection - ΑΠΕΝΕΡΓΟΠΟΙΗΜΕΝΟ
         selectedActivities.forEach(act => {
             if (act.note && (
                 act.note.includes("οικογενειακή") || 
@@ -3890,17 +3890,7 @@ function findAvailableCombos(allActivities, selectedActivities) {
                 act.note.includes("2+2") ||
                 act.note.includes("έκπτωση")
             )) {
-                combos.push({
-                    name: "👨‍👩‍👧‍👦 Οικογενειακή Έκπτωση",
-                    description: `Οικογενειακή προσφορά για: ${act.name}`,
-                    activities: [act.name],
-                    regularPrice: calculateRegularCost([act], categorizeFamilyMembers()),
-                    comboPrice: calculateRegularCost([act], categorizeFamilyMembers()) * 0.8, // 20% έκπτωση
-                    saving: calculateRegularCost([act], categorizeFamilyMembers()) * 0.2,
-                    note: "Εκτίμηση 20% έκπτωσης για οικογένειες - ελέγξτε στον πάροχο"
-                });
-            }
-        });
+               }); */
     }
     
     console.log("📊 Σύνολο combos που βρέθηκαν:", combos.length);
