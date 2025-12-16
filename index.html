@@ -1559,6 +1559,7 @@ function searchHotels() {
   document.body.appendChild(img);
 }
 async function goToStep4() {
+    console.log(`🚀 goToStep4() για: ${selectedDestinationName}`);
     activateStep('step-activities');
     
     const step4Section = document.getElementById("step-activities");
@@ -1569,49 +1570,82 @@ async function goToStep4() {
     let currentActivities = null;
     let activityTitle = "";
     
-    // 1. ΠΑΛΙΕΣ ΠΟΛΕΙΣ (built-in)
-    if(selectedDestinationName.includes("Βιέννη")){
-        currentActivities = activities;
-        activityTitle = "Οικογενειακές Δραστηριότητες στη Βιέννη";
-    } else if (selectedDestinationName.includes("Βερολίνο")){
-        currentActivities = activitiesBerlin;
-        activityTitle = "Οικογενειακές Δραστηριότητες στο Βερολίνο";
-    } else if (selectedDestinationName.includes("Λισαβόνα")){
-        currentActivities = activitiesLisbon;
-        activityTitle = "Οικογενειακές Δραστηριότητες στη Λισαβόνα";
-    } else if (selectedDestinationName.includes("Βουδαπέστη")){
-        currentActivities = activitiesBudapest;
-        activityTitle = "Οικογενειακές Δραστηριότητες στη Βουδαπέστη";
-    } else if (selectedDestinationName.includes("Μαδρίτη")){
-        currentActivities = activitiesMadrid;
-        activityTitle = "Οικογενειακές Δραστηριότητες στη Μαδρίτη";
-    }
+    // 🔄 ΒΗΜΑ 1: ΦΟΡΤΩΣΗ JSON ΠΟΛΕΩΝ ΠΡΙΝ ΑΠΟ ΟΛΟ (Κωνσταντινούπολη, Παρίσι, Πράγα)
+    const jsonCities = ["Κωνσταντινούπολη", "Παρίσι", "Πράγα"];
+    const isJsonCity = jsonCities.some(city => selectedDestinationName.includes(city));
     
-    // 2. ΝΕΟ ΣΥΣΤΗΜΑ: ΧΡΗΣΗ TravelDataManager
-    if (!currentActivities && TravelDataManager) {
-        console.log(`🔍 Έλεγχος στον TravelDataManager: ${selectedDestinationName}`);
+    if (isJsonCity) {
+        console.log(`📂 Αυτή είναι JSON πόλη: ${selectedDestinationName}`);
         
+        // Προσπάθεια φόρτωσης από JSON
         try {
-            const cityData = TravelDataManager.getCityData(selectedDestinationName);
-            
-            if (cityData && cityData.activities && cityData.activities.length > 0) {
-                currentActivities = cityData.activities;
-                activityTitle = `Οικογενειακές Δραστηριότητες στην ${selectedDestinationName}`;
-                console.log(`✅ Βρέθηκαν ${currentActivities.length} δραστηριότητες από TravelDataManager`);
+            const cityConfig = window.EXTRA_CITIES_CONFIG?.[selectedDestinationName];
+            if (cityConfig && cityConfig.file) {
+                console.log(`📥 Φόρτωση από: ${cityConfig.file}`);
+                
+                const response = await fetch(cityConfig.file);
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    if (data && data.activities) {
+                        // Αποθήκευση στις global μεταβλητές
+                        window.loadedExtraCityActivities = data.activities;
+                        currentActivities = data.activities;
+                        activityTitle = `Οικογενειακές Δραστηριότητες στην ${selectedDestinationName}`;
+                        
+                        console.log(`✅ Φορτώθηκαν ${currentActivities.length} δραστηριότητες από JSON`);
+                    }
+                }
             }
         } catch (error) {
-            console.error("❌ Σφάλμα:", error);
+            console.error('❌ Σφάλμα φόρτωσης JSON:', error);
         }
     }
     
-    // 3. ΕΑΝ ΒΡΕΘΟΥΝ ΔΡΑΣΤΗΡΙΟΤΗΤΕΣ
-    if(currentActivities && currentActivities.length > 0){
+    // 🔄 ΒΗΜΑ 2: ΠΑΛΙΕΣ ΠΟΛΕΙΣ (built-in) - ΜΟΝΟ αν δεν έχουμε βρει από JSON
+    if (!currentActivities) {
+        if (selectedDestinationName.includes("Βιέννη")) {
+            currentActivities = activities;
+            activityTitle = "Οικογενειακές Δραστηριότητες στη Βιέννη";
+        } else if (selectedDestinationName.includes("Βερολίνο")) {
+            currentActivities = activitiesBerlin;
+            activityTitle = "Οικογενειακές Δραστηριότητες στο Βερολίνο";
+        } else if (selectedDestinationName.includes("Λισαβόνα")) {
+            currentActivities = activitiesLisbon;
+            activityTitle = "Οικογενειακές Δραστηριότητες στη Λισαβόνα";
+        } else if (selectedDestinationName.includes("Βουδαπέστη")) {
+            currentActivities = activitiesBudapest;
+            activityTitle = "Οικογενειακές Δραστηριότητες στη Βουδαπέστη";
+        } else if (selectedDestinationName.includes("Μαδρίτη")) {
+            currentActivities = activitiesMadrid;
+            activityTitle = "Οικογενειακές Δραστηριότητες στη Μαδρίτη";
+        }
+    }
+    
+    // 🔄 ΒΗΜΑ 3: ΧΡΗΣΗ TravelDataManager για ΜΕΤΑΤΡΟΠΗ
+    if (currentActivities && currentActivities.length > 0 && window.UnifiedAgeManager) {
+        console.log(`🔄 Μετατροπή ${currentActivities.length} δραστηριοτήτων σε unified format...`);
+        
+        // Μετατροπή ΚΑΘΕ δραστηριότητας
+        const convertedActivities = currentActivities.map(activity => {
+            return window.UnifiedAgeManager.convertActivity(activity);
+        });
+        
+        currentActivities = convertedActivities;
+        console.log('✅ Μετατροπή ολοκληρώθηκε');
+    }
+    
+    // 🔄 ΒΗΜΑ 4: ΕΜΦΑΝΙΣΗ
+    if (currentActivities && currentActivities.length > 0) {
         createActivityCards(currentActivities);
         
         step4Section.querySelector('h1').innerText = activityTitle;
         activityContainer.style.display = 'grid';
         overallTotalDiv.style.display = 'block';
         step5BtnContainer.style.display = 'block';
+        
+        // Αποθήκευση για μελλοντική χρήση
+        window.currentDisplayedActivities = currentActivities;
         
         calculateAllCosts(currentActivities);
         
