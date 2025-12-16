@@ -148,38 +148,28 @@ const TravelDataManager = {
   },
   
   // 💰 ΥΠΟΛΟΓΙΣΜΟΣ ΤΙΜΗΣ ΓΙΑ ΜΕΛΟΣ
-  calculatePriceForMember: function(memberAge, activityPrices) {
-    if (!activityPrices) return 0;
+     // 2. ΕΥΡΕΤΗΣΗ ΚΟΝΤΙΝΟΤΕΡΗΣ ΟΜΑΔΑΣ (με debugging)
+    console.log("🔍 Δεν βρέθηκε ακριβής αντιστοίχιση για ηλικία", memberAge);
+    console.log("   Διαθέσιμες ομάδες:", Object.keys(activityPrices));
     
-    // 1. ΑΚΡΙΒΗΣ ΑΝΤΙΣΤΟΙΧΙΣΗ
-    for (const [ageGroup, price] of Object.entries(activityPrices)) {
-      if (ageGroup.includes('-')) {
-        const [min, max] = ageGroup.split('-').map(Number);
-        if (memberAge >= min && memberAge <= max) {
-          return this.normalizePrice(price);
-        }
-      } else if (ageGroup === "18+" && memberAge >= 18) {
-        return this.normalizePrice(price);
-      } else if (ageGroup === "17+" && memberAge >= 17) {
-        return this.normalizePrice(price);
-      }
-    }
-    
-    // 2. ΕΥΡΕΤΗΣΗ ΚΟΝΤΙΝΟΤΕΡΗΣ ΟΜΑΔΑΣ
     const ageGroups = Object.keys(activityPrices).filter(g => g.includes('-'));
     if (ageGroups.length > 0) {
+      console.log("   Ομάδες με εύρος:", ageGroups);
+      
       const closestGroup = ageGroups.sort((a, b) => {
         const aMin = parseInt(a.split('-')[0]);
         const bMin = parseInt(b.split('-')[0]);
         return Math.abs(aMin - memberAge) - Math.abs(bMin - memberAge);
       })[0];
       
+      console.log("   Επέλεξε κοντινότερη:", closestGroup, "τιμή:", activityPrices[closestGroup]);
       return this.normalizePrice(activityPrices[closestGroup]);
     }
     
     // 3. ΠΡΟΕΠΙΛΟΓΗ
+    console.warn("⚠️ ΟΥΤΕ κοντινή ομάδα δεν βρέθηκε. Επιστροφή 0.");
     return 0;
-  },
+},
   
   // 🔢 ΜΕΤΑΤΡΟΠΗ ΤΙΜΗΣ ΣΕ ΑΡΙΘΜΟ
   normalizePrice: function(price) {
