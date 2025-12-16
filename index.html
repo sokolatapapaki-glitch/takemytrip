@@ -937,15 +937,7 @@ let selectedBudget = 0;
     // ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ ΓΙΑ ΜΟΡΦΟΠΟΙΗΣΗ ΤΙΜΩΝ
 function formatPrice(price) {
     if (price === undefined || price === null) return '-';
-    if (price === 0) return '0€';
-    if (typeof price === 'number') {
-        // Στρογγυλοποίηση σε 2 δεκαδικά
-        const rounded = Math.round(price * 100) / 100;
-        // Αφαίρεση μηδενικών .00
-        return rounded % 1 === 0 ? rounded + '€' : rounded.toFixed(2) + '€';
-    }
-    if (typeof price === 'string' && price.toLowerCase() === 'free') return 'ΔΩΡΕΑΝ';
-    if (typeof price === 'string' && price.toLowerCase() === 'n/a') return 'ΔΕΝ ΕΠΙΤΡΕΠΕΤΑΙ';
+    if (typeof price === 'number') return price + '€';
     return price;
 }
 
@@ -1469,43 +1461,7 @@ const activitiesBudapest = [
     activityType: "playground"
   }
 ];
-// ==================== ΕΥΦΥΗΣ ΥΠΟΛΟΓΙΣΜΟΣ ΓΙΑ ΟΛΕΣ ΤΙΣ ΠΟΛΕΙΣ ====================
-function getPriceForAge(age, priceMap) {
-    if (!priceMap || typeof priceMap !== 'object') return 0;
-    
-    // 1. Μετατροπή age σε number
-    const ageNum = parseInt(age);
-    
-    // 2. Άμεση αντιστοίχιση (για "0-2", "3-5", κλπ)
-    for (const [range, price] of Object.entries(priceMap)) {
-        if (range.includes('-')) {
-            const [minStr, maxStr] = range.split('-');
-            const min = parseInt(minStr);
-            const max = maxStr.includes('+') ? 999 : parseInt(maxStr);
-            
-            if (ageNum >= min && ageNum <= max) {
-                return parseFloat(price) || 0;
-            }
-        } else if (range === 'free') {
-            return 0;
-        }
-    }
-    
-    // 3. Fallback για διάσημες κατηγορίες
-    if (ageNum <= 2) {
-        return priceMap["0-2"] || priceMap["0-4"] || priceMap["infant"] || 0;
-    }
-    if (ageNum <= 5) {
-        return priceMap["3-5"] || priceMap["2-5"] || priceMap["child"] || 0;
-    }
-    if (ageNum <= 14) {
-        return priceMap["6-14"] || priceMap["5-15"] || priceMap["junior"] || 0;
-    }
-    if (ageNum <= 19) {
-        return priceMap["15-19"] || priceMap["16-24"] || priceMap["student"] || 0;
-    }
-    return priceMap["18+"] || priceMap["25+"] || priceMap["adult"] || 0;
-}
+
 function toggleFamily(){
   const type = document.getElementById("travel-type").value;
   document.getElementById("family-options").style.display = (type==="Οικογένεια")?"flex":"none";
@@ -1631,14 +1587,21 @@ async function goToStep4() {
         activityTitle = "Οικογενειακές Δραστηριότητες στη Μαδρίτη";
     }
     
-    // 2. ΝΕΟ ΣΥΣΤΗΜΑ: ΕΛΕΓΧΟΣ ΓΙΑ JSON ΠΟΛΕΙΣ
-    if (!currentActivities && EXTRA_CITIES_CONFIG && EXTRA_CITIES_CONFIG[selectedDestinationName]) {
-        console.log(`🔍 Έλεγχος JSON για: ${selectedDestinationName}`);
-        activityTitle = `Οικογενειακές Δραστηριότητες στην ${selectedDestinationName}`;
+    // 2. ΝΕΟ ΣΥΣΤΗΜΑ: ΧΡΗΣΗ TravelDataManager
+    if (!currentActivities && TravelDataManager) {
+        console.log(`🔍 Έλεγχος στον TravelDataManager: ${selectedDestinationName}`);
         
-        // Θα φορτώσουμε τις δραστηριότητες όταν ο χρήστης πατήσει το κουμπί
-        showLoadingMessage(selectedDestinationName);
-        return;
+        try {
+            const cityData = TravelDataManager.getCityData(selectedDestinationName);
+            
+            if (cityData && cityData.activities && cityData.activities.length > 0) {
+                currentActivities = cityData.activities;
+                activityTitle = `Οικογενειακές Δραστηριότητες στην ${selectedDestinationName}`;
+                console.log(`✅ Βρέθηκαν ${currentActivities.length} δραστηριότητες από TravelDataManager`);
+            }
+        } catch (error) {
+            console.error("❌ Σφάλμα:", error);
+        }
     }
     
     // 3. ΕΑΝ ΒΡΕΘΟΥΝ ΔΡΑΣΤΗΡΙΟΤΗΤΕΣ
@@ -1658,138 +1621,7 @@ async function goToStep4() {
     
     saveToLocalStorage();
 }
-    function showLoadingMessage(cityName) {
-    const container = document.getElementById('activities-container');
-    const step4Section = document.getElementById("step-activities");
-    
-    container.innerHTML = `
-        <div style="text-align: center; padding: 40px;">
-            <h3>📥 Φόρτωση Δραστηριοτήτων για ${cityName}...</h3>
-            <p>Παρακαλώ περιμένετε ή επιλέξτε άλλη πόλη.</p>
-            <button onclick="loadActivitiesForCity('${cityName}')" 
-                    style="padding: 12px 24px; background: #3eb489; color: white; border: none; border-radius: 8px; cursor: pointer; margin: 15px;">
-                🔄 Φόρτωση Τώρα
-            </button>
-        </div>
-    `;
-    
-    step4Section.querySelector('h1').innerText = `Οικογενειακές Δραστηριότητες στην ${cityName}`;
-}
-async function loadActivitiesForCity(cityName) {
-    const container = document.getElementById('activities-container');
-    const cityConfig = EXTRA_CITIES_CONFIG[cityName];
-    
-    if (!cityConfig) {
-        container.innerHTML = '<p>⚠️ Η πόλη δεν είναι διαθέσιμη.</p>';
-        return;
-    }
-    
-    container.innerHTML = '<p>⏳ Φόρτωση... Παρακαλώ περιμένετε.</p>';
-    
-    try {
-        const response = await fetch(cityConfig.file);
-        if (!response.ok) throw new Error('Δεν βρέθηκε αρχείο');
-        
-        const data = await response.json();
-        window.loadedExtraCityActivities = data.activities || [];
-        
-        // Χρήση της νέας συνάρτησης για JSON πόλεις
-        createActivityCardsFromJSON(window.loadedExtraCityActivities, cityName);
-        
-    } catch (error) {
-        container.innerHTML = `
-            <div style="color: #e74c3c; text-align: center; padding: 20px;">
-                <h4>❌ Σφάλμα Φόρτωσης</h4>
-                <p>Δεν μπορώ να φορτώσω τις δραστηριότητες για ${cityName}.</p>
-                <p>Λάθος: ${error.message}</p>
-            </div>
-        `;
-    }
-}
-   // ==================== ΒΟΗΘΗΤΙΚΗ ΓΙΑ ΔΗΜΙΟΥΡΓΙΑ ΚΑΡΤΩΝ ΑΠΟ JSON ====================
-function createActivityCardsFromJSON(activityList, cityName) {
-    const container = document.getElementById('activities-container');
-    container.innerHTML = "";
-    
-    if (!activityList || activityList.length === 0) {
-        container.innerHTML = '<p>⚠️ Δεν βρέθηκαν δραστηριότητες για αυτήν την πόλη.</p>';
-        return;
-    }
-    
-    activityList.forEach((act, index) => {
-        // EMOJI ανά τύπο
-        let emoji = "📍";
-        if (act.name.includes("Μουσείο") || act.name.includes("Μουσειο")) emoji = "🏛️";
-        else if (act.name.includes("Πάρκο") || act.name.includes("Παρκο")) emoji = "🌳";
-        else if (act.name.includes("Τζαμί") || act.name.includes("Τζαμι")) emoji = "🕌";
-        else if (act.name.includes("Παλάτι") || act.name.includes("Παλατι")) emoji = "🏰";
-        else if (act.name.includes("Αγορά") || act.name.includes("Αγορα")) emoji = "🛍️";
-        else if (act.name.includes("Πύργος") || act.name.includes("Πυργος")) emoji = "🗼";
-        else if (act.name.includes("Εκκλησία") || act.name.includes("Εκκλησια")) emoji = "⛪";
-        else if (act.name.includes("Γέφυρα") || act.name.includes("Γεφυρα")) emoji = "🌉";
-        
-        const card = document.createElement('div');
-        card.className = "activity-card";
-        card.id = `activity-${index}`;
-        card.dataset.index = index;
-        
-        // Δημιουργία πίνακα τιμών
-        let priceTableHTML = '<table class="activity-table"><tr><th>Ηλικία</th><th>Τιμή</th></tr>';
-        
-        if (act.prices) {
-            Object.entries(act.prices).forEach(([ageRange, price]) => {
-                priceTableHTML += `<tr><td>${ageRange} ετών</td><td>${formatPrice(price)}</td></tr>`;
-            });
-        }
-        priceTableHTML += '</table>';
-        
-        card.innerHTML = `
-            <span class="emoji-icon">${emoji}</span>
-            <span class="star">⭐</span>
-            <div class="activity-info">
-                <h3>${act.name}</h3>
-                <p>${act.desc || ''}</p>
-                ${act.website ? `<a href="${act.website}" target="_blank" style="color: #3eb489; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 10px;">🔗 Δείτε περισσότερα</a>` : ''}
-                
-                <div style="margin-top: 10px;">
-                    ${priceTableHTML}
-                </div>
-                
-                ${act.note ? `<p style="color: #e74c3c; font-size: 0.9em; margin-top: 8px;">📝 ${act.note}</p>` : ''}
-                
-                <div class="total" id="total-${index}">Κόστος: 0 €</div>
-            </div>
-        `;
-        
-        card.addEventListener('click', () => {
-            card.classList.toggle('selected');
-            act.selected = !act.selected;
-            
-            // Ενημέρωση του global array
-            if (window.loadedExtraCityActivities) {
-                window.loadedExtraCityActivities[index] = act;
-            }
-            
-            calculateAllCosts(activityList);
-            saveToLocalStorage();
-        });
-        
-        container.appendChild(card);
-    });
-    
-    // Εμφάνιση συνολικού κόστους
-    calculateAllCosts(activityList);
-} 
-  // ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ ΓΙΑ ΜΟΡΦΟΠΟΙΗΣΗ ΤΙΜΩΝ
-// ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ ΓΙΑ ΜΟΡΦΟΠΟΙΗΣΗ ΤΙΜΩΝ
-function formatPrice(price) {
-    if (price === undefined || price === null) return '-';
-    if (price === 0) return '0€';
-    if (typeof price === 'number') return price + '€';
-    if (typeof price === 'string' && price.toLowerCase() === 'free') return 'ΔΩΡΕΑΝ';
-    if (typeof price === 'string' && price.toLowerCase() === 'n/a') return 'ΔΕΝ ΕΠΙΤΡΕΠΕΤΑΙ';
-    return price;
-}
+
 function goToStep5(){
     // Προφόρτωση Leaflet για γρηγορότερο χάρτη
     preloadLeaflet();
@@ -2020,18 +1852,28 @@ window.scrollTo({ top: 0, behavior: 'smooth' });
 
 // ** 4. ΒΗΜΑ 4 - ΔΡΑΣΤΗΡΙΟΤΗΤΕΧ **
 function createActivityCards(activityList) {
+     if (selectedDestinationName.includes("Κωνσταντινούπολη") || 
+        selectedDestinationName.includes("Παρίσι") || 
+        selectedDestinationName.includes("Πράγα")) {
+        window.loadedExtraCityActivities = activityList;
+    }
   const containerActivities = document.getElementById('activities-container');
   containerActivities.innerHTML = "";
  
+  const emojiMap = {
+    "Palace": "🏰", "Zoo": "🐯", "Museum": "🏛️", "Aquarium": "🐠",
+    "Park": "🌳", "Castle": "🏯", "Science": "🔬", "Music": "🎵",
+    "Tower": "🗼", "Theme": "🎡", "History": "📜", "Art": "🎨",
+    "Nature": "🌿", "Adventure": "🧗", "Cruise": "🚢", "Garden": "🌸",
+    "Schonbrunn": "🏰", "Prater": "🎡", "Opera": "🎭", "Danube": "🌉",
+    "Illuseum": "🎭", "Technikmuseum": "⚙️", "Naturkunde": "🦕",
+    "LEGOLAND": "🧱", "Tussauds": "👑", "Fernsehturm": "🗼",
+    "Oceanário": "🐠", "Pavilhão": "🔭", "Belém": "🏰", "Mosteiro": "⛪",
+    "Parliament": "🏛️", "Thermal": "♨️", "Eye": "🎡", "Margaret": "🏝️"
+  };
+ 
   activityList.forEach((act, index) => {
-    // EMOJI
-    const emojiMap = {
-      "Tower": "🏰", "Eye": "🎡", "Harry": "⚡", "Zoo": "🐯",
-      "Museum": "🏛️", "Observatory": "🔭", "Postal": "📮",
-      "Natural": "🦕", "Science": "🔬", "British": "🏺",
-      "Madame": "👑"
-    };
-    
+    // Βρίσκουμε κατάλληλο emoji από το όνομα
     let emoji = "📍";
     for (const [key, value] of Object.entries(emojiMap)) {
       if (act.name.includes(key)) {
@@ -2043,17 +1885,6 @@ function createActivityCards(activityList) {
     const card = document.createElement('div');
     card.className = "activity-card";
     card.id = `activity-${index}`;
-    
-    // Δημιουργία πίνακα τιμών ΜΑΝΟΥΑΛΙΑ
-    let priceTableHTML = '<table class="activity-table"><tr><th>Ηλικία</th><th>Τιμή</th></tr>';
-    
-    if (act.prices) {
-        Object.entries(act.prices).forEach(([ageRange, price]) => {
-            priceTableHTML += `<tr><td>${ageRange} ετών</td><td>${formatPrice(price)}</td></tr>`;
-        });
-    }
-    priceTableHTML += '</table>';
-    
     card.innerHTML = `
       <span class="emoji-icon">${emoji}</span>
       <span class="star">⭐</span>
@@ -2061,81 +1892,55 @@ function createActivityCards(activityList) {
         <h3>${act.name}</h3>
         <p>${act.desc}</p>
         ${act.website ? `<a href="${act.website}" target="_blank" style="color: #3eb489; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 10px;">🔗 Δείτε περισσότερα</a>` : ''}
-        
-        <!-- ΠΙΝΑΚΑΣ ΤΙΜΩΝ -->
-        <div style="margin-top: 10px;">
-          ${priceTableHTML}
-        </div>
-        
+        ${act.ageWarning ? `<div style="background: #fff3cd; padding: 5px; border-radius: 6px; margin: 5px 0; font-size: 0.9em; color: #856404;">⚠️ ${act.ageWarning}</div>` : ''}
+        ${act.priceNote ? `<div style="background: #d1ecf1; padding: 5px; border-radius: 6px; margin: 5px 0; font-size: 0.9em; color: #0c5460;">ℹ️ ${act.priceNote}</div>` : ''}
+       <table class="activity-table">
+    ${selectedDestinationName.includes("Κωνσταντινούπολη") || 
+      selectedDestinationName.includes("Παρίσι") || 
+      selectedDestinationName.includes("Πράγα") ?
+      // 👇 ΓΙΑ ΚΩΝΣΤΑΝΤΙΝΟΥΠΟΛΗ, ΠΑΡΙΣΙ, ΠΡΑΓΑ 👇
+      `<tr><th>0-6</th><th>7-12</th><th>13-17</th><th>18+</th></tr>
+       <tr>
+          <td>${formatPrice(act.prices["0-6"])}</td>
+          <td>${formatPrice(act.prices["7-12"])}</td>
+          <td>${formatPrice(act.prices["13-17"])}</td>
+          <td>${formatPrice(act.prices["18+"])}</td>
+       </tr>` :
+      // 👇 ΓΙΑ ΟΛΕΣ ΤΙΣ ΑΛΛΕΣ ΠΟΛΕΙΣ 👇
+      `<tr><th>0-2</th><th>3-5</th><th>6-14</th><th>15-19</th><th>18+</th></tr>
+       <tr>
+          <td>${formatPrice(act.prices["0-2"])}</td>
+          <td>${formatPrice(act.prices["3-5"])}</td>
+          <td>${formatPrice(act.prices["6-14"])}</td>
+          <td>${formatPrice(act.prices["15-19"])}</td>
+          <td>${formatPrice(act.prices["18+"])}</td>
+       </tr>`
+    }
+</table>
         <div class="total" id="total-${index}">Κόστος: 0 €</div>
       </div>
     `;
-    
+   
     card.addEventListener('click', ()=> {
-      card.classList.toggle('selected');
-      act.selected = !act.selected;
-      calculateAllCosts(activityList);
-      saveToLocalStorage();
-    });
-    
+    card.classList.toggle('selected');
+    activityList[index].selected = !activityList[index].selected;
+   
+    const listToPass = selectedDestinationName.includes("Βιέννη") ? activities :
+                      selectedDestinationName.includes("Βερολίνο") ? activitiesBerlin :
+                      selectedDestinationName.includes("Λισαβόνα") ? activitiesLisbon :
+                      selectedDestinationName.includes("Βουδαπέστη") ? activitiesBudapest :
+                      selectedDestinationName.includes("Μαδρίτη") ? activitiesMadrid : // ΠΡΟΣΘΗΚΗ
+                      activities;
+    calculateAllCosts(listToPass);
+   
+    saveToLocalStorage();
+});
     containerActivities.appendChild(card);
   });
-}
-    // 👇 ΒΑΛΤΕ ΑΥΤΗ ΤΗ ΣΥΝΑΡΤΗΣΗ ΑΚΡΙΒΩΣ ΠΡΙΝ ΤΗΝ calculateAllCosts:
-function calculateLondonPrice(age, prices) {
-    if (!prices || typeof prices !== 'object') return 0;
-    
-    const ageNum = parseInt(age);
-    console.log(`🇬🇧 Υπολογισμός για Λονδίνο: ${ageNum} ετών, τιμές:`, prices);
-    
-    // 1. Πρώτα δοκιμάζουμε συγκεκριμένες κατηγορίες
-    if (ageNum <= 4) {
-        if (prices["0-4"] !== undefined) return prices["0-4"];
-        if (prices["0-2"] !== undefined) return prices["0-2"];
-    }
-    
-    if (ageNum >= 5 && ageNum <= 15) {
-        if (prices["5-15"] !== undefined) return prices["5-15"];
-        if (prices["2-15"] !== undefined) return prices["2-15"];
-    }
-    
-    if (ageNum >= 16 && ageNum <= 24) {
-        if (prices["16-24"] !== undefined) return prices["16-24"];
-        if (prices["16+"] !== undefined) return prices["16+"];
-    }
-    
-    if (ageNum >= 25) {
-        if (prices["25+"] !== undefined) return prices["25+"];
-        if (prices["16+"] !== undefined) return prices["16+"];
-    }
-    
-    // 2. Αν δεν βρέθηκε, ψάχνουμε γενικότερα
-    for (const [range, price] of Object.entries(prices)) {
-        if (range.includes('-')) {
-            const [minStr, maxStr] = range.split('-');
-            const min = parseInt(minStr);
-            const max = maxStr.includes('+') ? 999 : parseInt(maxStr);
-            
-            if (ageNum >= min && ageNum <= max) {
-                console.log(`✅ Βρέθηκε: ${range} = ${price}£`);
-                return parseFloat(price) || 0;
-            }
-        } else if (range.includes('+')) {
-            const min = parseInt(range.replace('+', ''));
-            if (ageNum >= min) {
-                console.log(`✅ Βρέθηκε: ${range} = ${price}£`);
-                return parseFloat(price) || 0;
-            }
-        }
-    }
-    
-    console.log(`❌ Δεν βρέθηκε τιμή για ${ageNum} ετών`);
-    return 0;
 }
 
 // ==================== ΝΕΟΣ ΕΞΥΠΝΟΣ ΥΠΟΛΟΓΙΣΜΟΣ ΚΟΣΤΟΥΣ ====================
 function calculateAllCosts(activityList = null) {
-      console.log(`🔍 ΥΠΟΛΟΓΙΣΜΟΣ ΚΟΣΤΟΥΣ ΓΙΑ: ${selectedDestinationName}`);
     // 1. ΕΥΡΕΣΗ ΤΩΝ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ
     if (!activityList) {
         activityList = TravelDataManager.getCityData(selectedDestinationName)?.activities || [];
@@ -2156,11 +1961,11 @@ function calculateAllCosts(activityList = null) {
         if(isSelected){
             let total = 0;
            
-                        // ΥΠΟΛΟΓΙΣΜΟΣ ΚΟΣΤΟΥΣ ΜΑΝΟΥΑΛΙΑ
+            // ΧΡΗΣΗ ΤΟΥ ΝΕΟΥ MANAGER
             familyMembers.forEach(member => {
-    const price = getPriceForAge(member.age, act.prices);
-    total += price;
-});
+                const price = TravelDataManager.calculatePriceForMember(member.age, act.prices);
+                total += price;
+            });
             
             // ΕΜΦΑΝΙΣΗ
             const totalElement = document.getElementById(`total-${index}`);
@@ -3457,7 +3262,59 @@ const activitiesMadrid = [
     }
 ];
 // ==================== ΕΞΥΠΝΟΣ ΥΠΟΛΟΓΙΣΜΟΣ COMBO ====================
-
+function calculateSmartCombos() {
+    let currentActivities = null;
+   
+    // 1. ΠΡΩΤΑ: Έλεγχος για πόλεις από JSON (Κωνσταντινούπολη, Παρίσι, Πράγα)
+    if ((selectedDestinationName.includes("Κωνσταντινούπολη") || 
+         selectedDestinationName.includes("Παρίσι") || 
+         selectedDestinationName.includes("Πράγα")) &&
+        window.loadedExtraCityActivities && window.loadedExtraCityActivities.length > 0) {
+        
+        console.log("🎯 Χρήση δραστηριοτήτων από JSON για:", selectedDestinationName);
+        currentActivities = window.loadedExtraCityActivities;
+   
+    } else if (selectedDestinationName.includes("Βιέννη")) {
+        currentActivities = activities;
+    } else if (selectedDestinationName.includes("Βερολίνο")) {
+        currentActivities = activitiesBerlin;
+    } else if (selectedDestinationName.includes("Λισαβόνα")) {
+        currentActivities = activitiesLisbon;
+    } else if (selectedDestinationName.includes("Βουδαπέστη")) {
+        currentActivities = activitiesBudapest;
+    } else if (selectedDestinationName.includes("Μαδρίτη")) {
+        currentActivities = activitiesMadrid;
+    } else {
+        alert("⚠️ Ο έξυπνος υπολογισμός είναι διαθέσιμος μόνο για υποστηριζόμενες πόλεις.");
+        return;
+    }
+   
+    // Ενημέρωση των επιλεγμένων δραστηριοτήτων πρώτα
+    updateSelectedActivities(currentActivities);
+   
+    // Βρίσκουμε τις επιλεγμένες δραστηριότητες
+    const selectedActivities = currentActivities.filter(act => act.selected);
+   
+    if (selectedActivities.length === 0) {
+        alert("⚠️ Δεν έχετε επιλέξει δραστηριότητες! Κάντε κλικ στις κάρτες για να τις επιλέξετε.");
+        return;
+    }
+   
+    // Ανάλυση εισιτηρίων ανά ηλικιακή κατηγορία
+    const memberAgeGroups = categorizeFamilyMembers();
+   
+    // Υπολογισμός συνολικού κόστους χωρίς combos
+    const regularCost = calculateRegularCost(selectedActivities, memberAgeGroups);
+   
+    // Αναζήτηση πιθανών combos
+    const availableCombos = findAvailableCombos(currentActivities, selectedActivities);
+   
+    // Υπολογισμός κόστους με combos
+    const comboResults = calculateComboCosts(selectedActivities, availableCombos, memberAgeGroups, regularCost);
+   
+    // Εμφάνιση αποτελεσμάτων
+    displayComboResults(comboResults, regularCost);
+}
 function updateSelectedActivities(activityList) {
     console.log("🔍 Ενημέρωση επιλεγμένων δραστηριοτήτων για:", selectedDestinationName);
     
@@ -3524,86 +3381,84 @@ function categorizeFamilyMembers() {
     return categories;
 }
 function calculateRegularCost(selectedActivities, ageGroups) {
-    console.log("🧮 Υπολογισμός κόστους...");
+    console.log("🧮 Υπολογισμός κόστους για Κωνσταντινούπολη...");
+    console.log("Επιλεγμένες:", selectedActivities.length);
+    console.log("Ηλικιακές ομάδες:", ageGroups);
     
     let totalCost = 0;
     
-    selectedActivities.forEach((activity) => {
-        if (!activity.prices) return;
-        
+    selectedActivities.forEach((activity, index) => {
         let activityCost = 0;
+        console.log(`\n📊 ${activity.name}:`);
+        console.log("Προσβάσιμες τιμές:", activity.prices);
         
-        // ΓΙΑ ΚΑΘΕ ΗΛΙΚΙΑΚΗ ΟΜΑΔΑ
+        // ΕΞΥΠΝΟΣ ΥΠΟΛΟΓΙΣΜΟΣ για Κωνσταντινούπολη
         Object.keys(ageGroups).forEach(ageCategory => {
             const count = ageGroups[ageCategory];
             if (count > 0) {
-                // Βρες τη μέση ηλικία αυτής της κατηγορίας
-                const [minAge, maxAge] = ageCategory.split('-').map(Number);
-                const midAge = Math.floor((minAge + (maxAge || minAge)) / 2);
+                let price = 0;
                 
-                // ΧΡΗΣΙΜΟΠΟΙΗΣΕ ΤΗΝ getPriceForAge!
-                const price = getPriceForAge(midAge, activity.prices);
-                activityCost += price * count;
+                // Μετατροπή ηλικιακών κατηγοριών για Κωνσταντινούπολη
+                if (ageCategory === "0-2") {
+                    // 0-2 → ψάχνουμε 0-6
+                    price = activity.prices["0-6"] || 0;
+                } else if (ageCategory === "3-5") {
+                    // 3-5 → ψάχνουμε 0-6
+                    price = activity.prices["0-6"] || 0;
+                } else if (ageCategory === "6-14") {
+                    // 6-14 → ψάχνουμε 7-12 (για 6-12) και 13-17 (για 13-14)
+                    if (activity.prices["7-12"] !== undefined) {
+                        price = activity.prices["7-12"];
+                    } else if (activity.prices["13-17"] !== undefined) {
+                        price = activity.prices["13-17"];
+                    }
+                } else if (ageCategory === "15-19") {
+                    // 15-19 → ψάχνουμε 13-17 (για 15-17) και 18+ (για 18-19)
+                    if (activity.prices["13-17"] !== undefined) {
+                        price = activity.prices["13-17"];
+                    } else if (activity.prices["18+"] !== undefined) {
+                        price = activity.prices["18+"];
+                    }
+                } else if (ageCategory === "18+") {
+                    // 18+ → ψάχνουμε 18+
+                    price = activity.prices["18+"] || 0;
+                }
+                
+                // Άμα δεν βρέθηκε, δοκιμή γενικότερης αναζήτησης
+                if (price === 0 || price === undefined) {
+                    // Ψάξε για οποιαδήποτι τιμή που ταιριάζει
+                    for (const [key, value] of Object.entries(activity.prices || {})) {
+                        if (key.includes('-')) {
+                            const [min, max] = key.split('-').map(Number);
+                            const ageNum = parseInt(ageCategory.split('-')[0]); // πχ "6-14" → 6
+                            if (ageNum >= min && ageNum <= max) {
+                                price = value;
+                                break;
+                            }
+                        }
+                    }
+                }
+                
+                const costForThisAge = (price || 0) * count;
+                activityCost += costForThisAge;
+                
+                if (costForThisAge > 0) {
+                    console.log(`  ${ageCategory}: ${price}€ × ${count} = ${costForThisAge}€`);
+                }
             }
         });
         
-        totalCost += Math.round(activityCost * 100) / 100;
+        totalCost += activityCost;
+        console.log(`  Σύνολο για ${activity.name}: ${activityCost}€`);
     });
     
-    return Math.round(totalCost * 100) / 100;
+    console.log(`💰 ΣΥΝΟΛΙΚΟ ΚΟΣΤΟΣ: ${totalCost}€`);
+    return totalCost;
 }
 function findAvailableCombos(allActivities, selectedActivities) {
     console.log("🔍 Αναζήτηση combos...");
     console.log("Επιλεγμένες δραστηριότητες:", selectedActivities.map(a => a.name));
-    
-    // ΈΛΕΓΧΟΣ: Αν έχει επιλεγεί Combo Pass αλλά ΟΧΙ οι αντίστοιχες δραστηριότητες
-    const hasCombo2 = selectedActivities.some(act => act.name.includes("2-Attraction Combo Pass"));
-    const hasCombo3 = selectedActivities.some(act => act.name.includes("3-Attraction Combo Pass"));
-    const hasCombo5 = selectedActivities.some(act => act.name.includes("5-Attraction Combo Pass"));
-    
-    const comboPassesSelected = hasCombo2 || hasCombo3 || hasCombo5;
-    
-    if (comboPassesSelected) {
-        // Έλεγχος αν υπάρχουν και οι αντίστοιχες δραστηριότητες
-        const requiredActivities = {
-            "2-Attraction": ["Tower of London", "London Eye", "Warner Bros. Harry Potter Studio Tour"],
-            "3-Attraction": ["Tower of London", "London Eye", "Warner Bros. Harry Potter Studio Tour", "ZSL London Zoo"],
-            "5-Attraction": ["Tower of London", "London Eye", "Warner Bros. Harry Potter Studio Tour", "ZSL London Zoo", "Royal Observatory Greenwich"]
-        };
-        
-        let missingActivities = [];
-        
-        if (hasCombo2) {
-            const hasAny = requiredActivities["2-Attraction"].some(activityName =>
-                selectedActivities.some(act => act.name.includes(activityName))
-            );
-            if (!hasAny) missingActivities.push("2-Attraction Combo Pass (χωρίς δραστηριότητες)");
-        }
-        
-        if (hasCombo3) {
-            const hasAny = requiredActivities["3-Attraction"].some(activityName =>
-                selectedActivities.some(act => act.name.includes(activityName))
-            );
-            if (!hasAny) missingActivities.push("3-Attraction Combo Pass (χωρίς δραστηριότητες)");
-        }
-        
-        if (hasCombo5) {
-            const hasAny = requiredActivities["5-Attraction"].some(activityName =>
-                selectedActivities.some(act => act.name.includes(activityName))
-            );
-            if (!hasAny) missingActivities.push("5-Attraction Combo Pass (χωρίς δραστηριότητες)");
-        }
-        
-        if (missingActivities.length > 0) {
-            // Εμφάνιση μηνύματος με οδηγίες
-            setTimeout(() => {
-                alert(`🎫 ΠΡΟΣΟΧΗ: Έχετε επιλέξει Combo Pass αλλά ΟΧΙ δραστηριότητες!\n\n👉 Για το "${missingActivities[0]}" πρέπει να επιλέξετε ΚΑΙ:\n\n• Tower of London\n• London Eye\n• Harry Potter Studio\n\nΠαρακαλώ προσθέστε τουλάχιστον 2 από αυτές και δοκιμάστε ξανά.`);
-            }, 300);
-            console.log("⚠️ Combo Passes χωρίς δραστηριότητες:", missingActivities);
-            return []; // Επιστροφή κενής λίστας - δεν έχει νόημα να συνεχίσει
-        }
-    }
-    
+   
     const combos = [];
    
     // Ειδικά combos για κάθε πόλη
@@ -3674,190 +3529,111 @@ function findAvailableCombos(allActivities, selectedActivities) {
             });
         }
     }
-   
-    // ΓΙΑ ΛΟΝΔΙΝΟ: Combo Passes
-    if (selectedDestinationName.includes("Λονδίνο")) {
-        console.log("🇬🇧 Αναζήτηση combos για Λονδίνο");
+       // Για Κωνσταντινούπολη: Combo για μουσεία
+           if (selectedDestinationName.includes("Κωνσταντινούπολη")) {
+        console.log("🕌 Αναζήτηση combos για Κωνσταντινούπολη");
         
-        // Έλεγχος για Combo Passes στο JSON
-        const hasCombo2 = selectedActivities.some(act =>
-            act.name.includes("2-Attraction Combo Pass")
+        // Combo 1: Αγία Σοφία + Τοπ Καπί (από το json)
+        const hasHagiaSophia = selectedActivities.some(act =>
+            act.name && act.name.includes("Αγία Σοφία")
         );
-        const hasCombo3 = selectedActivities.some(act =>
-            act.name.includes("3-Attraction Combo Pass")
+        const hasTopkapi = selectedActivities.some(act =>
+            act.name && act.name.includes("Τοπ Καπί")
         );
-        const hasCombo5 = selectedActivities.some(act =>
-            act.name.includes("5-Attraction Combo Pass")
-        );
-        
-        // Αν υπάρχει Combo Pass, προσθέτουμε το combo
-        if (hasCombo2) {
+       
+        if (hasHagiaSophia && hasTopkapi) {
+            console.log("✅ Βρέθηκε combo Αγία Σοφία + Τοπ Καπί");
             combos.push({
-                name: "🎟️ 2-Attraction Combo Pass",
-                description: "Επιλογή 2 από: Tower of London, London Eye, Harry Potter Studio",
-                activities: ["Tower of London", "London Eye", "Harry Potter Studio"],
-                regularPrice: 78, // 41+37 = 78€
-                comboPrice: 65,
-                saving: 13,
-                note: "Εξοικονόμηση 13€ για 2 αξιοθέατα"
+                name: "🎟️ Combo: Αγία Σοφία + Τοπ Καπί",
+                description: "Συνδυαστικό εισιτήριο για τα 2 κύρια αξιοθέατα",
+                activities: ["Αγία Σοφία", "Τοπ Καπί"],
+                regularPrice: 90,  // 30€ + 60€ = 90€
+                comboPrice: 75,    // από το json
+                saving: 15,
+                note: "Εξοικονόμηση 15€"
             });
         }
         
-        if (hasCombo3) {
+        // Combo 2: Μπλε Τζαμί + Βασιλική Κινστέρνα
+        const hasBlueMosque = selectedActivities.some(act =>
+            act.name && act.name.includes("Μπλε Τζαμί")
+        );
+        const hasBasilicaCistern = selectedActivities.some(act =>
+            act.name && act.name.includes("Βασιλική Κινστέρνα")
+        );
+       
+        if (hasBlueMosque && hasBasilicaCistern) {
+            console.log("✅ Βρέθηκε combo Μπλε Τζαμί + Βασιλική Κινστέρνα");
             combos.push({
-                name: "🎟️ 3-Attraction Combo Pass",
-                description: "Επιλογή 3 από τα κορυφαία αξιοθέατα του Λονδίνου",
-                activities: ["Tower of London", "London Eye", "Harry Potter Studio", "Zoo"],
-                regularPrice: 120,
-                comboPrice: 95,
-                saving: 25,
-                note: "Εξοικονόμηση 25€ για 3 αξιοθέατα"
+                name: "💧 Combo: Μπλε Τζαμί + Βασιλική Κινστέρνα",
+                description: "Τζαμί & υπόγεια δεξαμενή",
+                activities: ["Μπλε Τζαμί", "Βασιλική Κινστέρνα"],
+                regularPrice: 30,  // 0€ + 30€ = 30€ (Μπλε Τζαμί είναι δωρεάν!)
+                comboPrice: 25,    // εκτίμηση
+                saving: 5,
+                note: "Εξοικονόμηση 5€ - Το Μπλε Τζαμί είναι δωρεάν"
             });
         }
         
-        if (hasCombo5) {
-            combos.push({
-                name: "🎟️ 5-Attraction Combo Pass",
-                description: "Πρόσβαση σε 5 αξιοθέατα του Λονδίνου",
-                activities: ["Tower of London", "London Eye", "Harry Potter Studio", "Zoo", "Observatory"],
-                regularPrice: 180,
-                comboPrice: 135,
-                saving: 45,
-                note: "Εξοικονόμηση 45€ για 5 αξιοθέατα"
-            });
+        // Combo 3: Museum Pass Istanbul (5 Ημερών)
+        if (selectedActivities.length >= 3) {
+            // Μετράμε πόσες από τις 5 κύριες δραστηριότητες του pass έχει επιλέξει
+            const passActivities = ["Αγία Σοφία", "Τοπ Καπί", "Αρχαιολογικό Μουσείο", 
+                                   "Μουσείο Σύγχρονης Τέχνης", "Βασιλική Κινστέρνα"];
+            const selectedPassActivities = (selectedActivities || []).filter(act => 
+    passActivities.some(passAct => act.name && act.name.includes(passAct))
+);
+            
+            if (selectedPassActivities.length >= 3) {
+                console.log("✅ Βρέθηκε Museum Pass (3+ δραστηριότητες)");
+                combos.push({
+                    name: "🏛️ Museum Pass Istanbul (5 Ημερών)",
+                    description: "Πρόσβαση σε 12+ μουσεία και αξιοθέατα για 5 ημέρες",
+                    activities: selectedPassActivities.map(a => a.name),
+                    regularPrice: calculateRegularCost(selectedPassActivities, categorizeFamilyMembers()),
+                    comboPrice: 85,  // από το json
+                    saving: "Έως 50%",
+                    note: "Αγοράστε online: https://www.muze.gov.tr/museum-pass-istanbul"
+                });
+            }
         }
     }
-    
-    /* Family Discounts detection - ΑΠΕΝΕΡΓΟΠΟΙΗΜΕΝΟ
-    selectedActivities.forEach(act => {
-        if (act.note && (
-            act.note.includes("οικογενειακή") || 
-            act.note.includes("οικογένεια") ||
-            act.note.includes("family") ||
-            act.note.includes("2+2") ||
-            act.note.includes("έκπτωση")
-        )) {
-            combos.push({
-                name: "👨‍👩‍👧‍👦 Οικογενειακή Έκπτωση",
-                description: `Οικογενειακή προσφορά για: ${act.name}`,
-                activities: [act.name],
-                regularPrice: calculateRegularCost([act], categorizeFamilyMembers()),
-                comboPrice: calculateRegularCost([act], categorizeFamilyMembers()) * 0.8, // 20% έκπτωση
-                saving: calculateRegularCost([act], categorizeFamilyMembers()) * 0.2,
-                note: "Εκτίμηση 20% έκπτωσης για οικογένειες - ελέγξτε στον πάροχο"
-            });
-        }
-    }); */
-    
     console.log("📊 Σύνολο combos που βρέθηκαν:", combos.length);
     return combos;
 }
 function calculateComboCosts(selectedActivities, availableCombos, ageGroups, regularCost) {
-    console.log("🧮 ΥΠΟΛΟΓΙΣΜΟΣ COMBO ΚΟΣΤΟΥΣ...");
-    
     const results = {
         regularCost: regularCost,
         bestCombo: null,
         bestSaving: 0,
         allCombos: []
     };
-    
-    // Βοηθητική συνάρτηση για ακριβή πολλαπλασιασμό
-    function safeMultiply(a, b) {
-        return Math.round((parseFloat(a) * b + Number.EPSILON) * 100) / 100;
-    }
-    
-    // Βοηθητική συνάρτηση: Υπολογισμός κόστους για μια δραστηριότητα
-    function calculateActivityCost(activity) {
-        let activityCost = 0;
-        
-        if (!activity || !activity.prices) return 0;
-        
-        Object.keys(ageGroups).forEach(ageCategory => {
-            const count = ageGroups[ageCategory];
-            if (count > 0) {
-                let price = 0;
-                
-                // ΧΡΗΣΙΜΟΠΟΙΟΥΜΕ ΤΗΝ ΙΔΙΑ ΛΟΓΙΚΗ ΜΕ ΤΗΝ calculateRegularCost()
-                
-                // 1. Άμεση αντιστοίχιση
-                if (activity.prices[ageCategory] !== undefined) {
-                    price = parseFloat(activity.prices[ageCategory]) || 0;
-                }
-                // 2. ΕΙΔΙΚΗ ΛΟΓΙΚΗ ΓΙΑ ΛΟΝΔΙΝΟ
-                else if (selectedDestinationName.includes("Λονδίνο")) {
-                    const ageNum = parseInt(ageCategory.split('-')[0]);
-                    
-                    // ΚΑΝΟΝΕΣ ΜΕΤΑΤΡΟΠΗΣ ΛΟΝΔΙΝΟΥ:
-                    if (ageNum <= 2) {
-                        price = activity.prices["0-2"] || 0;
-                    } else if (ageNum <= 5) {
-                        // ΣΗΜΕΙΩΣΗ: Στο Λονδίνο, 3-5 ετών πληρώνουν 34€ (όχι δωρεάν)
-                        price = activity.prices["3-5"] || 0;
-                    } else if (ageNum <= 14) {
-                        price = activity.prices["6-14"] || 0;
-                    } else if (ageNum <= 19) {
-                        price = activity.prices["15-19"] || 0;
-                    } else {
-                        price = activity.prices["18+"] || 0;
-                    }
-                }
-                
-                activityCost += safeMultiply(price, count);
-            }
-        });
-        
-        return Math.round((activityCost + Number.EPSILON) * 100) / 100;
-    }
-    
-    availableCombos.forEach((combo, index) => {
-        console.log(`\n🎫 COMBO ${index + 1}: ${combo.name}`);
-        console.log(`   Δραστηριότητες: ${combo.activities.join(', ')}`);
-        
+   
+    availableCombos.forEach(combo => {
+        // Υπολογισμός κανονικού κόστους για τις δραστηριότητες του combo
         let comboRegularCost = 0;
-        let foundActivities = 0;
        
-        // Για κάθε δραστηριότητα στο combo
         combo.activities.forEach(activityName => {
-            // Βρες την πλήρη δραστηριότητα (με ακριβή ταίριασμα)
-            const activity = selectedActivities.find(act => {
-                // ΑΚΡΙΒΕΣ ΤΑΙΡΙΑΣΜΑ (όχι includes!)
-                return act.name === activityName || 
-                       combo.activities.some(comboAct => act.name.includes(comboAct));
-            });
-            
+            const activity = selectedActivities.find(act => act.name.includes(activityName));
             if (activity) {
-                foundActivities++;
-                const cost = calculateActivityCost(activity);
-                console.log(`   ✅ ${activity.name}: ${cost}€`);
-                comboRegularCost += cost;
-            } else {
-                console.log(`   ❌ Δεν βρέθηκε: ${activityName}`);
+                Object.keys(ageGroups).forEach(ageCategory => {
+                    const count = ageGroups[ageCategory];
+                    if (count > 0 && activity.prices[ageCategory]) {
+                        const price = typeof activity.prices[ageCategory] === 'number' ?
+                            activity.prices[ageCategory] : 0;
+                        comboRegularCost += price * count;
+                    }
+                });
             }
         });
-        
-        // Στρογγυλοποίηση
-        comboRegularCost = Math.round((comboRegularCost + Number.EPSILON) * 100) / 100;
-        const comboPrice = parseFloat(combo.comboPrice) || 0;
-        
-        console.log(`   📊 Κανονικό κόστος: ${comboRegularCost}€`);
-        console.log(`   💰 Combo τιμή: ${comboPrice}€`);
-        
-        // Υπολογισμός εξοικονόμησης (μόνο αν βρέθηκαν όλες οι δραστηριότητες)
-        let saving = 0;
-        if (foundActivities === combo.activities.length) {
-            saving = Math.round((comboRegularCost - comboPrice + Number.EPSILON) * 100) / 100;
-            console.log(`   💵 Εξοικονόμηση: ${saving}€`);
-        } else {
-            console.log(`   ⚠️ Μερικές δραστηριότητες λείπουν`);
-            saving = -99999; // Πολύ αρνητική τιμή για να μην επιλεγεί
-        }
+       
+        // Υπολογισμός εξοικονόμησης
+        const saving = comboRegularCost - combo.comboPrice;
        
         // Ενημέρωση του combo object
         combo.regularPrice = comboRegularCost;
         combo.saving = saving > 0 ? saving : 0;
-        combo.totalWithCombo = Math.round((regularCost - combo.saving + Number.EPSILON) * 100) / 100;
-        combo.foundActivities = foundActivities;
+        combo.totalWithCombo = regularCost - saving;
        
         results.allCombos.push(combo);
        
@@ -3865,95 +3641,13 @@ function calculateComboCosts(selectedActivities, availableCombos, ageGroups, reg
         if (saving > results.bestSaving) {
             results.bestSaving = saving;
             results.bestCombo = combo;
-            results.bestTotal = Math.round((regularCost - saving + Number.EPSILON) * 100) / 100;
+            results.bestTotal = regularCost - saving;
         }
     });
-    
-    console.log(`\n📊 ΑΡΙΘΜΟΣ COMBOS: ${results.allCombos.length}`);
-    console.log(`🏆 ΚΑΛΥΤΕΡΗ ΕΞΟΙΚΟΝΟΜΗΣΗ: ${results.bestSaving}€`);
-    
+   
     return results;
 }
-// ΣΥΝΑΡΤΗΣΗ: Εμφάνιση οδηγιών για combo passes
-function showComboInstructions() {
-    const modal = document.createElement('div');
-    modal.id = 'combo-instructions-modal';
-    modal.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.8);
-        z-index: 10000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: 'Comic Neue', Arial, sans-serif;
-    `;
-    
-    modal.innerHTML = `
-        <div style="background: white; padding: 30px; border-radius: 20px; max-width: 600px; max-height: 80vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-            <h2 style="color: #9c27b0; margin-top: 0;">🎫 ΠΩΣ ΛΕΙΤΟΥΡΓΟΥΝ ΤΑ COMBO PASSES</h2>
-            
-            <div style="background: #f3e5f5; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
-                <h3 style="color: #7b1fa2;">📝 ΟΔΗΓΙΕΣ:</h3>
-                <ol style="text-align: left;">
-                    <li><strong>ΔΕΝ ΕΠΑΡΚΕΙ</strong> να επιλέξετε μόνο το "Combo Pass"</li>
-                    <li><strong>ΠΡΕΠΕΙ</strong> να επιλέξετε ΚΑΙ τις δραστηριότητες που καλύπτει</li>
-                </ol>
-            </div>
-            
-            <div style="margin-bottom: 20px;">
-                <h4>🎟️ <strong>2-Attraction Combo Pass</strong></h4>
-                <p>Καλύπτει <strong>2 από αυτές:</strong></p>
-                <ul style="text-align: left;">
-                    <li>✅ Tower of London</li>
-                    <li>✅ London Eye</li>
-                    <li>✅ Warner Bros. Harry Potter Studio Tour</li>
-                </ul>
-                <p style="color: #666; font-size: 0.9em;">👉 <strong>Επιλέξτε 2 από τις παραπάνω + το Combo Pass</strong></p>
-            </div>
-            
-            <div style="margin-bottom: 20px;">
-                <h4>🎟️ <strong>3-Attraction Combo Pass</strong></h4>
-                <p>Καλύπτει <strong>3 από αυτές:</strong></p>
-                <ul style="text-align: left;">
-                    <li>✅ Tower of London</li>
-                    <li>✅ London Eye</li>
-                    <li>✅ Warner Bros. Harry Potter Studio Tour</li>
-                    <li>✅ ZSL London Zoo</li>
-                </ul>
-            </div>
-            
-            <div style="margin-bottom: 25px;">
-                <h4>🎟️ <strong>5-Attraction Combo Pass</strong></h4>
-                <p>Καλύπτει <strong>5 από αυτές:</strong></p>
-                <ul style="text-align: left;">
-                    <li>✅ Tower of London</li>
-                    <li>✅ London Eye</li>
-                    <li>✅ Warner Bros. Harry Potter Studio Tour</li>
-                    <li>✅ ZSL London Zoo</li>
-                    <li>✅ Royal Observatory Greenwich</li>
-                </ul>
-            </div>
-            
-            <div style="text-align: center;">
-                <button onclick="closeComboInstructions()" 
-                        style="padding: 12px 25px; background: #3eb489; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold;">
-                    ✅ Κατάλαβα, θα προσθέσω δραστηριότητες!
-                </button>
-            </div>
-        </div>
-    `;
-    
-    document.body.appendChild(modal);
-}
 
-function closeComboInstructions() {
-    const modal = document.getElementById('combo-instructions-modal');
-    if (modal) modal.remove();
-}
 function displayComboResults(results, regularCost) {
     // Δημιουργία modal για εμφάνιση αποτελεσμάτων
        const modal = document.createElement('div');
@@ -4684,12 +4378,7 @@ const EXTRA_CITIES_CONFIG = {
     file: "data/rome.json", 
     enabled: true,
     emoji: "🍕"
-  },
-    "Λονδίνο": {  // <-- ΠΡΟΣΘΗΚΗ
-        file: "london.json",
-        enabled: true,
-        emoji: "🇬🇧"
-    }
+  }
 };
 window.TravelPlannerExtensions = {
   checkAndLoadExtraCity: async function(cityName) {
@@ -4722,6 +4411,8 @@ window.TravelPlannerExtensions = {
 };
 </script>
 
+<script src="travel-data-manager.js"></script>
+
 <script>
 // ==================== PWA SERVICE WORKER ====================
 if ('serviceWorker' in navigator) {
@@ -4735,372 +4426,6 @@ if ('serviceWorker' in navigator) {
       });
   });
 }
-  // ==================== ΣΥΝΑΡΤΗΣΗ ΓΙΑ ΛΗΨΗ ΕΠΙΛΕΓΜΕΝΩΝ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ ====================
-// ==================== ΣΥΝΑΡΤΗΣΗ ΓΙΑ ΛΗΨΗ ΕΠΙΛΕΓΜΕΝΩΝ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ ====================
-function getSelectedActivities() {
-    console.log("🔍 Αναζήτηση επιλεγμένων για:", selectedDestinationName);
-    
-    // 1. ΓΙΑ JSON ΠΟΛΕΙΣ (Κωνσταντινούπολη, Παρίσι, Πράγα, Ρώμη)
-    if (selectedDestinationName && window.loadedExtraCityActivities && window.loadedExtraCityActivities.length > 0) {
-        console.log("🔍 Έλεγχος για JSON πόλη...");
-        const selected = window.loadedExtraCityActivities.filter(act => act.selected === true);
-        console.log(`✅ Βρέθηκαν ${selected.length} επιλεγμένες από JSON`);
-        return selected;
-    }
-    
-    // 2. ΓΙΑ ΠΑΛΙΕΣ ΠΟΛΕΙΣ
-    let currentActivities = null;
-    
-    if (selectedDestinationName && selectedDestinationName.includes("Βιέννη")) {
-        currentActivities = activities;
-    } else if (selectedDestinationName && selectedDestinationName.includes("Βερολίνο")) {
-        currentActivities = activitiesBerlin;
-    } else if (selectedDestinationName && selectedDestinationName.includes("Λισαβόνα")) {
-        currentActivities = activitiesLisbon;
-    } else if (selectedDestinationName && selectedDestinationName.includes("Βουδαπέστη")) {
-        currentActivities = activitiesBudapest;
-    } else if (selectedDestinationName && selectedDestinationName.includes("Μαδρίτη")) {
-        currentActivities = activitiesMadrid;
-    } else {
-        console.log("⚠️ Δεν βρέθηκαν δραστηριότητες για:", selectedDestinationName);
-        return [];
-    }
-    
-    if (currentActivities) {
-        const selected = currentActivities.filter(act => act.selected === true);
-        console.log("✅ Επιλεγμένες δραστηριότητες:", selected.length, selected);
-        return selected;
-    }
-    
-    return [];
-}
-// ==================== ΔΙΟΡΘΩΣΗ ΓΙΑ COMBO ΚΟΥΜΠΙ ====================
-
-function calculateSmartCombos() {
-    console.log("🎯 Έξυπνος Υπολογισμός Combo...");
-    
-    // 1. Έλεγχος προορισμού
-    if (!selectedDestinationName) {
-        alert("⚠️ Δεν έχετε επιλέξει προορισμό!");
-        return;
-    }
-    
-    // 2. Ενημέρωση οικογένειας
-    updateFamilyMembers();
-    
-    // 3. Έλεγχος αν υπάρχουν μέλη
-    if (familyMembers.length === 0) {
-        alert("⚠️ Δεν έχετε προσθέσει μέλη οικογένειας!");
-        return;
-    }
-    
-    // 4. Διάβασμα επιλεγμένων δραστηριοτήτων
-    const selectedActivities = getSelectedActivities();
-    
-    if (selectedActivities.length === 0) {
-        alert("⚠️ Δεν έχετε επιλέξει δραστηριότητες!");
-        return;
-    }
-    
-    // 5. Υπολογισμός κόστους
-    const ageGroups = categorizeFamilyMembers();
-    const regularCost = calculateSimpleCost(selectedActivities, ageGroups);
-    
-    // 6. Απλή ανάλυση
-    const analysisHTML = `
-        <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-                    background: white; padding: 30px; border-radius: 15px; z-index: 10000;
-                    box-shadow: 0 0 20px rgba(0,0,0,0.3); max-width: 500px;">
-            <h2 style="color: #9c27b0;">💰 Ανάλυση Κόστους</h2>
-            <p><strong>Προορισμός:</strong> ${selectedDestinationName}</p>
-            <p><strong>Μέλη οικογένειας:</strong> ${familyMembers.length}</p>
-            <p><strong>Επιλεγμένες δραστηριότητες:</strong> ${selectedActivities.length}</p>
-            <hr>
-            <h3 style="color: #4caf50;">📊 Συνολικό Κόστος: ${regularCost.toFixed(2)} €</h3>
-            <p>💰 <strong>Μέσο κόστος ανά άτομο:</strong> ${(regularCost / familyMembers.length).toFixed(2)} €</p>
-            <p>🎯 <strong>Μέσο κόστος ανά δραστηριότητα:</strong> ${(regularCost / selectedActivities.length).toFixed(2)} €</p>
-            <hr>
-            <button onclick="this.parentElement.parentElement.remove()" 
-                    style="padding: 10px 20px; background: #3eb489; color: white; 
-                           border: none; border-radius: 8px; cursor: pointer;">
-                Κλείσιμο
-            </button>
-        </div>
-    `;
-    
-    // Προσθήκη στο body
-    const container = document.createElement('div');
-    container.innerHTML = analysisHTML;
-    document.body.appendChild(container);
-}
-
-// Βοηθητικές συναρτήσεις
-function categorizeFamilyMembers() {
-    const categories = { "0-2": 0, "3-5": 0, "6-14": 0, "15-19": 0, "18+": 0 };
-    familyMembers.forEach(member => {
-        if (member.age <= 2) categories["0-2"]++;
-        else if (member.age <= 5) categories["3-5"]++;
-        else if (member.age <= 14) categories["6-14"]++;
-        else if (member.age <= 19) categories["15-19"]++;
-        else categories["18+"]++;
-    });
-    return categories;
-}
-
-function calculateSimpleCost(activities, ageGroups) {
-    let total = 0;
-    activities.forEach(activity => {
-        if (!activity.prices) return;
-        Object.keys(ageGroups).forEach(category => {
-            const count = ageGroups[category];
-            if (count > 0 && activity.prices[category]) {
-                total += parseFloat(activity.prices[category]) * count;
-            }
-        });
-    });
-    return total;
-}   
-// ΕΛΕΓΧΟΣ COMBO ΣΥΝΑΡΤΗΣΗΣ
-console.log("=== ΕΛΕΓΧΟΣ COMBO ===");
-console.log("1. Υπάρχει calculateSmartCombos;", typeof calculateSmartCombos);
-console.log("2. Υπάρχει getSelectedActivities;", typeof getSelectedActivities);
-console.log("3. Υπάρχει updateFamilyMembers;", typeof updateFamilyMembers);
-
-// ΔΟΚΙΜΑ ΤΗΣ ΥΠΑΡΧΟΥΣΑΣ ΣΥΝΑΡΤΗΣΗΣ
-setTimeout(() => {
-    console.log("=== ΤΕΣΤ ΛΕΙΤΟΥΡΓΙΑΣ ===");
-    try {
-        calculateSmartCombos();
-        console.log("✅ Η συνάρτηση τρέχει χωρίς σφάλμα");
-    } catch (error) {
-        console.log("❌ ΣΦΑΛΜΑ:", error.message);
-    }
-}, 2000); 
-// ==================== ΠΛΗΡΗΣ ΕΠΑΝΑΦΟΡΤΩΣΗ COMBO ΓΙΑ ΟΛΕΣ ΤΙΣ ΠΟΛΕΙΣ ====================
-
-// 1. Αποθήκευση της υπάρχουσας συνάρτησης
-const originalCalculateSmartCombos = calculateSmartCombos;
-
-// 2. Δημιουργία νέας πλήρους συνάρτησης
-window.calculateSmartCombos = function() {
-    console.log("🎯 Έξυπνος Υπολογισμός Combo (Πλήρης Έκδοση)...");
-    
-    // 1. Έλεγχος προορισμού
-    if (!selectedDestinationName) {
-        alert("⚠️ Δεν έχετε επιλέξει προορισμό!");
-        return;
-    }
-    
-    // 2. Ενημέρωση οικογένειας
-    updateFamilyMembers();
-    
-    // 3. Έλεγχος αν υπάρχουν μέλη
-    if (familyMembers.length === 0) {
-        alert("⚠️ Δεν έχετε προσθέσει μέλη οικογένειας!");
-        return;
-    }
-    
-    // 4. Βρες τις επιλεγμένες δραστηριότητες
-    const selected = getSelectedActivities();
-    
-    if (selected.length === 0) {
-        alert("⚠️ Δεν έχετε επιλέξει δραστηριότητες!");
-        return;
-    }
-    
-    console.log(`📊 Επιλεγμένες: ${selected.length} δραστηριότητες`);
-    
-    // 5. ΑΝΑΛΥΣΗ ΒΑΣΕΙ ΠΟΛΗΣ
-    let comboMessage = `🏙️ ΑΝΑΛΥΣΗ ΓΙΑ ${selectedDestinationName.toUpperCase()}\n\n`;
-    comboMessage += `👨‍👩‍👧‍👦 Μέλη: ${familyMembers.length}\n`;
-    comboMessage += `🎯 Επιλεγμένες: ${selected.length} δραστηριότητες\n\n`;
-    
-    // 6. ΕΙΔΙΚΗ ΛΟΓΙΚΗ ΓΙΑ ΚΑΘΕ ΠΟΛΗ
-    if (selectedDestinationName.includes("Βιέννη")) {
-        // ΒΙΕΝΝΗ COMBO
-        const hasSchonbrunn = selected.some(a => a.name.includes("Schönbrunn") || a.name.includes("Palace Ticket"));
-        const hasSisi = selected.some(a => a.name.includes("Sisi") || a.name.includes("Sisi Museum"));
-        const hasClassic = selected.some(a => a.name.includes("Classic Pass"));
-        const hasZoo = selected.some(a => a.name.includes("Zoo Vienna"));
-        
-        if (hasSchonbrunn && hasSisi) {
-            comboMessage += "🎟️ ΒΡΗΚΕΣ COMBO: Sisi Pass!\n";
-            comboMessage += "✅ Περιλαμβάνει: Schönbrunn Palace + Sisi Museum\n";
-            comboMessage += "💰 Εξοικονόμηση: 8-10€\n";
-            comboMessage += "👉 Αφαίρεσε ΤΑ ξεχωριστά εισιτήρια!\n\n";
-        }
-        
-        if (hasClassic && hasZoo) {
-            comboMessage += "🏰 ΒΡΗΚΕΣ COMBO: Classic Pass Plus!\n";
-            comboMessage += "✅ Περιλαμβάνει: Classic Pass + Zoo\n";
-            comboMessage += "💰 Εξοικονόμηση: 10-15€\n";
-            comboMessage += "👉 Κράτα μόνο το Combo Pass!\n\n";
-        }
-        
-        if (!hasSchonbrunn && !hasSisi && !hasClassic && !hasZoo) {
-            comboMessage += "💡 ΣΥΜΒΟΥΛΕΣ ΓΙΑ ΒΙΕΝΝΗ:\n";
-            comboMessage += "• Συνδυασμός Schönbrunn + Sisi Museum = Sisi Pass (εκτόνηση)\n";
-            comboMessage += "• Συνδυασμός Classic Pass + Zoo = Classic Pass Plus\n\n";
-        }
-        
-    } else if (selectedDestinationName.includes("Βερολίνο")) {
-        // ΒΕΡΟΛΙΝΟ COMBO
-        const hasZoo = selected.some(a => a.name.includes("Zoologischer Garten"));
-        const hasAquarium = selected.some(a => a.name.includes("Aquarium Berlin"));
-        
-        if (hasZoo && hasAquarium) {
-            comboMessage += "🐯 ΒΡΗΚΕΣ COMBO: Zoo + Aquarium!\n";
-            comboMessage += "✅ Ζωολογικός Κήπος + Ενυδρείο\n";
-            comboMessage += "💰 Εξοικονόμηση: 7.5€\n";
-            comboMessage += "👉 Αφαίρεσε ΤΑ ξεχωριστά εισιτήρια!\n\n";
-        } else if (hasZoo || hasAquarium) {
-            comboMessage += "💡 ΣΥΜΒΟΥΛΗ: Αν θέλεις ΚΑΙ το ζωολογικό ΚΑΙ το ενυδρείο,\n";
-            comboMessage += "πάρε το combo εισιτήριο για εξοικονόμηση 7.5€!\n\n";
-        }
-        
-    } else if (selectedDestinationName.includes("Λονδίνο")) {
-        // ΛΟΝΔΙΝΟ COMBO
-        const hasCombo2 = selected.some(a => a.name.includes("2-Attraction Combo Pass"));
-        const hasCombo3 = selected.some(a => a.name.includes("3-Attraction Combo Pass"));
-        const hasCombo5 = selected.some(a => a.name.includes("5-Attraction Combo Pass"));
-        const hasTower = selected.some(a => a.name.includes("Tower of London"));
-        const hasEye = selected.some(a => a.name.includes("London Eye"));
-        const hasHarryPotter = selected.some(a => a.name.includes("Harry Potter"));
-        
-        if (hasCombo2 && (hasTower || hasEye || hasHarryPotter)) {
-            comboMessage += "🎟️ ΒΡΗΚΕΣ COMBO: 2-Attraction Pass!\n";
-            comboMessage += "✅ Επιλέγεις 2 από: Tower, London Eye, Harry Potter\n";
-            comboMessage += "💰 Εξοικονόμηση: ~13€\n";
-            comboMessage += "👉 Αφαίρεσε ΤΑ ξεχωριστά εισιτήρια!\n\n";
-        }
-        
-        if (hasCombo3 && selected.length >= 3) {
-            comboMessage += "🎟️ ΒΡΗΚΕΣ COMBO: 3-Attraction Pass!\n";
-            comboMessage += "✅ 3 αξιοθέατα της επιλογής σου\n";
-            comboMessage += "💰 Εξοικονόμηση: ~25€\n";
-            comboMessage += "👉 Κράτα μόνο το Combo Pass!\n\n";
-        }
-        
-        if (hasCombo5 && selected.length >= 5) {
-            comboMessage += "🎟️ ΒΡΗΚΕΣ COMBO: 5-Attraction Pass!\n";
-            comboMessage += "✅ Πρόσβαση σε 5 αξιοθέατα\n";
-            comboMessage += "💰 Εξοικονόμηση: ~45€\n";
-            comboMessage += "👉 Το Combo Pass είναι η καλύτερη επιλογή!\n\n";
-        }
-        
-        if (!hasCombo2 && !hasCombo3 && !hasCombo5 && selected.length >= 2) {
-            comboMessage += "💡 ΣΥΜΒΟΥΛΗ: Για εξοικονόμηση στο Λονδίνο,\n";
-            comboMessage += "διάλεξε ένα Combo Pass (2, 3 ή 5 αξιοθέατων)\n";
-            comboMessage += "αντί για μεμονωμένα εισιτήρια!\n\n";
-        }
-        
-    } else if (selectedDestinationName.includes("Λισαβόνα")) {
-        // ΛΙΣΑΒΟΝΑ COMBO
-        const hasOceanario = selected.some(a => a.name.includes("Oceanário"));
-        const hasTorre = selected.some(a => a.name.includes("Πύργος του Μπέλεν"));
-        const hasMosteiro = selected.some(a => a.name.includes("Μοναστήρι"));
-        
-        if (selected.length >= 3) {
-            comboMessage += "💡 ΣΥΜΒΟΥΛΗ ΓΙΑ ΛΙΣΑΒΟΝΑ:\n";
-            comboMessage += "Συνδυάστε 3+ αξιοθέατα για ομαδικές εκπτώσεις!\n";
-            comboMessage += "Προσφέρουν έκπτωση 10-15% για οικογένειες.\n\n";
-        }
-        
-    } else if (selectedDestinationName.includes("Βουδαπέστη")) {
-        // ΒΟΥΔΑΠΕΣΤΗ COMBO
-        const hasBath = selected.some(a => a.name.includes("Széchenyi Thermal Bath"));
-        const hasCruise = selected.some(a => a.name.includes("Cruise"));
-        const hasCastle = selected.some(a => a.name.includes("Buda Castle"));
-        
-        if (hasBath && hasCruise) {
-            comboMessage += "💡 ΣΥΜΒΟΥΛΗ: Συνδυασμός Λουτρών + Κρουαζιέρας\n";
-            comboMessage += "Συχνά προσφέρουν έκπτωση 15%!\n\n";
-        }
-        
-    } else if (selectedDestinationName.includes("Μαδρίτη")) {
-        // ΜΑΔΡΙΤΗ COMBO
-        const hasZoo = selected.some(a => a.name.includes("Zoo Aquarium"));
-        const hasFaunia = selected.some(a => a.name.includes("Faunia"));
-        
-        if (hasZoo && hasFaunia) {
-            comboMessage += "🎟️ ΒΡΗΚΕΣ COMBO: Zoo + Faunia!\n";
-            comboMessage += "✅ Συνδυαστικό εισιτήριο διαθέσιμο online\n";
-            comboMessage += "💰 Τιμή: ~39.90€ (εκτόνηση από 43.80€)\n";
-            comboMessage += "👉 Αγόρασε online για καλύτερη τιμή!\n\n";
-        }
-        
-    } else {
-        // ΓΙΑ ΟΛΕΣ ΤΙΣ ΑΛΛΕΣ ΠΟΛΕΙΣ
-        if (selected.length >= 3) {
-            comboMessage += "💡 ΓΕΝΙΚΗ ΣΥΜΒΟΥΛΗ:\n";
-            comboMessage += "• 3+ δραστηριότητες = Ζήτα ομαδική έκπτωση\n";
-            comboMessage += "• Ελέγξε τα επίσημα sites για family passes\n";
-            comboMessage += "• Online αγορές = Καλύτερες τιμές\n\n";
-        }
-    }
-    
-    // 7. ΓΕΝΙΚΕΣ ΣΥΜΒΟΥΛΕΣ (για όλες τις πόλεις)
-    if (selected.length >= 3) {
-        comboMessage += "🏆 ΓΕΝΙΚΕΣ ΣΥΜΒΟΥΛΕΣ ΕΞΟΙΚΟΝΟΜΗΣΗΣ:\n";
-        comboMessage += "1. Ομαδικά εισιτήρια = -10% έως -30%\n";
-        comboMessage += "2. Online αγορές = -15% από τα ταμεία\n";
-        comboMessage += "3. Family passes = Η καλύτερη σούιτα!\n";
-        comboMessage += "4. Συνδυασμοί = Πάντα φθηνότερα!\n\n";
-    }
-    
-    // 8. ΥΠΟΛΟΓΙΣΜΟΣ ΚΟΣΤΟΥΣ
-    const ageGroups = categorizeFamilyMembers();
-    const totalCost = calculateSimpleCost(selected, ageGroups);
-    
-    comboMessage += `💰 ΕΚΤΙΜΩΜΕΝΟ ΣΥΝΟΛΙΚΟ ΚΟΣΤΟΣ: ${totalCost.toFixed(2)} €\n`;
-    comboMessage += `💵 ΜΕΣΟ ΚΟΣΤΟΣ ΑΝΑ ΑΤΟΜΟ: ${(totalCost / familyMembers.length).toFixed(2)} €\n`;
-    comboMessage += `🎫 ΜΕΣΟ ΚΟΣΤΟΣ ΑΝΑ ΔΡΑΣΤΗΡΙΟΤΗΤΑ: ${(totalCost / selected.length).toFixed(2)} €`;
-    
-    // 9. ΕΜΦΑΝΙΣΗ ΜΗΝΥΜΑΤΟΣ
-    alert(comboMessage);
-    
-    console.log("✅ Combo ανάλυση ολοκληρώθηκε!");
-};
-
-// 3. ΒΟΗΘΗΤΙΚΕΣ ΣΥΝΑΡΤΗΣΕΙΣ
-function categorizeFamilyMembers() {
-    const categories = { "0-2": 0, "3-5": 0, "6-14": 0, "15-19": 0, "18+": 0 };
-    familyMembers.forEach(member => {
-        if (member.age <= 2) categories["0-2"]++;
-        else if (member.age <= 5) categories["3-5"]++;
-        else if (member.age <= 14) categories["6-14"]++;
-        else if (member.age <= 19) categories["15-19"]++;
-        else categories["18+"]++;
-    });
-    return categories;
-}
-
-function calculateSimpleCost(activities, ageGroups) {
-    let total = 0;
-    activities.forEach(activity => {
-        if (!activity.prices) return;
-        Object.keys(ageGroups).forEach(category => {
-            const count = ageGroups[category];
-            if (count > 0) {
-                const price = getPriceForAgeCategory(category, activity.prices);
-                total += price * count;
-            }
-        });
-    });
-    return Math.round(total * 100) / 100;
-}
-
-function getPriceForAgeCategory(ageCategory, priceMap) {
-    if (!priceMap) return 0;
-    if (priceMap[ageCategory] !== undefined) {
-        return parseFloat(priceMap[ageCategory]) || 0;
-    }
-    // Προσέγγιση αν δεν υπάρχει ακριβής τιμή
-    const approx = { "0-2": 0, "3-5": 5, "6-14": 15, "15-19": 20, "18+": 25 };
-    return approx[ageCategory] || 0;
-}
-
-console.log("✅ Πλήρης Combo συνάρτηση φορτώθηκε για ΟΛΕΣ τις πόλεις!");
 </script>
 </body>
-</html>
+    </html>
