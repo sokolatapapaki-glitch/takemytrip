@@ -1560,6 +1560,15 @@ function searchHotels() {
 }
 async function goToStep4() {
     console.log(`🚀 goToStep4() για: ${selectedDestinationName}`);
+    // 🔍 DEBUG: Τι υπάρχει στα configurations;
+    console.log('🔍 EXTRA_CITIES_CONFIG:', window.EXTRA_CITIES_CONFIG);
+    console.log('🔍 selectedDestinationName:', selectedDestinationName);
+    
+    // 🔍 DEBUG: Έλεγχος αν το cityConfig υπάρχει
+    const cityConfig = window.EXTRA_CITIES_CONFIG?.[selectedDestinationName];
+    console.log('🔍 cityConfig για', selectedDestinationName, ':', cityConfig);
+    
+    activateStep('step-activities');
     activateStep('step-activities');
     
     const step4Section = document.getElementById("step-activities");
