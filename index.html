@@ -4583,6 +4583,121 @@ if ('serviceWorker' in navigator) {
       });
   });
 }
+// ==================== ΝΕΕΣ ΣΥΝΑΡΤΗΣΕΙΣ ΓΙΑ ΒΗΜΑ 4 ====================
+
+// 1. Η ΣΥΝΑΡΤΗΣΗ ΠΟΥ ΦΟΡΤΩΝΕΙ ΤΙΣ ΠΟΛΕΙΣ
+async function loadCityActivities(cityName) {
+    console.log("🔍 Φόρτωση δραστηριοτήτων για:", cityName);
+    
+    try {
+        // ΠΡΩΤΗ ΠΡΟΣΠΑΘΕΙΑ: Από JSON αρχείο
+        const response = await fetch(`${cityName}.json`);
+        if (response.ok) {
+            const cityData = await response.json();
+            console.log("✅ Βρέθηκε JSON για:", cityName);
+            return cityData;
+        }
+    } catch (error) {
+        console.log("⚠️ Δεν βρέθηκε JSON, ψάχνω embedded...");
+    }
+    
+    // ΔΕΥΤΕΡΗ ΠΡΟΣΠΑΘΕΙΑ: Από embedded στον κώδικα
+    let embeddedActivities = null;
+    
+    if (cityName.includes("Βιέννη")) {
+        embeddedActivities = activities; // Από τη μεταβλητή activities
+    } else if (cityName.includes("Βερολίνο")) {
+        embeddedActivities = activitiesBerlin;
+    } else if (cityName.includes("Λισαβόνα")) {
+        embeddedActivities = activitiesLisbon;
+    } else if (cityName.includes("Βουδαπέστη")) {
+        embeddedActivities = activitiesBudapest;
+    } else if (cityName.includes("Μαδρίτη")) {
+        embeddedActivities = activitiesMadrid;
+    }
+    
+    if (embeddedActivities) {
+        console.log("✅ Βρέθηκαν embedded:", embeddedActivities.length, "δραστηριότητες");
+        return {
+            name: cityName,
+            activities: embeddedActivities
+        };
+    }
+    
+    // ΤΕΛΙΚΑ: ΚΑΝΕΝΑ ΔΕΝ ΒΡΕΘΗΚΕ
+    console.error("❌ Δεν βρέθηκαν δραστηριότητες");
+    return null;
+}
+
+// 2. Η ΣΥΝΑΡΤΗΣΗ ΠΟΥ ΔΗΜΙΟΥΡΓΕΙ ΚΑΡΤΕΣ
+function createActivityCardsNew(activityList) {
+    console.log("🃏 Δημιουργία καρτών για", activityList.length, "δραστηριότητες");
+    
+    const container = document.getElementById('activities-container');
+    if (!container) {
+        console.error("❌ Δεν βρέθηκε container!");
+        return;
+    }
+    
+    container.innerHTML = "";
+    
+    activityList.forEach((act, index) => {
+        const card = document.createElement('div');
+        card.className = "activity-card";
+        card.id = `activity-new-${index}`;
+        card.innerHTML = `
+            <h3>${act.name}</h3>
+            <p>${act.desc || act.description || ''}</p>
+            <div class="total" id="total-new-${index}">Κόστος: 0 €</div>
+        `;
+        
+        card.addEventListener('click', () => {
+            card.classList.toggle('selected');
+            act.selected = !act.selected;
+            calculateAllCostsNew();
+        });
+        
+        container.appendChild(card);
+    });
+}
+
+// 3. Η ΣΥΝΑΡΤΗΣΗ ΠΟΥ ΥΠΟΛΟΓΙΖΕΙ ΤΟ ΚΟΣΤΟΣ
+function calculateAllCostsNew() {
+    console.log("🧮 Υπολογισμός κόστους...");
+    
+    if (!window.currentCityActivities) {
+        console.error("❌ Δεν υπάρχουν δραστηριότητες!");
+        return;
+    }
+    
+    let overallTotal = 0;
+    
+    window.currentCityActivities.forEach((act, index) => {
+        const card = document.getElementById(`activity-new-${index}`);
+        if (!card) return;
+        
+        const isSelected = card.classList.contains('selected');
+        const totalElement = document.getElementById(`total-new-${index}`);
+        
+        if (isSelected && totalElement) {
+            // ΠΡΟΣΩΡΙΝΟΣ ΥΠΟΛΟΓΙΣΜΟΣ: 10€ ανά ενήλικα
+            const adults = familyMembers.filter(m => m.age >= 18).length;
+            const total = adults * 10;
+            
+            totalElement.textContent = `Κόστος: ${total} €`;
+            overallTotal += total;
+        } else if (totalElement) {
+            totalElement.textContent = "Κόστος: 0 €";
+        }
+    });
+    
+    const overallElement = document.getElementById('overall-total');
+    if (overallElement) {
+        overallElement.textContent = `Συνολικό Κόστος: ${overallTotal} €`;
+    }
+}
+
+// ==================== ΤΕΛΟΣ ΝΕΩΝ ΣΥΝΑΡΤΗΣΕΩΝ ====================    
 </script>
 </body>
 </html>
