@@ -1800,7 +1800,7 @@ function goToStep5(){
    
     } else if (selectedDestinationName.includes("Μαδρίτη")) {
         if (selectedActivities.length > 0) {
-            const dailyProgram = createDailyProgram(selectedActivities, selectedDaysStay || 1);
+            const dailyProgram = createSmartDailyProgram(selectedActivities, selectedDaysStay || 1);
             const distancesInfo = calculateDistances(selectedActivities);
            
             summaryDiv.innerHTML = `
@@ -1834,7 +1834,7 @@ function goToStep5(){
         const daysTextLocal = selectedDaysStay > 0 ? `${selectedDaysStay} μέρες` : "μη ορισμένες μέρες";
         
         if (selectedActivities.length > 0) {
-            const dailyProgram = createDailyProgram(selectedActivities, selectedDaysStay || 1);
+            const dailyProgram = createSmartDailyProgram(selectedActivities, selectedDaysStay || 1);
             const distancesInfo = calculateDistances(selectedActivities);
             
             summaryDiv.innerHTML = `
