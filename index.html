@@ -370,12 +370,13 @@ button { padding: 10px 20px; font-size: 16px; border-radius: 12px; border: none;
     right: 15px;
     font-size: 28px;
     color: gold;
-    display: none;
+    opacity: 0.3;  /* ΑΟΡΑΤΟ ΟΤΑΝ ΔΕΝ ΕΙΝΑΙ SELECTED */
     text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: opacity 0.3s;
 }
 
 .activity-card.selected .star {
-    display: block;
+    opacity: 1;  /* ΟΡΑΤΟ ΟΤΑΝ ΕΙΝΑΙ SELECTED */
     animation: pulse 1s infinite alternate;
 }
 
@@ -1931,72 +1932,6 @@ function createActivityCards(activityList) {
 }
 // ==================== ΝΕΕΣ ΣΥΝΑΡΤΗΣΕΙΣ ΓΙΑ ΤΟ ΝΕΟ ΣΥΣΤΗΜΑ ====================
 
-// 1. ΔΗΜΙΟΥΡΓΙΑ ΚΑΡΤΩΝ ΜΕ ΤΟ ΝΕΟ FORMAT
-function createActivityCardsNew(activityList) {
-  const containerActivities = document.getElementById('activities-container');
-  containerActivities.innerHTML = "";
- 
-  const emojiMap = {
-    "Palace": "🏰", "Zoo": "🐯", "Museum": "🏛️", "Aquarium": "🐠",
-    "Park": "🌳", "Castle": "🏯", "Science": "🔬", "Music": "🎵",
-    "Tower": "🗼", "Theme": "🎡", "History": "📜", "Art": "🎨",
-    "Nature": "🌿", "Adventure": "🧗", "Cruise": "🚢", "Garden": "🌸",
-    "Schonbrunn": "🏰", "Prater": "🎡", "Opera": "🎭", "Danube": "🌉",
-    "Illuseum": "🎭", "Technikmuseum": "⚙️", "Naturkunde": "🦕",
-    "LEGOLAND": "🧱", "Tussauds": "👑", "Fernsehturm": "🗼",
-    "Oceanário": "🐠", "Pavilhão": "🔭", "Belém": "🏰", "Mosteiro": "⛪",
-    "Parliament": "🏛️", "Thermal": "♨️", "Eye": "🎡", "Margaret": "🏝️"
-  };
- 
-  activityList.forEach((act, index) => {
-    // Βρίσκουμε κατάλληλο emoji
-    let emoji = "📍";
-    for (const [key, value] of Object.entries(emojiMap)) {
-      if (act.name.includes(key)) {
-        emoji = value;
-        break;
-      }
-    }
-   
-    const card = document.createElement('div');
-    card.className = "activity-card";
-    card.id = `activity-new-${index}`;
-    card.innerHTML = `
-      <span class="emoji-icon">${emoji}</span>
-      <span class="star">⭐</span>
-      <div class="activity-info">
-        <h3>${act.name}</h3>
-        <p>${act.description || act.desc || ''}</p>
-        ${act.website ? `<a href="${act.website}" target="_blank" style="color: #3eb489; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 10px;">🔗 Δείτε περισσότερα</a>` : ''}
-        ${act.ageWarning ? `<div style="background: #fff3cd; padding: 5px; border-radius: 6px; margin: 5px 0; font-size: 0.9em; color: #856404;">⚠️ ${act.ageWarning}</div>` : ''}
-        ${act.priceNote ? `<div style="background: #d1ecf1; padding: 5px; border-radius: 6px; margin: 5px 0; font-size: 0.9em; color: #0c5460;">ℹ️ ${act.priceNote}</div>` : ''}
-        <div style="margin-top: 15px;">
-          <table class="activity-table">
-            <tr>
-              <th>0-5</th><th>6-14</th><th>15-17</th><th>18+</th>
-            </tr>
-            <tr>
-              <td>${getPriceForAgeRange(act.prices, 0, 5)}€</td>
-              <td>${getPriceForAgeRange(act.prices, 6, 14)}€</td>
-              <td>${getPriceForAgeRange(act.prices, 15, 17)}€</td>
-              <td>${act.prices.adult || 0}€</td>
-            </tr>
-          </table>
-        </div>
-        <div class="total" id="total-new-${index}">Κόστος: 0 €</div>
-      </div>
-    `;
-   
-    card.addEventListener('click', ()=> {
-      card.classList.toggle('selected');
-      act.selected = !act.selected;
-      calculateAllCostsNew();
-      saveToLocalStorage();
-    });
-    
-    containerActivities.appendChild(card);
-  });
-}
 
 // Βοηθητική: Πάρτι την τιμή για μια ηλικιακή ομάδα
 function getPriceForAgeRange(prices, minAge, maxAge) {
@@ -4745,14 +4680,52 @@ function createActivityCardsNew(activityList) {
     
     container.innerHTML = "";
     
+    // Βοηθητική: Πάρτι την τιμή για μια ηλικιακή ομάδα
+    function getPriceForAgeRange(prices, minAge, maxAge) {
+        if (!prices) return 0;
+        
+        // Ψάχνουμε για οποιαδήποτε τιμή στην ομάδα
+        for (let age = minAge; age <= maxAge; age++) {
+            if (prices[age] !== undefined) {
+                return prices[age];
+            }
+        }
+        
+        // Αν δεν βρέθηκε, δοκιμάζουμε το adult
+        return (prices && prices.adult) || 0;
+    }
+    
     activityList.forEach((act, index) => {
         const card = document.createElement('div');
         card.className = "activity-card";
         card.id = `activity-${index}`;
+        
         card.innerHTML = `
-            <h3>${act.name}</h3>
-            <p>${act.desc || act.description || ''}</p>
-            <div class="total" id="total-${index}">Κόστος: 0 €</div>
+            <span class="star">⭐</span>
+            <div class="activity-info">
+                <h3>${act.name}</h3>
+                <p>${act.desc || act.description || ''}</p>
+                
+                <!-- ΠΙΝΑΚΑΣ ΤΙΜΩΝ ΑΝΑ ΗΛΙΚΙΑΚΗ ΟΜΑΔΑ -->
+                <div style="margin-top: 15px;">
+                    <table class="activity-table" style="width: 100%; text-align: center; border-collapse: collapse; font-size: 0.85em;">
+                        <tr>
+                            <th style="padding: 4px; background: #f0f8ff;">0-5</th>
+                            <th style="padding: 4px; background: #f0f8ff;">6-14</th>
+                            <th style="padding: 4px; background: #f0f8ff;">15-17</th>
+                            <th style="padding: 4px; background: #f0f8ff;">18+</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 4px; border: 1px solid #ddd;">${getPriceForAgeRange(act.prices, 0, 5)}€</td>
+                            <td style="padding: 4px; border: 1px solid #ddd;">${getPriceForAgeRange(act.prices, 6, 14)}€</td>
+                            <td style="padding: 4px; border: 1px solid #ddd;">${getPriceForAgeRange(act.prices, 15, 17)}€</td>
+                            <td style="padding: 4px; border: 1px solid #ddd;">${(act.prices && act.prices.adult) || 0}€</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="total" id="total-${index}">Κόστος: 0 €</div>
+            </div>
         `;
         
         card.addEventListener('click', () => {
