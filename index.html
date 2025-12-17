@@ -4650,11 +4650,11 @@ function createActivityCardsNew(activityList) {
     activityList.forEach((act, index) => {
         const card = document.createElement('div');
         card.className = "activity-card";
-        card.id = `activity-new-${index}`;
+        card.id = `activity-${index}`;
         card.innerHTML = `
             <h3>${act.name}</h3>
             <p>${act.desc || act.description || ''}</p>
-            <div class="total" id="total-new-${index}">Κόστος: 0 €</div>
+            <div class="total" id="total-${index}">Κόστος: 0 €</div>
         `;
         
         card.addEventListener('click', () => {
@@ -4679,11 +4679,12 @@ function calculateAllCostsNew() {
     let overallTotal = 0;
     
     window.currentCityActivities.forEach((act, index) => {
-        const card = document.getElementById(`activity-new-${index}`);
+        const card = document.getElementById(`activity-${index}`);
         if (!card) return;
         
         const isSelected = card.classList.contains('selected');
-        const totalElement = document.getElementById(`total-new-${index}`);
+        const totalElement = document.getElementById(`total-${index}`);
+
         
         if (isSelected && totalElement) {
             // ΠΡΟΣΩΡΙΝΟΣ ΥΠΟΛΟΓΙΣΜΟΣ: 10€ ανά ενήλικα
