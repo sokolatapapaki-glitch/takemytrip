@@ -4620,8 +4620,9 @@ async function loadCityActivities(cityName) {
             'Μαδρίτη': 'madrid.json',
             'Κωνσταντινούπολη': 'istanbul.json',
             'Παρίσι': 'paris.json',
-            'Πράγα': 'prague.json'
-        };
+            'Πράγα': 'prague.json',
+            'Λονδίνο': 'london.json'  // <-- ΠΡΟΣΘΗΚΗ ΕΔΩ
+            };
 
         const filename = cityFileMap[cityName] || `${cityName.toLowerCase()}.json`;
         console.log("📁 Προσπάθεια φόρτωσης:", filename);
