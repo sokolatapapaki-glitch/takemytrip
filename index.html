@@ -1634,7 +1634,8 @@ function goToStep5(){
         return;
     }
    
-const selectedActivities = getSelectedActivities ? getSelectedActivities() : [];   
+   const selectedActivities = window.currentCityActivities ? 
+    window.currentCityActivities.filter(act => act.selected === true) : [];
     const daysText = selectedDaysStay > 0 ? `${selectedDaysStay} μέρες` : "μη ορισμένες μέρες";
    
     if (selectedDestinationName.includes("Βιέννη")) {
@@ -2014,111 +2015,94 @@ function getPriceForAgeRange(prices, minAge, maxAge) {
 
 // 2. ΝΕΟΣ ΥΠΟΛΟΓΙΣΜΟΣ ΚΟΣΤΟΥΣ
 function calculateAllCostsNew() {
-  if (!window.currentCityActivities || window.currentCityActivities.length === 0) {
-    console.log("⚠️ Δεν υπάρχουν δραστηριότητες φορτωμένες");
-    return;
-  }
-  
-  // Ενημέρωση οικογένειας
-  updateFamilyMembers();
-  
-  let overallTotal = 0;
-  
-  window.currentCityActivities.forEach((act, index) => {
-    const cardElement = document.getElementById(`activity-new-${index}`);
-    const isSelected = cardElement ? cardElement.classList.contains('selected') : false;
-   
-    act.selected = isSelected;
-
-    if(isSelected){
-      let total = 0;
-     
-      // ΑΠΛΟΣ ΥΠΟΛΟΓΙΣΜΟΣ: κάθε ηλικία χωριστά
-      familyMembers.forEach(member => {
-        const age = member.age;
-        let price = 0;
+    console.log("🧮 Υπολογισμός κόστους για", familyMembers.length, "μέλη...");
+    
+    if (!window.currentCityActivities) {
+        console.error("❌ Δεν υπάρχουν δραστηριότητες!");
+        return;
+    }
+    
+    // ΒΕΒΑΙΩΣΟΥ ΟΤΙ Η ΟΙΚΟΓΕΝΕΙΑ ΕΙΝΑΙ ΕΝΗΜΕΡΩΜΕΝΗ
+    if (familyMembers.length === 0) {
+        alert("⚠️ Δεν έχετε ορίσει μέλη οικογένειας! Συμπληρώστε τις ηλικίες και πατήστε '🔄 Ενημέρωση Οικογένειας'");
+        return;
+    }
+    
+    let overallTotal = 0;
+    
+    window.currentCityActivities.forEach((act, index) => {
+        const card = document.getElementById(`activity-new-${index}`);
+        if (!card) return;
         
-        // 1. ΕΑΝ ΕΧΕΙ ΑΚΡΙΒΗ ΗΛΙΚΙΑ
-        if (act.prices && act.prices[age] !== undefined) {
-          price = act.prices[age];
-        }
-        // 2. ΕΑΝ ΕΙΝΑΙ ΕΝΗΛΙΚΑΣ
-        else if (age >= 18 && act.prices && act.prices.adult !== undefined) {
-          price = act.prices.adult;
-        }
-        // 3. ΕΑΝ ΕΙΝΑΙ ΠΑΙΔΙ ΚΑΙ ΔΕΝ ΒΡΕΘΗΚΕ
-        else if (age <= 17 && act.prices) {
-          // Ψάξε για την πλησιέστερη χαμηλότερη ηλικία
-          for (let lowerAge = age - 1; lowerAge >= 0; lowerAge--) {
-            if (act.prices[lowerAge] !== undefined) {
-              price = act.prices[lowerAge];
-              break;
-            }
-          }
-          // Αν δεν βρέθηκε, πάρε adult
-          if (price === 0 && act.prices.adult !== undefined) {
-            price = act.prices.adult;
-          }
-        }
+        const isSelected = card.classList.contains('selected');
+        const totalElement = document.getElementById(`total-new-${index}`);
         
-        total += price;
-      });
-      
-      if (document.getElementById(`total-new-${index}`)) {
-        document.getElementById(`total-new-${index}`).innerText = `Κόστος: ${total.toFixed(2)} €`;
-      }
-      overallTotal += total;
-    } else {
-      const totalElement = document.getElementById(`total-new-${index}`);
-      if (totalElement) totalElement.innerText = `Κόστος: 0 €`;
+        if (isSelected && totalElement) {
+            // ΠΡΑΓΜΑΤΙΚΟΣ ΥΠΟΛΟΓΙΣΜΟΣ
+            let activityTotal = 0;
+            
+            familyMembers.forEach(member => {
+                const age = member.age;
+                let price = 0;
+                
+                // ΕΛΕΓΧΟΣ ΓΙΑ ΤΑ ΠΑΛΙΑ FORMATS
+                if (act.prices) {
+                    // 1. ΕΑΝ ΕΧΕΙ ΝΕΟ FORMAT (0, 1, 2, ..., adult)
+                    if (act.prices[age] !== undefined) {
+                        price = act.prices[age];
+                    }
+                    // 2. ΕΑΝ ΕΧΕΙ ΠΑΛΙΟ FORMAT (0-2, 3-5, κλπ)
+                    else if (age <= 2 && act.prices["0-2"] !== undefined) {
+                        price = act.prices["0-2"];
+                    }
+                    else if (age <= 5 && act.prices["3-5"] !== undefined) {
+                        price = act.prices["3-5"];
+                    }
+                    else if (age <= 14 && act.prices["6-14"] !== undefined) {
+                        price = act.prices["6-14"];
+                    }
+                    else if (age <= 19 && act.prices["15-19"] !== undefined) {
+                        price = act.prices["15-19"];
+                    }
+                    else if (act.prices["18+"] !== undefined) {
+                        price = act.prices["18+"];
+                    }
+                    // 3. ΕΑΝ ΕΧΕΙ JSON FORMAT (0-6, 7-12, κλπ)
+                    else if (age <= 6 && act.prices["0-6"] !== undefined) {
+                        price = act.prices["0-6"];
+                    }
+                    else if (age <= 12 && act.prices["7-12"] !== undefined) {
+                        price = act.prices["7-12"];
+                    }
+                    else if (age <= 17 && act.prices["13-17"] !== undefined) {
+                        price = act.prices["13-17"];
+                    }
+                    // 4. ΤΕΛΙΚΟ: ΕΝΗΛΙΚΟΣ
+                    else if (act.prices["adult"] !== undefined) {
+                        price = act.prices["adult"];
+                    }
+                    else if (act.prices["18+"] !== undefined) {
+                        price = act.prices["18+"];
+                    }
+                }
+                
+                activityTotal += price;
+            });
+            
+            totalElement.textContent = `Κόστος: ${activityTotal} €`;
+            overallTotal += activityTotal;
+            
+        } else if (totalElement) {
+            totalElement.textContent = "Κόστος: 0 €";
+        }
+    });
+    
+    const overallElement = document.getElementById('overall-total');
+    if (overallElement) {
+        overallElement.textContent = `Συνολικό Κόστος Επιλεγμένων Δραστηριοτήτων: ${overallTotal} €`;
     }
-  });
-  
-  const overallTotalElement = document.getElementById('overall-total');
-  if (overallTotalElement) {
-    overallTotalElement.innerText = `Συνολικό Κόστους Επιλεγμένων Δραστηριοτήτων: ${overallTotal.toFixed(2)} €`;
-  }
-
-  // Budget Tracker
-  if (selectedBudget > 0) {
-    const budgetStatus = document.getElementById('budget-status') || document.createElement('div');
-    budgetStatus.id = 'budget-status';
-    budgetStatus.style.cssText = `
-        max-width: 1000px;
-        margin: 20px auto;
-        padding: 15px;
-        border-radius: 16px;
-        text-align: center;
-        font-size: 18px;
-        font-weight: bold;
-    `;
-   
-    const remaining = selectedBudget - overallTotal;
-    if (remaining >= 0) {
-      budgetStatus.style.background = '#d4edda';
-      budgetStatus.style.color = '#155724';
-      budgetStatus.style.border = '2px solid #28a745';
-      budgetStatus.innerHTML = `
-          💰 <strong>Προϋπολογισμός:</strong> ${selectedBudget}€ |
-          📊 <strong>Ξοδεύτηκε:</strong> ${overallTotal.toFixed(2)}€ |
-          ✅ <strong>Υπόλοιπο:</strong> ${remaining.toFixed(2)}€
-      `;
-    } else {
-      budgetStatus.style.background = '#f8d7da';
-      budgetStatus.style.color = '#721c24';
-      budgetStatus.style.border = '2px solid #dc3545';
-      budgetStatus.innerHTML = `
-          💰 <strong>Προϋπολογισμός:</strong> ${selectedBudget}€ |
-          📊 <strong>Ξοδεύτηκε:</strong> ${overallTotal.toFixed(2)}€ |
-          ❌ <strong>Υπέρβαση:</strong> ${Math.abs(remaining).toFixed(2)}€
-      `;
-    }
-   
-    if (!document.getElementById('budget-status')) {
-      const activitiesContainer = document.getElementById('activities-container-wrapper');
-      activitiesContainer.parentNode.insertBefore(budgetStatus, activitiesContainer);
-    }
-  }
+    
+    console.log("💰 Συνολικό κόστος:", overallTotal, "€");
 }
     
 // ==================== ΤΡΟΠΟΠΟΙΗΜΕΝΗ ΣΥΝΑΡΤΗΣΗ calculateAllCosts ====================
@@ -2448,7 +2432,8 @@ function preloadLeaflet() {
 }
 
 function initializeSmartMap() {
-const selectedActivities = getSelectedActivities ? getSelectedActivities() : [];    const mapContainer = document.getElementById('map-container');
+const selectedActivities = window.currentCityActivities ? 
+    window.currentCityActivities.filter(act => act.selected === true) : [];   const mapContainer = document.getElementById('map-container');
     mapContainer.innerHTML = '<div id="smart-map" style="height: 100%; width: 100%;"></div>';
    
     let mapCenter, mapZoom;
