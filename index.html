@@ -5271,22 +5271,42 @@ function displayComboResults(results, regularCost) {
             `;
         });
     } else {
+    // Βασικό μήνυμα για όλες τις περιπτώσεις
+    contentHTML += `
+        <div style="background: #fff3cd; padding: 20px; border-radius: 10px; border: 2px solid #ffc107;">
+            <h3 style="color: #856404;">ℹ️ Δεν βρέθηκαν διαθέσιμα combos</h3>
+            <p>Οι επιλεγμένες σας δραστηριότητες δεν έχουν διαθέσιμα οικονομικά combos.</p>
+    `;
+    
+    // ΕΙΔΙΚΗ ΣΥΜΒΟΥΛΗ ΜΟΝΟ ΓΙΑ ΤΟ ΛΟΝΔΙΝΟ
+    if (selectedDestinationName.includes('Λονδίνο')) {
         contentHTML += `
-            <div style="background: #fff3cd; padding: 20px; border-radius: 10px; border: 2px solid #ffc107;">
-                <h3 style="color: #856404;">ℹ️ Δεν βρέθηκαν διαθέσιμα combos</h3>
-                <p>Οι επιλεγμένες σας δραστηριότητες δεν έχουν διαθέσιμα οικονομικά combos.</p>
-                <p>💡 Συμβουλή: Για Λονδίνο, επιλέξτε 2+ από:</p>
-                <ul style="text-align: left; display: inline-block; margin: 10px 0;">
-                    <li>Sea Life London Aquarium</li>
-                    <li>London Eye</li>
-                    <li>Madame Tussauds</li>
-                    <li>Shrek's Adventure</li>
-                    <li>Tower of London</li>
-                    <li>London Dungeon</li>
-                </ul>
-            </div>
+            <p>💡 Συμβουλή: Για Λονδίνο, τα καλύτερα combos υπάρχουν για 2+ από:</p>
+            <ul style="text-align: left; display: inline-block; margin: 10px 0;">
+                <li>Sea Life London Aquarium</li>
+                <li>London Eye</li>
+                <li>Madame Tussauds</li>
+                <li>Shrek's Adventure</li>
+                <li>Tower of London</li>
+                <li>London Dungeon</li>
+            </ul>
+            <p><small>Αυτές είναι οι δραστηριότητες που καλύπτονται από τα Merlin Pass και άλλα εκπτωτικά πακέτα.</small></p>
+        `;
+    } else {
+        // Γενική συμβουλή για άλλες πόλεις
+        contentHTML += `
+            <p>💡 Γενική συμβουλή: Τα εκπτωτικά πακέτα (combos) συνήθως υπάρχουν για:</p>
+            <ul style="text-align: left; display: inline-block; margin: 10px 0;">
+                <li>Πολλά μουσεία/αξιοθέατα της ίδιας εταιρείας</li>
+                <li>Ζωολογικός κήπος + Ενυδρείο</li>
+                <li>Θεματικά πάρκα της ίδιας ομάδας</li>
+                <li>Πακέτα πόλης (π.χ. Vienna Pass, Berlin WelcomeCard)</li>
+            </ul>
         `;
     }
+    
+    contentHTML += `</div>`;
+}
     
     contentHTML += `
         <div style="margin-top: 20px; padding-top: 20px; border-top: 2px dashed #ccc;">
