@@ -4657,15 +4657,29 @@ function createActivityCardsNew(activityList) {
             <div class="total" id="total-${index}">Κόστος: 0 €</div>
         `;
         
-        card.addEventListener('click', () => {
-            card.classList.toggle('selected');
-            act.selected = !act.selected;
-            calculateAllCostsNew();
-        });
-        
-        container.appendChild(card);
-    });
-}
+       card.addEventListener('click', () => {
+    console.log(`🖱️ Κλικ στην κάρτα ${index}: ${act.name}`);
+    
+    // 1. Αλλαγή visual state της κάρτας
+    card.classList.toggle('selected');
+    
+    // 2. Ενημέρωση του activity object
+    if (act.selected === undefined) act.selected = false;
+    act.selected = !act.selected;
+    
+    console.log(`   ✅ Τώρα είναι selected: ${act.selected}`);
+    
+    // 3. Ενημέρωση του κεντρικού array
+    if (window.currentCityActivities && window.currentCityActivities[index]) {
+        window.currentCityActivities[index].selected = act.selected;
+    }
+    
+    // 4. Υπολογισμός κόστους
+    calculateAllCostsNew();
+    
+    // 5. Αποθήκευση
+    saveToLocalStorage();
+});
 
 // 3. Η ΣΥΝΑΡΤΗΣΗ ΠΟΥ ΥΠΟΛΟΓΙΖΕΙ ΤΟ ΚΟΣΤΟΣ
 function calculateAllCostsNew() {
