@@ -1599,7 +1599,42 @@ async function goToStep4() {
     window.currentCityActivities = cityData.activities;
     
     // 4. ΔΗΜΙΟΥΡΓΙΑ ΚΑΡΤΩΝ
+    // 1. Φόρτωσε τα αποθηκευμένα δεδομένα
+const savedData = localStorage.getItem('travelPlannerData');
+if (savedData) {
+    const data = JSON.parse(savedData);
+    
+    // 2. Αν έχουμε αποθηκευμένες επιλογές για αυτήν την πόλη
+    if (data.selectedDestinationName === selectedDestinationName && 
+        data.selectedActivities && data.selectedActivities.length > 0) {
+        
+        console.log("🔄 Επαναφορά", data.selectedActivities.length, "επιλογών...");
+        
+        // 3. Συνδυάζουμε: Πέρνουμε τις δραστηριότητες από το JSON και προσθέτουμε τα selected
+        const activitiesWithSelections = cityData.activities.map(activity => {
+            // Αν το όνομα αυτής της δραστηριότητας είναι στα αποθηκευμένα
+            const isSelected = data.selectedActivities.includes(activity.name);
+            return {
+                ...activity,  // Κρατάμε όλες τις ιδιότητες
+                selected: isSelected  // Προσθέτουμε το σωστό selected
+            };
+        });
+        
+        // 4. Αποθηκεύουμε στον κεντρικό πίνακα
+        window.currentCityActivities = activitiesWithSelections;
+        
+        // 5. Δημιουργούμε κάρτες με τις σωστές επιλογές
+        createActivityCardsNew(activitiesWithSelections);
+    } else {
+        // Αν δεν υπάρχουν αποθηκευμένες επιλογές
+        window.currentCityActivities = cityData.activities;
+        createActivityCardsNew(cityData.activities);
+    }
+} else {
+    // Αν δεν υπάρχει καθόλου saved data
+    window.currentCityActivities = cityData.activities;
     createActivityCardsNew(cityData.activities);
+}
     
     // 5. ΕΝΗΜΕΡΩΣΗ ΟΙΚΟΓΕΝΕΙΑΣ
     updateFamilyMembers();
