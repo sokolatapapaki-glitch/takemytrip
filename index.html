@@ -3706,13 +3706,89 @@ function calculateComboCosts(selectedActivities, availableCombos, ageGroups, reg
         regularCost: regularCost,
         bestCombo: null,
         bestSaving: 0,
+        bestTotal: regularCost, // Πρόσθεσα αυτό που λείπει
         allCombos: []
     };
-   
+
+    // ================= ΠΡΩΤΑ: ΕΛΕΓΧΟΣ ΓΙΑ ΛΟΝΔΙΝΟ =================
+    if (selectedDestinationName && (selectedDestinationName.includes("Λονδίνο") || selectedDestinationName.includes("London"))) {
+        console.log("🇬🇧 Εφαρμογή λογικής για London Combo Passes");
+
+        // Τιμές Combo Passes ΑΝΑ ΑΤΟΜΟ (για άτομα >4 ετών)
+        const londonComboRates = {
+            2: 28.5,  // 2-Attraction Pass
+            3: 21,    // 3-Attraction Pass  
+            5: 14     // 5-Attraction Pass
+        };
+
+        const selectedCount = selectedActivities.length;
+        let bestLondonCombo = null;
+        let bestLondonSaving = 0;
+        let bestLondonTotal = regularCost;
+
+        // Έλεγξε κάθε πάσο (2, 3, 5 αξιοθέατα)
+        for (const [attractionCount, pricePerPerson] of Object.entries(londonComboRates)) {
+            const count = parseInt(attractionCount);
+
+            // Έλεγχος: Ο χρήστης έχει αρκετά αξιοθέατα;
+            if (selectedCount >= count) {
+                // Υπολόγισε κόστος για την ομάδα
+                let comboCostForGroup = 0;
+
+                // Υπολόγισε το κόστος του combo για κάθε ηλικιακή ομάδα
+                Object.keys(ageGroups).forEach(ageCategory => {
+                    const numberOfPeople = ageGroups[ageCategory];
+                    if (numberOfPeople > 0) {
+                        // Μετατροπή ηλικιακής κατηγορίας σε αριθμό για έλεγχο
+                        const age = ageCategory === 'adult' ? 18 : parseInt(ageCategory);
+
+                        // Μόνο για άτομα >4 ετών πληρώνουν
+                        if (age > 4) {
+                            comboCostForGroup += pricePerPerson * numberOfPeople;
+                        }
+                    }
+                });
+
+                const saving = regularCost - comboCostForGroup;
+
+                console.log(`   📊 ${count}-Attraction Pass: ${pricePerPerson}€/άτομο = ${comboCostForGroup}€ (εξοικονόμηση: ${saving}€)`);
+
+                // Δημιουργία combo object σε μορφή που περιμένει η υπάρχουσα λογική
+                const londonCombo = {
+                    name: `${count}-Attraction Combo Pass (Λονδίνο)`,
+                    activities: [`${count} επιλεγμένα αξιοθέατα`],
+                    regularPrice: regularCost,
+                    comboPrice: comboCostForGroup,
+                    saving: saving > 0 ? saving : 0,
+                    totalWithCombo: comboCostForGroup
+                };
+
+                results.allCombos.push(londonCombo);
+
+                if (saving > bestLondonSaving) {
+                    bestLondonSaving = saving;
+                    bestLondonCombo = londonCombo;
+                    bestLondonTotal = comboCostForGroup;
+                }
+            }
+        }
+
+        // Επιστροφή άμεσα αν βρέθηκε καλύτερο combo για Λονδίνο
+        if (bestLondonCombo && bestLondonSaving > 0) {
+            results.bestCombo = bestLondonCombo;
+            results.bestSaving = bestLondonSaving;
+            results.bestTotal = bestLondonTotal;
+            console.log(`🏆 ΚΑΛΥΤΕΡΟ COMBO: ${bestLondonCombo.name} - Εξοικονόμηση ${bestLondonSaving}€`);
+            return results;  // 🔴 ΣΤΑΜΑΤΑ ΕΔΩ, ΜΗΝ ΣΥΝΕΧΙΣΕΙΣ ΜΕ ΤΑ ΑΛΛΑ COMBO
+        }
+    }
+    // ================= ΤΕΛΟΣ ΛΟΝΔΙΝΟΥ =================
+
+    // ================= ΠΑΛΙΟΣ ΚΩΔΙΚΑΣ (για όλες τις άλλες πόλεις) =================
     availableCombos.forEach(combo => {
         // Υπολογισμός κανονικού κόστους για τις δραστηριότητες του combo
         let comboRegularCost = 0;
-       
+
         combo.activities.forEach(activityName => {
             const activity = selectedActivities.find(act => act.name.includes(activityName));
             if (activity) {
@@ -3726,17 +3802,17 @@ function calculateComboCosts(selectedActivities, availableCombos, ageGroups, reg
                 });
             }
         });
-       
+
         // Υπολογισμός εξοικονόμησης
         const saving = comboRegularCost - combo.comboPrice;
-       
+
         // Ενημέρωση του combo object
         combo.regularPrice = comboRegularCost;
         combo.saving = saving > 0 ? saving : 0;
         combo.totalWithCombo = regularCost - saving;
-       
+
         results.allCombos.push(combo);
-       
+
         // Ενημέρωση του καλύτερου combo
         if (saving > results.bestSaving) {
             results.bestSaving = saving;
@@ -3744,7 +3820,7 @@ function calculateComboCosts(selectedActivities, availableCombos, ageGroups, reg
             results.bestTotal = regularCost - saving;
         }
     });
-   
+
     return results;
 }
 
