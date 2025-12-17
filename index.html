@@ -2323,53 +2323,94 @@ function getSelectedActivities() {
 
 function createSmartDailyProgram(activities, days) {
     const activitiesWithCoords = activities.filter(act => act.lat && act.lng);
-   
+    
     if (activitiesWithCoords.length === 0) {
-        return "<p>🚧 Για έξυπνο γεωγραφικό χωρισμό, χρειαζόμαστε συντεταγμένες στις δραστηριότητες</p>" +
-               createDailyProgram(activities, days);
+        // ΑΠΛΟΣ ΧΩΡΙΣΜΟΣ (όταν δεν υπάρχουν συντεταγμένες)
+        if (!activities || activities.length === 0) {
+            return '<p>Δεν έχετε επιλέξει δραστηριότητες.</p>';
+        }
+        
+        if (!days || days <= 0) days = 1;
+        
+        let programHTML = '<p>🗺️ <strong>Απλό Πρόγραμμα:</strong></p>';
+        const activitiesPerDay = Math.ceil(activities.length / days);
+        
+        for (let day = 0; day < days; day++) {
+            const startIndex = day * activitiesPerDay;
+            const endIndex = Math.min(startIndex + activitiesPerDay, activities.length);
+            const dayActivities = activities.slice(startIndex, endIndex);
+            
+            if (dayActivities.length === 0) continue;
+            
+            const morningActivities = dayActivities.slice(0, Math.ceil(dayActivities.length / 2));
+            const afternoonActivities = dayActivities.slice(Math.ceil(dayActivities.length / 2));
+            
+            programHTML += `
+                <div style="margin: 15px 0; padding: 12px; background: white; border-radius: 8px; border-left: 4px solid #ff7f50;">
+                    <h4 style="margin: 0 0 8px 0; color: #ff7f50;">📍 Ημέρα ${day + 1}</h4>
+                    
+                    ${morningActivities.length > 0 ? `
+                    <div style="margin-bottom: 8px;">
+                        <h5 style="margin: 0 0 4px 0; color: #3eb489;">🌅 Πρωινό (9:00-13:00)</h5>
+                        <ul style="margin: 0; padding-left: 20px;">
+                            ${morningActivities.map(act => `<li>${act.name}</li>`).join('')}
+                        </ul>
+                    </div>` : ''}
+                    
+                    ${afternoonActivities.length > 0 ? `
+                    <div style="margin-bottom: 6px;">
+                        <h5 style="margin: 0 0 4px 0; color: #4c7af0;">🌇 Απογευματινό (14:00-18:00)</h5>
+                        <ul style="margin: 0; padding-left: 20px;">
+                            ${afternoonActivities.map(act => `<li>${act.name}</li>`).join('')}
+                        </ul>
+                    </div>` : ''}
+                </div>
+            `;
+        }
+        
+        return programHTML;
     }
-   
+    
+    // ΕΞΥΠΝΟΣ ΧΩΡΙΣΜΟΣ (όταν υπάρχουν συντεταγμένες)
     const clusters = createSmartClusters(activitiesWithCoords, days);
-   
+    
     let programHTML = '<p>🗺️ <strong>Έξυπνο Πρόγραμμα με Βάση την Απόσταση & Χρόνο:</strong></p>';
-   
+    
     clusters.forEach((cluster, index) => {
         const morningActivities = cluster.slice(0, Math.ceil(cluster.length / 2));
         const afternoonActivities = cluster.slice(Math.ceil(cluster.length / 2));
-       
+        
         programHTML += `
-            <div style="margin: 20px 0; padding: 15px; background: white; border-radius: 12px; border-left: 6px solid #ff7f50; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-                <h4 style="margin: 0 0 12px 0; color: #ff7f50;">📍 Ημέρα ${index + 1} - Έξυπνο Πλάνο</h4>
-               
+            <div style="margin: 15px 0; padding: 12px; background: white; border-radius: 8px; border-left: 4px solid #ff7f50;">
+                <h4 style="margin: 0 0 8px 0; color: #ff7f50;">📍 Ημέρα ${index + 1} - Έξυπνο Πλάνο</h4>
+                
                 ${morningActivities.length > 0 ? `
-                <div style="margin-bottom: 12px;">
-                    <h5 style="margin: 0 0 6px 0; color: #3eb489;">🌅 Πρωινό (9:00 - 13:00)</h5>
+                <div style="margin-bottom: 8px;">
+                    <h5 style="margin: 0 0 4px 0; color: #3eb489;">🌅 Πρωινό (9:00-13:00)</h5>
                     <ul style="margin: 0; padding-left: 20px;">
                         ${morningActivities.map(act => `<li>${act.name}</li>`).join('')}
                     </ul>
-                </div>
-                ` : ''}
-               
+                </div>` : ''}
+                
                 ${afternoonActivities.length > 0 ? `
-                <div style="margin-bottom: 8px;">
-                    <h5 style="margin: 0 0 6px 0; color: #4c7af0;">🌇 Απογευματινό (14:00 - 18:00)</h5>
+                <div style="margin-bottom: 6px;">
+                    <h5 style="margin: 0 0 4px 0; color: #4c7af0;">🌇 Απογευματινό (14:00-18:00)</h5>
                     <ul style="margin: 0; padding-left: 20px;">
                         ${afternoonActivities.map(act => `<li>${act.name}</li>`).join('')}
                     </ul>
-                </div>
-                ` : ''}
-               
-                <div style="background: #f8f9fa; padding: 8px; border-radius: 6px; margin-top: 8px;">
-                    <p style="margin: 0; font-size: 0.85em; color: #666;">
-                        ✅ <strong>Βελτιστοποιημένη Διαδρομή</strong><br>
-                        🚶 <strong>Ελάχιστες Μετακινήσεις</strong><br>
+                </div>` : ''}
+                
+                <div style="background: #f8f9fa; padding: 6px; border-radius: 4px; margin-top: 6px;">
+                    <p style="margin: 0; font-size: 0.8em; color: #666;">
+                        ✅ <strong>Βελτιστοποιημένη Διαδρομή</strong> | 
+                        🚶 <strong>Ελάχιστες Μετακινήσεις</strong> | 
                         ⏱️ <strong>Ισορροπημένος Χρόνος</strong>
                     </p>
                 </div>
             </div>
         `;
     });
-   
+    
     return programHTML;
 }
 
