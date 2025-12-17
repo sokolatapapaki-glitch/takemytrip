@@ -1,7 +1,7 @@
 {
   "city": "Λονδίνο",
   "country": "Ηνωμένο Βασίλειο",
-  "currency": "GBP",
+  "currency": "EUR",
   "emoji": "🇬🇧",
   "pricing_model": "per_age",
   "activities": [
@@ -11,20 +11,15 @@
       "description": "Ο γιγαντιαίος τροχός με πανοραμική θέα του Λονδίνου.",
       "category": "attraction",
       "prices": {
-        "0": 0, "1": 0, "2": 0,
-        "3": 0, "4": 0, "5": 0,
-        "6": 25, "7": 25, "8": 25, "9": 25, "10": 25,
-        "11": 25, "12": 25, "13": 25, "14": 25,
-        "15": 30, "16": 30, "17": 30,
-        "adult": 35
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 34, "6": 34, "7": 34, "8": 34, "9": 34, "10": 34, "11": 34, "12": 34, "13": 34, "14": 34, "15": 34,
+        "16": 37, "17": 37,
+        "adult": 37
       },
-      "location": {
-        "lat": 51.5033,
-        "lng": -0.1195
-      },
-      "restaurant": "<a href='https://maps.google.com/?q=London+Eye+Restaurant' target='_blank'>London Eye Restaurant</a> - δίπλα στον τροχό",
+      "location": { "lat": 51.5033, "lng": -0.1195 },
+      "restaurant": "<a href='https://maps.google.com/?q=London+Eye+Restaurant' target='_blank'>London Eye Restaurant</a>",
       "website": "https://www.londoneye.com/",
-      "notes": ["Κράτηση online για καλύτερη τιμή"],
+      "notes": ["Κράτηση online συχνά φθηνότερη."],
       "tags": ["wheel", "view", "landmark"],
       "duration_hours": 1,
       "best_time": "any"
@@ -32,23 +27,18 @@
     {
       "id": 2,
       "name": "Tower of London",
-      "description": "Ιστορικό κάστρο με τα Κορώνα της Αγγλίας και τους Beefeaters.",
+      "description": "Ιστορικό κάστρο με τα Κορώνα της Αγγλίας.",
       "category": "castle",
       "prices": {
-        "0": 0, "1": 0, "2": 0,
-        "3": 14, "4": 14, "5": 14,
-        "6": 14, "7": 14, "8": 14, "9": 14, "10": 14,
-        "11": 14, "12": 14, "13": 14, "14": 14,
-        "15": 22, "16": 22, "17": 22,
-        "adult": 29
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 20, "6": 20, "7": 20, "8": 20, "9": 20, "10": 20, "11": 20, "12": 20, "13": 20, "14": 20, "15": 20,
+        "16": 41, "17": 41,
+        "adult": 41
       },
-      "location": {
-        "lat": 51.5081,
-        "lng": -0.0759
-      },
-      "restaurant": "<a href='https://maps.google.com/?q=New+Armouries+Cafe+London' target='_blank'>New Armouries Cafe</a> - μέσα στο Tower",
+      "location": { "lat": 51.5081, "lng": -0.0759 },
+      "restaurant": "<a href='https://maps.google.com/?q=New+Armouries+Cafe+London' target='_blank'>New Armouries Cafe</a>",
       "website": "https://www.hrp.org.uk/tower-of-london/",
-      "notes": ["Δωρεάν για κάτω των 5", "Κράτηση απαιτείται"],
+      "notes": ["Δωρεάν για κάτω των 5.", "Κράτηση απαιτείται."],
       "tags": ["castle", "history", "crown jewels"],
       "duration_hours": 3,
       "best_time": "morning"
@@ -56,26 +46,249 @@
     {
       "id": 3,
       "name": "Natural History Museum",
-      "description": "Δωρεάν μουσείο με δεινόσαυρους, ηφαίστεια και διάφορα εκθέματα.",
+      "description": "Δωρεάν μουσείο με δεινόσαυρους και φυσική ιστορία.",
       "category": "museum",
       "prices": {
-        "0": 0, "1": 0, "2": 0,
-        "3": 0, "4": 0, "5": 0,
-        "6": 0, "7": 0, "8": 0, "9": 0, "10": 0,
-        "11": 0, "12": 0, "13": 0, "14": 0,
-        "15": 0, "16": 0, "17": 0,
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0,
         "adult": 0
       },
-      "location": {
-        "lat": 51.4967,
-        "lng": -0.1764
-      },
-      "restaurant": "<a href='https://maps.google.com/?q=Tangerine+Cafe+Natural+History+Museum' target='_blank'>Tangerine Cafe</a> - μέσα στο μουσείο",
+      "location": { "lat": 51.4967, "lng": -0.1764 },
+      "restaurant": "<a href='https://maps.google.com/?q=Tangerine+Cafe+Natural+History+Museum' target='_blank'>Tangerine Cafe</a>",
       "website": "https://www.nhm.ac.uk/",
-      "notes": ["ΔΩΡΕΑΝ είσοδος", "Συνεισφορά προαιρετική"],
+      "notes": ["ΔΩΡΕΑΝ είσοδος. Συνεισφορά προαιρετική."],
       "tags": ["museum", "free", "dinosaurs"],
       "duration_hours": 2.5,
       "best_time": "afternoon"
+    },
+    {
+      "id": 4,
+      "name": "Warner Bros. Harry Potter Studio Tour",
+      "description": "Περιήγηση στα κινηματογραφικά στούντιο του Harry Potter.",
+      "category": "attraction",
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 51, "6": 51, "7": 51, "8": 51, "9": 51, "10": 51, "11": 51, "12": 51, "13": 51, "14": 51, "15": 51,
+        "16": 63, "17": 63,
+        "adult": 63
+      },
+      "location": { "lat": 51.6900, "lng": -0.4187 },
+      "restaurant": "<a href='https://maps.google.com/?q=Studio+Tour+Cafe' target='_blank'>Studio Tour Cafe</a>",
+      "website": "https://www.wbstudiotour.co.uk/",
+      "notes": ["Χωρίς μεταφορά.", "Οικογενειακή έκπτωση 26€ (2 ενήλικες + 2 παιδιά).", "Κράτηση απαραίτητη."],
+      "tags": ["harry potter", "movie", "studio"],
+      "duration_hours": 3.5,
+      "best_time": "any"
+    },
+    {
+      "id": 5,
+      "name": "ZSL London Zoo",
+      "description": "Ιστορικός ζωολογικός κήπος στο Ρίτζεντς Παρκ.",
+      "category": "zoo",
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 26, "6": 26, "7": 26, "8": 26, "9": 26, "10": 26, "11": 26, "12": 26, "13": 26, "14": 26, "15": 26,
+        "16": 32, "17": 32,
+        "adult": 32
+      },
+      "location": { "lat": 51.5353, "lng": -0.1534 },
+      "restaurant": "<a href='https://maps.google.com/?q=London+Zoo+Restaurants' target='_blank'>Βασικό Εστιατόριο</a>",
+      "website": "https://www.zsl.org/zsl-london-zoo",
+      "notes": ["Τιμές Off-Peak. Peak: Παιδιά 30€, Ενήλικες 37€.", "Κράτηση συνιστάται."],
+      "tags": ["zoo", "animals", "family"],
+      "duration_hours": 4,
+      "best_time": "morning"
+    },
+    {
+      "id": 6,
+      "name": "Royal Observatory Greenwich",
+      "description": "Το ιστορικό αστεροσκοπείο στον Πρώτο Μεσημβρινό.",
+      "category": "museum",
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 8, "6": 8, "7": 8, "8": 8, "9": 8, "10": 8, "11": 8, "12": 8, "13": 8, "14": 8, "15": 8,
+        "16": 16, "17": 16,
+        "adult": 16
+      },
+      "location": { "lat": 51.4769, "lng": -0.0005 },
+      "restaurant": "<a href='https://maps.google.com/?q=Greenwich+Observatory+Cafe' target='_blank'>Observatory Cafe</a>",
+      "website": "https://www.rmg.co.uk/royal-observatory",
+      "notes": ["Greenwich Park (έξω) είναι δωρεάν.", "Εκτίμηση τιμών."],
+      "tags": ["observatory", "planetarium", "history"],
+      "duration_hours": 2,
+      "best_time": "afternoon"
+    },
+    {
+      "id": 7,
+      "name": "Postal Museum + Mail Rail",
+      "description": "Μουσείο ταχυδρομείου με υπογεια σιδηροδρομική διαδρομή.",
+      "category": "museum",
+      "prices": {
+        "0": 0, "1": 0,
+        "2": 12.5, "3": 12.5, "4": 12.5, "5": 12.5, "6": 12.5, "7": 12.5, "8": 12.5, "9": 12.5, "10": 12.5, "11": 12.5, "12": 12.5, "13": 12.5, "14": 12.5, "15": 12.5,
+        "16": 14.5, "17": 14.5, "18": 14.5, "19": 14.5, "20": 14.5, "21": 14.5, "22": 14.5, "23": 14.5, "24": 14.5,
+        "adult": 21
+      },
+      "location": { "lat": 51.5291, "lng": -0.1213 },
+      "restaurant": "<a href='https://maps.google.com/?q=Postal+Museum+Cafe' target='_blank'>Postal Museum Cafe</a>",
+      "website": "https://www.postalmuseum.org/",
+      "notes": ["⚠️ Η τιμή 'adult' (21€) ισχύει για επισκέπτες 25 ετών και άνω.", "Επισκέπτες 16-24 ετών: 14.5€."],
+      "tags": ["interactive", "train", "history"],
+      "duration_hours": 2,
+      "best_time": "any"
+    },
+    {
+      "id": 8,
+      "name": "Horniman Museum – Ενυδρείο",
+      "description": "Ενυδρείο στο Horniman Museum. Το μουσείο & οι κήποι είναι δωρεάν.",
+      "category": "aquarium",
+      "prices": {
+        "0": 0, "1": 0, "2": 0,
+        "3": 5, "4": 5, "5": 5, "6": 5, "7": 5, "8": 5, "9": 5, "10": 5, "11": 5, "12": 5, "13": 5, "14": 5, "15": 5,
+        "16": 6, "17": 6,
+        "adult": 6
+      },
+      "location": { "lat": 51.4403, "lng": -0.0618 },
+      "restaurant": "<a href='https://maps.google.com/?q=Horniman+Museum+Cafe' target='_blank'>Horniman Museum Cafe</a>",
+      "website": "https://www.horniman.ac.uk/",
+      "notes": ["Μόνο το ενυδρείο είναι πληρωτέο.", "Το μουσείο & οι κήποι είναι ΔΩΡΕΑΝ.", "Εκτίμηση τιμών."],
+      "tags": ["aquarium", "museum", "garden"],
+      "duration_hours": 1.5,
+      "best_time": "afternoon"
+    },
+    {
+      "id": 9,
+      "name": "Science Museum",
+      "description": "Διαδραστικό μουσείο επιστήμης και τεχνολογίας.",
+      "category": "museum",
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0,
+        "adult": 0
+      },
+      "location": { "lat": 51.4975, "lng": -0.1747 },
+      "restaurant": "<a href='https://maps.google.com/?q=Science+Museum+Cafe' target='_blank'>Science Museum Cafe</a>",
+      "website": "https://www.sciencemuseum.org.uk/",
+      "notes": ["ΔΩΡΕΑΝ είσοδος. Συνεισφορά προαιρετική."],
+      "tags": ["museum", "free", "science", "interactive"],
+      "duration_hours": 3,
+      "best_time": "afternoon"
+    },
+    {
+      "id": 10,
+      "name": "British Museum",
+      "description": "Σημαντικό μουσείο παγκόσμιας ιστορίας και πολιτισμού.",
+      "category": "museum",
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0,
+        "adult": 0
+      },
+      "location": { "lat": 51.5194, "lng": -0.1269 },
+      "restaurant": "<a href='https://maps.google.com/?q=British+Museum+Great+Court+Restaurant' target='_blank'>Great Court Restaurant</a>",
+      "website": "https://www.britishmuseum.org/",
+      "notes": ["ΔΩΡΕΑΝ είσοδος. Συνεισφορά προαιρετική."],
+      "tags": ["museum", "free", "history", "art"],
+      "duration_hours": 4,
+      "best_time": "morning"
+    },
+    {
+      "id": 11,
+      "name": "Tate Modern",
+      "description": "Μουσείο μοντέρνας και σύγχρονης τέχνης.",
+      "category": "museum",
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0,
+        "adult": 0
+      },
+      "location": { "lat": 51.5076, "lng": -0.0994 },
+      "restaurant": "<a href='https://maps.google.com/?q=Tate+Modern+Restaurant' target='_blank'>Tate Modern Restaurant</a>",
+      "website": "https://www.tate.org.uk/visit/tate-modern",
+      "notes": ["ΔΩΡΕΑΝ είσοδος στις μόνιμες συλλογές.", "Ορισμένες ειδικές εκθέσεις έχουν χρέωση."],
+      "tags": ["museum", "free", "modern art"],
+      "duration_hours": 2.5,
+      "best_time": "afternoon"
+    },
+    {
+      "id": 12,
+      "name": "Museum of London Docklands",
+      "description": "Μουσείο για την ιστορία του Λονδίνου και του ποταμού Τάμεση.",
+      "category": "museum",
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0,
+        "adult": 0
+      },
+      "location": { "lat": 51.5071, "lng": -0.0236 },
+      "restaurant": "<a href='https://maps.google.com/?q=Museum+of+London+Docklands+Cafe' target='_blank'>Μουσείο Cafe</a>",
+      "website": "https://www.museumoflondon.org.uk/museum-london-docklands",
+      "notes": ["ΔΩΡΕΑΝ είσοδος."],
+      "tags": ["museum", "free", "history", "docklands"],
+      "duration_hours": 2,
+      "best_time": "afternoon"
+    },
+    {
+      "id": 13,
+      "name": "Regent's Park",
+      "description": "Μεγάλο βασιλικό πάρκο με κήπους και λίμνη.",
+      "category": "park",
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0,
+        "adult": 0
+      },
+      "location": { "lat": 51.5311, "lng": -0.1566 },
+      "restaurant": "<a href='https://maps.google.com/?q=Regents+Park+Cafe' target='_blank'>Park Cafe</a>",
+      "website": "https://www.royalparks.org.uk/parks/the-regents-park",
+      "notes": ["ΔΩΡΕΑΝ είσοδος."],
+      "tags": ["park", "free", "garden"],
+      "duration_hours": 1.5,
+      "best_time": "afternoon"
+    },
+    {
+      "id": 14,
+      "name": "Sky Garden",
+      "description": "Δωρεάν κήπος σε ουρανοξύστη με πανοραμική θέα (απαιτείται κράτηση).",
+      "category": "viewpoint",
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0,
+        "adult": 0
+      },
+      "location": { "lat": 51.5115, "lng": -0.0841 },
+      "restaurant": "<a href='https://maps.google.com/?q=Sky+Garden+Restaurant' target='_blank'>Sky Garden Restaurant</a>",
+      "website": "https://skygarden.london/",
+      "notes": ["ΔΩΡΕΑΝ, αλλά απαιτείται ΚΡΑΤΗΣΗ online."],
+      "tags": ["view", "free", "garden", "skyscraper"],
+      "duration_hours": 1,
+      "best_time": "any"
+    },
+    {
+      "id": 15,
+      "name": "Borough Market",
+      "description": "Ιστορική αγορά τροφίμων με παραδοσιακά και διεθνή προϊόντα.",
+      "category": "market",
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0,
+        "adult": 0
+      },
+      "location": { "lat": 51.5056, "lng": -0.0912 },
+      "restaurant": "Πολλά street food stalls μέσα στην αγορά.",
+      "website": "https://boroughmarket.org.uk/",
+      "notes": ["ΔΩΡΕΑΝ είσοδος.", "Κλειστό Κυριακές."],
+      "tags": ["market", "free", "food"],
+      "duration_hours": 1.5,
+      "best_time": "morning"
     }
   ]
 }
