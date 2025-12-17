@@ -4730,9 +4730,9 @@ function calculateSmartCombos() {
     
     console.log(`✅ Βρέθηκαν ${selectedActivities.length} επιλεγμένες δραστηριότητες`);
     
-    // 3. ΥΠΟΛΟΓΙΣΜΟΣ ΚΑΝΟΝΙΚΟΥ ΚΟΣΤΟΥΣ
+    // 3. ΥΠΟΛΟΓΙΣΜΟΣ ΣΥΝΟΛΙΚΟΥ ΚΟΣΤΟΥΣ ΟΛΩΝ ΤΩΝ ΕΠΙΛΕΓΜΕΝΩΝ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ
     const ageGroups = categorizeFamilyMembers();
-    const regularCost = calculateComboRegularCost(selectedActivities, ageGroups);
+    const totalRegularCost = calculateComboRegularCost(selectedActivities, ageGroups);
     
     // 4. ΑΝΑΖΗΤΗΣΗ COMBO ΒΑΣΕΙ ΠΟΛΗΣ
     let availableCombos = [];
@@ -4750,29 +4750,36 @@ function calculateSmartCombos() {
     // 5. ΥΠΟΛΟΓΙΣΜΟΣ ΚΑΛΥΤΕΡΟΥ COMBO
     let bestCombo = null;
     let bestSaving = 0;
-    let bestTotal = regularCost;
     
     availableCombos.forEach(combo => {
-        const saving = regularCost - combo.comboPrice;
-        if (saving > bestSaving) {
-            bestSaving = saving;
+        // Το combo.regularPrice είναι το κόστος ΜΟΝΟ των δραστηριοτήτων που καλύπτει το combo
+        // Το combo.comboPrice είναι το κόστος του combo για αυτές τις δραστηριότητες
+        const comboRegularCost = combo.regularPrice; // Μόνο για τις δραστηριότητες που καλύπτει το combo
+        const comboSaving = comboRegularCost - combo.comboPrice; // Εξοικονόμηση στις συγκεκριμένες δραστηριότητες
+        
+        if (comboSaving > bestSaving) {
+            bestSaving = comboSaving;
             bestCombo = combo;
-            bestTotal = combo.comboPrice;
         }
     });
     
-    // 6. ΕΜΦΑΝΙΣΗ ΑΠΟΤΕΛΕΣΜΑΤΩΝ
+    // 6. ΥΠΟΛΟΓΙΣΜΟΣ ΤΕΛΙΚΟΥ ΚΟΣΤΟΥΣ
+    let finalTotalCost = totalRegularCost;
+    if (bestCombo && bestSaving > 0) {
+        finalTotalCost = totalRegularCost - bestSaving; // Αφαιρούμε ΜΟΝΟ την εξοικονόμηση από τις συγκεκριμένες δραστηριότητες
+    }
+    
+    // 7. ΕΜΦΑΝΙΣΗ ΑΠΟΤΕΛΕΣΜΑΤΩΝ
     const results = {
-        regularCost: regularCost,
+        totalRegularCost: totalRegularCost,
         bestCombo: bestCombo,
         bestSaving: bestSaving,
-        bestTotal: bestTotal,
+        finalTotalCost: finalTotalCost,
         allCombos: availableCombos
     };
     
-    displayComboResults(results, regularCost);
+    displayComboResults(results, totalRegularCost);
 }
-
 // ==================== ΒΟΗΘΗΤΙΚΕΣ ΣΥΝΑΡΤΗΣΕΙΣ COMBO ====================
 
 function categorizeFamilyMembers() {
@@ -5304,7 +5311,7 @@ function displayComboResults(results, regularCost) {
                 Κλείσιμο
             </button>
             ${bestComboApplied ? `
-           <button onclick="applyComboToTotal('${results.bestCombo?.name}', ${results.bestCombo.regularPrice - results.bestCombo.comboPrice}, ${results.bestCombo.regularPrice})">
+            <button onclick="applyComboToTotal('${results.bestCombo?.name}', ${results.bestSaving})"
                     style="padding: 12px 25px; background: #9c27b0; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold;">
                 ✅ Εφαρμογή στο Συνολικό Κόστος
             </button>` : ''}
