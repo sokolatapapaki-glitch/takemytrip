@@ -3757,59 +3757,85 @@ function calculateComboCosts(selectedActivities, availableCombos, ageGroups, reg
     const paidSelectedIds = paidSelectedActivities.map(act => act.id);
     console.log(`   [ComboCalc] Πληρωτά επιλεγμένα IDs: ${paidSelectedIds.join(', ')}`);
 
-    // ================= ΒΗΜΑ 5: ΕΛΕΓΧΟΣ ΚΑΘΕ ΕΝΟΣ ΑΠΟ ΤΑ 3 ΜΑΣ COMBO PASSES =================
-    londonComboPasses.forEach(pass => {
-        console.log(`\n   [ComboCalc] 🔍 Έλεγχος: ${pass.name}`);
+    // ================= ΒΗΜΑ 5: ΕΛΕΓΧΟΣ ΚΑΘΕ ΕΝΟΣ ΑΠΟ ΤΑ 3 ΜΑΣ COMBO PASSES (ΔΙΟΡΘΩΜΕΝΗ ΛΟΓΙΚΗ) =================
+londonComboPasses.forEach(pass => {
+    console.log(`\n   [ComboCalc] 🔍 Έλεγχος: ${pass.name}`);
 
-        // Βρίσκουμε ποια από τα πληρωτά, επιλεγμένα αξιοθέατα καλύπτονται από αυτό το πάσο
-        const coveredIds = paidSelectedIds.filter(id => pass.validIds.includes(id));
-        console.log(`        Καλύπτονται ${coveredIds.length} από τα ${pass.requiredCount} απαιτούμενα αξιοθέατα.`);
+    // 1. Βρες ποια πληρωτά αξιοθέατα καλύπτονται ΚΑΙ είναι επιλεγμένα
+    const coveredActivities = paidSelectedActivities.filter(act => pass.validIds.includes(act.id));
+    console.log(`        Βρέθηκαν ${coveredActivities.length} καλυπτόμενα αξιοθέατα.`);
 
-        // Βασική προϋπόθεση: ο χρήστης έχει επιλέξει αρκετά από τα καλυπτόμενα αξιοθέατα;
-        if (coveredIds.length >= pass.requiredCount) {
-            console.log(`        ✅ ΙΣΧΥΕΙ.`);
+    // 2. Έλεγχος προϋπόθεσης: έχει αρκετά αξιοθέατα για να ισχύσει το πάσο;
+    if (coveredActivities.length >= pass.requiredCount) {
+        console.log(`        ✅ ΙΣΧΥΕΙ.`);
 
-            // ΥΠΟΛΟΓΙΣΜΟΣ: (Τιμή ανά άτομο) × (Αριθμός ατόμων που πληρώνουν)
-            const comboTotalCost = pass.pricePerPerson * totalPayingPeople;
-            const saving = regularCost - comboTotalCost; // Εξοικονόμηση έναντι του κανονικού κόστους
+        // 3. ΤΑΞΙΝΟΜΗΣΕ τα καλυπτόμενα αξιοθέατα από το ΦΘΗΝΟΤΕΡΟ στο ΑΚΡΙΒΟΤΕΡΟ (για 1 άτομο)
+        coveredActivities.sort((a, b) => {
+            const priceA = a.prices?.adult || 0;
+            const priceB = b.prices?.adult || 0;
+            return priceA - priceB;
+        });
 
-            console.log(`        💰 Κόστος Combo: ${pass.pricePerPerson}€/άτομο × ${totalPayingPeople} άτομα = ${comboTotalCost}€`);
-            console.log(`        💵 Εξοικονόμηση έναντι κανονικού (${regularCost}€): ${saving}€`);
+        // 4. Πάρε μόνο τα Χ πρώτα (όσα καλύπτει το πάσο) - αυτά αντικαθίστανται
+        const activitiesToReplace = coveredActivities.slice(0, pass.requiredCount);
+        const remainingActivities = coveredActivities.slice(pass.requiredCount); // Τα υπόλοιπα καλυπτόμενα (αν υπάρχουν) πληρώνονται κανονικά
 
-            // Δημιουργούμε το combo αντικείμενο στη δική σου δομή
-            const comboObject = {
-                name: pass.name,
-                activities: [`${pass.requiredCount} αξιοθέατα από τη λίστα του πάσου`],
-                regularPrice: regularCost,
-                comboPrice: comboTotalCost,
-                saving: saving > 0 ? saving : 0,
-                totalWithCombo: comboTotalCost
-            };
+        // 5. ΥΠΟΛΟΓΙΣΜΟΣ ΝΕΟΥ ΚΟΣΤΟΥΣ
+        // Α) Κόστος Combo για τα αντικαθιστώμενα αξιοθέατα
+        const comboReplacementCost = pass.pricePerPerson * totalPayingPeople; // Π.χ., 36€ * 2 άτομα = 72€
 
-            // Προσθέτουμε στα συνολικά αποτελέσματα
-            results.allCombos.push(comboObject);
+        // Β) Κόστος για τα υπόλοιπα αξιοθέατα (αυτά που ΔΕΝ αντικαθίστανται)
+        //    (περιλαμβάνει: Τα μη-καλυπτόμενα + Τα καλυπτόμενα αλλά πιο ακριβά από το όριο)
+        const nonCoveredActivities = paidSelectedActivities.filter(act => !pass.validIds.includes(act.id));
+        const allActivitiesToPayNormally = [...nonCoveredActivities, ...remainingActivities];
 
-            // Κρατάμε το καλύτερο (μεγαλύτερη εξοικονόμηση)
-            if (saving > results.bestSaving) {
-                results.bestSaving = saving;
-                results.bestCombo = comboObject;
-                results.bestTotal = comboTotalCost;
-            }
-        } else {
-            console.log(`        ❌ ΔΕΝ ισχύει. Δεν έχει αρκετά επιλεγμένα αξιοθέατα.`);
+        let normalCostOfOtherActivities = 0;
+        allActivitiesToPayNormally.forEach(act => {
+            let activityCostForGroup = 0;
+            Object.keys(ageGroups).forEach(category => {
+                const count = ageGroups[category];
+                if (count > 0) {
+                    const age = (category === 'adult') ? 18 : parseInt(category);
+                    const ageKey = age <= 17 ? age.toString() : 'adult';
+                    const price = act.prices[ageKey] || 0;
+                    activityCostForGroup += price * count;
+                }
+            });
+            normalCostOfOtherActivities += activityCostForGroup;
+        });
+
+        // Γ) ΣΥΝΟΛΙΚΟ ΚΟΣΤΟΣ ΜΕ COMBO
+        const totalCostWithCombo = comboReplacementCost + normalCostOfOtherActivities;
+        const saving = regularCost - totalCostWithCombo;
+
+        console.log(`        🔄 Αντικαθίστανται: ${activitiesToReplace.map(a => a.name).join(', ')}`);
+        console.log(`        💰 Κόστος Combo για αντικατάσταση: ${comboReplacementCost}€`);
+        console.log(`        📋 Τα υπόλοιπα ${allActivitiesToPayNormally.length} αξιοθέατα πληρώνονται κανονικά: ${normalCostOfOtherActivities}€`);
+        console.log(`        💵 Νέο Σύνολο: ${totalCostWithCombo}€ (Εξοικονόμηση vs ${regularCost}€: ${saving}€)`);
+
+        // 6. Δημιούργησε το combo object
+        const comboObject = {
+            name: pass.name,
+            description: `Αντικαθιστά ${pass.requiredCount} αξιοθέατα: ${activitiesToReplace.map(a => a.name).join(', ')}`,
+            activities: activitiesToReplace.map(a => a.name),
+            regularPrice: regularCost,
+            comboPrice: totalCostWithCombo,
+            saving: saving > 0 ? saving : 0,
+            totalWithCombo: totalCostWithCombo
+        };
+
+        results.allCombos.push(comboObject);
+
+        if (saving > results.bestSaving) {
+            results.bestSaving = saving;
+            results.bestCombo = comboObject;
+            results.bestTotal = totalCostWithCombo;
         }
-    });
-
-    // ================= ΒΗΜΑ 6: ΤΕΛΙΚΗ ΕΠΙΣΤΡΟΦΗ ΤΩΝ ΑΠΟΤΕΛΕΣΜΑΤΩΝ =================
-    console.log(`\n   [ComboCalc] ΤΕΛΟΣ ΛΟΓΙΚΗΣ. Βρέθηκαν ${results.allCombos.length} έγκυρα combos.`);
-    if (results.bestCombo) {
-        console.log(`   [ComboCalc] 🏆 ΚΑΛΥΤΕΡΟ COMBO: ${results.bestCombo.name} - Εξοικονόμηση ${results.bestSaving}€`);
     } else {
-        console.log(`   [ComboCalc] ℹ️ Δεν βρέθηκε συμφέρων Combo Pass.`);
+        console.log(`        ❌ ΔΕΝ ισχύει. Απαιτούνται ${pass.requiredCount}, έχει ${coveredActivities.length}.`);
     }
-    return results; // Στην οθόνη θα εμφανιστεί το καλύτερο combo (ή τίποτα αν δεν ισχύει κανένα).
-}
-
+});
+// ================= ΤΕΛΟΣ ΝΕΑΣ ΛΟΓΙΚΗΣ =================
 function displayComboResults(results, regularCost) {
     // Δημιουργία modal για εμφάνιση αποτελεσμάτων
        const modal = document.createElement('div');
