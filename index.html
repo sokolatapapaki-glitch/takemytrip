@@ -4602,7 +4602,46 @@ function calculateAllCostsNew() {
     
     console.log("💰 Συνολικό κόστος:", overallTotal, "€");
 }
+// ==================== ΚΩΔΙΚΑΣ ΓΙΑ ΕΦΑΡΜΟΓΗ COMBO ====================
 
+function applyComboToTotal(comboName, savingAmount) {
+    // 1. Κλείνει το παράθυρο combo
+    closeComboModal();
+    
+    // 2. Βρίσκει το συνολικό κόστος
+    const totalElement = document.getElementById('overall-total');
+    if (!totalElement) {
+        alert('Δεν βρέθηκε το κόστος');
+        return;
+    }
+    
+    // 3. Διαβάζει το τρέχον κόστος
+    const text = totalElement.textContent;
+    const numbers = text.match(/\d+/g);
+    let currentTotal = 0;
+    
+    if (numbers && numbers.length > 0) {
+        currentTotal = parseFloat(numbers[0]);
+    }
+    
+    // 4. Υπολογίζει το νέο κόστος
+    const newTotal = currentTotal - savingAmount;
+    
+    // 5. Ενημερώνει την οθόνη
+    totalElement.textContent = `Συνολικό Κόστος: ${newTotal.toFixed(2)} € (με ${comboName})`;
+    
+    // 6. Δείχνει μήνυμα επιτυχίας
+    alert(`✅ Εφαρμόστηκε: ${comboName}\n💰 Εξοικονόμηση: ${savingAmount}€\n📊 Νέο σύνολο: ${newTotal.toFixed(2)}€`);
+    
+    // 7. Αποθηκεύει
+    localStorage.setItem('lastCombo', JSON.stringify({
+        name: comboName,
+        saving: savingAmount,
+        date: new Date().toLocaleDateString()
+    }));
+}
+
+// ==================== ΤΕΛΟΣ ΚΩΔΙΚΑ COMBO ====================
 // ==================== ΤΕΛΟΣ ΝΕΩΝ ΣΥΝΑΡΤΗΣΕΩΝ ====================
  console.log("✅ Όλες οι συναρτήσεις φορτώθηκαν σωστά!"); 
  // ==================== ΕΞΥΠΝΟΣ ΥΠΟΛΟΓΙΣΜΟΣ COMBO (ΝΕΟ - ΓΙΑ ΟΛΕΣ ΤΙΣ ΠΟΛΕΙΣ) ====================
@@ -4754,53 +4793,122 @@ function findLondonCombos(selectedActivities, ageGroups) {
     console.log("🏴󠁧󠁢󠁥󠁮󠁧󠁿 Αναζήτηση combos για Λονδίνο");
     const combos = [];
     
-    // MUSEUM PASS COMBO
-    const museumActivities = selectedActivities.filter(act => 
-        act.name.includes("Museum") || 
-        act.name.includes("British Museum") ||
-        act.name.includes("Natural History") ||
-        act.name.includes("Science Museum")
-    );
+    // ============================================
+    // 1. MERLIN PASS COMBO (Sea Life + London Eye + Madame Tussauds + Shrek)
+    // ============================================
+    const merlinAttractions = selectedActivities.filter(act => {
+        const name = act.name.toLowerCase();
+        return name.includes("sea life") || 
+               name.includes("london eye") || 
+               name.includes("madame tussauds") || 
+               name.includes("shrek") ||
+               name.includes("london dungeon") ||
+               name.includes("thorpe park");
+    });
     
-    if (museumActivities.length >= 3) {
-        const normalCost = calculateComboRegularCost(museumActivities, ageGroups);
-        const passCost = 85; // Museum Pass London
+    if (merlinAttractions.length >= 2) {
+        // Κόστος ΧΩΡΙΣ combo (γι'αυτες τις δραστηριότητες ΜΟΝΟ)
+        const normalCostForMerlin = calculateComboRegularCost(merlinAttractions, ageGroups);
         
-        if (normalCost > passCost) {
+        // Υπολογισμός κόστους Merlin Pass ΑΝΑ ΑΤΟΜΟ
+        const adultCount = ageGroups["18+"] || 0;
+        const childCount = (ageGroups["6-14"] || 0) + (ageGroups["15-19"] || 0);
+        
+        // Τιμές Merlin Pass (προσομοίωση - βάλε τις πραγματικές τιμές)
+        const merlinPassAdultPrice = 79;  // £ ανά ενήλικα
+        const merlinPassChildPrice = 69;  // £ ανά παιδί
+        
+        // ΣΥΝΟΛΙΚΟ ΚΟΣΤΟΣ COMBO ΜΕ PASS
+        const comboCostMerlin = (adultCount * merlinPassAdultPrice) + (childCount * merlinPassChildPrice);
+        
+        if (normalCostForMerlin > comboCostMerlin) {
             combos.push({
-                name: "🏛️ Museum Pass London",
-                description: `Καλύπτει ${museumActivities.length} μουσεία`,
-                activities: museumActivities.map(a => a.name),
-                regularPrice: normalCost,
-                comboPrice: passCost,
-                saving: normalCost - passCost,
-                note: "Πρόσβαση σε 80+ μουσεία για 5 ημέρες"
+                name: "🎡 Merlin Pass London",
+                description: `Πρόσβαση σε ${merlinAttractions.length} αξιοθέατα της Merlin`,
+                activities: merlinAttractions.map(a => a.name),
+                regularPrice: normalCostForMerlin,
+                comboPrice: comboCostMerlin,
+                saving: normalCostForMerlin - comboCostMerlin,
+                note: `💰 Ενηλίκων: ${merlinPassAdultPrice}€ × ${adultCount} = ${adultCount * merlinPassAdultPrice}€ | Παιδιών: ${merlinPassChildPrice}€ × ${childCount} = ${childCount * merlinPassChildPrice}€`
             });
         }
     }
     
-    // LONDON PASS COMBO
-    const popularAttractions = selectedActivities.filter(act => 
-        act.name.includes("Tower") ||
-        act.name.includes("London Eye") ||
-        act.name.includes("Madame Tussauds") ||
-        act.name.includes("St. Paul") ||
-        act.name.includes("Westminster")
-    );
+    // ============================================
+    // 2. LONDON PASS COMBO
+    // ============================================
+    const londonPassActivities = selectedActivities.filter(act => {
+        const name = act.name.toLowerCase();
+        return name.includes("tower of london") ||
+               name.includes("tower bridge") ||
+               name.includes("westminster abbey") ||
+               name.includes("st. paul") ||
+               name.includes("kensington palace") ||
+               name.includes("hampton court") ||
+               name.includes("shakespeare") ||
+               name.includes("thames cruise");
+    });
     
-    if (popularAttractions.length >= 3) {
-        const normalCost = calculateComboRegularCost(popularAttractions, ageGroups);
-        const passCost = 79; // London Pass
+    if (londonPassActivities.length >= 3) {
+        const normalCostLondonPass = calculateComboRegularCost(londonPassActivities, ageGroups);
         
-        if (normalCost > passCost) {
+        // London Pass τιμές ανά ημέρα ανά άτομο
+        const adultCount = ageGroups["18+"] || 0;
+        const childCount = (ageGroups["6-14"] || 0) + (ageGroups["15-19"] || 0);
+        
+        const londonPass1DayAdult = 79;
+        const londonPass1DayChild = 55;
+        const londonPass2DayAdult = 109;
+        const londonPass2DayChild = 79;
+        
+        // Επιλογή ημερών βάσει αριθμού δραστηριοτήτων
+        const daysNeeded = Math.min(3, Math.ceil(londonPassActivities.length / 4));
+        const is2Days = daysNeeded >= 2;
+        
+        const comboCostLondon = is2Days ? 
+            (adultCount * londonPass2DayAdult) + (childCount * londonPass2DayChild) :
+            (adultCount * londonPass1DayAdult) + (childCount * londonPass1DayChild);
+        
+        if (normalCostLondonPass > comboCostLondon) {
             combos.push({
-                name: "🎫 London Pass (1 ημέρα)",
-                description: `Καλύπτει ${popularAttractions.length} αξιοθέατα`,
-                activities: popularAttractions.map(a => a.name),
-                regularPrice: normalCost,
-                comboPrice: passCost,
-                saving: normalCost - passCost,
-                note: "Περιλαμβάνει και δωρεάν μεταφορές"
+                name: is2Days ? "🎫 London Pass (2 ημέρες)" : "🎫 London Pass (1 ημέρα)",
+                description: `Καλύπτει ${londonPassActivities.length} αξιοθέατα`,
+                activities: londonPassActivities.map(a => a.name),
+                regularPrice: normalCostLondonPass,
+                comboPrice: comboCostLondon,
+                saving: normalCostLondonPass - comboCostLondon,
+                note: `👥 ${adultCount} ενήλικες, ${childCount} παιδιά | ${is2Days ? '2' : '1'} ημέρες`
+            });
+        }
+    }
+    
+    // ============================================
+    // 3. SEA LIFE + LONDON EYE COMBO
+    // ============================================
+    const seaLife = selectedActivities.find(a => a.name.toLowerCase().includes("sea life"));
+    const londonEye = selectedActivities.find(a => a.name.toLowerCase().includes("london eye"));
+    
+    if (seaLife && londonEye) {
+        const normalCostPair = calculateComboRegularCost([seaLife, londonEye], ageGroups);
+        
+        // Combo τιμή ανά άτομο
+        const adultCount = ageGroups["18+"] || 0;
+        const childCount = (ageGroups["6-14"] || 0) + (ageGroups["15-19"] || 0);
+        
+        const comboAdultPrice = 45;  // Combo price per adult
+        const comboChildPrice = 35;  // Combo price per child
+        
+        const comboCostPair = (adultCount * comboAdultPrice) + (childCount * comboChildPrice);
+        
+        if (normalCostPair > comboCostPair) {
+            combos.push({
+                name: "🌊 Sea Life + 🎡 London Eye Combo",
+                description: "Ειδική τιμή για τα 2 δημοφιλή αξιοθέατα",
+                activities: [seaLife.name, londonEye.name],
+                regularPrice: normalCostPair,
+                comboPrice: comboCostPair,
+                saving: normalCostPair - comboCostPair,
+                note: `📊 Combo: ${comboAdultPrice}€ ενήλικας, ${comboChildPrice}€ παιδί`
             });
         }
     }
@@ -4942,6 +5050,9 @@ function findGenericCombos(selectedActivities, ageGroups) {
 }
 
 function displayComboResults(results, regularCost) {
+    // Κλείσιμο παλιού modal αν υπάρχει
+    closeComboModal();
+    
     const modal = document.createElement('div');
     modal.id = 'combo-modal-main';
     modal.style.cssText = `
@@ -4963,65 +5074,129 @@ function displayComboResults(results, regularCost) {
         background: white;
         padding: 30px;
         border-radius: 20px;
-        max-width: 800px;
-        max-height: 80vh;
+        max-width: 900px;
+        max-height: 85vh;
         overflow-y: auto;
         box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     `;
-   
+    
+    // ΥΠΟΛΟΓΙΣΜΟΣ ΤΕΛΙΚΟΥ ΚΟΣΤΟΥΣ ΜΕ COMBO
+    let finalTotalCost = regularCost;
+    let bestComboApplied = false;
+    
+    if (results.bestCombo && results.bestSaving > 0) {
+        finalTotalCost = regularCost - results.bestSaving;
+        bestComboApplied = true;
+    }
+    
     let contentHTML = `
         <div style="text-align: center;">
-            <h2 style="color: #9c27b0; margin-top: 0;">💰 Έξυπνος Υπολογισμός Combos</h2>
+            <h2 style="color: #9c27b0; margin-top: 0;">💰 Έξυπνος Υπολογισμός Combos - ΛΟΝΔΙΝΟ</h2>
+            
             <div style="background: #f3e5f5; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
-                <h3 style="color: #7b1fa2;">📊 Συνολικό Κόστος Χωρίς Combo: <strong>${regularCost.toFixed(2)} €</strong></h3>
-                <p style="color: #666;">🏙️ Πόλη: ${selectedDestinationName}</p>
+                <h3 style="color: #7b1fa2;">📊 Κόστος ΧΩΡΙΣ Combos: <strong>${regularCost.toFixed(2)} €</strong></h3>
+                <p style="color: #666;">🏙️ Πόλη: ${selectedDestinationName} | 👨‍👩‍👧‍👦 Μέλη: ${familyMembers.length}</p>
             </div>
     `;
-   
+    
     if (results.allCombos.length > 0) {
-        if (results.bestSaving > 0) {
+        if (results.bestSaving > 0 && results.bestCombo) {
             contentHTML += `
                 <div style="background: #e8f5e8; padding: 20px; border-radius: 12px; border: 3px solid #4caf50; margin-bottom: 20px;">
                     <h3 style="color: #2e7d32;">🏆 ΚΑΛΥΤΕΡΗ ΕΠΙΛΟΓΗ</h3>
                     <h4>${results.bestCombo.name}</h4>
                     <p>${results.bestCombo.description}</p>
-                    <div style="display: flex; justify-content: space-around; margin: 15px 0;">
+                    
+                    <div style="background: #fff; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        <h4 style="color: #1565c0; margin-top: 0;">🧮 ΑΝΑΛΥΤΙΚΑ:</h4>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;">Συνολικό κόστος όλων των δραστηριοτήτων</td>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee; text-align: right;">${regularCost.toFixed(2)} €</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;">Κόστος των ${results.bestCombo.activities.length} δραστηριοτήτων χωριστά</td>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee; text-align: right;">${results.bestCombo.regularPrice.toFixed(2)} €</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;">Combo τιμή για τις ίδιες ${results.bestCombo.activities.length}</td>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee; text-align: right; color: #4caf50; font-weight: bold;">${results.bestCombo.comboPrice.toFixed(2)} €</td>
+                            </tr>
+                            <tr style="background: #f9f9f9;">
+                                <td style="padding: 8px;"><strong>Εξοικονόμηση</strong></td>
+                                <td style="padding: 8px; text-align: right; color: #4caf50; font-weight: bold;">-${results.bestSaving.toFixed(2)} €</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-around; margin: 20px 0; align-items: center;">
                         <div style="text-align: center;">
-                            <div style="font-size: 24px; color: #f44336; text-decoration: line-through;">${results.bestCombo.regularPrice.toFixed(2)}€</div>
-                            <small>Κανονικό κόστος</small>
+                            <div style="font-size: 24px; color: #f44336; text-decoration: line-through;">${regularCost.toFixed(2)}€</div>
+                            <small>Χωρίς combo</small>
                         </div>
+                        <div style="font-size: 30px; color: #666;">→</div>
                         <div style="text-align: center;">
-                            <div style="font-size: 28px; color: #4caf50; font-weight: bold;">${results.bestCombo.comboPrice}€</div>
-                            <small>Combo τιμή</small>
+                            <div style="font-size: 28px; color: #4caf50; font-weight: bold;">${finalTotalCost.toFixed(2)}€</div>
+                            <small>Με combo</small>
                         </div>
                     </div>
-                    <div style="background: #4caf50; color: white; padding: 10px; border-radius: 8px; font-size: 22px; font-weight: bold;">
+                    
+                    <div style="background: #4caf50; color: white; padding: 12px; border-radius: 8px; font-size: 22px; font-weight: bold; margin-top: 10px;">
                         💰 Εξοικονόμηση: ${results.bestSaving.toFixed(2)} €
                     </div>
-                    <p style="margin-top: 10px;"><strong>📈 Νέο Συνολικό Κόστος: ${results.bestTotal.toFixed(2)} €</strong></p>
-                    ${results.bestCombo.note ? `<p style="font-size: 0.9em; color: #666;">📝 ${results.bestCombo.note}</p>` : ''}
+                    
+                    ${results.bestCombo.note ? `
+                    <div style="background: #e3f2fd; padding: 10px; border-radius: 6px; margin-top: 15px; font-size: 0.9em;">
+                        📝 <strong>Λεπτομέρειες:</strong> ${results.bestCombo.note}
+                    </div>` : ''}
+                    
+                    <div style="margin-top: 15px; font-size: 0.9em; color: #666;">
+                        <strong>📋 Δραστηριότητες που καλύπτονται:</strong><br>
+                        ${results.bestCombo.activities.map(act => `• ${act}`).join('<br>')}
+                    </div>
                 </div>
             `;
         }
-       
-        contentHTML += `<h3 style="color: #3f51b5;">Όλα τα Διαθέσιμα Combos:</h3>`;
-       
+        
+        contentHTML += `<h3 style="color: #3f51b5;">🎯 Όλα τα Διαθέσιμα Combos:</h3>`;
+        
         results.allCombos.forEach((combo, index) => {
             const borderColor = combo.saving > 0 ? '#4caf50' : '#ff9800';
             const bgColor = combo.saving > 0 ? '#f1f8e9' : '#fff3e0';
-           
+            
+            // Υπολογισμός συνολικού κόστους με αυτό το combo
+            const totalWithThisCombo = regularCost - combo.saving;
+            
             contentHTML += `
                 <div style="background: ${bgColor}; padding: 15px; border-radius: 10px; border-left: 5px solid ${borderColor}; margin-bottom: 15px;">
                     <h4 style="margin-top: 0; color: #3f51b5;">${combo.name}</h4>
                     <p style="margin: 5px 0;">${combo.description}</p>
-                    <div style="display: flex; justify-content: space-between; margin: 10px 0;">
-                        <div><strong>Κανονικό:</strong> ${combo.regularPrice.toFixed(2)}€</div>
-                        <div><strong>Combo:</strong> ${combo.comboPrice}€</div>
-                        <div style="color: ${combo.saving > 0 ? '#4caf50' : '#f44336'}; font-weight: bold;">
-                            ${combo.saving > 0 ? '💰 Εξοικονόμηση: ' : '⚠️ Διαφορά: '}${combo.saving.toFixed(2)}€
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0;">
+                        <div style="text-align: center; padding: 8px; background: white; border-radius: 6px;">
+                            <div style="font-size: 0.9em; color: #666;">Κανονικό κόστος:</div>
+                            <div style="font-size: 18px; color: #f44336; text-decoration: line-through;">${combo.regularPrice.toFixed(2)}€</div>
+                        </div>
+                        <div style="text-align: center; padding: 8px; background: white; border-radius: 6px;">
+                            <div style="font-size: 0.9em; color: #666;">Combo τιμή:</div>
+                            <div style="font-size: 18px; color: #4caf50; font-weight: bold;">${combo.comboPrice.toFixed(2)}€</div>
                         </div>
                     </div>
-                    ${combo.note ? `<div style="font-size: 0.85em; color: #666;">📝 ${combo.note}</div>` : ''}
+                    
+                    <div style="background: ${combo.saving > 0 ? '#e8f5e9' : '#ffebee'}; padding: 8px; border-radius: 6px; margin: 8px 0;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span><strong>Εξοικονόμηση:</strong></span>
+                            <span style="color: ${combo.saving > 0 ? '#4caf50' : '#f44336'}; font-weight: bold;">
+                                ${combo.saving > 0 ? '💰 ' : '⚠️ '}${combo.saving.toFixed(2)}€
+                            </span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 0.9em;">
+                            <span>Νέο συνολικό κόστος:</span>
+                            <span><strong>${totalWithThisCombo.toFixed(2)}€</strong></span>
+                        </div>
+                    </div>
+                    
+                    ${combo.note ? `<div style="font-size: 0.85em; color: #666; background: rgba(0,0,0,0.05); padding: 5px; border-radius: 4px; margin-top: 5px;">📝 ${combo.note}</div>` : ''}
                 </div>
             `;
         });
@@ -5030,40 +5205,52 @@ function displayComboResults(results, regularCost) {
             <div style="background: #fff3cd; padding: 20px; border-radius: 10px; border: 2px solid #ffc107;">
                 <h3 style="color: #856404;">ℹ️ Δεν βρέθηκαν διαθέσιμα combos</h3>
                 <p>Οι επιλεγμένες σας δραστηριότητες δεν έχουν διαθέσιμα οικονομικά combos.</p>
+                <p>💡 Συμβουλή: Για Λονδίνο, επιλέξτε 2+ από:</p>
+                <ul style="text-align: left; display: inline-block; margin: 10px 0;">
+                    <li>Sea Life London Aquarium</li>
+                    <li>London Eye</li>
+                    <li>Madame Tussauds</li>
+                    <li>Shrek's Adventure</li>
+                    <li>Tower of London</li>
+                    <li>London Dungeon</li>
+                </ul>
             </div>
         `;
     }
-   
+    
     contentHTML += `
         <div style="margin-top: 20px; padding-top: 20px; border-top: 2px dashed #ccc;">
-            <h4 style="color: #9c27b0;">📊 Σύνοψη:</h4>
-            <ul style="text-align: left; padding-left: 20px;">
-                <li>💰 <strong>Κανονικό κόστος:</strong> ${regularCost.toFixed(2)} €</li>
-                ${results.bestSaving > 0 ?
-                    `<li>🏆 <strong>Με καλύτερο combo:</strong> ${results.bestTotal.toFixed(2)} €</li>
-                     <li>✅ <strong>Συνολική εξοικονόμηση:</strong> ${results.bestSaving.toFixed(2)} €</li>` :
-                    `<li>ℹ️ <strong>Δεν βρέθηκε εξοικονόμηση</strong></li>`
-                }
-                <li>🎯 <strong>Βρέθηκαν:</strong> ${results.allCombos.length} combos</li>
-            </ul>
+            <h4 style="color: #9c27b0;">📊 ΤΕΛΙΚΗ ΣΥΝΟΨΗ:</h4>
+            <div style="background: #e3f2fd; padding: 15px; border-radius: 10px;">
+                <ul style="margin: 0; padding-left: 20px;">
+                    <li>💰 <strong>Κανονικό κόστος (χωρίς combos):</strong> ${regularCost.toFixed(2)} €</li>
+                    ${bestComboApplied ?
+                        `<li>🏆 <strong>Με καλύτερο combo (${results.bestCombo?.name}):</strong> ${finalTotalCost.toFixed(2)} €</li>
+                         <li>✅ <strong>Συνολική εξοικονόμηση:</strong> ${results.bestSaving.toFixed(2)} €</li>` :
+                        `<li>ℹ️ <strong>Δεν βρέθηκε εξοικονόμηση</strong></li>`
+                    }
+                    <li>🎯 <strong>Βρέθηκαν:</strong> ${results.allCombos.length} combos</li>
+                    <li>👨‍👩‍👧‍👦 <strong>Μέλη οικογένειας:</strong> ${familyMembers.length} άτομα</li>
+                </ul>
+            </div>
         </div>
        
         <div style="margin-top: 25px; display: flex; justify-content: center; gap: 15px;">
             <button onclick="closeComboModal()"
-        style="padding: 12px 25px; background: #3eb489; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px;">
-    Κλείσιμο
-</button>
-            ${results.bestSaving > 0 ? `
-            <button onclick="applyBestCombo()"
+                style="padding: 12px 25px; background: #3eb489; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px;">
+                Κλείσιμο
+            </button>
+            ${bestComboApplied ? `
+            <button onclick="applyComboToTotal('${results.bestCombo?.name}', ${results.bestSaving})"
                     style="padding: 12px 25px; background: #9c27b0; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold;">
-                ✅ Εφαρμογή
+                ✅ Εφαρμογή στο Συνολικό Κόστος
             </button>` : ''}
         </div>
     `;
-   
+    
     modalContent.innerHTML = contentHTML;
     modal.appendChild(modalContent);
-   
+    
     const closeBtn = document.createElement('button');
     closeBtn.innerHTML = '×';
     closeBtn.style.cssText = `
@@ -5084,7 +5271,7 @@ function displayComboResults(results, regularCost) {
         modal.remove();
         closeBtn.remove();
     };
-   
+    
     document.body.appendChild(modal);
     document.body.appendChild(closeBtn);
 }
