@@ -4584,7 +4584,20 @@ async function loadCityActivities(cityName) {
     
     try {
         // ΠΡΩΤΗ ΠΡΟΣΠΑΘΕΙΑ: Από JSON αρχείο
-        const response = await fetch(`${cityName}.json`);
+// Μετατροπή Ελληνικών ονομάτων σε Αγγλικά filenames
+const cityFileMap = {
+    'Βιέννη': 'vienna.json',
+    'Βερολίνο': 'berlin.json',
+    'Λισαβόνα': 'lisbon.json',
+    'Βουδαπέστη': 'budapest.json',
+    'Μαδρίτη': 'madrid.json',
+    'Κωνσταντινούπολη': 'istanbul.json',
+    'Παρίσι': 'paris.json',
+    'Πράγα': 'prague.json'
+};
+
+const filename = cityFileMap[cityName] || `${cityName.toLowerCase()}.json`;
+const response = await fetch(filename);
         if (response.ok) {
             const cityData = await response.json();
             console.log("✅ Βρέθηκε JSON για:", cityName);
