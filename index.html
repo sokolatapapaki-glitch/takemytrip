@@ -3484,78 +3484,60 @@ function categorizeFamilyMembers() {
     return categories;
 }
 function calculateRegularCost(selectedActivities, ageGroups) {
-    console.log("🧮 Υπολογισμός κόστους για Κωνσταντινούπολη...");
-    console.log("Επιλεγμένες:", selectedActivities.length);
+    console.log("🧮 Υπολογισμός κανονικού κόστους...");
+    console.log("Επιλεγμένες δραστηριότητες:", selectedActivities.length);
     console.log("Ηλικιακές ομάδες:", ageGroups);
     
     let totalCost = 0;
     
-    selectedActivities.forEach((activity, index) => {
+    selectedActivities.forEach((activity) => {
         let activityCost = 0;
-        console.log(`\n📊 ${activity.name}:`);
-        console.log("Προσβάσιμες τιμές:", activity.prices);
         
-        // ΕΞΥΠΝΟΣ ΥΠΟΛΟΓΙΣΜΟΣ για Κωνσταντινούπολη
+        // Υπολογισμός για ΚΑΘΕ άτομο στην ομάδα
         Object.keys(ageGroups).forEach(ageCategory => {
-            const count = ageGroups[ageCategory];
-            if (count > 0) {
-                let price = 0;
-                
-                // Μετατροπή ηλικιακών κατηγοριών για Κωνσταντινούπολη
-                if (ageCategory === "0-2") {
-                    // 0-2 → ψάχνουμε 0-6
-                    price = activity.prices["0-6"] || 0;
-                } else if (ageCategory === "3-5") {
-                    // 3-5 → ψάχνουμε 0-6
-                    price = activity.prices["0-6"] || 0;
-                } else if (ageCategory === "6-14") {
-                    // 6-14 → ψάχνουμε 7-12 (για 6-12) και 13-17 (για 13-14)
-                    if (activity.prices["7-12"] !== undefined) {
-                        price = activity.prices["7-12"];
-                    } else if (activity.prices["13-17"] !== undefined) {
-                        price = activity.prices["13-17"];
-                    }
-                } else if (ageCategory === "15-19") {
-                    // 15-19 → ψάχνουμε 13-17 (για 15-17) και 18+ (για 18-19)
-                    if (activity.prices["13-17"] !== undefined) {
-                        price = activity.prices["13-17"];
-                    } else if (activity.prices["18+"] !== undefined) {
-                        price = activity.prices["18+"];
-                    }
-                } else if (ageCategory === "18+") {
-                    // 18+ → ψάχνουμε 18+
-                    price = activity.prices["18+"] || 0;
+            const numberOfPeople = ageGroups[ageCategory];
+            
+            if (numberOfPeople > 0) {
+                // Μετατροπή της ηλικιακής κατηγορίας σε συγκεκριμένη ηλικία
+                let specificAge;
+                if (ageCategory === 'adult') {
+                    specificAge = 'adult'; // Για ενήλικες
+                } else {
+                    // Π.χ. "15-19" → πάρε το μέσο όρο 17, ή μόνο το πρώτο νούμερο 15
+                    specificAge = ageCategory.split('-')[0]; // Πάρε το πρώτο νούμερο (π.χ. "15")
                 }
                 
-                // Άμα δεν βρέθηκε, δοκιμή γενικότερης αναζήτησης
-                if (price === 0 || price === undefined) {
-                    // Ψάξε για οποιαδήποτι τιμή που ταιριάζει
-                    for (const [key, value] of Object.entries(activity.prices || {})) {
-                        if (key.includes('-')) {
-                            const [min, max] = key.split('-').map(Number);
-                            const ageNum = parseInt(ageCategory.split('-')[0]); // πχ "6-14" → 6
-                            if (ageNum >= min && ageNum <= max) {
-                                price = value;
+                // Βρες την τιμή για τη συγκεκριμένη ηλικία
+                let price = 0;
+                if (activity.prices && activity.prices[specificAge] !== undefined) {
+                    // Έχουμε συγκεκριμένη τιμή για αυτή την ηλικία
+                    price = activity.prices[specificAge];
+                } else if (specificAge === 'adult' && activity.prices['adult'] !== undefined) {
+                    // Έχουμε τιμή για ενήλικες
+                    price = activity.prices['adult'];
+                } else {
+                    // Εναλλακτικά: ψάξε για την πλησιέστερη ηλικία
+                    const ageNum = parseInt(specificAge);
+                    if (!isNaN(ageNum)) {
+                        // Ψάξε στις ηλικίες 0-17
+                        for (let i = 0; i <= 17; i++) {
+                            if (activity.prices[i.toString()] !== undefined) {
+                                price = activity.prices[i.toString()];
                                 break;
                             }
                         }
                     }
                 }
                 
-                const costForThisAge = (price || 0) * count;
-                activityCost += costForThisAge;
-                
-                if (costForThisAge > 0) {
-                    console.log(`  ${ageCategory}: ${price}€ × ${count} = ${costForThisAge}€`);
-                }
+                activityCost += price * numberOfPeople;
             }
         });
         
         totalCost += activityCost;
-        console.log(`  Σύνολο για ${activity.name}: ${activityCost}€`);
+        console.log(`  ${activity.name}: ${activityCost}€`);
     });
     
-    console.log(`💰 ΣΥΝΟΛΙΚΟ ΚΟΣΤΟΣ: ${totalCost}€`);
+    console.log(`💰 ΣΥΝΟΛΙΚΟ ΚΑΝΟΝΙΚΟ ΚΟΣΤΟΣ: ${totalCost}€`);
     return totalCost;
 }
 function findAvailableCombos(allActivities, selectedActivities) {
