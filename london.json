@@ -1,0 +1,81 @@
+{
+  "city": "Λονδίνο",
+  "country": "Ηνωμένο Βασίλειο",
+  "currency": "GBP",
+  "emoji": "🇬🇧",
+  "pricing_model": "per_age",
+  "activities": [
+    {
+      "id": 1,
+      "name": "London Eye",
+      "description": "Ο γιγαντιαίος τροχός με πανοραμική θέα του Λονδίνου.",
+      "category": "attraction",
+      "prices": {
+        "0": 0, "1": 0, "2": 0,
+        "3": 0, "4": 0, "5": 0,
+        "6": 25, "7": 25, "8": 25, "9": 25, "10": 25,
+        "11": 25, "12": 25, "13": 25, "14": 25,
+        "15": 30, "16": 30, "17": 30,
+        "adult": 35
+      },
+      "location": {
+        "lat": 51.5033,
+        "lng": -0.1195
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=London+Eye+Restaurant' target='_blank'>London Eye Restaurant</a> - δίπλα στον τροχό",
+      "website": "https://www.londoneye.com/",
+      "notes": ["Κράτηση online για καλύτερη τιμή"],
+      "tags": ["wheel", "view", "landmark"],
+      "duration_hours": 1,
+      "best_time": "any"
+    },
+    {
+      "id": 2,
+      "name": "Tower of London",
+      "description": "Ιστορικό κάστρο με τα Κορώνα της Αγγλίας και τους Beefeaters.",
+      "category": "castle",
+      "prices": {
+        "0": 0, "1": 0, "2": 0,
+        "3": 14, "4": 14, "5": 14,
+        "6": 14, "7": 14, "8": 14, "9": 14, "10": 14,
+        "11": 14, "12": 14, "13": 14, "14": 14,
+        "15": 22, "16": 22, "17": 22,
+        "adult": 29
+      },
+      "location": {
+        "lat": 51.5081,
+        "lng": -0.0759
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=New+Armouries+Cafe+London' target='_blank'>New Armouries Cafe</a> - μέσα στο Tower",
+      "website": "https://www.hrp.org.uk/tower-of-london/",
+      "notes": ["Δωρεάν για κάτω των 5", "Κράτηση απαιτείται"],
+      "tags": ["castle", "history", "crown jewels"],
+      "duration_hours": 3,
+      "best_time": "morning"
+    },
+    {
+      "id": 3,
+      "name": "Natural History Museum",
+      "description": "Δωρεάν μουσείο με δεινόσαυρους, ηφαίστεια και διάφορα εκθέματα.",
+      "category": "museum",
+      "prices": {
+        "0": 0, "1": 0, "2": 0,
+        "3": 0, "4": 0, "5": 0,
+        "6": 0, "7": 0, "8": 0, "9": 0, "10": 0,
+        "11": 0, "12": 0, "13": 0, "14": 0,
+        "15": 0, "16": 0, "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 51.4967,
+        "lng": -0.1764
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Tangerine+Cafe+Natural+History+Museum' target='_blank'>Tangerine Cafe</a> - μέσα στο μουσείο",
+      "website": "https://www.nhm.ac.uk/",
+      "notes": ["ΔΩΡΕΑΝ είσοδος", "Συνεισφορά προαιρετική"],
+      "tags": ["museum", "free", "dinosaurs"],
+      "duration_hours": 2.5,
+      "best_time": "afternoon"
+    }
+  ]
+}
