@@ -1624,16 +1624,10 @@ function calculateAllCostsNew() {
     
 // ==================== ΤΡΟΠΟΠΟΙΗΜΕΝΗ ΣΥΝΑΡΤΗΣΗ calculateAllCosts ====================
 function calculateAllCosts(activityList = null) {
-            if (!activityList) {
-        activityList = selectedDestinationName.includes("Βιέννη") ? activities :
-                      selectedDestinationName.includes("Βερολίνο") ? activitiesBerlin :
-                      selectedDestinationName.includes("Λισαβόνα") ? activitiesLisbon :
-                      selectedDestinationName.includes("Βουδαπέστη") ? activitiesBudapest :
-                      selectedDestinationName.includes("Μαδρίτη") ? activitiesMadrid :
-                      (selectedDestinationName.includes("Πράγα") || selectedDestinationName.includes("Παρίσι")) ? 
-                      (window.loadedExtraCityActivities || []) : // 👈 ΓΙΑ JSON ΠΟΛΕΙΣ
-                      [];
-    }
+    // Απλά καλεί τη νέα συνάρτηση
+    console.log("🔄 Αυτόματη ανακατεύθυνση στη calculateAllCostsNew");
+    return calculateAllCostsNew();
+}
    
     // Ενημέρωση των familyMembers πριν τον υπολογισμό
     updateFamilyMembers();
