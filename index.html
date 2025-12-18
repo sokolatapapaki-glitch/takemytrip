@@ -2666,10 +2666,9 @@ function createBerlinSmartProgram(activities, days) {
     const activitiesWithCoords = activities.filter(act => act.lat && act.lng);
    
     if (activitiesWithCoords.length === 0) {
-        return "<p>🚧 Για έξυπνο γεωγραφικό χωρισμό, χρειαζόμαστε συντεταγμένες στις δραστηριότητες</p>" +
-               createDailyProgram(activities, days);
+        return createSmartDailyProgram(activities, days);
     }
-   
+      
     const clusters = createSmartClusters(activitiesWithCoords, days);
    
     let programHTML = '<p>🗺️ <strong>Έξυπνο Πρόγραμμα για Βερολίνο:</strong></p>';
@@ -2718,10 +2717,8 @@ function createLisbonSmartProgram(activities, days) {
     const activitiesWithCoords = activities.filter(act => act.lat && act.lng);
    
     if (activitiesWithCoords.length === 0) {
-        return "<p>🚧 Για έξυπνο γεωγραφικό χωρισμό, χρειαζόμαστε συντεταγμένες στις δραστηριότητες</p>" +
-               createDailyProgram(activities, days);
-    }
-   
+                 return createSmartDailyProgram(activities, days);
+      }
     const clusters = createSmartClusters(activitiesWithCoords, days);
    
     let programHTML = '<p>🗺️ <strong>Έξυπνο Πρόγραμμα για Λισαβόνα:</strong></p>';
@@ -2770,8 +2767,7 @@ function createBudapestSmartProgram(activities, days) {
     const activitiesWithCoords = activities.filter(act => act.lat && act.lng);
    
     if (activitiesWithCoords.length === 0) {
-        return "<p>🚧 Για έξυπνο γεωγραφικό χωρισμό, χρειαζόμαστε συντεταγμένες στις δραστηριότητες</p>" +
-               createDailyProgram(activities, days);
+        return createSmartDailyProgram(activities, days);
     }
    
     const clusters = createSmartClusters(activitiesWithCoords, days);
