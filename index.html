@@ -2614,29 +2614,22 @@ function createSmartMapWithActivities(activities) {
 
 // ΝΕΑ ΣΥΝΑΡΤΗΣΗ: Προσθήκη πινεζών στον χάρτη
 function addActivityMarkers(map, activities) {
-    console.log("✅ Προσθήκη πινεζών στον χάρτη για:", activities.length, "δραστηριότητες");
+    console.log("📍 Προσθήκη πινεζών για", activities.length, "δραστηριότητες");
     
     let selectedMarkers = [];
     let markerColor = 'green';
     
     activities.forEach((activity, index) => {
-        // ΕΛΕΓΧΟΣ: Προσαρμογή για διαφορετικές δομές δεδομένων
-        let lat, lng;
-        
-        if (activity.lat && activity.lng) {
-            // Παλιά δομή (Βιέννη, Βερολίνο, κλπ)
-            lat = activity.lat;
-            lng = activity.lng;
-        } else if (activity.location && activity.location.lat && activity.location.lng) {
-            // Νέα δομή (JSON πόλεις όπως Λονδίνο)
-            lat = activity.location.lat;
-            lng = activity.location.lng;
-        } else {
-            console.warn(`⚠️ Δραστηριότητα ${activity.name} δεν έχει συντεταγμένες!`);
+        // ΕΛΕΓΧΟΣ: ΠΑΝΤΑ από το location object
+        if (!activity.location || activity.location.lat === undefined) {
+            console.warn(`⚠️ Δραστηριότητα ${activity.name} δεν έχει location!`, activity);
             return;
         }
         
-        console.log(`📍 Συντεταγμένες: ${lat}, ${lng} για ${activity.name}`);
+        const lat = activity.location.lat;
+        const lng = activity.location.lng;
+        
+        console.log(`   ✅ ${activity.name}: (${lat}, ${lng})`);
         
         const customIcon = L.icon({
             iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${markerColor}.png`,
@@ -2647,31 +2640,17 @@ function addActivityMarkers(map, activities) {
         
         const marker = L.marker([lat, lng], { icon: customIcon }).addTo(map);
         
-        // Προσθήκη popup
         marker.bindPopup(createPopupContent(activity));
         
-        // Λογική για επιλογή πινεζών και διαδρομές
         marker.on('click', function() {
             handleMarkerClick(marker, selectedMarkers, map, activity);
         });
     });
     
-    // ΒΕΛΤΙΣΤΟΠΟΙΗΣΗ: Εάν υπάρχουν δραστηριότητες, fit bounds
     if (activities.length > 0) {
         const latlngs = activities
-            .filter(a => {
-                // Ελέγχουμε και τις δύο δομές
-                return (a.lat && a.lng) || 
-                       (a.location && a.location.lat && a.location.lng);
-            })
-            .map(a => {
-                // Επιστρέφουμε τις σωστές συντεταγμένες
-                if (a.lat && a.lng) {
-                    return [a.lat, a.lng];
-                } else {
-                    return [a.location.lat, a.location.lng];
-                }
-            });
+            .filter(a => a.location && a.location.lat !== undefined)
+            .map(a => [a.location.lat, a.location.lng]);
         
         if (latlngs.length > 0) {
             const bounds = L.latLngBounds(latlngs);
