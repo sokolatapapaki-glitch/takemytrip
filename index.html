@@ -4803,83 +4803,54 @@ async function loadCityActivities(cityName) {
     console.log("🔍 Φόρτωση δραστηριοτήτων για:", cityName);
     
     try {
-        // 1. ΦΟΡΤΩΣΗ ΑΠΟ JSON (αν υπάρχει)
+        // ΧΑΡΤΗΣ ΠΟΛΕΩΝ -> ΑΡΧΕΙΩΝ
         const cityFileMap = {
             'Βιέννη': 'vienna.json',
-            'Βερολίνο': 'berlin.json',
-            'Λισαβόνα': 'lisbon.json',
-            'Βουδαπέστη': 'budapest.json',
-            'Μαδρίτη': 'madrid.json',
+            'Λονδίνο': 'london.json',
             'Κωνσταντινούπολη': 'istanbul.json',
             'Παρίσι': 'paris.json',
             'Πράγα': 'prague.json',
-            'Λονδίνο': 'london.json'  // <-- ΠΡΟΣΘΗΚΗ ΕΔΩ
-            };
+            // Θα προσθέσουμε μετά:
+            // 'Βερολίνο': 'berlin.json',
+            // 'Λισαβόνα': 'lisbon.json',
+            // 'Βουδαπέστη': 'budapest.json',
+            // 'Μαδρίτη': 'madrid.json'
+        };
 
-        const filename = cityFileMap[cityName] || `${cityName.toLowerCase()}.json`;
-        console.log("📁 Προσπάθεια φόρτωσης:", filename);
+        const filename = cityFileMap[cityName];
         
+        if (!filename) {
+            console.log(`⚠️ Η πόλη ${cityName} δεν έχει ακόμα JSON`);
+            return null;
+        }
+        
+        console.log("📁 Φόρτωση:", filename);
         const response = await fetch(filename);
         
-        if (response.ok) {
-            const cityData = await response.json();
-            console.log("✅ Βρέθηκε JSON:", filename, cityData.activities.length, "δραστηριότητες");
-            
-            // ΜΕΤΑΤΡΟΠΗ ΟΛΩΝ ΤΩΝ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ
-            const convertedActivities = cityData.activities.map(activity => {
-                return {
-                    ...activity,
-                    prices: convertAnyPriceFormatToPerAge(activity.prices || {})
-                };
-            });
-            
-            return {
-                name: cityData.city || cityName,
-                activities: convertedActivities
-            };
+        if (!response.ok) {
+            throw new Error(`Δεν βρέθηκε ${filename}`);
         }
-    } catch (error) {
-        console.log("⚠️ Δεν βρέθηκε JSON:", error.message);
-    }
-    
-    // 2. ΑΝ ΔΕΝ ΥΠΑΡΧΕΙ JSON, ΨΑΞΕ ΣΤΟΝ ΚΩΔΙΚΑ
-    console.log("🔍 Αναζήτηση embedded δραστηριοτήτων...");
-    let embeddedActivities = null;
-    
-    if (cityName.includes("Βιέννη")) {
-        embeddedActivities = activities;
-    } else if (cityName.includes("Βερολίνο")) {
-        embeddedActivities = activitiesBerlin;
-    } else if (cityName.includes("Λισαβόνα")) {
-        embeddedActivities = activitiesLisbon;
-    } else if (cityName.includes("Βουδαπέστη")) {
-        embeddedActivities = activitiesBudapest;
-    } else if (cityName.includes("Μαδρίτη")) {
-        embeddedActivities = activitiesMadrid;
-    }
-    
-    if (embeddedActivities) {
-        console.log("✅ Βρέθηκαν embedded:", embeddedActivities.length, "δραστηριότητες");
         
-        // ΜΕΤΑΤΡΟΠΗ ΚΑΙ ΤΩΝ EMBEDDED
-        const convertedActivities = embeddedActivities.map(activity => {
-            return {
-                ...activity,
-                prices: convertAnyPriceFormatToPerAge(activity.prices || {})
-            };
-        });
+        const cityData = await response.json();
+        console.log(`✅ Βρέθηκε: ${cityData.city} (${cityData.activities.length} δραστηριότητες)`);
         
+        // ΕΠΙΣΤΡΟΦΗ ΤΩΝ ΔΕΔΟΜΕΝΩΝ ΧΩΡΙΣ ΜΕΤΑΤΡΟΠΗ
+        // (γιατί τα νέα JSON έχουν ήσω per-age prices)
         return {
-            name: cityName,
-            activities: convertedActivities
+            name: cityData.city,
+            country: cityData.country,
+            currency: cityData.currency,
+            emoji: cityData.emoji,
+            description: cityData.description,
+            location: cityData.location,
+            activities: cityData.activities
         };
+        
+    } catch (error) {
+        console.error("❌ Σφάλμα φόρτωσης:", error.message);
+        return null;
     }
-    
-    // 3. ΤΕΛΙΚΑ: ΚΑΝΕΝΑ ΔΕΝ ΒΡΕΘΗΚΕ
-    console.error("❌ Δεν βρέθηκαν δραστηριότητες για:", cityName);
-    return null;
 }
-
 // 2. Η ΣΥΝΑΡΤΗΣΗ ΠΟΥ ΔΗΜΙΟΥΡΓΕΙ ΚΑΡΤΕΣ
 function createActivityCardsNew(activityList) {
     console.log("🃏 Δημιουργία καρτών για", activityList.length, "δραστηριότητες");
