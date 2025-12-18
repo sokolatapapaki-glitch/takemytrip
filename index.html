@@ -2252,71 +2252,60 @@ function createPopupContent(activity) {
     `;
 }
 
+// Διαχείριση του κλικ σε μια πινέζα
 function handleMarkerClick(marker, selectedMarkers, map, activity) {
-    console.log("📍 Κλικ σε πινέζα:", activity.name);
-    
-    const markerIndex = selectedMarkers.findIndex(m => m === marker);
-    
+    const markerIndex = selectedMarkers.indexOf(marker);
     if (markerIndex === -1) {
-        // Προσθήκη στην επιλεγμένη λίστα
+        // Επιλογή της πινέζας
         selectedMarkers.push(marker);
-        
-        // Αλλαγή χρώματος όταν επιλεγεί
+        // Αλλαγή χρώματος σε μοβ όταν επιλεγεί
         marker.setIcon(L.icon({
             iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',
             iconSize: [25, 41],
             iconAnchor: [12, 41],
         }));
-        
-        console.log("✅ Προστέθηκε στις επιλογές. Επιλεγμένα:", selectedMarkers.length);
-        
     } else {
-        // Αφαίρεση από την επιλεγμένη λίστα
+        // Αποεπιλογή της πινέζας
         selectedMarkers.splice(markerIndex, 1);
-        
-        // Επιστροφή στο αρχικό χρώμα
-        let color = 'green'; // Προεπιλεγμένο για Λονδίνο
-        
+        // Επιστροφή στο αρχικό χρώμα ανάλογα με την πόλη
+        let color;
+        if (selectedDestinationName.includes("Βερολίνο")) color = 'blue';
+        else if (selectedDestinationName.includes("Λισαβόνα")) color = 'red';
+        else if (selectedDestinationName.includes("Βουδαπέστη")) color = 'orange';
+        else color = 'green';
+       
         marker.setIcon(L.icon({
             iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,
             iconSize: [25, 41],
             iconAnchor: [12, 41],
         }));
-        
-        console.log("❌ Αφαιρέθηκε από τις επιλογές. Επιλεγμένα:", selectedMarkers.length);
     }
-    
-    // Αν έχουμε 2 επιλεγμένες πινέζες, δείξε διαδρομή
+   
+    // Αν έχουν επιλεγεί ακριβώς 2 πινέζες, εμφάνιση διαδρομής
     if (selectedMarkers.length === 2) {
-        console.log("🗺️ Προσπάθεια δημιουργίας διαδρομής μεταξύ 2 σημείων");
-        showRouteAndDirections(selectedMarkers[0], selectedMarkers[1], map);
-        
+        showRouteAndDirections(selectedMarkers[0], selectedMarkers[1]);
     } else if (selectedMarkers.length > 2) {
-        console.log("⚠️ Περισσότερες από 2 επιλογές - διατήρηση των 2 τελευταίων");
-        
-        // Διατήρηση μόνο των 2 τελευταίων
+        // Αν επιλεγούν περισσότερες από 2, κρατάμε μόνο τις 2 τελευταίες
         const oldMarker = selectedMarkers.shift();
-        
         // Επιστροφή του παλιού marker στο κανονικό χρώμα
-        let color = 'green';
+        let color;
+        if (selectedDestinationName.includes("Βερολίνο")) color = 'blue';
+        else if (selectedDestinationName.includes("Λισαβόνα")) color = 'red';
+        else if (selectedDestinationName.includes("Βουδαπέστη")) color = 'orange';
+        else color = 'green';
+       
         oldMarker.setIcon(L.icon({
             iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,
             iconSize: [25, 41],
             iconAnchor: [12, 41],
         }));
-        
-        // Δείξε διαδρομή για τα 2 τελευταία
-        showRouteAndDirections(selectedMarkers[0], selectedMarkers[1], map);
-        
+        showRouteAndDirections(selectedMarkers[0], selectedMarkers[1]);
     } else {
-        console.log("🗑️ Καθαρισμός διαδρομής");
-        // Κλείσιμο διαδρομής αν υπάρχει
+        // Αν επιλέχθηκε λιγότερες από 2 πινέζες, καθάρισε τη διαδρομή
         if (window.polyline) {
             map.removeLayer(window.polyline);
             window.polyline = null;
         }
-        
-        // Αφαίρεση οδηγιών
         const directionsDiv = document.getElementById('route-directions');
         if (directionsDiv) directionsDiv.remove();
     }
@@ -2395,21 +2384,15 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
     return distance.toFixed(1);
 }
 
-function showRouteAndDirections(marker1, marker2, map) {
-    console.log("📍 Δημιουργία διαδρομής μεταξύ σημείων");
-    
-    if (!marker1 || !marker2 || !map) {
-        console.error("❌ Λείπουν απαραίτητα στοιχεία για διαδρομή");
-        return;
-    }
-    
+function showRouteAndDirections(marker1, marker2) {
+    const map = marker1._map;
     const latlngs = [marker1.getLatLng(), marker2.getLatLng()];
-    
+   
     // Καθαρισμός παλιάς διαδρομής
     if (window.polyline) {
         map.removeLayer(window.polyline);
     }
-    
+   
     // Δημιουργία νέας διαδρομής
     window.polyline = L.polyline(latlngs, {
         color: 'red',
@@ -2417,15 +2400,17 @@ function showRouteAndDirections(marker1, marker2, map) {
         opacity: 0.7,
         dashArray: '10, 10'
     }).addTo(map);
-    
+   
     // Υπολογισμός απόστασης (σε km)
     const distance = map.distance(latlngs[0], latlngs[1]) / 1000;
-    console.log("📏 Απόσταση:", distance.toFixed(2), "km");
+   
+    // Κλείσιμο παλιών οδηγιών
+    const oldDirections = document.getElementById('route-directions');
+    if (oldDirections) oldDirections.remove();
     
     // Δημιουργία οδηγιών
     createDirectionsPanel(latlngs[0], latlngs[1], distance, map);
 }
- // ==================== ΣΥΝΑΡΤΗΣΗ: ΔΗΜΙΟΥΡΓΙΑ ΟΔΗΓΙΩΝ ====================
 
 function createDirectionsPanel(point1, point2, distance, map) {
     console.log("📝 Δημιουργία οδηγιών για απόσταση:", distance.toFixed(2), "km");
