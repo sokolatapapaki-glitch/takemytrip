@@ -2007,6 +2007,8 @@ const selectedActivities = window.currentCityActivities ?
     }).addTo(map);
    
     // ΕΑΝ ΥΠΑΡΧΟΥΝ ΕΠΙΛΕΓΜΕΝΕΣ ΔΡΑΣΤΗΡΙΟΤΗΤΕΣ, Προσθήκη πινεζών
+    console.log("🔍 DEBUG: Συναθροισμένες δραστηριότητες:", selectedActivities.length);
+    console.log("🔍 DEBUG: Οι δραστηριότητες:", selectedActivities.map(a => a.name));
     if (selectedActivities.length > 0) {
         addActivityMarkers(map, selectedActivities);
     }
