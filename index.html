@@ -4810,6 +4810,11 @@ function showRouteBetweenMarkers(marker1, marker2) {
 } 
     // =============== ΣΥΝΑΡΤΗΣΗ: HANDLE MARKER CLICK ===============
 function handleMarkerClick(marker, activity) {
+     console.log("🔵 DEBUG: Κλικ σε marker!");
+    console.log("🔵 Marker:", marker);
+    console.log("🔵 Activity:", activity);
+    console.log("🔵 selectedMarkersForRoute:", window.selectedMarkersForRoute);
+    
     const map = window.currentMap;
     const markerIndex = window.selectedMarkersForRoute.indexOf(marker);
     
