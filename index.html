@@ -2109,7 +2109,10 @@ function createSmartMapWithActivities(activities) {
 
 // ΝΕΑ ΣΥΝΑΡΤΗΣΗ: Προσθήκη πινεζών στον χάρτη
 function addActivityMarkers(map, activities) {
+    console.log("📍📍📍📍📍 DEBUG addActivityMarkers CALLED! 📍📍📍📍📍");
     console.log("📍 Προσθήκη πινεζών για", activities.length, "δραστηριότητες");
+    console.log("📍 Χάρτης exists:", !!map);
+    console.log("📍 Οι δραστηριότητες:", activities.slice(0, 3).map(a => a.name)); // Μόνο τις πρώτες 3
     
     let selectedMarkers = [];
     let markerColor = 'green';
@@ -2210,44 +2213,6 @@ window.currentMap = map;
     addMapCloseButton(mapContainer, map);
         // ΦΟΡΤΩΣΗ CUSTOM POINTS
     loadCustomPointsOnMap();
-}
-
-// ΝΕΑ ΣΥΝΑΡΤΗΣΗ: Προσθήκη πινεζών στον χάρτη
-function addActivityMarkers(map, activities) {
-    console.log(`✅ Προσθήκη ${activities.length} πινεζών`);
-    
-    let markerColor = 'green'; // Πάντα πράσινο
-    
-    activities.forEach((activity, index) => {
-        // ΕΛΕΓΧΟΣ: Τι δομή έχουν τα δεδομένα;
-        if (activity.location && activity.location.lat && activity.location.lng) {
-            const lat = activity.location.lat;
-            const lng = activity.location.lng;
-            
-            const customIcon = L.icon({
-                iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${markerColor}.png`,
-                iconSize: [25, 41],
-                iconAnchor: [12, 41],
-                popupAnchor: [1, -34]
-            });
-            
-            const marker = L.marker([lat, lng], { icon: customIcon }).addTo(map);
-            marker.bindPopup(createPopupContent(activity));
-            
-        } else {
-            console.warn(`⚠️ Δραστηριότητα ${activity.name} δεν έχει συντεταγμένες!`);
-        }
-    });
-    
-    // Fit bounds
-    const latlngs = activities
-        .filter(a => a.location && a.location.lat && a.location.lng)
-        .map(a => [a.location.lat, a.location.lng]);
-    
-    if (latlngs.length > 0) {
-        const bounds = L.latLngBounds(latlngs);
-        map.fitBounds(bounds, { padding: [50, 50], maxZoom: 15 });
-    }
 }
 
 function createPopupContent(activity) {
