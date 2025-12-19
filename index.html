@@ -2137,6 +2137,7 @@ function addActivityMarkers(map, activities) {
         marker.bindPopup(createPopupContent(activity));
         // ============ ΚΡΙΤΙΚΟ: ΠΡΟΣΘΗΚΗ CLICK HANDLER ============
         marker.on('click', function() {
+            console.log("🟡 DEBUG: Click στο marker για", activity.name); // ΑΥΤΗΝ ΤΗ ΓΡΑΜΜΗ
             handleMarkerClick(marker, activity);
         });
         
