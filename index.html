@@ -1972,17 +1972,15 @@ function preloadLeaflet() {
         }
     }
 }
-
 function initializeSmartMap() {
-       console.log("🗺️ DEBUG: initializeSmartMap καλείται!");
+    console.log("🗺️ DEBUG: initializeSmartMap καλείται!");
     
     const selectedActivities = window.currentCityActivities ? 
         window.currentCityActivities.filter(act => act.selected === true) : [];
     
     console.log("🗺️ DEBUG: Επιλεγμένες δραστηριότητες για χάρτη:", selectedActivities.length);
      
-const selectedActivities = window.currentCityActivities ? 
-    window.currentCityActivities.filter(act => act.selected === true) : [];   const mapContainer = document.getElementById('map-container');
+    const mapContainer = document.getElementById('map-container');
     mapContainer.innerHTML = '<div id="smart-map" style="height: 100%; width: 100%;"></div>';
    
     let mapCenter, mapZoom;
@@ -2023,93 +2021,6 @@ const selectedActivities = window.currentCityActivities ?
     addMapCloseButton(mapContainer, map);
     
     // ΦΟΡΤΩΣΗ CUSTOM POINTS
-    loadCustomPointsOnMap();
-}
-   
-    const mapContainer = document.getElementById('map-container');
-    mapContainer.innerHTML = '<div id="smart-map" style="height: 100%; width: 100%;"></div>';
-   
-    // ΒΕΛΤΙΣΤΟΠΟΙΗΣΗ: Έλεγχος αν ο Leaflet είναι ήδη φορτωμένος
-    if (typeof L === 'undefined') {
-        // Αν ΟΧΙ, φορτώνουμε και περιμένουμε
-        if (!document.querySelector('link[href*="leaflet"]')) {
-            const link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-            document.head.appendChild(link);
-        }
-       
-        if (!document.querySelector('script[src*="leaflet"]')) {
-            const script = document.createElement('script');
-            script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-            script.onload = () => {
-                // Μικρή καθυστέρηση για σίγουρο φόρτωμα
-                setTimeout(() => {
-    const selectedActivitiesForMap = window.currentCityActivities ? 
-        window.currentCityActivities.filter(act => act.selected === true) : [];
-    createSmartMapWithActivities(selectedActivitiesForMap);
-}, 300);
-            };
-            document.head.appendChild(script);
-        } else {
-            // Το script είναι ήδη φορτωμένο, απλά περιμένουμε
-            setTimeout(() => {
-                if (typeof L !== 'undefined') {
-                   const selectedActivitiesForMap = window.currentCityActivities ? 
-    window.currentCityActivities.filter(act => act.selected === true) : [];
-createSmartMapWithActivities(selectedActivitiesForMap);
-                } else {
-                    // Αν ακόμα δεν είναι έτοιμο, ξαναπροσπαθούμε
-                    setTimeout(() => initializeSmartMap(), 500);
-                }
-            }, 500);
-        }
-    } else {
-        // Ο Leaflet είναι ΉΔΗ φορτωμένος - δημιουργούμε χάρτη αμέσως
-        const selectedActivitiesForMap = window.currentCityActivities ? 
-    window.currentCityActivities.filter(act => act.selected === true) : [];
-createSmartMapWithActivities(selectedActivitiesForMap);
-    }
-
-// ΝΕΑ ΣΥΝΑΡΤΗΣΗ: Δημιουργία χάρτη με δραστηριότητες (κοινή για όλες τις πόλεις)
-function createSmartMapWithActivities(activities) {
-    const mapContainer = document.getElementById('map-container');
-    const mapDiv = document.getElementById('smart-map');
-    
-    if (!mapDiv) {
-        mapContainer.innerHTML = '<div id="smart-map" style="height: 100%; width: 100%;"></div>';
-    }
-    
-    let mapCenter, mapZoom;
-    
-    // Προσδιορισμός κέντρου βάσει πόλης (ΠΡΟΣΘΗΚΗ ΛΟΝΔΙΝΟΥ)
-    if (selectedDestinationName.includes("Βερολίνο")) {
-        mapCenter = [52.5200, 13.4050];
-        mapZoom = 12;
-    } else if (selectedDestinationName.includes("Λισαβόνα")) {
-        mapCenter = [38.7223, -9.1393];
-        mapZoom = 13;
-    } else if (selectedDestinationName.includes("Βουδαπέστη")) {
-        mapCenter = [47.4979, 19.0402];
-        mapZoom = 13;
-    } else if (selectedDestinationName.includes("Λονδίνο")) {
-        mapCenter = [51.5074, -0.1278];  // ΚΕΝΤΡΙΚΟ ΣΗΜΕΙΟ ΛΟΝΔΙΝΟΥ
-        mapZoom = 12;
-    } else {
-        mapCenter = [48.2082, 16.3738];
-        mapZoom = 13;
-    }
-    
-    const map = L.map('smart-map').setView(mapCenter, mapZoom);
-    window.currentMap = map;
-    
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-    
-    addActivityMarkers(map, activities);
-    addMapCloseButton(mapContainer, map);
     loadCustomPointsOnMap();
 }
 
