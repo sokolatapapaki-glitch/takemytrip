@@ -1,33 +1,63 @@
 {
   "city": "Παρίσι",
   "country": "Γαλλία",
+  "currency": "EUR",
+  "emoji": "🇫🇷",
+  "pricing_model": "per_age",
   "description": "Η πόλη του φωτός",
-  "currency": "€",
-  "coordinates": { "lat": 48.8566, "lng": 2.3522 },
+  "location": {
+    "lat": 48.8566,
+    "lng": 2.3522
+  },
   "activities": [
     {
+      "id": 1,
       "name": "Disneyland Paris",
-      "desc": "Το διάσημο θεματικό πάρκο Disney",
-      "emoji": "🏰",
-      "prices": {"0-2": 0, "3-5": 45, "6-14": 55, "15-19": 65, "18+": 75},
-      "lat": 48.8722,
-      "lng": 2.7758,
+      "description": "Το διάσημο θεματικό πάρκο Disney",
+      "category": "themepark",
+      "prices": {
+        "0": 0, "1": 0, "2": 0,
+        "3": 45, "4": 45, "5": 45, "6": 55, "7": 55, "8": 55, "9": 55, "10": 55, "11": 55, "12": 55, "13": 55, "14": 55,
+        "15": 65, "16": 65, "17": 65,
+        "18": 75, "19": 75,
+        "adult": 75
+      },
+      "location": {
+        "lat": 48.8722,
+        "lng": 2.7758
+      },
       "restaurant": "<a href='https://maps.google.com/?q=Disneyland+Restaurant+Paris' target='_blank'>Disney Restaurant</a>",
       "website": "https://www.disneylandparis.com/",
-      "duration": "6-8 ώρες",
-      "bestFor": ["Οικογένειες", "Παιδιά"]
+      "notes": [],
+      "tags": ["Οικογένειες", "Παιδιά", "disney", "theme park", "family"],
+      "duration_hours": 7,
+      "best_time": "any",
+      "emoji": "🏰"
     },
     {
+      "id": 2,
       "name": "Πύργος του Άιφελ",
-      "desc": "Το παγκόσμια γνωστό αξιοθέατο",
-      "emoji": "🗼",
-      "prices": {"0-3": 0, "4-11": 8.5, "12-24": 17, "25+": 26},
-      "lat": 48.8584,
-      "lng": 2.2945,
+      "description": "Το παγκόσμια γνωστό αξιοθέατο",
+      "category": "landmark",
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0,
+        "4": 8.5, "5": 8.5, "6": 8.5, "7": 8.5, "8": 8.5, "9": 8.5, "10": 8.5, "11": 8.5,
+        "12": 17, "13": 17, "14": 17,
+        "15": 17, "16": 17, "17": 17,
+        "18": 26, "19": 26,
+        "adult": 26
+      },
+      "location": {
+        "lat": 48.8584,
+        "lng": 2.2945
+      },
       "restaurant": "<a href='https://maps.google.com/?q=58+Tour+Eiffel+Paris' target='_blank'>58 Tour Eiffel</a>",
       "website": "https://www.toureiffel.paris/",
-      "duration": "2-3 ώρες",
-      "bestFor": ["Ζευγάρια", "Φωτογραφίες"]
+      "notes": [],
+      "tags": ["Ζευγάρια", "Φωτογραφίες", "eiffel tower", "landmark", "view"],
+      "duration_hours": 2.5,
+      "best_time": "evening",
+      "emoji": "🗼"
     }
   ]
 }
