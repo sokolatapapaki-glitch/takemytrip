@@ -2657,5 +2657,5 @@ function init() {
     console.log("✅ Οργανωτής ταξιδιού έτοιμος!");
 }
 
-// Start the application when DOM is loaded
-document.addEventListener('DOMContentLoaded', init);
+// Αντί για DOMContentLoaded, περιμένουμε να φορτωθεί ΟΛΗ η σελίδα
+window.addEventListener('load', init);
