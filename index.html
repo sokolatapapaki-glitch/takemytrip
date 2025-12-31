@@ -57,30 +57,24 @@
         
         <!-- ΦΙΛΤΡΑ ΑΠΟ ΤΟ ΠΑΛΙΟ ΚΩΔΙΚΑ -->
         <div class="card">
-            <h3>Φίλτρα Αναζήτησης:</h3>
-            
-            <!-- ΦΙΛΤΡΟ 1: Τύπος ταξιδιώτη -->
-            <label>Τύπος ταξιδιώτη:</label>
-            <select id="travel-type" onchange="toggleFamilyOptions()">
+    <h3>🔍 Φίλτρα Αναζήτησης</h3>
+    
+    <!-- ΓΡΑΜΜΗ 1: Τύπος ταξιδιώτη & Απόσταση -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+        <div>
+            <label>👤 Τύπος ταξιδιώτη:</label>
+            <select id="travel-type" onchange="toggleFamilyOptions()" style="width:100%; padding:8px;">
                 <option value="">Επιλέξτε...</option>
                 <option value="Μόνος">Μόνος</option>
                 <option value="Ζευγάρι">Ζευγάρι</option>
                 <option value="Οικογένεια">Οικογένεια</option>
                 <option value="Παρέα φίλων">Παρέα φίλων</option>
             </select>
-            
-            <!-- Επιλογές για οικογένεια (κρυμμένο αρχικά) -->
-            <div id="family-options" style="display:none; margin-top:10px; background:#f0f8ff; padding:10px; border-radius:5px;">
-                <label><input type="checkbox" value="Καρότσι"> Καρότσι</label>
-                <label><input type="checkbox" value="Μικρά"> Μικρά</label>
-                <label><input type="checkbox" value="Μεγάλα"> Μεγάλα</label>
-                <label><input type="checkbox" value="Έφηβοι"> Έφηβοι</label>
-                <label><input type="checkbox" value="Άνω των 18"> Άνω των 18</label>
-            </div>
-            
-            <!-- ΦΙΛΤΡΟ 2: Απόσταση -->
-            <label style="margin-top:15px; display:block;">Απόσταση σε ώρες:</label>
-            <select id="distance">
+        </div>
+        
+        <div>
+            <label>📏 Απόσταση σε ώρες:</label>
+            <select id="distance" style="width:100%; padding:8px;">
                 <option value="">Όλα</option>
                 <option value="1">Έως 1 ώρα</option>
                 <option value="2">Έως 2 ώρες</option>
@@ -88,11 +82,77 @@
                 <option value="4">Έως 4 ώρες</option>
                 <option value="5">Πάνω από 4 ώρες</option>
             </select>
-            
-            <button onclick="filterCitiesAdvanced()" style="margin-top:20px; display:block; width:100%;">🔍 Εφαρμογή Φίλτρων</button>
-            <button onclick="resetFilters()" style="margin-top:10px; background:#6c757d;">🔄 Επαναφορά</button>
+        </div>
+    </div>
+    
+    <!-- ΟΙΚΟΓΕΝΕΙΑΚΕΣ ΕΠΙΛΟΓΕΣ (κρυφές) -->
+    <div id="family-options" style="display:none; background:#f0f8ff; padding:10px; border-radius:5px; margin-bottom:15px;">
+        <p style="margin-top:0; font-weight:bold;">👨‍👩‍👧‍👦 Επιλογές για οικογένεια:</p>
+        <label><input type="checkbox" value="Καρότσι"> Καρότσι</label>
+        <label><input type="checkbox" value="Μικρά"> Μικρά</label>
+        <label><input type="checkbox" value="Μεγάλα"> Μεγάλα</label>
+        <label><input type="checkbox" value="Έφηβοι"> Έφηβοι</label>
+        <label><input type="checkbox" value="Άνω των 18"> Άνω των 18</label>
+    </div>
+    
+    <!-- ΓΡΑΜΜΗ 2: Καιρός + Θεματικά Πάρκα -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+        <div>
+            <label>🌡️ Θερμοκρασία/Χειμώνας:</label>
+            <select id="weather" style="width:100%; padding:8px;">
+                <option value="">Όλα</option>
+                <option value="Πιο ζεστό">Πιο ζεστό από Ελλάδα</option>
+                <option value="Ίδια">Ίδια θερμοκρασία</option>
+                <option value="Πιο κρύο">Πιο κρύο</option>
+                <option value="Χιόνια">Πιθανά χιόνια</option>
+            </select>
         </div>
         
+        <div>
+            <label>🎢 Θεματικά πάρκα:</label>
+            <select id="themeparks" style="width:100%; padding:8px;">
+                <option value="">Αδιάφορο</option>
+                <option value="Ναι">Ναι</option>
+                <option value="Όχι">Όχι</option>
+            </select>
+        </div>
+    </div>
+    
+    <!-- ΓΡΑΜΜΗ 3: Χριστουγεννιάτικες αγορές + Τύπος Διακοπών -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+        <div>
+            <label>🎄 Χριστουγεννιάτικες αγορές:</label>
+            <select id="christmas" style="width:100%; padding:8px;">
+                <option value="">Αδιάφορο</option>
+                <option value="Ναι">Ναι</option>
+                <option value="Όχι">Όχι</option>
+            </select>
+        </div>
+        
+        <div>
+            <label>🏖️ Τύπος Διακοπών:</label>
+            <select id="vacation-type" style="width:100%; padding:8px;">
+                <option value="">Όλα</option>
+                <option value="Πολιτισμός">Πολιτισμός & Μουσεία</option>
+                <option value="Φυσική Ομορφιά">Φυσική Ομορφιά</option>
+                <option value="Θάλασσα">Θαλάσσια & Παραλίες</option>
+                <option value="Πόλη">Αστικές Διακοπές</option>
+                <option value="Βουνό">Βουνό & Χιονοδρομικά</option>
+            </select>
+        </div>
+    </div>
+    
+    <!-- ΚΟΥΜΠΙΑ -->
+    <div style="display: flex; gap: 10px;">
+        <button onclick="filterCitiesAdvanced()" style="flex: 3; padding: 12px; background: #3eb489;">
+            🔍 Εφαρμογή Φίλτρων
+        </button>
+        <button onclick="resetFilters()" style="flex: 1; padding: 12px; background: #6c757d;">
+            🔄 Επαναφορά
+        </button>
+    </div>
+</div>
+   
         <div id="cities-list">
             ${renderAllCities()}
         </div>
