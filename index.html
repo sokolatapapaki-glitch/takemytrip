@@ -846,7 +846,18 @@ body {
 <script type="module">
 // ==================== IMPORT DATA FROM MODULES ====================
 import { destinations, cityFileMap } from './modules/data.js';
-
+    
+// ==================== ΕΚΘΕΣΗ ΣΥΝΑΡΤΗΣΕΩΝ ΣΤΟ GLOBAL SCOPE ====================
+window.activateStep = activateStep;
+window.toggleFamily = toggleFamily;
+window.filterDestinations = filterDestinations;
+window.selectDestination = selectDestination;
+window.resetFilters = resetFilters;
+window.clearAllData = clearAllData;
+window.updateDaysStay = updateDaysStay;
+window.toggleQuickSelection = toggleQuickSelection;
+window.selectQuickCity = selectQuickCity;
+    
 // ==================== ΝΕΟΣ ΤΡΟΠΟΣ ΔΙΑΧΕΙΡΙΣΗΣ ΗΛΙΚΙΩΝ ====================
 let familyMembers = [
     { name: "Πατέρας", age: 42 },
@@ -1778,14 +1789,13 @@ familyMembers.forEach(member => {
 // ==================== ΕΚΘΕΣΗ ΣΥΝΑΡΤΗΣΕΩΝ ΣΤΟ GLOBAL SCOPE ====================
 window.activateStep = activateStep;
 window.toggleFamily = toggleFamily;
-window.filterDestinations = filterDestinations;  // ΠΡΟΣΘΗΚΗ
+window.filterDestinations = filterDestinations;     // ✅ ΠΡΕΠΕΙ ΝΑ ΥΠΑΡΧΕΙ
 window.selectDestination = selectDestination;
-window.resetFilters = resetFilters;             // ΠΡΟΣΘΗΚΗ
-window.clearAllData = clearAllData;
+window.resetFilters = resetFilters;                // ✅ ΠΡΕΠΕΙ ΝΑ ΥΠΑΡΧΕΙ  
+window.clearAllData = clearAllData;               // ✅ ΠΡΕΠΕΙ ΝΑ ΥΠΑΡΧΕΙ (ΝΕΟ)
 window.updateDaysStay = updateDaysStay;
-window.toggleQuickSelection = toggleQuickSelection; // ΠΡΟΣΘΗΚΗ
+window.toggleQuickSelection = toggleQuickSelection;
 window.selectQuickCity = selectQuickCity;
-window.fillQuickCityDropdown = fillQuickCityDropdown;
     
 // ΑΡΧΙΚΟΠΟΙΗΣΗ & ΠΛΟΗΓΗΣΗ SIDEBAR
 document.querySelectorAll('.step').forEach(step=>{
