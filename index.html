@@ -488,10 +488,17 @@ function showStep4() {
 
 // Συναρτήσεις για τα μέλη οικογένειας
 function initFamilyMembers() {
-    familyMembers = [
-        { name: "Πατέρας", age: "" },
-       { name: "Μητέρα", age: "" }
-    ];
+    // Έλεγξε αν υπάρχει αποθηκευμένη οικογένεια
+    const savedFamily = localStorage.getItem('familyMembers');
+    
+    if (savedFamily) {
+        familyMembers = JSON.parse(savedFamily);
+        console.log("📂 Φορτώθηκε αποθηκευμένη οικογένεια:", familyMembers);
+    } else {
+        // ΚΑΝΕΝΑ προκαθορισμένο μέλος - Ο χρήστης θα προσθέσει όσα θέλει
+        familyMembers = [];
+        console.log("🆕 Κενή οικογένεια - ο χρήστης θα προσθέσει μέλη");
+    }
     renderFamilyMembers();
 }
 
@@ -499,14 +506,29 @@ function renderFamilyMembers() {
     const container = document.getElementById('family-members-list');
     if (!container) return;
     
+    // Αν δεν υπάρχουν μέλη, δείξε μήνυμα
+    if (familyMembers.length === 0) {
+        container.innerHTML = `
+            <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+                <p>📭 Δεν υπάρχουν μέλη οικογένειας ακόμα</p>
+                <p>Πατήστε στα κουμπιά "Προσθήκη" για να ξεκινήσετε</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Εμφάνισε όλα τα μέλη
     container.innerHTML = familyMembers.map((member, index) => `
         <div class="family-member">
-            <input type="text" placeholder="Όνομα" value="${member.name}" 
+            <input type="text" placeholder="Όνομα" value="${member.name || ''}" 
                    class="member-name" onchange="updateFamilyMember(${index}, this.value, 'name')">
-            <input type="number" placeholder="Ηλικία" value="${member.age}" 
+            <input type="number" placeholder="Ηλικία" value="${member.age || ''}" 
                    class="member-age" min="0" max="120" onchange="updateFamilyMember(${index}, this.value, 'age')">
             <span>ετών</span>
-            ${index >= 2 ? `<button onclick="removeFamilyMember(${index})" style="background:#dc3545; padding:5px 10px;">×</button>` : ''}
+            <button onclick="removeFamilyMember(${index})" 
+                    style="background:#dc3545; color:white; border:none; border-radius:4px; padding:5px 10px; cursor:pointer;">
+                ×
+            </button>
         </div>
     `).join('');
 }
