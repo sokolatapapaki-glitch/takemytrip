@@ -1775,7 +1775,14 @@ familyMembers.forEach(member => {
         }
     }
 }
-
+// ==================== ΕΚΘΕΣΗ ΣΥΝΑΡΤΗΣΕΩΝ ΣΤΟ GLOBAL SCOPE ====================
+window.activateStep = activateStep;
+window.toggleFamily = toggleFamily;
+window.filterDestinations = filterDestinations;
+window.selectDestination = selectDestination;
+window.resetFilters = resetFilters;
+window.clearAllData = clearAllData;
+window.updateDaysStay = updateDaysStay;
 // ΑΡΧΙΚΟΠΟΙΗΣΗ & ΠΛΟΗΓΗΣΗ SIDEBAR
 document.querySelectorAll('.step').forEach(step=>{
   step.addEventListener('click', ()=>{
