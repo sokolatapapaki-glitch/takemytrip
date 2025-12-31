@@ -1778,14 +1778,15 @@ familyMembers.forEach(member => {
 // ==================== ΕΚΘΕΣΗ ΣΥΝΑΡΤΗΣΕΩΝ ΣΤΟ GLOBAL SCOPE ====================
 window.activateStep = activateStep;
 window.toggleFamily = toggleFamily;
-window.filterDestinations = filterDestinations;
+window.filterDestinations = filterDestinations;  // ΠΡΟΣΘΗΚΗ
 window.selectDestination = selectDestination;
-window.resetFilters = resetFilters;
+window.resetFilters = resetFilters;             // ΠΡΟΣΘΗΚΗ
 window.clearAllData = clearAllData;
 window.updateDaysStay = updateDaysStay;
-window.toggleQuickSelection = toggleQuickSelection;
+window.toggleQuickSelection = toggleQuickSelection; // ΠΡΟΣΘΗΚΗ
 window.selectQuickCity = selectQuickCity;
-window.fillQuickCityDropdown = fillQuickCityDropdown; // ΚΑΙ ΑΥΤΗ ΧΡΕΙΑΖΕΤΑΙ
+window.fillQuickCityDropdown = fillQuickCityDropdown;
+    
 // ΑΡΧΙΚΟΠΟΙΗΣΗ & ΠΛΟΗΓΗΣΗ SIDEBAR
 document.querySelectorAll('.step').forEach(step=>{
   step.addEventListener('click', ()=>{
