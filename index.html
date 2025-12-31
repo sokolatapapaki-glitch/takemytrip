@@ -419,14 +419,14 @@ function showStep4() {
             <h3>👨‍👩‍👧‍👦 Τα Μέλη Της Οικογένειας</h3>
             <div id="family-members-list">
                 <!-- ΕΔΩ ΘΑ ΕΜΦΑΝΙΖΟΝΤΑΙ ΤΑ ΜΕΛΗ -->
-                <div class="family-member">
+                               <div class="family-member">
                     <input type="text" placeholder="Όνομα (π.χ. Πατέρας)" value="Πατέρας" class="member-name">
-                    <input type="number" placeholder="Ηλικία" value="40" class="member-age" min="0" max="120">
+                    <input type="number" placeholder="Ηλικία" class="member-age" min="0" max="120">
                     <span>ετών</span>
                 </div>
                 <div class="family-member">
-                    <input type="text" placeholder="Όνομα (π.χ. Μητέρα)" value="Μητέρα" class="member-age">
-                    <input type="number" placeholder="Ηλικία" value="38" class="member-age" min="0" max="120">
+                    <input type="text" placeholder="Όνομα (π.χ. Μητέρα)" value="Μητέρα" class="member-name">
+                    <input type="number" placeholder="Ηλικία" class="member-age" min="0" max="120">
                     <span>ετών</span>
                 </div>
             </div>
@@ -489,8 +489,8 @@ function showStep4() {
 // Συναρτήσεις για τα μέλη οικογένειας
 function initFamilyMembers() {
     familyMembers = [
-        { name: "Πατέρας", age: 40 },
-        { name: "Μητέρα", age: 38 }
+        { name: "Πατέρας", age: "" },
+       { name: "Μητέρα", age: "" }
     ];
     renderFamilyMembers();
 }
