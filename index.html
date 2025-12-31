@@ -558,23 +558,23 @@ function updateFamilyAndLoadActivities() {
         }
         
         // ΣΤ. ΠΛΟΗΓΗΣΗ SIDEBAR
-        document.querySelectorAll('.step').forEach(step => {
-            step.addEventListener('click', function() {
-                const stepId = this.getAttribute('data-step');
-                
-                // Ενημέρωση ενεργού
-                document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-                this.classList.add('active');
-                
-                // Εμφάνιση βήματος
-                if (stepId === 'destination') showStep1();
-                else if (stepId === 'flight') showStep2();
-                else if (stepId === 'hotel') showStep3();
-                else if (stepId === 'activities') showStep4();
-                else if (stepId === 'summary') showStep5();
-                else if (stepId === 'map') showStep6();
-            });
-        });
+document.querySelectorAll('.step').forEach(step => {
+    step.addEventListener('click', function() {
+        const stepId = this.getAttribute('data-step');
+        
+        // Ενημέρωση ενεργού
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Εμφάνιση βήματος
+        if (stepId === 'destination') showStep1();
+        else if (stepId === 'flight') showStep2();
+        else if (stepId === 'hotel') showStep3();
+        else if (stepId === 'activities') showStep4();   // 👈 Η ΝΕΑ ΓΡΑΜΜΗ
+        else if (stepId === 'summary') showStep5();
+        else if (stepId === 'map') showStep6();
+    });
+});
         
         // Ζ. ΕΝΑΡΞΗ
         window.onload = function() {
