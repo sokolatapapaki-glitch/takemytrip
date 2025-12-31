@@ -796,6 +796,8 @@ function calculateTotalCost() {
 // ==================== ΒΗΜΑ 5: ΤΕΛΙΚΗ ΣΥΝΟΨΗ ====================
 
 function showStep5() {
+    console.log("🎯 Η showStep5() ΚΑΛΕΙΤΑΙ!");
+    
     const destination = localStorage.getItem('destination');
     const savedFamily = localStorage.getItem('familyMembers');
     const familyMembers = savedFamily ? JSON.parse(savedFamily) : [];
@@ -937,7 +939,7 @@ function showStep5() {
                 <div style="background: white; padding: 15px; border-radius: 8px;">
                     <h4 style="margin-top: 0; color: #4c7af0;">🏨 Διαμονή</h4>
                     <ul style="margin: 10px 0; padding-left: 20px; font-size: 0.9em;">
-                        <li>Επιλογή φιλικών προς οικογένειες ξενοδοχείων[citation:8]</li>
+                        <li>Επιλογή φιλικών προς οικογένειες ξενοδοχείων</li>
                         <li>Έλεγχος για εγκαταστάσεις όπως κούνιες</li>
                         <li>Διαθέσιμα παιδικά προγράμματα ψυχαγωγίας</li>
                     </ul>
@@ -952,7 +954,7 @@ function showStep5() {
                 </div>
             </div>
             <p style="font-size: 0.9em; color: #666; margin-top: 15px; margin-bottom: 0;">
-                💡 <strong>Συμβουλή:</strong> Κρατήστε εύκολα προσβάσιμους τους τοπικούς αριθμούς έκτακτης ανάγκης[citation:5].
+                💡 <strong>Συμβουλή:</strong> Κρατήστε εύκολα προσβάσιμους τους τοπικούς αριθμούς έκτακτης ανάγκης.
             </p>
         </div>
         
@@ -1082,6 +1084,56 @@ if (!document.querySelector('#print-styles')) {
     `;
     document.head.appendChild(style);
 }
+
+// ==================== ΒΗΜΑ 6: ΧΑΡΤΗΣ (ΑΠΛΟ) ====================
+
+function showStep6() {
+    const destination = localStorage.getItem('destination');
+    
+    // Ενημέρωση sidebar
+    document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+    document.querySelector('[data-step="map"]').classList.add('active');
+    
+    const main = document.getElementById('main-content');
+    
+    main.innerHTML = `
+        <h1>🗺️ Βήμα 6: Χάρτης</h1>
+        
+        <div class="card" style="text-align: center; padding: 40px;">
+            <h2>Χάρτης & Διαδρομές</h2>
+            <p>🚧 Η λειτουργία του διαδραστικού χάρτη υπό κατασκευή</p>
+            <p>Σύντομα θα μπορείτε να δείτε όλες τις επιλεγμένες δραστηριότητες στον χάρτη!</p>
+            
+            <div style="margin: 30px 0;">
+                <h3>📌 Προγραμματισμένα Χαρακτηριστικά:</h3>
+                <ul style="text-align: left; display: inline-block; margin: 15px 0;">
+                    <li>🔍 Χάρτης με τις επιλεγμένες δραστηριότητες</li>
+                    <li>📍 Προσωπικά σημεία (εστιατόρια, ξενοδοχεία)</li>
+                    <li>🗺️ Οδηγίες μεταξύ σημείων</li>
+                    <li>🎯 Βελτιστοποίηση διαδρομών</li>
+                </ul>
+            </div>
+            
+            <button onclick="showStep5()" style="background: #3eb489; padding: 12px 25px; margin: 10px;">
+                ↩️ Επιστροφή στη Σύνοψη
+            </button>
+            <button onclick="showStep1()" style="background: #6c757d; padding: 12px 25px; margin: 10px;">
+                🏠 Αρχική Σελίδα
+            </button>
+        </div>
+        
+        <div class="card" style="margin-top: 20px; background: #e3f2fd;">
+            <h3>✅ Τα Βήματα Ταξιδιού Ολοκληρώθηκαν!</h3>
+            <p>Μπορείτε τώρα να:</p>
+            <ol style="text-align: left;">
+                <li><strong>Αποθηκεύσετε</strong> τη σύνοψη του ταξιδιού σας</li>
+                <li><strong>Εκτυπώσετε</strong> το πρόγραμμα</li>
+                <li><strong>Επιστρέψετε</strong> και τροποποιήσετε οποιοδήποτε βήμα</li>
+                <li><strong>Ξεκινήσετε</strong> νέο ταξίδι!</li>
+            </ol>
+        </div>
+    `;
+}
         
 // Βοηθητική: Κατηγοριοποίηση ηλικιών
 function categorizeFamilyMembers() {
@@ -1100,15 +1152,19 @@ function categorizeFamilyMembers() {
     
     return groups;
 }
-        function searchHotels() {
-            const city = document.getElementById('hotel-city').value || localStorage.getItem('destination');
-            window.open(`https://www.booking.com/searchresults.el.html?ss=${city}`, '_blank');
-        }
-        
-        // ΣΤ. ΠΛΟΗΓΗΣΗ SIDEBAR
+
+function searchHotels() {
+    const city = document.getElementById('hotel-city').value || localStorage.getItem('destination');
+    window.open(`https://www.booking.com/searchresults.el.html?ss=${city}`, '_blank');
+}
+
+// ==================== ΠΛΟΗΓΗΣΗ SIDEBAR ====================
+
 document.querySelectorAll('.step').forEach(step => {
     step.addEventListener('click', function() {
         const stepId = this.getAttribute('data-step');
+        
+        console.log("🔍 Κλικ στο βήμα:", stepId);
         
         // Ενημέρωση ενεργού
         document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
@@ -1118,17 +1174,26 @@ document.querySelectorAll('.step').forEach(step => {
         if (stepId === 'destination') showStep1();
         else if (stepId === 'flight') showStep2();
         else if (stepId === 'hotel') showStep3();
-        else if (stepId === 'activities') showStep4();   // 👈 Η ΝΕΑ ΓΡΑΜΜΗ
-        else if (stepId === 'summary') showStep5();
+        else if (stepId === 'activities') showStep4();
+        else if (stepId === 'summary') {
+            console.log("🎯 Καλείται showStep5()");
+            if (typeof showStep5 === 'function') {
+                showStep5();
+            } else {
+                console.error("❌ Η showStep5 ΔΕΝ είναι function!");
+                alert("⚠️ Προσωρινό σφάλμα. Παρακαλώ κάντε refresh τη σελίδα.");
+            }
+        }
         else if (stepId === 'map') showStep6();
     });
 });
-        
-        // Ζ. ΕΝΑΡΞΗ
-        window.onload = function() {
-            console.log("✅ Η σελίδα φορτώθηκε");
-            showStep1();
-        };
+
+// ==================== ΕΝΑΡΞΗ ====================
+
+window.onload = function() {
+    console.log("✅ Η σελίδα φορτώθηκε");
+    showStep1();
+};
     </script>
 </body>
 </html>
