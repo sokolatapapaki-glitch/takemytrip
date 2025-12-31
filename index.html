@@ -392,7 +392,166 @@ function resetFilters() {
             document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
             document.querySelector('[data-step="hotel"]').classList.add('active');
         }
+        // ==================== ΒΗΜΑ 4: ΟΙΚΟΓΕΝΕΙΑ & ΔΡΑΣΤΗΡΙΟΤΗΤΕΧ ====================
+
+// Γлобική μεταβλητή για τα μέλη της οικογένειας
+let familyMembers = [];
+
+function showStep4() {
+    const destination = localStorage.getItem('destination') || 'Χωρίς προορισμό';
+    
+    // Ενημέρωση sidebar
+    document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+    document.querySelector('[data-step="activities"]').classList.add('active');
+    
+    const main = document.getElementById('main-content');
+    
+    main.innerHTML = `
+        <h1>👨‍👩‍👧‍👦 Βήμα 4: Οικογένεια & Δραστηριότητες</h1>
         
+        <div class="card" style="background: #e8f5e9; border-color: #4caf50;">
+            <h3>🏙️ Προορισμός: ${destination}</h3>
+            <p>Πρώτα, προσθέστε τα μέλη της οικογένειας:</p>
+        </div>
+        
+        <!-- ΜΕΛΗ ΟΙΚΟΓΕΝΕΙΑΣ -->
+        <div class="card" id="family-container">
+            <h3>👨‍👩‍👧‍👦 Τα Μέλη Της Οικογένειας</h3>
+            <div id="family-members-list">
+                <!-- ΕΔΩ ΘΑ ΕΜΦΑΝΙΖΟΝΤΑΙ ΤΑ ΜΕΛΗ -->
+                <div class="family-member">
+                    <input type="text" placeholder="Όνομα (π.χ. Πατέρας)" value="Πατέρας" class="member-name">
+                    <input type="number" placeholder="Ηλικία" value="40" class="member-age" min="0" max="120">
+                    <span>ετών</span>
+                </div>
+                <div class="family-member">
+                    <input type="text" placeholder="Όνομα (π.χ. Μητέρα)" value="Μητέρα" class="member-age">
+                    <input type="number" placeholder="Ηλικία" value="38" class="member-age" min="0" max="120">
+                    <span>ετών</span>
+                </div>
+            </div>
+            
+            <div style="margin: 20px 0; text-align: center;">
+                <h4>➕ Προσθήκη Μελών</h4>
+                <div style="display: flex; gap: 10px; justify-content: center; margin: 15px 0;">
+                    <button onclick="addFamilyMember('adult')" style="background: #3eb489;">
+                        👨 Προσθήκη Ενήλικα
+                    </button>
+                    <button onclick="addFamilyMember('child')" style="background: #4c7af0;">
+                        🧒 Προσθήκη Παιδιού
+                    </button>
+                    <button onclick="addFamilyMember('baby')" style="background: #ff7f50;">
+                        👶 Προσθήκη Μωρού
+                    </button>
+                </div>
+                
+                <button onclick="updateFamilyAndLoadActivities()" style="background: #9c27b0; padding: 12px 25px;">
+                    🔄 Ενημέρωση Οικογένειας & Φόρτωση Δραστηριοτήτων
+                </button>
+            </div>
+        </div>
+        
+        <!-- ΔΡΑΣΤΗΡΙΟΤΗΤΕΧ (θα εμφανιστεί αργότερα) -->
+        <div id="activities-container" style="display: none;">
+            <!-- Θα γεμίσει με δραστηριότητες -->
+        </div>
+    `;
+    
+    // Προσθήκη CSS για τα μέλη οικογένειας
+    if (!document.querySelector('#family-styles')) {
+        const style = document.createElement('style');
+        style.id = 'family-styles';
+        style.textContent = `
+            .family-member {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin: 10px 0;
+                padding: 10px;
+                background: #f8f9fa;
+                border-radius: 8px;
+            }
+            .family-member input {
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+            }
+            .member-name { flex: 2; }
+            .member-age { flex: 1; }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // Αρχικοποίηση της οικογένειας
+    initFamilyMembers();
+}
+
+// Συναρτήσεις για τα μέλη οικογένειας
+function initFamilyMembers() {
+    familyMembers = [
+        { name: "Πατέρας", age: 40 },
+        { name: "Μητέρα", age: 38 }
+    ];
+    renderFamilyMembers();
+}
+
+function renderFamilyMembers() {
+    const container = document.getElementById('family-members-list');
+    if (!container) return;
+    
+    container.innerHTML = familyMembers.map((member, index) => `
+        <div class="family-member">
+            <input type="text" placeholder="Όνομα" value="${member.name}" 
+                   class="member-name" onchange="updateFamilyMember(${index}, this.value, 'name')">
+            <input type="number" placeholder="Ηλικία" value="${member.age}" 
+                   class="member-age" min="0" max="120" onchange="updateFamilyMember(${index}, this.value, 'age')">
+            <span>ετών</span>
+            ${index >= 2 ? `<button onclick="removeFamilyMember(${index})" style="background:#dc3545; padding:5px 10px;">×</button>` : ''}
+        </div>
+    `).join('');
+}
+
+function addFamilyMember(type) {
+    let name, age;
+    
+    if (type === 'adult') {
+        name = `Ενήλικας ${familyMembers.filter(m => m.name.includes('Ενήλικας')).length + 1}`;
+        age = 30;
+    } else if (type === 'child') {
+        name = `Παιδί ${familyMembers.filter(m => m.name.includes('Παιδί')).length + 1}`;
+        age = 10;
+    } else {
+        name = `Μωρό ${familyMembers.filter(m => m.name.includes('Μωρό')).length + 1}`;
+        age = 2;
+    }
+    
+    familyMembers.push({ name, age: parseInt(age) });
+    renderFamilyMembers();
+}
+
+function updateFamilyMember(index, value, field) {
+    if (field === 'name') {
+        familyMembers[index].name = value;
+    } else {
+        familyMembers[index].age = parseInt(value) || 0;
+    }
+}
+
+function removeFamilyMember(index) {
+    familyMembers.splice(index, 1);
+    renderFamilyMembers();
+}
+
+function updateFamilyAndLoadActivities() {
+    console.log("👨‍👩‍👧‍👦 Οικογένεια ενημερώθηκε:", familyMembers);
+    alert(`✅ Οικογένεια ενημερώθηκε: ${familyMembers.length} μέλη\n\nΣτο επόμενο βήμα θα φορτώσουμε τις δραστηριότητες!`);
+    
+    // Αποθήκευση
+    localStorage.setItem('familyMembers', JSON.stringify(familyMembers));
+    
+    // Προς το επόμενο κομμάτι (θα φτιάξουμε στο Βήμα 4.2)
+    // loadCityActivities();
+}
         function searchHotels() {
             const city = document.getElementById('hotel-city').value || localStorage.getItem('destination');
             window.open(`https://www.booking.com/searchresults.el.html?ss=${city}`, '_blank');
