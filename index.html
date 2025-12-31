@@ -50,31 +50,100 @@
         
         // Β. ΕΜΦΑΝΙΣΗ ΤΟΥ ΒΗΜΑΤΟΣ 1
         function showStep1() {
-            const main = document.getElementById('main-content');
+    const main = document.getElementById('main-content');
+    
+    main.innerHTML = `
+        <h1>🏙️ Επιλογή Προορισμού</h1>
+        
+        <!-- ΦΙΛΤΡΑ ΑΠΟ ΤΟ ΠΑΛΙΟ ΚΩΔΙΚΑ -->
+        <div class="card">
+            <h3>Φίλτρα Αναζήτησης:</h3>
             
-            main.innerHTML = `
-                <h1>🏙️ Επιλογή Προορισμού</h1>
-                
-                <div class="card">
-                    <h3>Φίλτρα:</h3>
-                    <select id="city-filter">
-                        <option value="">Όλες οι πόλεις</option>
-                        ${cities.map(city => `<option value="${city.name}">${city.name}</option>`).join('')}
-                    </select>
-                    <button onclick="filterCities()">🔍 Εφαρμογή</button>
-                </div>
-                
-                <div id="cities-list">
-                    ${cities.map(city => `
-                        <div class="card">
-                            <h3>${city.name}</h3>
-                            <p>${city.desc}</p>
-                            <button onclick="selectCity('${city.name}')">Επιλογή</button>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-        }
+            <!-- ΦΙΛΤΡΟ 1: Τύπος ταξιδιώτη -->
+            <label>Τύπος ταξιδιώτη:</label>
+            <select id="travel-type" onchange="toggleFamilyOptions()">
+                <option value="">Επιλέξτε...</option>
+                <option value="Μόνος">Μόνος</option>
+                <option value="Ζευγάρι">Ζευγάρι</option>
+                <option value="Οικογένεια">Οικογένεια</option>
+                <option value="Παρέα φίλων">Παρέα φίλων</option>
+            </select>
+            
+            <!-- Επιλογές για οικογένεια (κρυμμένο αρχικά) -->
+            <div id="family-options" style="display:none; margin-top:10px; background:#f0f8ff; padding:10px; border-radius:5px;">
+                <label><input type="checkbox" value="Καρότσι"> Καρότσι</label>
+                <label><input type="checkbox" value="Μικρά"> Μικρά</label>
+                <label><input type="checkbox" value="Μεγάλα"> Μεγάλα</label>
+                <label><input type="checkbox" value="Έφηβοι"> Έφηβοι</label>
+                <label><input type="checkbox" value="Άνω των 18"> Άνω των 18</label>
+            </div>
+            
+            <!-- ΦΙΛΤΡΟ 2: Απόσταση -->
+            <label style="margin-top:15px; display:block;">Απόσταση σε ώρες:</label>
+            <select id="distance">
+                <option value="">Όλα</option>
+                <option value="1">Έως 1 ώρα</option>
+                <option value="2">Έως 2 ώρες</option>
+                <option value="3">Έως 3 ώρες</option>
+                <option value="4">Έως 4 ώρες</option>
+                <option value="5">Πάνω από 4 ώρες</option>
+            </select>
+            
+            <button onclick="filterCitiesAdvanced()" style="margin-top:20px; display:block; width:100%;">🔍 Εφαρμογή Φίλτρων</button>
+            <button onclick="resetFilters()" style="margin-top:10px; background:#6c757d;">🔄 Επαναφορά</button>
+        </div>
+        
+        <div id="cities-list">
+            ${renderAllCities()}
+        </div>
+    `;
+}
+
+// ΣΥΝΑΡΤΗΣΗ ΓΙΑ ΤΟ FAMILY OPTIONS (από παλιό κώδικα)
+function toggleFamilyOptions() {
+    const type = document.getElementById("travel-type").value;
+    const optionsDiv = document.getElementById("family-options");
+    optionsDiv.style.display = (type === "Οικογένεια") ? "block" : "none";
+}
+
+// ΣΥΝΑΡΤΗΣΗ ΓΙΑ ΝΑ ΕΜΦΑΝΙΖΕΙ ΠΟΛΕΙΣ (θα την συμπληρώσουμε)
+function renderAllCities() {
+    // ΠΡΟΣΘΗΚΗ: Θα βάλω εδώ τον πλήρη πίνακα με 25 πόλεις
+    return cities.map(city => `
+        <div class="card">
+            <h3>${city.name}</h3>
+            <p>${city.desc}</p>
+            <button onclick="selectCity('${city.name}')">Επιλογή</button>
+        </div>
+    `).join('');
+}
+
+// ΣΥΝΑΡΤΗΣΗ ΓΙΑ ΤΑ ΝΕΑ ΦΙΛΤΡΑ
+function filterCitiesAdvanced() {
+    const travelType = document.getElementById("travel-type").value;
+    const distance = document.getElementById("distance").value;
+    
+    console.log(`Φίλτρα: Τύπος=${travelType}, Απόσταση=${distance}`);
+    
+    // ΠΡΟΣΘΗΚΗ: Εδώ θα βάλω την λογική φιλτραρίσματος όπως στο παλιό
+    // Για τώρα, απλώς δείξε όλες τις πόλεις
+    const citiesList = document.getElementById('cities-list');
+    citiesList.innerHTML = renderAllCities();
+    
+    alert("Τα φίλτρα εφαρμόστηκαν! (Η λογική φιλτραρίσματος θα προστεθεί στο επόμενο βήμα)");
+}
+
+function resetFilters() {
+    document.getElementById("travel-type").value = "";
+    document.getElementById("distance").value = "";
+    const optionsDiv = document.getElementById("family-options");
+    optionsDiv.style.display = "none";
+    
+    const citiesList = document.getElementById('cities-list');
+    citiesList.innerHTML = renderAllCities();
+    
+    alert("Τα φίλτρα επαναφέρθηκαν!");
+}
         
         // Γ. ΣΥΝΑΡΤΗΣΕΙΣ
         function filterCities() {
