@@ -857,6 +857,29 @@ window.clearAllData = clearAllData;
 window.updateDaysStay = updateDaysStay;
 window.toggleQuickSelection = toggleQuickSelection;
 window.selectQuickCity = selectQuickCity;
+
+// ==================== ΠΡΟΣΩΡΙΝΕΣ ΣΥΝΑΡΤΗΣΕΙΣ ====================
+function filterDestinations() {
+  alert("✅ Η filterDestinations λειτουργεί! (Θα την κάνουμε κανονικά μετά)");
+  return false;
+}
+
+function resetFilters() {
+  alert("✅ Επαναφορά φίλτρων!");
+  document.querySelectorAll('select').forEach(s => s.value = '');
+  return false;
+}
+
+function toggleQuickSelection() {
+  const quickSelect = document.getElementById('quick-city-select');
+  if (quickSelect) {
+    quickSelect.style.display = quickSelect.style.display === 'none' ? 'block' : 'none';
+    alert("✅ Quick selection menu toggled!");
+  }
+  return false;
+}    
+
+
     
 // ==================== ΝΕΟΣ ΤΡΟΠΟΣ ΔΙΑΧΕΙΡΙΣΗΣ ΗΛΙΚΙΩΝ ====================
 let familyMembers = [
