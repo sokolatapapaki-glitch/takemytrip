@@ -596,10 +596,202 @@ function updateFamilyAndLoadActivities() {
     
     alert(message);
     
-    // 5. Φόρτωση δραστηριοτήτων (θα φτιάξουμε στο επόμενο βήμα)
-    // loadCityActivities();
+        // 5. Φόρτωση δραστηριοτήτων
+    loadCityActivities();
+}
+// ==================== ΦΟΡΤΩΣΗ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ ====================
+
+async function loadCityActivities() {
+    const destination = localStorage.getItem('destination');
+    
+    if (!destination) {
+        alert("⚠️ Δεν έχετε επιλέξει προορισμό! Επιστρέψτε στο Βήμα 1.");
+        return;
+    }
+    
+    if (familyMembers.length === 0) {
+        alert("⚠️ Δεν έχετε προσθέσει μέλη οικογένειας!");
+        return;
+    }
+    
+    // Μήνυμα φόρτωσης
+    const activitiesContainer = document.getElementById('activities-container');
+    activitiesContainer.innerHTML = `
+        <div class="card" style="text-align: center; padding: 30px;">
+            <h3>⏳ Φόρτωση δραστηριοτήτων για ${destination}...</h3>
+            <p>Παρακαλώ περιμένετε</p>
+        </div>
+    `;
+    activitiesContainer.style.display = 'block';
+    
+    // Προσομοίωση φόρτωσης (θα το αντικαταστήσουμε με πραγματικό JSON)
+    setTimeout(() => {
+        displayMockActivities(destination);
+    }, 1500);
 }
 
+// Προσωρινή συνάρτηση με δοκιμαστικές δραστηριότητες
+function displayMockActivities(cityName) {
+    console.log(`🏙️ Φόρτωση δραστηριοτήτων για: ${cityName}`);
+    
+    // Διαφορετικές δραστηριότητες ανά πόλη
+    const activitiesByCity = {
+        "Βιέννη": [
+            { name: "Σαινμπρούν Παλάτι", desc: "Αυτοκρατορικό παλάτι με κήπους", priceAdult: 20, priceChild: 10 },
+            { name: "Πρατέρ Πάρκ", desc: "Θεματικό πάρκο με ρόδες", priceAdult: 15, priceChild: 8 },
+            { name: "Κέντρο της Βιέννης", desc: "Περίπατος στην ιστορική πόλη", priceAdult: 0, priceChild: 0 }
+        ],
+        "Παρίσι": [
+            { name: "Πύργος του Άιφελ", desc: "Σύμβολο του Παρισιού", priceAdult: 25, priceChild: 12 },
+            { name: "Λούβρο", desc: "Παγκόσμιο μουσείο τέχνης", priceAdult: 17, priceChild: 0 },
+            { name: "Disneyland Paris", desc: "Θεματικό πάρκο", priceAdult: 80, priceChild: 70 }
+        ],
+        "Λονδίνο": [
+            { name: "London Eye", desc: "Τροχός με θέα την πόλη", priceAdult: 30, priceChild: 15 },
+            { name: "Μουσείο Φυσικής Ιστορίας", desc: "Δωρεάν μουσείο", priceAdult: 0, priceChild: 0 },
+            { name: "Sea Life Ακουάριο", desc: "Υποβρύχιος κόσμος", priceAdult: 25, priceChild: 18 }
+        ]
+    };
+    
+    // Επιλογή δραστηριοτήτων για την πόλη ή γενικές
+    const activities = activitiesByCity[cityName] || [
+        { name: "Ιστορικό Κέντρο", desc: "Περιήγηση στην παλιά πόλη", priceAdult: 0, priceChild: 0 },
+        { name: "Τοπικό Μουσείο", desc: "Μάθετε την ιστορία", priceAdult: 10, priceChild: 5 },
+        { name: "Πάρκο Ανάπαυσης", desc: "Χρόνος για χαλάρωση", priceAdult: 0, priceChild: 0 }
+    ];
+    
+    // Εμφάνιση δραστηριοτήτων
+    const container = document.getElementById('activities-container');
+    
+    let html = `
+        <div class="card" style="background: #e3f2fd;">
+            <h3>🎯 Διαθέσιμες Δραστηριότητες για ${cityName}</h3>
+            <p>Επιλέξτε τις δραστηριότητες που σας ενδιαφέρουν:</p>
+        </div>
+        
+        <div id="activities-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; margin-top: 20px;">
+    `;
+    
+    activities.forEach((activity, index) => {
+        html += `
+            <div class="card activity-card" id="activity-${index}" onclick="toggleActivitySelection(${index})" 
+                 style="cursor: pointer; transition: all 0.3s; border: 2px solid #ddd;">
+                <h4>${activity.name}</h4>
+                <p>${activity.desc}</p>
+                <div style="background: #f8f9fa; padding: 10px; border-radius: 5px; margin: 10px 0;">
+                    <strong>💰 Τιμές:</strong><br>
+                    • Ενήλικας: ${activity.priceAdult}€<br>
+                    • Παιδί (0-17): ${activity.priceChild}€
+                </div>
+                <div class="activity-total" id="activity-total-${index}">
+                    Κόστος για την οικογένεια σας: <strong>0€</strong>
+                </div>
+                <div style="text-align: center; margin-top: 10px;">
+                    <span style="color: #ffd700; font-size: 24px; opacity: 0.3;">⭐</span>
+                    <p style="color: #666; font-size: 0.9em;">Κάντε κλικ για επιλογή</p>
+                </div>
+            </div>
+        `;
+    });
+    
+    html += `
+        </div>
+        
+        <div class="card" style="text-align: center; margin-top: 20px; background: #fff3cd;">
+            <h3>💰 ΣΥΝΟΛΙΚΟ ΚΟΣΤΟΣ</h3>
+            <div id="total-cost" style="font-size: 28px; font-weight: bold; color: #3eb489;">
+                0 €
+            </div>
+            <p>Για ${familyMembers.length} μέλη οικογένειας</p>
+        </div>
+    `;
+    
+    container.innerHTML = html;
+    
+    // Αποθήκευση των δραστηριοτήτων για υπολογισμούς
+    window.currentActivities = activities;
+    
+    // Υπολογισμός αρχικού κόστους
+    calculateTotalCost();
+}
+
+// Συνάρτηση επιλογής/αποεπιλογής δραστηριότητας
+function toggleActivitySelection(index) {
+    const card = document.getElementById(`activity-${index}`);
+    const star = card.querySelector('span');
+    
+    // Αλλαγή κατάστασης
+    if (card.classList.contains('selected')) {
+        card.classList.remove('selected');
+        card.style.borderColor = '#ddd';
+        card.style.backgroundColor = 'white';
+        star.style.opacity = '0.3';
+        window.currentActivities[index].selected = false;
+    } else {
+        card.classList.add('selected');
+        card.style.borderColor = '#3eb489';
+        card.style.backgroundColor = '#f0f9f0';
+        star.style.opacity = '1';
+        window.currentActivities[index].selected = true;
+    }
+    
+    // Υπολογισμός νέου κόστους
+    calculateTotalCost();
+}
+
+// Υπολογισμός συνολικού κόστους
+function calculateTotalCost() {
+    if (!window.currentActivities || !familyMembers) return;
+    
+    let total = 0;
+    
+    window.currentActivities.forEach((activity, index) => {
+        if (activity.selected) {
+            let activityTotal = 0;
+            
+            // Υπολογισμός για κάθε μέλος
+            familyMembers.forEach(member => {
+                const age = parseInt(member.age);
+                if (isNaN(age)) return;
+                
+                if (age >= 18) {
+                    activityTotal += activity.priceAdult || 0;
+                } else {
+                    activityTotal += activity.priceChild || 0;
+                }
+            });
+            
+            // Ενημέρωση του συγκεκριμένου activity
+            const activityTotalElement = document.getElementById(`activity-total-${index}`);
+            if (activityTotalElement) {
+                activityTotalElement.innerHTML = `Κόστος για την οικογένεια σας: <strong>${activityTotal}€</strong>`;
+            }
+            
+            total += activityTotal;
+        } else {
+            // Επαναφορά αν δεν είναι selected
+            const activityTotalElement = document.getElementById(`activity-total-${index}`);
+            if (activityTotalElement) {
+                activityTotalElement.innerHTML = `Κόστος για την οικογένεια σας: <strong>0€</strong>`;
+            }
+        }
+    });
+    
+    // Ενημέρωση συνολικού κόστους
+    const totalElement = document.getElementById('total-cost');
+    if (totalElement) {
+        totalElement.textContent = `${total} €`;
+        
+        // Αλλαγή χρώματος ανάλογα με το κόστος
+        if (total === 0) {
+            totalElement.style.color = '#666';
+        } else if (total > 200) {
+            totalElement.style.color = '#e74c3c';
+        } else {
+            totalElement.style.color = '#3eb489';
+        }
+    }
+}
 // Βοηθητική: Κατηγοριοποίηση ηλικιών
 function categorizeFamilyMembers() {
     const groups = {
