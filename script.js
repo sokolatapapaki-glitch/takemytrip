@@ -968,7 +968,7 @@ function setupActivitiesStep() {
     // Εάν υπάρχουν μέλη οικογένειας και προορισμός, φόρτωσε αυτόματα
     if (APP_STATE.destination && APP_STATE.familyMembers.length > 0) {
         setTimeout(() => {
-            ies();
+           loadCityActivities(); // <-- ΑΛΛΑΓΗ ΕΔΩ
         }, 500);
     }
 }
@@ -1090,7 +1090,7 @@ function saveFamilyMembers() {
     // Αυτόματη φόρτωση δραστηριοτήτων αν υπάρχει προορισμός
     if (APP_STATE.destination && APP_STATE.familyMembers.length > 0) {
         setTimeout(() => {
-            ies();
+         loadCityActivities(); // <-- ΑΛΛΑΓΗ ΚΑΙ ΕΔΩ
         }, 1000);
     }
 }
