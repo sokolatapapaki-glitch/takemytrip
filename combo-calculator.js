@@ -826,69 +826,34 @@ function showComboNotification(message, type = 'info') {
     }
 }
 
-// ==================== ADD COMBO BUTTON TO UI ====================
+// ==================== ADD COMBO BUTTON TO UI (SIMPLIFIED) ====================
 function addComboButtonToUI() {
-    // Περιμένουμε να φορτωθεί το DOM
-    setTimeout(() => {
-        // Ψάχνουμε το activities step container - ΑΛΛΑΓΗ ΕΔΩ
-        const checkInterval = setInterval(() => {
-            // ΜΕΤΑΒΛΗΤΗ ΑΝΑΖΗΤΗΣΗΣ:
-            // Ψάχνουμε το activities container, ΟΧΙ το sidebar
-            const activitiesStep = document.querySelector('#step-content .activities-step, .activities-step, [data-step="activities"]');
-            
-            if (activitiesStep) {
-                clearInterval(checkInterval);
-                
-                // Έλεγχος αν υπάρχει ήδη το κουμπί
-                if (activitiesStep.querySelector('.combo-button-container')) {
-                    console.log('✅ Combo button already exists');
-                    return;
-                }
-                
-                // Προσθήκη του κουμπιού ΜΕΣΑ στο activities container
-                const comboButtonHTML = `
-                    <div class="combo-button-container" style="text-align: center; margin: 25px 0;">
-                        <button onclick="calculateSmartCombos()" 
-                                class="combo-main-button"
-                                style="background: linear-gradient(135deg, #9c27b0, #673ab7); 
-                                       color: white; 
-                                       border: none; 
-                                       padding: 16px 40px; 
-                                       border-radius: 50px; 
-                                       font-size: 1.1em; 
-                                       font-weight: bold; 
-                                       cursor: pointer;
-                                       box-shadow: 0 5px 20px rgba(156, 39, 176, 0.3);
-                                       transition: all 0.3s ease;">
-                            <i class="fas fa-percentage" style="margin-right: 10px;"></i>
-                            💰 Έξυπνος Υπολογισμός Combos
-                        </button>
-                        <p style="color: #666; margin-top: 10px; font-size: 0.9em;">
-                            Βρίσκει αυτόματα τα καλύτερα combos για εξοικονόμηση χρημάτων
-                        </p>
-                    </div>
-                `;
-                
-                // Προσθήκη ΜΕΣΑ στο activities step
-                // Ψάχνουμε το total cost card ή το activities container
-                const totalCostCard = activitiesStep.querySelector('.total-cost-card');
-                const activitiesGrid = activitiesStep.querySelector('.activities-grid');
-                
-                if (totalCostCard) {
-                    // Προσθήκη ΠΑΝΩ από το total cost
-                    totalCostCard.insertAdjacentHTML('beforebegin', comboButtonHTML);
-                } else if (activitiesGrid) {
-                    // Προσθήκη ΚΑΤΩ από τις δραστηριότητες
-                    activitiesGrid.insertAdjacentHTML('afterend', comboButtonHTML);
-                } else {
-                    // Προσθήκη στο τέλος του container
-                    activitiesStep.insertAdjacentHTML('beforeend', comboButtonHTML);
-                }
-                
-                console.log('✅ Combo button added to activities step!');
-            }
-        }, 1000); // Μείωσε το interval για γρηγορότερη εμφάνιση
-    }, 500);
+    console.log('🎯 Adding combo button...');
+    
+    // Προσθήκη του κουμπιού απευθείας στο τέλος της σελίδας
+    const comboButtonHTML = `
+        <div class="combo-button-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 10000;">
+            <button onclick="calculateSmartCombos()" 
+                    class="combo-main-button"
+                    style="background: linear-gradient(135deg, #9c27b0, #673ab7); 
+                           color: white; 
+                           border: none; 
+                           padding: 16px 40px; 
+                           border-radius: 50px; 
+                           font-size: 1.1em; 
+                           font-weight: bold; 
+                           cursor: pointer;
+                           box-shadow: 0 5px 20px rgba(156, 39, 176, 0.3);
+                           transition: all 0.3s ease;">
+                <i class="fas fa-percentage" style="margin-right: 10px;"></i>
+                💰 Έξυπνος Υπολογισμός Combos
+            </button>
+        </div>
+    `;
+    
+    // Προσθήκη στο <body> του DOM
+    document.body.insertAdjacentHTML('beforeend', comboButtonHTML);
+    console.log('✅ Combo button added globally! (Fixed at bottom-right)');
 }
 // ==================== DEBUG HELPER ====================
 function debugComboState() {
