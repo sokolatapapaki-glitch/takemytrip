@@ -1,0 +1,428 @@
+{
+  "city": "Βερολίνο",
+  "country": "Γερμανία",
+  "currency": "EUR",
+  "emoji": "🇩🇪",
+  "pricing_model": "per_age",
+  "description": "Η πρωτεύουσα της Γερμανίας με πλούσια ιστορία, μουσεία και μοντέρνα αρχιτεκτονική.",
+  "location": {
+    "lat": 52.5200,
+    "lng": 13.4050
+  },
+  "activities": [
+    {
+      "id": 1,
+      "name": "Illuseum Berlin",
+      "description": "Ένας κόσμος γεμάτος ψευδαισθήσεις, οπτικά φαινόμενα και διαδραστικές εμπειρίες για μικρούς και μεγάλους.",
+      "category": "museum",
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
+        "6": 12, "7": 12, "8": 12, "9": 12, "10": 12, "11": 12, "12": 12, "13": 12, "14": 12,
+        "15": 16, "16": 16, "17": 16,
+        "18": 16, "19": 16,
+        "adult": 16
+      },
+      "location": {
+        "lat": 52.5206,
+        "lng": 13.3878
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Curry+36+Berlin+Kreuzberg' target='_blank'>Curry 36</a> - διάσημα currywurst",
+      "website": "https://www.illuseum.de/en/",
+      "notes": [],
+      "tags": ["illusions", "interactive", "optical", "family"],
+      "duration_hours": 1.5,
+      "best_time": "any"
+    },
+    {
+      "id": 2,
+      "name": "Deutsches Technikmuseum",
+      "description": "Μουσείο τεχνολογίας με τρένα, αεροπλάνα, πλοία και Spectrum για παιδιά.",
+      "category": "museum",
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
+        "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0,
+        "15": 0, "16": 0, "17": 0,
+        "18": 12, "19": 12,
+        "adult": 12
+      },
+      "location": {
+        "lat": 52.4986,
+        "lng": 13.3779
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Schleusenkrug+Berlin' target='_blank'>Schleusenkrug</a> - beer garden",
+      "website": "https://technikmuseum.berlin/en/",
+      "notes": [],
+      "tags": ["technology", "museum", "trains", "airplanes", "family"],
+      "duration_hours": 3,
+      "best_time": "afternoon"
+    },
+    {
+      "id": 3,
+      "name": "DDR Museum",
+      "description": "Διαδραστικό μουσείο για την καθημερινή ζωή στην Ανατολική Γερμανία (DDR).",
+      "category": "museum",
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
+        "6": 8, "7": 8, "8": 8, "9": 8, "10": 8, "11": 8, "12": 8, "13": 8, "14": 8,
+        "15": 13.5, "16": 13.5, "17": 13.5,
+        "18": 13.5, "19": 13.5,
+        "adult": 13.5
+      },
+      "location": {
+        "lat": 52.5194,
+        "lng": 13.4025
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Zur+letzten+Instanz+Berlin' target='_blank'>Zur letzten Instanz</a> - παλιό εστιατόριο",
+      "website": "https://www.ddr-museum.de/en",
+      "notes": [],
+      "tags": ["ddr", "history", "interactive", "germany", "cold war"],
+      "duration_hours": 2,
+      "best_time": "afternoon"
+    },
+    {
+      "id": 4,
+      "name": "Museum für Naturkunde",
+      "description": "Ψηλότερος σκελετός δεινοσαύρου και μεγάλη συλλογή ζώων και ορυκτών.",
+      "category": "museum",
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
+        "6": 5, "7": 5, "8": 5, "9": 5, "10": 5, "11": 5, "12": 5, "13": 5, "14": 5,
+        "15": 11, "16": 11, "17": 11,
+        "18": 11, "19": 11,
+        "adult": 11
+      },
+      "location": {
+        "lat": 52.5302,
+        "lng": 13.3793
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Transit+Berlin+Mitte' target='_blank'>Transit</a> - modern German cuisine",
+      "website": "https://www.museumfuernaturkunde.berlin/en",
+      "notes": [],
+      "tags": ["natural history", "dinosaurs", "animals", "minerals", "family"],
+      "duration_hours": 2.5,
+      "best_time": "morning"
+    },
+    {
+      "id": 5,
+      "name": "LEGOLAND Discovery Centre Berlin",
+      "description": "Κέντρο διασκέδασης με LEGO, μίνι Βερολίνο, 4D cinema και παιχνίδια.",
+      "category": "attraction",
+      "prices": {
+        "0": 0, "1": 0, "2": 0,
+        "3": 19.5, "4": 19.5, "5": 19.5, "6": 19.5, "7": 19.5, "8": 19.5, "9": 19.5, "10": 19.5, "11": 19.5, "12": 19.5, "13": 19.5, "14": 19.5,
+        "15": 19.5, "16": 19.5, "17": 19.5,
+        "18": 19.5, "19": 19.5,
+        "adult": 19.5
+      },
+      "location": {
+        "lat": 52.5015,
+        "lng": 13.3371
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Vapiano+Berlin+Potsdamer+Platz' target='_blank'>Vapiano</a> - Italian",
+      "website": "https://www.legolanddiscoverycentre.de/berlin/",
+      "notes": [],
+      "tags": ["lego", "discovery", "family", "children", "interactive"],
+      "duration_hours": 3,
+      "best_time": "any"
+    },
+    {
+      "id": 6,
+      "name": "Madame Tussauds Berlin",
+      "description": "Κέρινα ομοιώματα διασημοτήτων και ιστορικών προσώπων.",
+      "category": "museum",
+      "prices": {
+        "0": 0, "1": 0, "2": 0,
+        "3": 18, "4": 18, "5": 18, "6": 18, "7": 18, "8": 18, "9": 18, "10": 18, "11": 18, "12": 18, "13": 18, "14": 18,
+        "15": 23.5, "16": 23.5, "17": 23.5,
+        "18": 23.5, "19": 23.5,
+        "adult": 23.5
+      },
+      "location": {
+        "lat": 52.5032,
+        "lng": 13.3385
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=California+Berlin' target='_blank'>California</a> - American style",
+      "website": "https://www.madametussauds.com/berlin/en/",
+      "notes": [],
+      "tags": ["wax", "celebrities", "museum", "figures", "family"],
+      "duration_hours": 2,
+      "best_time": "afternoon"
+    },
+    {
+      "id": 7,
+      "name": "ANOHA - Children's World",
+      "description": "Διαδραστικός παιδικός κόσμος στο Εβραϊκό Μουσείο Βερολίνου.",
+      "category": "museum",
+      "prices": {
+        "0": 3, "1": 3, "2": 3,
+        "3": 3, "4": 3, "5": 3, "6": 3, "7": 3, "8": 3, "9": 3, "10": 3, "11": 3, "12": 3, "13": 3, "14": 3,
+        "15": 3, "16": 3, "17": 3,
+        "18": 3, "19": 3,
+        "adult": 3
+      },
+      "location": {
+        "lat": 52.5024,
+        "lng": 13.3952
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Cafe+Schmus+Berlin' target='_blank'>Cafe Schmus</a> - στο μουσείο",
+      "website": "https://www.jmberlin.de/en/anoha",
+      "notes": [],
+      "tags": ["children", "interactive", "jewish museum", "play", "family"],
+      "duration_hours": 1.5,
+      "best_time": "afternoon"
+    },
+    {
+      "id": 8,
+      "name": "Labyrinth Kindermuseum",
+      "description": "Μουσείο για παιδιά με εκθέματα που ενθαρρύνουν παιχνίδι και μάθηση.",
+      "category": "museum",
+      "prices": {
+        "0": 0, "1": 0, "2": 0,
+        "3": 7, "4": 7, "5": 7, "6": 7, "7": 7, "8": 7, "9": 7, "10": 7, "11": 7, "12": 7, "13": 7, "14": 7,
+        "15": 7, "16": 7, "17": 7,
+        "18": 7, "19": 7,
+        "adult": 7
+      },
+      "location": {
+        "lat": 52.5432,
+        "lng": 13.4221
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Schiller+Burg+Berlin' target='_blank'>Schiller Burg</a> - burgers",
+      "website": "https://www.labyrinth-kindermuseum.de/en",
+      "notes": [],
+      "tags": ["children", "museum", "play", "learning", "interactive"],
+      "duration_hours": 2,
+      "best_time": "afternoon"
+    },
+    {
+      "id": 9,
+      "name": "MACHmit! Museum for Children",
+      "description": "Μουσείο για παιδιά με εργαστήρια και παιχνίδια.",
+      "category": "museum",
+      "prices": {
+        "0": 0, "1": 0, "2": 0,
+        "3": 9, "4": 9, "5": 9, "6": 9, "7": 9, "8": 9, "9": 9, "10": 9, "11": 9, "12": 9, "13": 9, "14": 9,
+        "15": 9, "16": 9, "17": 9,
+        "18": 9, "19": 9,
+        "adult": 9
+      },
+      "location": {
+        "lat": 52.5401,
+        "lng": 13.4178
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=La+Casa+Berlin' target='_blank'>La Casa</a> - Mediterranean",
+      "website": "https://www.machmitmuseum.de/en/",
+      "notes": [],
+      "tags": ["children", "museum", "workshops", "play", "hands-on"],
+      "duration_hours": 2,
+      "best_time": "afternoon"
+    },
+    {
+      "id": 10,
+      "name": "Zoologischer Garten Berlin",
+      "description": "Ο παλαιότερος ζωολογικός κήπος της Γερμανίας με μεγάλη ποικιλία ζώων.",
+      "category": "zoo",
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 7, "6": 7, "7": 7, "8": 7, "9": 7, "10": 7, "11": 7, "12": 7, "13": 7, "14": 7,
+        "15": 15.5, "16": 15.5, "17": 15.5,
+        "18": 15.5, "19": 15.5,
+        "adult": 15.5
+      },
+      "location": {
+        "lat": 52.5075,
+        "lng": 13.3375
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Block+House+Berlin' target='_blank'>Block House</a> - steakhouse",
+      "website": "https://www.zoo-berlin.de/en",
+      "notes": [],
+      "tags": ["zoo", "animals", "oldest", "germany", "family"],
+      "duration_hours": 4,
+      "best_time": "morning"
+    },
+    {
+      "id": 11,
+      "name": "Zoologischer Garten + Aquarium Berlin",
+      "description": "Συνδυαστικό εισιτήριο ζωολογικού κήπου και ενυδρείου.",
+      "category": "zoo",
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 10.5, "6": 10.5, "7": 10.5, "8": 10.5, "9": 10.5, "10": 10.5, "11": 10.5, "12": 10.5, "13": 10.5, "14": 10.5,
+        "15": 23.5, "16": 23.5, "17": 23.5,
+        "18": 23.5, "19": 23.5,
+        "adult": 23.5
+      },
+      "location": {
+        "lat": 52.5075,
+        "lng": 13.3375
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Hard+Rock+Cafe+Berlin' target='_blank'>Hard Rock Cafe</a> - American",
+      "website": "https://www.aquarium-berlin.de/en",
+      "notes": [],
+      "tags": ["zoo", "aquarium", "combo", "animals", "marine"],
+      "duration_hours": 5,
+      "best_time": "any"
+    },
+    {
+      "id": 12,
+      "name": "Tiergarten",
+      "description": "Το τεράστιο κεντρικό πάρκο του Βερολίνου.",
+      "category": "park",
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
+        "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0,
+        "15": 0, "16": 0, "17": 0,
+        "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 52.5145,
+        "lng": 13.3501
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Cafe+am+Neuen+See+Berlin' target='_blank'>Cafe am Neuen See</a> - beer garden",
+      "website": "https://www.berlin.de/en/parks-and-gardens/3559686-3104052-tiergarten.en.html",
+      "notes": [],
+      "tags": ["park", "free", "central", "green", "nature"],
+      "duration_hours": 2,
+      "best_time": "afternoon"
+    },
+    {
+      "id": 13,
+      "name": "Garten der Welt",
+      "description": "Εντυπωσιακό πάρκο με θεματικούς κήπους και τελεφερίκ.",
+      "category": "park",
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
+        "6": 4, "7": 4, "8": 4, "9": 4, "10": 4, "11": 4, "12": 4, "13": 4, "14": 4,
+        "15": 4, "16": 4, "17": 4,
+        "18": 9, "19": 9,
+        "adult": 9
+      },
+      "location": {
+        "lat": 52.5408,
+        "lng": 13.5775
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Restaurant+Erholung+Berlin' target='_blank'>Restaurant Erholung</a> - στο πάρκο",
+      "website": "https://www.gruen-berlin.de/en/gardens-of-the-world",
+      "notes": [],
+      "tags": ["park", "gardens", "thematic", "cable car", "nature"],
+      "duration_hours": 3,
+      "best_time": "afternoon"
+    },
+    {
+      "id": 14,
+      "name": "FEZ Berlin",
+      "description": "Μεγάλο κέντρο αναψυχής για παιδιά με εργαστήρια, θέατρο και παιδικό μουσείο.",
+      "category": "attraction",
+      "prices": {
+        "0": 0, "1": 0, "2": 0,
+        "3": 5, "4": 5, "5": 5, "6": 5, "7": 5, "8": 5, "9": 5, "10": 5, "11": 5, "12": 5, "13": 5, "14": 5,
+        "15": 5, "16": 5, "17": 5,
+        "18": 5, "19": 5,
+        "adult": 5
+      },
+      "location": {
+        "lat": 52.4456,
+        "lng": 13.5364
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=FEZ+Cafe+Berlin' target='_blank'>FEZ Cafe</a> - family friendly",
+      "website": "https://fez-berlin.de/en/",
+      "notes": [],
+      "tags": ["children", "recreation", "workshops", "theater", "family"],
+      "duration_hours": 4,
+      "best_time": "any"
+    },
+    {
+      "id": 15,
+      "name": "Fernsehturm + VR",
+      "description": "Πύργος Τηλεόρασης με πανοραμική θέα και VR.",
+      "category": "attraction",
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 26.5, "6": 26.5, "7": 26.5, "8": 26.5, "9": 26.5, "10": 26.5, "11": 26.5, "12": 26.5, "13": 26.5, "14": 26.5,
+        "15": 36.5, "16": 36.5, "17": 36.5,
+        "18": 36.5, "19": 36.5,
+        "adult": 36.5
+      },
+      "location": {
+        "lat": 52.5208,
+        "lng": 13.4094
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Sphere+Restaurant+Berlin' target='_blank'>Sphere Restaurant</a> - περιστρεφόμενο",
+      "website": "https://tv-turm.de/en/",
+      "notes": [],
+      "tags": ["tower", "view", "panorama", "vr", "television"],
+      "duration_hours": 1.5,
+      "best_time": "evening"
+    },
+    {
+      "id": 16,
+      "name": "Κρουαζιέρα στον ποταμό Spree",
+      "description": "Χαλαρωτικός τρόπος να δείτε τα αξιοθέατα της πόλης.",
+      "category": "cruise",
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0,
+        "7": 12.5, "8": 12.5, "9": 12.5, "10": 12.5, "11": 12.5, "12": 12.5, "13": 12.5, "14": 12.5,
+        "15": 16.5, "16": 16.5, "17": 16.5,
+        "18": 22, "19": 22,
+        "adult": 22
+      },
+      "location": {
+        "lat": 52.5163,
+        "lng": 13.4025
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Spreegold+Berlin' target='_blank'>Spreegold</a> - German cuisine",
+      "website": "https://www.berlin-city-cruises.de/en/",
+      "notes": [],
+      "tags": ["cruise", "river", "spree", "sightseeing", "relaxing"],
+      "duration_hours": 2,
+      "best_time": "afternoon"
+    },
+    {
+      "id": 17,
+      "name": "Extavium Potsdam",
+      "description": "Επιστημονικό κέντρο με πειράματα, ιδανικό για παιδιά 4–12 ετών.",
+      "category": "museum",
+      "prices": {
+        "0": 0, "1": 0, "2": 0,
+        "3": 14, "4": 14, "5": 14, "6": 14, "7": 14, "8": 14, "9": 14, "10": 14, "11": 14, "12": 14, "13": 14, "14": 14,
+        "15": 14, "16": 14, "17": 14,
+        "18": 14, "19": 14,
+        "adult": 14
+      },
+      "location": {
+        "lat": 52.4009,
+        "lng": 13.0592
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Alter+Fritz+Potsdam' target='_blank'>Alter Fritz</a> - traditional",
+      "website": "https://www.extavium.de/en/",
+      "notes": [],
+      "tags": ["science", "experiments", "children", "hands-on", "potsdam"],
+      "duration_hours": 2.5,
+      "best_time": "afternoon"
+    },
+    {
+      "id": 18,
+      "name": "Computerspielemuseum",
+      "description": "Μουσείο βιντεοπαιχνιδιών με interactive εκθέματα.",
+      "category": "museum",
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
+        "6": 7, "7": 7, "8": 7, "9": 7, "10": 7, "11": 7, "12": 7, "13": 7, "14": 7,
+        "15": 11, "16": 11, "17": 11,
+        "18": 11, "19": 11,
+        "adult": 11
+      },
+      "location": {
+        "lat": 52.5111,
+        "lng": 13.4478
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Burger+Me+Berlin' target='_blank'>Burger Me</a> - burgers",
+      "website": "https://www.computerspielemuseum.de/",
+      "notes": [],
+      "tags": ["video games", "computers", "interactive", "museum", "gaming"],
+      "duration_hours": 2,
+      "best_time": "afternoon"
+    }
+  ]
+}
