@@ -4319,6 +4319,8 @@ function calculateSmartCombos() {
         availableCombos = findViennaCombos(selectedActivities, ageGroups);
     } else if (selectedDestinationName.includes("Βερολίνο")) {
         availableCombos = findBerlinCombos(selectedActivities, ageGroups);
+    } else if (selectedDestinationName.includes("Άμστερνταμ")) { // <-- ΠΡΟΣΘΕΣΕ ΑΥΤΗ ΤΗ ΓΡΑΜΜΗ
+        availableCombos = findAmsterdamCombos(selectedActivities, ageGroups); // <-- ΚΑΙ ΑΥΤΗ
     } else {
         availableCombos = findGenericCombos(selectedActivities, ageGroups);
     }
@@ -4625,7 +4627,200 @@ function findBerlinCombos(selectedActivities, ageGroups) {
     
     return combos;
 }
-
+function findAmsterdamCombos(selectedActivities, ageGroups) {
+    console.log("🇳🇱 Αναζήτηση combos για Άμστερνταμ");
+    const combos = [];
+    
+    // ============================================
+    // 1. COMBO: Madame Tussauds + This is Holland
+    // ============================================
+    const madameTussauds = selectedActivities.find(act => 
+        act.name.toLowerCase().includes("madame tussauds") || 
+        act.name.toLowerCase().includes("μαντάμ τυσώ")
+    );
+    
+    const thisIsHolland = selectedActivities.find(act => 
+        act.name.toLowerCase().includes("this is holland") || 
+        act.name.toLowerCase().includes("όλα είναι ολλανδία")
+    );
+    
+    if (madameTussauds && thisIsHolland) {
+        console.log("✅ Βρέθηκε combo: Madame Tussauds + This is Holland");
+        
+        // Υπολογισμός κανονικού κόστους για ΑΥΤΕΣ τις 2 δραστηριότητες
+        const normalCostForPair = calculateComboRegularCost([madameTussauds, thisIsHolland], ageGroups);
+        
+        // Υπολογισμός combo κόστους βάσει ηλικιακών ομάδων
+        const adultCount = ageGroups["18+"] || 0;
+        const childCount15Plus = ageGroups["15-19"] || 0; // 15+ ετών
+        const childCount2to14 = (ageGroups["6-14"] || 0) + (ageGroups["3-5"] || 0) + (ageGroups["0-2"] || 0); // 2-14 ετών
+        
+        // COMBO ΤΙΜΕΣ:
+        // 0-1 ετών: δωρεάν
+        // 2-14 ετών: 32€
+        // 15+ ετών: 37€
+        
+        // Για απλότητα: 0-14 = 32€, 15+ = 37€
+        const comboCost = (childCount2to14 * 32) + ((adultCount + childCount15Plus) * 37);
+        
+        if (normalCostForPair > comboCost) {
+            combos.push({
+                name: "🎭 Madame Tussauds + ✈️ This is Holland",
+                description: "Συνδυασμός κέρινων ομοιωμάτων και εικονικής πτήσης",
+                activities: [madameTussauds.name, thisIsHolland.name],
+                regularPrice: normalCostForPair,
+                comboPrice: comboCost,
+                saving: normalCostForPair - comboCost,
+                note: "🎫 Combo τιμές: 2-14 ετών: 32€ | 15+ ετών: 37€ | 0-1 ετών: Δωρεάν"
+            });
+        }
+    }
+    
+    // ============================================
+    // 2. COMBO: Madame Tussauds + Canal cruise
+    // ============================================
+    const canalCruise = selectedActivities.find(act => 
+        act.name.toLowerCase().includes("canal cruise") || 
+        act.name.toLowerCase().includes("κρουαζιέρα καναλιών") ||
+        act.name.toLowerCase().includes("κανάλι") ||
+        act.name.toLowerCase().includes("κρουαζιέρα")
+    );
+    
+    if (madameTussauds && canalCruise) {
+        console.log("✅ Βρέθηκε combo: Madame Tussauds + Canal cruise");
+        
+        const normalCostForPair2 = calculateComboRegularCost([madameTussauds, canalCruise], ageGroups);
+        
+        const adultCount = ageGroups["18+"] || 0;
+        const childCount15Plus = ageGroups["15-19"] || 0;
+        const childCount2to14 = (ageGroups["6-14"] || 0) + (ageGroups["3-5"] || 0) + (ageGroups["0-2"] || 0);
+        
+        // COMBO ΤΙΜΕΣ:
+        // 0-1 ετών: δωρεάν
+        // 2-14 ετών: 29.5€
+        // 15+ ετών: 37€
+        
+        const comboCost2 = (childCount2to14 * 29.5) + ((adultCount + childCount15Plus) * 37);
+        
+        if (normalCostForPair2 > comboCost2) {
+            combos.push({
+                name: "🎭 Madame Tussauds + 🚢 Canal Cruise",
+                description: "Κέρινα ομοιώματα + Κρουαζιέρα στα κανάλια",
+                activities: [madameTussauds.name, canalCruise.name],
+                regularPrice: normalCostForPair2,
+                comboPrice: comboCost2,
+                saving: normalCostForPair2 - comboCost2,
+                note: "🎫 Combo τιμές: 2-14 ετών: 29.5€ | 15+ ετών: 37€ | 0-1 ετών: Δωρεάν"
+            });
+        }
+    }
+    
+    // ============================================
+    // 3. COMBO: This is Holland + Pancakes cruise
+    // ============================================
+    const pancakesCruise = selectedActivities.find(act => 
+        act.name.toLowerCase().includes("pancakes cruise") || 
+        act.name.toLowerCase().includes("κρουαζιέρα πανκεϊκ") ||
+        act.name.toLowerCase().includes("πανκεϊκ")
+    );
+    
+    if (thisIsHolland && pancakesCruise) {
+        console.log("✅ Βρέθηκε combo: This is Holland + Pancakes cruise");
+        
+        const normalCostForPair3 = calculateComboRegularCost([thisIsHolland, pancakesCruise], ageGroups);
+        
+        // Για αυτό το combo: 0-3 ετών δεν επιτρέπονται
+        // 4-12 ετών: 35.5€
+        // 13+ ετών: 43.5€
+        
+        // Υπολογισμός ατόμων που επιτρέπονται
+        const childCount4to12 = (ageGroups["6-14"] || 0); // Προσέγγιση: 6-14 = 4-12
+        const teenCount13Plus = (ageGroups["15-19"] || 0) + (ageGroups["18+"] || 0); // 13+ = 15-19 + 18+
+        
+        const comboCost3 = (childCount4to12 * 35.5) + (teenCount13Plus * 43.5);
+        
+        // Έλεγχος: αν υπάρχουν παιδιά 0-3 ετών, προσθήκη σημείωσης
+        const hasBabies = (ageGroups["0-2"] || 0) > 0 || (ageGroups["3-5"] || 0) > 0;
+        const note = hasBabies ? 
+            "⚠️ Παιδιά 0-3 ετών δεν επιτρέπονται σε αυτό το combo" : 
+            "🎫 Combo τιμές: 4-12 ετών: 35.5€ | 13+ ετών: 43.5€";
+        
+        if (normalCostForPair3 > comboCost3 && (childCount4to12 + teenCount13Plus) > 0) {
+            combos.push({
+                name: "✈️ This is Holland + 🥞 Pancakes Cruise",
+                description: "Εικονική πτήση + Κρουαζιέρα με απεριόριστα πανκεϊκς",
+                activities: [thisIsHolland.name, pancakesCruise.name],
+                regularPrice: normalCostForPair3,
+                comboPrice: comboCost3,
+                saving: normalCostForPair3 - comboCost3,
+                note: note
+            });
+        }
+    }
+    
+    // ============================================
+    // 4. AMSTERDAM CITY CARD COMBO (ΓΕΝΙΚΟ)
+    // ============================================
+    // Αναζήτηση για πολλές δραστηριότητες που καλύπτονται από την κάρτα
+    const amsterdamCardActivities = selectedActivities.filter(act => {
+        const name = act.name.toLowerCase();
+        return name.includes("rijksmuseum") ||
+               name.includes("van gogh") ||
+               name.includes("canal cruise") ||
+               name.includes("museum") ||
+               name.includes("cruise") ||
+               name.includes("artis") ||
+               name.includes("zoo") ||
+               name.includes("nemo") ||
+               name.includes("science");
+    });
+    
+    if (amsterdamCardActivities.length >= 3) {
+        console.log("✅ Βρέθηκαν δραστηριότητες για Amsterdam City Card");
+        
+        const normalCostForCard = calculateComboRegularCost(amsterdamCardActivities, ageGroups);
+        
+        // Amsterdam City Card τιμές (προσομοίωση)
+        const adultCount = ageGroups["18+"] || 0;
+        const childCount = (ageGroups["6-14"] || 0) + (ageGroups["15-19"] || 0);
+        
+        // 24ωρη κάρτα: Ενήλικας 65€, Παιδί 32.5€
+        // 48ωρη κάρτα: Ενήλικας 85€, Παιδί 42.5€
+        // 72ωρη κάρτα: Ενήλικας 100€, Παιδί 50€
+        
+        // Απόφαση για ημέρες βάσει αριθμού δραστηριοτήτων
+        const daysNeeded = Math.min(3, Math.ceil(amsterdamCardActivities.length / 3));
+        let cardAdultPrice, cardChildPrice;
+        
+        if (daysNeeded === 1) {
+            cardAdultPrice = 65;
+            cardChildPrice = 32.5;
+        } else if (daysNeeded === 2) {
+            cardAdultPrice = 85;
+            cardChildPrice = 42.5;
+        } else {
+            cardAdultPrice = 100;
+            cardChildPrice = 50;
+        }
+        
+        const comboCostCard = (adultCount * cardAdultPrice) + (childCount * cardChildPrice);
+        
+        if (normalCostForCard > comboCostCard) {
+            combos.push({
+                name: `🏙️ Amsterdam City Card (${daysNeeded} ημέρες)`,
+                description: `Πρόσβαση σε ${amsterdamCardActivities.length} αξιοθέατα + Δωρεάν μεταφορές`,
+                activities: amsterdamCardActivities.map(a => a.name),
+                regularPrice: normalCostForCard,
+                comboPrice: comboCostCard,
+                saving: normalCostForCard - comboCostCard,
+                note: `📅 ${daysNeeded} ημέρες | 🚇 Με δωρεάν μεταφορές | 👥 Ενήλικας: ${cardAdultPrice}€, Παιδί: ${cardChildPrice}€`
+            });
+        }
+    }
+    
+    console.log(`🇳🇱 Βρέθηκαν ${combos.length} combos για Άμστερνταμ`);
+    return combos;
+}
 function findGenericCombos(selectedActivities, ageGroups) {
     console.log("🌍 Αναζήτηση γενικών combos");
     const combos = [];
