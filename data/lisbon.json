@@ -1,0 +1,129 @@
+{
+  "city": "Λισαβόνα",
+  "country": "Πορτογαλία",
+  "currency": "EUR",
+  "emoji": "🇵🇹",
+  "pricing_model": "per_age",
+  "description": "Η ηλιακή πρωτεύουσα της Πορτογαλίας, χτισμένη σε επτά λόφους, με ιστορικά μνημεία, παραδοσιακές συνοικίες και θέα στον Τάγο.",
+  "location": {
+    "lat": 38.7223,
+    "lng": -9.1393
+  },
+  "activities": [
+    {
+      "id": 1,
+      "name": "Oceanário de Lisboa",
+      "description": "Ένα από τα μεγαλύτερα ενυδρεία στην Ευρώπη με χιλιάδες ψάρια και θαλάσσια είδη.",
+      "category": "aquarium",
+      "prices": {
+        "0": 0, "1": 0, "2": 0,
+        "3": 8, "4": 8, "5": 8, "6": 12, "7": 12, "8": 12, "9": 12, "10": 12, "11": 12, "12": 12, "13": 12, "14": 12,
+        "15": 17, "16": 17, "17": 17,
+        "18": 19, "19": 19,
+        "adult": 19
+      },
+      "location": {
+        "lat": 38.7633,
+        "lng": -9.0937
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Sea+Me+Lisbon' target='_blank'>Sea Me</a> - ψαροταβέρνα",
+      "website": "https://www.oceanario.pt/en/",
+      "notes": [],
+      "tags": ["aquarium", "marine life", "family", "ocean", "fish"],
+      "duration_hours": 3,
+      "best_time": "any"
+    },
+    {
+      "id": 2,
+      "name": "Pavilhão do Conhecimento",
+      "description": "Διαδραστικό μουσείο επιστήμης ιδανικό για παιδιά και εφήβους.",
+      "category": "museum",
+      "prices": {
+        "0": 0, "1": 0, "2": 0,
+        "3": 6, "4": 6, "5": 6, "6": 8, "7": 8, "8": 8, "9": 8, "10": 8, "11": 8, "12": 8, "13": 8, "14": 8,
+        "15": 9, "16": 9, "17": 9,
+        "18": 9, "19": 9,
+        "adult": 9
+      },
+      "location": {
+        "lat": 38.7625,
+        "lng": -9.0950
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Restaurante+do+Oceanário' target='_blank'>Restaurante do Oceanário</a>",
+      "website": "https://www.pavconhecimento.pt/en/",
+      "notes": [],
+      "tags": ["museum", "science", "interactive", "children", "hands-on"],
+      "duration_hours": 2.5,
+      "best_time": "afternoon"
+    },
+    {
+      "id": 3,
+      "name": "Πύργος του Μπέλεν",
+      "description": "Ιστορικός πύργος από τον 16ο αιώνα, σύμβολο της Πορτογαλίας.",
+      "category": "monument",
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
+        "6": 6, "7": 6, "8": 6, "9": 6, "10": 6, "11": 6, "12": 6, "13": 6, "14": 6,
+        "15": 8, "16": 8, "17": 8,
+        "18": 8, "19": 8,
+        "adult": 8
+      },
+      "location": {
+        "lat": 38.6916,
+        "lng": -9.2160
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Pasteis+de+Belem' target='_blank'>Pasteis de Belem</a> - διάσημα παστέλ νάτα",
+      "website": "https://www.torrebelem.pt/en/",
+      "notes": [],
+      "tags": ["tower", "historic", "unesco", "monument", "landmark"],
+      "duration_hours": 1,
+      "best_time": "morning"
+    },
+    {
+      "id": 4,
+      "name": "Μοναστήρι των Ιερονομιτών",
+      "description": "Μνημείο UNESCO με εκπληκτική αρχιτεκτονική και ιστορία.",
+      "category": "monument",
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
+        "6": 7, "7": 7, "8": 7, "9": 7, "10": 7, "11": 7, "12": 7, "13": 7, "14": 7,
+        "15": 10, "16": 10, "17": 10,
+        "18": 10, "19": 10,
+        "adult": 10
+      },
+      "location": {
+        "lat": 38.6978,
+        "lng": -9.2067
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Antiga+Confeitaria+de+Belem' target='_blank'>Antiga Confeitaria</a> - παραδοσιακά γλυκά",
+      "website": "https://www.mosteirojeronimos.pt/en/",
+      "notes": [],
+      "tags": ["monastery", "unesco", "historic", "architecture", "gothic"],
+      "duration_hours": 1.5,
+      "best_time": "morning"
+    },
+    {
+      "id": 5,
+      "name": "Κάστρο του Αγίου Γεωργίου",
+      "description": "Μεσαιωνικό κάστρο με πανοραμική θέα της Λισαβόνας.",
+      "category": "castle",
+      "prices": {
+        "0": 0, "1": 0, "2": 0,
+        "3": 5, "4": 5, "5": 5, "6": 8, "7": 8, "8": 8, "9": 8, "10": 8, "11": 8, "12": 8, "13": 8, "14": 8,
+        "15": 10, "16": 10, "17": 10,
+        "18": 10, "19": 10,
+        "adult": 10
+      },
+      "location": {
+        "lat": 38.7139,
+        "lng": -9.1335
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Chapito' target='_blank'>Chapito</a> - εστιατόριο με θέα",
+      "website": "https://castelodesaojorge.pt/en/",
+      "notes": [],
+      "tags": ["castle", "medieval", "view", "panorama", "historic"],
+      "duration_hours": 2,
+      "best_time": "evening"
+    }
+  ]
+}
