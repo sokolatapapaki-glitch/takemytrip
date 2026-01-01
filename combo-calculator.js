@@ -194,8 +194,39 @@ function findAvailableCombos() {
         }
     }
     
+    // 👇 ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΣΩΣΤΟ FALLBACK - ΜΕΣΑ ΣΤΗ ΣΥΝΑΡΤΗΣΗ 👇
+    // Fallback: Αν δεν βρέθηκαν combos, δημιούργησε ένα γενικό
+    if (availableCombos.length === 0 && selectedActivities.length >= 2) {
+        const adultCount = window.APP_STATE.familyMembers.filter(m => m.age >= 18).length;
+        const childCount = window.APP_STATE.familyMembers.filter(m => m.age < 18).length;
+        
+        // Διάλεξε τις 2 πρώτες δραστηριότητες για ένα combo
+        const firstTwo = selectedActivities.slice(0, 2);
+        const regularPrice = firstTwo.reduce((sum, activity) => {
+            return sum + (activity.adultPrice * adultCount + (activity.childPrice || 0) * childCount);
+        }, 0);
+        
+        // 15% έκπτωση
+        const comboPrice = Math.round(regularPrice * 0.85);
+        const saving = regularPrice - comboPrice;
+        
+        if (saving > 0) {
+            availableCombos.push({
+                name: '🎯 Special Family Package',
+                description: 'Ειδική προσφορά για τις πρώτες 2 δραστηριότητες',
+                matchingActivities: firstTwo.map(a => a.name),
+                regularPrice: regularPrice,
+                comboPrice: comboPrice,
+                saving: saving,
+                discount: 15,
+                note: '15% έκπτωση για 2 δραστηριότητες'
+            });
+        }
+    }
+    // 👆 ΜΕΧΡΙ ΕΔΩ 👆
+    
     return availableCombos;
-}
+} // <-- ΜΟΝΟ ΕΝΑ ΚΛΕΙΣΙΜΟ ΕΔΩ!
 
 function findBestCombo(combos) {
     if (!combos || combos.length === 0) return null;
@@ -859,7 +890,19 @@ function addComboButtonToUI() {
         }, 1000); // Μείωσε το interval για γρηγορότερη εμφάνιση
     }, 500);
 }
-
+// ==================== DEBUG HELPER ====================
+function debugComboState() {
+    console.log('=== COMBO DEBUG INFO ===');
+    console.log('Destination:', window.APP_STATE?.destination);
+    console.log('Selected Activities:', window.APP_STATE?.selectedActivities?.length || 0);
+    console.log('Family Members:', window.APP_STATE?.familyMembers?.length || 0);
+    
+    if (window.APP_STATE?.selectedActivities) {
+        window.APP_STATE.selectedActivities.forEach((act, i) => {
+            console.log(`  ${i}: ${act.name} - Adult:${act.adultPrice}€ Child:${act.childPrice}€`);
+        });
+    }
+}
 function initComboCalculator() {
     console.log('🚀 Combo Calculator initialized!');
     
@@ -870,8 +913,10 @@ function initComboCalculator() {
     window.calculateSmartCombos = calculateSmartCombos;
     window.closeComboModal = closeComboModal;
     window.applyBestCombo = applyBestCombo;
+    window.debugComboState = debugComboState; // 👈 ΚΡΙΤΙΚΟ!
 }
 
 // ==================== EXPORT ====================
 // Το module είναι έτοιμο για χρήση!
+
 console.log('🎯 Combo Calculator ready!');
