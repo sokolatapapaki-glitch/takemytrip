@@ -906,7 +906,7 @@ function renderStepActivities() {
                     </div>
                     
                     <div style="text-align: center; margin-top: 30px;">
-                        <button class="btn btn-secondary" onclick="loadCityActivities()" id="load-activities-btn">
+                        <button class="btn btn-secondary" onclick="ies()" id="load-activities-btn">
                             <i class="fas fa-sync-alt"></i> Φόρτωση Δραστηριοτήτων
                         </button>
                     </div>
@@ -968,7 +968,7 @@ function setupActivitiesStep() {
     // Εάν υπάρχουν μέλη οικογένειας και προορισμός, φόρτωσε αυτόματα
     if (APP_STATE.destination && APP_STATE.familyMembers.length > 0) {
         setTimeout(() => {
-            loadCityActivities();
+            ies();
         }, 500);
     }
 }
@@ -1090,7 +1090,7 @@ function saveFamilyMembers() {
     // Αυτόματη φόρτωση δραστηριοτήτων αν υπάρχει προορισμός
     if (APP_STATE.destination && APP_STATE.familyMembers.length > 0) {
         setTimeout(() => {
-            loadCityActivities();
+            ies();
         }, 1000);
     }
 }
@@ -1115,29 +1115,77 @@ async function loadCityActivities() {
     if (container) container.style.display = 'none';
     
     try {
-        // ========== ΝΕΟΣ ΚΩΔΙΚΑΣ: Φόρτωση πραγματικού JSON ==========
-        const cityFileName = APP_STATE.destination.toLowerCase() + '.json';
+        // Μετατροπή ελληνικού ονόματος σε filename
+        const cityMap = {
+            'Άμστερνταμ': 'amsterdam',
+            'Αμβέρσα': 'antwerp',
+            'Βερολίνο': 'berlin',
+            'Βουδαπέστη': 'budapest',
+            'Βιέννη': 'vienna',
+            'Παρίσι': 'paris',
+            'Λονδίνο': 'london',
+            'Λισαβόνα': 'lisbon',
+            'Μαδρίτη': 'madrid',
+            'Πράγα': 'prague',
+            'Ρώμη': 'rome',
+            'Ισταμπούλ': 'istanbul'
+        };
         
-        // Προσπάθησε να φορτώσεις το JSON αρχείο
+        const cityFileName = (cityMap[APP_STATE.destination] || APP_STATE.destination.toLowerCase()) + '.json';
+        
+        console.log(`🔄 Φόρτωση: data/${cityFileName}`);
+        
+        // Φόρτωση JSON αρχείου
         const response = await fetch(`data/${cityFileName}`);
         
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error(`Δεν βρέθηκε το αρχείο: ${cityFileName}`);
         }
         
         const cityData = await response.json();
+        console.log('📊 Δεδομένα που φορτώθηκαν:', cityData);
         
-        // Εξαγωγή δραστηριοτήτων από το JSON
-        // Υποθέτουμε ότι το JSON έχει τη μορφή: { "activities": [...] }
-        const activities = cityData.activities || cityData.details || [];
+        // Εξαγωγή δραστηριοτήτων
+        const activities = cityData.activities || [];
         
         if (activities.length === 0) {
-            throw new Error('Δεν βρέθηκαν δραστηριότητες για αυτήν την πόλη');
+            throw new Error('Δεν βρέθηκαν δραστηριότητες στο αρχείο');
         }
         
+        // Μετατροπή σε μορφή που καταλαβαίνει το script
+        const formattedActivities = activities.map(activity => {
+            // Υπολογισμός τιμών για ενήλικα/παιδί
+            let adultPrice = activity.prices?.adult || 0;
+            let childPrice = 0;
+            
+            // Βρες μέση τιμή για παιδιά (ηλικίες 4-14)
+            if (activity.prices) {
+                const childAges = [4,5,6,7,8,9,10,11,12,13,14];
+                const childPrices = childAges.map(age => activity.prices[age]).filter(p => p !== undefined);
+                if (childPrices.length > 0) {
+                    childPrice = childPrices.reduce((a, b) => a + b, 0) / childPrices.length;
+                }
+            }
+            
+            return {
+                id: activity.id,
+                name: activity.name,
+                desc: activity.description,
+                adultPrice: adultPrice,
+                childPrice: childPrice,
+                duration: `${activity.duration_hours} ώρες`,
+                category: activity.category,
+                tags: activity.tags,
+                notes: activity.notes,
+                website: activity.website,
+                location: activity.location,
+                originalData: activity // Κρατάμε τα πλήρη δεδομένα
+            };
+        });
+        
         // Αποθήκευση στο state
-        APP_STATE.availableActivities = activities;
-        // ==========================================================
+        APP_STATE.availableActivities = formattedActivities;
+        APP_STATE.currentCityData = cityData; // Κρατάμε όλα τα δεδομένα
         
         // Εμφάνιση δραστηριοτήτων
         if (container) {
@@ -1150,72 +1198,58 @@ async function loadCityActivities() {
     } catch (error) {
         console.error('Σφάλμα φόρτωσης:', error);
         
-        // Fallback στα στατικά δεδομένα αν αποτύχει το fetch
+        // Fallback στα στατικά δεδομένα
         console.log('Χρησιμοποίηση fallback δεδομένων...');
         if (container) {
-            container.innerHTML = renderActivitiesList(); // Θα χρησιμοποιήσει τα hardcoded
+            container.innerHTML = renderActivitiesList(true); // Fallback mode
             container.style.display = 'block';
         }
         
-        showNotification('⚠️ Χρησιμοποιούνται προσωρινά δεδομένα', 'warning');
+        showNotification(`⚠️ ${error.message}. Χρησιμοποιούνται προσωρινά δεδομένα.`, 'warning');
     } finally {
         if (btn) btn.disabled = false;
         if (loadingDiv) loadingDiv.style.display = 'none';
     }
 }
 
-// Διέγραψε τη συνάρτηση simulateActivitiesLoad() αν υπάρχει
-// function simulateActivitiesLoad() {
-//     return new Promise(resolve => {
-//         setTimeout(resolve, 1500);
-//     });
-// }
-
-function simulateActivitiesLoad() {
-    return new Promise(resolve => {
-        setTimeout(resolve, 1500);
-    });
-}
-
-function renderActivitiesList() {
-    // Δεδομένα δραστηριοτήτων ανά πόλη
-    const activitiesData = {
-        'Βιέννη': [
-            { name: 'Σαινμπρούν Παλάτι', desc: 'Αυτοκρατορικό παλάτι με κήπους', adultPrice: 20, childPrice: 10, duration: '3-4 ώρες' },
-            { name: 'Πρατέρ Πάρκ', desc: 'Θεματικό πάρκο με ρόδες', adultPrice: 15, childPrice: 8, duration: '4-6 ώρες' },
-            { name: 'Κέντρο της Βιέννης', desc: 'Περίπατος στην ιστορική πόλη', adultPrice: 0, childPrice: 0, duration: '2-3 ώρες' },
-            { name: 'Ζωολογικός Κήπος', desc: 'Παλιότερος ζωολογικός στον κόσμο', adultPrice: 22, childPrice: 11, duration: '3-4 ώρες' }
-        ],
-        'Παρίσι': [
-            { name: 'Πύργος του Άιφελ', desc: 'Σύμβολο του Παρισιού', adultPrice: 25, childPrice: 12, duration: '2-3 ώρες' },
-            { name: 'Λούβρο', desc: 'Παγκόσμιο μουσείο τέχνης', adultPrice: 17, childPrice: 0, duration: '4-6 ώρες' },
-            { name: 'Disneyland Paris', desc: 'Θεματικό πάρκο', adultPrice: 80, childPrice: 70, duration: 'Ολόκληρη μέρα' }
-        ],
-        'Λονδίνο': [
-            { name: 'London Eye', desc: 'Τροχός με θέα την πόλη', adultPrice: 30, childPrice: 15, duration: '30 λεπτά' },
-            { name: 'Μουσείο Φυσικής Ιστορίας', desc: 'Δωρεάν μουσείο', adultPrice: 0, childPrice: 0, duration: '3-4 ώρες' },
-            { name: 'Sea Life Ακουάριο', desc: 'Υποβρύχιος κόσμος', adultPrice: 25, childPrice: 18, duration: '2 ώρες' }
-        ]
-    };
+function renderActivitiesList(useFallback = false) {
+    let activities;
     
-    const activities = activitiesData[APP_STATE.destination] || [
-        { name: 'Ιστορικό Κέντρο', desc: 'Περιήγηση στην παλιά πόλη', adultPrice: 0, childPrice: 0, duration: '2-3 ώρες' },
-        { name: 'Τοπικό Μουσείο', desc: 'Μάθετε την ιστορία', adultPrice: 10, childPrice: 5, duration: '2 ώρες' },
-        { name: 'Πάρκο Ανάπαυσης', desc: 'Χρόνος για χαλάρωση', adultPrice: 0, childPrice: 0, duration: '1-2 ώρες' }
-    ];
+    if (useFallback || !APP_STATE.availableActivities) {
+        // Fallback στατικά δεδομένα
+        const fallbackData = {
+            'Άμστερνταμ': [
+                { name: 'Περιήγηση στα κανάλια', desc: 'Βόλτα με βαρκούλα στα διάσημα κανάλια', adultPrice: 15, childPrice: 8, duration: '1 ώρα' },
+                { name: 'Μουσείο Βαν Γκογκ', desc: 'Μουσείο με έργα του διάσημου ζωγράφου', adultPrice: 24, childPrice: 0, duration: '2-3 ώρες' }
+            ],
+            'Παρίσι': [
+                { name: 'Πύργος του Άιφελ', desc: 'Σύμβολο του Παρισιού', adultPrice: 25, childPrice: 12, duration: '2-3 ώρες' },
+                { name: 'Λούβρο', desc: 'Παγκόσμιο μουσείο τέχνης', adultPrice: 17, childPrice: 0, duration: '4-6 ώρες' }
+            ],
+            'Βιέννη': [
+                { name: 'Σαινμπρούν Παλάτι', desc: 'Αυτοκρατορικό παλάτι με κήπους', adultPrice: 20, childPrice: 10, duration: '3-4 ώρες' }
+            ]
+        };
+        
+        activities = fallbackData[APP_STATE.destination] || [
+            { name: 'Ιστορικό Κέντρο', desc: 'Περιήγηση στην παλιά πόλη', adultPrice: 0, childPrice: 0, duration: '2-3 ώρες' }
+        ];
+    } else {
+        activities = APP_STATE.availableActivities;
+    }
     
-    // Αποθήκευση στο state
+    // Αποθήκευση για fallback
     APP_STATE.availableActivities = activities;
     
     return `
         <div class="activities-header" style="margin-bottom: 25px;">
-            <h3><i class="fas fa-star"></i> Διαθέσιμες Δραστηριότητες</h3>
+            <h3><i class="fas fa-star"></i> ${activities.length} Διαθέσιμες Δραστηριότητες</h3>
             <p>Κάντε κλικ για επιλογή/αποεπιλογή</p>
         </div>
         
         <div class="activities-grid">
             ${activities.map((activity, index) => {
-                const isSelected = APP_STATE.selectedActivities.some(a => a.name === activity.name);
+                const isSelected = APP_STATE.selectedActivities.some(a => a.id === activity.id || a.name === activity.name);
                 const totalPrice = calculateActivityPrice(activity);
                 
                 return `
@@ -1227,10 +1261,19 @@ function renderActivitiesList() {
                             <div class="activity-checkbox">
                                 <i class="fas fa-${isSelected ? 'check-circle' : 'circle'}"></i>
                             </div>
-                            <h4>${activity.name}</h4>
+                            <div>
+                                <h4>${activity.name}</h4>
+                                ${activity.category ? `<span class="activity-category">${activity.category}</span>` : ''}
+                            </div>
                         </div>
                         
                         <p class="activity-description">${activity.desc}</p>
+                        
+                        ${activity.tags ? `
+                            <div class="activity-tags">
+                                ${activity.tags.map(tag => `<span class="tag tag-small">${tag}</span>`).join('')}
+                            </div>
+                        ` : ''}
                         
                         <div class="activity-details">
                             <div class="detail-item">
@@ -1241,6 +1284,12 @@ function renderActivitiesList() {
                                 <i class="fas fa-euro-sign"></i>
                                 <span>${activity.adultPrice}€/ενήλικας</span>
                             </div>
+                            ${activity.childPrice > 0 ? `
+                                <div class="detail-item">
+                                    <i class="fas fa-child"></i>
+                                    <span>${activity.childPrice}€/παιδί</span>
+                                </div>
+                            ` : ''}
                         </div>
                         
                         <div class="activity-price">
@@ -1264,7 +1313,6 @@ function renderActivitiesList() {
         </div>
     `;
 }
-
 function calculateActivityPrice(activity) {
     if (!APP_STATE.familyMembers.length) return 0;
     
