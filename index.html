@@ -1345,6 +1345,77 @@ function goToStep5(){
         summaryDiv.style.border = '2px dashed #ff6b35';
         summaryDiv.style.background = '#fff5e6';
    
+    } else if (selectedDestinationName.includes("Άμστερνταμ")) {
+        const daysText = selectedDaysStay > 0 ? `${selectedDaysStay} μέρες` : "μη ορισμένες μέρες";
+        
+        if (selectedActivities.length > 0) {
+            const dailyProgram = createSmartDailyProgram(selectedActivities, selectedDaysStay || 1);
+            const distancesInfo = calculateDistances(selectedActivities);
+            
+            summaryDiv.innerHTML = `
+                <h3>🇳🇱 Το προσωπικό σας πρόγραμμα για ${daysText} στο Άμστερνταμ!</h3>
+                <div style="background: #e6f7ff; padding: 15px; border-radius: 10px; border: 2px solid #ff6600; margin: 15px 0;">
+                    <strong>📅 Πρόγραμμα Διακοπών:</strong>
+                    ${dailyProgram}
+                </div>
+                ${distancesInfo}
+                <div style="background: #fff3cd; padding: 15px; border-radius: 10px; border: 1px solid #ffeaa7; margin: 15px 0;">
+                    <strong>Οι επιλεγμένες σας δραστηριότητες (${selectedActivities.length}):</strong>
+                    <ul>
+                        ${selectedActivities.map(act => `<li>${act.name}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            summaryDiv.style.border = '2px dashed #ff6600';
+            summaryDiv.style.background = '#fff5e6';
+        } else {
+            summaryDiv.innerHTML = `
+                <h3>🇳🇱 Άμστερνταμ - Πρόγραμμα ${daysText}</h3>
+                <p>Δεν έχετε επιλέξει δραστηριότητες ακόμα. Επιστρέψτε στο Βήμα 4 και επιλέξτε δραστηριότητες!</p>
+                <p style="color: #ff6600; font-size: 0.9em;">🚲 Συμβουλή: Μην ξεχάσετε να νοικιάσετε ποδήλατο για να εξερευνήσετε την πόλη σαν ντόπιος!</p>
+                <button onclick="activateStep('step-activities')" style="padding: 10px 20px; background: #ff6600; color: white; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px;">
+                    Επιστροφή στο Βήμα 4
+                </button>
+            `;
+            summaryDiv.style.border = '2px dashed #ff6600';
+            summaryDiv.style.background = '#fff5e6';
+        }
+        
+    } else if (selectedDestinationName.includes("Λονδίνο")) {
+        const daysText = selectedDaysStay > 0 ? `${selectedDaysStay} μέρες` : "μη ορισμένες μέρες";
+        
+        if (selectedActivities.length > 0) {
+            const dailyProgram = createSmartDailyProgram(selectedActivities, selectedDaysStay || 1);
+            const distancesInfo = calculateDistances(selectedActivities);
+            
+            summaryDiv.innerHTML = `
+                <h3>🇬🇧 Το προσωπικό σας πρόγραμμα για ${daysText} στο Λονδίνο!</h3>
+                <div style="background: #e8f4f8; padding: 15px; border-radius: 10px; border: 2px solid #1565c0; margin: 15px 0;">
+                    <strong>📅 Πρόγραμμα Διακοπών:</strong>
+                    ${dailyProgram}
+                </div>
+                ${distancesInfo}
+                <div style="background: #fff3cd; padding: 15px; border-radius: 10px; border: 1px solid #ffeaa7; margin: 15px 0;">
+                    <strong>Οι επιλεγμένες σας δραστηριότητες (${selectedActivities.length}):</strong>
+                    <ul>
+                        ${selectedActivities.map(act => `<li>${act.name}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            summaryDiv.style.border = '2px dashed #1565c0';
+            summaryDiv.style.background = '#f0f8ff';
+        } else {
+            summaryDiv.innerHTML = `
+                <h3>🇬🇧 Λονδίνο - Πρόγραμμα ${daysText}</h3>
+                <p>Δεν έχετε επιλέξει δραστηριότητες ακόμα.</p>
+                <button onclick="activateStep('step-activities')" style="padding: 10px 20px; background: #1565c0; color: white; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px;">
+                    Επιστροφή στις Δραστηριότητες
+                </button>
+            `;
+            summaryDiv.style.border = '2px dashed #1565c0';
+            summaryDiv.style.background = '#f0f8ff';
+        }
+        
     } else {
         // Για όλους τους άλλους προορισμούς
         const daysTextLocal = selectedDaysStay > 0 ? `${selectedDaysStay} μέρες` : "μη ορισμένες μέρες";
@@ -1369,43 +1440,6 @@ function goToStep5(){
             `;
             summaryDiv.style.border = '2px dashed #3eb489';
             summaryDiv.style.background = '#e0fff0';
-            // Βάλε αυτό ΑΚΡΙΒΩΣ πριν το: } else {
-} else if (selectedDestinationName.includes("Λονδίνο")) {
-    const daysText = selectedDaysStay > 0 ? `${selectedDaysStay} μέρες` : "μη ορισμένες μέρες";
-    
-    if (selectedActivities.length > 0) {
-        const dailyProgram = createSmartDailyProgram(selectedActivities, selectedDaysStay || 1);
-        const distancesInfo = calculateDistances(selectedActivities);
-        
-        summaryDiv.innerHTML = `
-            <h3>🇬🇧 Το προσωπικό σας πρόγραμμα για ${daysText} στο Λονδίνο!</h3>
-            <div style="background: #e8f4f8; padding: 15px; border-radius: 10px; border: 2px solid #1565c0; margin: 15px 0;">
-                <strong>📅 Πρόγραμμα Διακοπών:</strong>
-                ${dailyProgram}
-            </div>
-            ${distancesInfo}
-            <div style="background: #fff3cd; padding: 15px; border-radius: 10px; border: 1px solid #ffeaa7; margin: 15px 0;">
-                <strong>Οι επιλεγμένες σας δραστηριότητες (${selectedActivities.length}):</strong>
-                <ul>
-                    ${selectedActivities.map(act => `<li>${act.name}</li>`).join('')}
-                </ul>
-            </div>
-        `;
-        summaryDiv.style.border = '2px dashed #1565c0';
-        summaryDiv.style.background = '#f0f8ff';
-    } else {
-        summaryDiv.innerHTML = `
-            <h3>🇬🇧 Λονδίνο - Πρόγραμμα ${daysText}</h3>
-            <p>Δεν έχετε επιλέξει δραστηριότητες ακόμα.</p>
-            <button onclick="activateStep('step-activities')" style="padding: 10px 20px; background: #1565c0; color: white; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px;">
-                Επιστροφή στις Δραστηριότητες
-            </button>
-        `;
-        summaryDiv.style.border = '2px dashed #1565c0';
-        summaryDiv.style.background = '#f0f8ff';
-    }
-    
-// και ΜΕΤΑ συνεχίζει το υπάρχον: } else {
         } else {
             summaryDiv.innerHTML = `
                 <h3>🏙️ ${selectedDestinationName} - Πρόγραμμα ${daysTextLocal}</h3>
@@ -3963,7 +3997,8 @@ async function loadCityActivities(cityName) {
             'Βερολίνο': 'berlin.json',
             'Λισαβόνα': 'lisbon.json',
             'Βουδαπέστη': 'budapest.json',
-            'Μαδρίτη': 'madrid.json'
+            'Μαδρίτη': 'madrid.json',
+            'Άμστερνταμ': 'amsterdam.json'
         };
 
         const filename = cityFileMap[cityName];
