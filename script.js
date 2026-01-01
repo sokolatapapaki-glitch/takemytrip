@@ -1115,8 +1115,29 @@ async function loadCityActivities() {
     if (container) container.style.display = 'none';
     
     try {
-        // Προσομοίωση φόρτωσης από JSON
-        await simulateActivitiesLoad();
+        // ========== ΝΕΟΣ ΚΩΔΙΚΑΣ: Φόρτωση πραγματικού JSON ==========
+        const cityFileName = APP_STATE.destination.toLowerCase() + '.json';
+        
+        // Προσπάθησε να φορτώσεις το JSON αρχείο
+        const response = await fetch(`data/${cityFileName}`);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const cityData = await response.json();
+        
+        // Εξαγωγή δραστηριοτήτων από το JSON
+        // Υποθέτουμε ότι το JSON έχει τη μορφή: { "activities": [...] }
+        const activities = cityData.activities || cityData.details || [];
+        
+        if (activities.length === 0) {
+            throw new Error('Δεν βρέθηκαν δραστηριότητες για αυτήν την πόλη');
+        }
+        
+        // Αποθήκευση στο state
+        APP_STATE.availableActivities = activities;
+        // ==========================================================
         
         // Εμφάνιση δραστηριοτήτων
         if (container) {
@@ -1124,15 +1145,31 @@ async function loadCityActivities() {
             container.style.display = 'block';
         }
         
-        showNotification(`✅ Φορτώθηκαν δραστηριότητες για ${APP_STATE.destination}`, 'success');
+        showNotification(`✅ Φορτώθηκαν ${activities.length} δραστηριότητες για ${APP_STATE.destination}`, 'success');
+        
     } catch (error) {
         console.error('Σφάλμα φόρτωσης:', error);
-        showNotification('❌ Σφάλμα φόρτωσης δραστηριοτήτων', 'error');
+        
+        // Fallback στα στατικά δεδομένα αν αποτύχει το fetch
+        console.log('Χρησιμοποίηση fallback δεδομένων...');
+        if (container) {
+            container.innerHTML = renderActivitiesList(); // Θα χρησιμοποιήσει τα hardcoded
+            container.style.display = 'block';
+        }
+        
+        showNotification('⚠️ Χρησιμοποιούνται προσωρινά δεδομένα', 'warning');
     } finally {
         if (btn) btn.disabled = false;
         if (loadingDiv) loadingDiv.style.display = 'none';
     }
 }
+
+// Διέγραψε τη συνάρτηση simulateActivitiesLoad() αν υπάρχει
+// function simulateActivitiesLoad() {
+//     return new Promise(resolve => {
+//         setTimeout(resolve, 1500);
+//     });
+// }
 
 function simulateActivitiesLoad() {
     return new Promise(resolve => {
