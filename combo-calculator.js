@@ -826,18 +826,17 @@ function showComboNotification(message, type = 'info') {
     }
 }
 
-// ==================== ADD COMBO BUTTON TO UI (SIMPLIFIED) ====================
+// ==================== ADD COMBO BUTTON TO UI ====================
 function addComboButtonToUI() {
     console.log('🎯 Adding combo button...');
     
-    // Προσθήκη του κουμπιού απευθείας στο τέλος της σελίδας
+    // Απλή HTML για το κουμπί
     const comboButtonHTML = `
-        <div class="combo-button-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 10000;">
+        <div class="combo-button-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; border: 3px solid red !important;">
             <button onclick="calculateSmartCombos()" 
-                    class="combo-main-button"
                     style="background: linear-gradient(135deg, #9c27b0, #673ab7); 
                            color: white; 
-                           border: none; 
+                           border: 2px solid yellow !important;
                            padding: 16px 40px; 
                            border-radius: 50px; 
                            font-size: 1.1em; 
@@ -851,9 +850,9 @@ function addComboButtonToUI() {
         </div>
     `;
     
-    // Προσθήκη στο <body> του DOM
+    // Προσθήκη στο <body>
     document.body.insertAdjacentHTML('beforeend', comboButtonHTML);
-    console.log('✅ Combo button added globally! (Fixed at bottom-right)');
+    console.log('✅ Combo button added!');
 }
 // ==================== DEBUG HELPER ====================
 function debugComboState() {
@@ -883,5 +882,8 @@ function initComboCalculator() {
 
 // ==================== EXPORT ====================
 // Το module είναι έτοιμο για χρήση!
+// ==================== ΑΥΤΟΜΑΤΗ ΕΚΚΙΝΗΣΗ ====================
+// ΞΕΚΙΝΑΕΙ ΑΜΕΣΑ ΟΤΑΝ ΦΟΡΤΩΘΕΙ ΤΟ SCRIPT
+addComboButtonToUI();
 
 console.log('🎯 Combo Calculator ready!');
