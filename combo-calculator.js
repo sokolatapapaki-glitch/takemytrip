@@ -799,14 +799,22 @@ function showComboNotification(message, type = 'info') {
 function addComboButtonToUI() {
     // Περιμένουμε να φορτωθεί το DOM
     setTimeout(() => {
-        // Ψάχνουμε το activities container
+        // Ψάχνουμε το activities step container - ΑΛΛΑΓΗ ΕΔΩ
         const checkInterval = setInterval(() => {
-            const activitiesContainer = document.querySelector('.activities-step, [data-step="activities"]');
+            // ΜΕΤΑΒΛΗΤΗ ΑΝΑΖΗΤΗΣΗΣ:
+            // Ψάχνουμε το activities container, ΟΧΙ το sidebar
+            const activitiesStep = document.querySelector('#step-content .activities-step, .activities-step, [data-step="activities"]');
             
-            if (activitiesContainer) {
+            if (activitiesStep) {
                 clearInterval(checkInterval);
                 
-                // Προσθήκη του κουμπιού
+                // Έλεγχος αν υπάρχει ήδη το κουμπί
+                if (activitiesStep.querySelector('.combo-button-container')) {
+                    console.log('✅ Combo button already exists');
+                    return;
+                }
+                
+                // Προσθήκη του κουμπιού ΜΕΣΑ στο activities container
                 const comboButtonHTML = `
                     <div class="combo-button-container" style="text-align: center; margin: 25px 0;">
                         <button onclick="calculateSmartCombos()" 
@@ -830,40 +838,26 @@ function addComboButtonToUI() {
                     </div>
                 `;
                 
-                // Προσθήκη πριν το "Φόρτωση Δραστηριοτήτων" κουμπί ή στο τέλος
-                const loadButton = activitiesContainer.querySelector('#load-activities-btn');
-                if (loadButton) {
-                    loadButton.insertAdjacentHTML('beforebegin', comboButtonHTML);
+                // Προσθήκη ΜΕΣΑ στο activities step
+                // Ψάχνουμε το total cost card ή το activities container
+                const totalCostCard = activitiesStep.querySelector('.total-cost-card');
+                const activitiesGrid = activitiesStep.querySelector('.activities-grid');
+                
+                if (totalCostCard) {
+                    // Προσθήκη ΠΑΝΩ από το total cost
+                    totalCostCard.insertAdjacentHTML('beforebegin', comboButtonHTML);
+                } else if (activitiesGrid) {
+                    // Προσθήκη ΚΑΤΩ από τις δραστηριότητες
+                    activitiesGrid.insertAdjacentHTML('afterend', comboButtonHTML);
                 } else {
-                    activitiesContainer.insertAdjacentHTML('beforeend', comboButtonHTML);
+                    // Προσθήκη στο τέλος του container
+                    activitiesStep.insertAdjacentHTML('beforeend', comboButtonHTML);
                 }
                 
-                // Προσθήκη CSS για το κουμπί
-                const buttonStyle = document.createElement('style');
-                buttonStyle.textContent = `
-                    .combo-main-button:hover {
-                        transform: translateY(-3px);
-                        box-shadow: 0 8px 25px rgba(156, 39, 176, 0.4);
-                    }
-                    
-                    .combo-main-button:active {
-                        transform: translateY(-1px);
-                    }
-                `;
-                document.head.appendChild(buttonStyle);
-                
-                console.log('✅ Combo button added to UI!');
+                console.log('✅ Combo button added to activities step!');
             }
-        }, 500);
-    }, 1000);
-}
-
-// ==================== INITIALIZATION ====================
-// Περιμένουμε να φορτωθεί η σελίδα
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initComboCalculator);
-} else {
-    initComboCalculator();
+        }, 1000); // Μείωσε το interval για γρηγορότερη εμφάνιση
+    }, 500);
 }
 
 function initComboCalculator() {
