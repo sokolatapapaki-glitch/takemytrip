@@ -906,7 +906,7 @@ function renderStepActivities() {
                     </div>
                     
                     <div style="text-align: center; margin-top: 30px;">
-                        <button class="btn btn-secondary" onclick="ies()" id="load-activities-btn">
+                    <button class="btn btn-secondary" onclick="loadCityActivities()" id="load-activities-btn">
                             <i class="fas fa-sync-alt"></i> Φόρτωση Δραστηριοτήτων
                         </button>
                     </div>
