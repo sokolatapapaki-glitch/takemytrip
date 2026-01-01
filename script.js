@@ -1095,6 +1095,7 @@ function saveFamilyMembers() {
     }
 }
 
+// ==== ΝΕΗ ΣΥΝΑΡΤΗΣΗ loadCityActivities() ====
 async function loadCityActivities() {
     if (!APP_STATE.destination) {
         showNotification('⚠️ Πρέπει να επιλέξετε προορισμό πρώτα', 'warning');
@@ -1211,7 +1212,6 @@ async function loadCityActivities() {
         if (loadingDiv) loadingDiv.style.display = 'none';
     }
 }
-
 function renderActivitiesList(useFallback = false) {
     let activities;
     
