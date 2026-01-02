@@ -321,7 +321,7 @@ function showComboModal() {
                         <i class="fas fa-percentage"></i>
                         Έξυπνος Υπολογισμός Combos
                     </h2>
-                    <button class="combo-modal-close" ="closeComboModal()">
+                    <button class="combo-modal-close" onclick="closeComboModal()">
                         &times;
                     </button>
                 </div>
@@ -332,13 +332,13 @@ function showComboModal() {
                 
                 <div class="combo-modal-footer">
                     ${currentComboResults.bestCombo ? `
-                        <button class="combo-btn-apply" ="applyBestCombo()">
+                        <button class="combo-btn-apply" onclick="applyBestCombo()">
                             <i class="fas fa-check-circle"></i>
                             Εφαρμογή Καλύτερου Combo
                         </button>
                     ` : ''}
                     
-                    <button class="combo-btn-close" ="closeComboModal()">
+                    <button class="combo-btn-close" onclick="closeComboModal()">
                         Κλείσιμο
                     </button>
                 </div>
