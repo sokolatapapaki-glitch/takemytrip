@@ -901,28 +901,53 @@ function showComboNotification(message, type = 'info') {
 
 // ==================== ADD COMBO BUTTON TO UI ====================
 function addComboButtonToUI() {
-    console.log('🎯 Adding combo button...');
+    console.log('🎯 Checking if we should add combo button...');
     
-    // Απλή HTML για το κουμπί
+    // 1. Έλεγχος αν είμαστε στο βήμα "activities"
+    const isActivitiesStep = () => {
+        // Έλεγχος με διάφορους τρόπους
+        const currentStep = document.querySelector('[data-step="activities"], [data-current-step="activities"]');
+        const stepTitle = document.querySelector('h2, h1')?.textContent?.toLowerCase();
+        const activitiesGrid = document.querySelector('.activities-grid, .activities-container');
+        
+        return currentStep || 
+               (stepTitle && stepTitle.includes('δραστηριότητ')) || 
+               activitiesGrid;
+    };
+    
+    // 2. Αν ΔΕΝ είμαστε στο activities step, μην προσθέσεις το κουμπί
+    if (!isActivitiesStep()) {
+        console.log('⏸️ Not in activities step, skipping button');
+        return;
+    }
+    
+    // 3. Έλεγχος αν υπάρχει ήδη το κουμπί
+    if (document.querySelector('.combo-button-container')) {
+        console.log('✅ Combo button already exists');
+        return;
+    }
+    
+    console.log('✅ Adding combo button to activities step...');
+    
+    // 4. Προσθήκη του κουμπιού
     const comboButtonHTML = `
-    <div class="combo-button-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;">
-        <button onclick="calculateSmartCombos()" 
-                style="background: linear-gradient(135deg, #9c27b0, #673ab7); 
-                       color: white; 
-                       padding: 16px 40px; 
-                       border-radius: 50px; 
-                       font-size: 1.1em; 
-                       font-weight: bold; 
-                       cursor: pointer;
-                       box-shadow: 0 5px 20px rgba(156, 39, 176, 0.3);
-                       transition: all 0.3s ease;">
-            <i class="fas fa-percentage" style="margin-right: 10px;"></i>
-            💰 Έξυπνος Υπολογισμός Combos
-        </button>
-    </div>
-`;
+        <div class="combo-button-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;">
+            <button onclick="calculateSmartCombos()" 
+                    style="background: linear-gradient(135deg, #9c27b0, #673ab7); 
+                           color: white; 
+                           padding: 16px 40px; 
+                           border-radius: 50px; 
+                           font-size: 1.1em; 
+                           font-weight: bold; 
+                           cursor: pointer;
+                           box-shadow: 0 5px 20px rgba(156, 39, 176, 0.3);
+                           transition: all 0.3s ease;">
+                <i class="fas fa-percentage" style="margin-right: 10px;"></i>
+                💰 Έξυπνος Υπολογισμός Combos
+            </button>
+        </div>
+    `;
     
-    // Προσθήκη στο <body>
     document.body.insertAdjacentHTML('beforeend', comboButtonHTML);
     console.log('✅ Combo button added!');
 }
@@ -955,7 +980,20 @@ window.closeComboModal = closeComboModal;
 window.applyBestCombo = applyBestCombo;
 window.testComboButton = testComboButton;
 
-// Τώρα προσθέτουμε το κουμπί
-addComboButtonToUI();
+// ==================== ΑΥΤΟΜΑΤΗ ΕΚΚΙΝΗΣΗ ====================
+// Προσθήκη του κουμπιού όταν φορτωθεί η σελίδα
+setTimeout(() => {
+    addComboButtonToUI();
+}, 1000); // Περίμενε 1 δευτερόλεπτο για να φορτωθεί το DOM
+
+// Προσθήκη ξανά όταν γίνονται αλλαγές (για single-page apps)
+let lastCheck = 0;
+setInterval(() => {
+    const now = Date.now();
+    if (now - lastCheck > 2000) { // Κάθε 2 δευτερόλεπτα
+        lastCheck = now;
+        addComboButtonToUI();
+    }
+}, 1000);
 
 console.log('🎯 Combo Calculator ready!');
