@@ -113,12 +113,14 @@ function calculateSmartCombos() {
     for (let i = 0; i < adultCount; i++) familyMembers.push({ age: 35 });
     for (let i = 0; i < childCount; i++) familyMembers.push({ age: 10 });
     
-    // 4. Debug info
-    console.log('📊 Found:', {
+        // 4. Debug info
+    console.log('📊 Found DETAILS:', {
         destination: destination || 'NOT FOUND',
         activities: selectedActivities.length,
         family: familyMembers.length
     });
+    console.log('📍 Exact destination value:', `"${destination}"`);
+    console.log('🎯 Activities array:', selectedActivities);
     
     // 5. Έλεγχοι
     if (!destination) {
