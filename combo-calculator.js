@@ -89,8 +89,31 @@ function calculateSmartCombos() {
     // ===== ΤΕΛΟΣ ΠΡΟΣΘΗΚΗΣ =====
     
     // 2. Βρες τις επιλεγμένες δραστηριότητες από το DOM
+    let activityElements = document.querySelectorAll('.activity-card.selected, .activity-item.selected, [data-activity].selected');
+    
+    // ==== ΝΕΟ: ΦΙΛΤΡΑΡΙΣΜΑ ΑΥΤΟ-SELECTED ====
+    // Αν υπάρχουν πάνω από 10 selected, είναι auto-selected
+    const MAX_AUTO_SELECTED = 3; // Κράτα μόνο τις πρώτες 3
+    
+    if (activityElements.length > 10) {
+        console.log(`⚠️ Detected ${activityElements.length} auto-selected activities`);
+        
+        // Κράτα μόνο τις πρώτες MAX_AUTO_SELECTED
+        const trulySelected = Array.from(activityElements).slice(0, MAX_AUTO_SELECTED);
+        
+        // Ξεκλικάρισμα των υπολοίπων στο DOM
+        activityElements.forEach((card, index) => {
+            if (index >= MAX_AUTO_SELECTED) {
+                card.classList.remove('selected');
+            }
+        });
+        
+        console.log(`✅ Keeping only ${trulySelected.length} activities`);
+        activityElements = trulySelected;
+    }
+    // ==== ΤΕΛΟΣ ΝΕΟΥ ΚΩΔΙΚΑ ====
+    
     const selectedActivities = [];
-    const activityElements = document.querySelectorAll('.activity-card.selected, .activity-item.selected, [data-activity].selected');
     
     activityElements.forEach(el => {
         const name = el.querySelector('h4')?.textContent?.trim() || 'Activity';
@@ -153,7 +176,6 @@ function calculateSmartCombos() {
     // 7. Κάλεσε τον αρχικό υπολογισμό (χωρίς να αλλάξεις τον υπόλοιπο κώδικα)
     continueComboCalculation();
 }
-
 // ==================== ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ ====================
 function continueComboCalculation() {
     // Αυτό είναι το υπόλοιπο της αρχικής συνάρτησης
@@ -901,7 +923,7 @@ function showComboNotification(message, type = 'info') {
 
 // ==================== ADD COMBO BUTTON TO UI ====================
 function addComboButtonToUI() {
-        // 0. ΑΠΛΟΣ ΕΛΕΓΧΟΣ: Αν υπάρχει activities-grid ΚΑΙ activity cards
+    // 0. ΑΠΛΟΣ ΕΛΕΓΧΟΣ: Αν υπάρχει activities-grid ΚΑΙ activity cards
     const activitiesGrid = document.querySelector('.activities-grid, .activities-container');
     const activityCards = document.querySelectorAll('.activity-card, .activity-item');
     
@@ -967,6 +989,16 @@ function addComboButtonToUI() {
     
     document.body.insertAdjacentHTML('beforeend', comboButtonHTML);
     console.log('✅ Combo button added ONLY in activities step!');
+    
+    // ==== ΝΕΟ: ΑΥΤΟΜΑΤΟ CLEANUP ΑΥΤΟ-SELECTED ====
+    setTimeout(() => {
+        const allSelected = document.querySelectorAll('.activity-card.selected, .activity-item.selected');
+        if (allSelected.length > 5) {
+            console.log(`🧹 Auto-cleaning ${allSelected.length} auto-selected activities`);
+            allSelected.forEach(card => card.classList.remove('selected'));
+            showComboNotification('🧹 Αφαίρεση αυτόματων επιλογών δραστηριοτήτων', 'info');
+        }
+    }, 1500);
 }
 // ==================== DEBUG HELPER ====================
 function debugComboState() {
