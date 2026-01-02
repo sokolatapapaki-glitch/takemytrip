@@ -901,17 +901,18 @@ function showComboNotification(message, type = 'info') {
 
 // ==================== ADD COMBO BUTTON TO UI ====================
 function addComboButtonToUI() {
-    // 0. ΤΕΛΕΥΤΑΙΑ ΠΡΟΣΠΑΘΕΙΑ: ΚΡΥΨΕ το κουμπί ΠΑΝΤΑ εκτός activities
-    const currentStep = document.body.getAttribute('data-current-step') || 
-                       document.querySelector('[data-step]')?.getAttribute('data-step') ||
-                       '';
+        // 0. ΑΠΛΟΣ ΕΛΕΓΧΟΣ: Αν υπάρχει activities-grid ΚΑΙ activity cards
+    const activitiesGrid = document.querySelector('.activities-grid, .activities-container');
+    const activityCards = document.querySelectorAll('.activity-card, .activity-item');
     
-    if (currentStep !== 'activities') {
-        console.log('⏸️ Not in activities step (data-step check)');
+    if (!activitiesGrid || activityCards.length === 0) {
+        console.log('⏸️ No activities grid found');
         const existingButton = document.querySelector('.combo-button-container');
         if (existingButton) existingButton.remove();
         return;
     }
+    
+    console.log('✅ Found activities grid with', activityCards.length, 'cards');
     
     // 1. ΔΙΑΓΡΑΨΕ πρώτα οποιοδήποτε υπάρχον κουμπί
     const existingButton = document.querySelector('.combo-button-container');
