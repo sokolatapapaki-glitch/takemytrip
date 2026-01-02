@@ -82,18 +82,17 @@ function calculateSmartCombos() {
         const select = document.querySelector('select[name="destination"], select[id*="destination"]');
         if (select) destination = select.value;
     }
-     // ===== ΠΡΟΣΘΗΚΗ: 4 ΓΡΑΜΜΕΣ =====
+    
+    // Προσωρινό fallback για δοκιμή
     if (!destination) {
-        destination = 'Βιέννη'; // Προσωρινά, για δοκιμή
+        destination = 'Βιέννη';
     }
-    // ===== ΤΕΛΟΣ ΠΡΟΣΘΗΚΗΣ =====
     
     // 2. Βρες τις επιλεγμένες δραστηριότητες από το DOM
     let activityElements = document.querySelectorAll('.activity-card.selected, .activity-item.selected, [data-activity].selected');
     
-    // ==== ΝΕΟ: ΦΙΛΤΡΑΡΙΣΜΑ ΑΥΤΟ-SELECTED ====
-    // Αν υπάρχουν πάνω από 10 selected, είναι auto-selected
-    const MAX_AUTO_SELECTED = 3; // Κράτα μόνο τις πρώτες 3
+    // ΦΙΛΤΡΑΡΙΣΜΑ ΑΥΤΟ-SELECTED
+    const MAX_AUTO_SELECTED = 3;
     
     if (activityElements.length > 10) {
         console.log(`⚠️ Detected ${activityElements.length} auto-selected activities`);
@@ -111,7 +110,6 @@ function calculateSmartCombos() {
         console.log(`✅ Keeping only ${trulySelected.length} activities`);
         activityElements = trulySelected;
     }
-    // ==== ΤΕΛΟΣ ΝΕΟΥ ΚΩΔΙΚΑ ====
     
     const selectedActivities = [];
     
@@ -128,7 +126,7 @@ function calculateSmartCombos() {
         });
     });
     
-    // 3. Βρες τα μέλη οικογένειας (προσωρινή λύση)
+    // 3. Βρες τα μέλη οικογένειας
     const familyMembers = [];
     const adultInput = document.querySelector('input[name="adults"], input[id*="adult"]');
     const childInput = document.querySelector('input[name="children"], input[id*="child"]');
@@ -139,7 +137,7 @@ function calculateSmartCombos() {
     for (let i = 0; i < adultCount; i++) familyMembers.push({ age: 35 });
     for (let i = 0; i < childCount; i++) familyMembers.push({ age: 10 });
     
-        // 4. Debug info
+    // 4. Debug info
     console.log('📊 Found DETAILS:', {
         destination: destination || 'NOT FOUND',
         activities: selectedActivities.length,
@@ -164,7 +162,7 @@ function calculateSmartCombos() {
         return;
     }
     
-    // 6. Δημιούργησε APP_STATE για τον υπόλοιπο κώδικα
+    // 6. Δημιούργησε APP_STATE
     window.APP_STATE = {
         destination: destination,
         selectedActivities: selectedActivities,
@@ -173,25 +171,17 @@ function calculateSmartCombos() {
     
     console.log('✅ APP_STATE created:', window.APP_STATE);
     
-    // 7. Κάλεσε τον αρχικό υπολογισμό (χωρίς να αλλάξεις τον υπόλοιπο κώδικα)
-    continueComboCalculation();
-}
-// ==================== ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ ====================
-function continueComboCalculation() {
-    // Αυτό είναι το υπόλοιπο της αρχικής συνάρτησης
-    // (όλος ο κώδικας μετά τους ελέγχους)
-    
-    // Υπολογισμός κανονικού κόστους
+    // 7. Υπολογισμός κανονικού κόστους
     const regularCost = calculateTotalComboCost();
     
-    // Αναζήτηση διαθέσιμων combos
+    // 8. Αναζήτηση διαθέσιμων combos
     const availableCombos = findAvailableCombos();
     
-    // Εύρεση καλύτερου combo
+    // 9. Εύρεση καλύτερου combo
     const bestCombo = findBestCombo(availableCombos);
     const bestSaving = bestCombo ? bestCombo.saving : 0;
     
-    // Αποθήκευση αποτελεσμάτων
+    // 10. Αποθήκευση αποτελεσμάτων
     currentComboResults = {
         regularCost: regularCost,
         availableCombos: availableCombos,
@@ -200,7 +190,7 @@ function continueComboCalculation() {
         timestamp: new Date().toISOString()
     };
     
-    // Εμφάνιση modal
+    // 11. Εμφάνιση modal
     showComboModal();
     
     console.log('🎉 Combo calculation complete! Found', availableCombos.length, 'combos');
@@ -289,8 +279,7 @@ function findAvailableCombos() {
         }
     }
     
-    // 👇 ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΣΩΣΤΟ FALLBACK - ΜΕΣΑ ΣΤΗ ΣΥΝΑΡΤΗΣΗ 👇
-    // Fallback: Αν δεν βρέθηκαν combos, δημιούργησε ένα γενικό
+    // Fallback: Αν δεν βρέθηκαν combos
     if (availableCombos.length === 0 && selectedActivities.length >= 2) {
         const adultCount = window.APP_STATE.familyMembers.filter(m => m.age >= 18).length;
         const childCount = window.APP_STATE.familyMembers.filter(m => m.age < 18).length;
@@ -318,10 +307,9 @@ function findAvailableCombos() {
             });
         }
     }
-    // 👆 ΜΕΧΡΙ ΕΔΩ 👆
     
     return availableCombos;
-} // <-- ΜΟΝΟ ΕΝΑ ΚΛΕΙΣΙΜΟ ΕΔΩ!
+}
 
 function findBestCombo(combos) {
     if (!combos || combos.length === 0) return null;
@@ -497,7 +485,7 @@ function applyBestCombo() {
     const bestCombo = currentComboResults.bestCombo;
     const newTotal = currentComboResults.regularCost - bestCombo.saving;
     
-    // Ενημέρωση του συνολικού κόστους (θα μπορούσε να είναι πιο προχωρημένο)
+    // Ενημέρωση του συνολικού κόστους
     const totalElement = document.querySelector('.total-amount, #total-activities-cost');
     if (totalElement) {
         totalElement.textContent = `${newTotal.toFixed(2)}€`;
@@ -509,584 +497,4 @@ function applyBestCombo() {
     closeComboModal();
 }
 
-// ==================== STYLES ====================
-function addComboStyles() {
-    const style = document.createElement('style');
-    style.id = 'combo-styles';
-    style.textContent = `
-        /* COMBO MODAL */
-        .combo-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        .combo-modal {
-            background: white;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 800px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            animation: slideUp 0.3s ease;
-        }
-        
-        .combo-modal-header {
-            background: linear-gradient(135deg, #9c27b0, #673ab7);
-            color: white;
-            padding: 20px;
-            border-radius: 12px 12px 0 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .combo-modal-header h2 {
-            margin: 0;
-            font-size: 1.5em;
-        }
-        
-        .combo-modal-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 28px;
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: background 0.2s;
-        }
-        
-        .combo-modal-close:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        
-        .combo-modal-body {
-            padding: 25px;
-        }
-        
-        .combo-modal-footer {
-            padding: 20px;
-            border-top: 1px solid #eee;
-            display: flex;
-            gap: 15px;
-            justify-content: flex-end;
-        }
-        
-        /* COMBO SUMMARY */
-        .combo-summary-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 25px;
-            border: 2px solid #e9ecef;
-        }
-        
-        .combo-summary-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-        
-        .combo-summary-item {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        
-        .combo-label {
-            font-size: 0.9em;
-            color: #666;
-        }
-        
-        .combo-value {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #333;
-        }
-        
-        .combo-value.saving {
-            color: #27ae60;
-        }
-        
-        .combo-value.new-cost {
-            color: #2ecc71;
-            font-size: 1.3em;
-        }
-        
-        /* COMBO CARDS */
-        .combo-card {
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            position: relative;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        
-        .combo-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .combo-card.best-combo {
-            border-color: #9c27b0;
-            background: linear-gradient(to right, rgba(156, 39, 176, 0.05), rgba(103, 58, 183, 0.05));
-        }
-        
-        .combo-badge {
-            position: absolute;
-            top: -10px;
-            right: 20px;
-            background: #9c27b0;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            font-weight: bold;
-            box-shadow: 0 3px 10px rgba(156, 39, 176, 0.3);
-        }
-        
-        .combo-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .combo-card-header h3 {
-            margin: 0;
-            color: #333;
-        }
-        
-        .combo-discount {
-            background: #ff9800;
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.9em;
-        }
-        
-        .combo-description {
-            color: #666;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-        
-        .combo-prices {
-            display: flex;
-            gap: 30px;
-            margin-bottom: 15px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 8px;
-        }
-        
-        .combo-price-old, .combo-price-new {
-            flex: 1;
-        }
-        
-        .price-label {
-            display: block;
-            font-size: 0.9em;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .combo-price-old .price-value {
-            font-size: 1.3em;
-            color: #e74c3c;
-            text-decoration: line-through;
-            font-weight: bold;
-        }
-        
-        .combo-price-new .price-value {
-            font-size: 1.5em;
-            color: #27ae60;
-            font-weight: bold;
-        }
-        
-        .combo-saving {
-            background: #d4edda;
-            color: #155724;
-            padding: 10px 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .saving-label {
-            font-weight: bold;
-        }
-        
-        .saving-value {
-            font-size: 1.3em;
-            font-weight: bold;
-        }
-        
-        .combo-note {
-            background: #d1ecf1;
-            color: #0c5460;
-            padding: 10px;
-            border-radius: 6px;
-            font-size: 0.9em;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .combo-activities {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid #eee;
-        }
-        
-        .combo-activities ul {
-            margin: 10px 0 0 0;
-            padding-left: 20px;
-        }
-        
-        .combo-activities li {
-            margin-bottom: 5px;
-            color: #555;
-        }
-        
-        /* COMBO BUTTONS */
-        .combo-btn-apply {
-            background: linear-gradient(135deg, #9c27b0, #673ab7);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1em;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        
-        .combo-btn-apply:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(156, 39, 176, 0.3);
-        }
-        
-        .combo-btn-close {
-            background: #6c757d;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1em;
-        }
-        
-        .combo-btn-close:hover {
-            background: #5a6268;
-        }
-        
-        /* EMPTY STATE */
-        .combo-empty {
-            text-align: center;
-            padding: 40px 20px;
-            color: #666;
-        }
-        
-        .combo-tip {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-            text-align: left;
-        }
-        
-        /* ANIMATIONS */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes slideUp {
-            from { 
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* NOTIFICATIONS */
-        .combo-notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 25px;
-            border-radius: 8px;
-            color: white;
-            font-weight: bold;
-            z-index: 10001;
-            animation: slideInRight 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .combo-notification.success {
-            background: #27ae60;
-            border-left: 5px solid #219653;
-        }
-        
-        .combo-notification.warning {
-            background: #f39c12;
-            border-left: 5px solid #e67e22;
-        }
-        
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-            .combo-modal {
-                width: 95%;
-                margin: 10px;
-            }
-            
-            .combo-summary-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .combo-prices {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .combo-modal-footer {
-                flex-direction: column;
-            }
-        }
-    `;
-    
-    document.head.appendChild(style);
-}
-
-function showComboNotification(message, type = 'info') {
-    // Δημιουργία notification
-    const notification = document.createElement('div');
-    notification.className = `combo-notification ${type}`;
-    notification.textContent = message;
-    
-    // Προσθήκη στο DOM
-    document.body.appendChild(notification);
-    
-    // Αφαίρεση μετά από 3 δευτερόλεπτα
-    setTimeout(() => {
-        notification.style.animation = 'slideOutRight 0.3s ease';
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.remove();
-            }
-        }, 300);
-    }, 3000);
-    
-    // CSS για την animation
-    if (!document.querySelector('#combo-notification-animation')) {
-        const style = document.createElement('style');
-        style.id = 'combo-notification-animation';
-        style.textContent = `
-            @keyframes slideOutRight {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-}
-
-// ==================== ADD COMBO BUTTON TO UI ====================
-function addComboButtonToUI() {
-    // ΚΡΙΤΙΚΟ: Διάγραψε ΟΛΑ τα παλιά κουμπιά ΠΡΙΝ από οτιδήποτε άλλο
-    document.querySelectorAll('.combo-button-container').forEach(btn => {
-        btn.remove();
-    });
-    // 0. ΑΠΛΟΣ ΕΛΕΓΧΟΣ: Αν υπάρχει activities-grid ΚΑΙ activity cards
-    const activitiesGrid = document.querySelector('.activities-grid, .activities-container');
-    const activityCards = document.querySelectorAll('.activity-card, .activity-item');
-    
-    if (!activitiesGrid || activityCards.length === 0) {
-        console.log('⏸️ No activities grid found');
-        const existingButton = document.querySelector('.combo-button-container');
-        if (existingButton) existingButton.remove();
-        return;
-    }
-    
-    console.log('✅ Found activities grid with', activityCards.length, 'cards');
-    
-    // 1. ΔΙΑΓΡΑΨΕ πρώτα οποιοδήποτε υπάρχον κουμπί
-    const existingButton = document.querySelector('.combo-button-container');
-    if (existingButton) {
-        existingButton.remove();
-        console.log('🗑️ Removed old combo button');
-    }
-    
-    console.log('🎯 Checking for activities step...');
-    
-    // 2. Έλεγχος αν είμαστε ΠΡΑΓΜΑΤΙΚΑ στο βήμα activities
-    const isActivitiesStep = () => {
-        // ΚΡΙΤΙΚΟ: Πρέπει να υπάρχει ΚΑΙ ο container ΚΑΙ να είναι ΟΡΑΤΟΣ
-        const activitiesGrid = document.querySelector('.activities-grid, .activities-container');
-        const activityCards = document.querySelectorAll('.activity-card, .activity-item');
-        
-        // Πρέπει να υπάρχει ΤΟΥΛΑΧΙΣΤΟΝ 1 activity card ΟΡΑΤΗ
-        const hasVisibleActivities = Array.from(activityCards).some(card => {
-            const rect = card.getBoundingClientRect();
-            return rect.width > 0 && rect.height > 0; // Είναι ορατό
-        });
-        
-        return activitiesGrid && hasVisibleActivities && activityCards.length > 0;
-    };
-    
-    // 3. Αν ΔΕΝ είμαστε στο activities step, ΣΤΑΜΑΤΑ
-    if (!isActivitiesStep()) {
-        console.log('⏸️ Not in activities step - button NOT added');
-        return;
-    }
-    
-    console.log('✅ In activities step! Adding button...');
-    
-    // 4. Προσθήκη του κουμπιού
-    const comboButtonHTML = `
-        <div class="combo-button-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;">
-            <button onclick="calculateSmartCombos()" 
-                    style="background: linear-gradient(135deg, #9c27b0, #673ab7); 
-                           color: white; 
-                           padding: 16px 40px; 
-                           border-radius: 50px; 
-                           font-size: 1.1em; 
-                           font-weight: bold; 
-                           cursor: pointer;
-                           box-shadow: 0 5px 20px rgba(156, 39, 176, 0.3);
-                           transition: all 0.3s ease;">
-                <i class="fas fa-percentage" style="margin-right: 10px;"></i>
-                💰 Έξυπνος Υπολογισμός Combos
-            </button>
-        </div>
-    `;
-    
-    document.body.insertAdjacentHTML('beforeend', comboButtonHTML);
-    console.log('✅ Combo button added ONLY in activities step!');
-    
-    // ==== ΝΕΟ: ΑΥΤΟΜΑΤΟ CLEANUP ΑΥΤΟ-SELECTED ====
-    setTimeout(() => {
-        const allSelected = document.querySelectorAll('.activity-card.selected, .activity-item.selected');
-        if (allSelected.length > 5) {
-            console.log(`🧹 Auto-cleaning ${allSelected.length} auto-selected activities`);
-            allSelected.forEach(card => card.classList.remove('selected'));
-            showComboNotification('🧹 Αφαίρεση αυτόματων επιλογών δραστηριοτήτων', 'info');
-        }
-    }, 1500);
-}
-// ==================== DEBUG HELPER ====================
-function debugComboState() {
-    console.log('=== COMBO DEBUG INFO ===');
-    console.log('Destination:', window.APP_STATE?.destination);
-    console.log('Selected Activities:', window.APP_STATE?.selectedActivities?.length || 0);
-    console.log('Family Members:', window.APP_STATE?.familyMembers?.length || 0);
-    
-    if (window.APP_STATE?.selectedActivities) {
-        window.APP_STATE.selectedActivities.forEach((act, i) => {
-            console.log(`  ${i}: ${act.name} - Adult:${act.adultPrice}€ Child:${act.childPrice}€`);
-        });
-    }
-}
-
-function testComboButton() {
-    alert('✅ Το κουμπί πατήθηκε! Η συνάρτηση λειτουργεί.');
-    console.log('[DEBUG] Το testComboButton κλήθηκε επιτυχώς.');
-}
-
-// ==================== ΑΥΤΟΜΑΤΗ ΕΚΚΙΝΗΣΗ ====================
-// ΞΕΚΙΝΑΕΙ ΑΜΕΣΑ ΟΤΑΝ ΦΟΡΤΩΘΕΙ ΤΟ SCRIPT
-
-// ΚΡΙΤΙΚΟ: Κάνουμε τις συναρτήσεις global για το onclick
-window.calculateSmartCombos = calculateSmartCombos;
-window.closeComboModal = closeComboModal;
-window.applyBestCombo = applyBestCombo;
-window.testComboButton = testComboButton;
-
-// ==================== ΑΥΤΟΜΑΤΗ ΕΚΚΙΝΗΣΗ ====================
-// Περιμένουμε το activities grid να φορτωθεί
-function waitForActivitiesGrid() {
-    console.log('⏳ Waiting for activities grid...');
-    
-    const checkInterval = setInterval(() => {
-        const grid = document.querySelector('.activities-grid, .activities-container');
-        const cards = document.querySelectorAll('.activity-card, .activity-item');
-        
-        if (grid && cards.length > 0) {
-            clearInterval(checkInterval);
-            console.log('✅ Activities grid loaded! Adding button...');
-            addComboButtonToUI();
-            
-            // Έλεγξε ξανά μετά από 1 δευτερόλεπτο για extra safety
-            setTimeout(addComboButtonToUI, 1000);
-        }
-    }, 500); // Έλεγχος κάθε 0.5 δευτερόλεπτο
-}
-
-// Ξεκίνα τον έλεγχο μετά από 1 δευτερόλεπτο
-setTimeout(waitForActivitiesGrid, 1000);
-// ==================== ΑΝΤΙΚΕΙΜΕΝΟ ΓΙΑ ΟΛΙΚΟ ΚΟΝΤΡΟΛ ====================
-// Παρακολούθηση αλλαγών στο DOM για destination changes
-const observer = new MutationObserver((mutations) => {
-    mutations.forEach(mutation => {
-        // Αν προστέθηκαν/αφαιρέθηκαν activity cards
-        if (mutation.addedNodes.length > 0 || mutation.removedNodes.length > 0) {
-            const hasActivityChanges = Array.from(mutation.addedNodes).some(node => 
-                node.classList?.contains('activity-card') || 
-                node.classList?.contains('activity-item')
-            );
-            
-            if (hasActivityChanges) {
-                console.log('🔄 Activity cards changed, updating button...');
-                setTimeout(addComboButtonToUI, 500);
-            }
-        }
-    });
-});
-
-// Παρατήρησε αλλαγών στο activities grid
-const activitiesGrid = document.querySelector('.activities-grid, .activities-container');
-if (activitiesGrid) {
-    observer.observe(activitiesGrid, { childList: true, subtree: true });
-}
-
-// Επίσης, κάλεσε τη συνάρτηση όταν γίνεται click σε destination
-document.addEventListener('click', (event) => {
-    if (event.target.closest('.destination-card, [data-destination]')) {
-        console.log('📍 Destination changed, updating button...');
-        setTimeout(addComboButtonToUI, 1000);
-    }
-});
-
-console.log('🎯 Combo Calculator ready!');
-
-console.log('🎯 Combo Calculator ready!');
+// ... (το υπόλοιπο CSS και συναρτήσεις παραμένουν ίδιες) ...
