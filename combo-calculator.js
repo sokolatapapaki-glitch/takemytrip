@@ -923,6 +923,10 @@ function showComboNotification(message, type = 'info') {
 
 // ==================== ADD COMBO BUTTON TO UI ====================
 function addComboButtonToUI() {
+    // ΚΡΙΤΙΚΟ: Διάγραψε ΟΛΑ τα παλιά κουμπιά ΠΡΙΝ από οτιδήποτε άλλο
+    document.querySelectorAll('.combo-button-container').forEach(btn => {
+        btn.remove();
+    });
     // 0. ΑΠΛΟΣ ΕΛΕΓΧΟΣ: Αν υπάρχει activities-grid ΚΑΙ activity cards
     const activitiesGrid = document.querySelector('.activities-grid, .activities-container');
     const activityCards = document.querySelectorAll('.activity-card, .activity-item');
@@ -1050,5 +1054,39 @@ function waitForActivitiesGrid() {
 
 // Ξεκίνα τον έλεγχο μετά από 1 δευτερόλεπτο
 setTimeout(waitForActivitiesGrid, 1000);
+// ==================== ΑΝΤΙΚΕΙΜΕΝΟ ΓΙΑ ΟΛΙΚΟ ΚΟΝΤΡΟΛ ====================
+// Παρακολούθηση αλλαγών στο DOM για destination changes
+const observer = new MutationObserver((mutations) => {
+    mutations.forEach(mutation => {
+        // Αν προστέθηκαν/αφαιρέθηκαν activity cards
+        if (mutation.addedNodes.length > 0 || mutation.removedNodes.length > 0) {
+            const hasActivityChanges = Array.from(mutation.addedNodes).some(node => 
+                node.classList?.contains('activity-card') || 
+                node.classList?.contains('activity-item')
+            );
+            
+            if (hasActivityChanges) {
+                console.log('🔄 Activity cards changed, updating button...');
+                setTimeout(addComboButtonToUI, 500);
+            }
+        }
+    });
+});
+
+// Παρατήρησε αλλαγών στο activities grid
+const activitiesGrid = document.querySelector('.activities-grid, .activities-container');
+if (activitiesGrid) {
+    observer.observe(activitiesGrid, { childList: true, subtree: true });
+}
+
+// Επίσης, κάλεσε τη συνάρτηση όταν γίνεται click σε destination
+document.addEventListener('click', (event) => {
+    if (event.target.closest('.destination-card, [data-destination]')) {
+        console.log('📍 Destination changed, updating button...');
+        setTimeout(addComboButtonToUI, 1000);
+    }
+});
+
+console.log('🎯 Combo Calculator ready!');
 
 console.log('🎯 Combo Calculator ready!');
