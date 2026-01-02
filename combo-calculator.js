@@ -82,6 +82,11 @@ function calculateSmartCombos() {
         const select = document.querySelector('select[name="destination"], select[id*="destination"]');
         if (select) destination = select.value;
     }
+     // ===== ΠΡΟΣΘΗΚΗ: 4 ΓΡΑΜΜΕΣ =====
+    if (!destination) {
+        destination = 'Βιέννη'; // Προσωρινά, για δοκιμή
+    }
+    // ===== ΤΕΛΟΣ ΠΡΟΣΘΗΚΗΣ =====
     
     // 2. Βρες τις επιλεγμένες δραστηριότητες από το DOM
     const selectedActivities = [];
