@@ -70,23 +70,89 @@ const CITY_COMBOS = {
 
 // ==================== MAIN COMBO FUNCTION ====================
 function calculateSmartCombos() {
-    console.log('🔍 Calculating smart combos...');
+    console.log('🔍 Calculating smart combos - NEW VERSION...');
     
-    // Έλεγχος συνθηκών
-    if (!window.APP_STATE || !window.APP_STATE.destination) {
+    // 1. Βρες τον προορισμό από το DOM
+    let destination = '';
+    const destinationEl = document.querySelector('.destination-card.selected, [data-destination].selected');
+    if (destinationEl) {
+        destination = destinationEl.dataset.destination || destinationEl.textContent.trim();
+    } else {
+        // Ψάξε σε dropdowns/selects
+        const select = document.querySelector('select[name="destination"], select[id*="destination"]');
+        if (select) destination = select.value;
+    }
+    
+    // 2. Βρες τις επιλεγμένες δραστηριότητες από το DOM
+    const selectedActivities = [];
+    const activityElements = document.querySelectorAll('.activity-card.selected, .activity-item.selected, [data-activity].selected');
+    
+    activityElements.forEach(el => {
+        const name = el.dataset.activity || 
+                    el.querySelector('.activity-name, .title, h3')?.textContent || 
+                    'Activity';
+        
+        const priceText = el.querySelector('.price, .activity-price, .cost')?.textContent || '0€';
+        const price = parseFloat(priceText.replace(/[^\d.]/g, '')) || 25;
+        
+        selectedActivities.push({
+            name: name,
+            adultPrice: price,
+            childPrice: price * 0.7 // 30% έκπτωση για παιδιά
+        });
+    });
+    
+    // 3. Βρες τα μέλη οικογένειας (προσωρινή λύση)
+    const familyMembers = [];
+    const adultInput = document.querySelector('input[name="adults"], input[id*="adult"]');
+    const childInput = document.querySelector('input[name="children"], input[id*="child"]');
+    
+    const adultCount = adultInput ? parseInt(adultInput.value) || 2 : 2;
+    const childCount = childInput ? parseInt(childInput.value) || 1 : 1;
+    
+    for (let i = 0; i < adultCount; i++) familyMembers.push({ age: 35 });
+    for (let i = 0; i < childCount; i++) familyMembers.push({ age: 10 });
+    
+    // 4. Debug info
+    console.log('📊 Found:', {
+        destination: destination || 'NOT FOUND',
+        activities: selectedActivities.length,
+        family: familyMembers.length
+    });
+    
+    // 5. Έλεγχοι
+    if (!destination) {
         showComboNotification('⚠️ Πρέπει να επιλέξετε προορισμό πρώτα', 'warning');
         return;
     }
     
-    if (!window.APP_STATE.selectedActivities || window.APP_STATE.selectedActivities.length < 2) {
-        showComboNotification('⚠️ Χρειάζονται τουλάχιστον 2 δραστηριότητες για combos', 'warning');
+    if (selectedActivities.length < 2) {
+        showComboNotification(`⚠️ Χρειάζονται τουλάχιστον 2 δραστηριότητες (έχετε ${selectedActivities.length})`, 'warning');
         return;
     }
     
-    if (!window.APP_STATE.familyMembers || window.APP_STATE.familyMembers.length === 0) {
+    if (familyMembers.length === 0) {
         showComboNotification('⚠️ Πρέπει να έχετε ορίσει μέλη οικογένειας', 'warning');
         return;
     }
+    
+    // 6. Δημιούργησε APP_STATE για τον υπόλοιπο κώδικα
+    window.APP_STATE = {
+        destination: destination,
+        selectedActivities: selectedActivities,
+        familyMembers: familyMembers
+    };
+    
+    console.log('✅ APP_STATE created:', window.APP_STATE);
+    
+    // 7. Κάλεσε τον αρχικό υπολογισμό (χωρίς να αλλάξεις τον υπόλοιπο κώδικα)
+    continueComboCalculation();
+}
+
+// ==================== ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ ====================
+function continueComboCalculation() {
+    // Αυτό είναι το υπόλοιπο της αρχικής συνάρτησης
+    // (όλος ο κώδικας μετά τους ελέγχους)
     
     // Υπολογισμός κανονικού κόστους
     const regularCost = calculateTotalComboCost();
@@ -109,6 +175,8 @@ function calculateSmartCombos() {
     
     // Εμφάνιση modal
     showComboModal();
+    
+    console.log('🎉 Combo calculation complete! Found', availableCombos.length, 'combos');
 }
 
 // ==================== HELPER FUNCTIONS ====================
