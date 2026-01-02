@@ -248,7 +248,7 @@ function showComboModal() {
                         <i class="fas fa-percentage"></i>
                         Έξυπνος Υπολογισμός Combos
                     </h2>
-                    <button class="combo-modal-close" onclick="closeComboModal()">
+                    <button class="combo-modal-close" ="closeComboModal()">
                         &times;
                     </button>
                 </div>
@@ -259,13 +259,13 @@ function showComboModal() {
                 
                 <div class="combo-modal-footer">
                     ${currentComboResults.bestCombo ? `
-                        <button class="combo-btn-apply" onclick="applyBestCombo()">
+                        <button class="combo-btn-apply" ="applyBestCombo()">
                             <i class="fas fa-check-circle"></i>
                             Εφαρμογή Καλύτερου Combo
                         </button>
                     ` : ''}
                     
-                    <button class="combo-btn-close" onclick="closeComboModal()">
+                    <button class="combo-btn-close" ="closeComboModal()">
                         Κλείσιμο
                     </button>
                 </div>
@@ -833,7 +833,7 @@ function addComboButtonToUI() {
     // Απλή HTML για το κουμπί
     const comboButtonHTML = `
         <div class="combo-button-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; border: 3px solid red !important;">
-           <button onclick="testComboButton()" 
+           onclick="calculateSmartCombos()"
                     style="background: linear-gradient(135deg, #9c27b0, #673ab7); 
                            color: white; 
                            border: 2px solid yellow !important;
