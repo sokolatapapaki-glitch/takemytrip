@@ -93,9 +93,7 @@ function calculateSmartCombos() {
     const activityElements = document.querySelectorAll('.activity-card.selected, .activity-item.selected, [data-activity].selected');
     
     activityElements.forEach(el => {
-        const name = el.dataset.activity || 
-                    el.querySelector('.activity-name, .title, h3')?.textContent || 
-                    'Activity';
+        const name = el.querySelector('h4')?.textContent?.trim() || 'Activity';
         
         const priceText = el.querySelector('.price, .activity-price, .cost')?.textContent || '0€';
         const price = parseFloat(priceText.replace(/[^\d.]/g, '')) || 25;
