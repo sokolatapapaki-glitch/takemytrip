@@ -905,22 +905,22 @@ function addComboButtonToUI() {
     
     // Απλή HTML για το κουμπί
     const comboButtonHTML = `
-        <div class="combo-button-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; border: 3px solid red !important;">
-           <button onclick="calculateSmartCombos()" 
-        style="background: linear-gradient(135deg, #9c27b0, #673ab7); 
-               color: white; 
-               border: 2px solid yellow !important;
-               padding: 16px 40px; 
-               border-radius: 50px; 
-               font-size: 1.1em; 
-               font-weight: bold; 
-               cursor: pointer;
-               box-shadow: 0 5px 20px rgba(156, 39, 176, 0.3);
-               transition: all 0.3s ease;">
-    <i class="fas fa-percentage" style="margin-right: 10px;"></i>
-    💰 Έξυπνος Υπολογισμός Combos
-</button>
-    `;
+    <div class="combo-button-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;">
+        <button onclick="calculateSmartCombos()" 
+                style="background: linear-gradient(135deg, #9c27b0, #673ab7); 
+                       color: white; 
+                       padding: 16px 40px; 
+                       border-radius: 50px; 
+                       font-size: 1.1em; 
+                       font-weight: bold; 
+                       cursor: pointer;
+                       box-shadow: 0 5px 20px rgba(156, 39, 176, 0.3);
+                       transition: all 0.3s ease;">
+            <i class="fas fa-percentage" style="margin-right: 10px;"></i>
+            💰 Έξυπνος Υπολογισμός Combos
+        </button>
+    </div>
+`;
     
     // Προσθήκη στο <body>
     document.body.insertAdjacentHTML('beforeend', comboButtonHTML);
