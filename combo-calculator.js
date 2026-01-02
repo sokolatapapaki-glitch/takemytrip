@@ -997,7 +997,26 @@ window.applyBestCombo = applyBestCombo;
 window.testComboButton = testComboButton;
 
 // ==================== ΑΥΤΟΜΑΤΗ ΕΚΚΙΝΗΣΗ ====================
-// Περίμενε 3 δευτερόλεπτα για πρώτη φορά
-setTimeout(addComboButtonToUI, 3000);
+// Περιμένουμε το activities grid να φορτωθεί
+function waitForActivitiesGrid() {
+    console.log('⏳ Waiting for activities grid...');
+    
+    const checkInterval = setInterval(() => {
+        const grid = document.querySelector('.activities-grid, .activities-container');
+        const cards = document.querySelectorAll('.activity-card, .activity-item');
+        
+        if (grid && cards.length > 0) {
+            clearInterval(checkInterval);
+            console.log('✅ Activities grid loaded! Adding button...');
+            addComboButtonToUI();
+            
+            // Έλεγξε ξανά μετά από 1 δευτερόλεπτο για extra safety
+            setTimeout(addComboButtonToUI, 1000);
+        }
+    }, 500); // Έλεγχος κάθε 0.5 δευτερόλεπτο
+}
+
+// Ξεκίνα τον έλεγχο μετά από 1 δευτερόλεπτο
+setTimeout(waitForActivitiesGrid, 1000);
 
 console.log('🎯 Combo Calculator ready!');
