@@ -901,26 +901,63 @@ function showComboNotification(message, type = 'info') {
 
 // ==================== ADD COMBO BUTTON TO UI ====================
 function addComboButtonToUI() {
+    // 1. ΔΙΑΓΡΑΨΕ πρώτα οποιοδήποτε υπάρχον κουμπί
+    const existingButton = document.querySelector('.combo-button-container');
+    if (existingButton) {
+        existingButton.remove();
+        console.log('🗑️ Removed old combo button');
+    }
+    
     console.log('🎯 Checking for activities step...');
     
-    // 1. Ψάξε για ΚΑΠΟΙΟ ΣΗΜΕΙΟ που υπάρχει ΜΟΝΟ στο βήμα activities
-    const activitiesIndicator = document.querySelector(
-        '.activities-grid, .activities-container, [data-step="activities"], #activities-step, .activity-card, .activity-item'
-    );
+    // 2. Έλεγχος αν είμαστε στο βήμα activities
+    const isActivitiesStep = () => {
+        // Α. Ψάξε για συγκεκριμένα selectors που υπάρχουν ΜΟΝΟ στο activities step
+        const activitiesSelectors = [
+            '.activities-grid',
+            '.activities-container', 
+            '[data-step="activities"]',
+            '#activities-step',
+            '.activity-card',
+            '.activity-item',
+            'h2:contains("Δραστηριότητες")',
+            'h2:contains("Activities")'
+        ];
+        
+        for (const selector of activitiesSelectors) {
+            if (document.querySelector(selector)) {
+                console.log(`✅ Found activities indicator: ${selector}`);
+                return true;
+            }
+        }
+        
+        // Β. Έλεγχος από URL ή page title
+        const pageTitle = document.title.toLowerCase();
+        const currentURL = window.location.href.toLowerCase();
+        
+        if (pageTitle.includes('δραστηριότητ') || pageTitle.includes('activities') ||
+            currentURL.includes('activities') || currentURL.includes('δραστηριότητ')) {
+            console.log('✅ Found activities in title/URL');
+            return true;
+        }
+        
+        // Γ. Έλεγχος από κείμενο στην σελίδα
+        const pageText = document.body.textContent.toLowerCase();
+        if (pageText.includes('δραστηριότητ') && pageText.includes('επιλέξτε')) {
+            console.log('✅ Found activities text in page');
+            return true;
+        }
+        
+        return false;
+    };
     
-    // 2. Αν ΔΕΝ υπάρχει τίποτα από τα παραπάνω, μην κάνεις τίποτα
-    if (!activitiesIndicator) {
-        console.log('⏸️ Not in activities step yet');
+    // 3. Αν ΔΕΝ είμαστε στο activities step, ΣΤΑΜΑΤΑ
+    if (!isActivitiesStep()) {
+        console.log('⏸️ Not in activities step - button NOT added');
         return;
     }
     
-    // 3. Έλεγχος αν υπάρχει ήδη το κουμπί
-    if (document.querySelector('.combo-button-container')) {
-        console.log('✅ Combo button already exists');
-        return;
-    }
-    
-    console.log('✅ Found activities step! Adding button...');
+    console.log('✅ In activities step! Adding button...');
     
     // 4. Προσθήκη του κουμπιού
     const comboButtonHTML = `
@@ -942,9 +979,8 @@ function addComboButtonToUI() {
     `;
     
     document.body.insertAdjacentHTML('beforeend', comboButtonHTML);
-    console.log('✅ Combo button added to activities step!');
+    console.log('✅ Combo button added ONLY in activities step!');
 }
-
 // ==================== DEBUG HELPER ====================
 function debugComboState() {
     console.log('=== COMBO DEBUG INFO ===');
@@ -974,12 +1010,7 @@ window.applyBestCombo = applyBestCombo;
 window.testComboButton = testComboButton;
 
 // ==================== ΑΥΤΟΜΑΤΗ ΕΚΚΙΝΗΣΗ ====================
-// Περίμενε 2 δευτερόλεπτα και μετά έλεγξε για activities step
-setTimeout(() => {
-    addComboButtonToUI();
-    
-    // Έλεγξε ξανά κάθε 1.5 δευτερόλεπτα (για single-page navigation)
-    setInterval(addComboButtonToUI, 1500);
-}, 2000);
+// Περίμενε 3 δευτερόλεπτα για πρώτη φορά
+setTimeout(addComboButtonToUI, 3000);
 
 console.log('🎯 Combo Calculator ready!');
