@@ -901,23 +901,16 @@ function showComboNotification(message, type = 'info') {
 
 // ==================== ADD COMBO BUTTON TO UI ====================
 function addComboButtonToUI() {
-    console.log('🎯 Checking if we should add combo button...');
+    console.log('🎯 Checking for activities step...');
     
-    // 1. Έλεγχος αν είμαστε στο βήμα "activities"
-    const isActivitiesStep = () => {
-        // Έλεγχος με διάφορους τρόπους
-        const currentStep = document.querySelector('[data-step="activities"], [data-current-step="activities"]');
-        const stepTitle = document.querySelector('h2, h1')?.textContent?.toLowerCase();
-        const activitiesGrid = document.querySelector('.activities-grid, .activities-container');
-        
-        return currentStep || 
-               (stepTitle && stepTitle.includes('δραστηριότητ')) || 
-               activitiesGrid;
-    };
+    // 1. Ψάξε για ΚΑΠΟΙΟ ΣΗΜΕΙΟ που υπάρχει ΜΟΝΟ στο βήμα activities
+    const activitiesIndicator = document.querySelector(
+        '.activities-grid, .activities-container, [data-step="activities"], #activities-step, .activity-card, .activity-item'
+    );
     
-    // 2. Αν ΔΕΝ είμαστε στο activities step, μην προσθέσεις το κουμπί
-    if (!isActivitiesStep()) {
-        console.log('⏸️ Not in activities step, skipping button');
+    // 2. Αν ΔΕΝ υπάρχει τίποτα από τα παραπάνω, μην κάνεις τίποτα
+    if (!activitiesIndicator) {
+        console.log('⏸️ Not in activities step yet');
         return;
     }
     
@@ -927,7 +920,7 @@ function addComboButtonToUI() {
         return;
     }
     
-    console.log('✅ Adding combo button to activities step...');
+    console.log('✅ Found activities step! Adding button...');
     
     // 4. Προσθήκη του κουμπιού
     const comboButtonHTML = `
@@ -949,7 +942,7 @@ function addComboButtonToUI() {
     `;
     
     document.body.insertAdjacentHTML('beforeend', comboButtonHTML);
-    console.log('✅ Combo button added!');
+    console.log('✅ Combo button added to activities step!');
 }
 
 // ==================== DEBUG HELPER ====================
@@ -981,19 +974,12 @@ window.applyBestCombo = applyBestCombo;
 window.testComboButton = testComboButton;
 
 // ==================== ΑΥΤΟΜΑΤΗ ΕΚΚΙΝΗΣΗ ====================
-// Προσθήκη του κουμπιού όταν φορτωθεί η σελίδα
+// Περίμενε 2 δευτερόλεπτα και μετά έλεγξε για activities step
 setTimeout(() => {
     addComboButtonToUI();
-}, 1000); // Περίμενε 1 δευτερόλεπτο για να φορτωθεί το DOM
-
-// Προσθήκη ξανά όταν γίνονται αλλαγές (για single-page apps)
-let lastCheck = 0;
-setInterval(() => {
-    const now = Date.now();
-    if (now - lastCheck > 2000) { // Κάθε 2 δευτερόλεπτα
-        lastCheck = now;
-        addComboButtonToUI();
-    }
-}, 1000);
+    
+    // Έλεγξε ξανά κάθε 1.5 δευτερόλεπτα (για single-page navigation)
+    setInterval(addComboButtonToUI, 1500);
+}, 2000);
 
 console.log('🎯 Combo Calculator ready!');
