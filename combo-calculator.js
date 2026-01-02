@@ -833,7 +833,7 @@ function addComboButtonToUI() {
     // Απλή HTML για το κουμπί
     const comboButtonHTML = `
         <div class="combo-button-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; border: 3px solid red !important;">
-           onclick="calculateSmartCombos()"
+            <button onclick="testComboButton()" 
                     style="background: linear-gradient(135deg, #9c27b0, #673ab7); 
                            color: white; 
                            border: 2px solid yellow !important;
