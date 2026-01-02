@@ -901,6 +901,18 @@ function showComboNotification(message, type = 'info') {
 
 // ==================== ADD COMBO BUTTON TO UI ====================
 function addComboButtonToUI() {
+    // 0. ΤΕΛΕΥΤΑΙΑ ΠΡΟΣΠΑΘΕΙΑ: ΚΡΥΨΕ το κουμπί ΠΑΝΤΑ εκτός activities
+    const currentStep = document.body.getAttribute('data-current-step') || 
+                       document.querySelector('[data-step]')?.getAttribute('data-step') ||
+                       '';
+    
+    if (currentStep !== 'activities') {
+        console.log('⏸️ Not in activities step (data-step check)');
+        const existingButton = document.querySelector('.combo-button-container');
+        if (existingButton) existingButton.remove();
+        return;
+    }
+    
     // 1. ΔΙΑΓΡΑΨΕ πρώτα οποιοδήποτε υπάρχον κουμπί
     const existingButton = document.querySelector('.combo-button-container');
     if (existingButton) {
@@ -910,45 +922,19 @@ function addComboButtonToUI() {
     
     console.log('🎯 Checking for activities step...');
     
-    // 2. Έλεγχος αν είμαστε στο βήμα activities
+    // 2. Έλεγχος αν είμαστε ΠΡΑΓΜΑΤΙΚΑ στο βήμα activities
     const isActivitiesStep = () => {
-        // Α. Ψάξε για συγκεκριμένα selectors που υπάρχουν ΜΟΝΟ στο activities step
-        const activitiesSelectors = [
-            '.activities-grid',
-            '.activities-container', 
-            '[data-step="activities"]',
-            '#activities-step',
-            '.activity-card',
-            '.activity-item',
-            'h2:contains("Δραστηριότητες")',
-            'h2:contains("Activities")'
-        ];
+        // ΚΡΙΤΙΚΟ: Πρέπει να υπάρχει ΚΑΙ ο container ΚΑΙ να είναι ΟΡΑΤΟΣ
+        const activitiesGrid = document.querySelector('.activities-grid, .activities-container');
+        const activityCards = document.querySelectorAll('.activity-card, .activity-item');
         
-        for (const selector of activitiesSelectors) {
-            if (document.querySelector(selector)) {
-                console.log(`✅ Found activities indicator: ${selector}`);
-                return true;
-            }
-        }
+        // Πρέπει να υπάρχει ΤΟΥΛΑΧΙΣΤΟΝ 1 activity card ΟΡΑΤΗ
+        const hasVisibleActivities = Array.from(activityCards).some(card => {
+            const rect = card.getBoundingClientRect();
+            return rect.width > 0 && rect.height > 0; // Είναι ορατό
+        });
         
-        // Β. Έλεγχος από URL ή page title
-        const pageTitle = document.title.toLowerCase();
-        const currentURL = window.location.href.toLowerCase();
-        
-        if (pageTitle.includes('δραστηριότητ') || pageTitle.includes('activities') ||
-            currentURL.includes('activities') || currentURL.includes('δραστηριότητ')) {
-            console.log('✅ Found activities in title/URL');
-            return true;
-        }
-        
-        // Γ. Έλεγχος από κείμενο στην σελίδα
-        const pageText = document.body.textContent.toLowerCase();
-        if (pageText.includes('δραστηριότητ') && pageText.includes('επιλέξτε')) {
-            console.log('✅ Found activities text in page');
-            return true;
-        }
-        
-        return false;
+        return activitiesGrid && hasVisibleActivities && activityCards.length > 0;
     };
     
     // 3. Αν ΔΕΝ είμαστε στο activities step, ΣΤΑΜΑΤΑ
