@@ -167,14 +167,19 @@ class ComboCalculator {
         }, 300);
     }
 
-    clearAutoSelections() {
-        // ΚΑΘΑΡΙΣΜΟΣ αυτόματων επιλογών
-        const autoSelectedCards = document.querySelectorAll('.activity-card[data-auto-selected="true"]');
+clearAutoSelections() {
+    // Δεν χρειάζεται πλέον, αλλά ας την κρατήσουμε για κάθε περίπτωση
+    console.log("🧹 Καθαρισμός επιλογών (λειτουργία διατηρείται)");
+    
+    const autoSelectedCards = document.querySelectorAll('.activity-card[data-auto-selected="true"]');
+    if (autoSelectedCards.length > 0) {
         autoSelectedCards.forEach(card => {
             card.classList.remove('selected');
             card.removeAttribute('data-auto-selected');
         });
+        console.log(`🧹 Αφαιρέθηκαν ${autoSelectedCards.length} παλιές αυτόματες επιλογές`);
     }
+}
 
     // ==================== ΚΥΡΙΑ ΣΥΝΑΡΤΗΣΗ ΥΠΟΛΟΓΙΣΜΟΥ ====================
     async calculateSmartCombos() {
