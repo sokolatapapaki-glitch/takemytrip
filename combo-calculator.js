@@ -195,46 +195,10 @@ class ComboCalculator {
         
         const selectedActivities = APP_STATE.selectedActivities;
         
-        if (selectedActivities.length === 0) {
-            const proceed = confirm("ℹ️ Δεν έχετε επιλέξει δραστηριότητες!\n\nΘέλετε να σας προτείνω έξυπνους συνδυασμούς;\n(Θα επιλέξω αυτόματα τις καλύτερες δραστηριότητες για εσάς)");
-            
-            if (!proceed) return;
-            
-            // ΑΥΤΟΜΑΤΗ ΕΠΙΛΟΓΗ
-            if (APP_STATE.availableActivities && APP_STATE.availableActivities.length > 0) {
-                // Επέλεξε τις 3 πρώτες
-                const toSelect = APP_STATE.availableActivities.slice(0, 3);
-                toSelect.forEach((activity, index) => {
-                    if (!selectedActivities.some(a => a.name === activity.name)) {
-                        selectedActivities.push(activity);
-                        
-                        // Ενημέρωση UI
-                        const card = document.querySelector(`.activity-card[data-index="${index}"]`);
-                        if (card) {
-                            card.classList.add('selected');
-                            card.setAttribute('data-auto-selected', 'true');
-                            const icon = card.querySelector('.activity-checkbox i');
-                            if (icon) icon.className = 'fas fa-check-circle';
-                        }
-                    }
-                });
-                
-                // Ενημέρωση state
-                APP_STATE.selectedActivities = selectedActivities;
-                
-                // Ενημέρωση συνολικού κόστους
-                const totalCostElement = document.getElementById('total-activities-cost');
-                if (totalCostElement) {
-                    const total = this.calculateTotalCost();
-                    totalCostElement.textContent = `${total}€`;
-                }
-                
-                showNotification('✅ Αυτόματη επιλογή 3 δραστηριοτήτων', 'success');
-            } else {
-                alert("❌ Δεν βρέθηκαν διαθέσιμες δραστηριότητες για αυτόματη επιλογή");
-                return;
-            }
-        }
+       if (selectedActivities.length === 0) {
+    alert("ℹ️ Δεν έχετε επιλέξει δραστηριότητες!\n\nΠαρακαλώ επιλέξτε τουλάχιστον μία δραστηριότητα για να δείτε έξυπνους συνδυασμούς.");
+    return;
+}
         
         console.log(`✅ Βρέθηκαν ${selectedActivities.length} επιλεγμένες δραστηριότητες`);
         
