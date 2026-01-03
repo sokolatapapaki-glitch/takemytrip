@@ -2018,4 +2018,131 @@ window.loadStepContent = function(stepId) {
         }, 500);
     }
 };
+// ==================== COMBO BUTTON INTEGRATION ====================
+
+function initializeComboButton() {
+    console.log("🎯 Αρχικοποίηση Combo Button...");
+    
+    // Έλεγχος αν το κουμπί υπάρχει ήδη
+    let comboBtn = document.getElementById('smart-combo-btn');
+    
+    if (!comboBtn) {
+        // Δημιουργία νέου κουμπιού
+        comboBtn = document.createElement('button');
+        comboBtn.id = 'smart-combo-btn';
+        comboBtn.innerHTML = '💰 Έξυπνος Υπολογισμός Combo';
+        comboBtn.style.cssText = `
+            display: none;
+            margin: 25px auto;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #9c27b0, #7b1fa2);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3);
+            transition: all 0.3s ease;
+            width: 90%;
+            max-width: 500px;
+            opacity: 0;
+            transform: translateY(10px);
+        `;
+        
+        // Hover effects
+        comboBtn.onmouseenter = () => {
+            comboBtn.style.transform = 'translateY(-2px)';
+            comboBtn.style.boxShadow = '0 6px 20px rgba(156, 39, 176, 0.4)';
+        };
+        
+        comboBtn.onmouseleave = () => {
+            comboBtn.style.transform = 'translateY(0)';
+            comboBtn.style.boxShadow = '0 4px 12px rgba(156, 39, 176, 0.3)';
+        };
+        
+        // Click handler
+        comboBtn.onclick = function() {
+            alert("🎉 Combo Calculator!\n\nΓια να δείτε τα combos, πρέπει:\n1. Επιλέξτε τουλάχιστον 2 δραστηριότητες\n2. Το κουμπί θα υπολογίσει αυτόματα τις εκπτώσεις\n\nΣυνολικό κόστος: " + calculateTotalActivitiesCost() + "€");
+        };
+        
+        // Προσθήκη στο body
+        document.body.appendChild(comboBtn);
+    }
+    
+    // Έλεγχος αν είμαστε στο βήμα 4
+    checkAndShowComboButton();
+}
+
+function checkAndShowComboButton() {
+    const comboBtn = document.getElementById('smart-combo-btn');
+    if (!comboBtn) return;
+    
+    const activeStep = document.querySelector('.step.active');
+    if (!activeStep) return;
+    
+    const stepType = activeStep.getAttribute('data-step');
+    const activitiesContainer = document.getElementById('activities-container');
+    const totalCostCard = document.querySelector('.total-cost-card');
+    
+    if (stepType === 'activities') {
+        // Μετακίνηση στο σωστό σημείο
+        const stepContent = document.getElementById('step-content');
+        if (stepContent && !stepContent.contains(comboBtn)) {
+            stepContent.appendChild(comboBtn);
+        }
+        
+        // Τοποθέτηση μετά τις δραστηριότητες
+        if (activitiesContainer && totalCostCard && comboBtn.parentNode === stepContent) {
+            if (activitiesContainer.nextSibling !== comboBtn) {
+                if (totalCostCard.previousSibling !== comboBtn) {
+                    stepContent.insertBefore(comboBtn, totalCostCard);
+                }
+            }
+        }
+        
+        // Εμφάνιση με animation
+        setTimeout(() => {
+            comboBtn.style.display = 'block';
+            setTimeout(() => {
+                comboBtn.style.opacity = '1';
+                comboBtn.style.transform = 'translateY(0)';
+            }, 50);
+        }, 300);
+        
+        console.log("✅ Combo button shown on Step 4");
+    } else {
+        // Απόκρυψη
+        comboBtn.style.opacity = '0';
+        comboBtn.style.transform = 'translateY(10px)';
+        setTimeout(() => {
+            comboBtn.style.display = 'none';
+        }, 300);
+    }
+}
+
+// Αυτόματη κλήση όταν αλλάζει το βήμα
+const originalNavigateToStep = window.navigateToStep;
+window.navigateToStep = function(stepId) {
+    if (originalNavigateToStep) {
+        originalNavigateToStep(stepId);
+    }
+    setTimeout(checkAndShowComboButton, 100);
+};
+
+// Αρχικοποίηση όταν φορτώνει η σελίδα
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(initializeComboButton, 1500);
+});
+
+// Έλεγχος όταν φορτώνουν οι δραστηριότητες
+const originalLoadCityActivities = window.loadCityActivities;
+if (originalLoadCityActivities) {
+    window.loadCityActivities = function() {
+        originalLoadCityActivities();
+        setTimeout(checkAndShowComboButton, 500);
+    };
+}
+
 console.log('✅ Όλες οι συναρτήσεις φορτώθηκαν!');
+
