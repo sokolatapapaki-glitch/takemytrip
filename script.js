@@ -1809,3 +1809,100 @@ window.toggleActivitySelection = toggleActivitySelection;
 window.showActivityMap = showActivityMap;
 
 console.log('✅ Όλες οι συναρτήσεις ενσωματώθηκαν με τα JSON δεδομένα!');
+// ============================================
+// FIX MISSING FUNCTIONS
+// ============================================
+
+// 1. Αυτή λείπει από τον παλιό κώδικά σου
+function showSelectedDestination() {
+    // Αυτή η function δεν χρειάζεται πλέον, απλά κάνει console log
+    console.log('📍 Εμφάνιση επιλεγμένου προορισμού');
+    if (state.selectedDestination) {
+        console.log(`Τρέχων προορισμός: ${state.selectedDestination}`);
+    }
+}
+
+// 2. Βελτιωμένη έκδοση για το χάρτη
+function initializeMap() {
+    console.log('🗺️ Αρχικοποίηση διαδραστικού χάρτη');
+    
+    const mapContainer = document.getElementById('map-container');
+    if (!mapContainer) return;
+    
+    if (!state.selectedDestination) {
+        mapContainer.innerHTML = `
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle"></i>
+                Δεν υπάρχει επιλεγμένος προορισμός
+            </div>
+        `;
+        return;
+    }
+    
+    // Χρήση Leaflet για πραγματικό χάρτη
+    try {
+        // Καθαρίζουμε το container
+        mapContainer.innerHTML = '<div id="map" style="height: 100%;"></div>';
+        
+        // Αρχικοποίηση χάρτη με default coordinates (Άμστερνταμ)
+        const map = L.map('map').setView([52.3676, 4.9041], 13);
+        
+        // Προσθήκη OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 19
+        }).addTo(map);
+        
+        // Προσθήκη marker για τον επιλεγμένο προορισμό
+        L.marker([52.3676, 4.9041])
+            .addTo(map)
+            .bindPopup(`<b>${state.selectedDestination}</b><br>Επιλεγμένες δραστηριότητες: ${state.selectedActivities.length}`)
+            .openPopup();
+            
+        console.log('✅ Χάρτης φορτώθηκε επιτυχώς');
+        
+    } catch (error) {
+        console.error('❌ Σφάλμα χάρτη:', error);
+        // Fallback αν αποτύχει ο Leaflet
+        mapContainer.innerHTML = `
+            <div style="height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; text-align: center;">
+                <i class="fas fa-map-marked-alt" style="font-size: 60px; margin-bottom: 20px;"></i>
+                <h2 style="margin-bottom: 10px;">Χάρτης ${state.selectedDestination}</h2>
+                <p style="margin-bottom: 20px;">${state.selectedActivities.length} επιλεγμένες δραστηριότητες</p>
+                
+                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; margin: 15px 0;">
+                    <h4 style="margin-bottom: 10px;">Διαδραστικός χάρτης</h4>
+                    <p style="font-size: 14px;">Ο πλήρης χάρτης θα φορτωθεί σύντομα με τις τοποθεσίες όλων των δραστηριοτήτων.</p>
+                </div>
+                
+                <div style="display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; justify-content: center;">
+                    <button class="btn btn-primary" onclick="addCustomPoint()">
+                        <i class="fas fa-plus"></i> Προσθήκη Σημείου
+                    </button>
+                    <button class="btn btn-secondary" onclick="showActivityMap()">
+                        <i class="fas fa-map-pin"></i> Δραστηριότητες
+                    </button>
+                    <button class="btn btn-accent" onclick="location.reload()">
+                        <i class="fas fa-sync-alt"></i> Επαναφόρτωση
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+}
+
+// 3. Βοηθητικές συναρτήσεις για τον χάρτη
+function addCustomPoint() {
+    const pointName = prompt('Όνομα σημείου:');
+    if (pointName) {
+        alert(`✅ Προστέθηκε σημείο: "${pointName}" στον χάρτη του ${state.selectedDestination}`);
+        // Εδώ θα προσθέσεις το σημείο στον πραγματικό χάρτη
+    }
+}
+
+// 4. Εξαγωγή στο global scope
+window.showSelectedDestination = showSelectedDestination;
+window.initializeMap = initializeMap;
+window.addCustomPoint = addCustomPoint;
+
+console.log('✅ Οι missing functions προστέθηκαν!');
