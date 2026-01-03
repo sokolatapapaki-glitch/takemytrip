@@ -1100,50 +1100,6 @@ function setupMapStep() {
 
 let map = null;
 
-function initializeMap() {
-    console.log('🌍 Αρχικοποίηση χάρτη');
-    
-    const mapContainer = document.getElementById('map-container');
-    
-    if (!state.selectedDestination) {
-        mapContainer.innerHTML = '<div class="alert alert-warning"><i class="fas fa-exclamation-triangle"></i> Δεν υπάρχει επιλεγμένος προορισμός</div>';
-        return;
-    }
-    
-    // Προσπάθεια φόρτωσης Leaflet χάρτη
-    try {
-        mapContainer.innerHTML = '<div id="map" style="height: 100%;"></div>';
-        
-        // Προσθήκη demo χάρτη (χωρίς πραγματικό Leaflet)
-        mapContainer.innerHTML = `
-            <div style="height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; text-align: center;">
-                <i class="fas fa-map-marked-alt" style="font-size: 60px; margin-bottom: 20px;"></i>
-                <h2 style="margin-bottom: 10px;">Διαδραστικός Χάρτης</h2>
-                <p style="margin-bottom: 20px;">Χάρτης για: ${state.selectedDestination}</p>
-                <p style="font-size: 14px; opacity: 0.9;">ℹ️ Η πλήρης λειτουργία χάρτη θα είναι διαθέσιμη σύντομα</p>
-                
-                <div style="display: flex; gap: 10px; margin-top: 30px;">
-                    <button class="btn btn-primary" onclick="alert('📍 Προστέθηκε σημείο στο χάρτη')">
-                        <i class="fas fa-plus"></i> Προσθήκη Σημείου
-                    </button>
-                    <button class="btn btn-secondary" onclick="alert('🗺️ Εμφάνιση διαδρομής')">
-                        <i class="fas fa-route"></i> Διαδρομή
-                    </button>
-                </div>
-            </div>
-        `;
-        
-    } catch (error) {
-        console.error('❌ Σφάλμα φόρτωσης χάρτη:', error);
-        mapContainer.innerHTML = `
-            <div class="alert alert-danger">
-                <i class="fas fa-exclamation-circle"></i>
-                Δεν ήταν δυνατή η φόρτωση του χάρτη. Παρακαλώ δοκιμάστε ξανά.
-            </div>
-        `;
-    }
-}
-
 // ============================================
 // Εξαγωγή συναρτήσεων στο global scope
 // ============================================
@@ -1906,3 +1862,99 @@ window.initializeMap = initializeMap;
 window.addCustomPoint = addCustomPoint;
 
 console.log('✅ Οι missing functions προστέθηκαν!');
+// ============================================
+// ΟΛΟΚΛΗΡΩΜΕΝΗ MAP FUNCTION
+// ============================================
+
+let travelMap = null;
+
+function initializeMap() {
+    console.log('🗺️ Φόρτωση πραγματικού Leaflet χάρτη...');
+    
+    const mapContainer = document.getElementById('map-container');
+    if (!mapContainer) {
+        console.error('❌ Δεν βρέθηκε map-container');
+        return;
+    }
+    
+    if (!state.selectedDestination) {
+        mapContainer.innerHTML = '<div class="alert alert-warning"><i class="fas fa-exclamation-triangle"></i> Παρακαλώ επιλέξτε πρώτα προορισμό</div>';
+        return;
+    }
+    
+    // Εμφάνιση loading
+    mapContainer.innerHTML = `
+        <div id="map" style="height: 500px; width: 100%; border-radius: 10px; position: relative;"></div>
+        <div id="map-loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; background: white; padding: 20px; border-radius: 10px; box-shadow: var(--shadow-lg);">
+            <i class="fas fa-spinner fa-spin fa-2x" style="color: var(--primary);"></i>
+            <p style="margin-top: 10px;">Φόρτωση χάρτη...</p>
+        </div>
+    `;
+    
+    // Μικρή καθυστέρηση
+    setTimeout(() => {
+        try {
+            // 1. Έλεγχος αν το Leaflet είναι διαθέσιμο
+            if (typeof L === 'undefined') {
+                throw new Error('Leaflet library not loaded');
+            }
+            
+            // 2. Δημιουργία χάρτη
+            travelMap = L.map('map').setView([52.3676, 4.9041], 13);
+            
+            // 3. Προσθήκη χάρτη OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                maxZoom: 19
+            }).addTo(travelMap);
+            
+            // 4. Προσθήκη βασικού marker
+            L.marker([52.3676, 4.9041])
+                .addTo(travelMap)
+                .bindPopup(`<b>${state.selectedDestination}</b><br>${state.selectedActivities.length} δραστηριότητες`)
+                .openPopup();
+            
+            // 5. Αφαίρεση loading
+            const loadingDiv = document.getElementById('map-loading');
+            if (loadingDiv) loadingDiv.remove();
+            
+            console.log('✅ Χάρτης φορτώθηκε επιτυχώς!');
+            
+            // 6. Προσθήκη controls
+            addMapControls();
+            
+        } catch (error) {
+            console.error('❌ Σφάλμα χάρτη:', error);
+            // Fallback αν αποτύχει
+            mapContainer.innerHTML = `
+                <div style="height: 500px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; padding: 20px; text-align: center; border-radius: 10px;">
+                    <i class="fas fa-map-marked-alt" style="font-size: 64px; margin-bottom: 20px;"></i>
+                    <h2>Χάρτης ${state.selectedDestination}</h2>
+                    <p style="margin: 20px 0;">Ο χάρτης δεν μπόρεσε να φορτωθεί</p>
+                    <p style="font-size: 14px; opacity: 0.8;">Αίτιο: ${error.message}</p>
+                    <button onclick="initializeMap()" style="margin-top: 20px; padding: 10px 20px; background: white; color: var(--primary); border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
+                        <i class="fas fa-sync-alt"></i> Δοκίμασε ξανά
+                    </button>
+                </div>
+            `;
+        }
+    }, 800);
+}
+
+function addMapControls() {
+    if (!travelMap) return;
+    
+    // Προσθήκη κουμπιού για fullscreen
+    L.control.fullscreen({
+        position: 'topright',
+        title: {
+            'false': 'Πλήρης οθόνη',
+            'true': 'Έξοδος'
+        }
+    }).addTo(travelMap);
+}
+
+// Βεβαιώσου ότι η function είναι διαθέσιμη global
+window.initializeMap = initializeMap;
+
+console.log('✅ Νέα map function προστέθηκε!');
