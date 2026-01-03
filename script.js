@@ -1996,5 +1996,26 @@ window.addCustomMarker = addCustomMarker;
 window.focusOnMapActivity = focusOnMapActivity;
 window.showRouteBetweenActivities = showRouteBetweenActivities;
 window.resetAllData = resetAllData;
+// ==================== COMBO CALCULATOR INTEGRATION ====================
+// Προσθήκη global functions για το combo calculator
+window.calculateTotalActivitiesCost = calculateTotalActivitiesCost;
+window.showNotification = showNotification;
 
+// Ενημέρωση του APP_STATE για πρόσβαση από combo calculator
+window.APP_STATE = APP_STATE;
+
+// Αρχικοποίηση combo calculator όταν φορτώνει το βήμα activities
+const originalLoadStepContent = window.loadStepContent;
+window.loadStepContent = function(stepId) {
+    originalLoadStepContent(stepId);
+    
+    if (stepId === 'activities' && window.comboCalculator) {
+        setTimeout(() => {
+            if (!window.comboCalculator.initialized) {
+                window.comboCalculator.init();
+            }
+            window.comboCalculator.checkCurrentStep();
+        }, 500);
+    }
+};
 console.log('✅ Όλες οι συναρτήσεις φορτώθηκαν!');
