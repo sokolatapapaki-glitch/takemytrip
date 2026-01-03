@@ -1,6 +1,7 @@
 // ==================== GLOBAL STATE ====================
 const state = {
     selectedDestination: null,
+    selectedDestinationId: null,
     selectedDays: 0,
     selectedBudget: 0,
     familyMembers: [
@@ -45,21 +46,22 @@ function loadSavedData() {
     if (saved) {
         const data = JSON.parse(saved);
         
-        // Επαναφορά προορισμού
         if (data.selectedDestinationName) {
             state.selectedDestination = data.selectedDestinationName;
             document.getElementById('current-destination-display').textContent = state.selectedDestination;
         }
         
-        // Επαναφορά budget
         if (data.selectedBudget) {
             state.selectedBudget = data.selectedBudget;
             document.getElementById('budget-total').textContent = state.selectedBudget + '€';
         }
         
-        // Επαναφορά οικογένειας
         if (data.familyMembers) {
             state.familyMembers = data.familyMembers;
+        }
+        
+        if (data.selectedActivities) {
+            state.selectedActivities = data.selectedActivities;
         }
         
         console.log('📂 Φορτώθηκαν αποθηκευμένα δεδομένα');
@@ -68,7 +70,6 @@ function loadSavedData() {
 
 // ==================== STEP MANAGEMENT ====================
 function setupStepNavigation() {
-    // Desktop steps
     document.querySelectorAll('.step').forEach(step => {
         step.addEventListener('click', function() {
             const stepName = this.dataset.step;
@@ -76,7 +77,6 @@ function setupStepNavigation() {
         });
     });
     
-    // Mobile dropdown
     document.getElementById('mobile-step-selector').addEventListener('change', function() {
         showStep(this.value);
     });
@@ -85,29 +85,18 @@ function setupStepNavigation() {
 function showStep(stepName) {
     console.log(`📱 Εμφάνιση βήματος: ${stepName}`);
     
-    // 1. Ενημέρωση state
     state.currentStep = stepName;
-    
-    // 2. Ενημέρωση UI
     updateStepUI(stepName);
-    
-    // 3. Φόρτωση περιεχομένου
     loadStepContent(stepName);
-    
-    // 4. Ενημέρωση mobile selector
     document.getElementById('mobile-step-selector').value = stepName;
-    
-    // 5. Αποθήκευση
     saveState();
 }
 
 function updateStepUI(activeStep) {
-    // Καθαρισμός active class
     document.querySelectorAll('.step').forEach(step => {
         step.classList.remove('active');
     });
     
-    // Προσθήκη active class στο επιλεγμένο
     const activeElement = document.querySelector(`.step[data-step="${activeStep}"]`);
     if (activeElement) {
         activeElement.classList.add('active');
@@ -158,7 +147,6 @@ function getDestinationStepHTML() {
             <p class="card-subtitle">Βρείτε την τέλεια πόλη για τις οικογενειακές σας διακοπές</p>
             
             <div class="grid grid-3">
-                <!-- Φίλτρο 1 -->
                 <div class="form-group">
                     <label class="form-label">Τύπος Ταξιδιώτη</label>
                     <select class="form-control" id="travel-type">
@@ -170,7 +158,6 @@ function getDestinationStepHTML() {
                     </select>
                 </div>
                 
-                <!-- Φίλτρο 2 -->
                 <div class="form-group">
                     <label class="form-label">Απόσταση (ώρες)</label>
                     <select class="form-control" id="distance">
@@ -183,7 +170,6 @@ function getDestinationStepHTML() {
                     </select>
                 </div>
                 
-                <!-- Φίλτρο 3 -->
                 <div class="form-group">
                     <label class="form-label">Κλιματικές συνθήκες</label>
                     <select class="form-control" id="weather">
@@ -197,7 +183,6 @@ function getDestinationStepHTML() {
             </div>
             
             <div class="grid grid-3">
-                <!-- Φίλτρο 4 -->
                 <div class="form-group">
                     <label class="form-label">Τύπος Διακοπών</label>
                     <select class="form-control" id="vacation-type">
@@ -210,7 +195,6 @@ function getDestinationStepHTML() {
                     </select>
                 </div>
                 
-                <!-- Φίλτρο 5 -->
                 <div class="form-group">
                     <label class="form-label">Κόστος</label>
                     <select class="form-control" id="cost-level">
@@ -221,7 +205,6 @@ function getDestinationStepHTML() {
                     </select>
                 </div>
                 
-                <!-- Φίλτρο 6 -->
                 <div class="form-group">
                     <label class="form-label">Μέρες Διαμονής</label>
                     <select class="form-control" id="days-stay">
@@ -235,14 +218,12 @@ function getDestinationStepHTML() {
                 </div>
             </div>
             
-            <!-- Προϋπολογισμός -->
             <div class="form-group">
                 <label class="form-label">Προϋπολογισμός Ταξιδιού (προαιρετικό)</label>
                 <input type="number" class="form-control" id="travel-budget" placeholder="π.χ. 500">
                 <small class="text-muted">Βάλτε το συνολικό ποσό που θέλετε να ξοδέψετε</small>
             </div>
             
-            <!-- Κουμπιά -->
             <div style="display: flex; gap: 15px; margin-top: 30px;">
                 <button class="btn btn-primary" onclick="filterDestinations()">
                     <i class="fas fa-search"></i> Αναζήτηση Προορισμών
@@ -253,13 +234,11 @@ function getDestinationStepHTML() {
             </div>
         </div>
         
-        <!-- Αποτελέσματα -->
         <div id="destination-results" class="grid grid-3" style="margin-top: 20px;"></div>
     `;
 }
 
 function setupDestinationStep() {
-    // Επαναφορά φίλτρων από state
     if (state.selectedDays > 0) {
         document.getElementById('days-stay').value = state.selectedDays;
     }
@@ -268,7 +247,6 @@ function setupDestinationStep() {
         document.getElementById('travel-budget').value = state.selectedBudget;
     }
     
-    // Εμφάνιση προηγούμενων αποτελεσμάτων
     if (state.selectedDestination) {
         showSelectedDestination();
     }
@@ -522,7 +500,12 @@ function getSummaryStepHTML() {
                     <div id="selected-activities-list" style="min-height: 100px; padding: 20px; background: #f8f9fa; border-radius: var(--radius-md);">
                         ${state.selectedActivities.length === 0 ? 
                             '<p style="text-align: center; color: var(--gray);"><i class="fas fa-info-circle"></i> Δεν έχετε επιλέξει δραστηριότητες ακόμα</p>' : 
-                            '<p>Φόρτωση...</p>'}
+                            state.selectedActivities.map(activity => 
+                                `<div style="padding: 10px; background: white; margin-bottom: 10px; border-radius: 8px;">
+                                    <i class="fas fa-check-circle" style="color: var(--success); margin-right: 10px;"></i>
+                                    ${activity.name} - ${activity.price || '0'}€
+                                </div>`
+                            ).join('')}
                     </div>
                 </div>
                 
@@ -602,12 +585,9 @@ function getMapStepHTML() {
 }
 
 // ==================== HELPER FUNCTIONS ====================
-function setupMobileNavigation() {
-    // Μηδενική λειτουργία για τώρα - θα συμπληρωθεί
-}
+function setupMobileNavigation() {}
 
 function setupEventListeners() {
-    // Reset button
     document.getElementById('reset-all').addEventListener('click', function() {
         if (confirm('⚠️ Θέλετε να διαγράψετε όλα τα δεδομένα;')) {
             localStorage.clear();
@@ -615,7 +595,6 @@ function setupEventListeners() {
         }
     });
     
-    // Budget input
     document.addEventListener('input', function(e) {
         if (e.target.id === 'travel-budget') {
             state.selectedBudget = parseInt(e.target.value) || 0;
@@ -648,92 +627,99 @@ function calculateTotalSpent() {
 function saveState() {
     const data = {
         selectedDestinationName: state.selectedDestination,
+        selectedDestinationId: state.selectedDestinationId,
         selectedDaysStay: state.selectedDays,
         selectedBudget: state.selectedBudget,
         familyMembers: state.familyMembers,
-        selectedActivities: state.selectedActivities.map(act => act.name)
+        selectedActivities: state.selectedActivities
     };
     
     localStorage.setItem('travelPlannerData', JSON.stringify(data));
 }
 
-// ==================== EXPORTED FUNCTIONS ====================
-window.showStep = showStep;
-window.filterDestinations = filterDestinations;
-window.resetFilters = resetFilters;
-window.searchHotels = searchHotels;
-window.updateFamilyMemberName = function(index, name) {
-    state.familyMembers[index].name = name;
-};
-
-window.updateFamilyMemberAge = function(index, age) {
-    state.familyMembers[index].age = parseInt(age) || 0;
-};
-
-window.addFamilyMember = function(type) {
-    const newMember = {
-        name: type === 'adult' ? 'Νέο Μέλος' : 'Νέο Παιδί',
-        age: type === 'adult' ? 30 : 10
-    };
-    state.familyMembers.push(newMember);
-    showStep('activities');
-};
-
-window.removeFamilyMember = function(index) {
-    if (state.familyMembers.length > 2) {
-        state.familyMembers.splice(index, 1);
-        showStep('activities');
+// ==================== DESTINATION FUNCTIONS ====================
+async function filterDestinations() {
+    console.log('🔍 Αναζήτηση προορισμών...');
+    
+    const travelType = document.getElementById('travel-type').value;
+    const vacationType = document.getElementById('vacation-type').value;
+    const daysStay = document.getElementById('days-stay').value;
+    const budget = document.getElementById('travel-budget').value;
+    
+    if (daysStay) state.selectedDays = parseInt(daysStay);
+    if (budget) {
+        state.selectedBudget = parseInt(budget);
+        updateBudgetTracker();
     }
-};
-
-window.updateFamilyMembers = function() {
-    saveState();
-    alert('✅ Τα μέλη της οικογένειας ενημερώθηκαν!');
-};
-
-window.calculateSmartCombos = function() {
-    alert('ℹ️ Η λειτουργία "Έξυπνο Combo" θα είναι διαθέσιμη σύντομα!');
-};
-
-// ============================================
-// DESTINATION STEP FUNCTIONS
-// ============================================
-
-function filterDestinations(category) {
-    console.log(`🔍 Φιλτράρισμα προορισμών: ${category || 'all'}`);
     
-    const destinationResults = document.getElementById('destination-results');
-    destinationResults.innerHTML = '<p>Φόρτωση προορισμών...</p>';
+    const resultsDiv = document.getElementById('destination-results');
+    resultsDiv.innerHTML = `
+        <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+            <div class="loading">
+                <i class="fas fa-spinner fa-spin fa-2x"></i>
+                <p>Φόρτωση προορισμών...</p>
+            </div>
+        </div>
+    `;
     
-    setTimeout(() => {
-        const destinations = [
-            { name: 'Θεσσαλονίκη', description: 'Η συμπρωτεύουσα της Ελλάδας', category: 'Πόλη' },
-            { name: 'Σαντορίνη', description: 'Τοπ νησί με ηφαίστειο', category: 'Θάλασσα' },
-            { name: 'Ζαγοριόχωρια', description: 'Τραditionιαλά χωριά', category: 'Βουνό' }
-        ];
-        
-        let html = '';
-        destinations.forEach(dest => {
-            if (!category || category === 'all' || dest.category === category) {
-                html += `
-                    <div class="destination-card" onclick="selectDestination('${dest.name}')">
-                        <h3>${dest.name}</h3>
-                        <p>${dest.description}</p>
-                        <div class="tags">
-                            <span class="tag tag-primary">${dest.category}</span>
+    // Στοιχειώδης λίστα πόλεων (προσάρμοσέ την με τα δικά σου JSON)
+    const cities = [
+        { id: 'amsterdam', name: 'Άμστερνταμ', emoji: '🌷', category: 'πόλη' },
+        { id: 'paris', name: 'Παρίσι', emoji: '🗼', category: 'πόλη' },
+        { id: 'london', name: 'Λονδίνο', emoji: '🇬🇧', category: 'πόλη' },
+        { id: 'rome', name: 'Ρώμη', emoji: '🏛️', category: 'πόλη' }
+    ];
+    
+    let html = '';
+    
+    for (const city of cities) {
+        try {
+            // Προσπάθεια φόρτωσης του JSON
+            const response = await fetch(`data/${city.id}.json`);
+            const cityData = await response.json();
+            
+            html += `
+                <div class="destination-card" onclick="selectDestination('${city.name}', '${city.id}')">
+                    <div style="font-size: 48px; text-align: center; margin-bottom: 15px;">
+                        ${city.emoji}
+                    </div>
+                    <h3>${city.name}</h3>
+                    <p><i class="fas fa-globe-europe"></i> ${cityData.country || 'Ευρώπη'}</p>
+                    
+                    <div style="margin: 15px 0;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: var(--gray);">Δραστηριότητες:</span>
+                            <strong>${cityData.activities ? cityData.activities.length : 'N/A'}</strong>
                         </div>
                     </div>
-                `;
-            }
-        });
-        
-        destinationResults.innerHTML = html;
-    }, 500);
+                    
+                    <div class="tags" style="margin-top: 15px;">
+                        <span class="tag tag-primary">${city.category}</span>
+                        <span class="tag tag-secondary">${cityData.currency || 'EUR'}</span>
+                    </div>
+                </div>
+            `;
+        } catch (error) {
+            console.log(`Δεν βρέθηκε ${city.id}.json, χρήση προεπιλογής`);
+            html += `
+                <div class="destination-card" onclick="selectDestination('${city.name}', '${city.id}')">
+                    <div style="font-size: 48px; text-align: center; margin-bottom: 15px;">
+                        ${city.emoji}
+                    </div>
+                    <h3>${city.name}</h3>
+                    <p><i class="fas fa-globe-europe"></i> Ευρώπη</p>
+                    <div class="tags" style="margin-top: 15px;">
+                        <span class="tag tag-primary">${city.category}</span>
+                    </div>
+                </div>
+            `;
+        }
+    }
+    
+    resultsDiv.innerHTML = html;
 }
 
 function resetFilters() {
-    console.log('🔄 Επαναφορά φίλτρων');
-    
     document.getElementById('travel-type').value = '';
     document.getElementById('distance').value = '';
     document.getElementById('weather').value = '';
@@ -745,18 +731,19 @@ function resetFilters() {
     document.getElementById('destination-results').innerHTML = '';
     
     state.selectedDestination = null;
+    state.selectedDestinationId = null;
     state.selectedDays = 0;
     state.selectedBudget = 0;
+    state.selectedActivities = [];
     
     document.getElementById('current-destination-display').textContent = 'Δεν έχει επιλεγεί';
     updateBudgetTracker();
     saveState();
 }
 
-function selectDestination(destinationName) {
-    console.log(`📍 Επιλέχθηκε προορισμός: ${destinationName}`);
-    
+function selectDestination(destinationName, destinationId) {
     state.selectedDestination = destinationName;
+    state.selectedDestinationId = destinationId;
     state.selectedDays = parseInt(document.getElementById('days-stay').value) || 3;
     state.selectedBudget = parseInt(document.getElementById('travel-budget').value) || 0;
     
@@ -778,16 +765,11 @@ function selectDestination(destinationName) {
 }
 
 function showSelectedDestination() {
-    console.log('📍 Εμφάνιση επιλεγμένου προορισμού');
+    console.log('📍 Επιλεγμένος προορισμός:', state.selectedDestination);
 }
 
-// ============================================
-// FLIGHT STEP FUNCTIONS
-// ============================================
-
+// ==================== FLIGHT FUNCTIONS ====================
 function setupFlightStep() {
-    console.log('✈️ Ρύθμιση βήματος πτήσεων');
-    
     const flightDate = document.getElementById('flight-date');
     const today = new Date();
     const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
@@ -795,13 +777,8 @@ function setupFlightStep() {
     flightDate.value = nextWeek.toISOString().split('T')[0];
 }
 
-// ============================================
-// HOTEL STEP FUNCTIONS
-// ============================================
-
+// ==================== HOTEL FUNCTIONS ====================
 function setupHotelStep() {
-    console.log('🏨 Ρύθμιση βήματος ξενοδοχείων');
-    
     const checkin = document.getElementById('hotel-checkin');
     const checkout = document.getElementById('hotel-checkout');
     const today = new Date();
@@ -823,8 +800,6 @@ function setupHotelStep() {
 }
 
 function searchHotels() {
-    console.log('🔍 Αναζήτηση ξενοδοχείων');
-    
     const destination = document.getElementById('hotel-destination').value;
     const checkin = document.getElementById('hotel-checkin').value;
     const checkout = document.getElementById('hotel-checkout').value;
@@ -838,14 +813,11 @@ function searchHotels() {
     window.open(bookingUrl, '_blank');
 }
 
-// ============================================
-// ACTIVITIES STEP FUNCTIONS
-// ============================================
-
-function setupActivitiesStep() {
+// ==================== ACTIVITIES FUNCTIONS ====================
+async function setupActivitiesStep() {
     console.log('🎯 Ρύθμιση βήματος δραστηριοτήτων');
     
-    if (!state.selectedDestination) {
+    if (!state.selectedDestinationId) {
         console.log('⚠️ Δεν υπάρχει επιλεγμένος προορισμός');
         return;
     }
@@ -853,40 +825,34 @@ function setupActivitiesStep() {
     const activitiesList = document.getElementById('activities-list');
     activitiesList.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i><p>Φόρτωση δραστηριοτήτων...</p></div>';
     
-    setTimeout(() => {
-        const activities = [
-            { 
-                name: 'Πεζοπορία στο κέντρο', 
-                description: 'Περιηγηθείτε στα σημαντικότερα αξιοθέατα', 
-                emoji: '🚶',
-                prices: { adult: 15, child: 8 }
-            },
-            { 
-                name: 'Επισκέψη σε μουσείο', 
-                description: 'Γνωρίστε την ιστορία της περιοχής', 
-                emoji: '🏛️',
-                prices: { adult: 10, child: 5 }
-            },
-            { 
-                name: 'Βόλτα με ποδήλατο', 
-                description: 'Εξερευνήστε την πόλη με άλλο τρόπο', 
-                emoji: '🚲',
-                prices: { adult: 12, child: 7 }
-            }
-        ];
+    try {
+        // Φόρτωση των δεδομένων από το JSON
+        const response = await fetch(`data/${state.selectedDestinationId}.json`);
+        const cityData = await response.json();
+        
+        state.currentCityActivities = cityData.activities || [];
         
         let html = '';
-        activities.forEach(activity => {
-            const totalCost = (activity.prices.adult * 2) + (activity.prices.child * Math.max(0, state.familyMembers.length - 2));
+        state.currentCityActivities.forEach((activity, index) => {
+            const familyCost = calculateFamilyCost(activity.prices);
+            const isSelected = state.selectedActivities.some(a => a.id === activity.id);
             
             html += `
-                <div class="activity-card" onclick="toggleActivitySelection('${activity.name}')">
+                <div class="activity-card ${isSelected ? 'selected' : ''}" 
+                     onclick="toggleActivitySelection(${activity.id})" 
+                     data-activity-id="${activity.id}">
                     <div class="activity-header">
-                        <div class="activity-emoji">${activity.emoji}</div>
+                        <div class="activity-emoji">${getActivityEmoji(activity.category)}</div>
                         <div class="activity-title">${activity.name}</div>
-                        <div class="activity-star">⭐</div>
+                        <div class="activity-star">${isSelected ? '⭐' : '☆'}</div>
                     </div>
+                    
                     <div class="activity-description">${activity.description}</div>
+                    
+                    <div style="font-size: 12px; color: var(--gray); margin: 10px 0;">
+                        <i class="fas fa-clock"></i> ${activity.duration_hours || '?'} ώρες
+                        <span style="margin-left: 15px;"><i class="fas fa-tag"></i> ${activity.category}</span>
+                    </div>
                     
                     <table class="price-table">
                         <tr>
@@ -895,14 +861,14 @@ function setupActivitiesStep() {
                             <th>Οικογένεια</th>
                         </tr>
                         <tr>
-                            <td>${activity.prices.adult}€</td>
-                            <td>${activity.prices.child}€</td>
-                            <td><strong>${totalCost}€</strong></td>
+                            <td>${activity.prices?.adult || '0'}€</td>
+                            <td>${activity.prices?.child || activity.prices?.['4'] || '0'}€</td>
+                            <td><strong>${familyCost}€</strong></td>
                         </tr>
                     </table>
                     
-                    <div class="activity-total" id="total-${activity.name.replace(/\s+/g, '-')}">
-                        ${totalCost}€ για ${state.familyMembers.length} άτομα
+                    <div class="activity-total">
+                        ${familyCost}€ για ${state.familyMembers.length} άτομα
                     </div>
                 </div>
             `;
@@ -910,21 +876,84 @@ function setupActivitiesStep() {
         
         activitiesList.innerHTML = html;
         updateActivitiesTotal();
-    }, 1000);
+        
+    } catch (error) {
+        console.error('❌ Σφάλμα φόρτωσης δραστηριοτήτων:', error);
+        activitiesList.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-circle"></i>
+                    Δεν ήταν δυνατή η φόρτωση των δραστηριοτήτων.
+                </div>
+            </div>
+        `;
+    }
 }
 
-function toggleActivitySelection(activityName) {
-    const activityCard = document.querySelector(`.activity-card:has(.activity-title:contains("${activityName}"))`);
+function calculateFamilyCost(prices) {
+    let total = 0;
+    
+    state.familyMembers.forEach(member => {
+        const age = member.age;
+        
+        if (prices && prices[age] !== undefined && prices[age] !== "ΔΕΝ ΕΠΙΤΡΕΠΕΤΑΙ") {
+            total += typeof prices[age] === 'number' ? prices[age] : 0;
+        } else if (age >= 18 && prices?.adult) {
+            total += prices.adult;
+        } else if (age < 18 && prices?.child) {
+            total += prices.child;
+        } else if (age < 18 && prices?.['4']) {
+            total += prices['4'];
+        }
+    });
+    
+    return total;
+}
+
+function getActivityEmoji(category) {
+    const emojiMap = {
+        'museum': '🏛️',
+        'experience': '🎭',
+        'zoo': '🐯',
+        'park': '🌳',
+        'cruise': '🚢',
+        'art': '🎨',
+        'science': '🔬'
+    };
+    
+    return emojiMap[category] || '📍';
+}
+
+function toggleActivitySelection(activityId) {
+    const activityCard = document.querySelector(`.activity-card[data-activity-id="${activityId}"]`);
     
     if (activityCard) {
-        activityCard.classList.toggle('selected');
+        const isSelected = activityCard.classList.contains('selected');
         
-        const index = state.selectedActivities.findIndex(a => a.name === activityName);
-        
-        if (index === -1) {
-            state.selectedActivities.push({ name: activityName, selected: true });
+        if (isSelected) {
+            // Αφαίρεση
+            activityCard.classList.remove('selected');
+            activityCard.querySelector('.activity-star').textContent = '☆';
+            
+            const index = state.selectedActivities.findIndex(a => a.id === activityId);
+            if (index !== -1) {
+                state.selectedActivities.splice(index, 1);
+            }
         } else {
-            state.selectedActivities.splice(index, 1);
+            // Προσθήκη
+            activityCard.classList.add('selected');
+            activityCard.querySelector('.activity-star').textContent = '⭐';
+            
+            const activity = state.currentCityActivities.find(a => a.id === activityId);
+            if (activity) {
+                const familyCost = calculateFamilyCost(activity.prices);
+                state.selectedActivities.push({
+                    id: activityId,
+                    name: activity.name,
+                    price: familyCost,
+                    duration: activity.duration_hours
+                });
+            }
         }
         
         updateActivitiesTotal();
@@ -936,42 +965,16 @@ function updateActivitiesTotal() {
     let total = 0;
     
     state.selectedActivities.forEach(activity => {
-        total += 20;
+        total += activity.price || 0;
     });
     
-    total += state.familyMembers.length * 10;
-    
     document.getElementById('activities-total').textContent = total + '€';
-    state.selectedBudget = Math.max(state.selectedBudget, total + 200);
     updateBudgetTracker();
 }
 
-// ============================================
-// SUMMARY STEP FUNCTIONS
-// ============================================
-
+// ==================== SUMMARY FUNCTIONS ====================
 function setupSummaryStep() {
-    console.log('📋 Ρύθμιση βήματος σύνοψης');
-    
-    if (!state.selectedDestination) {
-        return;
-    }
-    
-    const selectedList = document.getElementById('selected-activities-list');
-    
-    if (state.selectedActivities.length === 0) {
-        selectedList.innerHTML = '<p style="text-align: center; color: var(--gray);"><i class="fas fa-info-circle"></i> Δεν έχετε επιλέξει δραστηριότητες ακόμα</p>';
-    } else {
-        let html = '<ul style="list-style: none; padding: 0;">';
-        state.selectedActivities.forEach(activity => {
-            html += `<li style="padding: 10px; background: white; margin-bottom: 10px; border-radius: 8px;">
-                        <i class="fas fa-check-circle" style="color: var(--success); margin-right: 10px;"></i>
-                        ${activity.name}
-                     </li>`;
-        });
-        html += '</ul>';
-        selectedList.innerHTML = html;
-    }
+    if (!state.selectedDestination) return;
     
     createDailyProgram();
 }
@@ -991,8 +994,7 @@ function createDailyProgram() {
                     <h5>🌅 Πρωί (9:00 - 12:00)</h5>
                     <ul>
                         <li>Πρωινό στο ξενοδοχείο</li>
-                        <li>Επισκέψη σε τοπικό αξιοθέατο</li>
-                        <li>Καφές σε παραδοσιακό καφενείο</li>
+                        ${state.selectedActivities[i-1] ? `<li>${state.selectedActivities[i-1].name}</li>` : '<li>Ελεύθερος χρόνος</li>'}
                     </ul>
                 </div>
                 
@@ -1000,93 +1002,65 @@ function createDailyProgram() {
                     <h5>☀️ Μεσημέρι (12:00 - 17:00)</h5>
                     <ul>
                         <li>Γεύμα σε τοπικό εστιατόριο</li>
-                        ${i === 1 ? '<li>Περίπατος στο κέντρο της πόλης</li>' : ''}
-                        ${i === 2 && state.selectedActivities.length > 0 ? `<li>${state.selectedActivities[0]?.name || 'Επιλεγμένη δραστηριότητα'}</li>` : ''}
-                        <li>Ξεκούραση</li>
+                        <li>Περίπατος στην πόλη</li>
                     </ul>
                 </div>
                 
                 <div class="time-slot">
                     <h5>🌙 Βράδυ (17:00 - 22:00)</h5>
                     <ul>
-                        <li>Βόλτα για ψώνια</li>
-                        <li>Δείπνο με τοπικές σπεσιαλιτέ</li>
+                        <li>Δείπνο</li>
                         ${i < days ? '<li>Προγραμματισμός για την επόμενη μέρα</li>' : '<li>Αναχώρηση</li>'}
                     </ul>
                 </div>
-            </div>
-        `;
+            </div>`;
     }
     
     dailyProgram.innerHTML = html;
 }
 
-// ============================================
-// MAP STEP FUNCTIONS - ΔΙΟΡΘΩΜΕΝΕΣ!
-// ============================================
-
+// ==================== MAP FUNCTIONS ====================
 let travelMap = null;
 
 function setupMapStep() {
-    console.log('🗺️ Ρύθμιση βήματος χάρτη');
+    if (!state.selectedDestination) return;
     
-    if (!state.selectedDestination) {
-        return;
-    }
-    
-    // Μικρή καθυστέρηση για να φορτώσει το HTML πρώτα
     setTimeout(() => {
         initializeMap();
     }, 100);
 }
 
 function initializeMap() {
-    console.log('🗺️ Αρχικοποίηση χάρτη...');
-    
     const mapElement = document.getElementById('map');
-    if (!mapElement) {
-        console.error('❌ Δεν βρέθηκε στοιχείο με id="map"');
-        return;
-    }
+    if (!mapElement) return;
     
-    // Καθαρισμός του container
     mapElement.innerHTML = '';
     
     try {
-        // Έλεγχος αν το Leaflet είναι διαθέσιμο
         if (typeof L === 'undefined') {
             throw new Error('Η βιβλιοθήκη Leaflet δεν φορτώθηκε');
         }
         
-        // Δημιουργία χάρτη
         travelMap = L.map('map').setView([52.3676, 4.9041], 13);
         
-        // Προσθήκη χάρτη OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             maxZoom: 19
         }).addTo(travelMap);
         
-        // Προσθήκη marker για τον προορισμό
         L.marker([52.3676, 4.9041])
             .addTo(travelMap)
             .bindPopup(`<b>${state.selectedDestination}</b><br>${state.selectedActivities.length} δραστηριότητες`)
             .openPopup();
         
-        console.log('✅ Χάρτης φορτώθηκε επιτυχώς!');
-        
-        // Προσθήκη ελέγχων
-        addMapControls();
+        L.control.zoom({ position: 'topright' }).addTo(travelMap);
         
     } catch (error) {
-        console.error('❌ Σφάλμα χάρτη:', error);
-        // Fallback αν αποτύχει
         mapElement.innerHTML = `
             <div style="height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; padding: 20px; text-align: center; border-radius: 10px;">
                 <i class="fas fa-map-marked-alt" style="font-size: 48px; margin-bottom: 20px;"></i>
                 <h3>${state.selectedDestination}</h3>
                 <p style="margin: 15px 0;">Ο χάρτης δεν μπόρεσε να φορτωθεί</p>
-                <p style="font-size: 14px; opacity: 0.8;">${error.message}</p>
                 <button onclick="reloadMap()" class="btn btn-primary" style="margin-top: 20px; background: white; color: var(--primary); border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
                     <i class="fas fa-sync-alt"></i> Δοκιμάστε ξανά
                 </button>
@@ -1096,17 +1070,7 @@ function initializeMap() {
 }
 
 function reloadMap() {
-    console.log('🔄 Επαναφόρτωση χάρτη');
     initializeMap();
-}
-
-function addMapControls() {
-    if (!travelMap) return;
-    
-    // Προσθήκη zoom controls
-    L.control.zoom({
-        position: 'topright'
-    }).addTo(travelMap);
 }
 
 function addCustomPoint() {
@@ -1117,7 +1081,6 @@ function addCustomPoint() {
     
     const pointName = prompt('Όνομα σημείου:');
     if (pointName) {
-        // Προσθήκη marker στο κέντρο του χάρτη
         const center = travelMap.getCenter();
         L.marker(center)
             .addTo(travelMap)
@@ -1134,9 +1097,8 @@ function showActivityMap() {
         return;
     }
     
-    alert(`🗺️ Εμφάνιση ${state.selectedActivities.length} δραστηριοτήτων στον χάρτη`);
+    alert(`🗺️ Εμφάνιση ${state.selectedActivities.length} δραστηριοτήτων`);
     
-    // Προσθήκη markers για κάθε δραστηριότητα
     state.selectedActivities.forEach((activity, index) => {
         const lat = 52.3676 + (Math.random() - 0.5) * 0.1;
         const lng = 4.9041 + (Math.random() - 0.5) * 0.1;
@@ -1155,11 +1117,40 @@ function showRouteBetweenPoints() {
     alert('🛣️ Η δημιουργία διαδρομής θα είναι διαθέσιμη σύντομα!');
 }
 
-// ============================================
-// ΕΞΑΓΩΓΗ ΣΥΝΑΡΤΗΣΕΩΝ
-// ============================================
-
-// Προσθήκη των νέων συναρτήσεων στο global scope
+// ==================== EXPORTED FUNCTIONS ====================
+window.showStep = showStep;
+window.filterDestinations = filterDestinations;
+window.resetFilters = resetFilters;
+window.selectDestination = selectDestination;
+window.searchHotels = searchHotels;
+window.updateFamilyMemberName = function(index, name) {
+    state.familyMembers[index].name = name;
+};
+window.updateFamilyMemberAge = function(index, age) {
+    state.familyMembers[index].age = parseInt(age) || 0;
+};
+window.addFamilyMember = function(type) {
+    const newMember = {
+        name: type === 'adult' ? 'Νέο Μέλος' : 'Νέο Παιδί',
+        age: type === 'adult' ? 30 : 10
+    };
+    state.familyMembers.push(newMember);
+    showStep('activities');
+};
+window.removeFamilyMember = function(index) {
+    if (state.familyMembers.length > 2) {
+        state.familyMembers.splice(index, 1);
+        showStep('activities');
+    }
+};
+window.updateFamilyMembers = function() {
+    saveState();
+    alert('✅ Τα μέλη της οικογένειας ενημερώθηκαν!');
+};
+window.calculateSmartCombos = function() {
+    alert('ℹ️ Η λειτουργία "Έξυπνο Combo" θα είναι διαθέσιμη σύντομα!');
+};
+window.toggleActivitySelection = toggleActivitySelection;
 window.setupMapStep = setupMapStep;
 window.initializeMap = initializeMap;
 window.reloadMap = reloadMap;
@@ -1167,5 +1158,4 @@ window.addCustomPoint = addCustomPoint;
 window.showActivityMap = showActivityMap;
 window.showRouteBetweenPoints = showRouteBetweenPoints;
 
-// Στο τέλος του αρχείου
-console.log('✅ Script.js loaded successfully with working map!');
+console.log('✅ Script.js loaded successfully!');
