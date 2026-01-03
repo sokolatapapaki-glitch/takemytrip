@@ -1,4 +1,4 @@
-// ==================== COMBO CALCULATOR - SAFE VERSION ====================
+// ==================== COMBO CALCULATOR - SAFE VERSION (UPDATED) ====================
 console.log('🎯 Combo Calculator v2.0 loaded');
 
 // ==================== GLOBAL VARIABLES ====================
@@ -6,38 +6,28 @@ let comboInitialized = false;
 let comboBtn = null;
 let selectedActivities = [];
 let originalTitles = new Map();
+let comboObserver = null; // keep reference so we can disconnect if needed
 
 // ==================== CHECK IF ON ACTIVITIES PAGE ====================
 function isOnActivitiesPage() {
-    // Check URL for activity keywords
     const url = window.location.href.toLowerCase();
     const urlKeywords = ['activity', 'tour', 'excursion', 'package', 'activities'];
-    
-    if (urlKeywords.some(keyword => url.includes(keyword))) {
-        return true;
-    }
-    
-    // Check page content
-    const pageText = document.body.textContent.toLowerCase();
+    if (urlKeywords.some(keyword => url.includes(keyword))) return true;
+
+    const pageText = (document.body.textContent || '').toLowerCase();
     const contentKeywords = ['δραστηριότητ', 'activities', 'tours', 'packages', 'tickets'];
-    
-    if (contentKeywords.some(keyword => pageText.includes(keyword))) {
-        return true;
-    }
-    
-    // Check for activity cards/items
+    if (contentKeywords.some(keyword => pageText.includes(keyword))) return true;
+
     const activityElements = document.querySelectorAll('[class*="activity"], [class*="tour"], [class*="package"], .card, .product-item');
-    if (activityElements.length > 3) {
-        return true;
-    }
-    
+    if (activityElements.length > 3) return true;
+
     return false;
 }
 
 // ==================== ADD STYLES ====================
 function addComboStyles() {
     if (document.getElementById('combo-styles')) return;
-    
+
     const style = document.createElement('style');
     style.id = 'combo-styles';
     style.textContent = `
@@ -49,7 +39,7 @@ function addComboStyles() {
             z-index: 10000;
             animation: slideIn 0.5s ease-out;
         }
-        
+
         #combo-btn {
             background: linear-gradient(135deg, #ff6b6b, #ff4757);
             color: white;
@@ -66,23 +56,23 @@ function addComboStyles() {
             transition: all 0.3s ease;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
-        
+
         #combo-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(255, 107, 107, 0.6);
         }
-        
+
         #combo-btn:active {
             transform: translateY(-1px);
         }
-        
+
         /* Activity Selection */
         .activity-combo-select {
             position: relative;
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .activity-combo-select::after {
             content: '';
             position: absolute;
@@ -95,15 +85,15 @@ function addComboStyles() {
             transition: border-color 0.3s ease;
             pointer-events: none;
         }
-        
+
         .activity-combo-select.selected {
             background: rgba(255, 107, 107, 0.05) !important;
         }
-        
+
         .activity-combo-select.selected::after {
             border-color: #ff6b6b;
         }
-        
+
         .activity-combo-select.selected::before {
             content: '✓';
             position: absolute;
@@ -121,7 +111,7 @@ function addComboStyles() {
             z-index: 2;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
-        
+
         /* Modal */
         .combo-modal-overlay {
             position: fixed;
@@ -136,7 +126,7 @@ function addComboStyles() {
             z-index: 10001;
             animation: fadeIn 0.3s ease;
         }
-        
+
         .combo-modal {
             background: white;
             border-radius: 15px;
@@ -146,7 +136,7 @@ function addComboStyles() {
             overflow-y: auto;
             animation: slideUp 0.4s ease;
         }
-        
+
         .combo-modal-header {
             background: linear-gradient(135deg, #ff6b6b, #ff4757);
             color: white;
@@ -156,7 +146,7 @@ function addComboStyles() {
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .combo-modal-close {
             background: none;
             border: none;
@@ -168,11 +158,11 @@ function addComboStyles() {
             opacity: 0.8;
             transition: opacity 0.2s;
         }
-        
+
         .combo-modal-close:hover {
             opacity: 1;
         }
-        
+
         /* Animations */
         @keyframes slideIn {
             from {
@@ -184,12 +174,12 @@ function addComboStyles() {
                 transform: translateX(0);
             }
         }
-        
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        
+
         @keyframes slideUp {
             from {
                 opacity: 0;
@@ -201,47 +191,47 @@ function addComboStyles() {
             }
         }
     `;
-    
+
     document.head.appendChild(style);
 }
 
 // ==================== CREATE COMBO BUTTON ====================
 function createComboButton() {
     if (comboBtn || !isOnActivitiesPage()) return;
-    
+
     // Remove any existing button first
     const existingBtn = document.getElementById('combo-btn-container');
     if (existingBtn) existingBtn.remove();
-    
+
     addComboStyles();
-    
+
     const btnContainer = document.createElement('div');
     btnContainer.id = 'combo-btn-container';
     btnContainer.innerHTML = `
-        <button id="combo-btn">
+        <button id="combo-btn" aria-label="Combo button">
             <span style="font-size: 20px;">🎯</span>
             <span>Έξυπνα Combos</span>
             <span id="combo-counter" style="background: white; color: #ff4757; padding: 2px 8px; border-radius: 20px; font-size: 12px; margin-left: 5px; display: none;">0</span>
         </button>
     `;
-    
+
     document.body.appendChild(btnContainer);
     comboBtn = document.getElementById('combo-btn');
-    
+
     // Add click event
     comboBtn.addEventListener('click', function(e) {
         e.stopPropagation();
         showComboModal();
     });
-    
+
     console.log('✅ Combo button created successfully!');
 }
 
 // ==================== ACTIVITY SELECTION LOGIC ====================
 function enableActivitySelection() {
     if (!isOnActivitiesPage()) return;
-    
-    // Find activity elements with better selectors
+
+    // Simpler, more compatible selectors (avoid :has which isn't supported everywhere)
     const selectors = [
         '.activity-item',
         '.tour-item',
@@ -250,63 +240,64 @@ function enableActivitySelection() {
         '[data-activity]',
         '[data-tour]',
         '[data-package]',
-        '.card:has(h3, h4):has(.price, [class*="price"]):not(.combo-modal *):not(#combo-btn-container *)',
-        '.item:has(h3, h4):has(.price, [class*="price"]):not(.combo-modal *):not(#combo-btn-container *)'
+        '.card',
+        '.item',
+        '.product-card',
+        '.listing-item'
     ];
-    
+
     let activitiesFound = 0;
-    
+
     selectors.forEach(selector => {
         try {
             const elements = document.querySelectorAll(selector);
-            
             elements.forEach(element => {
+                // Avoid elements inside our UI
+                if (element.closest('#combo-btn-container') || element.closest('.combo-modal')) return;
+
                 if (element.classList.contains('combo-processed')) return;
-                
+
                 activitiesFound++;
                 element.classList.add('combo-processed');
                 element.classList.add('activity-combo-select');
-                
-                // Store original title for later
-                const title = element.querySelector('h3, h4, .title, .name');
-                if (title) {
-                    originalTitles.set(element, title.textContent.trim());
+
+                // Store original title for later (if exists)
+                const titleEl = element.querySelector('h3, h4, .title, .name');
+                if (titleEl && titleEl.textContent) {
+                    originalTitles.set(element, titleEl.textContent.trim());
                 }
-                
+
                 // Add click event
                 element.addEventListener('click', function(e) {
-                    // Ignore clicks on buttons and links
+                    // Ignore clicks on buttons and links/inputs inside the card
                     if (e.target.tagName === 'BUTTON' || e.target.closest('button') ||
                         e.target.tagName === 'A' || e.target.closest('a') ||
-                        e.target.tagName === 'INPUT') {
+                        e.target.tagName === 'INPUT' || e.target.closest('input')) {
                         return;
                     }
-                    
+
                     e.stopPropagation();
-                    
+
                     // Toggle selection
                     if (this.classList.contains('selected')) {
                         this.classList.remove('selected');
                         const index = selectedActivities.indexOf(this);
-                        if (index > -1) {
-                            selectedActivities.splice(index, 1);
-                        }
+                        if (index > -1) selectedActivities.splice(index, 1);
                     } else {
                         this.classList.add('selected');
-                        if (!selectedActivities.includes(this)) {
-                            selectedActivities.push(this);
-                        }
+                        if (!selectedActivities.includes(this)) selectedActivities.push(this);
                     }
-                    
+
                     updateComboCounter();
                     console.log('Selected activities:', selectedActivities.length);
                 });
             });
-        } catch (e) {
-            console.log('Error with selector:', selector, e);
+        } catch (err) {
+            // Log selector errors but don't break execution
+            console.log('Error with selector:', selector, err);
         }
     });
-    
+
     if (activitiesFound > 0) {
         console.log(`Found ${activitiesFound} activity elements`);
         createComboButton();
@@ -316,7 +307,7 @@ function enableActivitySelection() {
 function updateComboCounter() {
     const counter = document.getElementById('combo-counter');
     if (!counter) return;
-    
+
     if (selectedActivities.length > 0) {
         counter.textContent = selectedActivities.length;
         counter.style.display = 'inline-block';
@@ -333,48 +324,49 @@ function calculateCombos() {
             message: `Πρέπει να επιλέξετε τουλάχιστον 2 δραστηριότητες για combos.<br><br>Επιλέξτε κάνοντας κλικ στις δραστηριότητες που σας ενδιαφέρουν.`
         };
     }
-    
-    // Get prices from selected activities
+
     const activities = selectedActivities.map(element => {
         let price = 0;
         let title = '';
-        
-        // Try to find price
-        const priceEl = element.querySelector('.price, .cost, [class*="price"], [class*="cost"]');
-        if (priceEl) {
-            const priceText = priceEl.textContent;
-            const match = priceText.match(/(\d+(?:[.,]\d+)?)/);
-            if (match) {
-                price = parseFloat(match[1].replace(',', '.'));
+
+        try {
+            const priceEl = element.querySelector('.price, .cost, [class*="price"], [class*="cost"]');
+            if (priceEl) {
+                const priceText = priceEl.textContent || '';
+                const match = priceText.match(/(\d+(?:[.,]\d+)?)/);
+                if (match) {
+                    price = parseFloat(match[1].replace(',', '.'));
+                }
             }
-        }
-        
-        // Get title
-        const titleEl = element.querySelector('h3, h4, .title, .name');
-        if (titleEl) {
-            title = titleEl.textContent.trim();
-        } else {
+
+            const titleEl = element.querySelector('h3, h4, .title, .name');
+            if (titleEl && titleEl.textContent) {
+                title = titleEl.textContent.trim();
+            } else {
+                title = originalTitles.get(element) || 'Δραστηριότητα';
+            }
+        } catch (e) {
+            // defensive - keep defaults
+            console.log('Error reading activity element', e);
             title = originalTitles.get(element) || 'Δραστηριότητα';
         }
-        
+
         return {
             element: element,
             title: title,
-            price: price || 25, // Default price if not found
-            adults: 2, // Default 2 adults
-            children: 1 // Default 1 child
+            price: price || 25, // default price
+            adults: 2, // default
+            children: 1 // default
         };
     });
-    
-    // Calculate combos
-    const availableCombos = [];
+
     const totalRegularPrice = activities.reduce((sum, activity) => {
         return sum + (activity.price * (activity.adults + activity.children * 0.7));
     }, 0);
-    
-    // Combo options based on number of activities
+
+    const availableCombos = [];
+
     if (selectedActivities.length >= 2) {
-        // 2 Activities Combo
         availableCombos.push({
             name: '🎯 Combo 2 Δραστηριοτήτων',
             discount: 15,
@@ -382,17 +374,15 @@ function calculateCombos() {
             icon: '🎯'
         });
     }
-    
+
     if (selectedActivities.length >= 3) {
-        // 3 Activities Combo
         availableCombos.push({
             name: '⭐ Combo 3 Δραστηριοτήτων',
             discount: 25,
             description: 'Ειδική προσφορά για 3+ δραστηριότητες',
             icon: '⭐'
         });
-        
-        // Premium Combo
+
         availableCombos.push({
             name: '🏆 Premium Combo',
             discount: 30,
@@ -400,9 +390,8 @@ function calculateCombos() {
             icon: '🏆'
         });
     }
-    
+
     if (selectedActivities.length >= 4) {
-        // Family Combo
         availableCombos.push({
             name: '👨‍👩‍👧‍👦 Οικογενειακό Combo',
             discount: 35,
@@ -410,12 +399,11 @@ function calculateCombos() {
             icon: '👨‍👩‍👧‍👦'
         });
     }
-    
-    // Calculate prices for each combo
+
     const combosWithPrices = availableCombos.map(combo => {
         const comboPrice = totalRegularPrice * (1 - combo.discount / 100);
         const saving = totalRegularPrice - comboPrice;
-        
+
         return {
             ...combo,
             regularPrice: totalRegularPrice.toFixed(2),
@@ -424,26 +412,24 @@ function calculateCombos() {
             activityCount: selectedActivities.length
         };
     });
-    
-    // Sort by best saving
+
     combosWithPrices.sort((a, b) => parseFloat(b.saving) - parseFloat(a.saving));
-    
+
     return {
         success: true,
         activityCount: selectedActivities.length,
         regularPrice: totalRegularPrice.toFixed(2),
         combos: combosWithPrices,
-        bestCombo: combosWithPrices[0]
+        bestCombo: combosWithPrices[0] || null
     };
 }
 
 // ==================== MODAL FUNCTIONS ====================
 function showComboModal() {
-    // Close any existing modal
     closeComboModal();
-    
+
     const result = calculateCombos();
-    
+
     const modalHTML = `
         <div class="combo-modal-overlay" id="combo-modal">
             <div class="combo-modal">
@@ -452,9 +438,9 @@ function showComboModal() {
                         <span style="margin-right: 10px;">🎯</span>
                         Έξυπνα Combos
                     </h2>
-                    <button class="combo-modal-close" onclick="closeComboModal()">&times;</button>
+                    <button class="combo-modal-close" onclick="closeComboModal()" aria-label="Close">&times;</button>
                 </div>
-                
+
                 <div style="padding: 25px;">
                     ${!result.success ? `
                         <div style="text-align: center; padding: 30px 20px;">
@@ -470,7 +456,6 @@ function showComboModal() {
                             </div>
                         </div>
                     ` : `
-                        <!-- Summary -->
                         <div style="background: #f8f9fa; border-radius: 10px; padding: 20px; margin-bottom: 25px;">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                                 <div>
@@ -483,10 +468,9 @@ function showComboModal() {
                                 </div>
                             </div>
                         </div>
-                        
-                        <!-- Available Combos -->
+
                         <h3 style="margin-top: 0; margin-bottom: 20px; color: #333;">Διαθέσιμα Combos</h3>
-                        
+
                         ${result.combos.map((combo, index) => `
                             <div style="border: 2px solid ${index === 0 ? '#ff6b6b' : '#e0e0e0'}; 
                                        border-radius: 12px; 
@@ -499,7 +483,7 @@ function showComboModal() {
                                         🏆 ΚΑΛΥΤΕΡΗ ΠΡΟΣΦΟΡΑ
                                     </div>
                                 ` : ''}
-                                
+
                                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
                                     <div>
                                         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 5px;">
@@ -517,8 +501,7 @@ function showComboModal() {
                                         -${combo.discount}%
                                     </div>
                                 </div>
-                                
-                                <!-- Pricing -->
+
                                 <div style="background: white; border-radius: 8px; padding: 15px; margin-bottom: 15px; border: 1px solid #eee;">
                                     <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 15px;">
                                         <span>Κανονική τιμή:</span>
@@ -529,8 +512,7 @@ function showComboModal() {
                                         <span style="color: #27ae60; font-size: 22px;">${combo.comboPrice}€</span>
                                     </div>
                                 </div>
-                                
-                                <!-- Saving -->
+
                                 <div style="background: linear-gradient(135deg, #d4edda, #c3e6cb); 
                                             color: #155724; 
                                             padding: 12px 15px; 
@@ -541,8 +523,7 @@ function showComboModal() {
                                         <span style="font-size: 20px;">${combo.saving}€</span>
                                     </div>
                                 </div>
-                                
-                                <!-- Action Button -->
+
                                 <button onclick="applyCombo('${combo.name}', ${combo.comboPrice})" 
                                         style="width: 100%; 
                                                background: ${index === 0 ? '#ff6b6b' : '#4CAF50'}; 
@@ -558,33 +539,32 @@ function showComboModal() {
                                 </button>
                             </div>
                         `).join('')}
-                        
-                        <!-- Instructions -->
+
                         <div style="margin-top: 25px; padding: 15px; background: #e3f2fd; border-radius: 8px; font-size: 14px; color: #1565c0;">
-                            <strong>💡 Συμβουλή:</strong> Μπορείτε να επιλέξετε ή να αποεπιλέξετε δραστηριότητες κάνωντας κλικ πάνω τους.
+                            <strong>💡 Συμβουλή:</strong> Μπορείτε να επιλέξετε ή να αποεπιλέξετε δραστηριότητες κάνοντας κλικ πάνω τους.
                         </div>
                     `}
                 </div>
             </div>
         </div>
     `;
-    
+
     document.body.insertAdjacentHTML('beforeend', modalHTML);
-    
-    // Add click outside to close
-    document.getElementById('combo-modal').addEventListener('click', function(e) {
-        if (e.target === this) {
-            closeComboModal();
-        }
-    });
-    
-    // Add ESC key listener
-    document.addEventListener('keydown', function modalEscHandler(e) {
+
+    const overlay = document.getElementById('combo-modal');
+    if (overlay) {
+        overlay.addEventListener('click', function(e) {
+            if (e.target === this) closeComboModal();
+        });
+    }
+
+    function modalEscHandler(e) {
         if (e.key === 'Escape') {
             closeComboModal();
             document.removeEventListener('keydown', modalEscHandler);
         }
-    });
+    }
+    document.addEventListener('keydown', modalEscHandler);
 }
 
 function closeComboModal() {
@@ -593,57 +573,54 @@ function closeComboModal() {
 }
 
 function applyCombo(comboName, price) {
-    alert(`✅ Εφαρμόστηκε το "${comboName}"!\n\n💰 Εξοικονόμηση: ${price}€\n\nΟι τιμές έχουν ενημερωθεί στο καλάθι σας.`);
+    // price is the combo final price (string or number)
+    alert(`✅ Εφαρμόστηκε το "${comboName}"!\n\n💳 Τελική τιμή με το combo: ${price}€\n\nΟι τιμές έχουν ενημερωθεί στο καλάθι σας.`);
     closeComboModal();
 }
 
 // ==================== INITIALIZE ====================
 function initializeComboCalculator() {
     if (comboInitialized) return;
-    
+
     console.log('🚀 Initializing Combo Calculator...');
-    
-    // Wait for page to load
+
     setTimeout(() => {
-        // Check if we're on activities page
         if (isOnActivitiesPage()) {
             console.log('📋 Found activities page!');
-            
-            // Add styles
+
             addComboStyles();
-            
-            // Enable activity selection
             enableActivitySelection();
-            
-            // Create button if activities found
+
             setTimeout(() => {
                 if (!comboBtn) {
                     createComboButton();
                 }
             }, 500);
-            
-            // Watch for new activities (SPA navigation)
-            const observer = new MutationObserver(() => {
+
+            // Disconnect previous observer if exists (prevent duplicates)
+            if (comboObserver) {
+                try { comboObserver.disconnect(); } catch (e) { /* ignore */ }
+            }
+
+            comboObserver = new MutationObserver(() => {
                 enableActivitySelection();
-                
-                // Remove button if no longer on activities page
+
                 if (!isOnActivitiesPage() && comboBtn) {
-                    comboBtn.parentElement.remove();
+                    try {
+                        comboBtn.parentElement.remove();
+                    } catch (e) { /* ignore */ }
                     comboBtn = null;
                 }
             });
-            
-            observer.observe(document.body, {
-                childList: true,
-                subtree: true
-            });
-            
+
+            comboObserver.observe(document.body, { childList: true, subtree: true });
+
             comboInitialized = true;
             console.log('✅ Combo Calculator initialized successfully!');
         } else {
             console.log('ℹ️ Not on activities page, calculator not activated.');
         }
-    }, 1500); // Wait longer for page to fully load
+    }, 1500);
 }
 
 // ==================== EXPORT FUNCTIONS ====================
@@ -651,17 +628,14 @@ window.closeComboModal = closeComboModal;
 window.applyCombo = applyCombo;
 
 // ==================== START ====================
-// Initialize when page loads
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initializeComboCalculator);
 } else {
     initializeComboCalculator();
 }
 
-// Also initialize after a delay for dynamically loaded content
 setTimeout(initializeComboCalculator, 3000);
 
-// Watch for URL changes (for SPAs)
 let lastUrl = window.location.href;
 setInterval(() => {
     if (window.location.href !== lastUrl) {
