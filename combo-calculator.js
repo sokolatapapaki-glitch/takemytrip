@@ -1,6 +1,50 @@
 // combo-calculator.js
 // Υπολογισμός έξυπνων combos για δραστηριότητες
 
+class StorageManager {
+    static STORAGE_KEY = 'takemytrip_saved_state';
+    static HAS_VISITED_KEY = 'takemytrip_first_visit';
+    
+    static saveState(state) {
+        try {
+            const data = {
+                timestamp: Date.now(),
+                selectedActivities: state.selectedActivities || [],
+                destination: state.destination || '',
+                familyMembers: state.familyMembers || []
+            };
+            localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
+            console.log("💾 State saved to localStorage");
+        } catch (e) {
+            console.error("❌ Error saving state:", e);
+        }
+    }
+    
+    static loadState() {
+        try {
+            const saved = localStorage.getItem(this.STORAGE_KEY);
+            return saved ? JSON.parse(saved) : null;
+        } catch (e) {
+            console.error("❌ Error loading state:", e);
+            return null;
+        }
+    }
+    
+    static clearState() {
+        localStorage.removeItem(this.STORAGE_KEY);
+        console.log("🗑️ State cleared from localStorage");
+    }
+    
+    static isFirstVisit() {
+        const hasVisited = sessionStorage.getItem(this.HAS_VISITED_KEY);
+        if (!hasVisited) {
+            sessionStorage.setItem(this.HAS_VISITED_KEY, 'true');
+            return true;
+        }
+        return false;
+    }
+}
+
 class ComboCalculator {
     constructor() {
         this.initialized = false;
@@ -13,6 +57,9 @@ class ComboCalculator {
         if (this.initialized) return;
         
         console.log("🎯 Combo Calculator Αρχικοποίηση...");
+        
+        // 🆕 ΒΗΜΑ 0: ΔΙΑΧΕΙΡΙΣΗ ΠΡΩΤΗΣ ΕΠΙΣΚΕΨΗΣ ΚΑΙ ΑΠΟΘΗΚΕΥΜΕΝΟΥ
+        await this.handleSavedState();
         
         // Βρες το step-content container
         this.stepContentContainer = document.getElementById('step-content');
@@ -32,6 +79,175 @@ class ComboCalculator {
         
         this.initialized = true;
         console.log("✅ Combo Calculator Αρχικοποιήθηκε");
+        
+        // 🆕 ΑΠΟΘΗΚΕΥΣΗ ΟΤΑΝ ΦΕΥΓΕΙ Ο ΧΡΗΣΤΗΣ
+        this.setupUnloadHandler();
+    }
+
+    // 🆕 ΝΕΗ ΜΕΘΟΔΟΣ: Διαχείριση αποθηκευμένου state
+    async handleSavedState() {
+        // 1. Πρώτη επίσκεψη; Καθαρισμός
+        if (StorageManager.isFirstVisit()) {
+            console.log("👋 Πρώτη επίσκεψη - καθαρισμός state");
+            StorageManager.clearState();
+            
+            if (window.APP_STATE) {
+                window.APP_STATE.selectedActivities = [];
+            }
+            return;
+        }
+        
+        // 2. Έλεγχος για αποθηκευμένο state
+        const savedState = StorageManager.loadState();
+        if (!savedState || !savedState.selectedActivities || savedState.selectedActivities.length === 0) {
+            console.log("📭 Δεν βρέθηκε αποθηκευμένο state");
+            return;
+        }
+        
+        // 3. Ερώτηση στον χρήστη
+        const shouldRestore = await this.askToRestoreState(savedState);
+        
+        if (shouldRestore) {
+            console.log("🔄 Επαναφορά αποθηκευμένου state...");
+            this.restoreState(savedState);
+        } else {
+            console.log("🗑️ Χρήστης απέρριψε επαναφορά");
+            StorageManager.clearState();
+        }
+    }
+
+    // 🆕 Ερώτηση στον χρήστη για επαναφορά
+    askToRestoreState(savedState) {
+        return new Promise((resolve) => {
+            // Δημιουργία custom modal για confirmation
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                z-index: 9999;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-family: Arial, sans-serif;
+            `;
+            
+            const activitiesCount = savedState.selectedActivities?.length || 0;
+            const destination = savedState.destination || 'Άγνωστος προορισμός';
+            
+            modal.innerHTML = `
+                <div style="background: white; padding: 30px; border-radius: 15px; max-width: 500px; text-align: center;">
+                    <h2 style="color: #9c27b0; margin-top: 0;">🔍 Βρέθηκε αποθηκευμένο ταξίδι!</h2>
+                    
+                    <div style="background: #f3e5f5; padding: 15px; border-radius: 10px; margin: 20px 0;">
+                        <p><strong>Προορισμός:</strong> ${destination}</p>
+                        <p><strong>Δραστηριότητες:</strong> ${activitiesCount} επιλεγμένες</p>
+                        <p><strong>Αποθηκεύτηκε:</strong> ${new Date(savedState.timestamp).toLocaleString('el-GR')}</p>
+                    </div>
+                    
+                    <p style="margin: 20px 0;">Θέλετε να συνεχίσετε από εκεί που σταματήσατε;</p>
+                    
+                    <div style="display: flex; gap: 15px; justify-content: center;">
+                        <button id="restore-yes" 
+                                style="padding: 12px 25px; background: #4caf50; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold;">
+                            ✅ Ναι, φέρε το πίσω
+                        </button>
+                        <button id="restore-no" 
+                                style="padding: 12px 25px; background: #f44336; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px;">
+                            ❌ Όχι, ξεκινά από το μηδέν
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            document.getElementById('restore-yes').onclick = () => {
+                modal.remove();
+                resolve(true);
+            };
+            
+            document.getElementById('restore-no').onclick = () => {
+                modal.remove();
+                resolve(false);
+            };
+        });
+    }
+
+    // 🆕 Επαναφορά state
+    restoreState(savedState) {
+        if (!window.APP_STATE) {
+            console.error("❌ Δεν υπάρχει APP_STATE για επαναφορά");
+            return;
+        }
+        
+        // Επαναφορά βασικών δεδομένων
+        window.APP_STATE.selectedActivities = savedState.selectedActivities || [];
+        if (savedState.destination) window.APP_STATE.destination = savedState.destination;
+        if (savedState.familyMembers) window.APP_STATE.familyMembers = savedState.familyMembers;
+        
+        console.log(`🔄 Επαναφέρθηκαν ${window.APP_STATE.selectedActivities.length} δραστηριότητες`);
+        
+        // Ενημέρωση UI μετά από λίγο
+        setTimeout(() => {
+            this.updateUIFromState();
+            showNotification('✅ Επαναφορά αποθηκευμένου ταξιδιού', 'success');
+        }, 500);
+    }
+
+    // 🆕 Ενημέρωση UI από state
+    updateUIFromState() {
+        if (!window.APP_STATE || !window.APP_STATE.selectedActivities) return;
+        
+        const activities = window.APP_STATE.selectedActivities;
+        
+        // Ενημέρωση καρτών δραστηριοτήτων
+        activities.forEach((activity, index) => {
+            const card = document.querySelector(`.activity-card[data-index="${index}"]`);
+            if (card) {
+                if (!card.classList.contains('selected')) {
+                    card.classList.add('selected');
+                    const icon = card.querySelector('.activity-checkbox i');
+                    if (icon) icon.className = 'fas fa-check-circle';
+                }
+            }
+        });
+        
+        // Ενημέρωση συνολικού κόστους
+        const totalCostElement = document.getElementById('total-activities-cost');
+        if (totalCostElement) {
+            const total = this.calculateTotalCost();
+            totalCostElement.textContent = `${total}€`;
+        }
+    }
+
+    // 🆕 Ρύθμιση handler για αποθήκευση κατά το κλείσιμο
+    setupUnloadHandler() {
+        window.addEventListener('beforeunload', (e) => {
+            if (window.APP_STATE && window.APP_STATE.selectedActivities && 
+                window.APP_STATE.selectedActivities.length > 0) {
+                
+                // Αποθήκευση μόνο αν υπάρχουν επιλογές
+                StorageManager.saveState(window.APP_STATE);
+                
+                // Προαιρετικό: Ερώτηση confirmation
+                // e.preventDefault();
+                // e.returnValue = 'Έχετε μη αποθηκευμένες αλλαγές. Θέλετε σίγουρα να φύγετε;';
+            }
+        });
+        
+        // Αποθήκευση και κατά το hashchange (SPA navigation)
+        window.addEventListener('hashchange', () => {
+            if (window.APP_STATE && window.APP_STATE.selectedActivities && 
+                window.APP_STATE.selectedActivities.length > 0) {
+                StorageManager.saveState(window.APP_STATE);
+            }
+        });
+        
+        console.log("🔧 Unload handler setup completed");
     }
 
     createComboButton() {
@@ -167,19 +383,30 @@ class ComboCalculator {
         }, 300);
     }
 
-clearAutoSelections() {
-    // Δεν χρειάζεται πλέον, αλλά ας την κρατήσουμε για κάθε περίπτωση
-    console.log("🧹 Καθαρισμός επιλογών (λειτουργία διατηρείται)");
-    
-    const autoSelectedCards = document.querySelectorAll('.activity-card[data-auto-selected="true"]');
-    if (autoSelectedCards.length > 0) {
+    clearAutoSelections() {
+        console.log("🧹 Καθαρισμός αυτόματων επιλογών...");
+        
+        // Καθαρισμός μόνο από UI
+        const autoSelectedCards = document.querySelectorAll('.activity-card[data-auto-selected="true"]');
         autoSelectedCards.forEach(card => {
             card.classList.remove('selected');
             card.removeAttribute('data-auto-selected');
+            console.log(`🧹 Αφαίρεση αυτόματης επιλογής από card`);
         });
-        console.log(`🧹 Αφαιρέθηκαν ${autoSelectedCards.length} παλιές αυτόματες επιλογές`);
+        
+        // 🚨 Αφαίρεση μόνο αυτόματα επιλεγμένων από state
+        if (window.APP_STATE && APP_STATE.selectedActivities) {
+            const originalLength = APP_STATE.selectedActivities.length;
+            APP_STATE.selectedActivities = APP_STATE.selectedActivities.filter(activity => {
+                return !activity.autoSelected;
+            });
+            
+            const removedCount = originalLength - APP_STATE.selectedActivities.length;
+            if (removedCount > 0) {
+                console.log(`🗑️ Αφαιρέθηκαν ${removedCount} αυτόματες επιλογές από state`);
+            }
+        }
     }
-}
 
     // ==================== ΚΥΡΙΑ ΣΥΝΑΡΤΗΣΗ ΥΠΟΛΟΓΙΣΜΟΥ ====================
     async calculateSmartCombos() {
@@ -200,10 +427,11 @@ clearAutoSelections() {
         
         const selectedActivities = APP_STATE.selectedActivities;
         
-       if (selectedActivities.length === 0) {
-    alert("ℹ️ Δεν έχετε επιλέξει δραστηριότητες!\n\nΠαρακαλώ επιλέξτε τουλάχιστον μία δραστηριότητα για να δείτε έξυπνους συνδυασμούς.");
-    return;
-}
+        // 🆕 ΔΙΟΡΘΩΣΗ: ΧΩΡΙΣ ΑΥΤΟΜΑΤΗ ΕΠΙΛΟΓΗ!
+        if (selectedActivities.length === 0) {
+            alert("ℹ️ Δεν έχετε επιλέξει δραστηριότητες!\n\nΠαρακαλώ επιλέξτε τουλάχιστον μία δραστηριότητα για να δείτε έξυπνους συνδυασμούς.");
+            return;
+        }
         
         console.log(`✅ Βρέθηκαν ${selectedActivities.length} επιλεγμένες δραστηριότητες`);
         
@@ -227,6 +455,11 @@ clearAutoSelections() {
         
         // 5. ΕΜΦΑΝΙΣΗ ΑΠΟΤΕΛΕΣΜΑΤΩΝ
         this.displaySimpleResult(totalRegularCost, bestCombo, bestSaving, cityName);
+        
+        // 🆕 ΑΠΟΘΗΚΕΥΣΗ ΜΕΤΑ ΤΟΝ ΥΠΟΛΟΓΙΣΜΟ
+        if (window.APP_STATE) {
+            StorageManager.saveState(window.APP_STATE);
+        }
     }
 
     calculateTotalCost() {
@@ -378,7 +611,7 @@ clearAutoSelections() {
             successMsg.remove();
         }, 3000);
         
-        // 3. Ενημέρωση συνολικού κόστους (προσομοίωση)
+        // 3. Ενημέρωση συνολικού κόστους
         const totalElement = document.getElementById('total-activities-cost');
         if (totalElement) {
             const currentText = totalElement.textContent;
@@ -389,7 +622,44 @@ clearAutoSelections() {
             totalElement.style.fontWeight = 'bold';
         }
         
-        showNotification(`✅ Εφαρμόστηκε το combo: ${comboName}`, 'success');
+        // 🆕 ΑΠΟΘΗΚΕΥΣΗ ΜΕΤΑ ΤΗΝ ΕΦΑΡΜΟΓΗ COMBO
+        if (window.APP_STATE) {
+            StorageManager.saveState(window.APP_STATE);
+        }
+        
+        if (typeof showNotification === 'function') {
+            showNotification(`✅ Εφαρμόστηκε το combo: ${comboName}`, 'success');
+        }
+    }
+
+    // 🆕 ΜΕΘΟΔΟΣ: Μηχανική καθαρισμού (για debugging)
+    forceClearState() {
+        console.log("🧹 Εξαναγκασμένος καθαρισμός state...");
+        StorageManager.clearState();
+        
+        if (window.APP_STATE) {
+            window.APP_STATE.selectedActivities = [];
+        }
+        
+        // Καθαρισμός UI
+        const selectedCards = document.querySelectorAll('.activity-card.selected');
+        selectedCards.forEach(card => {
+            card.classList.remove('selected');
+            const icon = card.querySelector('.activity-checkbox i');
+            if (icon) icon.className = 'far fa-circle';
+        });
+        
+        const totalElement = document.getElementById('total-activities-cost');
+        if (totalElement) {
+            totalElement.textContent = '0€';
+        }
+        
+        console.log("✅ State cleared forcefully");
+        alert("✅ Όλα τα δεδομένα διαγράφηκαν. Η σελίδα θα ανανεωθεί.");
+        
+        setTimeout(() => {
+            location.reload();
+        }, 1500);
     }
 
     // ΔΗΜΟΣΙΕΣ ΜΕΘΟΔΟΙ
@@ -427,6 +697,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Κάνε το comboCalculator προσβάσιμο
 window.comboCalculator = comboCalculator;
+
+// 🆕 Προσθήκη debug function για καθαρισμό
+window.clearTripData = () => {
+    if (comboCalculator && typeof comboCalculator.forceClearState === 'function') {
+        comboCalculator.forceClearState();
+    } else {
+        localStorage.clear();
+        sessionStorage.clear();
+        alert("📭 Όλα τα δεδομένα διαγράφηκαν");
+        location.reload();
+    }
+};
 
 // Debug function
 window.debugComboButton = () => {
