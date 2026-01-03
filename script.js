@@ -225,7 +225,7 @@ function getDestinationStepHTML() {
             </div>
             
             <div style="display: flex; gap: 15px; margin-top: 30px;">
-                <button class="btn btn-primary" onclick="filterDestinations()">
+                <button class="btn btn-primary" onclick="()">
                     <i class="fas fa-search"></i> Αναζήτηση Προορισμών
                 </button>
                 <button class="btn btn-outline" onclick="resetFilters()">
@@ -662,13 +662,19 @@ async function filterDestinations() {
         </div>
     `;
     
-    // Στοιχειώδης λίστα πόλεων (προσάρμοσέ την με τα δικά σου JSON)
-    const cities = [
-        { id: 'amsterdam', name: 'Άμστερνταμ', emoji: '🌷', category: 'πόλη' },
-        { id: 'paris', name: 'Παρίσι', emoji: '🗼', category: 'πόλη' },
-        { id: 'london', name: 'Λονδίνο', emoji: '🇬🇧', category: 'πόλη' },
-        { id: 'rome', name: 'Ρώμη', emoji: '🏛️', category: 'πόλη' }
-    ];
+    // Στοιχειώδης λίστα πόλεων (με βάση τα JSON αρχεία που έχετε)
+const cities = [
+    { id: 'amsterdam', name: 'Άμστερνταμ', emoji: '🌷', category: 'πόλη' },
+    { id: 'berlin', name: 'Βερολίνο', emoji: '🇩🇪', category: 'πόλη' },
+    { id: 'budapest', name: 'Βουδαπέστη', emoji: '🏰', category: 'πόλη' },
+    { id: 'istanbul', name: 'Κωνσταντινούπολη', emoji: '🕌', category: 'πόλη' },
+    { id: 'lisbon', name: 'Λισαβόνα', emoji: '🏖️', category: 'πόλη' },
+    { id: 'london', name: 'Λονδίνο', emoji: '🇬🇧', category: 'πόλη' },
+    { id: 'madrid', name: 'Μαδρίτη', emoji: '🇪🇸', category: 'πόλη' },
+    { id: 'paris', name: 'Παρίσι', emoji: '🗼', category: 'πόλη' },
+    { id: 'prague', name: 'Πράγα', emoji: '🏰', category: 'πόλη' },
+    { id: 'vienna', name: 'Βιέννη', emoji: '🎻', category: 'πόλη' }
+];
     
     let html = '';
     
