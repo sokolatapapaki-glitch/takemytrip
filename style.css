@@ -381,7 +381,7 @@ body {
     position: relative;
 }
 
-.step-content {
+.step-page {
     min-height: calc(100vh - 160px);
     animation: fadeIn 0.4s ease;
 }
