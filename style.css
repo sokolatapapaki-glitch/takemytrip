@@ -77,6 +77,7 @@ body {
     background: white;
     color: var(--dark);
 }
+
 /* ==================== SIDEBAR FIX - ΚΕΙΜΕΝΑ ΟΡΑΤΑ ==================== */
 .sidebar {
     width: 280px;
@@ -110,9 +111,9 @@ body {
     transition: var(--transition);
     background: rgba(255, 255, 255, 0.05);
     border-left: 3px solid transparent;
-    min-height: 70px; /* Ελαφρώς μεγαλύτερο για περισσότερο κείμενο */
+    min-height: 70px;
     max-height: 70px;
-    overflow: visible; /* Αλλαγή από hidden σε visible */
+    overflow: visible;
 }
 
 .step:hover {
@@ -150,7 +151,7 @@ body {
 .step-content {
     flex: 1;
     min-width: 0;
-    overflow: visible; /* Σημαντικό: να είναι visible */
+    overflow: visible;
 }
 
 .step-content h3 {
@@ -159,7 +160,6 @@ body {
     color: white;
     line-height: 1.3;
     margin-bottom: 4px;
-    /* Αφαίρεσα το white-space: nowrap */
     overflow: visible;
     text-overflow: clip;
 }
@@ -169,11 +169,10 @@ body {
     color: rgba(255, 255, 255, 0.6);
     line-height: 1.3;
     margin: 0;
-    /* Αφαίρεσα το white-space: nowrap */
     overflow: visible;
     text-overflow: clip;
-    display: block; /* Βεβαιώνουμε ότι εμφανίζεται */
-    opacity: 1; /* Βεβαιώνουμε ότι είναι ορατό */
+    display: block;
+    opacity: 1;
 }
 
 /* Επιπλέον CSS για διαχείριση μεγάλων κειμένων */
@@ -181,139 +180,18 @@ body {
 .step-content p {
     word-wrap: break-word;
     word-break: break-word;
-    white-space: normal; /* Αυτό είναι το κλειδί */
+    white-space: normal;
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* Περιορίζει σε 2 γραμμές */
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    max-height: 2.6em; /* 2 γραμμές * 1.3 line-height */
+    max-height: 2.6em;
 }
 
 .step-content h3 {
-    -webkit-line-clamp: 1; /* Μόνο 1 γραμμή για τον τίτλο */
+    -webkit-line-clamp: 1;
     max-height: 1.3em;
 }
 
-/* ΣΕ ΜΙΚΡΟΤΕΡΕΣ ΟΘΟΝΕΣ */
-@media (max-width: 1400px) {
-    .sidebar {
-        width: 240px;
-    }
-    
-    .step {
-        padding: 10px 12px;
-        min-height: 65px;
-        max-height: 65px;
-    }
-    
-    .step-icon {
-        width: 32px;
-        height: 32px;
-        font-size: 13px;
-    }
-    
-    .step-content h3 {
-        font-size: 13px;
-    }
-    
-    .step-content p {
-        font-size: 10px;
-    }
-}
-
-@media (max-width: 1200px) {
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-        padding: 15px;
-    }
-    
-    .steps-container {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-    }
-    
-    .step {
-        flex-direction: column;
-        text-align: center;
-        padding: 15px 10px;
-        min-height: auto;
-        max-height: none;
-        height: auto;
-        gap: 8px;
-    }
-    
-    .step-content {
-        text-align: center;
-    }
-    
-    .step-content h3 {
-        font-size: 13px;
-        -webkit-line-clamp: 2; /* 2 γραμμές σε tablet */
-        max-height: 2.6em;
-    }
-    
-    .step-content p {
-        display: block !important; /* Βεβαιώνουμε ότι εμφανίζεται */
-        font-size: 11px;
-        -webkit-line-clamp: 2;
-        max-height: 2.6em;
-        margin-top: 4px;
-    }
-    
-    .step-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 16px;
-    }
-}
-
-@media (max-width: 768px) {
-    .sidebar {
-        display: none;
-    }
-    
-    .mobile-nav {
-        display: block;
-    }
-}
-
-@media (max-width: 480px) {
-    .steps-container {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-    }
-    
-    .step {
-        padding: 12px 8px;
-    }
-    
-    .step-content h3 {
-        font-size: 12px;
-    }
-    
-    .step-content p {
-        font-size: 10px;
-    }
-    
-    .step-icon {
-        width: 36px;
-        height: 36px;
-        font-size: 14px;
-    }
-}
-
-/* ΑΝΙΜΑΣΙΑ */
-@keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(74, 144, 226, 0.4); }
-    70% { box-shadow: 0 0 0 6px rgba(74, 144, 226, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(74, 144, 226, 0); }
-}
-
-.step.active .step-icon {
-    animation: pulse 2s infinite;
-}
 /* SIDEBAR FOOTER */
 .sidebar-footer {
     margin-top: auto;
@@ -950,4 +828,336 @@ body {
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
     border-radius: var(--radius-lg);
+}
+
+/* =========================================== */
+/* ΒΕΛΤΙΩΣΕΙΣ ΓΙΑ ΤΑ ΚΟΥΜΠΙΑ ΣΤΟ ΒΗΜΑ 1       */
+/* =========================================== */
+
+/* Βελτίωση για τα κουμπιά στο βήμα 1 */
+#step-content .card > div:last-of-type {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 2px solid var(--light);
+}
+
+#step-content .card button.btn-primary {
+    min-width: 220px;
+    flex: 1;
+    padding: 15px 25px;
+    font-size: 16px;
+    border-radius: var(--radius-md);
+    transition: all 0.3s ease;
+}
+
+#step-content .card button.btn-outline {
+    min-width: 180px;
+    flex: 1;
+    padding: 15px 25px;
+    font-size: 16px;
+    border-radius: var(--radius-md);
+}
+
+/* Βελτίωση για το κουμπί "ΕΧΩ ΗΔΗ ΒΡΕΙ ΠΡΟΟΡΙΣΜΟ" */
+#step-content .card button.btn-primary:nth-child(2) {
+    background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+    border: none;
+    color: white;
+    box-shadow: 0 4px 15px rgba(123, 104, 238, 0.2);
+}
+
+#step-content .card button.btn-primary:nth-child(2):hover {
+    background: linear-gradient(135deg, var(--secondary-dark), #5A4ACC);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(123, 104, 238, 0.3);
+}
+
+/* Για κινητές συσκευές */
+@media (max-width: 768px) {
+    #step-content .card > div:last-of-type {
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 30px;
+    }
+    
+    #step-content .card > div:last-of-type button {
+        width: 100%;
+        min-width: unset;
+        padding: 16px 20px;
+    }
+    
+    #step-content .card button.btn-primary,
+    #step-content .card button.btn-outline {
+        width: 100%;
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    #step-content .card > div:last-of-type {
+        gap: 10px;
+        padding: 15px 0;
+    }
+    
+    #step-content .card > div:last-of-type button {
+        padding: 14px 16px;
+        font-size: 15px;
+    }
+}
+
+/* ==================== PRICE TABLE IN ACTIVITIES ==================== */
+.price-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    background: white;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.price-table th {
+    background: var(--light);
+    padding: 10px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--gray);
+    border-bottom: 2px solid var(--border);
+}
+
+.price-table td {
+    padding: 12px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--dark);
+    border-bottom: 1px solid var(--border);
+}
+
+.price-table tr:last-child td {
+    border-bottom: none;
+}
+
+.price-table strong {
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.activity-total {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: white;
+    padding: 12px;
+    border-radius: var(--radius-md);
+    text-align: center;
+    font-weight: 700;
+    font-size: 16px;
+    margin-top: 15px;
+}
+
+/* ==================== LOADING OVERLAY ==================== */
+#loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    backdrop-filter: blur(5px);
+}
+
+.loading-spinner {
+    text-align: center;
+}
+
+.loading-spinner i {
+    font-size: 48px;
+    color: var(--primary);
+    margin-bottom: 15px;
+}
+
+.loading-spinner p {
+    color: var(--gray);
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* ==================== MODAL STYLES ==================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    backdrop-filter: blur(3px);
+}
+
+.modal-content {
+    background: white;
+    border-radius: var(--radius-xl);
+    padding: 30px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-xl);
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(-30px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--light);
+}
+
+.modal-header h3 {
+    font-size: 22px;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: var(--gray);
+    cursor: pointer;
+    transition: var(--transition);
+    line-height: 1;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.modal-close:hover {
+    background: var(--light);
+    color: var(--danger);
+}
+
+.text-muted {
+    color: var(--gray);
+    font-size: 13px;
+    display: block;
+    margin-top: 6px;
+}
+
+/* ==================== MEDIA QUERIES ==================== */
+@media (max-width: 1200px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 15px;
+    }
+    
+    .steps-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+    
+    .step {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px 10px;
+        min-height: auto;
+        max-height: none;
+        height: auto;
+        gap: 8px;
+    }
+    
+    .step-content {
+        text-align: center;
+    }
+    
+    .step-content h3 {
+        font-size: 13px;
+        -webkit-line-clamp: 2;
+        max-height: 2.6em;
+    }
+    
+    .step-content p {
+        display: block !important;
+        font-size: 11px;
+        -webkit-line-clamp: 2;
+        max-height: 2.6em;
+        margin-top: 4px;
+    }
+    
+    .step-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+    
+    .mobile-nav {
+        display: block;
+    }
+}
+
+@media (max-width: 480px) {
+    .steps-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    
+    .step {
+        padding: 12px 8px;
+    }
+    
+    .step-content h3 {
+        font-size: 12px;
+    }
+    
+    .step-content p {
+        font-size: 10px;
+    }
+    
+    .step-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+}
+
+/* ΑΝΙΜΑΣΙΑ */
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(74, 144, 226, 0.4); }
+    70% { box-shadow: 0 0 0 6px rgba(74, 144, 226, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(74, 144, 226, 0); }
+}
+
+.step.active .step-icon {
+    animation: pulse 2s infinite;
 }
