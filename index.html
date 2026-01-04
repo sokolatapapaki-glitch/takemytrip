@@ -111,28 +111,19 @@
                 <!-- ΕΔΩ ΘΑ ΦΟΡΤΩΝΕΙ ΚΑΘΕ ΒΗΜΑ ΑΠΟ ΤΟ script.js -->
             </div>
             
-            <!-- ΚΟΥΜΠΙ "ΕΧΩ ΗΔΗ ΒΡΕΙ ΠΡΟΟΡΙΣΜΟ" -->
-            <div id="already-found-container" style="display: none; text-align: center; margin-top: 30px;">
-                <div style="padding: 20px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border-radius: var(--radius-lg); max-width: 500px; margin: 0 auto;">
-                    <h3 style="color: white; margin-bottom: 10px;">
-                        <i class="fas fa-check-circle"></i> Έχετε ήδη βρει προορισμό;
-                    </h3>
-                    <p style="opacity: 0.9; margin-bottom: 20px;">
-                        Αν γνωρίζετε ήδη σε ποια πόλη θέλετε να ταξιδέψετε, 
-                        πατήστε το κουμπί παρακάτω για να συνεχίσετε άμεσα.
-                    </p>
-                    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                        <button class="btn" onclick="showManualDestinationModal()" 
-                                style="background: white; color: #667eea; border: none; padding: 12px 25px;">
-                            <i class="fas fa-map-marker-alt"></i> Επιλέξτε Από Την Λίστα
-                        </button>
-                        <button class="btn" onclick="showStep('flight')" 
-                                style="background: rgba(255,255,255,0.2); color: white; border: 1px solid white; padding: 12px 25px;">
-                            <i class="fas fa-arrow-right"></i> Συνέχεια στις Πτήσεις
-                        </button>
-                    </div>
-                </div>
-            </div>
+                <!-- ΚΟΥΜΠΙΑ ΑΝΑΖΗΤΗΣΗΣ -->
+<div id="search-buttons-container" style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
+    <!-- Κουμπί Αναζήτησης -->
+    <button class="btn btn-primary" id="search-destination-btn">
+        <i class="fas fa-search"></i> ΑΝΑΖΗΤΗΣΗ ΠΡΟΟΡΙΣΜΩΝ
+    </button>
+
+    <!-- Κουμπί Έχω ήδη βρει προορισμό -->
+    <button class="btn btn-primary" id="already-found-btn" onclick="showStep('flight')">
+        <i class="fas fa-arrow-right"></i> ΕΧΩ ΗΔΗ ΒΡΕΙ ΠΡΟΟΡΙΣΜΟ
+    </button>
+</div>
+
             
             <!-- BUDGET TRACKER (fixed) -->
             <div class="budget-tracker" id="budget-tracker">
