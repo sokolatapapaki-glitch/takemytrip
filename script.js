@@ -667,90 +667,394 @@ function saveState() {
 
 // ==================== DESTINATION FUNCTIONS ====================
 async function filterDestinations() {
-    console.log('🔍 Αναζήτηση προορισμών...');
+    console.log('🔍 Εφαρμογή φίλτρων προορισμών...');
     
+    // 1. ΔΙΑΒΑΣΜΑ ΦΙΛΤΡΩΝ ΑΠΟ ΤΟ UI
     const travelType = document.getElementById('travel-type').value;
-    const vacationType = document.getElementById('vacation-type').value;
+    const distanceFilter = document.getElementById('distance').value;
+    const weatherFilter = document.getElementById('weather').value;
+    const vacationTypeFilter = document.getElementById('vacation-type').value;
+    const costFilter = document.getElementById('cost-level').value;
     const daysStay = document.getElementById('days-stay').value;
-    const budget = document.getElementById('travel-budget').value;
+    const budgetInput = document.getElementById('travel-budget').value;
     
-    if (daysStay) state.selectedDays = parseInt(daysStay);
-    if (budget) {
-        state.selectedBudget = parseInt(budget);
-        updateBudgetTracker();
+    // 2. ΕΝΗΜΕΡΩΣΗ STATE
+    if (daysStay) {
+        state.selectedDays = parseInt(daysStay);
+        console.log('📅 Επιλεγμένες μέρες:', state.selectedDays);
     }
     
+    if (budgetInput) {
+        state.selectedBudget = parseInt(budgetInput);
+        updateBudgetTracker();
+        console.log('💰 Προϋπολογισμός:', state.selectedBudget + '€');
+    }
+    
+    // 3. LOADING INDICATOR
     const resultsDiv = document.getElementById('destination-results');
     resultsDiv.innerHTML = `
-        <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+        <div style="grid-column: 1/-1; text-align: center; padding: 60px;">
             <div class="loading">
-                <i class="fas fa-spinner fa-spin fa-2x"></i>
-                <p>Φόρτωση προορισμών...</p>
+                <i class="fas fa-search fa-spin fa-3x" style="color: var(--primary); margin-bottom: 20px;"></i>
+                <h3 style="color: var(--dark); margin-bottom: 10px;">Αναζήτηση Προορισμών</h3>
+                <p style="color: var(--gray);">Εφαρμογή φίλτρων και φόρτωση δεδομένων...</p>
+                <div style="margin-top: 20px; font-size: 14px; color: var(--gray);">
+                    <i class="fas fa-filter"></i> Ενεργά φίλτρα: 
+                    ${distanceFilter ? 'Απόσταση ' + distanceFilter + 'ώρες' : ''}
+                    ${weatherFilter ? ', Καιρός: ' + weatherFilter : ''}
+                    ${vacationTypeFilter ? ', Τύπος: ' + vacationTypeFilter : ''}
+                    ${costFilter ? ', Κόστος: ' + costFilter : ''}
+                </div>
             </div>
         </div>
     `;
     
-    // Στοιχειώδης λίστα πόλεων (με βάση τα JSON αρχεία που έχετε)
-const cities = [
-    { id: 'amsterdam', name: 'Άμστερνταμ', emoji: '🌷', category: 'πόλη' },
-    { id: 'berlin', name: 'Βερολίνο', emoji: '🇩🇪', category: 'πόλη' },
-    { id: 'budapest', name: 'Βουδαπέστη', emoji: '🏰', category: 'πόλη' },
-    { id: 'istanbul', name: 'Κωνσταντινούπολη', emoji: '🕌', category: 'πόλη' },
-    { id: 'lisbon', name: 'Λισαβόνα', emoji: '🏖️', category: 'πόλη' },
-    { id: 'london', name: 'Λονδίνο', emoji: '🇬🇧', category: 'πόλη' },
-    { id: 'madrid', name: 'Μαδρίτη', emoji: '🇪🇸', category: 'πόλη' },
-    { id: 'paris', name: 'Παρίσι', emoji: '🗼', category: 'πόλη' },
-    { id: 'prague', name: 'Πράγα', emoji: '🏰', category: 'πόλη' },
-    { id: 'vienna', name: 'Βιέννη', emoji: '🎻', category: 'πόλη' }
-];
+    // 4. ΛΙΣΤΑ 20+ ΕΥΡΩΠΑΪΚΩΝ ΠΟΛΕΩΝ (με metadata)
+    const cities = [
+        // === ΠΟΛΕΙΣ ΜΕ JSON (ΥΠΑΡΧΟΥΝ ΗΔΗ) ===
+        { id: 'amsterdam', name: 'Άμστερνταμ', emoji: '🌷', category: 'πόλη', 
+          hasJSON: true, distance: 3.5, weather: 'Ζεστό', cost: 'Μέτριο', 
+          vacationType: 'Πόλη', country: 'Ολλανδία', popularity: 9 },
+        
+        { id: 'berlin', name: 'Βερολίνο', emoji: '🇩🇪', category: 'πόλη', 
+          hasJSON: true, distance: 2.5, weather: 'Ίδιο', cost: 'Οικονομικό', 
+          vacationType: 'Πόλη', country: 'Γερμανία', popularity: 8 },
+        
+        { id: 'budapest', name: 'Βουδαπέστη', emoji: '🏰', category: 'πόλη', 
+          hasJSON: true, distance: 2.0, weather: 'Ίδιο', cost: 'Οικονομικό', 
+          vacationType: 'Πολιτισμός', country: 'Ουγγαρία', popularity: 7 },
+        
+        { id: 'istanbul', name: 'Κωνσταντινούπολη', emoji: '🕌', category: 'πόλη', 
+          hasJSON: true, distance: 1.5, weather: 'Ζεστό', cost: 'Οικονομικό', 
+          vacationType: 'Πολιτισμός', country: 'Τουρκία', popularity: 8 },
+        
+        { id: 'lisbon', name: 'Λισαβόνα', emoji: '🏖️', category: 'πόλη', 
+          hasJSON: true, distance: 4.5, weather: 'Ζεστό', cost: 'Μέτριο', 
+          vacationType: 'Θάλασσα', country: 'Πορτογαλία', popularity: 7 },
+        
+        { id: 'london', name: 'Λονδίνο', emoji: '🇬🇧', category: 'πόλη', 
+          hasJSON: true, distance: 3.8, weather: 'Ίδιο', cost: 'Ακριβό', 
+          vacationType: 'Πόλη', country: 'ΗΒ', popularity: 10 },
+        
+        { id: 'madrid', name: 'Μαδρίτη', emoji: '🇪🇸', category: 'πόλη', 
+          hasJSON: true, distance: 4.0, weather: 'Ζεστό', cost: 'Μέτριο', 
+          vacationType: 'Πόλη', country: 'Ισπανία', popularity: 8 },
+        
+        { id: 'paris', name: 'Παρίσι', emoji: '🗼', category: 'πόλη', 
+          hasJSON: true, distance: 3.0, weather: 'Ίδιο', cost: 'Ακριβό', 
+          vacationType: 'Πολιτισμός', country: 'Γαλλία', popularity: 10 },
+        
+        { id: 'prague', name: 'Πράγα', emoji: '🏰', category: 'πόλη', 
+          hasJSON: true, distance: 2.2, weather: 'Κρύο', cost: 'Οικονομικό', 
+          vacationType: 'Πολιτισμός', country: 'Τσεχία', popularity: 9 },
+        
+        { id: 'vienna', name: 'Βιέννη', emoji: '🎻', category: 'πόλη', 
+          hasJSON: true, distance: 2.0, weather: 'Ίδιο', cost: 'Μέτριο', 
+          vacationType: 'Πολιτισμός', country: 'Αυστρία', popularity: 8 },
+        
+        // === ΠΟΛΕΙΣ ΧΩΡΙΣ JSON (ΣΥΝΤΟΜΑ ΔΙΑΘΕΣΙΜΕΣ) ===
+        { id: 'rome', name: 'Ρώμη', emoji: '🏛️', category: 'πόλη', 
+          hasJSON: false, distance: 1.8, weather: 'Ζεστό', cost: 'Μέτριο', 
+          vacationType: 'Πολιτισμός', country: 'Ιταλία', popularity: 10 },
+        
+        { id: 'barcelona', name: 'Βαρκελώνη', emoji: '🏖️', category: 'πόλη', 
+          hasJSON: false, distance: 3.0, weather: 'Ζεστό', cost: 'Μέτριο', 
+          vacationType: 'Θάλασσα', country: 'Ισπανία', popularity: 9 },
+        
+        { id: 'brussels', name: 'Βρυξέλλες', emoji: '🍫', category: 'πόλη', 
+          hasJSON: false, distance: 3.0, weather: 'Ίδιο', cost: 'Μέτριο', 
+          vacationType: 'Πόλη', country: 'Βέλγιο', popularity: 6 },
+        
+        { id: 'copenhagen', name: 'Κοπεγχάγη', emoji: '🧜', category: 'πόλη', 
+          hasJSON: false, distance: 3.5, weather: 'Κρύο', cost: 'Ακριβό', 
+          vacationType: 'Πόλη', country: 'Δανία', popularity: 7 },
+        
+        { id: 'dublin', name: 'Δουβλίνο', emoji: '🍀', category: 'πόλη', 
+          hasJSON: false, distance: 4.2, weather: 'Ίδιο', cost: 'Μέτριο', 
+          vacationType: 'Πόλη', country: 'Ιρλανδία', popularity: 7 },
+        
+        { id: 'edinburgh', name: 'Εδιμβούργο', emoji: '🏰', category: 'πόλη', 
+          hasJSON: false, distance: 4.0, weather: 'Κρύο', cost: 'Μέτριο', 
+          vacationType: 'Πολιτισμός', country: 'Σκωτία', popularity: 8 },
+        
+        { id: 'florence', name: 'Φλωρεντία', emoji: '🎨', category: 'πόλη', 
+          hasJSON: false, distance: 2.0, weather: 'Ζεστό', cost: 'Μέτριο', 
+          vacationType: 'Πολιτισμός', country: 'Ιταλία', popularity: 8 },
+        
+        { id: 'milan', name: 'Μιλάνο', emoji: '👔', category: 'πόλη', 
+          hasJSON: false, distance: 2.3, weather: 'Ζεστό', cost: 'Ακριβό', 
+          vacationType: 'Πόλη', country: 'Ιταλία', popularity: 7 },
+        
+        { id: 'munich', name: 'Μόναχο', emoji: '🍺', category: 'πόλη', 
+          hasJSON: false, distance: 2.5, weather: 'Ίδιο', cost: 'Μέτριο', 
+          vacationType: 'Πολιτισμός', country: 'Γερμανία', popularity: 8 },
+        
+        { id: 'venice', name: 'Βενετία', emoji: '🛶', category: 'πόλη', 
+          hasJSON: false, distance: 2.0, weather: 'Ζεστό', cost: 'Ακριβό', 
+          vacationType: 'Πολιτισμός', country: 'Ιταλία', popularity: 9 },
+        
+        { id: 'warsaw', name: 'Βαρσοβία', emoji: '🐻', category: 'πόλη', 
+          hasJSON: false, distance: 2.5, weather: 'Κρύο', cost: 'Οικονομικό', 
+          vacationType: 'Πόλη', country: 'Πολωνία', popularity: 6 },
+        
+        { id: 'zurich', name: 'Ζυρίχη', emoji: '💼', category: 'πόλη', 
+          hasJSON: false, distance: 2.5, weather: 'Κρύο', cost: 'Ακριβό', 
+          vacationType: 'Βουνό', country: 'Ελβετία', popularity: 7 }
+    ];
     
+    // 5. ΕΦΑΡΜΟΓΗ ΦΙΛΤΡΩΝ
+    const filteredCities = cities.filter(city => {
+        let passesFilters = true;
+        
+        // Φίλτρο ΑΠΟΣΤΑΣΗΣ
+        if (distanceFilter && passesFilters) {
+            const maxDistance = parseFloat(distanceFilter);
+            if (city.distance > maxDistance) {
+                passesFilters = false;
+            }
+        }
+        
+        // Φίλτρο ΚΑΙΡΟΥ
+        if (weatherFilter && passesFilters) {
+            if (city.weather !== weatherFilter) {
+                passesFilters = false;
+            }
+        }
+        
+        // Φίλτρο ΤΥΠΟΥ ΔΙΑΚΟΠΩΝ
+        if (vacationTypeFilter && passesFilters) {
+            if (city.vacationType !== vacationTypeFilter) {
+                passesFilters = false;
+            }
+        }
+        
+        // Φίλτρο ΚΟΣΤΟΥΣ
+        if (costFilter && passesFilters) {
+            if (city.cost !== costFilter) {
+                passesFilters = false;
+            }
+        }
+        
+        // Φίλτρο ΤΥΠΟΥ ΤΑΞΙΔΙΩΤΗ (ΒΑΣΙΚΟ)
+        if (travelType && passesFilters) {
+            if (travelType === 'Οικογένεια' && city.vacationType === 'νεαρών') {
+                passesFilters = false;
+            }
+            if (travelType === 'Μόνος' && city.category === 'οικογενειακό') {
+                passesFilters = false;
+            }
+        }
+        
+        // Φίλτρο BUDGET (προσέγγιση)
+        if (budgetInput && passesFilters && city.hasJSON) {
+            const budget = parseInt(budgetInput);
+            if (budget > 0) {
+                // Προσέγγιση: αν το budget είναι πολύ μικρό για ακριβή πόλη
+                if (city.cost === 'Ακριβό' && budget < 1000) {
+                    passesFilters = false;
+                }
+                if (city.cost === 'Μέτριο' && budget < 500) {
+                    passesFilters = false;
+                }
+            }
+        }
+        
+        return passesFilters;
+    });
+    
+    console.log(`📊 Φίλτρα: Βρέθηκαν ${filteredCities.length} πόλεις από ${cities.length}`);
+    
+    // 6. ΕΜΦΑΝΙΣΗ ΑΠΟΤΕΛΕΣΜΑΤΩΝ
     let html = '';
     
-    for (const city of cities) {
-        try {
-            // Προσπάθεια φόρτωσης του JSON
-            const response = await fetch(`data/${city.id}.json`);
-            const cityData = await response.json();
-            
-            html += `
-                <div class="destination-card" onclick="selectDestination('${city.name}', '${city.id}')">
-                    <div style="font-size: 48px; text-align: center; margin-bottom: 15px;">
-                        ${city.emoji}
-                    </div>
-                    <h3>${city.name}</h3>
-                    <p><i class="fas fa-globe-europe"></i> ${cityData.country || cityData.city || 'Ευρώπη'}</p>
-                    
-                    <div style="margin: 15px 0;">
-                        <div style="display: flex; justify-content: space-between;">
-                            <span style="color: var(--gray);">Δραστηριότητες:</span>
-                            <strong>${cityData.activities ? cityData.activities.length : 'N/A'}</strong>
-                        </div>
-                    </div>
-                    
-                    <div class="tags" style="margin-top: 15px;">
-                        <span class="tag tag-primary">${city.category}</span>
-                        <span class="tag tag-secondary">${cityData.currency || 'EUR'}</span>
-                    </div>
+    if (filteredCities.length === 0) {
+        html = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 60px;">
+                <div class="alert alert-warning" style="max-width: 600px; margin: 0 auto;">
+                    <i class="fas fa-search fa-2x" style="color: var(--warning); margin-bottom: 20px;"></i>
+                    <h3 style="color: var(--dark); margin-bottom: 10px;">Δεν βρέθηκαν αποτελέσματα</h3>
+                    <p style="color: var(--gray); margin-bottom: 20px;">
+                        Δεν υπάρχουν πόλεις που να ταιριάζουν με τα επιλεγμένα φίλτρα.
+                        <br>
+                        <strong>Προσπαθήστε:</strong>
+                    </p>
+                    <ul style="text-align: left; display: inline-block; margin-bottom: 20px;">
+                        <li>Να αλλάξετε κάποιο φίλτρο</li>
+                        <li>Να αφαιρέσετε μερικά φίλτρα</li>
+                        <li>Να αυξήσετε το προϋπολογισμό</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="resetFilters()" style="margin-top: 10px;">
+                        <i class="fas fa-redo"></i> Επαναφορά Όλων των Φίλτρων
+                    </button>
                 </div>
-            `;
-        } catch (error) {
-            console.log(`Δεν βρέθηκε ${city.id}.json, χρήση προεπιλογής`);
-            html += `
-                <div class="destination-card" onclick="selectDestination('${city.name}', '${city.id}')">
-                    <div style="font-size: 48px; text-align: center; margin-bottom: 15px;">
-                        ${city.emoji}
-                    </div>
-                    <h3>${city.name}</h3>
-                    <p><i class="fas fa-globe-europe"></i> Ευρώπη</p>
-                    <div class="tags" style="margin-top: 15px;">
-                        <span class="tag tag-primary">${city.category}</span>
-                    </div>
-                </div>
-            `;
+            </div>
+        `;
+    } else {
+        // ΤΑΞΙΝΟΜΗΣΗ: πρώτα με JSON, μετά δημοφιλία
+        const sortedCities = [...filteredCities].sort((a, b) => {
+            if (a.hasJSON && !b.hasJSON) return -1;
+            if (!a.hasJSON && b.hasJSON) return 1;
+            return b.popularity - a.popularity;
+        });
+        
+        // ΔΗΜΙΟΥΡΓΙΑ ΚΑΡΤΩΝ ΠΟΛΕΩΝ
+        for (const city of sortedCities) {
+            if (city.hasJSON) {
+                // ΠΟΛΗ ΜΕ JSON - προσπάθεια φόρτωσης
+                try {
+                    const response = await fetch(`data/${city.id}.json`);
+                    const cityData = await response.json();
+                    
+                    html += createCityCard(city, cityData, true);
+                    
+                } catch (error) {
+                    // Fallback αν λείπει το JSON
+                    html += createCityCard(city, null, true);
+                }
+            } else {
+                // ΠΟΛΗ ΧΩΡΙΣ JSON (coming soon)
+                html += createCityCard(city, null, false);
+            }
         }
     }
     
     resultsDiv.innerHTML = html;
+    
+    // 7. ΣΤΑΤΙΣΤΙΚΑ ΑΠΟΤΕΛΕΣΜΑΤΩΝ
+    if (filteredCities.length > 0) {
+        const citiesWithJSON = filteredCities.filter(c => c.hasJSON).length;
+        const comingSoon = filteredCities.filter(c => !c.hasJSON).length;
+        
+        const statsHTML = `
+            <div style="grid-column: 1/-1; margin-top: 30px; padding: 20px; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border-radius: var(--radius-lg); text-align: center;">
+                <h4 style="color: white; margin-bottom: 10px;">
+                    <i class="fas fa-chart-bar"></i> Στατιστικά Αναζήτησης
+                </h4>
+                <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
+                    <div>
+                        <div style="font-size: 32px; font-weight: bold;">${filteredCities.length}</div>
+                        <div style="font-size: 14px; opacity: 0.9;">Σύνολο Πόλεων</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 32px; font-weight: bold;">${citiesWithJSON}</div>
+                        <div style="font-size: 14px; opacity: 0.9;">
+                            <i class="fas fa-check-circle" style="color: #2ecc71;"></i> Πλήρης Υποστήριξη
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size: 32px; font-weight: bold;">${comingSoon}</div>
+                        <div style="font-size: 14px; opacity: 0.9;">
+                            <i class="fas fa-tools" style="color: #f39c12;"></i> Σύντομα Διαθέσιμες
+                        </div>
+                    </div>
+                </div>
+                ${travelType ? `<p style="margin-top: 15px; font-size: 14px; opacity: 0.9;"><i class="fas fa-user"></i> Τύπος ταξιδιώτη: ${travelType}</p>` : ''}
+            </div>
+        `;
+        
+        resultsDiv.insertAdjacentHTML('beforeend', statsHTML);
+    }
+}
+
+// ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ: Δημιουργία κάρτας πόλης
+function createCityCard(city, cityData, hasJSON) {
+    const isClickable = hasJSON ? 'onclick="selectDestination(\'' + city.name + '\', \'' + city.id + '\')"' : '';
+    const cardStyle = hasJSON ? '' : 'style="opacity: 0.8; cursor: not-allowed;"';
+    const title = hasJSON ? '' : 'title="Σύντομα διαθέσιμο - Εργαζόμαστε πάνω σε αυτό!"';
+    
+    return `
+        <div class="destination-card" ${cardStyle} ${title} ${isClickable}>
+            <div style="font-size: 48px; text-align: center; margin-bottom: 15px;">
+                ${city.emoji}
+            </div>
+            
+            <h3>${city.name}</h3>
+            <p style="color: var(--gray); margin-bottom: 10px;">
+                <i class="fas fa-globe-europe"></i> ${city.country || (cityData?.country || 'Ευρώπη')}
+            </p>
+            
+            <!-- ΠΛΗΡΟΦΟΡΙΕΣ ΠΟΛΗΣ -->
+            <div style="background: var(--light); padding: 15px; border-radius: var(--radius-md); margin: 15px 0;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 12px; color: var(--gray);">
+                            <i class="fas fa-plane"></i> Απόσταση
+                        </div>
+                        <div style="font-weight: bold; color: var(--dark);">
+                            ${city.distance} ώρες
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 12px; color: var(--gray);">
+                            <i class="fas fa-cloud"></i> Καιρός
+                        </div>
+                        <div style="font-weight: bold; color: var(--dark);">
+                            ${city.weather}
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 12px; color: var(--gray);">
+                            <i class="fas fa-wallet"></i> Κόστος
+                        </div>
+                        <div style="font-weight: bold; color: var(--dark);">
+                            ${city.cost.replace('Οικονομικό', '💰').replace('Μέτριο', '💰💰').replace('Ακριβό', '💰💰💰')}
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 12px; color: var(--gray);">
+                            <i class="fas fa-umbrella-beach"></i> Τύπος
+                        </div>
+                        <div style="font-weight: bold; color: var(--dark);">
+                            ${city.vacationType}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TAGS -->
+            <div class="tags" style="margin-top: 10px;">
+                <span class="tag tag-primary">${city.category}</span>
+                ${city.vacationType ? `<span class="tag tag-secondary">${city.vacationType}</span>` : ''}
+                ${city.cost === 'Οικονομικό' ? '<span class="tag" style="background: #2ecc71; color: white;">💰 Οικονομικό</span>' : ''}
+                ${city.cost === 'Μέτριο' ? '<span class="tag" style="background: #f39c12; color: white;">💰💰 Μέτριο</span>' : ''}
+                ${city.cost === 'Ακριβό' ? '<span class="tag" style="background: #e74c3c; color: white;">💰💰💰 Ακριβό</span>' : ''}
+            </div>
+            
+            <!-- STATUS -->
+            <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border); text-align: center;">
+                ${hasJSON ? `
+                    <span class="tag" style="background: var(--success); color: white;">
+                        <i class="fas fa-check-circle"></i> Πλήρης Υποστήριξη
+                    </span>
+                    <p style="font-size: 12px; color: var(--gray); margin-top: 5px;">
+                        ${cityData?.activities?.length || 'Πολλές'} δραστηριότητες διαθέσιμες
+                    </p>
+                ` : `
+                    <span class="tag" style="background: var(--warning); color: white;">
+                        <i class="fas fa-tools"></i> Σύντομα Διαθέσιμο
+                    </span>
+                    <p style="font-size: 12px; color: var(--gray); margin-top: 5px;">
+                        Υπό κατασκευή - Ερχόμαστε σύντομα!
+                    </p>
+                `}
+            </div>
+            
+            <!-- ΚΟΥΜΠΙ ΕΠΙΛΟΓΗΣ (μόνο για πόλεις με JSON) -->
+            ${hasJSON ? `
+                <div style="margin-top: 20px;">
+                    <button class="btn btn-primary" style="width: 100%;" onclick="selectDestination('${city.name}', '${city.id}'); event.stopPropagation();">
+                        <i class="fas fa-map-marker-alt"></i> Επιλογή Προορισμού
+                    </button>
+                </div>
+            ` : `
+                <div style="margin-top: 20px; text-align: center;">
+                    <button class="btn btn-outline" style="width: 100%; cursor: not-allowed;" disabled>
+                        <i class="fas fa-clock"></i> Σύντομα Διαθέσιμο
+                    </button>
+                </div>
+            `}
+        </div>
+    `;
 }
 
 function resetFilters() {
