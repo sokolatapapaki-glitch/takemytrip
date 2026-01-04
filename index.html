@@ -279,24 +279,23 @@
     }
 </style>
     <script>
-<script>
-    // DEBUG SIDEBAR - ΒΗΜΑ 4
+// DEBUG SIDEBAR - ΒΗΜΑ 4 (FIXED)
     document.addEventListener('DOMContentLoaded', function() {
         console.log('=== DEBUG SIDEBAR ΒΗΜΑ 4 ===');
         
         const steps = document.querySelectorAll('.step');
         
-        steps.forEach((step, index) => {
+        steps.forEach(function(step, index) {
             const h3 = step.querySelector('.step-content h3');
             const p = step.querySelector('.step-content p');
             
-            console.log(`\nΒήμα ${index + 1}:`);
+            console.log('Βήμα ' + (index + 1) + ':');
             console.log('  h3 υπάρχει:', !!h3);
             if (h3) {
                 console.log('  h3 textContent:', h3.textContent);
                 console.log('  h3 innerHTML:', h3.innerHTML);
-                console.log('  h3 offsetWidth:', h3.offsetWidth, 'px');
-                console.log('  h3 offsetHeight:', h3.offsetHeight, 'px');
+                console.log('  h3 offsetWidth:', h3.offsetWidth + 'px');
+                console.log('  h3 offsetHeight:', h3.offsetHeight + 'px');
             }
             
             console.log('  p υπάρχει:', !!p);
@@ -308,7 +307,7 @@
             // Έλεγχος container
             const stepContent = step.querySelector('.step-content');
             if (stepContent) {
-                console.log('  stepContent width:', stepContent.offsetWidth, 'px');
+                console.log('  stepContent width:', stepContent.offsetWidth + 'px');
             }
             
             // Προσθήκη border για debugging
@@ -319,11 +318,12 @@
         // Έλεγχος sidebar width
         const sidebar = document.querySelector('.sidebar');
         if (sidebar) {
-            console.log('\nSidebar width:', sidebar.offsetWidth, 'px');
-            console.log('Sidebar clientWidth:', sidebar.clientWidth, 'px');
+            console.log('Sidebar width:', sidebar.offsetWidth + 'px');
+            console.log('Sidebar clientWidth:', sidebar.clientWidth + 'px');
             sidebar.style.border = '2px solid blue';
         }
     });
 </script>
+    
 </body>
 </html>
