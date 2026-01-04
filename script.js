@@ -1223,22 +1223,52 @@ async function setupActivitiesStep() {
                         
                         <!-- ΤΙΜΕΣ -->
                         <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin: 10px 0;">
-                            <div style="font-size: 12px; color: var(--gray); margin-bottom: 8px;">
-                                <i class="fas fa-money-bill-wave"></i> Τιμές ανά ηλικία:
-                            </div>
-                            <div style="display: flex; justify-content: space-between; font-size: 14px;">
-                                <span>Βρέφη (0-4):</span>
-                                <span><strong>${activity.prices['0'] === 0 ? 'ΔΩΡΕΑΝ' : activity.prices['0'] + '€'}</strong></span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; font-size: 14px; margin-top: 5px;">
-                                <span>Παιδιά (5-15):</span>
-                                <span><strong>${activity.prices['5'] || activity.prices['10'] || '?'}€</strong></span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; font-size: 14px; margin-top: 5px;">
-                                <span>Ενήλικες (16+):</span>
-                                <span><strong>${activity.prices.adult || activity.prices['16'] || '?'}€</strong></span>
-                            </div>
-                        </div>
+    <div style="font-size: 12px; color: var(--gray); margin-bottom: 8px;">
+        <i class="fas fa-money-bill-wave"></i> 
+        ${getPriceInfo(activity.prices)}
+    </div>
+    
+    <!-- ΤΙΜΕΣ ΓΙΑ ΚΑΘΕ ΜΕΛΟΣ ΤΗΣ ΟΙΚΟΓΕΝΕΙΑΣ -->
+    ${state.familyMembers.map(member => {
+        const age = member.age;
+        let price = '?';
+        
+        // Βρες τιμή για την συγκεκριμένη ηλικία
+        if (activity.prices[age] !== undefined) {
+            price = activity.prices[age] === 0 ? 'ΔΩΡΕΑΝ' : activity.prices[age] + '€';
+        }
+        // Για ενήλικες, χρησιμοποίησε 'adult' αν υπάρχει
+        else if (age >= 16 && activity.prices.adult !== undefined) {
+            price = activity.prices.adult + '€';
+        }
+        // Για παιδιά 5-15, ψάξε για κοινές ηλικίες
+        else if (age >= 5 && age <= 15) {
+            if (activity.prices['10'] !== undefined) {
+                price = activity.prices['10'] + '€';
+            } else if (activity.prices['5'] !== undefined) {
+                price = activity.prices['5'] + '€';
+            }
+        }
+        // Για βρέφη 0-4, χρησιμοποίησε '0'
+        else if (age <= 4 && activity.prices['0'] !== undefined) {
+            price = activity.prices['0'] === 0 ? 'ΔΩΡΕΑΝ' : activity.prices['0'] + '€';
+        }
+        
+        return `
+        <div style="display: flex; justify-content: space-between; font-size: 13px; margin-top: 4px; padding: 2px 0;">
+            <span>${member.name} (${age}):</span>
+            <span><strong>${price}</strong></span>
+        </div>`;
+    }).join('')}
+    
+    <!-- ΠΛΗΡΟΦΟΡΙΕΣ ΑΠΟ ΤΟ JSON -->
+    ${activity.notes && activity.notes.length > 0 ? `
+        <div style="font-size: 11px; color: #666; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #ddd;">
+            <i class="fas fa-info-circle"></i>
+            ${activity.notes.join(' • ')}
+        </div>
+    ` : ''}
+</div>
                         
                         <!-- ΣΥΝΟΛΙΚΟ ΚΟΣΤΟΣ ΓΙΑ ΟΙΚΟΓΕΝΕΙΑ -->
                         <div class="activity-total" style="background: var(--primary); color: white; padding: 12px; border-radius: 8px; text-align: center; font-weight: bold; margin-top: 10px;">
@@ -1283,54 +1313,51 @@ async function setupActivitiesStep() {
     }
 }
 function calculateFamilyCost(prices) {
-    if (!prices) return 0;
+    if (!prices || typeof prices !== 'object') {
+        console.log('❌ prices είναι άκυρο:', prices);
+        return 0;
+    }
+    
+    console.log('💰 Διαθέσιμες τιμές:', Object.keys(prices).map(k => `${k}: ${prices[k]}€`).join(', '));
     
     let total = 0;
     
-    state.familyMembers.forEach(member => {
+    state.familyMembers.forEach((member) => {
         const age = member.age;
+        let price = 0;
         
-        // 1. ΒΡΕΦΗ (0-4 ετών)
-        if (age <= 4) {
-            const babyPrice = prices['0']; // Ή prices['0'], prices['1'], κλπ
-            if (babyPrice !== undefined && typeof babyPrice === 'number') {
-                total += babyPrice;
-                console.log(`👶 Βρέφος ${age} ετών: ${babyPrice}€`);
+        // 1. Προσπάθεια: Βρες ακριβή τιμή για συγκεκριμένη ηλικία
+        if (prices[age] !== undefined && prices[age] !== null) {
+            price = prices[age];
+        }
+        // 2. Προσπάθεια: Για ενήλικες, χρησιμοποίησε 'adult'
+        else if (age >= 18 && prices.adult !== undefined) {
+            price = prices.adult;
+        }
+        // 3. Προσπάθεια: Για παιδιά, χρησιμοποίησε 'child' ή ψάξε για 10, 5
+        else if (age >= 5 && age <= 17) {
+            if (prices.child !== undefined) {
+                price = prices.child;
+            } else if (prices['10'] !== undefined) {
+                price = prices['10'];
+            } else if (prices['5'] !== undefined) {
+                price = prices['5'];
             }
         }
-        // 2. ΠΑΙΔΙΑ (5-15 ετών)
-        else if (age >= 5 && age <= 15) {
-            // Ψάχνουμε για συγκεκριμένη ηλικία
-            let childPrice = prices[age.toString()];
-            
-            // Αν δεν βρέθηκε, δοκιμάζουμε για ηλικία 5, 10, κλπ
-            if (childPrice === undefined) {
-                childPrice = prices['10'] || prices['5'] || prices.child;
-            }
-            
-            if (childPrice !== undefined && typeof childPrice === 'number') {
-                total += childPrice;
-                console.log(`🧒 Παιδί ${age} ετών: ${childPrice}€`);
-            }
+        // 4. Προσπάθεια: Για βρέφη, χρησιμοποίησε '0'
+        else if (age <= 4 && prices['0'] !== undefined) {
+            price = prices['0'];
         }
-        // 3. ΕΝΗΛΙΚΕΣ (16+ ετών)
-        else if (age >= 16) {
-            // Πρώτα ψάχνουμε για adult price
-            let adultPrice = prices.adult;
-            
-            // Αν δεν υπάρχει adult, ψάχνουμε για ηλικία 16, 18, κλπ
-            if (adultPrice === undefined) {
-                adultPrice = prices['16'] || prices['18'] || prices[age.toString()];
-            }
-            
-            if (adultPrice !== undefined && typeof adultPrice === 'number') {
-                total += adultPrice;
-                console.log(`👨 Ενήλικας ${age} ετών: ${adultPrice}€`);
-            }
+        // 5. Fallback: Αν δεν βρέθηκε, δείξε ? αλλά χρησιμοποίησε 0
+        else {
+            price = 0;
+            console.warn(`⚠️ Δεν βρέθηκε τιμή για ηλικία ${age}. Στο JSON υπάρχουν: ${Object.keys(prices).join(', ')}`);
         }
+        
+        total += price;
     });
     
-    console.log(`💰 Συνολικό κόστος οικογένειας: ${total}€`);
+    console.log(`💰 Συνολικό κόστος: ${total}€ για ${state.familyMembers.length} άτομα`);
     return total;
 }
 function toggleActivitySelection(activityId) {
@@ -1869,5 +1896,77 @@ window.removeFamilyMember = removeFamilyMember;
 window.updateFamilyMembers = updateFamilyMembers;
 window.calculateSmartCombos = calculateSmartCombos;
 window.clearSelectedActivities = clearSelectedActivities;
+// ==================== HELPER FUNCTIONS ====================
+// ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ ΓΙΑ ΕΜΦΑΝΙΣΗ ΤΙΜΩΝ
+function getPriceInfo(prices) {
+    if (!prices || typeof prices !== 'object') {
+        return 'Άγνωστες τιμές';
+    }
+    
+    // Έλεγχος για δωρεάν είσοδο
+    if (prices['0'] === 0 && prices['4'] === 0) {
+        return 'Βρέφη δωρεάν (0-4)';
+    }
+    if (prices['0'] === 0 && prices['18'] === 0) {
+        return 'Παιδιά δωρεάν (0-18)';
+    }
+    
+    // Βρες όλες τις αριθμητικές τιμές
+    const allPrices = Object.values(prices)
+        .filter(p => typeof p === 'number' && !isNaN(p));
+    
+    if (allPrices.length === 0) {
+        return 'Άγνωστες τιμές';
+    }
+    
+    // Βρες ελάχιστη και μέγιστη τιμή
+    const min = Math.min(...allPrices);
+    const max = Math.max(...allPrices);
+    
+    // Εμφάνιση ανάλογα
+    if (min === max) {
+        return `${min}€ για όλους`;
+    } else if (min === 0) {
+        return `${max}€ (βρέφη δωρεάν)`;
+    } else {
+        return `${min}-${max}€`;
+    }
+}
 
+// ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ: Βρες τιμή για συγκεκριμένη ηλικία
+function getPriceForAge(prices, age) {
+    if (!prices) return '?';
+    
+    // 1. Προσπάθησε να βρεις ακριβή τιμή για την ηλικία
+    if (prices[age] !== undefined && prices[age] !== null) {
+        return prices[age] + '€';
+    }
+    
+    // 2. Για ενήλικες (18+), ψάξε για 'adult'
+    if (age >= 18 && prices.adult !== undefined) {
+        return prices.adult + '€';
+    }
+    
+    // 3. Για παιδιά (5-17), ψάξε για 'child' ή κοινές ηλικίες
+    if (age >= 5 && age <= 17) {
+        if (prices.child !== undefined) return prices.child + '€';
+        if (prices['10'] !== undefined) return prices['10'] + '€';
+        if (prices['5'] !== undefined) return prices['5'] + '€';
+    }
+    
+    // 4. Για βρέφη (0-4), ψάξε για '0'
+    if (age <= 4 && prices['0'] !== undefined) {
+        return prices['0'] === 0 ? 'ΔΩΡΕΑΝ' : prices['0'] + '€';
+    }
+    
+    // 5. Fallback: ψάξε για την πλησιέστερη μικρότερη ηλικία
+    for (let i = age; i >= 0; i--) {
+        if (prices[i] !== undefined) {
+            return prices[i] + '€';
+        }
+    }
+    
+    // 6. Αν δεν βρέθηκε τίποτα
+    return '?';
+}
 console.log('✅ Script.js loaded successfully!');
