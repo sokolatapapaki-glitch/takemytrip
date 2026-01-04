@@ -1081,47 +1081,134 @@ function createDailyProgram() {
 let travelMap = null;
 
 function setupMapStep() {
-    if (!state.selectedDestination) return;
+    console.log('🗺️ Ρύθμιση βήματος χάρτη για:', state.selectedDestination);
     
+    if (!state.selectedDestination) {
+        console.log('⚠️ Δεν υπάρχει επιλεγμένος προορισμός');
+        return;
+    }
+    
+    // ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ: Λήψη συντεταγμένων ΜΟΝΟ για τις πόλεις που έχετε
+    function getCityCoordinates(cityName) {
+        const cityCoords = {
+            'Άμστερνταμ': [52.3676, 4.9041],
+            'Βερολίνο': [52.5200, 13.4050],
+            'Βουδαπέστη': [47.4979, 19.0402],
+            'Κωνσταντινούπολη': [41.0082, 28.9784],
+            'Λισαβόνα': [38.7223, -9.1393],
+            'Λονδίνο': [51.5074, -0.1278],
+            'Μαδρίτη': [40.4168, -3.7038],
+            'Παρίσι': [48.8566, 2.3522],
+            'Πράγα': [50.0755, 14.4378],
+            'Βιέννη': [48.2082, 16.3738]
+            // ΜΟΝΟ οι 10 πόλεις από τη λίστα στο filterDestinations()
+        };
+        
+        // Επιστρέφουμε τις συντεταγμένες ή προεπιλογή (Άμστερνταμ)
+        return cityCoords[cityName] || [52.3676, 4.9041];
+    }
+    
+    // Αποθήκευση των συντεταγμένων
+    state.cityCoordinates = getCityCoordinates(state.selectedDestination);
+    console.log('📍 Συντεταγμένες:', state.cityCoordinates, 'για', state.selectedDestination);
+    
+    // Περιμένουμε το DOM
     setTimeout(() => {
-        initializeMap();
-    }, 100);
+        // Έλεγχος για το map container
+        const mapContainer = document.getElementById('map-container');
+        const mapDiv = document.getElementById('map');
+        
+        if (!mapContainer || !mapDiv) {
+            console.error('❌ Το map container δεν βρέθηκε!');
+            
+            // Δημιουργία αν λείπει
+            const card = document.querySelector('.card');
+            if (card) {
+                card.innerHTML += `
+                    <div id="map-container" style="height: 500px; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 20px; border: 2px solid var(--border);">
+                        <div id="map" style="height: 100%; width: 100%;">
+                            <div style="height: 100%; display: flex; align-items: center; justify-content: center; background: var(--light);">
+                                <div class="loading">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <p>Προετοιμασία χάρτη...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        
+        // Καθαρισμός και loading
+        if (mapDiv) {
+            mapDiv.innerHTML = `
+                <div style="height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--light);">
+                    <i class="fas fa-spinner fa-spin fa-2x" style="color: var(--primary); margin-bottom: 15px;"></i>
+                    <p style="color: var(--gray);">Φόρτωση χάρτη ${state.selectedDestination}...</p>
+                </div>
+            `;
+        }
+        
+        // Μικρή καθυστέρηση και δημιουργία χάρτη
+        setTimeout(() => {
+            initializeMap();
+        }, 150);
+        
+    }, 300);
 }
 
 function initializeMap() {
     const mapElement = document.getElementById('map');
-    if (!mapElement) return;
+    if (!mapElement) {
+        console.error('❌ Το map div δεν βρέθηκε!');
+        return;
+    }
     
-    mapElement.innerHTML = '';
+    // Καθαρισμός αν υπάρχει παλιός χάρτης
+    if (travelMap) {
+        travelMap.remove();
+    }
     
     try {
         if (typeof L === 'undefined') {
-            throw new Error('Η βιβλιοθήκη Leaflet δεν φορτώθηκε');
+            throw new Error('Leaflet library not loaded');
         }
         
-        travelMap = L.map('map').setView([52.3676, 4.9041], 13);
+        // Συντεταγμένες από τη setupMapStep() ή προεπιλογή
+        const coords = state.cityCoordinates || [52.3676, 4.9041];
         
+        // Δημιουργία χάρτη
+        travelMap = L.map('map').setView(coords, 13);
+        
+        // Προσθήκη χάρτη
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            attribution: '© OpenStreetMap contributors',
             maxZoom: 19
         }).addTo(travelMap);
         
-        L.marker([52.3676, 4.9041])
+        // Προσθήκη μαρκαδόρου
+        L.marker(coords)
             .addTo(travelMap)
-            .bindPopup(`<b>${state.selectedDestination}</b><br>${state.selectedActivities.length} δραστηριότητες`)
+            .bindPopup(`<b>${state.selectedDestination}</b>`)
             .openPopup();
         
+        // Προσθήκη zoom controls
         L.control.zoom({ position: 'topright' }).addTo(travelMap);
         
+        console.log('✅ Χάρτης δημιουργήθηκε για', state.selectedDestination);
+        
     } catch (error) {
+        console.error('Σφάλμα:', error);
         mapElement.innerHTML = `
-            <div style="height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; padding: 20px; text-align: center; border-radius: 10px;">
-                <i class="fas fa-map-marked-alt" style="font-size: 48px; margin-bottom: 20px;"></i>
-                <h3>${state.selectedDestination}</h3>
-                <p style="margin: 15px 0;">Ο χάρτης δεν μπόρεσε να φορτωθεί</p>
-                <button onclick="reloadMap()" class="btn btn-primary" style="margin-top: 20px; background: white; color: var(--primary); border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
-                    <i class="fas fa-sync-alt"></i> Δοκιμάστε ξανά
-                </button>
+            <div style="height:100%; display:flex; align-items:center; justify-content:center; background:#f8f9fa; color:#666; text-align:center;">
+                <div>
+                    <i class="fas fa-exclamation-triangle" style="font-size:48px; margin-bottom:20px; color:#dc3545;"></i>
+                    <h4>Σφάλμα φόρτωσης χάρτη</h4>
+                    <p>${error.message}</p>
+                    <button onclick="reloadMap()" class="btn btn-primary" style="margin-top:20px;">
+                        <i class="fas fa-sync-alt"></i> Δοκιμάστε ξανά
+                    </button>
+                </div>
             </div>
         `;
     }
