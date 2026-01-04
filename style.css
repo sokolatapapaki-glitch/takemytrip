@@ -1218,3 +1218,237 @@ body {
     color: var(--gray);
     font-style: italic;
 }
+/* ==================== ΒΗΜΑ 2: NEW DESTINATION CARDS STYLES ==================== */
+/* ΠΡΟΣΘΕΣΕ ΑΥΤΟ ΣΤΟ ΤΕΛΟΣ ΤΟΥ CSS ΑΡΧΕΙΟΥ */
+
+/* Better grid for destination cards */
+.destinations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    margin: 25px 0;
+    padding: 10px;
+}
+
+/* Card styling */
+.destination-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover effect line */
+.destination-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    transform-origin: left;
+}
+
+.destination-card:hover::before {
+    transform: scaleX(1);
+}
+
+.destination-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary);
+}
+
+/* Emoji/Icon */
+.destination-emoji {
+    font-size: 48px;
+    text-align: center;
+    margin-bottom: 15px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* City name */
+.destination-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 8px;
+    text-align: center;
+    line-height: 1.3;
+}
+
+/* Country */
+.destination-country {
+    text-align: center;
+    color: var(--gray);
+    font-size: 14px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.destination-country i {
+    font-size: 12px;
+}
+
+/* Info grid */
+.destination-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 15px 0;
+    padding: 15px;
+    background: var(--light);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.info-item {
+    text-align: center;
+}
+
+.info-label {
+    font-size: 11px;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+.info-value {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--dark);
+}
+
+/* Tags */
+.destination-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 15px 0;
+    justify-content: center;
+}
+
+/* Status badge */
+.destination-status {
+    margin-top: 15px;
+    padding: 10px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    padding-top: 15px;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.status-badge.success {
+    background: rgba(46, 204, 113, 0.15);
+    color: var(--success);
+    border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+.status-badge.warning {
+    background: rgba(243, 156, 18, 0.15);
+    color: var(--warning);
+    border: 1px solid rgba(243, 156, 18, 0.3);
+}
+
+/* Button */
+.destination-btn {
+    margin-top: 15px;
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 15px;
+}
+
+.destination-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(74, 144, 226, 0.3);
+}
+
+.destination-btn:disabled {
+    background: var(--gray);
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Coming soon card */
+.destination-card.coming-soon {
+    opacity: 0.85;
+    cursor: not-allowed;
+}
+
+.destination-card.coming-soon:hover {
+    transform: none;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Responsive */
+@media (max-width: 1400px) {
+    .destinations-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .destinations-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+        padding: 5px;
+    }
+    
+    .destination-info-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .destinations-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}
+
+/* Center results */
+#destination-results {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 10px;
+}
