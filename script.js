@@ -526,18 +526,31 @@ function setupDestinationStep() {
 
 // ==================== MANUAL DESTINATION MODAL ====================
 function showManualDestinationModal() {
-    console.log('📋 Άνοιγμα modal για χειροκίνητη επιλογή');
-    document.getElementById('manual-destination-modal').style.display = 'flex';
+    console.log('📋 Άνοιγμα dropdown για χειροκίνητη επιλογή');
     
-    document.getElementById('manual-city-select').value = '';
-    document.getElementById('manual-days').value = '5';
-    document.getElementById('manual-budget').value = '';
-    document.getElementById('city-details').innerHTML = '';
-    document.getElementById('selected-city-info').textContent = 'Επιλέξτε πόλη για πληροφορίες';
+    // Αν το dropdown είναι ήδη ορατό, κλείσε το
+    if (isDropdownVisible && destinationDropdown) {
+        closeManualDestinationModal();
+        return;
+    }
+    
+    // Δημιουργία dropdown αν δεν υπάρχει
+    if (!destinationDropdown) {
+        createDestinationDropdown();
+    }
+    
+    // Εμφάνιση dropdown κοντά στο κουμπί
+    showDropdownNearButton();
 }
 
 function closeManualDestinationModal() {
-    document.getElementById('manual-destination-modal').style.display = 'none';
+    if (destinationDropdown) {
+        destinationDropdown.style.display = 'none';
+    }
+    isDropdownVisible = false;
+    
+    // Remove overlay
+    removeDropdownOverlay();
 }
 
 function saveManualDestination() {
@@ -845,5 +858,200 @@ window.showQuickRecommendations = showQuickRecommendations;
 window.showPopularDestinations = showPopularDestinations;
 window.showBudgetDestinations = showBudgetDestinations;
 window.showFamilyDestinations = showFamilyDestinations;
+// ==================== DROPDOWN FUNCTIONS ====================
+let destinationDropdown = null;
+let isDropdownVisible = false;
+
+function createDestinationDropdown() {
+    // Δημιουργία container
+    const dropdownContainer = document.createElement('div');
+    dropdownContainer.className = 'destination-dropdown-container';
+    dropdownContainer.style.cssText = `
+        position: fixed;
+        z-index: 1000;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        width: 380px;
+        max-width: 90vw;
+        padding: 20px;
+        border: 2px solid #4F46E5;
+        display: none;
+        animation: fadeIn 0.3s ease;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    `;
+    
+    // Προσθήκη animation στο CSS
+    if (!document.querySelector('#dropdown-animation')) {
+        const style = document.createElement('style');
+        style.id = 'dropdown-animation';
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translate(-50%, -48%); }
+                to { opacity: 1; transform: translate(-50%, -50%); }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // HTML περιεχόμενο του dropdown
+    dropdownContainer.innerHTML = `
+        <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3 style="margin: 0; color: #1A202C; font-size: 18px;">
+                <i class="fas fa-map-marker-alt" style="color: #4F46E5; margin-right: 8px;"></i>
+                Επιλογή Προορισμού
+            </h3>
+            <button class="modal-close" onclick="closeManualDestinationModal()" 
+                    style="background: none; border: none; font-size: 24px; cursor: pointer; color: #718096; padding: 0; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;">
+                &times;
+            </button>
+        </div>
+        
+        <div class="form-group" style="margin-bottom: 20px;">
+            <label class="form-label" style="display: block; margin-bottom: 8px; color: #1A202C; font-weight: 500;">
+                Επιλέξτε Πόλη Από Την Λίστα Μας
+            </label>
+            <select class="form-control" id="manual-city-select" 
+                    style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; background: white;">
+                <option value="">-- Επιλέξτε πόλη --</option>
+                <optgroup label="✅ Πλήρης Υποστήριξη">
+                    <option value="amsterdam">Άμστερνταμ (Ολλανδία)</option>
+                    <option value="berlin">Βερολίνο (Γερμανία)</option>
+                    <option value="budapest">Βουδαπέστη (Ουγγαρία)</option>
+                    <option value="istanbul">Κωνσταντινούπολη (Τουρκία)</option>
+                    <option value="lisbon">Λισαβόνα (Πορτογαλία)</option>
+                    <option value="london">Λονδίνο (ΗΒ)</option>
+                    <option value="madrid">Μαδρίτη (Ισπανία)</option>
+                    <option value="paris">Παρίσι (Γαλλία)</option>
+                    <option value="prague">Πράγα (Τσεχία)</option>
+                    <option value="vienna">Βιέννη (Αυστρία)</option>
+                </optgroup>
+                <optgroup label="🛠️ Σύντομα Διαθέσιμες">
+                    <option value="rome">Ρώμη (Ιταλία)</option>
+                    <option value="barcelona">Βαρκελώνη (Ισπανία)</option>
+                    <option value="brussels">Βρυξέλλες (Βέλγιο)</option>
+                    <option value="copenhagen">Κοπεγχάγη (Δανία)</option>
+                    <option value="dublin">Δουβλίνο (Ιρλανδία)</option>
+                    <option value="edinburgh">Εδιμβούργο (Σκωτία)</option>
+                    <option value="florence">Φλωρεντία (Ιταλία)</option>
+                    <option value="munich">Μόναχο (Γερμανία)</option>
+                    <option value="venice">Βενετία (Ιταλία)</option>
+                    <option value="warsaw">Βαρσοβία (Πολωνία)</option>
+                    <option value="zurich">Ζυρίχη (Ελβετία)</option>
+                </optgroup>
+            </select>
+            <small style="display: block; margin-top: 6px; color: #666; font-size: 13px;">
+                Μόνο πόλεις από την λίστα μας. ✅ = πλήρης υποστήριξη, 🛠️ = σύντομα
+            </small>
+        </div>
+        
+        <div class="form-group" style="margin-bottom: 20px;">
+            <label class="form-label" style="display: block; margin-bottom: 8px; color: #1A202C; font-weight: 500;">
+                Διάρκεια Ταξιδιού (μέρες)
+            </label>
+            <input type="number" class="form-control" id="manual-days" min="1" max="30" value="5"
+                   style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px;">
+        </div>
+        
+        <div class="form-group" style="margin-bottom: 25px;">
+            <label class="form-label" style="display: block; margin-bottom: 8px; color: #1A202C; font-weight: 500;">
+                Προϋπολογισμός (προαιρετικό)
+            </label>
+            <input type="number" class="form-control" id="manual-budget" placeholder="π.χ. 1500"
+                   style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px;">
+            <small style="display: block; margin-top: 6px; color: #666; font-size: 13px;">
+                Συνολικό ποσό για το ταξίδι
+            </small>
+        </div>
+        
+        <div id="city-info-container" style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4F46E5;">
+            <h4 style="color: #4F46E5; margin: 0 0 10px 0; font-size: 16px;">
+                <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
+                Πληροφορίες:
+            </h4>
+            <p style="color: #666; font-size: 14px; margin: 0;">
+                <span id="selected-city-info">Επιλέξτε πόλη για πληροφορίες</span>
+            </p>
+            <div id="city-details" style="font-size: 13px; color: #666; margin-top: 8px;"></div>
+        </div>
+        
+        <div style="display: flex; gap: 12px; margin-top: 25px;">
+            <button onclick="saveManualDestination()" 
+                    style="flex: 1; padding: 14px; background: #4F46E5; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <i class="fas fa-check"></i>
+                Αποθήκευση Προορισμού
+            </button>
+            <button onclick="closeManualDestinationModal()" 
+                    style="flex: 1; padding: 14px; background: white; color: #1A202C; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <i class="fas fa-times"></i>
+                Ακύρωση
+            </button>
+        </div>
+    `;
+    
+    document.body.appendChild(dropdownContainer);
+    destinationDropdown = dropdownContainer;
+    
+    // Event listener για επιλογή πόλης
+    const citySelect = dropdownContainer.querySelector('#manual-city-select');
+    citySelect.addEventListener('change', function() {
+        updateCityInfo(this.value, this.options[this.selectedIndex].text);
+    });
+    
+    // Event listener για κλικ έξω από το dropdown
+    document.addEventListener('click', function(event) {
+        if (isDropdownVisible && destinationDropdown && 
+            !destinationDropdown.contains(event.target) && 
+            !event.target.closest('.main-already-btn')) {
+            closeManualDestinationModal();
+        }
+    });
+    
+    // Event listener για Escape
+    document.addEventListener('keydown', function(event) {
+        if (isDropdownVisible && event.key === 'Escape') {
+            closeManualDestinationModal();
+        }
+    });
+}
+
+function showDropdownNearButton() {
+    if (!destinationDropdown) return;
+    
+    destinationDropdown.style.display = 'block';
+    isDropdownVisible = true;
+    
+    // Add overlay για background
+    addDropdownOverlay();
+}
+
+function addDropdownOverlay() {
+    let overlay = document.querySelector('.dropdown-overlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'dropdown-overlay';
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            animation: fadeIn 0.3s ease;
+        `;
+        overlay.onclick = closeManualDestinationModal;
+        document.body.appendChild(overlay);
+    }
+}
+
+function removeDropdownOverlay() {
+    const overlay = document.querySelector('.dropdown-overlay');
+    if (overlay) {
+        overlay.remove();
+    }
+}
 
 console.log('✅ Script.js loaded successfully!');
