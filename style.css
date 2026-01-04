@@ -77,7 +77,6 @@ body {
     background: white;
     color: var(--dark);
 }
-
 /* ==================== SIDEBAR ==================== */
 .sidebar {
     width: 280px;
@@ -92,73 +91,51 @@ body {
     overflow-y: auto;
 }
 
-.sidebar-header {
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.sidebar-header h1 {
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 5px;
-    color: white;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    line-height: 1.3;
-}
-
-.sidebar-header .subtitle {
-    color: rgba(255,255,255,0.7);
-    font-size: 13px;
-    line-height: 1.4;
-}
-
 /* ΒΗΜΑΤΑ */
 .steps-container {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    padding: 10px 0;
+    gap: 6px; /* Μικρότερο gap */
+    padding: 5px 0;
 }
 
 .step {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 16px 18px;
+    gap: 10px; /* Μικρότερο gap */
+    padding: 10px 12px; /* Μικρότερο padding */
     border-radius: var(--radius-md);
     cursor: pointer;
     transition: var(--transition);
-    background: rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.05);
     border-left: 3px solid transparent;
-    min-height: 72px;
-    overflow: visible;
+    min-height: 50px; /* Μικρότερο ύψος */
+    max-height: 50px; /* Μικρότερο ύψος */
+    overflow: hidden;
 }
 
 .step:hover {
-    background: rgba(255,255,255,0.12);
-    transform: translateX(3px);
+    background: rgba(255,255,255,0.1);
+    transform: translateX(2px);
 }
 
 .step.active {
     background: rgba(74, 144, 226, 0.15);
     border-left-color: var(--primary);
-    box-shadow: inset 4px 0 8px rgba(74, 144, 226, 0.1);
+    box-shadow: inset 3px 0 6px rgba(74, 144, 226, 0.1);
 }
 
 .step-icon {
-    width: 36px;
-    height: 36px;
-    background: rgba(255,255,255,0.12);
+    width: 28px;
+    height: 28px;
+    background: rgba(255,255,255,0.1);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 13px;
     flex-shrink: 0;
     transition: var(--transition);
 }
@@ -166,33 +143,38 @@ body {
 .step.active .step-icon {
     background: var(--primary);
     color: white;
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .step-content {
     min-width: 0;
     flex: 1;
-    overflow: visible;
+    overflow: hidden;
 }
 
 .step-content h3 {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
     color: white;
     white-space: normal;
-    overflow: visible;
-    line-height: 1.3;
-    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 
 .step-content p {
-    font-size: 13px;
-    color: rgba(255,255,255,0.85);
-    line-height: 1.4;
-    display: block;
-    overflow: visible;
-    margin: 0;
+    font-size: 11px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.2;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-height: 24px;
 }
 
 /* SIDEBAR FOOTER */
