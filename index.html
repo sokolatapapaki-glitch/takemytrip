@@ -124,7 +124,7 @@
                     <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
                         <button class="btn" onclick="showManualDestinationModal()" 
                                 style="background: white; color: #667eea; border: none; padding: 12px 25px;">
-                            <i class="fas fa-map-marker-alt"></i> Επιλέξω Εγώ
+                            <i class="fas fa-map-marker-alt"></i> Επιλέξω Από Την Λίστα
                         </button>
                         <button class="btn" onclick="showStep('flight')" 
                                 style="background: rgba(255,255,255,0.2); color: white; border: 1px solid white; padding: 12px 25px;">
@@ -178,31 +178,40 @@
             </div>
             
             <div class="form-group">
-                <label class="form-label">Επιλέξτε Πόλη</label>
+                <label class="form-label">Επιλέξτε Πόλη Από Την Λίστα Μας</label>
                 <select class="form-control" id="manual-city-select">
                     <option value="">-- Επιλέξτε πόλη --</option>
-                    <option value="amsterdam">Άμστερνταμ</option>
-                    <option value="berlin">Βερολίνο</option>
-                    <option value="budapest">Βουδαπέστη</option>
-                    <option value="istanbul">Κωνσταντινούπολη</option>
-                    <option value="lisbon">Λισαβόνα</option>
-                    <option value="london">Λονδίνο</option>
-                    <option value="madrid">Μαδρίτη</option>
-                    <option value="paris">Παρίσι</option>
-                    <option value="prague">Πράγα</option>
-                    <option value="vienna">Βιέννη</option>
-                    <option value="rome">Ρώμη</option>
-                    <option value="barcelona">Βαρκελώνη</option>
-                    <option value="brussels">Βρυξέλλες</option>
-                    <option value="copenhagen">Κοπεγχάγη</option>
-                    <option value="dublin">Δουβλίνο</option>
-                    <option value="other">Άλλη πόλη...</option>
+                    
+                    <!-- ΠΟΛΕΙΣ ΜΕ JSON (ΠΛΗΡΗΣ ΥΠΟΣΤΗΡΙΞΗ) -->
+                    <optgroup label="✅ Πλήρης Υποστήριξη">
+                        <option value="amsterdam">Άμστερνταμ (Ολλανδία)</option>
+                        <option value="berlin">Βερολίνο (Γερμανία)</option>
+                        <option value="budapest">Βουδαπέστη (Ουγγαρία)</option>
+                        <option value="istanbul">Κωνσταντινούπολη (Τουρκία)</option>
+                        <option value="lisbon">Λισαβόνα (Πορτογαλία)</option>
+                        <option value="london">Λονδίνο (ΗΒ)</option>
+                        <option value="madrid">Μαδρίτη (Ισπανία)</option>
+                        <option value="paris">Παρίσι (Γαλλία)</option>
+                        <option value="prague">Πράγα (Τσεχία)</option>
+                        <option value="vienna">Βιέννη (Αυστρία)</option>
+                    </optgroup>
+                    
+                    <!-- ΠΟΛΕΙΣ ΧΩΡΙΣ JSON (ΣΥΝΤΟΜΑ) -->
+                    <optgroup label="🛠️ Σύντομα Διαθέσιμες">
+                        <option value="rome">Ρώμη (Ιταλία)</option>
+                        <option value="barcelona">Βαρκελώνη (Ισπανία)</option>
+                        <option value="brussels">Βρυξέλλες (Βέλγιο)</option>
+                        <option value="copenhagen">Κοπεγχάγη (Δανία)</option>
+                        <option value="dublin">Δουβλίνο (Ιρλανδία)</option>
+                        <option value="edinburgh">Εδιμβούργο (Σκωτία)</option>
+                        <option value="florence">Φλωρεντία (Ιταλία)</option>
+                        <option value="munich">Μόναχο (Γερμανία)</option>
+                        <option value="venice">Βενετία (Ιταλία)</option>
+                        <option value="warsaw">Βαρσοβία (Πολωνία)</option>
+                        <option value="zurich">Ζυρίχη (Ελβετία)</option>
+                    </optgroup>
                 </select>
-            </div>
-            
-            <div class="form-group" id="other-city-group" style="display: none;">
-                <label class="form-label">Όνομα Πόλης</label>
-                <input type="text" class="form-control" id="other-city-input" placeholder="π.χ. Νέα Υόρκη, Τόκιο, κλπ">
+                <small class="text-muted">Μόνο πόλεις από την λίστα μας. ✅ = πλήρης υποστήριξη, 🛠️ = σύντομα</small>
             </div>
             
             <div class="form-group">
@@ -213,11 +222,22 @@
             <div class="form-group">
                 <label class="form-label">Προϋπολογισμός (προαιρετικό)</label>
                 <input type="number" class="form-control" id="manual-budget" placeholder="π.χ. 1500">
+                <small class="text-muted">Συνολικό ποσό για το ταξίδι</small>
+            </div>
+            
+            <div style="margin: 20px 0; padding: 15px; background: var(--light); border-radius: var(--radius-md);">
+                <h4 style="color: var(--primary); margin-bottom: 10px;"><i class="fas fa-info-circle"></i> Πληροφορίες:</h4>
+                <p style="color: var(--gray); font-size: 14px; margin-bottom: 5px;">
+                    <span id="selected-city-info">Επιλέξτε πόλη για πληροφορίες</span>
+                </p>
+                <div id="city-details" style="font-size: 13px; color: var(--gray);">
+                    <!-- ΕΔΩ ΘΑ ΕΜΦΑΝΙΖΟΝΤΑΙ ΠΛΗΡΟΦΟΡΙΕΣ -->
+                </div>
             </div>
             
             <div style="display: flex; gap: 15px; margin-top: 30px;">
                 <button class="btn btn-primary" onclick="saveManualDestination()" style="flex: 1;">
-                    <i class="fas fa-check"></i> Αποθήκευση
+                    <i class="fas fa-check"></i> Αποθήκευση Προορισμού
                 </button>
                 <button class="btn btn-outline" onclick="closeManualDestinationModal()" style="flex: 1;">
                     <i class="fas fa-times"></i> Ακύρωση
