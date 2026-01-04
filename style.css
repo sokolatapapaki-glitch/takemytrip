@@ -84,11 +84,11 @@ body {
     color: white;
     display: flex;
     flex-direction: column;
-    padding: 20px 15px;
+    padding: 15px 12px;
     position: sticky;
     top: 0;
     height: 100vh;
-    overflow-y: auto;
+    /* ΑΦΑΙΡΕΣΑΜΕ: overflow-y: auto */
 }
 
 /* ΒΗΜΑΤΑ - ΓΙΑ DESKTOP */
@@ -96,39 +96,40 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 2px; /* ΠΑΡΑ ΠΟΛΥ ΜΙΚΡΟ */
-    padding: 2px 0;
+    gap: 2px;
 }
 
 .step {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 6px 8px; /* ΠΟΛΥ ΜΙΚΡΟ */
-    border-radius: 5px;
+    padding: 8px 10px;
+    border-radius: 6px;
     cursor: pointer;
     transition: var(--transition);
     background: rgba(255,255,255,0.05);
-    border-left: 2px solid transparent;
-    min-height: 36px !important; /* ΜΟΝΟ 36px! */
-    max-height: 36px !important; /* ΜΟΝΟ 36px! */
-    overflow: hidden;
+    border-left: 3px solid transparent;
+    /* ΧΩΡΙΣ min-height/max-height */
+    height: auto !important;
+    overflow: visible !important;
 }
 
-.step-icon {
-    width: 24px !important;  /* ΜΙΚΡΟ */
-    height: 24px !important; /* ΜΙΚΡΟ */
-    font-size: 11px !important;
+.step-content {
+    flex: 1;
+    overflow: visible !important;
 }
 
 .step-content h3 {
-    font-size: 12px !important;
-    line-height: 1.1;
-    margin-bottom: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 2px;
 }
 
 .step-content p {
-    font-size: 9px !important;
+    font-size: 10px;
+    color: rgba(255,255,255,0.7);
     line-height: 1.1;
 }
 /* SIDEBAR FOOTER */
