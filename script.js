@@ -299,35 +299,7 @@ function getDestinationStepHTML() {
                 </button>
             </div>
             
-            <!-- ΒΟΗΘΗΤΙΚΕΣ ΠΛΗΡΟΦΟΡΙΕΣ -->
-            <div class="alert alert-info" style="margin-top: 30px; background: #e3f2fd; border-left: 4px solid #2196f3;">
-                <div style="display: flex; align-items: flex-start; gap: 15px;">
-                    <i class="fas fa-lightbulb" style="font-size: 24px; color: #2196f3; margin-top: 2px;"></i>
-                    <div>
-                        <h4 style="margin: 0 0 10px 0; color: #0c5460;">💡 Συμβουλές για την αναζήτηση:</h4>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px;">
-                            <div>
-                                <strong>👨‍👩‍👧‍👦 Για οικογένειες:</strong>
-                                <ul style="margin: 5px 0 0 15px; font-size: 14px;">
-                                    <li>Επιλέξτε "Θεματικά Πάρκα"</li>
-                                    <li>Διαλέξτε "Μέτριο" ή "Ακριβό" κόστος</li>
-                                    <li>5+ μέρες για ήρεμο ρυθμό</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <strong>🧳 Για φθηνό ταξίδι:</strong>
-                                <ul style="margin: 5px 0 0 15px; font-size: 14px;">
-                                    <li>Επιλέξτε "Οικονομικό" κόστος</li>
-                                    <li>Κοντινές αποστάσεις (<3 ώρες)</li>
-                                    <li>3-4 μέρες διαμονής</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
+                   
         <!-- ΑΠΟΤΕΛΕΣΜΑΤΑ ΑΝΑΖΗΤΗΣΗΣ -->
         <div id="destination-results">
             <div style="text-align: center; padding: 60px 20px; background: var(--light); border-radius: var(--radius-lg); margin-top: 20px;">
