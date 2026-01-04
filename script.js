@@ -130,7 +130,7 @@ function loadStepContent(stepName) {
     
     switch(stepName) {
         case 'destination':
-            stepContent.innerHTML = getDestinationStepHTML();
+            stepContent.innerHTML = L();
             setupDestinationStep();
             break;
             
@@ -168,98 +168,205 @@ function getDestinationStepHTML() {
             <h1 class="card-title"><i class="fas fa-map-marked-alt"></i> Επιλογή Προορισμού</h1>
             <p class="card-subtitle">Βρείτε την τέλεια πόλη για τις οικογενειακές σας διακοπές</p>
             
+            <!-- ΑΝΑΖΗΤΗΣΗ ΚΑΙ ΦΙΛΤΡΑ -->
             <div class="grid grid-3">
                 <div class="form-group">
-                    <label class="form-label">Τύπος Ταξιδιώτη</label>
+                    <label class="form-label"><i class="fas fa-users"></i> Τύπος Ταξιδιώτη</label>
                     <select class="form-control" id="travel-type">
-                        <option value="">Επιλέξτε...</option>
-                        <option value="Μόνος">Μόνος</option>
+                        <option value="">Όλοι (προεπιλογή)</option>
+                        <option value="Μόνος">Μόνος/η</option>
                         <option value="Ζευγάρι">Ζευγάρι</option>
-                        <option value="Οικογένεια">Οικογένεια</option>
+                        <option value="Οικογένεια" selected>Οικογένεια με παιδιά</option>
                         <option value="Παρέα">Παρέα φίλων</option>
+                        <option value="Εκδρομή">Σχολική Εκδρομή</option>
                     </select>
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Απόσταση (ώρες)</label>
+                    <label class="form-label"><i class="fas fa-plane"></i> Απόσταση πτήσης</label>
                     <select class="form-control" id="distance">
-                        <option value="">Όλα</option>
-                        <option value="1">Έως 1 ώρα</option>
-                        <option value="2">Έως 2 ώρες</option>
-                        <option value="3">Έως 3 ώρες</option>
-                        <option value="4">Έως 4 ώρες</option>
-                        <option value="5">Πάνω από 4</option>
+                        <option value="">Όλες οι αποστάσεις</option>
+                        <option value="1.5">Έως 1.5 ώρες</option>
+                        <option value="2.5">Έως 2.5 ώρες</option>
+                        <option value="3.5" selected>Έως 3.5 ώρες</option>
+                        <option value="5">Έως 5 ώρες</option>
+                        <option value="10">Οποιαδήποτε απόσταση</option>
                     </select>
+                    <small class="text-muted">Από Αθήνα</small>
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Κλιματικές συνθήκες</label>
+                    <label class="form-label"><i class="fas fa-cloud-sun"></i> Καιρός</label>
                     <select class="form-control" id="weather">
-                        <option value="">Όλα</option>
-                        <option value="Ζεστό">Πιο ζεστό</option>
-                        <option value="Ίδιο">Ίδια θερμοκρασία</option>
-                        <option value="Κρύο">Πιο κρύο</option>
-                        <option value="Χιόνια">Πιθανά χιόνια</option>
+                        <option value="">Όλοι οι καιροί</option>
+                        <option value="Ζεστό">☀️ Πιο ζεστό από Ελλάδα</option>
+                        <option value="Ίδιο" selected>🌤️ Ίδια θερμοκρασία</option>
+                        <option value="Κρύο">⛄ Πιο κρύο</option>
                     </select>
                 </div>
             </div>
             
             <div class="grid grid-3">
                 <div class="form-group">
-                    <label class="form-label">Τύπος Διακοπών</label>
+                    <label class="form-label"><i class="fas fa-umbrella-beach"></i> Τύπος Διακοπών</label>
                     <select class="form-control" id="vacation-type">
-                        <option value="">Όλα</option>
-                        <option value="Πολιτισμός">Πολιτισμός & Μουσεία</option>
-                        <option value="Φυσική">Φυσική Ομορφία</option>
-                        <option value="Θάλασσα">Θαλάσσια & Παραλίες</option>
-                        <option value="Πόλη">Αστικές Διακοπές</option>
-                        <option value="Βουνό">Βουνό & Χιονοδρομικά</option>
+                        <option value="">Όλοι οι τύποι</option>
+                        <option value="Πολιτισμός">🏛️ Πολιτισμός & Μουσεία</option>
+                        <option value="Θάλασσα">🏖️ Θαλάσσια & Παραλίες</option>
+                        <option value="Πόλη" selected>🏙️ Αστικές Εμπειρίες</option>
+                        <option value="Βουνό">🏔️ Βουνό & Χιονοδρομικά</option>
+                        <option value="Φυσική">🌳 Φυσική Ομορφία</option>
+                        <option value="Ψώνια">🛍️ Ψώνια & Gastronomy</option>
                     </select>
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Κόστος</label>
+                    <label class="form-label"><i class="fas fa-wallet"></i> Επίπεδο Κόστους</label>
                     <select class="form-control" id="cost-level">
-                        <option value="">Όλα</option>
+                        <option value="">Όλα τα επίπεδα</option>
                         <option value="Οικονομικό">💰 Οικονομικό</option>
-                        <option value="Μέτριο">💰💰 Μέτριο</option>
+                        <option value="Μέτριο" selected>💰💰 Μέτριο</option>
                         <option value="Ακριβό">💰💰💰 Ακριβό</option>
                     </select>
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Μέρες Διαμονής</label>
+                    <label class="form-label"><i class="fas fa-calendar-day"></i> Μέρες Διαμονής</label>
                     <select class="form-control" id="days-stay">
                         <option value="">-- Επιλέξτε --</option>
-                        <option value="3">3 μέρες</option>
+                        <option value="2">2 μέρες (Σαβ-Κυρ)</option>
+                        <option value="3">3 μέρες (Σαβ-Δευ)</option>
                         <option value="4">4 μέρες</option>
-                        <option value="5">5 μέρες</option>
-                        <option value="6">6 μέρες</option>
-                        <option value="7">7 μέρες</option>
+                        <option value="5" selected>5 μέρες</option>
+                        <option value="7">7 μέρες (Μια εβδομάδα)</option>
+                        <option value="10">10+ μέρες</option>
                     </select>
                 </div>
             </div>
             
-            <div class="form-group">
-                <label class="form-label">Προϋπολογισμός Ταξιδιού (προαιρετικό)</label>
-                <input type="number" class="form-control" id="travel-budget" placeholder="π.χ. 500">
-                <small class="text-muted">Βάλτε το συνολικό ποσό που θέλετε να ξοδέψετε</small>
+            <div class="grid grid-2">
+                <div class="form-group">
+                    <label class="form-label"><i class="fas fa-ferris-wheel"></i> Θεματικά Πάρκα & Διασκέδαση</label>
+                    <select class="form-control" id="theme-parks">
+                        <option value="">Όλα (με ή χωρίς)</option>
+                        <option value="has-parks">🎡 Με θεματικά πάρκα</option>
+                        <option value="disney">👑 Με Disneyland</option>
+                        <option value="multiple">🎢 Με πολλαπλά πάρκα</option>
+                        <option value="family-excellent">⭐ Κορυφαία για οικογένειες</option>
+                        <option value="no-parks">🏛️ Χωρίς θεματικά πάρκα</option>
+                    </select>
+                    <small class="text-muted">Ιδανικό για οικογένειες με παιδιά</small>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label"><i class="fas fa-money-bill-wave"></i> Προϋπολογισμός Ταξιδιού</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="number" class="form-control" id="travel-budget" placeholder="π.χ. 1500" style="flex: 1;">
+                        <select class="form-control" id="budget-currency" style="width: 100px;">
+                            <option value="EUR">€</option>
+                            <option value="USD">$</option>
+                            <option value="GBP">£</option>
+                        </select>
+                    </div>
+                    <small class="text-muted">Συνολικό ποσό για το ταξίδι (προαιρετικό)</small>
+                </div>
             </div>
             
-            <div style="display: flex; gap: 15px; margin-top: 30px;">
-<button class="btn btn-primary" onclick="filterDestinations()">
-<i class="fas fa-search"></i> Αναζήτηση Προορισμών
+            <!-- ΚΟΥΜΠΙΑ ΔΡΑΣΗΣ -->
+            <div style="display: flex; gap: 15px; margin-top: 40px; justify-content: center;">
+                <button class="btn btn-primary" onclick="filterDestinations()" style="padding: 16px 40px; font-size: 18px;">
+                    <i class="fas fa-search"></i> 🔍 Αναζήτηση Προορισμών
                 </button>
-                <button class="btn btn-outline" onclick="resetFilters()">
+                
+                <button class="btn btn-outline" onclick="showQuickRecommendations()" style="padding: 16px 30px;">
+                    <i class="fas fa-bolt"></i> Γρήγορες Προτάσεις
+                </button>
+                
+                <button class="btn btn-outline" onclick="resetFilters()" style="padding: 16px 30px; border-color: var(--danger); color: var(--danger);">
                     <i class="fas fa-redo"></i> Επαναφορά
                 </button>
             </div>
+            
+            <!-- ΒΟΗΘΗΤΙΚΕΣ ΠΛΗΡΟΦΟΡΙΕΣ -->
+            <div class="alert alert-info" style="margin-top: 30px; background: #e3f2fd; border-left: 4px solid #2196f3;">
+                <div style="display: flex; align-items: flex-start; gap: 15px;">
+                    <i class="fas fa-lightbulb" style="font-size: 24px; color: #2196f3; margin-top: 2px;"></i>
+                    <div>
+                        <h4 style="margin: 0 0 10px 0; color: #0c5460;">💡 Συμβουλές για την αναζήτηση:</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px;">
+                            <div>
+                                <strong>👨‍👩‍👧‍👦 Για οικογένειες:</strong>
+                                <ul style="margin: 5px 0 0 15px; font-size: 14px;">
+                                    <li>Επιλέξτε "Θεματικά Πάρκα"</li>
+                                    <li>Διαλέξτε "Μέτριο" ή "Ακριβό" κόστος</li>
+                                    <li>5+ μέρες για ήρεμο ρυθμό</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <strong>🧳 Για φθηνό ταξίδι:</strong>
+                                <ul style="margin: 5px 0 0 15px; font-size: 14px;">
+                                    <li>Επιλέξτε "Οικονομικό" κόστος</li>
+                                    <li>Κοντινές αποστάσεις (<3 ώρες)</li>
+                                    <li>3-4 μέρες διαμονής</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         
-        <div id="destination-results" class="grid grid-3" style="margin-top: 20px;"></div>
+        <!-- ΑΠΟΤΕΛΕΣΜΑΤΑ ΑΝΑΖΗΤΗΣΗΣ -->
+        <div id="destination-results">
+            <div style="text-align: center; padding: 60px 20px; background: var(--light); border-radius: var(--radius-lg); margin-top: 20px;">
+                <div style="font-size: 64px; margin-bottom: 20px; color: var(--primary);">🗺️</div>
+                <h2 style="color: var(--dark); margin-bottom: 15px;">Ανακαλύψτε Προορισμούς</h2>
+                <p style="color: var(--gray); max-width: 600px; margin: 0 auto 30px;">
+                    Χρησιμοποιήστε τα φίλτρα παραπάνω για να βρείτε την τέλεια πόλη για το ταξίδι σας.
+                    <br>
+                    <strong>20+ ευρωπαϊκές πόλεις</strong> διαθέσιμες για εξερεύνηση.
+                </p>
+                
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn btn-primary" onclick="showPopularDestinations()">
+                        <i class="fas fa-fire"></i> Δημοφιλείς Προορισμοί
+                    </button>
+                    <button class="btn btn-outline" onclick="showBudgetDestinations()">
+                        <i class="fas fa-euro-sign"></i> Οικονομικές Επιλογές
+                    </button>
+                    <button class="btn btn-outline" onclick="showFamilyDestinations()">
+                        <i class="fas fa-child"></i> Για Οικογένειες
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- INFO BANNER -->
+        <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border-radius: var(--radius-lg); text-align: center;">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                <div style="text-align: center;">
+                    <div style="font-size: 32px; font-weight: bold;">20+</div>
+                    <div style="font-size: 14px; opacity: 0.9;">Ευρωπαϊκές Πόλεις</div>
+                </div>
+                <div style="width: 1px; height: 40px; background: rgba(255,255,255,0.3);"></div>
+                <div style="text-align: center;">
+                    <div style="font-size: 32px; font-weight: bold;">10</div>
+                    <div style="font-size: 14px; opacity: 0.9;">Πλήρης Υποστήριξη</div>
+                </div>
+                <div style="width: 1px; height: 40px; background: rgba(255,255,255,0.3);"></div>
+                <div style="text-align: center;">
+                    <div style="font-size: 32px; font-weight: bold;">8</div>
+                    <div style="font-size: 14px; opacity: 0.9;">Με Θεματικά Πάρκα</div>
+                </div>
+                <div style="width: 1px; height: 40px; background: rgba(255,255,255,0.3);"></div>
+                <div style="text-align: center;">
+                    <div style="font-size: 32px; font-weight: bold;">1</div>
+                    <div style="font-size: 14px; opacity: 0.9;">Με Disneyland</div>
+                </div>
+            </div>
+        </div>
     `;
 }
-
 function setupDestinationStep() {
     if (state.selectedDays > 0) {
         document.getElementById('days-stay').value = state.selectedDays;
@@ -710,97 +817,324 @@ async function filterDestinations() {
     `;
     
     // 4. ΛΙΣΤΑ 20+ ΕΥΡΩΠΑΪΚΩΝ ΠΟΛΕΩΝ (με metadata)
-    const cities = [
-        // === ΠΟΛΕΙΣ ΜΕ JSON (ΥΠΑΡΧΟΥΝ ΗΔΗ) ===
-        { id: 'amsterdam', name: 'Άμστερνταμ', emoji: '🌷', category: 'πόλη', 
-          hasJSON: true, distance: 3.5, weather: 'Ζεστό', cost: 'Μέτριο', 
-          vacationType: 'Πόλη', country: 'Ολλανδία', popularity: 9 },
-        
-        { id: 'berlin', name: 'Βερολίνο', emoji: '🇩🇪', category: 'πόλη', 
-          hasJSON: true, distance: 2.5, weather: 'Ίδιο', cost: 'Οικονομικό', 
-          vacationType: 'Πόλη', country: 'Γερμανία', popularity: 8 },
-        
-        { id: 'budapest', name: 'Βουδαπέστη', emoji: '🏰', category: 'πόλη', 
-          hasJSON: true, distance: 2.0, weather: 'Ίδιο', cost: 'Οικονομικό', 
-          vacationType: 'Πολιτισμός', country: 'Ουγγαρία', popularity: 7 },
-        
-        { id: 'istanbul', name: 'Κωνσταντινούπολη', emoji: '🕌', category: 'πόλη', 
-          hasJSON: true, distance: 1.5, weather: 'Ζεστό', cost: 'Οικονομικό', 
-          vacationType: 'Πολιτισμός', country: 'Τουρκία', popularity: 8 },
-        
-        { id: 'lisbon', name: 'Λισαβόνα', emoji: '🏖️', category: 'πόλη', 
-          hasJSON: true, distance: 4.5, weather: 'Ζεστό', cost: 'Μέτριο', 
-          vacationType: 'Θάλασσα', country: 'Πορτογαλία', popularity: 7 },
-        
-        { id: 'london', name: 'Λονδίνο', emoji: '🇬🇧', category: 'πόλη', 
-          hasJSON: true, distance: 3.8, weather: 'Ίδιο', cost: 'Ακριβό', 
-          vacationType: 'Πόλη', country: 'ΗΒ', popularity: 10 },
-        
-        { id: 'madrid', name: 'Μαδρίτη', emoji: '🇪🇸', category: 'πόλη', 
-          hasJSON: true, distance: 4.0, weather: 'Ζεστό', cost: 'Μέτριο', 
-          vacationType: 'Πόλη', country: 'Ισπανία', popularity: 8 },
-        
-        { id: 'paris', name: 'Παρίσι', emoji: '🗼', category: 'πόλη', 
-          hasJSON: true, distance: 3.0, weather: 'Ίδιο', cost: 'Ακριβό', 
-          vacationType: 'Πολιτισμός', country: 'Γαλλία', popularity: 10 },
-        
-        { id: 'prague', name: 'Πράγα', emoji: '🏰', category: 'πόλη', 
-          hasJSON: true, distance: 2.2, weather: 'Κρύο', cost: 'Οικονομικό', 
-          vacationType: 'Πολιτισμός', country: 'Τσεχία', popularity: 9 },
-        
-        { id: 'vienna', name: 'Βιέννη', emoji: '🎻', category: 'πόλη', 
-          hasJSON: true, distance: 2.0, weather: 'Ίδιο', cost: 'Μέτριο', 
-          vacationType: 'Πολιτισμός', country: 'Αυστρία', popularity: 8 },
-        
-        // === ΠΟΛΕΙΣ ΧΩΡΙΣ JSON (ΣΥΝΤΟΜΑ ΔΙΑΘΕΣΙΜΕΣ) ===
-        { id: 'rome', name: 'Ρώμη', emoji: '🏛️', category: 'πόλη', 
-          hasJSON: false, distance: 1.8, weather: 'Ζεστό', cost: 'Μέτριο', 
-          vacationType: 'Πολιτισμός', country: 'Ιταλία', popularity: 10 },
-        
-        { id: 'barcelona', name: 'Βαρκελώνη', emoji: '🏖️', category: 'πόλη', 
-          hasJSON: false, distance: 3.0, weather: 'Ζεστό', cost: 'Μέτριο', 
-          vacationType: 'Θάλασσα', country: 'Ισπανία', popularity: 9 },
-        
-        { id: 'brussels', name: 'Βρυξέλλες', emoji: '🍫', category: 'πόλη', 
-          hasJSON: false, distance: 3.0, weather: 'Ίδιο', cost: 'Μέτριο', 
-          vacationType: 'Πόλη', country: 'Βέλγιο', popularity: 6 },
-        
-        { id: 'copenhagen', name: 'Κοπεγχάγη', emoji: '🧜', category: 'πόλη', 
-          hasJSON: false, distance: 3.5, weather: 'Κρύο', cost: 'Ακριβό', 
-          vacationType: 'Πόλη', country: 'Δανία', popularity: 7 },
-        
-        { id: 'dublin', name: 'Δουβλίνο', emoji: '🍀', category: 'πόλη', 
-          hasJSON: false, distance: 4.2, weather: 'Ίδιο', cost: 'Μέτριο', 
-          vacationType: 'Πόλη', country: 'Ιρλανδία', popularity: 7 },
-        
-        { id: 'edinburgh', name: 'Εδιμβούργο', emoji: '🏰', category: 'πόλη', 
-          hasJSON: false, distance: 4.0, weather: 'Κρύο', cost: 'Μέτριο', 
-          vacationType: 'Πολιτισμός', country: 'Σκωτία', popularity: 8 },
-        
-        { id: 'florence', name: 'Φλωρεντία', emoji: '🎨', category: 'πόλη', 
-          hasJSON: false, distance: 2.0, weather: 'Ζεστό', cost: 'Μέτριο', 
-          vacationType: 'Πολιτισμός', country: 'Ιταλία', popularity: 8 },
-        
-        { id: 'milan', name: 'Μιλάνο', emoji: '👔', category: 'πόλη', 
-          hasJSON: false, distance: 2.3, weather: 'Ζεστό', cost: 'Ακριβό', 
-          vacationType: 'Πόλη', country: 'Ιταλία', popularity: 7 },
-        
-        { id: 'munich', name: 'Μόναχο', emoji: '🍺', category: 'πόλη', 
-          hasJSON: false, distance: 2.5, weather: 'Ίδιο', cost: 'Μέτριο', 
-          vacationType: 'Πολιτισμός', country: 'Γερμανία', popularity: 8 },
-        
-        { id: 'venice', name: 'Βενετία', emoji: '🛶', category: 'πόλη', 
-          hasJSON: false, distance: 2.0, weather: 'Ζεστό', cost: 'Ακριβό', 
-          vacationType: 'Πολιτισμός', country: 'Ιταλία', popularity: 9 },
-        
-        { id: 'warsaw', name: 'Βαρσοβία', emoji: '🐻', category: 'πόλη', 
-          hasJSON: false, distance: 2.5, weather: 'Κρύο', cost: 'Οικονομικό', 
-          vacationType: 'Πόλη', country: 'Πολωνία', popularity: 6 },
-        
-        { id: 'zurich', name: 'Ζυρίχη', emoji: '💼', category: 'πόλη', 
-          hasJSON: false, distance: 2.5, weather: 'Κρύο', cost: 'Ακριβό', 
-          vacationType: 'Βουνό', country: 'Ελβετία', popularity: 7 }
-    ];
+const cities = [
+    // === ΠΟΛΕΙΣ ΜΕ JSON (ΠΛΗΡΗΣ ΥΠΟΣΤΗΡΙΞΗ) ===
+    { 
+        id: 'paris', name: 'Παρίσι', emoji: '🗼', category: 'πόλη', 
+        hasJSON: true, distance: 3.0, weather: 'Ίδιο', cost: 'Ακριβό', 
+        vacationType: 'Πολιτισμός', country: 'Γαλλία', popularity: 10,
+        themeParks: {
+            hasParks: true,
+            parksCount: 2,
+            parkNames: ["Disneyland Paris", "Parc Astérix"],
+            familyRating: 10,
+            hasDisney: true,
+            waterParks: 1
+        },
+        tags: ['ρομαντικό', 'πολιτισμός', 'μούσεια', 'γκαστρονομία']
+    },
+    
+    { 
+        id: 'amsterdam', name: 'Άμστερνταμ', emoji: '🌷', category: 'πόλη', 
+        hasJSON: true, distance: 3.5, weather: 'Ζεστό', cost: 'Μέτριο', 
+        vacationType: 'Πόλη', country: 'Ολλανδία', popularity: 9,
+        themeParks: {
+            hasParks: true,
+            parksCount: 3,
+            parkNames: ["Efteling", "Duinrell", "Slagharen"],
+            familyRating: 9,
+            hasDisney: false,
+            waterParks: 2
+        },
+        tags: ['καναλόπολης', 'ποδήλατο', 'τέχνη', 'ανεμόμυλοι']
+    },
+    
+    { 
+        id: 'berlin', name: 'Βερολίνο', emoji: '🇩🇪', category: 'πόλη', 
+        hasJSON: true, distance: 2.5, weather: 'Ίδιο', cost: 'Οικονομικό', 
+        vacationType: 'Πόλη', country: 'Γερμανία', popularity: 8,
+        themeParks: {
+            hasParks: true,
+            parksCount: 2,
+            parkNames: ["Filmpark Babelsberg", "Tropical Islands"],
+            familyRating: 7,
+            hasDisney: false,
+            waterParks: 1
+        },
+        tags: ['ιστορία', 'τεχνολογία', 'νυχτερινή ζωή', 'street food']
+    },
+    
+    { 
+        id: 'london', name: 'Λονδίνο', emoji: '🇬🇧', category: 'πόλη', 
+        hasJSON: true, distance: 3.8, weather: 'Ίδιο', cost: 'Ακριβό', 
+        vacationType: 'Πόλη', country: 'ΗΒ', popularity: 10,
+        themeParks: {
+            hasParks: true,
+            parksCount: 4,
+            parkNames: ["Thorpe Park", "Chessington World", "Legoland Windsor", "Alton Towers"],
+            familyRating: 9,
+            hasDisney: false,
+            waterParks: 1
+        },
+        tags: ['πολυπολιτισμικό', 'βασιλείο', 'θέατρο', 'shopping']
+    },
+    
+    { 
+        id: 'madrid', name: 'Μαδρίτη', emoji: '🇪🇸', category: 'πόλη', 
+        hasJSON: true, distance: 4.0, weather: 'Ζεστό', cost: 'Μέτριο', 
+        vacationType: 'Πόλη', country: 'Ισπανία', popularity: 8,
+        themeParks: {
+            hasParks: true,
+            parksCount: 1,
+            parkNames: ["Parque Warner Madrid"],
+            familyRating: 8,
+            hasDisney: false,
+            waterParks: 0
+        },
+        tags: ['φλαμένκο', 'τέχνη', 'παραδοσιακή κουζίνα', 'nightlife']
+    },
+    
+    { 
+        id: 'prague', name: 'Πράγα', emoji: '🏰', category: 'πόλη', 
+        hasJSON: true, distance: 2.2, weather: 'Κρύο', cost: 'Οικονομικό', 
+        vacationType: 'Πολιτισμός', country: 'Τσεχία', popularity: 9,
+        themeParks: {
+            hasParks: false,
+            parksCount: 0,
+            parkNames: [],
+            familyRating: 5,
+            hasDisney: false,
+            waterParks: 0
+        },
+        tags: ['μεσαιωνική', 'μπύρα', 'αρχιτεκτονική', 'ιστορία']
+    },
+    
+    { 
+        id: 'vienna', name: 'Βιέννη', emoji: '🎻', category: 'πόλη', 
+        hasJSON: true, distance: 2.0, weather: 'Ίδιο', cost: 'Μέτριο', 
+        vacationType: 'Πολιτισμός', country: 'Αυστρία', popularity: 8,
+        themeParks: {
+            hasParks: true,
+            parksCount: 1,
+            parkNames: ["Prater"],
+            familyRating: 7,
+            hasDisney: false,
+            waterParks: 0
+        },
+        tags: ['μουσική', 'καφέ', 'αυτοκρατορική', 'πολιτισμός']
+    },
+    
+    { 
+        id: 'budapest', name: 'Βουδαπέστη', emoji: '🏰', category: 'πόλη', 
+        hasJSON: true, distance: 2.0, weather: 'Ίδιο', cost: 'Οικονομικό', 
+        vacationType: 'Πολιτισμός', country: 'Ουγγαρία', popularity: 7,
+        themeParks: {
+            hasParks: false,
+            parksCount: 0,
+            parkNames: [],
+            familyRating: 5,
+            hasDisney: false,
+            waterParks: 1
+        },
+        tags: ['θερμές πηγές', 'αρ νουβό', 'ποτάμια', 'ιστορία']
+    },
+    
+    { 
+        id: 'istanbul', name: 'Κωνσταντινούπολη', emoji: '🕌', category: 'πόλη', 
+        hasJSON: true, distance: 1.5, weather: 'Ζεστό', cost: 'Οικονομικό', 
+        vacationType: 'Πολιτισμός', country: 'Τουρκία', popularity: 8,
+        themeParks: {
+            hasParks: true,
+            parksCount: 2,
+            parkNames: ["Vialand", "Isfanbul"],
+            familyRating: 8,
+            hasDisney: false,
+            waterParks: 1
+        },
+        tags: ['ανατολίτικη', 'μπαζάρια', 'ιστορία', 'θαλασσοπλοΐα']
+    },
+    
+    { 
+        id: 'lisbon', name: 'Λισαβόνα', emoji: '🏖️', category: 'πόλη', 
+        hasJSON: true, distance: 4.5, weather: 'Ζεστό', cost: 'Μέτριο', 
+        vacationType: 'Θάλασσα', country: 'Πορτογαλία', popularity: 7,
+        themeParks: {
+            hasParks: false,
+            parksCount: 0,
+            parkNames: [],
+            familyRating: 5,
+            hasDisney: false,
+            waterParks: 0
+        },
+        tags: ['ατλαντικός', 'τρόλεϊ', 'φαδό', 'παραλίες']
+    },
+    
+    // === ΠΟΛΕΙΣ ΧΩΡΙΣ JSON (ΣΥΝΤΟΜΑ ΔΙΑΘΕΣΙΜΕΣ) ===
+    { 
+        id: 'rome', name: 'Ρώμη', emoji: '🏛️', category: 'πόλη', 
+        hasJSON: false, distance: 1.8, weather: 'Ζεστό', cost: 'Μέτριο', 
+        vacationType: 'Πολιτισμός', country: 'Ιταλία', popularity: 10,
+        themeParks: {
+            hasParks: true,
+            parksCount: 1,
+            parkNames: ["Rainbow Magicland"],
+            familyRating: 7,
+            hasDisney: false,
+            waterParks: 0
+        },
+        tags: ['αρχαία', 'εκκλησίες', 'παστά', 'γλυπτά']
+    },
+    
+    { 
+        id: 'barcelona', name: 'Βαρκελώνη', emoji: '🏖️', category: 'πόλη', 
+        hasJSON: false, distance: 3.0, weather: 'Ζεστό', cost: 'Μέτριο', 
+        vacationType: 'Θάλασσα', country: 'Ισπανία', popularity: 9,
+        themeParks: {
+            hasParks: true,
+            parksCount: 2,
+            parkNames: ["PortAventura World", "Tibidabo"],
+            familyRating: 9,
+            hasDisney: false,
+            waterParks: 1
+        },
+        tags: ['γαουντί', 'παραλία', 'ταπάς', 'μοντέρνα τέχνη']
+    },
+    
+    { 
+        id: 'brussels', name: 'Βρυξέλλες', emoji: '🍫', category: 'πόλη', 
+        hasJSON: false, distance: 3.0, weather: 'Ίδιο', cost: 'Μέτριο', 
+        vacationType: 'Πόλη', country: 'Βέλγιο', popularity: 6,
+        themeParks: {
+            hasParks: true,
+            parksCount: 1,
+            parkNames: ["Walibi Belgium"],
+            familyRating: 7,
+            hasDisney: false,
+            waterParks: 0
+        },
+        tags: ['σοκολάτα', 'μπύρα', 'ευρωπαϊκή έδρα', 'κομίκς']
+    },
+    
+    { 
+        id: 'copenhagen', name: 'Κοπεγχάγη', emoji: '🧜', category: 'πόλη', 
+        hasJSON: false, distance: 3.5, weather: 'Κρύο', cost: 'Ακριβό', 
+        vacationType: 'Πόλη', country: 'Δανία', popularity: 7,
+        themeParks: {
+            hasParks: true,
+            parksCount: 1,
+            parkNames: ["Tivoli Gardens"],
+            familyRating: 9,
+            hasDisney: false,
+            waterParks: 0
+        },
+        tags: ['χάγιαρτ', 'design', 'ποδηλατόπολη', 'νορδική']
+    },
+    
+    { 
+        id: 'dublin', name: 'Δουβλίνο', emoji: '🍀', category: 'πόλη', 
+        hasJSON: false, distance: 4.2, weather: 'Ίδιο', cost: 'Μέτριο', 
+        vacationType: 'Πόλη', country: 'Ιρλανδία', popularity: 7,
+        themeParks: {
+            hasParks: false,
+            parksCount: 0,
+            parkNames: [],
+            familyRating: 5,
+            hasDisney: false,
+            waterParks: 0
+        },
+        tags: ['μπύρα', 'μουσική', 'βιβλιοθήκες', 'φιλόξενοι']
+    },
+    
+    { 
+        id: 'edinburgh', name: 'Εδιμβούργο', emoji: '🏰', category: 'πόλη', 
+        hasJSON: false, distance: 4.0, weather: 'Κρύο', cost: 'Μέτριο', 
+        vacationType: 'Πολιτισμός', country: 'Σκωτία', popularity: 8,
+        themeParks: {
+            hasParks: false,
+            parksCount: 0,
+            parkNames: [],
+            familyRating: 6,
+            hasDisney: false,
+            waterParks: 0
+        },
+        tags: ['μεσαιωνική', 'φρούριο', 'whisky', 'φεστιβάλ']
+    },
+    
+    { 
+        id: 'florence', name: 'Φλωρεντία', emoji: '🎨', category: 'πόλη', 
+        hasJSON: false, distance: 2.0, weather: 'Ζεστό', cost: 'Μέτριο', 
+        vacationType: 'Πολιτισμός', country: 'Ιταλία', popularity: 8,
+        themeParks: {
+            hasParks: false,
+            parksCount: 0,
+            parkNames: [],
+            familyRating: 6,
+            hasDisney: false,
+            waterParks: 0
+        },
+        tags: ['αναγέννηση', 'τέχνη', 'έργα τέχνης', 'τοσκάνη']
+    },
+    
+    { 
+        id: 'munich', name: 'Μόναχο', emoji: '🍺', category: 'πόλη', 
+        hasJSON: false, distance: 2.5, weather: 'Ίδιο', cost: 'Μέτριο', 
+        vacationType: 'Πολιτισμός', country: 'Γερμανία', popularity: 8,
+        themeParks: {
+            hasParks: false,
+            parksCount: 0,
+            parkNames: [],
+            familyRating: 6,
+            hasDisney: false,
+            waterParks: 0
+        },
+        tags: ['οκτόμπερφεστ', 'μπύρα', 'βαρυαρία', 'παραδοσιακή']
+    },
+    
+    { 
+        id: 'venice', name: 'Βενετία', emoji: '🛶', category: 'πόλη', 
+        hasJSON: false, distance: 2.0, weather: 'Ζεστό', cost: 'Ακριβό', 
+        vacationType: 'Πολιτισμός', country: 'Ιταλία', popularity: 9,
+        themeParks: {
+            hasParks: false,
+            parksCount: 0,
+            parkNames: [],
+            familyRating: 5,
+            hasDisney: false,
+            waterParks: 0
+        },
+        tags: ['κανάλια', 'γέφυρες', 'καρναβάλι', 'ρομαντικό']
+    },
+    
+    { 
+        id: 'warsaw', name: 'Βαρσοβία', emoji: '🐻', category: 'πόλη', 
+        hasJSON: false, distance: 2.5, weather: 'Κρύο', cost: 'Οικονομικό', 
+        vacationType: 'Πόλη', country: 'Πολωνία', popularity: 6,
+        themeParks: {
+            hasParks: false,
+            parksCount: 0,
+            parkNames: [],
+            familyRating: 5,
+            hasDisney: false,
+            waterParks: 0
+        },
+        tags: ['πολωνική ιστορία', 'ανακατασκευή', 'χαμηλό κόστος', 'πάρκα']
+    },
+    
+    { 
+        id: 'zurich', name: 'Ζυρίχη', emoji: '💼', category: 'πόλη', 
+        hasJSON: false, distance: 2.5, weather: 'Κρύο', cost: 'Ακριβό', 
+        vacationType: 'Βουνό', country: 'Ελβετία', popularity: 7,
+        themeParks: {
+            hasParks: false,
+            parksCount: 0,
+            parkNames: [],
+            familyRating: 6,
+            hasDisney: false,
+            waterParks: 0
+        },
+        tags: ['αλπική', 'οικονομική πρωτεύουσα', 'λίμνες', 'καθαρή']
+    }
+];
     
     // 5. ΕΦΑΡΜΟΓΗ ΦΙΛΤΡΩΝ
     const filteredCities = cities.filter(city => {
@@ -1740,3 +2074,113 @@ function clearSelectedActivities() {
 window.clearSelectedActivities = clearSelectedActivities;
 
 console.log('✅ Script.js loaded successfully!');
+// ==================== QUICK RECOMMENDATIONS ====================
+function showQuickRecommendations() {
+    const recommendations = [
+        {
+            title: "👨‍👩‍👧‍👦 Για Οικογένειες",
+            cities: ["Παρίσι", "Λονδίνο", "Άμστερνταμ", "Βαρκελώνη"],
+            filters: { 
+                'theme-parks': 'has-parks',
+                'travel-type': 'Οικογένεια',
+                'cost-level': 'Μέτριο'
+            },
+            description: "Πόλεις με θεματικά πάρκα και οικογενειακές δραστηριότητες"
+        },
+        {
+            title: "💰 Οικονομικές Επιλογές",
+            cities: ["Βουδαπέστη", "Πράγα", "Κωνσταντινούπολη", "Βερολίνο"],
+            filters: { 
+                'cost-level': 'Οικονομικό',
+                'distance': '2.5'
+            },
+            description: "Καλής ποιότητας ταξίδια με χαμηλό κόστος"
+        },
+        {
+            title: "🎨 Πολιτισμός & Τέχνη",
+            cities: ["Παρίσι", "Ρώμη", "Φλωρεντία", "Βιέννη"],
+            filters: { 
+                'vacation-type': 'Πολιτισμός',
+                'theme-parks': 'no-parks'
+            },
+            description: "Για εκδρομές μουσεία, τέχνη και ιστορία"
+        },
+        {
+            title: "👑 Disneyland Paris",
+            cities: ["Παρίσι"],
+            filters: { 
+                'theme-parks': 'disney',
+                'travel-type': 'Οικογένεια'
+            },
+            description: "Μοναδική ευρωπαϊκή πόλη με Disneyland"
+        }
+    ];
+    
+    const resultsDiv = document.getElementById('destination-results');
+    let html = '<h2 style="grid-column: 1/-1; margin-bottom: 20px;">🎯 Γρήγορες Προτάσεις</h2>';
+    
+    recommendations.forEach(rec => {
+        html += `
+            <div class="card" style="grid-column: span 1;">
+                <h3 style="color: var(--primary); margin-bottom: 10px;">${rec.title}</h3>
+                <p style="color: var(--gray); margin-bottom: 15px; font-size: 14px;">${rec.description}</p>
+                
+                <div style="margin-bottom: 15px;">
+                    ${rec.cities.map(city => `
+                        <span class="tag" style="background: var(--light); margin: 0 5px 5px 0;">
+                            <i class="fas fa-map-marker-alt"></i> ${city}
+                        </span>
+                    `).join('')}
+                </div>
+                
+                <button class="btn btn-outline" onclick="applyRecommendation(${JSON.stringify(rec.filters).replace(/"/g, '&quot;')})" style="width: 100%;">
+                    <i class="fas fa-magic"></i> Εφαρμογή Φίλτρων
+                </button>
+            </div>
+        `;
+    });
+    
+    resultsDiv.innerHTML = `<div class="grid grid-4">${html}</div>`;
+}
+
+function applyRecommendation(filters) {
+    Object.keys(filters).forEach(filterId => {
+        const element = document.getElementById(filterId);
+        if (element) {
+            element.value = filters[filterId];
+        }
+    });
+    
+    // Αυτόματη αναζήτηση με τα φίλτρα
+    setTimeout(() => filterDestinations(), 300);
+}
+
+// ==================== QUICK FILTER BUTTONS ====================
+function showPopularDestinations() {
+    document.getElementById('theme-parks').value = '';
+    document.getElementById('cost-level').value = '';
+    document.getElementById('distance').value = '3.5';
+    filterDestinations();
+}
+
+function showBudgetDestinations() {
+    document.getElementById('cost-level').value = 'Οικονομικό';
+    document.getElementById('distance').value = '2.5';
+    document.getElementById('theme-parks').value = '';
+    filterDestinations();
+}
+
+function showFamilyDestinations() {
+    document.getElementById('travel-type').value = 'Οικογένεια';
+    document.getElementById('theme-parks').value = 'has-parks';
+    document.getElementById('cost-level').value = 'Μέτριο';
+    document.getElementById('days-stay').value = '5';
+    filterDestinations();
+}
+
+// Προσθήκη στο window object
+window.showQuickRecommendations = showQuickRecommendations;
+window.applyRecommendation = applyRecommendation;
+window.showPopularDestinations = showPopularDestinations;
+window.showBudgetDestinations = showBudgetDestinations;
+window.showFamilyDestinations = showFamilyDestinations;
