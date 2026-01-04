@@ -860,16 +860,16 @@ async function setupActivitiesStep() {
                         <span style="margin-left: 15px;"><i class="fas fa-tag"></i> ${activity.category}</span>
                     </div>
                     
-                   <table class="price-table">
+                 <table class="price-table">
     <tr>
         <th>Βρέφη</th>
         <th>Παιδιά</th>
         <th>Ενήλικες</th>
     </tr>
     <tr>
-        <td>${getPriceDisplay(prices, 2)}</td>
-        <td>${getPriceDisplay(prices, 12)}</td>
-        <td><strong>${getPriceDisplay(prices, 'adult')}</strong></td>
+        <td>${getPriceDisplay(activity.prices, 2)}</td>
+        <td>${getPriceDisplay(activity.prices, 12)}</td>
+        <td><strong>${getPriceDisplay(activity.prices, 'adult')}</strong></td>
     </tr>
 </table>
                     
