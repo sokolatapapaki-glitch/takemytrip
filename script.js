@@ -43,6 +43,28 @@ function initApp() {
 
 function loadSavedData() {
     const saved = localStorage.getItem('travelPlannerData');
+    
+    // ΕΡΩΤΗΣΗ ΣΤΟΝ ΧΡΗΣΤΗ: Νέο ή προηγούμενο ταξίδι;
+    if (saved && !sessionStorage.getItem('userChoiceMade')) {
+        const userChoice = confirm(
+            'Βρέθηκε προηγούμενο ταξίδι!\n\n' +
+            'Κάντε κλικ:\n' +
+            '• "OK" για να συνεχίσετε το προηγούμενο ταξίδι\n' +
+            '• "Cancel" για να ξεκινήσετε νέο ταξίδι'
+        );
+        
+        sessionStorage.setItem('userChoiceMade', 'true');
+        
+        if (!userChoice) {
+            // Ο χρήστης θέλει ΝΕΟ ταξίδι - ΚΑΘΑΡΙΣΜΟΣ
+            localStorage.removeItem('travelPlannerData');
+            localStorage.removeItem('travel_custom_points');
+            console.log('🆕 Ξεκινάει νέο ταξίδι');
+            return; // ΣΤΑΜΑΤΑ ΕΔΩ, δεν φορτώνει τίποτα
+        }
+    }
+    
+    // Αν φτάσει εδώ, ο χρήστης επέλεξε να συνεχίσει
     if (saved) {
         const data = JSON.parse(saved);
         
@@ -438,12 +460,18 @@ function getActivitiesStepHTML() {
                     </div>
                 </div>
                 
-                <!-- Smart Combo Button -->
-                <div style="text-align: center; margin: 30px 0;">
-                    <button class="btn btn-accent" onclick="calculateSmartCombos()" style="padding: 18px 40px; font-size: 18px;">
-                        <i class="fas fa-calculator"></i> Έξυπνος Υπολογισμός Combo
-                    </button>
-                </div>
+                <!-- Smart Combo Button και Καθαρισμός -->
+<div style="display: flex; gap: 15px; justify-content: center; margin: 30px 0; flex-wrap: wrap;">
+    <button class="btn btn-accent" onclick="calculateSmartCombos()" style="padding: 18px 40px; font-size: 18px;">
+        <i class="fas fa-calculator"></i> Έξυπνο Combo
+    </button>
+    
+    <!-- ΚΟΥΜΠΙ ΚΑΘΑΡΙΣΜΟΥ -->
+    <button class="btn btn-outline" onclick="clearSelectedActivities()" 
+            style="padding: 18px 40px; font-size: 18px; border-color: var(--danger); color: var(--danger);">
+        <i class="fas fa-trash-alt"></i> Καθαρισμός Επιλογών
+    </button>
+</div>
                 
                 <!-- Total Cost -->
                 <div class="card" style="background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: white; text-align: center;">
@@ -829,7 +857,20 @@ async function setupActivitiesStep() {
     }
     
     const activitiesList = document.getElementById('activities-list');
-    activitiesList.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i><p>Φόρτωση δραστηριοτήτων...</p></div>';
+    
+    // ΠΡΟΣΘΗΚΗ: Reset μόνο αν ο χρήστης δεν έχει επιλέξει
+    if (!state.selectedActivities || state.selectedActivities.length === 0) {
+        activitiesList.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i>
+                    <p>Δεν έχετε επιλέξει δραστηριότητες ακόμα. Κάντε κλικ για να προσθέσετε.</p>
+                </div>
+            </div>
+        `;
+    } else {
+        activitiesList.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i><p>Φόρτωση δραστηριοτήτων...</p></div>';
+    }
     
     try {
         // Φόρτωση των δεδομένων από το JSON
@@ -841,6 +882,8 @@ async function setupActivitiesStep() {
         let html = '';
         state.currentCityActivities.forEach((activity, index) => {
             const familyCost = calculateFamilyCost(activity.prices);
+            
+            // ΑΛΛΑΓΗ: Έλεγχος αν η δραστηριότητα είναι ΕΠΙΛΕΓΜΕΝΗ
             const isSelected = state.selectedActivities.some(a => a.id === activity.id);
             
             html += `
@@ -860,18 +903,18 @@ async function setupActivitiesStep() {
                         <span style="margin-left: 15px;"><i class="fas fa-tag"></i> ${activity.category}</span>
                     </div>
                     
-                 <table class="price-table">
-    <tr>
-        <th>Βρέφη</th>
-        <th>Παιδιά</th>
-        <th>Ενήλικες</th>
-    </tr>
-    <tr>
-        <td>${getPriceDisplay(activity.prices, 2)}</td>
-        <td>${getPriceDisplay(activity.prices, 12)}</td>
-        <td><strong>${getPriceDisplay(activity.prices, 'adult')}</strong></td>
-    </tr>
-</table>
+                    <table class="price-table">
+                        <tr>
+                            <th>Βρέφη</th>
+                            <th>Παιδιά</th>
+                            <th>Ενήλικες</th>
+                        </tr>
+                        <tr>
+                            <td>${getPriceDisplay(activity.prices, 2)}</td>
+                            <td>${getPriceDisplay(activity.prices, 12)}</td>
+                            <td><strong>${getPriceDisplay(activity.prices, 'adult')}</strong></td>
+                        </tr>
+                    </table>
                     
                     <div class="activity-total">
                         ${familyCost}€ για ${state.familyMembers.length} άτομα
@@ -881,6 +924,8 @@ async function setupActivitiesStep() {
         });
         
         activitiesList.innerHTML = html;
+        
+        // Ενημέρωση του συνολικού κόστους
         updateActivitiesTotal();
         
     } catch (error) {
@@ -890,6 +935,9 @@ async function setupActivitiesStep() {
                 <div class="alert alert-danger">
                     <i class="fas fa-exclamation-circle"></i>
                     Δεν ήταν δυνατή η φόρτωση των δραστηριοτήτων.
+                    <button onclick="setupActivitiesStep()" class="btn btn-outline" style="margin-top: 10px;">
+                        <i class="fas fa-sync-alt"></i> Δοκιμή ξανά
+                    </button>
                 </div>
             </div>
         `;
@@ -1353,5 +1401,38 @@ window.reloadMap = reloadMap;
 window.addCustomPoint = addCustomPoint;
 window.showActivityMap = showActivityMap;
 window.showRouteBetweenPoints = showRouteBetweenPoints;
+// ==================== NEW FUNCTION: CLEAR ACTIVITIES ====================
+function clearSelectedActivities() {
+    if (state.selectedActivities.length === 0) {
+        alert('ℹ️ Δεν έχετε επιλέξει καμία δραστηριότητα!');
+        return;
+    }
+    
+    if (confirm('⚠️ Θέλετε να καταργήσετε ΟΛΕΣ τις επιλεγμένες δραστηριότητες;')) {
+        // 1. Καθαρισμός από το state
+        state.selectedActivities = [];
+        
+        // 2. Καθαρισμός από την οθόνη
+        document.querySelectorAll('.activity-card.selected').forEach(card => {
+            card.classList.remove('selected');
+            const star = card.querySelector('.activity-star');
+            if (star) {
+                star.textContent = '☆';
+            }
+        });
+        
+        // 3. Ενημέρωση κόστους
+        updateActivitiesTotal();
+        
+        // 4. Αποθήκευση
+        saveState();
+        
+        // 5. Ενημέρωση χρήστη
+        alert('✅ Οι επιλογές καθαρίστηκαν! Τώρα μπορείτε να επιλέξετε νέες δραστηριότητες.');
+    }
+}
+
+// Προσθήκη της συνάρτησης στο window για να είναι προσβάσιμη
+window.clearSelectedActivities = clearSelectedActivities;
 
 console.log('✅ Script.js loaded successfully!');
