@@ -225,8 +225,8 @@ function getDestinationStepHTML() {
             </div>
             
             <div style="display: flex; gap: 15px; margin-top: 30px;">
-                <button class="btn btn-primary" onclick="()">
-                    <i class="fas fa-search"></i> Αναζήτηση Προορισμών
+<button class="btn btn-primary" onclick="filterDestinations()">
+<i class="fas fa-search"></i> Αναζήτηση Προορισμών
                 </button>
                 <button class="btn btn-outline" onclick="resetFilters()">
                     <i class="fas fa-redo"></i> Επαναφορά
