@@ -77,9 +77,9 @@ body {
     background: white;
     color: var(--dark);
 }
-/* ==================== SIDEBAR FIX ==================== */
+/* ==================== SIDEBAR FIX - ΚΕΙΜΕΝΑ ΟΡΑΤΑ ==================== */
 .sidebar {
-    width: 280px; /* Ελαφρώς μεγαλύτερο για καλύτερη αναγνωσιμότητα */
+    width: 280px;
     background: linear-gradient(180deg, var(--dark) 0%, #1A202C 100%);
     color: white;
     display: flex;
@@ -91,12 +91,12 @@ body {
     overflow-y: auto;
 }
 
-/* ΒΗΜΑΤΑ - ΣΥΜΠΑΓΗ ΑΛΛΑ ΑΝΑΓΝΩΣΙΜΑ */
+/* ΒΗΜΑΤΑ - ΣΥΜΠΑΓΗ ΜΕ ΟΡΑΤΑ ΚΕΙΜΕΝΑ */
 .steps-container {
-    flex: 0 1 auto; /* Δεν τραβάει όλο το ύψος */
+    flex: 0 1 auto;
     display: flex;
     flex-direction: column;
-    gap: 8px; /* Μικρό gap μεταξύ κουμπιών */
+    gap: 8px;
     margin-top: 15px;
 }
 
@@ -110,9 +110,9 @@ body {
     transition: var(--transition);
     background: rgba(255, 255, 255, 0.05);
     border-left: 3px solid transparent;
-    min-height: 60px; /* Σταθερό ύψος */
-    max-height: 60px; /* Σταθερό ύψος */
-    overflow: hidden;
+    min-height: 70px; /* Ελαφρώς μεγαλύτερο για περισσότερο κείμενο */
+    max-height: 70px;
+    overflow: visible; /* Αλλαγή από hidden σε visible */
 }
 
 .step:hover {
@@ -149,7 +149,8 @@ body {
 
 .step-content {
     flex: 1;
-    min-width: 0; /* Επιτρέπει το text-overflow */
+    min-width: 0;
+    overflow: visible; /* Σημαντικό: να είναι visible */
 }
 
 .step-content h3 {
@@ -158,19 +159,38 @@ body {
     color: white;
     line-height: 1.3;
     margin-bottom: 4px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    /* Αφαίρεσα το white-space: nowrap */
+    overflow: visible;
+    text-overflow: clip;
 }
 
 .step-content p {
     font-size: 11px;
     color: rgba(255, 255, 255, 0.6);
-    line-height: 1.2;
+    line-height: 1.3;
     margin: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    /* Αφαίρεσα το white-space: nowrap */
+    overflow: visible;
+    text-overflow: clip;
+    display: block; /* Βεβαιώνουμε ότι εμφανίζεται */
+    opacity: 1; /* Βεβαιώνουμε ότι είναι ορατό */
+}
+
+/* Επιπλέον CSS για διαχείριση μεγάλων κειμένων */
+.step-content h3,
+.step-content p {
+    word-wrap: break-word;
+    word-break: break-word;
+    white-space: normal; /* Αυτό είναι το κλειδί */
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Περιορίζει σε 2 γραμμές */
+    -webkit-box-orient: vertical;
+    max-height: 2.6em; /* 2 γραμμές * 1.3 line-height */
+}
+
+.step-content h3 {
+    -webkit-line-clamp: 1; /* Μόνο 1 γραμμή για τον τίτλο */
+    max-height: 1.3em;
 }
 
 /* ΣΕ ΜΙΚΡΟΤΕΡΕΣ ΟΘΟΝΕΣ */
@@ -181,8 +201,8 @@ body {
     
     .step {
         padding: 10px 12px;
-        min-height: 55px;
-        max-height: 55px;
+        min-height: 65px;
+        max-height: 65px;
     }
     
     .step-icon {
@@ -193,6 +213,10 @@ body {
     
     .step-content h3 {
         font-size: 13px;
+    }
+    
+    .step-content p {
+        font-size: 10px;
     }
 }
 
@@ -220,15 +244,22 @@ body {
         gap: 8px;
     }
     
+    .step-content {
+        text-align: center;
+    }
+    
     .step-content h3 {
         font-size: 13px;
-        white-space: normal;
-        overflow: visible;
-        text-overflow: clip;
+        -webkit-line-clamp: 2; /* 2 γραμμές σε tablet */
+        max-height: 2.6em;
     }
     
     .step-content p {
-        display: none; /* Κρύβω τα descriptions σε tablet */
+        display: block !important; /* Βεβαιώνουμε ότι εμφανίζεται */
+        font-size: 11px;
+        -webkit-line-clamp: 2;
+        max-height: 2.6em;
+        margin-top: 4px;
     }
     
     .step-icon {
@@ -240,7 +271,7 @@ body {
 
 @media (max-width: 768px) {
     .sidebar {
-        display: none; /* Αποκρύπτεται για mobile */
+        display: none;
     }
     
     .mobile-nav {
@@ -262,6 +293,10 @@ body {
         font-size: 12px;
     }
     
+    .step-content p {
+        font-size: 10px;
+    }
+    
     .step-icon {
         width: 36px;
         height: 36px;
@@ -269,7 +304,7 @@ body {
     }
 }
 
-/* ΑΝΙΜΑΣΙΑ ΓΙΑ ACTIVE STEP */
+/* ΑΝΙΜΑΣΙΑ */
 @keyframes pulse {
     0% { box-shadow: 0 0 0 0 rgba(74, 144, 226, 0.4); }
     70% { box-shadow: 0 0 0 6px rgba(74, 144, 226, 0); }
