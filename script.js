@@ -860,18 +860,18 @@ async function setupActivitiesStep() {
                         <span style="margin-left: 15px;"><i class="fas fa-tag"></i> ${activity.category}</span>
                     </div>
                     
-                    <table class="price-table">
-                        <tr>
-                            <th>Ενήλικας</th>
-                            <th>Παιδί</th>
-                            <th>Οικογένεια</th>
-                        </tr>
-                        <tr>
-                            <td>${activity.prices?.adult || '0'}€</td>
-                            <td>${activity.prices?.child || activity.prices?.['4'] || '0'}€</td>
-                            <td><strong>${familyCost}€</strong></td>
-                        </tr>
-                    </table>
+                   <table class="price-table">
+    <tr>
+        <th>Βρέφη</th>
+        <th>Παιδιά</th>
+        <th>Ενήλικες</th>
+    </tr>
+    <tr>
+        <td>${getPriceDisplay(prices, 2)}</td>
+        <td>${getPriceDisplay(prices, 12)}</td>
+        <td><strong>${getPriceDisplay(prices, 'adult')}</strong></td>
+    </tr>
+</table>
                     
                     <div class="activity-total">
                         ${familyCost}€ για ${state.familyMembers.length} άτομα
@@ -895,24 +895,76 @@ async function setupActivitiesStep() {
         `;
     }
 }
+function getPriceDisplay(prices, age) {
+    if (!prices) return '0€';
+    
+    if (age === 'adult') {
+        return prices.adult !== undefined ? `${prices.adult}€` : 'N/A';
+    }
+    
+    const price = prices[age.toString()];
+    if (price === undefined) return 'N/A';
+    if (price === 'blocked') return '✗ Απαγ.';
+    if (price === 0) return 'ΔΩΡΕΑΝ';
+    return `${price}€`;
+}
 
 function calculateFamilyCost(prices) {
+    if (!prices) return 0;
+    
     let total = 0;
     
     state.familyMembers.forEach(member => {
         const age = member.age;
         
-        if (prices && prices[age] !== undefined && prices[age] !== "ΔΕΝ ΕΠΙΤΡΕΠΕΤΑΙ") {
-            total += typeof prices[age] === 'number' ? prices[age] : 0;
-        } else if (age >= 18 && prices?.adult) {
-            total += prices.adult;
-        } else if (age < 18 && prices?.child) {
-            total += prices.child;
-        } else if (age < 18 && prices?.['4']) {
-            total += prices['4'];
+        // 1. Βρίσκουμε την τιμή για τη συγκεκριμένη ηλικία
+        const agePrice = prices[age.toString()]; // Μετατρέπουμε σε string γιατί τα κλειδιά είναι strings
+        
+        // 2. Αν δεν υπάρχει τιμή για αυτήν την ηλικία, ψάχνουμε για adult
+        const adultPrice = prices.adult;
+        
+        // 3. Ελέγχουμε τι είδους τιμή έχουμε
+        if (agePrice !== undefined) {
+            // Περίπτωση 1: Η τιμή είναι "blocked" - αγνοούμε (δεν υπολογίζεται)
+            if (agePrice === "blocked") {
+                console.log(`Ηλικία ${age}: ΑΠΑΓΟΡΕΥΕΤΑΙ`);
+                return; // συνεχίζουμε με επόμενο μέλος
+            }
+            
+            // Περίπτωση 2: Η τιμή είναι αριθμός
+            if (typeof agePrice === 'number') {
+                total += agePrice;
+                console.log(`Ηλικία ${age}: ${agePrice}€`);
+            }
+            
+            // Περίπτωση 3: Η τιμή είναι 0 (δωρεάν)
+            // Απλά δεν προσθέτουμε τίποτα
+        }
+        // 4. Αν δεν βρέθηκε τιμή για συγκεκριμένη ηλικία, δοκιμάζουμε adult
+        else if (adultPrice !== undefined && age >= 18) {
+            if (typeof adultPrice === 'number') {
+                total += adultPrice;
+                console.log(`Ενήλικας ${age}: ${adultPrice}€`);
+            }
+        }
+        // 5. Αν δεν βρέθηκε τίποτα και είναι παιδί (<18)
+        else if (age < 18) {
+            // Ψάχνουμε για child τιμή (αν υπάρχει)
+            const childPrice = prices.child;
+            if (childPrice !== undefined && typeof childPrice === 'number') {
+                total += childPrice;
+                console.log(`Παιδί ${age}: ${childPrice}€ (child price)`);
+            }
+            // Αν δεν υπάρχει child τιμή, ψάχνουμε για τιμή ηλικίας 4 (συχνά για παιδιά)
+            else if (prices['4'] !== undefined && typeof prices['4'] === 'number') {
+                total += prices['4'];
+                console.log(`Παιδί ${age}: ${prices['4']}€ (default child price)`);
+            }
+            // Διαφορετικά, παιδί δωρεάν
         }
     });
     
+    console.log(`Συνολικό κόστος οικογένειας: ${total}€`);
     return total;
 }
 
