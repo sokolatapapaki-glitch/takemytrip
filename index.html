@@ -108,7 +108,30 @@
         <!-- MAIN CONTENT -->
         <main class="main-content">
             <div id="step-content" class="step-content">
-                <!-- ΕΔΩ ΘΑ ΦΟΡΤΩΝΕΙ ΚΑΘΕ ΒΗΜΑ -->
+                <!-- ΕΔΩ ΘΑ ΦΟΡΤΩΝΕΙ ΚΑΘΕ ΒΗΜΑ ΑΠΟ ΤΟ script.js -->
+            </div>
+            
+            <!-- ΚΟΥΜΠΙ "ΕΧΩ ΗΔΗ ΒΡΕΙ ΠΡΟΟΡΙΣΜΟ" -->
+            <div id="already-found-container" style="display: none; text-align: center; margin-top: 30px;">
+                <div style="padding: 20px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border-radius: var(--radius-lg); max-width: 500px; margin: 0 auto;">
+                    <h3 style="color: white; margin-bottom: 10px;">
+                        <i class="fas fa-check-circle"></i> Έχετε ήδη βρει προορισμό;
+                    </h3>
+                    <p style="opacity: 0.9; margin-bottom: 20px;">
+                        Αν γνωρίζετε ήδη σε ποια πόλη θέλετε να ταξιδέψετε, 
+                        πατήστε το κουμπί παρακάτω για να συνεχίσετε άμεσα.
+                    </p>
+                    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                        <button class="btn" onclick="showManualDestinationModal()" 
+                                style="background: white; color: #667eea; border: none; padding: 12px 25px;">
+                            <i class="fas fa-map-marker-alt"></i> Επιλέξω Εγώ
+                        </button>
+                        <button class="btn" onclick="showStep('flight')" 
+                                style="background: rgba(255,255,255,0.2); color: white; border: 1px solid white; padding: 12px 25px;">
+                            <i class="fas fa-arrow-right"></i> Συνέχεια στα Πτήσεις
+                        </button>
+                    </div>
+                </div>
             </div>
             
             <!-- BUDGET TRACKER (fixed) -->
@@ -143,6 +166,63 @@
         <div class="loading-spinner">
             <i class="fas fa-plane-departure fa-spin"></i>
             <p>Φόρτωση...</p>
+        </div>
+    </div>
+
+    <!-- MODAL ΓΙΑ ΧΕΙΡΟΚΙΝΗΤΗ ΕΠΙΛΟΓΗ ΠΟΛΗΣ -->
+    <div id="manual-destination-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-map-marker-alt"></i> Επιλογή Προορισμού</h3>
+                <button class="modal-close" onclick="closeManualDestinationModal()">&times;</button>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Επιλέξτε Πόλη</label>
+                <select class="form-control" id="manual-city-select">
+                    <option value="">-- Επιλέξτε πόλη --</option>
+                    <option value="amsterdam">Άμστερνταμ</option>
+                    <option value="berlin">Βερολίνο</option>
+                    <option value="budapest">Βουδαπέστη</option>
+                    <option value="istanbul">Κωνσταντινούπολη</option>
+                    <option value="lisbon">Λισαβόνα</option>
+                    <option value="london">Λονδίνο</option>
+                    <option value="madrid">Μαδρίτη</option>
+                    <option value="paris">Παρίσι</option>
+                    <option value="prague">Πράγα</option>
+                    <option value="vienna">Βιέννη</option>
+                    <option value="rome">Ρώμη</option>
+                    <option value="barcelona">Βαρκελώνη</option>
+                    <option value="brussels">Βρυξέλλες</option>
+                    <option value="copenhagen">Κοπεγχάγη</option>
+                    <option value="dublin">Δουβλίνο</option>
+                    <option value="other">Άλλη πόλη...</option>
+                </select>
+            </div>
+            
+            <div class="form-group" id="other-city-group" style="display: none;">
+                <label class="form-label">Όνομα Πόλης</label>
+                <input type="text" class="form-control" id="other-city-input" placeholder="π.χ. Νέα Υόρκη, Τόκιο, κλπ">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Διάρκεια Ταξιδιού (μέρες)</label>
+                <input type="number" class="form-control" id="manual-days" min="1" max="30" value="5">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Προϋπολογισμός (προαιρετικό)</label>
+                <input type="number" class="form-control" id="manual-budget" placeholder="π.χ. 1500">
+            </div>
+            
+            <div style="display: flex; gap: 15px; margin-top: 30px;">
+                <button class="btn btn-primary" onclick="saveManualDestination()" style="flex: 1;">
+                    <i class="fas fa-check"></i> Αποθήκευση
+                </button>
+                <button class="btn btn-outline" onclick="closeManualDestinationModal()" style="flex: 1;">
+                    <i class="fas fa-times"></i> Ακύρωση
+                </button>
+            </div>
         </div>
     </div>
 
