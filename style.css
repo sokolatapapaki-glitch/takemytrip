@@ -79,58 +79,76 @@ body {
 }
 /* ==================== SIDEBAR ==================== */
 .sidebar {
-    width: 280px;
+    width: 250px; /* ΜΙΚΡΟΤΕΡΟ ΠΛΑΤΟΣ */
     background: linear-gradient(180deg, var(--dark) 0%, #1A202C 100%);
     color: white;
     display: flex;
     flex-direction: column;
-    padding: 15px 12px;
+    padding: 10px 8px; /* ΜΙΚΡΟΤΕΡΟ PADDING */
     position: sticky;
     top: 0;
     height: 100vh;
-    /* ΑΦΑΙΡΕΣΑΜΕ: overflow-y: auto */
+    overflow-y: auto; /* ΚΑΝΕΙ SCROLL ΑΝ ΧΡΕΙΑΣΤΕΙ */
 }
 
-/* ΒΗΜΑΤΑ - ΓΙΑ DESKTOP */
+/* ΒΗΜΑΤΑ - ΥΠΕΡ-ΣΥΜΠΑΓΗ */
 .steps-container {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 1px; /* ΜΙΑ ΓΡΑΜΜΗ ΜΟΝΟ */
 }
 
 .step {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 10px;
-    border-radius: 6px;
+    gap: 6px;
+    padding: 5px 6px; /* ΥΠΕΡ-ΜΙΚΡΟ */
+    border-radius: 4px;
     cursor: pointer;
     transition: var(--transition);
     background: rgba(255,255,255,0.05);
-    border-left: 3px solid transparent;
-    /* ΧΩΡΙΣ min-height/max-height */
-    height: auto !important;
-    overflow: visible !important;
+    border-left: 2px solid transparent;
+    height: auto;
 }
 
-.step-content {
-    flex: 1;
-    overflow: visible !important;
+.step-icon {
+    width: 20px !important;
+    height: 20px !important;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 10px !important;
+    flex-shrink: 0;
 }
 
 .step-content h3 {
-    font-size: 13px;
+    font-size: 11px !important;
     font-weight: 600;
-    color: white;
-    line-height: 1.2;
-    margin-bottom: 2px;
+    color: white !important;
+    line-height: 1.1;
+    margin: 0;
 }
 
 .step-content p {
-    font-size: 10px;
-    color: rgba(255,255,255,0.7);
-    line-height: 1.1;
+    font-size: 8px !important;
+    color: rgba(255,255,255,0.6) !important;
+    line-height: 1;
+    margin: 0;
+    display: none; /* ΚΡΥΒΩ ΤΑ PARAGRAPHS ΓΙΑ ΝΑ ΜΠΟΡΕΣΩ ΝΑ ΤΑ ΜΙΚΡΥΝΩ */
+}
+
+/* ΣΕ POLY ΜΙΚΡΗ ΟΘΟΝΗ: ΕΜΦΑΝΙΖΩ ΤΑ PARAGRAPHS */
+@media (max-width: 1400px) {
+    .step-content p {
+        display: block;
+    }
+    .step {
+        padding: 6px 8px;
+    }
 }
 /* SIDEBAR FOOTER */
 .sidebar-footer {
