@@ -279,5 +279,60 @@
         }, 500);
     });
 </script>
+  <!-- Αυτό ακριβώς πριν το </body> -->
+<script>
+    // IMMEDIATE SIDEBAR FIX - ΜΟΝΟ ΑΥΤΟ ΕΔΩ
+    (function fixSidebarImmediately() {
+        console.log('=== IMMEDIATE SIDEBAR FIX ===');
+        
+        // 1. Εφαρμόζουμε το CSS ΑΜΕΣΑ
+        const style = document.createElement('style');
+        style.textContent = `
+            .step-content h3 {
+                color: #FFFFFF !important;
+                font-weight: 600 !important;
+                font-size: 14px !important;
+                display: block !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            }
+            .step-content p {
+                color: rgba(255, 255, 255, 0.8) !important;
+                display: block !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                font-size: 11px !important;
+            }
+            .step {
+                background: rgba(255, 255, 255, 0.05) !important;
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // 2. Κάνουμε manual αλλαγή των χρωμάτων
+        setTimeout(() => {
+            const steps = document.querySelectorAll('.step');
+            steps.forEach(step => {
+                const h3 = step.querySelector('h3');
+                const p = step.querySelector('p');
+                
+                if (h3) {
+                    h3.style.color = '#FFFFFF';
+                    h3.style.fontWeight = '600';
+                    h3.style.display = 'block';
+                }
+                
+                if (p) {
+                    p.style.color = 'rgba(255, 255, 255, 0.8)';
+                    p.style.display = 'block';
+                }
+            });
+            
+            console.log('Fixed', steps.length, 'steps');
+        }, 100);
+    })();
+</script>
+</body>
+</html>  
 </body>
 </html>
