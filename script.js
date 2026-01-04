@@ -1133,7 +1133,7 @@ function searchHotels() {
 }
 
 async function setupActivitiesStep() {
-    console.log('🎯 Ρύθμιση βήματος δραστηριοτήτων');
+    console.log('🎯 Ρύθμιση βήματος δραστηριοτήτων για:', state.selectedDestinationId);
     
     if (!state.selectedDestinationId) {
         console.log('⚠️ Δεν υπάρχει επιλεγμένος προορισμός');
@@ -1141,93 +1141,245 @@ async function setupActivitiesStep() {
     }
     
     const activitiesList = document.getElementById('activities-list');
-    
-    if (!state.selectedActivities || state.selectedActivities.length === 0) {
-        activitiesList.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
-                <div class="alert alert-info">
-                    <i class="fas fa-info-circle"></i>
-                    <p>Δεν έχετε επιλέξει δραστηριότητες ακόμα. Κάντε κλικ για να προσθέσετε.</p>
-                </div>
-            </div>
-        `;
-    } else {
-        activitiesList.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i><p>Φόρτωση δραστηριοτήτων...</p></div>';
+    if (!activitiesList) {
+        console.error('❌ Δεν βρέθηκε activities-list');
+        return;
     }
     
-    setTimeout(() => {
-        state.currentCityActivities = [
-            { id: 1, name: 'Μουσείο Αρχαιολογίας', category: 'museum', price: 50, duration_hours: 3 },
-            { id: 2, name: 'City Tour', category: 'experience', price: 80, duration_hours: 4 },
-            { id: 3, name: 'Ζωολογικός Κήπος', category: 'zoo', price: 40, duration_hours: 5 }
-        ];
+    // LOADING INDICATOR
+    activitiesList.innerHTML = `
+        <div style="grid-column: 1/-1; text-align: center; padding: 60px;">
+            <div class="loading">
+                <i class="fas fa-ticket-alt fa-spin fa-3x" style="color: var(--primary); margin-bottom: 20px;"></i>
+                <h3 style="color: var(--dark); margin-bottom: 10px;">Φόρτωση Δραστηριοτήτων</h3>
+                <p style="color: var(--gray);">Φόρτωση δραστηριοτήτων για ${state.selectedDestination}...</p>
+                <p style="font-size: 14px; color: #666; margin-top: 10px;">
+                    Αναζήτηση: <code>data/${state.selectedDestinationId}.json</code>
+                </p>
+            </div>
+        </div>
+    `;
+    
+    try {
+        // ΒΗΜΑ: Φόρτωσε το JSON
+        console.log(`📂 Προσπαθώ να φορτώσω: data/${state.selectedDestinationId}.json`);
         
+        const response = await fetch(`data/${state.selectedDestinationId}.json`);
+        
+        if (!response.ok) {
+            throw new Error(`Δεν βρέθηκε το αρχείο (${response.status})`);
+        }
+        
+        const cityData = await response.json();
+        console.log('✅ JSON φορτώθηκε:', cityData.city);
+        
+        if (!cityData.activities || !Array.isArray(cityData.activities)) {
+            throw new Error('Το JSON δεν έχει πίνακα activities');
+        }
+        
+        // Αποθήκευσε τις δραστηριότητες στο state
+        state.currentCityActivities = cityData.activities;
+        console.log(`📊 Βρέθηκαν ${cityData.activities.length} δραστηριότητες`);
+        
+        // ΒΗΜΑ: Δημιούργησε τις κάρτες δραστηριοτήτων
         let html = '';
-        state.currentCityActivities.forEach((activity, index) => {
-            const familyCost = activity.price * state.familyMembers.length;
-            const isSelected = state.selectedActivities.some(a => a.id === activity.id);
-            
-            html += `
-                <div class="activity-card ${isSelected ? 'selected' : ''}" 
-                     onclick="toggleActivitySelection(${activity.id})" 
-                     data-activity-id="${activity.id}">
-                    <div class="activity-header">
-                        <div class="activity-emoji">${getActivityEmoji(activity.category)}</div>
-                        <div class="activity-title">${activity.name}</div>
-                        <div class="activity-star">${isSelected ? '⭐' : '☆'}</div>
-                    </div>
-                    
-                    <div class="activity-description">${activity.category} activity for families</div>
-                    
-                    <div style="font-size: 12px; color: var(--gray); margin: 10px 0;">
-                        <i class="fas fa-clock"></i> ${activity.duration_hours || '?'} ώρες
-                    </div>
-                    
-                    <div class="activity-total">
-                        ${familyCost}€ για ${state.familyMembers.length} άτομα
+        
+        if (state.currentCityActivities.length === 0) {
+            html = `
+                <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <p>Δεν βρέθηκαν διαθέσιμες δραστηριότητες για την πόλη ${cityData.city}.</p>
                     </div>
                 </div>
             `;
-        });
-        
-        activitiesList.innerHTML = html;
-        updateActivitiesTotal();
-    }, 800);
-}
-
-function toggleActivitySelection(activityId) {
-    const activityCard = document.querySelector(`.activity-card[data-activity-id="${activityId}"]`);
-    
-    if (activityCard) {
-        const isSelected = activityCard.classList.contains('selected');
-        
-        if (isSelected) {
-            activityCard.classList.remove('selected');
-            activityCard.querySelector('.activity-star').textContent = '☆';
-            
-            const index = state.selectedActivities.findIndex(a => a.id === activityId);
-            if (index !== -1) {
-                state.selectedActivities.splice(index, 1);
-            }
         } else {
-            activityCard.classList.add('selected');
-            activityCard.querySelector('.activity-star').textContent = '⭐';
-            
-            const activity = state.currentCityActivities.find(a => a.id === activityId);
-            if (activity) {
-                const familyCost = activity.price * state.familyMembers.length;
-                state.selectedActivities.push({
-                    id: activityId,
-                    name: activity.name,
-                    price: familyCost,
-                    duration: activity.duration_hours
-                });
-            }
+            state.currentCityActivities.forEach((activity) => {
+                // Υπολόγισε το κόστος για την οικογένεια
+                const familyCost = calculateFamilyCost(activity.prices);
+                const isSelected = state.selectedActivities.some(a => a.id === activity.id);
+                
+                html += `
+                    <div class="activity-card ${isSelected ? 'selected' : ''}" 
+                         onclick="toggleActivitySelection(${activity.id})" 
+                         data-activity-id="${activity.id}">
+                        
+                        <div class="activity-header">
+                            <div class="activity-emoji">${getActivityEmoji(activity.category)}</div>
+                            <div class="activity-title">${activity.name}</div>
+                            <div class="activity-star">${isSelected ? '⭐' : '☆'}</div>
+                        </div>
+                        
+                        <div class="activity-description">
+                            ${activity.description || 'Δραστηριότητα για οικογένειες'}
+                        </div>
+                        
+                        <div style="font-size: 12px; color: var(--gray); margin: 10px 0;">
+                            <i class="fas fa-clock"></i> ${activity.duration_hours || '?'} ώρες
+                            <span style="margin-left: 15px;">
+                                <i class="fas fa-tag"></i> ${activity.category || 'Γενική'}
+                            </span>
+                        </div>
+                        
+                        <!-- ΤΙΜΕΣ -->
+                        <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin: 10px 0;">
+                            <div style="font-size: 12px; color: var(--gray); margin-bottom: 8px;">
+                                <i class="fas fa-money-bill-wave"></i> Τιμές ανά ηλικία:
+                            </div>
+                            <div style="display: flex; justify-content: space-between; font-size: 14px;">
+                                <span>Βρέφη (0-4):</span>
+                                <span><strong>${activity.prices['0'] === 0 ? 'ΔΩΡΕΑΝ' : activity.prices['0'] + '€'}</strong></span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; font-size: 14px; margin-top: 5px;">
+                                <span>Παιδιά (5-15):</span>
+                                <span><strong>${activity.prices['5'] || activity.prices['10'] || '?'}€</strong></span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; font-size: 14px; margin-top: 5px;">
+                                <span>Ενήλικες (16+):</span>
+                                <span><strong>${activity.prices.adult || activity.prices['16'] || '?'}€</strong></span>
+                            </div>
+                        </div>
+                        
+                        <!-- ΣΥΝΟΛΙΚΟ ΚΟΣΤΟΣ ΓΙΑ ΟΙΚΟΓΕΝΕΙΑ -->
+                        <div class="activity-total" style="background: var(--primary); color: white; padding: 12px; border-radius: 8px; text-align: center; font-weight: bold; margin-top: 10px;">
+                            <i class="fas fa-users"></i> ${familyCost}€ για ${state.familyMembers.length} άτομα
+                        </div>
+                    </div>
+                `;
+            });
         }
         
+        activitiesList.innerHTML = html;
+        
+        // Ενημέρωση συνολικού κόστους
         updateActivitiesTotal();
-        saveState();
+        
+        console.log('✅ Δραστηριότητες εμφανίστηκαν επιτυχώς');
+        
+    } catch (error) {
+        console.error('❌ Σφάλμα φόρτωσης:', error);
+        
+        activitiesList.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h4>Σφάλμα φόρτωσης δραστηριοτήτων</h4>
+                    <p>${error.message}</p>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left;">
+                        <strong>Πληροφορίες σφάλματος:</strong><br>
+                        • Αρχείο: <code>data/${state.selectedDestinationId}.json</code><br>
+                        • Προορισμός: ${state.selectedDestination || 'Άγνωστο'}<br>
+                        • ID: ${state.selectedDestinationId}
+                    </div>
+                    <button onclick="setupActivitiesStep()" class="btn btn-primary" style="margin-top: 15px;">
+                        <i class="fas fa-sync-alt"></i> Δοκιμή ξανά
+                    </button>
+                    <button onclick="showStep('destination')" class="btn btn-outline" style="margin-top: 15px; margin-left: 10px;">
+                        <i class="fas fa-arrow-left"></i> Επιστροφή σε Προορισμό
+                    </button>
+                </div>
+            </div>
+        `;
     }
+}
+function calculateFamilyCost(prices) {
+    if (!prices) return 0;
+    
+    let total = 0;
+    
+    state.familyMembers.forEach(member => {
+        const age = member.age;
+        
+        // 1. ΒΡΕΦΗ (0-4 ετών)
+        if (age <= 4) {
+            const babyPrice = prices['0']; // Ή prices['0'], prices['1'], κλπ
+            if (babyPrice !== undefined && typeof babyPrice === 'number') {
+                total += babyPrice;
+                console.log(`👶 Βρέφος ${age} ετών: ${babyPrice}€`);
+            }
+        }
+        // 2. ΠΑΙΔΙΑ (5-15 ετών)
+        else if (age >= 5 && age <= 15) {
+            // Ψάχνουμε για συγκεκριμένη ηλικία
+            let childPrice = prices[age.toString()];
+            
+            // Αν δεν βρέθηκε, δοκιμάζουμε για ηλικία 5, 10, κλπ
+            if (childPrice === undefined) {
+                childPrice = prices['10'] || prices['5'] || prices.child;
+            }
+            
+            if (childPrice !== undefined && typeof childPrice === 'number') {
+                total += childPrice;
+                console.log(`🧒 Παιδί ${age} ετών: ${childPrice}€`);
+            }
+        }
+        // 3. ΕΝΗΛΙΚΕΣ (16+ ετών)
+        else if (age >= 16) {
+            // Πρώτα ψάχνουμε για adult price
+            let adultPrice = prices.adult;
+            
+            // Αν δεν υπάρχει adult, ψάχνουμε για ηλικία 16, 18, κλπ
+            if (adultPrice === undefined) {
+                adultPrice = prices['16'] || prices['18'] || prices[age.toString()];
+            }
+            
+            if (adultPrice !== undefined && typeof adultPrice === 'number') {
+                total += adultPrice;
+                console.log(`👨 Ενήλικας ${age} ετών: ${adultPrice}€`);
+            }
+        }
+    });
+    
+    console.log(`💰 Συνολικό κόστος οικογένειας: ${total}€`);
+    return total;
+}
+function toggleActivitySelection(activityId) {
+    console.log(`🎫 Toggle activity: ${activityId}`);
+    
+    // Βρες την πλήρη δραστηριότητα
+    const activity = state.currentCityActivities.find(a => a.id === activityId);
+    
+    if (!activity) {
+        console.error('❌ Δραστηριότητα δεν βρέθηκε:', activityId);
+        return;
+    }
+    
+    // Έλεγχος αν είναι ήδη επιλεγμένη
+    const existingIndex = state.selectedActivities.findIndex(a => a.id === activityId);
+    
+    if (existingIndex > -1) {
+        // Αφαίρεση
+        state.selectedActivities.splice(existingIndex, 1);
+        console.log(`➖ Αφαίρεση: ${activity.name}`);
+    } else {
+        // Προσθήκη
+        const familyCost = calculateFamilyCost(activity.prices);
+        
+        state.selectedActivities.push({
+            id: activityId,
+            name: activity.name,
+            price: familyCost,
+            duration: activity.duration_hours,
+            category: activity.category
+        });
+        console.log(`➕ Προσθήκη: ${activity.name} - ${familyCost}€`);
+    }
+    
+    // Ενημέρωση UI
+    const activityCard = document.querySelector(`.activity-card[data-activity-id="${activityId}"]`);
+    if (activityCard) {
+        const isNowSelected = state.selectedActivities.some(a => a.id === activityId);
+        activityCard.classList.toggle('selected', isNowSelected);
+        
+        const star = activityCard.querySelector('.activity-star');
+        if (star) {
+            star.textContent = isNowSelected ? '⭐' : '☆';
+        }
+    }
+    
+    // Ενημέρωση κόστους και αποθήκευση
+    updateActivitiesTotal();
+    saveState();
 }
 
 function updateActivitiesTotal() {
@@ -1403,13 +1555,29 @@ function saveState() {
 
 function getActivityEmoji(category) {
     const emojiMap = {
+        'attraction': '🎡',
+        'castle': '🏰',
         'museum': '🏛️',
-        'experience': '🎭',
+        'landmark': '🗼',
+        'theme_park': '🎢',
         'zoo': '🐯',
-        'park': '🌳',
+        'aquarium': '🐠',
+        'garden': '🌳',
+        'palace': '👑',
+        'church': '⛪',
+        'tower': '🗼',
+        'wheel': '🎡',
+        'bridge': '🌉',
+        'square': '⛲',
         'cruise': '🚢',
-        'art': '🎨'
+        'tour': '🚌',
+        'experience': '🎭',
+        'art': '🎨',
+        'history': '📜',
+        'science': '🔬',
+        'nature': '🌿'
     };
+    
     return emojiMap[category] || '📍';
 }
 
