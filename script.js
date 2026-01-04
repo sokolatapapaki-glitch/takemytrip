@@ -2086,6 +2086,212 @@ function clearSelectedActivities() {
 window.clearSelectedActivities = clearSelectedActivities;
 
 console.log('✅ Script.js loaded successfully!');
+
+// ==================== MANUAL DESTINATION FUNCTIONS ====================
+function showManualDestinationModal() {
+    console.log('📋 Άνοιγμα modal για χειροκίνητη επιλογή');
+    document.getElementById('manual-destination-modal').style.display = 'flex';
+    
+    // Reset form
+    document.getElementById('manual-city-select').value = '';
+    document.getElementById('manual-days').value = '5';
+    document.getElementById('manual-budget').value = '';
+    document.getElementById('city-details').innerHTML = '';
+    document.getElementById('selected-city-info').textContent = 'Επιλέξτε πόλη για πληροφορίες';
+}
+
+function closeManualDestinationModal() {
+    document.getElementById('manual-destination-modal').style.display = 'none';
+}
+
+function saveManualDestination() {
+    const citySelect = document.getElementById('manual-city-select');
+    const days = document.getElementById('manual-days').value;
+    const budget = document.getElementById('manual-budget').value;
+    
+    if (!citySelect.value) {
+        alert('⚠️ Παρακαλώ επιλέξτε πόλη από τη λίστα');
+        return;
+    }
+    
+    const cityName = citySelect.options[citySelect.selectedIndex].text;
+    const cityId = citySelect.value;
+    
+    // ΕΛΕΓΧΟΣ: Αν είναι πόλη χωρίς JSON
+    const citiesWithoutJSON = ['rome', 'barcelona', 'brussels', 'copenhagen', 'dublin', 
+                              'edinburgh', 'florence', 'munich', 'venice', 'warsaw', 'zurich'];
+    
+    if (citiesWithoutJSON.includes(cityId)) {
+        const confirmContinue = confirm(
+            `ℹ️ Η πόλη "${cityName}" δεν έχει πλήρη υποστήριξη ακόμα.\n\n` +
+            `• Δεν υπάρχουν προτεινόμενες δραστηριότητες\n` +
+            `• Ο χάρτης μπορεί να μην έχει λεπτομέρειες\n\n` +
+            `Θέλετε να συνεχίσετε;`
+        );
+        
+        if (!confirmContinue) {
+            return;
+        }
+    }
+    
+    // Αποθήκευση στο state
+    state.selectedDestination = cityName;
+    state.selectedDestinationId = cityId;
+    state.selectedDays = parseInt(days) || 5;
+    state.selectedBudget = parseInt(budget) || 0;
+    
+    // Ενημέρωση UI
+    document.getElementById('current-destination-display').textContent = cityName;
+    updateBudgetTracker();
+    
+    // Κλείσιμο modal
+    closeManualDestinationModal();
+    
+    // Απόκρυψη του banner
+    document.getElementById('already-found-container').style.display = 'none';
+    
+    // Ενημέρωση χρήστη
+    alert(`✅ Επιλέξατε: ${cityName}\n\nΤώρα μπορείτε να συνεχίσετε στις πτήσεις.`);
+    
+    // Αποθήκευση
+    saveState();
+    
+    console.log('📍 Χειροκίνητη επιλογή:', cityName, cityId);
+}
+
+// ΣΥΝΑΡΤΗΣΗ: Εμφάνιση πληροφοριών πόλης όταν επιλέγεται
+function updateCityDetails(cityId) {
+    const cityDetails = {
+        'amsterdam': { country: 'Ολλανδία', distance: '3.5 ώρες', cost: 'Μέτριο', features: 'Κανάλια, Ποδήλατο, Μουσεία' },
+        'berlin': { country: 'Γερμανία', distance: '2.5 ώρες', cost: 'Οικονομικό', features: 'Ιστορία, Τέχνη, Nightlife' },
+        'budapest': { country: 'Ουγγαρία', distance: '2 ώρες', cost: 'Οικονομικό', features: 'Θερμές πηγές, Αρχιτεκτονική' },
+        'istanbul': { country: 'Τουρκία', distance: '1.5 ώρες', cost: 'Οικονομικό', features: 'Ιστορία, Μπαζάρια, Τζαμιά' },
+        'lisbon': { country: 'Πορτογαλία', distance: '4.5 ώρες', cost: 'Μέτριο', features: 'Παραλίες, Τρόλεϊ, Φαντά' },
+        'london': { country: 'Ηνωμένο Βασίλειο', distance: '3.8 ώρες', cost: 'Ακριβό', features: 'Μουσεία, Θεάτρο, Shopping' },
+        'madrid': { country: 'Ισπανία', distance: '4 ώρες', cost: 'Μέτριο', features: 'Τέχνη, Φλαμένκο, Νυχτερινή ζωή' },
+        'paris': { country: 'Γαλλία', distance: '3 ώρες', cost: 'Ακριβό', features: 'Disneyland, Μουσεία, Ρομαντική' },
+        'prague': { country: 'Τσεχία', distance: '2.2 ώρες', cost: 'Οικονομικό', features: 'Μεσαιωνική, Μπύρα, Αρχιτεκτονική' },
+        'vienna': { country: 'Αυστρία', distance: '2 ώρες', cost: 'Μέτριο', features: 'Μουσική, Καφέ, Αυτοκρατορική' },
+        'rome': { country: 'Ιταλία', distance: '1.8 ώρες', cost: 'Μέτριο', features: 'Αρχαία, Εκκλησίες, Παστά' },
+        'barcelona': { country: 'Ισπανία', distance: '3 ώρες', cost: 'Μέτριο', features: 'Γαουντί, Παραλία, Ταπάς' },
+        'brussels': { country: 'Βέλγιο', distance: '3 ώρες', cost: 'Μέτριο', features: 'Σοκολάτα, Μπύρα, Ευρωπαϊκή Έδρα' },
+        'copenhagen': { country: 'Δανία', distance: '3.5 ώρες', cost: 'Ακριβό', features: 'Design, Ποδηλατόπολη, Χάγιαρτ' },
+        'dublin': { country: 'Ιρλανδία', distance: '4.2 ώρες', cost: 'Μέτριο', features: 'Μπύρα, Μουσική, Φιλόξενοι' },
+        'edinburgh': { country: 'Σκωτία', distance: '4 ώρες', cost: 'Μέτριο', features: 'Φρούριο, Whisky, Φεστιβάλ' },
+        'florence': { country: 'Ιταλία', distance: '2 ώρες', cost: 'Μέτριο', features: 'Αναγέννηση, Τέχνη, Μουσεία' },
+        'munich': { country: 'Γερμανία', distance: '2.5 ώρες', cost: 'Μέτριο', features: 'Οκτόμπερφεστ, Μπύρα, Παραδοσιακή' },
+        'venice': { country: 'Ιταλία', distance: '2 ώρες', cost: 'Ακριβό', features: 'Κανάλια, Γέφυρες, Καρναβάλι' },
+        'warsaw': { country: 'Πολωνία', distance: '2.5 ώρες', cost: 'Οικονομικό', features: 'Ιστορία, Χαμηλό κόστος, Πάρκα' },
+        'zurich': { country: 'Ελβετία', distance: '2.5 ώρες', cost: 'Ακριβό', features: 'Αλπική, Οικονομική, Λίμνες' }
+    };
+    
+    const info = cityDetails[cityId];
+    const citySelect = document.getElementById('manual-city-select');
+    const cityName = citySelect.options[citySelect.selectedIndex].text;
+    
+    if (info) {
+        const hasJSON = !['rome', 'barcelona', 'brussels', 'copenhagen', 'dublin', 
+                         'edinburgh', 'florence', 'munich', 'venice', 'warsaw', 'zurich'].includes(cityId);
+        
+        document.getElementById('selected-city-info').textContent = `${cityName} - ${info.country}`;
+        
+        let html = `
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+                <div>
+                    <strong>✈️ Απόσταση:</strong><br>
+                    <span>${info.distance} από Ελλάδα</span>
+                </div>
+                <div>
+                    <strong>💰 Κόστος:</strong><br>
+                    <span>${info.cost}</span>
+                </div>
+                <div style="grid-column: 1 / -1;">
+                    <strong>⭐ Χαρακτηριστικά:</strong><br>
+                    <span>${info.features}</span>
+                </div>
+                <div style="grid-column: 1 / -1; margin-top: 10px; padding: 10px; border-radius: 8px; background: ${
+                    hasJSON ? 'rgba(46, 204, 113, 0.1)' : 'rgba(243, 156, 18, 0.1)'
+                }; border-left: 4px solid ${hasJSON ? '#2ecc71' : '#f39c12'};">
+                    <strong>${hasJSON ? '✅ ΠΛΗΡΗΣ ΥΠΟΣΤΗΡΙΞΗ' : '🛠️ ΣΥΝΤΟΜΑ ΔΙΑΘΕΣΙΜΗ'}</strong><br>
+                    <span>${hasJSON ? 
+                        'Διαθέσιμες δραστηριότητες, χάρτης και πληροφορίες' : 
+                        'Υπό κατασκευή - περιορισμένες λειτουργίες'}</span>
+                </div>
+            </div>
+        `;
+        
+        document.getElementById('city-details').innerHTML = html;
+    }
+}
+
+// Ενημέρωση της loadStepContent για να ελέγχει το banner
+const originalLoadStepContent = loadStepContent;
+loadStepContent = function(stepName) {
+    originalLoadStepContent(stepName);
+    
+    // Εμφάνιση/απόκρυψη banner
+    if (stepName === 'destination') {
+        setTimeout(() => {
+            document.getElementById('already-found-container').style.display = 'block';
+        }, 300);
+    } else {
+        document.getElementById('already-found-container').style.display = 'none';
+    }
+};
+
+// Προσθήκη event listeners μετά τη φόρτωση
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+        // Event listener για dropdown πόλης
+        const citySelect = document.getElementById('manual-city-select');
+        if (citySelect) {
+            citySelect.addEventListener('change', function() {
+                if (this.value) {
+                    updateCityDetails(this.value);
+                } else {
+                    document.getElementById('selected-city-info').textContent = 'Επιλέξτε πόλη για πληροφορίες';
+                    document.getElementById('city-details').innerHTML = '';
+                }
+            });
+        }
+        
+        // Κλείσιμο modal με ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('manual-destination-modal');
+                if (modal && modal.style.display === 'flex') {
+                    closeManualDestinationModal();
+                }
+            }
+        });
+        
+        // Κλείσιμο modal με κλικ έξω
+        const modal = document.getElementById('manual-destination-modal');
+        if (modal) {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeManualDestinationModal();
+                }
+            });
+        }
+        
+    }, 1000);
+});
+
+// Προσθήκη στο window object
+window.showManualDestinationModal = showManualDestinationModal;
+window.closeManualDestinationModal = closeManualDestinationModal;
+window.saveManualDestination = saveManualDestination;
+
+// ==================== QUICK RECOMMENDATIONS ====================
+// ΟΙ ΥΠΟΛΟΙΠΕΣ ΣΥΝΑΡΤΗΣΕΙΣ ΠΑΡΑΜΕΝΟΥΝ ΟΠΩΣ ΕΧΟΥΝ
+function showQuickRecommendations() {
+    // ... υπάρχων κώδικας ...
+}
+// κλπ...
+
+
+
 // ==================== QUICK RECOMMENDATIONS ====================
 function showQuickRecommendations() {
     const recommendations = [
