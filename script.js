@@ -290,6 +290,11 @@ function getDestinationStepHTML() {
                     <i class="fas fa-search"></i> 🔍 Αναζήτηση Προορισμών
                 </button>
                 
+                <!-- ΚΟΥΜΠΙ ΕΧΩ ΗΔΗ ΒΡΕΙ ΠΡΟΟΡΙΣΜΟ -->
+                <button class="btn btn-primary" onclick="showManualDestinationModal()" style="padding: 16px 40px; font-size: 18px;">
+                    <i class="fas fa-arrow-right"></i> ΕΧΩ ΗΔΗ ΒΡΕΙ ΠΡΟΟΡΙΣΜΟ
+                </button>
+                
                 <button class="btn btn-outline" onclick="showQuickRecommendations()" style="padding: 16px 30px;">
                     <i class="fas fa-bolt"></i> Γρήγορες Προτάσεις
                 </button>
@@ -299,53 +304,53 @@ function getDestinationStepHTML() {
                 </button>
             </div>
             
-                   
-        <!-- ΑΠΟΤΕΛΕΣΜΑΤΑ ΑΝΑΖΗΤΗΣΗΣ -->
-        <div id="destination-results">
-            <div style="text-align: center; padding: 60px 20px; background: var(--light); border-radius: var(--radius-lg); margin-top: 20px;">
-                <div style="font-size: 64px; margin-bottom: 20px; color: var(--primary);">🗺️</div>
-                <h2 style="color: var(--dark); margin-bottom: 15px;">Ανακαλύψτε Προορισμούς</h2>
-                <p style="color: var(--gray); max-width: 600px; margin: 0 auto 30px;">
-                    Χρησιμοποιήστε τα φίλτρα παραπάνω για να βρείτε την τέλεια πόλη για το ταξίδι σας.
-                    <br>
-                    <strong>20+ ευρωπαϊκές πόλεις</strong> διαθέσιμες για εξερεύνηση.
-                </p>
-                
-                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                    <button class="btn btn-primary" onclick="showPopularDestinations()">
-                        <i class="fas fa-fire"></i> Δημοφιλείς Προορισμοί
-                    </button>
-                    <button class="btn btn-outline" onclick="showBudgetDestinations()">
-                        <i class="fas fa-euro-sign"></i> Οικονομικές Επιλογές
-                    </button>
-                    <button class="btn btn-outline" onclick="showFamilyDestinations()">
-                        <i class="fas fa-child"></i> Για Οικογένειες
-                    </button>
+            <!-- ΑΠΟΤΕΛΕΣΜΑΤΑ ΑΝΑΖΗΤΗΣΗΣ -->
+            <div id="destination-results">
+                <div style="text-align: center; padding: 60px 20px; background: var(--light); border-radius: var(--radius-lg); margin-top: 20px;">
+                    <div style="font-size: 64px; margin-bottom: 20px; color: var(--primary);">🗺️</div>
+                    <h2 style="color: var(--dark); margin-bottom: 15px;">Ανακαλύψτε Προορισμούς</h2>
+                    <p style="color: var(--gray); max-width: 600px; margin: 0 auto 30px;">
+                        Χρησιμοποιήστε τα φίλτρα παραπάνω για να βρείτε την τέλεια πόλη για το ταξίδι σας.
+                        <br>
+                        <strong>20+ ευρωπαϊκές πόλεις</strong> διαθέσιμες για εξερεύνηση.
+                    </p>
+                    
+                    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                        <button class="btn btn-primary" onclick="showPopularDestinations()">
+                            <i class="fas fa-fire"></i> Δημοφιλείς Προορισμοί
+                        </button>
+                        <button class="btn btn-outline" onclick="showBudgetDestinations()">
+                            <i class="fas fa-euro-sign"></i> Οικονομικές Επιλογές
+                        </button>
+                        <button class="btn btn-outline" onclick="showFamilyDestinations()">
+                            <i class="fas fa-child"></i> Για Οικογένειες
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- INFO BANNER -->
-        <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border-radius: var(--radius-lg); text-align: center;">
-            <div style="display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;">
-                <div style="text-align: center;">
-                    <div style="font-size: 32px; font-weight: bold;">20+</div>
-                    <div style="font-size: 14px; opacity: 0.9;">Ευρωπαϊκές Πόλεις</div>
-                </div>
-                <div style="width: 1px; height: 40px; background: rgba(255,255,255,0.3);"></div>
-                <div style="text-align: center;">
-                    <div style="font-size: 32px; font-weight: bold;">10</div>
-                    <div style="font-size: 14px; opacity: 0.9;">Πλήρης Υποστήριξη</div>
-                </div>
-                <div style="width: 1px; height: 40px; background: rgba(255,255,255,0.3);"></div>
-                <div style="text-align: center;">
-                    <div style="font-size: 32px; font-weight: bold;">8</div>
-                    <div style="font-size: 14px; opacity: 0.9;">Με Θεματικά Πάρκα</div>
-                </div>
-                <div style="width: 1px; height: 40px; background: rgba(255,255,255,0.3);"></div>
-                <div style="text-align: center;">
-                    <div style="font-size: 32px; font-weight: bold;">1</div>
-                    <div style="font-size: 14px; opacity: 0.9;">Με Disneyland</div>
+            
+            <!-- INFO BANNER -->
+            <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border-radius: var(--radius-lg); text-align: center;">
+                <div style="display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 32px; font-weight: bold;">20+</div>
+                        <div style="font-size: 14px; opacity: 0.9;">Ευρωπαϊκές Πόλεις</div>
+                    </div>
+                    <div style="width: 1px; height: 40px; background: rgba(255,255,255,0.3);"></div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 32px; font-weight: bold;">10</div>
+                        <div style="font-size: 14px; opacity: 0.9;">Πλήρης Υποστήριξη</div>
+                    </div>
+                    <div style="width: 1px; height: 40px; background: rgba(255,255,255,0.3);"></div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 32px; font-weight: bold;">8</div>
+                        <div style="font-size: 14px; opacity: 0.9;">Με Θεματικά Πάρκα</div>
+                    </div>
+                    <div style="width: 1px; height: 40px; background: rgba(255,255,255,0.3);"></div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 32px; font-weight: bold;">1</div>
+                        <div style="font-size: 14px; opacity: 0.9;">Με Disneyland</div>
+                    </div>
                 </div>
             </div>
         </div>
