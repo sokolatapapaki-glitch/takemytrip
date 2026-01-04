@@ -44,49 +44,33 @@ function initApp() {
 function loadSavedData() {
     const saved = localStorage.getItem('travelPlannerData');
     
-    // ΕΡΩΤΗΣΗ ΣΤΟΝ ΧΡΗΣΤΗ: Νέο ή προηγούμενο ταξίδι;
+    // ΕΛΕΓΧΟΣ: Ρωτάμε τον χρήστη αν θέλει να συνεχίσει
     if (saved && !sessionStorage.getItem('userChoiceMade')) {
-        const userChoice = confirm(
-            'Βρέθηκε προηγούμενο ταξίδι!\n\n' +
-            'Κάντε κλικ:\n' +
-            '• "OK" για να συνεχίσετε το προηγούμενο ταξίδι\n' +
-            '• "Cancel" για να ξεκινήσετε νέο ταξίδι'
-        );
-        
-        sessionStorage.setItem('userChoiceMade', 'true');
-        
-        if (!userChoice) {
-            // Ο χρήστης θέλει ΝΕΟ ταξίδι - ΚΑΘΑΡΙΣΜΟΣ
-            localStorage.removeItem('travelPlannerData');
-            localStorage.removeItem('travel_custom_points');
-            console.log('🆕 Ξεκινάει νέο ταξίδι');
-            return; // ΣΤΑΜΑΤΑ ΕΔΩ, δεν φορτώνει τίποτα
-        }
-    }
-    
-    // Αν φτάσει εδώ, ο χρήστης επέλεξε να συνεχίσει
-    if (saved) {
-        const data = JSON.parse(saved);
-        
-        if (data.selectedDestinationName) {
-            state.selectedDestination = data.selectedDestinationName;
-            document.getElementById('current-destination-display').textContent = state.selectedDestination;
-        }
-        
-        if (data.selectedBudget) {
-            state.selectedBudget = data.selectedBudget;
-            document.getElementById('budget-total').textContent = state.selectedBudget + '€';
-        }
-        
-        if (data.familyMembers) {
-            state.familyMembers = data.familyMembers;
-        }
-        
-        if (data.selectedActivities) {
-            state.selectedActivities = data.selectedActivities;
-        }
-        
-        console.log('📂 Φορτώθηκαν αποθηκευμένα δεδομένα');
+        // ΧΡΗΣΗ setTimeout για να μην μπλοκάρει από το browser
+        setTimeout(() => {
+            const userChoice = confirm(
+                'Βρέθηκε προηγούμενο ταξίδι!\n\n' +
+                'Κάντε κλικ:\n' +
+                '• "OK" για να συνεχίσετε το προηγούμενο ταξίδι\n' +
+                '• "Cancel" για να ξεκινήσετε νέο ταξίδι'
+            );
+            
+            sessionStorage.setItem('userChoiceMade', 'true');
+            
+            if (!userChoice) {
+                // Ο χρήστης θέλει ΝΕΟ ταξίδι
+                localStorage.removeItem('travelPlannerData');
+                localStorage.removeItem('travel_custom_points');
+                console.log('🆕 Ξεκινάει νέο ταξίδι');
+                return;
+            }
+            
+            // Αν ο χρήστης επιλέξει να συνεχίσει, φόρτωσε τα δεδομένα
+            loadSavedDataNow(saved);
+            
+        }, 1000); // 1 δευτερόλεπτο καθυστέρηση
+    } else if (saved) {
+        loadSavedDataNow(saved);
     }
 }
 
@@ -128,9 +112,19 @@ function updateStepUI(activeStep) {
 function loadStepContent(stepName) {
     const stepContent = document.getElementById('step-content');
     
+    // ΚΑΘΑΡΙΣΜΟΣ ΠΡΟΗΓΟΥΜΕΝΟΥ ΧΑΡΤΗ (αν υπάρχει)
+    if (window.travelMap && stepName !== 'map') {
+        try {
+            window.travelMap.remove();
+            window.travelMap = null;
+        } catch(e) {
+            console.log('ℹ️ Δεν υπήρχε ενεργός χάρτης');
+        }
+    }
+    
     switch(stepName) {
         case 'destination':
-            stepContent.innerHTML = L();
+            stepContent.innerHTML = getDestinationStepHTML();
             setupDestinationStep();
             break;
             
@@ -156,7 +150,25 @@ function loadStepContent(stepName) {
             
         case 'map':
             stepContent.innerHTML = getMapStepHTML();
-            setupMapStep();
+            // ΜΗΝ καλέσεις το setupMapStep() ΑΜΕΣΑ
+            // Χρήση setTimeout για να φορτώσει η Leaflet
+            setTimeout(() => {
+                if (typeof L !== 'undefined') {
+                    setupMapStep();
+                } else {
+                    console.error('❌ Leaflet δεν φορτώθηκε');
+                    // Fallback content
+                    document.getElementById('map-container').innerHTML = `
+                        <div style="height: 500px; display: flex; align-items: center; justify-content: center; background: var(--light); color: var(--gray);">
+                            <div style="text-align: center;">
+                                <i class="fas fa-exclamation-triangle fa-2x" style="margin-bottom: 15px;"></i>
+                                <h4>Χάρτης μη διαθέσιμος</h4>
+                                <p>Δοκιμάστε να ανανεώσετε τη σελίδα</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            }, 500);
             break;
     }
 }
