@@ -1452,3 +1452,27 @@ body {
     margin: 0 auto;
     padding: 10px;
 }
+/* ==================== QUICK FIX - SHOW SIDEBAR NAMES ==================== */
+.step-content h3 {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    display: block !important;
+    font-size: 16px !important;
+}
+
+.step-content p {
+    display: block !important;
+    overflow: visible !important;
+    max-height: none !important;
+    font-size: 13px !important;
+    opacity: 0.8 !important;
+}
+
+.sidebar {
+    width: 300px !important;
+}
+
+.step {
+    padding: 15px !important;
+}
