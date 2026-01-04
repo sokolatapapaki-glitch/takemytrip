@@ -1264,7 +1264,11 @@ const cities = [
         }
     }
     
-    resultsDiv.innerHTML = html;
+    resultsDiv.innerHTML = `
+    <div class="destinations-grid">
+        ${html}
+    </div>
+`;
     
     // 7. ΣΤΑΤΙΣΤΙΚΑ ΑΠΟΤΕΛΕΣΜΑΤΩΝ
     if (filteredCities.length > 0) {
@@ -1304,105 +1308,85 @@ const cities = [
 
 // ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ: Δημιουργία κάρτας πόλης
 function createCityCard(city, cityData, hasJSON) {
-    const isClickable = hasJSON ? 'onclick="selectDestination(\'' + city.name + '\', \'' + city.id + '\')"' : '';
-    const cardStyle = hasJSON ? '' : 'style="opacity: 0.8; cursor: not-allowed;"';
-    const title = hasJSON ? '' : 'title="Σύντομα διαθέσιμο - Εργαζόμαστε πάνω σε αυτό!"';
+    const isClickable = hasJSON ? `onclick="selectDestination('${city.name}', '${city.id}')"` : '';
+    const cardClass = hasJSON ? 'destination-card' : 'destination-card coming-soon';
     
     return `
-        <div class="destination-card" ${cardStyle} ${title} ${isClickable}>
-            <div style="font-size: 48px; text-align: center; margin-bottom: 15px;">
+        <div class="${cardClass}" ${isClickable}>
+            <!-- Emoji -->
+            <div class="destination-emoji">
                 ${city.emoji}
             </div>
             
-            <h3>${city.name}</h3>
-            <p style="color: var(--gray); margin-bottom: 10px;">
-                <i class="fas fa-globe-europe"></i> ${city.country || (cityData?.country || 'Ευρώπη')}
-            </p>
+            <!-- Name & Country -->
+            <h3 class="destination-name">${city.name}</h3>
+            <div class="destination-country">
+                <i class="fas fa-globe-europe"></i>
+                ${city.country || (cityData?.country || 'Ευρώπη')}
+            </div>
             
-            <!-- ΠΛΗΡΟΦΟΡΙΕΣ ΠΟΛΗΣ -->
-            <div style="background: var(--light); padding: 15px; border-radius: var(--radius-md); margin: 15px 0;">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                    <div style="text-align: center;">
-                        <div style="font-size: 12px; color: var(--gray);">
-                            <i class="fas fa-plane"></i> Απόσταση
-                        </div>
-                        <div style="font-weight: bold; color: var(--dark);">
-                            ${city.distance} ώρες
-                        </div>
+            <!-- Info Grid -->
+            <div class="destination-info-grid">
+                <div class="info-item">
+                    <div class="info-label">
+                        <i class="fas fa-plane"></i> Απόσταση
                     </div>
-                    <div style="text-align: center;">
-                        <div style="font-size: 12px; color: var(--gray);">
-                            <i class="fas fa-cloud"></i> Καιρός
-                        </div>
-                        <div style="font-weight: bold; color: var(--dark);">
-                            ${city.weather}
-                        </div>
+                    <div class="info-value">${city.distance} ώρες</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">
+                        <i class="fas fa-cloud"></i> Καιρός
                     </div>
-                    <div style="text-align: center;">
-                        <div style="font-size: 12px; color: var(--gray);">
-                            <i class="fas fa-wallet"></i> Κόστος
-                        </div>
-                        <div style="font-weight: bold; color: var(--dark);">
-                            ${city.cost.replace('Οικονομικό', '💰').replace('Μέτριο', '💰💰').replace('Ακριβό', '💰💰💰')}
-                        </div>
+                    <div class="info-value">${city.weather}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">
+                        <i class="fas fa-wallet"></i> Κόστος
                     </div>
-                    <div style="text-align: center;">
-                        <div style="font-size: 12px; color: var(--gray);">
-                            <i class="fas fa-umbrella-beach"></i> Τύπος
-                        </div>
-                        <div style="font-weight: bold; color: var(--dark);">
-                            ${city.vacationType}
-                        </div>
+                    <div class="info-value">
+                        ${city.cost === 'Οικονομικό' ? '💰' : 
+                          city.cost === 'Μέτριο' ? '💰💰' : '💰💰💰'}
                     </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">
+                        <i class="fas fa-umbrella-beach"></i> Τύπος
+                    </div>
+                    <div class="info-value">${city.vacationType}</div>
                 </div>
             </div>
             
-            <!-- TAGS -->
-            <div class="tags" style="margin-top: 10px;">
+            <!-- Tags -->
+            <div class="destination-tags">
                 <span class="tag tag-primary">${city.category}</span>
-                ${city.vacationType ? `<span class="tag tag-secondary">${city.vacationType}</span>` : ''}
-                ${city.cost === 'Οικονομικό' ? '<span class="tag" style="background: #2ecc71; color: white;">💰 Οικονομικό</span>' : ''}
-                ${city.cost === 'Μέτριο' ? '<span class="tag" style="background: #f39c12; color: white;">💰💰 Μέτριο</span>' : ''}
-                ${city.cost === 'Ακριβό' ? '<span class="tag" style="background: #e74c3c; color: white;">💰💰💰 Ακριβό</span>' : ''}
+                <span class="tag tag-secondary">${city.vacationType}</span>
+                ${city.cost === 'Οικονομικό' ? '<span class="tag tag-success">💰 Οικονομικό</span>' : ''}
+                ${city.cost === 'Μέτριο' ? '<span class="tag tag-accent">💰💰 Μέτριο</span>' : ''}
+                ${city.cost === 'Ακριβό' ? '<span class="tag" style="background: rgba(231, 76, 60, 0.1); color: var(--danger); border-color: rgba(231, 76, 60, 0.3);">💰💰💰 Ακριβό</span>' : ''}
             </div>
             
-            <!-- STATUS -->
-            <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border); text-align: center;">
-                ${hasJSON ? `
-                    <span class="tag" style="background: var(--success); color: white;">
-                        <i class="fas fa-check-circle"></i> Πλήρης Υποστήριξη
-                    </span>
-                    <p style="font-size: 12px; color: var(--gray); margin-top: 5px;">
-                        ${cityData?.activities?.length || 'Πολλές'} δραστηριότητες διαθέσιμες
-                    </p>
-                ` : `
-                    <span class="tag" style="background: var(--warning); color: white;">
-                        <i class="fas fa-tools"></i> Σύντομα Διαθέσιμο
-                    </span>
-                    <p style="font-size: 12px; color: var(--gray); margin-top: 5px;">
-                        Υπό κατασκευή - Ερχόμαστε σύντομα!
-                    </p>
-                `}
+            <!-- Status Badge -->
+            <div class="destination-status">
+                <div class="status-badge ${hasJSON ? 'success' : 'warning'}">
+                    <i class="fas ${hasJSON ? 'fa-check-circle' : 'fa-tools'}"></i>
+                    ${hasJSON ? 'Πλήρης Υποστήριξη' : 'Σύντομα Διαθέσιμο'}
+                </div>
+                <p style="font-size: 12px; color: var(--gray); margin-top: 5px;">
+                    ${hasJSON ? 
+                        (cityData?.activities?.length || 'Πολλές') + ' δραστηριότητες διαθέσιμες' : 
+                        'Υπό κατασκευή'}
+                </p>
             </div>
             
-            <!-- ΚΟΥΜΠΙ ΕΠΙΛΟΓΗΣ (μόνο για πόλεις με JSON) -->
-            ${hasJSON ? `
-                <div style="margin-top: 20px;">
-                    <button class="btn btn-primary" style="width: 100%;" onclick="selectDestination('${city.name}', '${city.id}'); event.stopPropagation();">
-                        <i class="fas fa-map-marker-alt"></i> Επιλογή Προορισμού
-                    </button>
-                </div>
-            ` : `
-                <div style="margin-top: 20px; text-align: center;">
-                    <button class="btn btn-outline" style="width: 100%; cursor: not-allowed;" disabled>
-                        <i class="fas fa-clock"></i> Σύντομα Διαθέσιμο
-                    </button>
-                </div>
-            `}
+            <!-- Button -->
+            <button class="destination-btn" ${!hasJSON ? 'disabled' : ''} 
+                    onclick="selectDestination('${city.name}', '${city.id}'); event.stopPropagation();">
+                <i class="fas ${hasJSON ? 'fa-map-marker-alt' : 'fa-clock'}"></i>
+                ${hasJSON ? 'Επιλογή Προορισμού' : 'Σύντομα Διαθέσιμο'}
+            </button>
         </div>
     `;
 }
-
 function resetFilters() {
     document.getElementById('travel-type').value = '';
     document.getElementById('distance').value = '';
