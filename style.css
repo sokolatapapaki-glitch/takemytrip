@@ -91,83 +91,45 @@ body {
     overflow-y: auto;
 }
 
-/* ΒΗΜΑΤΑ */
+/* ΒΗΜΑΤΑ - ΓΙΑ DESKTOP */
 .steps-container {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    padding: 5px 0;
+    gap: 2px; /* ΠΑΡΑ ΠΟΛΥ ΜΙΚΡΟ */
+    padding: 2px 0;
 }
 
 .step {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px 12px;
-    border-radius: var(--radius-md);
+    gap: 8px;
+    padding: 6px 8px; /* ΠΟΛΥ ΜΙΚΡΟ */
+    border-radius: 5px;
     cursor: pointer;
     transition: var(--transition);
     background: rgba(255,255,255,0.05);
-    border-left: 3px solid transparent;
-    min-height: 52px;
-    overflow: visible;
-}
-
-.step:hover {
-    background: rgba(255,255,255,0.1);
-    transform: translateX(2px);
-}
-
-.step.active {
-    background: rgba(74, 144, 226, 0.15);
-    border-left-color: var(--primary);
-    box-shadow: inset 3px 0 6px rgba(74, 144, 226, 0.1);
+    border-left: 2px solid transparent;
+    min-height: 36px !important; /* ΜΟΝΟ 36px! */
+    max-height: 36px !important; /* ΜΟΝΟ 36px! */
+    overflow: hidden;
 }
 
 .step-icon {
-    width: 28px;
-    height: 28px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    font-size: 13px;
-    flex-shrink: 0;
-    transition: var(--transition);
-}
-
-.step.active .step-icon {
-    background: var(--primary);
-    color: white;
-    transform: scale(1.05);
-}
-
-.step-content {
-    min-width: 0;
-    flex: 1;
-    overflow: visible;
+    width: 24px !important;  /* ΜΙΚΡΟ */
+    height: 24px !important; /* ΜΙΚΡΟ */
+    font-size: 11px !important;
 }
 
 .step-content h3 {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 2px;
-    color: white;
-    white-space: normal;
-    overflow: visible;
-    line-height: 1.2;
-    display: block;
+    font-size: 12px !important;
+    line-height: 1.1;
+    margin-bottom: 0;
 }
 
 .step-content p {
-    font-size: 11px;
-    color: rgba(255,255,255,0.7);
-    line-height: 1.2;
-    display: block;
-    overflow: visible;
+    font-size: 9px !important;
+    line-height: 1.1;
 }
 /* SIDEBAR FOOTER */
 .sidebar-footer {
