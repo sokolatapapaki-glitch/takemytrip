@@ -534,8 +534,8 @@ body {
     color: #721C24;
 }
 
-/* ==================== DESTINATION CARDS - Επιστροφή στην αρχική μορφή ==================== */
 /* ==================== DESTINATION CARDS - Νέα Μορφή ==================== */
+/* ==================== DESTINATION CARDS - ΜΙΚΡΕΣ & ΚΟΜΨΕΣ ==================== */
 .destination-card {
     background: white;
     border-radius: var(--radius-md);
@@ -664,7 +664,6 @@ body {
         gap: 12px;
     }
 }
-
 /* ACTIVITY CARDS */
 .activity-card {
     background: white;
