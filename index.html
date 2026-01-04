@@ -279,52 +279,50 @@
     }
 </style>
     <script>
-    // DEBUG SIDEBAR - ΒΗΜΑ 3
+<script>
+    // DEBUG SIDEBAR - ΒΗΜΑ 4
     document.addEventListener('DOMContentLoaded', function() {
-        console.log('=== DEBUG SIDEBAR ===');
+        console.log('=== DEBUG SIDEBAR ΒΗΜΑ 4 ===');
         
-        // 1. Βρες όλα τα steps
         const steps = document.querySelectorAll('.step');
-        console.log('Βρέθηκαν ' + steps.length + ' βήματα');
         
-        // 2. Δείξε τα styles κάθε step
         steps.forEach((step, index) => {
             const h3 = step.querySelector('.step-content h3');
             const p = step.querySelector('.step-content p');
             
+            console.log(`\nΒήμα ${index + 1}:`);
+            console.log('  h3 υπάρχει:', !!h3);
             if (h3) {
-                const styles = window.getComputedStyle(h3);
-                console.log(`Βήμα ${index + 1} - h3:`);
-                console.log('  white-space:', styles.whiteSpace);
-                console.log('  overflow:', styles.overflow);
-                console.log('  display:', styles.display);
-                console.log('  visibility:', styles.visibility);
+                console.log('  h3 textContent:', h3.textContent);
+                console.log('  h3 innerHTML:', h3.innerHTML);
+                console.log('  h3 offsetWidth:', h3.offsetWidth, 'px');
+                console.log('  h3 offsetHeight:', h3.offsetHeight, 'px');
             }
+            
+            console.log('  p υπάρχει:', !!p);
+            if (p) {
+                console.log('  p textContent:', p.textContent);
+                console.log('  p innerHTML:', p.innerHTML);
+            }
+            
+            // Έλεγχος container
+            const stepContent = step.querySelector('.step-content');
+            if (stepContent) {
+                console.log('  stepContent width:', stepContent.offsetWidth, 'px');
+            }
+            
+            // Προσθήκη border για debugging
+            if (h3) h3.style.border = '1px solid red';
+            if (p) p.style.border = '1px solid green';
         });
         
-        // 3. Διορθώνει με inline styles
-        setTimeout(() => {
-            steps.forEach(step => {
-                const h3 = step.querySelector('.step-content h3');
-                const p = step.querySelector('.step-content p');
-                
-                if (h3) {
-                    h3.style.whiteSpace = 'normal';
-                    h3.style.overflow = 'visible';
-                    h3.style.display = 'block';
-                    h3.style.height = 'auto';
-                }
-                
-                if (p) {
-                    p.style.display = 'block';
-                    p.style.visibility = 'visible';
-                    p.style.opacity = '0.8';
-                    p.style.height = 'auto';
-                }
-            });
-            
-            console.log('=== APPLIED FIXES ===');
-        }, 100);
+        // Έλεγχος sidebar width
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar) {
+            console.log('\nSidebar width:', sidebar.offsetWidth, 'px');
+            console.log('Sidebar clientWidth:', sidebar.clientWidth, 'px');
+            sidebar.style.border = '2px solid blue';
+        }
     });
 </script>
 </body>
