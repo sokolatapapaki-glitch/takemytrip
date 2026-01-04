@@ -535,6 +535,7 @@ body {
 }
 
 /* ==================== DESTINATION CARDS - Επιστροφή στην αρχική μορφή ==================== */
+/* ==================== DESTINATION CARDS - Νέα Μορφή ==================== */
 .destination-card {
     background: white;
     border-radius: var(--radius-md);
@@ -664,7 +665,6 @@ body {
     }
 }
 
-/* Αφαίρεση των προηγούμενων destination card styles που τα έκαναν μεγάλα */
 /* ACTIVITY CARDS */
 .activity-card {
     background: white;
