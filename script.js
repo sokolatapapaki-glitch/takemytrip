@@ -2108,9 +2108,7 @@ function saveManualDestination() {
     // Κλείσιμο modal
     closeManualDestinationModal();
     
-    // Απόκρυψη του banner
-    document.getElementById('already-found-container').style.display = 'none';
-    
+        
     // Ενημέρωση χρήστη
     alert(`✅ Επιλέξατε: ${cityName}\n\nΤώρα μπορείτε να συνεχίσετε στις πτήσεις.`);
     
@@ -2184,21 +2182,6 @@ function updateCityDetails(cityId) {
         document.getElementById('city-details').innerHTML = html;
     }
 }
-
-// Ενημέρωση της loadStepContent για να ελέγχει το banner
-const originalLoadStepContent = loadStepContent;
-loadStepContent = function(stepName) {
-    originalLoadStepContent(stepName);
-    
-    // Εμφάνιση/απόκρυψη banner
-    if (stepName === 'destination') {
-        setTimeout(() => {
-            document.getElementById('already-found-container').style.display = 'block';
-        }, 300);
-    } else {
-        document.getElementById('already-found-container').style.display = 'none';
-    }
-};
 
 // Προσθήκη event listeners μετά τη φόρτωση
 document.addEventListener('DOMContentLoaded', function() {
