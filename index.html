@@ -324,6 +324,53 @@
         }
     });
 </script>
-    
+ <script>
+    // ULTIMATE SIDEBAR FIX - ΒΗΜΑ 7
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('=== ULTIMATE FIX ===');
+        
+        // 1. Βρες όλα τα h3 στο sidebar
+        const h3s = document.querySelectorAll('.step-content h3');
+        console.log('Βρέθηκαν ' + h3s.length + ' h3 elements');
+        
+        // 2. Εφαρμοσε INLINE STYLES σε κάθε ένα
+        h3s.forEach((h3, index) => {
+            console.log('h3 ' + (index + 1) + ': "' + h3.textContent + '"');
+            
+            // ΕΦΑΡΜΟΓΗ ΟΛΩΝ ΤΩΝ STYLES ΑΜΕΣΑ
+            h3.style.cssText = `
+                color: white !important;
+                font-size: 16px !important;
+                font-weight: 600 !important;
+                white-space: normal !important;
+                overflow: visible !important;
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                background: rgba(255,0,0,0.2) !important;
+                border: 1px solid lime !important;
+            `;
+        });
+        
+        // 3. Τα ίδια για τα paragraphs
+        const ps = document.querySelectorAll('.step-content p');
+        ps.forEach(p => {
+            p.style.cssText = `
+                color: rgba(255,255,255,0.8) !important;
+                font-size: 13px !important;
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                background: rgba(0,255,0,0.2) !important;
+                border: 1px solid yellow !important;
+            `;
+        });
+        
+        console.log('=== APPLIED ULTIMATE FIX ===');
+        
+        // 4. Βάλε ένα αναίμακτο background στο sidebar για debugging
+        document.querySelector('.sidebar').style.background = 'rgba(0,0,0,0.9)';
+    });
+</script>   
 </body>
 </html>
