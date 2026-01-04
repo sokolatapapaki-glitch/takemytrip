@@ -249,128 +249,35 @@
     <!-- ΕΞΩΤΕΡΙΚΟ JavaScript - ΔΙΟΡΘΩΜΕΝΟ -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="script.js"></script>
-    <style>
-    /* TEMPORARY OVERRIDE - ΒΗΜΑ 2 */
-    .sidebar {
-        width: 320px !important;
-        min-width: 320px !important;
-    }
-    
-    .step {
-        min-height: 70px !important;
-        height: auto !important;
-        padding: 15px !important;
-    }
-    
-    .step-content h3 {
-        white-space: normal !important;
-        overflow: visible !important;
-        display: block !important;
-        font-size: 16px !important;
-        color: white !important;
-    }
-    
-    .step-content p {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 0.8 !important;
-        font-size: 13px !important;
-        color: rgba(255,255,255,0.7) !important;
-    }
-</style>
-    <script>
-// DEBUG SIDEBAR - ΒΗΜΑ 4 (FIXED)
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('=== DEBUG SIDEBAR ΒΗΜΑ 4 ===');
+  <script>
+    // ONE-TIME SIDEBAR FIX - ΒΗΜΑ 9
+    window.addEventListener('load', function() {
+        console.log('=== ONE-TIME SIDEBAR FIX ===');
         
-        const steps = document.querySelectorAll('.step');
-        
-        steps.forEach(function(step, index) {
-            const h3 = step.querySelector('.step-content h3');
-            const p = step.querySelector('.step-content p');
+        // Περιμένουμε 500ms για να φορτώσουν όλα
+        setTimeout(function() {
+            // 1. Βάζουμε χρώμα στα h3
+            const h3s = document.querySelectorAll('.step-content h3');
+            h3s.forEach(h3 => {
+                h3.style.color = '#FFFFFF'; // Λευκό
+                h3.style.fontWeight = '600';
+            });
             
-            console.log('Βήμα ' + (index + 1) + ':');
-            console.log('  h3 υπάρχει:', !!h3);
-            if (h3) {
-                console.log('  h3 textContent:', h3.textContent);
-                console.log('  h3 innerHTML:', h3.innerHTML);
-                console.log('  h3 offsetWidth:', h3.offsetWidth + 'px');
-                console.log('  h3 offsetHeight:', h3.offsetHeight + 'px');
-            }
+            // 2. Βάζουμε χρώμα στα p
+            const ps = document.querySelectorAll('.step-content p');
+            ps.forEach(p => {
+                p.style.color = 'rgba(255, 255, 255, 0.8)';
+                p.style.display = 'block';
+            });
             
-            console.log('  p υπάρχει:', !!p);
-            if (p) {
-                console.log('  p textContent:', p.textContent);
-                console.log('  p innerHTML:', p.innerHTML);
-            }
+            // 3. Ενημερώνουμε
+            console.log('Εφαρμόστηκαν fixes σε:', h3s.length + ' h3 και ' + ps.length + ' p elements');
             
-            // Έλεγχος container
-            const stepContent = step.querySelector('.step-content');
-            if (stepContent) {
-                console.log('  stepContent width:', stepContent.offsetWidth + 'px');
-            }
+            // 4. Άμεση οπτική επιβεβαίωση
+            document.querySelector('.sidebar').style.backgroundColor = '#1A202C';
             
-            // Προσθήκη border για debugging
-            if (h3) h3.style.border = '1px solid red';
-            if (p) p.style.border = '1px solid green';
-        });
-        
-        // Έλεγχος sidebar width
-        const sidebar = document.querySelector('.sidebar');
-        if (sidebar) {
-            console.log('Sidebar width:', sidebar.offsetWidth + 'px');
-            console.log('Sidebar clientWidth:', sidebar.clientWidth + 'px');
-            sidebar.style.border = '2px solid blue';
-        }
+        }, 500);
     });
 </script>
- <script>
-    // ULTIMATE SIDEBAR FIX - ΒΗΜΑ 7
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('=== ULTIMATE FIX ===');
-        
-        // 1. Βρες όλα τα h3 στο sidebar
-        const h3s = document.querySelectorAll('.step-content h3');
-        console.log('Βρέθηκαν ' + h3s.length + ' h3 elements');
-        
-        // 2. Εφαρμοσε INLINE STYLES σε κάθε ένα
-        h3s.forEach((h3, index) => {
-            console.log('h3 ' + (index + 1) + ': "' + h3.textContent + '"');
-            
-            // ΕΦΑΡΜΟΓΗ ΟΛΩΝ ΤΩΝ STYLES ΑΜΕΣΑ
-            h3.style.cssText = `
-                color: white !important;
-                font-size: 16px !important;
-                font-weight: 600 !important;
-                white-space: normal !important;
-                overflow: visible !important;
-                display: block !important;
-                visibility: visible !important;
-                opacity: 1 !important;
-                background: rgba(255,0,0,0.2) !important;
-                border: 1px solid lime !important;
-            `;
-        });
-        
-        // 3. Τα ίδια για τα paragraphs
-        const ps = document.querySelectorAll('.step-content p');
-        ps.forEach(p => {
-            p.style.cssText = `
-                color: rgba(255,255,255,0.8) !important;
-                font-size: 13px !important;
-                display: block !important;
-                visibility: visible !important;
-                opacity: 1 !important;
-                background: rgba(0,255,0,0.2) !important;
-                border: 1px solid yellow !important;
-            `;
-        });
-        
-        console.log('=== APPLIED ULTIMATE FIX ===');
-        
-        // 4. Βάλε ένα αναίμακτο background στο sidebar για debugging
-        document.querySelector('.sidebar').style.background = 'rgba(0,0,0,0.9)';
-    });
-</script>   
 </body>
 </html>
