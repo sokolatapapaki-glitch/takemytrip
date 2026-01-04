@@ -180,9 +180,11 @@ body {
     font-size: 15px;
     font-weight: 600;
     margin-bottom: 3px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+
+
     line-height: 1.3;
 }
 
