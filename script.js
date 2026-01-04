@@ -53,6 +53,32 @@ function initApp() {
     console.log('✅ Αρχικοποίηση ολοκληρώθηκε');
 }
 
+// ==================== MOBILE NAVIGATION ====================
+function setupMobileNavigation() {
+    console.log('📱 Ρύθμιση mobile navigation');
+    
+    const mobileSelector = document.getElementById('mobile-step-selector');
+    if (!mobileSelector) return;
+    
+    // Όταν αλλάζει ο selector, αλλάζει και το βήμα
+    mobileSelector.addEventListener('change', function() {
+        const stepName = this.value;
+        if (stepName) {
+            showStep(stepName);
+        }
+    });
+    
+    // Ενημέρωση του selector όταν αλλάζει βήμα
+    const originalShowStep = showStep;
+    showStep = function(stepName) {
+        originalShowStep(stepName);
+        if (mobileSelector && mobileSelector.value !== stepName) {
+            mobileSelector.value = stepName;
+        }
+    };
+}
+
+// ==================== LOAD SAVED DATA ====================
 function loadSavedData() {
     const saved = localStorage.getItem('travelPlannerData');
     
@@ -821,6 +847,3 @@ window.showBudgetDestinations = showBudgetDestinations;
 window.showFamilyDestinations = showFamilyDestinations;
 
 console.log('✅ Script.js loaded successfully!');
-
-// Οι υπόλοιπες συναρτήσεις (flight, hotel, activities, κλπ) παραμένουν ίδιες
-// Εδώ προσθέτουμε μόνο το fix για τα κουμπιά
