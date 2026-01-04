@@ -690,7 +690,7 @@ const cities = [
                         ${city.emoji}
                     </div>
                     <h3>${city.name}</h3>
-                    <p><i class="fas fa-globe-europe"></i> ${cityData.country || 'Ευρώπη'}</p>
+                    <p><i class="fas fa-globe-europe"></i> ${cityData.country || cityData.city || 'Ευρώπη'}</p>
                     
                     <div style="margin: 15px 0;">
                         <div style="display: flex; justify-content: space-between;">
@@ -1103,16 +1103,67 @@ function showActivityMap() {
         return;
     }
     
-    alert(`🗺️ Εμφάνιση ${state.selectedActivities.length} δραστηριοτήτων`);
+    if (state.selectedActivities.length === 0) {
+        alert('Δεν έχετε επιλέξει δραστηριότητες ακόμα');
+        return;
+    }
     
-    state.selectedActivities.forEach((activity, index) => {
-        const lat = 52.3676 + (Math.random() - 0.5) * 0.1;
-        const lng = 4.9041 + (Math.random() - 0.5) * 0.1;
-        
-        L.marker([lat, lng])
-            .addTo(travelMap)
-            .bindPopup(`<b>${activity.name}</b><br>${activity.price || '0'}€`);
-    });
+    // Φορτώνουμε ξανά το JSON για να πάρουμε τις πραγματικές συντεταγμένες
+    if (!state.selectedDestinationId) {
+        alert('Δεν υπάρχει επιλεγμένος προορισμός');
+        return;
+    }
+    
+    // Διαβάζουμε το JSON για τις πληροφορίες των δραστηριοτήτων
+    fetch(`data/${state.selectedDestinationId}.json`)
+        .then(response => response.json())
+        .then(cityData => {
+            if (!cityData.activities) {
+                alert('Δεν υπάρχουν πληροφορίες για δραστηριότητες σε αυτήν την πόλη');
+                return;
+            }
+            
+            // Καθαρίζουμε τους προηγούμενους δείκτες (εκτός από τον κεντρικό)
+            travelMap.eachLayer((layer) => {
+                if (layer instanceof L.Marker && layer !== travelMap.centerMarker) {
+                    travelMap.removeLayer(layer);
+                }
+            });
+            
+            // Προσθέτουμε δείκτες για κάθε επιλεγμένη δραστηριότητα
+            state.selectedActivities.forEach((selectedActivity, index) => {
+                // Βρίσκουμε την πλήρη δραστηριότητα από το JSON
+                const fullActivity = cityData.activities.find(a => a.id === selectedActivity.id);
+                
+                if (fullActivity && fullActivity.location) {
+                    // Έχουμε πραγματικές συντεταγμένες
+                    L.marker([fullActivity.location.lat, fullActivity.location.lng])
+                        .addTo(travelMap)
+                        .bindPopup(`
+                            <b>${fullActivity.name}</b><br>
+                            <small>${fullActivity.description || ''}</small><br>
+                            <strong>${selectedActivity.price || '0'}€</strong>
+                        `)
+                        .openPopup();
+                } else {
+                    // Fallback: χρησιμοποιούμε τυχαίες συντεταγμένες γύρω από το κέντρο
+                    const center = travelMap.getCenter();
+                    const lat = center.lat + (Math.random() - 0.5) * 0.05;
+                    const lng = center.lng + (Math.random() - 0.5) * 0.05;
+                    
+                    L.marker([lat, lng])
+                        .addTo(travelMap)
+                        .bindPopup(`<b>${selectedActivity.name}</b><br>${selectedActivity.price || '0'}€`)
+                        .openPopup();
+                }
+            });
+            
+            alert(`✅ Προστέθηκαν ${state.selectedActivities.length} δραστηριότητες στον χάρτη`);
+        })
+        .catch(error => {
+            console.error('Σφάλμα φόρτωσης δεδομένων πόλης:', error);
+            alert('Δεν μπόρεσαν να φορτωθούν οι πληροφορίες για τις δραστηριότητες');
+        });
 }
 
 function showRouteBetweenPoints() {
