@@ -1645,23 +1645,94 @@ function setupSummaryStep() {
 
 function createDailyProgram() {
     const dailyProgram = document.getElementById('daily-program');
+    if (!dailyProgram) return;
+    
     const days = state.selectedDays || 3;
+    const totalActivities = state.selectedActivities.length;
+    
+    // Υπολογισμός δραστηριοτήτων ανά μέρα
+    const activitiesPerDay = Math.max(1, Math.ceil(totalActivities / days));
     
     let html = '';
     
-    for (let i = 1; i <= days; i++) {
+    for (let day = 1; day <= days; day++) {
+        // Βρες ποιες δραστηριότητες πάνε σε αυτή τη μέρα
+        const startIndex = (day - 1) * activitiesPerDay;
+        const endIndex = Math.min(startIndex + activitiesPerDay, totalActivities);
+        const dailyActivities = state.selectedActivities.slice(startIndex, endIndex);
+        
         html += `
-            <div class="day-program">
-                <h4><i class="fas fa-calendar-day"></i> Μέρα ${i}</h4>
+            <div class="day-program" style="margin-bottom: 25px; padding: 20px; background: white; border-radius: 10px; border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                <h4 style="color: var(--primary); margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid var(--primary-light);">
+                    <i class="fas fa-calendar-day"></i> Μέρα ${day}
+                </h4>
                 
-                <div class="time-slot">
-                    <h5>🌅 Πρωί (9:00 - 12:00)</h5>
-                    <ul>
+                <!-- ΠΡΩΙ -->
+                <div style="margin-bottom: 15px; padding: 12px; background: #f0f9ff; border-radius: 8px;">
+                    <h5 style="color: #0366d6; margin-bottom: 8px;">
+                        <i class="fas fa-sun"></i> Πρωί (9:00 - 12:00)
+                    </h5>
+                    <ul style="margin: 0; padding-left: 20px;">
                         <li>Πρωινό στο ξενοδοχείο</li>
-                        ${state.selectedActivities[i-1] ? `<li>${state.selectedActivities[i-1].name}</li>` : '<li>Ελεύθερος χρόνος</li>'}
+                        ${dailyActivities[0] ? `<li><strong>${dailyActivities[0].name}</strong> (${dailyActivities[0].price}€)</li>` : '<li>Ελεύθερος χρόνος / Ανακαλύψτε την πόλη</li>'}
                     </ul>
                 </div>
-            </div>`;
+                
+                <!-- ΜΕΣΗΜΕΡΙ -->
+                <div style="margin-bottom: 15px; padding: 12px; background: #fff8e1; border-radius: 8px;">
+                    <h5 style="color: #ff9800; margin-bottom: 8px;">
+                        <i class="fas fa-utensils"></i> Μεσημέρι (13:00 - 15:00)
+                    </h5>
+                    <ul style="margin: 0; padding-left: 20px;">
+                        <li>Γεύμα σε τοπικό εστιατόριο</li>
+                        ${dailyActivities[1] ? `<li><strong>${dailyActivities[1].name}</strong> (${dailyActivities[1].price}€)</li>` : '<li>Ανάπαυση / Ξεκούραση</li>'}
+                    </ul>
+                </div>
+                
+                <!-- ΑΠΟΓΕΥΜΑ -->
+                <div style="margin-bottom: 15px; padding: 12px; background: #f3e5f5; border-radius: 8px;">
+                    <h5 style="color: #9c27b0; margin-bottom: 8px;">
+                        <i class="fas fa-walking"></i> Απόγευμα (16:00 - 19:00)
+                    </h5>
+                    <ul style="margin: 0; padding-left: 20px;">
+                        ${dailyActivities[2] ? `<li><strong>${dailyActivities[2].name}</strong> (${dailyActivities[2].price}€)</li>` : '<li>Περιπάτωση / Shopping</li>'}
+                        <li>Καφές ή ποτό σε τοπική καφετέρια</li>
+                    </ul>
+                </div>
+                
+                <!-- ΒΡΑΔΥ -->
+                <div style="padding: 12px; background: #e8f5e9; border-radius: 8px;">
+                    <h5 style="color: #4caf50; margin-bottom: 8px;">
+                        <i class="fas fa-moon"></i> Βράδυ (20:00+)
+                    </h5>
+                    <ul style="margin: 0; padding-left: 20px;">
+                        <li>Δείπνο σε τοπικό εστιατόριο</li>
+                        ${dailyActivities[3] ? `<li><strong>${dailyActivities[3].name}</strong> (${dailyActivities[3].price}€)</li>` : '<li>Βραδινή βόλτα / Διασκέδαση</li>'}
+                    </ul>
+                </div>
+                
+                <!-- ΣΥΝΟΛΟ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ ΓΙΑ ΑΥΤΗ ΤΗ ΜΕΡΑ -->
+                ${dailyActivities.length > 0 ? `
+                <div style="margin-top: 15px; padding: 10px; background: var(--primary-light); border-radius: 6px; color: white; font-weight: bold; text-align: center;">
+                    <i class="fas fa-star"></i> ${dailyActivities.length} δραστηριότητες σήμερα
+                </div>
+                ` : ''}
+            </div>
+        `;
+    }
+    
+    // Αν δεν υπάρχουν δραστηριότητες
+    if (totalActivities === 0) {
+        html = `
+            <div style="text-align: center; padding: 40px; color: var(--gray);">
+                <i class="fas fa-calendar-alt fa-3x" style="margin-bottom: 20px; opacity: 0.5;"></i>
+                <h4>Δεν υπάρχουν επιλεγμένες δραστηριότητες</h4>
+                <p>Επιστρέψτε στο βήμα "Δραστηριότητες" για να επιλέξετε</p>
+                <button onclick="showStep('activities')" class="btn btn-primary" style="margin-top: 15px;">
+                    <i class="fas fa-arrow-left"></i> Επιστροφή στις Δραστηριότητες
+                </button>
+            </div>
+        `;
     }
     
     dailyProgram.innerHTML = html;
@@ -2433,19 +2504,22 @@ function updateProgramDays() {
     const selectedDays = parseInt(selectedValue);
     
     if (selectedDays > 0) {
-        // 1. Αποθήκευση στο state
+        // 1. Αποθήκευση
         state.selectedDays = selectedDays;
         
         // 2. Ενημέρωση εμφάνισης
-        document.getElementById('days-display').textContent = '✅ ' + selectedDays + ' μέρες επιλέχθηκαν';
+        const daysDisplay = document.getElementById('days-display');
+        if (daysDisplay) {
+            daysDisplay.textContent = '✅ ' + selectedDays + ' μέρες επιλέχθηκαν';
+            daysDisplay.style.color = 'var(--success)';
+        }
         
-        // 3. Ενημέρωση προγράμματος
+        // 3. ΕΝΗΜΕΡΩΣΗ ΠΡΟΓΡΑΜΜΑΤΟΣ
         createDailyProgram();
         
         // 4. Αποθήκευση
         saveState();
         
-        // 5. Μήνυμα (προαιρετικό)
         console.log(`📅 Ενημέρωση προγράμματος για ${selectedDays} μέρες`);
     }
 }
