@@ -948,33 +948,113 @@ async function filterDestinations() {
     
     await new Promise(resolve => setTimeout(resolve, 800));
     
-    const cities = [
-        { 
-            id: 'paris', name: 'Παρίσι', emoji: '🗼', 
-            hasJSON: true, distance: 3.0, weather: 'Ίδιο', cost: 'Ακριβό',
-            country: 'Γαλλία', vacationType: 'Πολιτισμός'
-        },
-        { 
-            id: 'amsterdam', name: 'Άμστερνταμ', emoji: '🌷',
-            hasJSON: true, distance: 3.5, weather: 'Ζεστό', cost: 'Μέτριο',
-            country: 'Ολλανδία', vacationType: 'Πόλη'
-        },
-        { 
-            id: 'berlin', name: 'Βερολίνο', emoji: '🇩🇪',
-            hasJSON: true, distance: 2.5, weather: 'Ίδιο', cost: 'Οικονομικό',
-            country: 'Γερμανία', vacationType: 'Πόλη'
-        },
-        { 
-            id: 'london', name: 'Λονδίνο', emoji: '🇬🇧',
-            hasJSON: true, distance: 3.8, weather: 'Ίδιο', cost: 'Ακριβό',
-            country: 'ΗΒ', vacationType: 'Πόλη'
-        },
-        { 
-            id: 'prague', name: 'Πράγα', emoji: '🏰',
-            hasJSON: true, distance: 2.2, weather: 'Κρύο', cost: 'Οικονομικό',
-            country: 'Τσεχία', vacationType: 'Πολιτισμός'
-        },
-    ];
+   const cities = [
+    { 
+        id: 'amsterdam', name: 'Άμστερνταμ', emoji: '🌷',
+        hasJSON: true, distance: 3.5, weather: 'Κρύο', cost: 'Μέτριο',  // ΑΛΛΑΓΗ: weather: 'Κρύο'
+        country: 'Ολλανδία', vacationType: 'Πόλη'
+    },
+    { 
+        id: 'paris', name: 'Παρίσι', emoji: '🗼', 
+        hasJSON: true, distance: 3.0, weather: 'Ίδιο', cost: 'Ακριβό',
+        country: 'Γαλλία', vacationType: 'Πολιτισμός'
+    },
+    { 
+        id: 'london', name: 'Λονδίνο', emoji: '🇬🇧',
+        hasJSON: true, distance: 3.8, weather: 'Κρύο', cost: 'Ακριβό',  // ΑΛΛΑΓΗ: weather: 'Κρύο'
+        country: 'ΗΒ', vacationType: 'Πόλη'
+    },
+    { 
+        id: 'berlin', name: 'Βερολίνο', emoji: '🇩🇪',
+        hasJSON: true, distance: 2.5, weather: 'Κρύο', cost: 'Οικονομικό',  // ΑΛΛΑΓΗ: weather: 'Κρύο'
+        country: 'Γερμανία', vacationType: 'Πόλη'
+    },
+    { 
+        id: 'prague', name: 'Πράγα', emoji: '🏰',
+        hasJSON: true, distance: 2.2, weather: 'Κρύο', cost: 'Οικονομικό',
+        country: 'Τσεχία', vacationType: 'Πολιτισμός'
+    },
+    { 
+        id: 'budapest', name: 'Βουδαπέστη', emoji: '♨️',
+        hasJSON: true, distance: 2.0, weather: 'Ίδιο', cost: 'Οικονομικό',
+        country: 'Ουγγαρία', vacationType: 'Πόλη'
+    },
+    { 
+        id: 'vienna', name: 'Βιέννη', emoji: '🎻',
+        hasJSON: true, distance: 2.3, weather: 'Ίδιο', cost: 'Μέτριο',
+        country: 'Αυστρία', vacationType: 'Πολιτισμός'
+    },
+    { 
+        id: 'rome', name: 'Ρώμη', emoji: '🏛️',
+        hasJSON: false, distance: 2.5, weather: 'Ζεστό', cost: 'Μέτριο',
+        country: 'Ιταλία', vacationType: 'Πολιτισμός'
+    },
+    { 
+        id: 'barcelona', name: 'Βαρκελώνη', emoji: '🏖️',
+        hasJSON: false, distance: 3.0, weather: 'Ζεστό', cost: 'Μέτριο',
+        country: 'Ισπανία', vacationType: 'Θάλασσα'
+    },
+    { 
+        id: 'madrid', name: 'Μαδρίτη', emoji: '🐂',
+        hasJSON: true, distance: 3.2, weather: 'Ζεστό', cost: 'Μέτριο',
+        country: 'Ισπανία', vacationType: 'Πόλη'
+    },
+    { 
+        id: 'lisbon', name: 'Λισαβόνα', emoji: '🌊',
+        hasJSON: true, distance: 4.0, weather: 'Ζεστό', cost: 'Οικονομικό',
+        country: 'Πορτογαλία', vacationType: 'Θάλασσα'
+    },
+    { 
+        id: 'istanbul', name: 'Κωνσταντινούπολη', emoji: '🕌',
+        hasJSON: true, distance: 1.5, weather: 'Ζεστό', cost: 'Οικονομικό',
+        country: 'Τουρκία', vacationType: 'Πολιτισμός'
+    },
+    { 
+        id: 'brussels', name: 'Βρυξέλλες', emoji: '🍫',
+        hasJSON: false, distance: 3.0, weather: 'Ίδιο', cost: 'Μέτριο',
+        country: 'Βέλγιο', vacationType: 'Πόλη'
+    },
+    { 
+        id: 'copenhagen', name: 'Κοπεγχάγη', emoji: '🧜‍♀️',
+        hasJSON: false, distance: 3.5, weather: 'Κρύο', cost: 'Ακριβό',
+        country: 'Δανία', vacationType: 'Πόλη'
+    },
+    { 
+        id: 'dublin', name: 'Δουβλίνο', emoji: '🍀',
+        hasJSON: false, distance: 4.0, weather: 'Κρύο', cost: 'Μέτριο',
+        country: 'Ιρλανδία', vacationType: 'Πόλη'
+    },
+    { 
+        id: 'edinburgh', name: 'Εδιμβούργο', emoji: '🏰',
+        hasJSON: false, distance: 4.0, weather: 'Κρύο', cost: 'Μέτριο',
+        country: 'Σκωτία', vacationType: 'Πολιτισμός'
+    },
+    { 
+        id: 'florence', name: 'Φλωρεντία', emoji: '🎨',
+        hasJSON: false, distance: 2.3, weather: 'Ζεστό', cost: 'Μέτριο',
+        country: 'Ιταλία', vacationType: 'Πολιτισμός'
+    },
+    { 
+        id: 'munich', name: 'Μόναχο', emoji: '🍺',
+        hasJSON: false, distance: 2.2, weather: 'Ίδιο', cost: 'Μέτριο',
+        country: 'Γερμανία', vacationType: 'Πόλη'
+    },
+    { 
+        id: 'venice', name: 'Βενετία', emoji: '🛶',
+        hasJSON: false, distance: 2.0, weather: 'Ζεστό', cost: 'Ακριβό',
+        country: 'Ιταλία', vacationType: 'Πόλη'
+    },
+    { 
+        id: 'warsaw', name: 'Βαρσοβία', emoji: '🦅',
+        hasJSON: false, distance: 2.5, weather: 'Κρύο', cost: 'Οικονομικό',
+        country: 'Πολωνία', vacationType: 'Πόλη'
+    },
+    { 
+        id: 'zurich', name: 'Ζυρίχη', emoji: '🏔️',
+        hasJSON: false, distance: 2.5, weather: 'Κρύο', cost: 'Ακριβό',
+        country: 'Ελβετία', vacationType: 'Βουνό'
+    }
+];
     
     let html = '';
     
