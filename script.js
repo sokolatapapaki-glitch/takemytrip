@@ -168,7 +168,7 @@ function loadStepContent(stepName) {
             setupFlightStep();
             break;
         case 'hotel':
-            stepContent.innerHTML = getHotelStepHTML();
+            stepContent.innerHTML = ();
             setupHotelStep();
             break;
         case 'activities':
@@ -549,7 +549,7 @@ function getHotelStepHTML() {
                     <label class="form-label">Δωμάτια</label>
                     <select class="form-control" id="hotel-rooms">
                         <option value="1">1</option>
-                        <option value="2" selected>2</option>
+                        <option value="1" selected>2</option>
                         <option value="3">3</option>
                     </select>
                 </div>
@@ -574,20 +574,25 @@ function setupHotelStep() {
     const checkin = document.getElementById('hotel-checkin');
     const checkout = document.getElementById('hotel-checkout');
     const today = new Date();
-    const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
-    const tenDays = new Date(today.getTime() + 10 * 24 * 60 * 60 * 1000);
     
+    // Μόνο ορισμός minimum date (σήμερα)
     checkin.min = today.toISOString().split('T')[0];
     checkout.min = today.toISOString().split('T')[0];
     
-    checkin.value = nextWeek.toISOString().split('T')[0];
-    checkout.value = tenDays.toISOString().split('T')[0];
+    // ΚΑΝΕΝΑ default value
     
+    // Αυτόματη ενημέρωση checkout όταν αλλάζει το checkin
     checkin.addEventListener('change', function() {
-        const checkinDate = new Date(this.value);
-        const newCheckout = new Date(checkinDate.getTime() + 3 * 24 * 60 * 60 * 1000);
-        checkout.value = newCheckout.toISOString().split('T')[0];
-        checkout.min = this.value;
+        if (this.value) {
+            const checkinDate = new Date(this.value);
+            const newCheckout = new Date(checkinDate.getTime() + 3 * 24 * 60 * 60 * 1000);
+            checkout.min = this.value;
+            
+            // Προσθήκη checkout μόνο αν δεν έχει τιμή
+            if (!checkout.value) {
+                checkout.value = newCheckout.toISOString().split('T')[0];
+            }
+        }
     });
 }
 
