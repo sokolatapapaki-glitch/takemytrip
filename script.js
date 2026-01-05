@@ -530,15 +530,27 @@ function getHotelStepHTML() {
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">Δωμάτια</label>
-                    <select class="form-control" id="hotel-rooms">
-                        <option value="1">1</option>
-                        <option value="1" selected>2</option>
-                        <option value="3">3</option>
-                    </select>
-                </div>
+    <label class="form-label">Δωμάτια</label>
+    <select class="form-control" id="hotel-rooms">
+        <option value="1" selected>1</option>  <!-- ΜΟΝΟ ΕΔΩ selected -->
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select>
+</div>
             </div>
-            
+             <!-- ΝΕΟ: Προειδοποίηση για Booking.com -->
+            <div class="alert alert-info" style="
+                background: #fff3cd; 
+                border-left: 4px solid #ffc107; 
+                padding: 15px; 
+                margin: 20px 0; 
+                border-radius: 8px;
+                text-align: left;
+            ">
+                <i class="fas fa-external-link-alt" style="color: #ffc107; margin-right: 10px;"></i>
+                <strong>Σημείωση:</strong> Η αναζήτηση θα σας ανακατευθύνει στην επίσημη ιστοσελίδα 
+                <strong>Booking.com</strong>
+            </div>
             <div style="text-align: center; margin: 40px 0;">
                 <button class="btn btn-primary" onclick="searchHotels()" style="min-width: 300px; padding: 18px;">
                     <i class="fas fa-search"></i> Αναζήτηση Ξενοδοχείων
@@ -1327,14 +1339,30 @@ function searchHotels() {
     const destination = document.getElementById('hotel-destination').value;
     const checkin = document.getElementById('hotel-checkin').value;
     const checkout = document.getElementById('hotel-checkout').value;
+    const adults = document.getElementById('hotel-adults').value;
+    const children = document.getElementById('hotel-children').value;
+    const rooms = document.getElementById('hotel-rooms').value;
     
     if (!destination) {
         alert('⚠️ Παρακαλώ επιλέξτε προορισμό πρώτα');
         return;
     }
     
-    const bookingUrl = `https://www.booking.com/searchresults.el.html?ss=${encodeURIComponent(destination)}&checkin=${checkin}&checkout=${checkout}`;
-    window.open(bookingUrl, '_blank');
+    // Δημιουργία URL για Booking.com
+    const bookingUrl = `https://www.booking.com/searchresults.el.html?ss=${encodeURIComponent(destination)}&checkin=${checkin}&checkout=${checkout}&group_adults=${adults}&group_children=${children}&no_rooms=${rooms}`;
+    
+    // Επιβεβαίωση πριν την ανακατεύθυνση
+    const userConfirmed = confirm(
+        '🔍 Αναζήτηση Ξενοδοχείων\n\n' +
+        `Θα ανοίξει νέα καρτέλα με ταξίδι σε: ${destination}\n` +
+        `Check-in: ${checkin} | Check-out: ${checkout}\n` +
+        `Άτομα: ${adults} ενήλικοι, ${children} παιδιά | Δωμάτια: ${rooms}\n\n` +
+        'Θέλετε να συνεχίσετε στην ιστοσελίδα Booking.com;'
+    );
+    
+    if (userConfirmed) {
+        window.open(bookingUrl, '_blank');
+    }
 }
 
 async function setupActivitiesStep() {
