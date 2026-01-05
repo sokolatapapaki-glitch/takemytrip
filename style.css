@@ -813,6 +813,24 @@ body {
     line-height: 1.5;
     margin-bottom: 15px;
 }
+/* ==================== MAP FIXES ==================== */
+#map-container {
+    height: 500px;
+    width: 100%;
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 2px solid var(--border);
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+}
+
+/* Σταματάμε εδώ. Μόνο αυτό για τώρα. */
 
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 1200px) {
