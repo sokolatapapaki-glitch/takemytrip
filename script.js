@@ -1465,7 +1465,7 @@ function initializeMap() {
     const mapElement = document.getElementById('map');
     if (!mapElement) return;
     
-    if (travelMap) travelMap.remove();
+  if (window.travelMap) window.travelMap.remove();
     
     try {
         if (typeof L === 'undefined') {
@@ -1474,14 +1474,13 @@ function initializeMap() {
         
         const coords = [48.8566, 2.3522];
         
-        travelMap = L.map('map').setView(coords, 13);
-        
+window.travelMap = L.map('map').setView(coords, 13);      
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
-        }).addTo(travelMap);
+        }).addTo(window.travelMap)
         
         L.marker(coords)
-            .addTo(travelMap)
+            .addTo(window.travelMap)
             .bindPopup(`<b>${state.selectedDestination}</b>`)
             .openPopup();
             
@@ -1508,15 +1507,15 @@ function reloadMap() {
 }
 
 function addCustomPoint() {
-    if (!travelMap) {
+   if (!window.travelMap) {
+
         alert('Παρακαλώ πρώτα φορτώστε τον χάρτη');
         return;
     }
     
     const pointName = prompt('Όνομα σημείου:');
     if (pointName) {
-        const center = travelMap.getCenter();
-        L.marker(center)
+const center = window.travelMap.getCenter();        L.marker(center)
             .addTo(travelMap)
             .bindPopup(`<b>${pointName}</b>`)
             .openPopup();
@@ -1524,7 +1523,8 @@ function addCustomPoint() {
 }
 
 function showActivityMap() {
-    if (!travelMap) {
+   if (!window.travelMap) {
+
         alert('Παρακαλώ πρώτα φορτώστε τον χάρτη');
         return;
     }
@@ -1533,7 +1533,8 @@ function showActivityMap() {
 }
 
 function showRouteBetweenPoints() {
-    if (!travelMap) {
+if (!window.travelMap) {
+
         alert('Παρακαλώ πρώτα φορτώστε τον χάρτη');
         return;
     }
