@@ -1530,7 +1530,7 @@ function showActivityMap() {
     
     console.log('📍 Προσθήκη πινέζων για τις επιλεγμένες δραστηριότητες');
     
-    // 1. Διαγραφή υπαρχουσων πινεζων (ΔΙΟΡΘΩΜΕΝΟ)
+    // 1. Διαγραφή υπαρχουσων πινεζων
     window.travelMap.eachLayer(function(layer) {
         if (layer && layer.options && layer.options.icon) {
             window.travelMap.removeLayer(layer);
@@ -1557,8 +1557,10 @@ function showActivityMap() {
         // Βρες τις πλήρεις πληροφορίες για την δραστηριότητα
         const fullActivity = state.currentCityActivities.find(a => a.id === activity.id);
         
-        if (fullActivity && fullActivity.coordinates) {
-            const marker = L.marker(fullActivity.coordinates)
+        if (fullActivity && fullActivity.location) {
+            // ΑΛΛΑΓΗ: Χρησιμοποιούμε location.lat και location.lng
+            const coords = [fullActivity.location.lat, fullActivity.location.lng];
+            const marker = L.marker(coords)
                 .addTo(window.travelMap)
                 .bindPopup(`
                     <b>${fullActivity.name}</b><br>
@@ -1567,6 +1569,8 @@ function showActivityMap() {
                 `);
             
             activityCount++;
+        } else {
+            console.log('⚠️ Δραστηριότητα χωρίς location:', fullActivity?.name);
         }
     });
     
@@ -1575,6 +1579,35 @@ function showActivityMap() {
     } else {
         alert('ℹ️ Οι επιλεγμένες δραστηριότητες δεν έχουν συντεταγμένες');
     }
+}
+
+function getCityCoordinates(cityId) {
+    const coordinates = {
+        'amsterdam': [52.3702, 4.8952],
+        'paris': [48.8566, 2.3522],
+        'london': [51.5074, -0.1278],
+        'berlin': [52.5200, 13.4050],
+        'prague': [50.0755, 14.4378],
+        'budapest': [47.4979, 19.0402],
+        'vienna': [48.2082, 16.3738],
+        'rome': [41.9028, 12.4964],
+        'madrid': [40.4168, -3.7038],
+        'lisbon': [38.7223, -9.1393],
+        'istanbul': [41.0082, 28.9784]
+    };
+    
+    return coordinates[cityId] || [52.3702, 4.8952]; // Προεπιλογή: Άμστερνταμ
+}
+
+// Κάντε τη συνάρτηση διαθέσιμη globally
+window.getCityCoordinates = getCityCoordinates;
+
+function showRouteBetweenPoints() {
+    if (!window.travelMap) {
+        alert('Παρακαλώ πρώτα φορτώστε τον χάρτη');
+        return;
+    }
+    alert('🛣️ Διαδρομή μεταξύ σημείων');
 }
 
 function getCityCoordinates(cityId) {
