@@ -1607,7 +1607,90 @@ function showRouteBetweenPoints() {
         alert('Παρακαλώ πρώτα φορτώστε τον χάρτη');
         return;
     }
-    alert('🛣️ Διαδρομή μεταξύ σημείων');
+    
+    // Ελέγχουμε αν έχουμε αρκετές δραστηριότητες
+    if (state.selectedActivities.length < 2) {
+        alert('Χρειάζεστε τουλάχιστον 2 επιλεγμένες δραστηριότητες για να δημιουργήσετε διαδρομή');
+        return;
+    }
+    
+    // Απλή έκδοση πρώτα: Ενώνουμε την πρώτη με τη δεύτερη δραστηριότητα
+    const firstActivity = state.currentCityActivities.find(a => a.id === state.selectedActivities[0].id);
+    const secondActivity = state.currentCityActivities.find(a => a.id === state.selectedActivities[1].id);
+    
+    if (!firstActivity || !secondActivity || !firstActivity.location || !secondActivity.location) {
+        alert('Δεν βρέθηκαν πληροφορίες για τις δραστηριότητες');
+        return;
+    }
+    
+    const fromCoords = [firstActivity.location.lat, firstActivity.location.lng];
+    const toCoords = [secondActivity.location.lat, secondActivity.location.lng];
+    
+    // 1. Σχεδιάζουμε γραμμή στον χάρτη
+    drawRouteLine(fromCoords, toCoords);
+    
+    // 2. Ανοίγουμε Google Maps
+    openGoogleMapsRoute(fromCoords, toCoords);
+}
+
+function drawRouteLine(fromCoords, toCoords) {
+    // Διαγραφή προηγούμενης γραμμής αν υπάρχει
+    if (window.currentRouteLine) {
+        window.travelMap.removeLayer(window.currentRouteLine);
+    }
+    
+    console.log('📏 Σχεδίαση γραμμής από:', fromCoords, 'προς:', toCoords);
+    
+    // Δημιουργία γραμμής
+    window.currentRouteLine = L.polyline([fromCoords, toCoords], {
+        color: '#FF6B6B', // Κόκκινο χρώμα
+        weight: 5, // Πάχος γραμμής
+        opacity: 0.8,
+        dashArray: '10, 10', // Παύλες
+        lineCap: 'round'
+    }).addTo(window.travelMap);
+    
+    // Προσθήκη μπλε μαρκαδόρων στα άκρα
+    L.marker(fromCoords, { 
+        icon: L.divIcon({
+            html: '📍',
+            iconSize: [30, 30],
+            className: 'route-marker'
+        })
+    }).addTo(window.travelMap)
+      .bindPopup('🏁 Από')
+      .openPopup();
+    
+    L.marker(toCoords, { 
+        icon: L.divIcon({
+            html: '🎯',
+            iconSize: [30, 30],
+            className: 'route-marker'
+        })
+    }).addTo(window.travelMap)
+      .bindPopup('⭐ Προς')
+      .openPopup();
+    
+    // Προσαρμογή zoom για να φαίνονται και τα 2 σημεία
+    const bounds = L.latLngBounds([fromCoords, toCoords]);
+    window.travelMap.fitBounds(bounds, { padding: [100, 100] });
+    
+    alert('✅ Προστέθηκε γραμμή στον χάρτη!');
+}
+function openGoogleMapsRoute(fromCoords, toCoords) {
+    // Δημιουργία Google Maps URL για περπάτημα
+    const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${fromCoords[0]},${fromCoords[1]}&destination=${toCoords[0]},${toCoords[1]}&travelmode=walking`;
+    
+    console.log('🗺️ Άνοιγμα Google Maps:', googleMapsUrl);
+    
+    // Άνοιγμα νέας καρτέλας
+    const newWindow = window.open(googleMapsUrl, '_blank');
+    
+    if (newWindow) {
+        alert('✅ Άνοιξε Google Maps σε νέα καρτέλα!\n\nΜπορείτε να δείτε:\n• Απόσταση\n• Χρόνο μετακίνησης\n• Οδηγίες περπατήματος\n\n(Αν η καρτέλα δεν άνοιξε, ελέγξτε τα popup blockers)');
+    } else {
+        alert('⚠️ Δεν άνοιξε η καρτέλα. Πιθανότατα τα popup είναι μπλοκαρισμένα.\n\nURL για αντιγραφή:\n' + googleMapsUrl);
+    }
 }
 
 function getCityCoordinates(cityId) {
