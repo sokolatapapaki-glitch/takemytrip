@@ -321,8 +321,7 @@ function getDestinationStepHTML() {
                         <option value="Πόλη" selected>🏙️ Αστικές Εμπειρίες</option>
                         <option value="Βουνό">🏔️ Βουνό & Χιονοδρομικά</option>
                         <option value="Φυσική">🌳 Φυσική Ομορφία</option>
-                        <option value="Ψώνια">🛍️ Ψώνια & Gastronomy</option>
-                    </select>
+                        </select>
                 </div>
                 
                 <div class="form-group">
