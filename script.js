@@ -1635,21 +1635,26 @@ function initializeMap() {
     const mapElement = document.getElementById('map');
     if (!mapElement) return;
     
-  if (window.travelMap) window.travelMap.remove();
+    if (window.travelMap) window.travelMap.remove();
     
     try {
         if (typeof L === 'undefined') {
             throw new Error('Leaflet not loaded');
         }
         
-        const coords = [48.8566, 2.3522];
+        // ΑΛΛΑΓΗ: Παίρνουμε συντεταγμένες της πόλης
+        const cityCoords = getCityCoordinates(state.selectedDestinationId);
         
-window.travelMap = L.map('map').setView(coords, 13);      
+        if (!cityCoords) {
+            throw new Error(`Δεν βρέθηκαν συντεταγμένες για ${state.selectedDestination}`);
+        }
+        
+        window.travelMap = L.map('map').setView(cityCoords, 13);   
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(window.travelMap)
         
-        L.marker(coords)
+        L.marker(cityCoords) 
             .addTo(window.travelMap)
             .bindPopup(`<b>${state.selectedDestination}</b>`)
             .openPopup();
@@ -1761,12 +1766,29 @@ function getCityCoordinates(cityId) {
         'budapest': [47.4979, 19.0402],
         'vienna': [48.2082, 16.3738],
         'rome': [41.9028, 12.4964],
+        'barcelona': [41.3851, 2.1734],
         'madrid': [40.4168, -3.7038],
         'lisbon': [38.7223, -9.1393],
-        'istanbul': [41.0082, 28.9784]
+        'istanbul': [41.0082, 28.9784],
+        'brussels': [50.8503, 4.3517],
+        'copenhagen': [55.6761, 12.5683],
+        'dublin': [53.3498, -6.2603],
+        'edinburgh': [55.9533, -3.1883],
+        'florence': [43.7696, 11.2558],
+        'munich': [48.1351, 11.5820],
+        'venice': [45.4408, 12.3155],
+        'warsaw': [52.2297, 21.0122],
+        'krakow': [50.0647, 19.9450],
+        'zurich': [47.3769, 8.5417]
     };
     
-    return coordinates[cityId] || [52.3702, 4.8952]; // Προεπιλογή: Άμστερνταμ
+    // ΑΝΤΙ για προεπιλογή, επιστρέφουμε null αν δεν βρεθεί
+    if (!coordinates[cityId]) {
+        console.error(`❌ Δεν βρέθηκαν συντεταγμένες για πόλη: ${cityId}`);
+        return null; // ή επιστροφή κενού πίνακα []
+    }
+    
+    return coordinates[cityId];
 }
 
 // Κάντε τη συνάρτηση διαθέσιμη globally
