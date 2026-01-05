@@ -538,19 +538,7 @@ function getHotelStepHTML() {
     </select>
 </div>
             </div>
-             <!-- ΝΕΟ: Προειδοποίηση για Booking.com -->
-            <div class="alert alert-info" style="
-                background: #fff3cd; 
-                border-left: 4px solid #ffc107; 
-                padding: 15px; 
-                margin: 20px 0; 
-                border-radius: 8px;
-                text-align: left;
-            ">
-                <i class="fas fa-external-link-alt" style="color: #ffc107; margin-right: 10px;"></i>
-                <strong>Σημείωση:</strong> Η αναζήτηση θα σας ανακατευθύνει στην επίσημη ιστοσελίδα 
-                <strong>Booking.com</strong>
-            </div>
+                        
             <!-- Προειδοποίηση για πλατφόρμες -->
 <div class="alert alert-info" style="
     background: #fff3cd; 
