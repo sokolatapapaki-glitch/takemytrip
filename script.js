@@ -1064,6 +1064,11 @@ async function filterDestinations() {
             country: 'Πολωνία', vacationType: 'Πόλη'
         },
         { 
+    id: 'krakow', name: 'Κρακοβία', emoji: '🐉',
+    hasJSON: false, distance: 2.0, weather: 'Κρύο', cost: 'Οικονομικό',
+    country: 'Πολωνία', vacationType: 'Πολιτισμός'
+},
+        { 
             id: 'zurich', name: 'Ζυρίχη', emoji: '🏔️',
             hasJSON: false, distance: 2.5, weather: 'Κρύο', cost: 'Ακριβό',
             country: 'Ελβετία', vacationType: 'Βουνό'
@@ -2005,6 +2010,7 @@ function createDestinationDropdown() {
                     <option value="munich">Μόναχο (Γερμανία)</option>
                     <option value="venice">Βενετία (Ιταλία)</option>
                     <option value="warsaw">Βαρσοβία (Πολωνία)</option>
+                    <option value="krakow">Κρακοβία (Πολωνία)</option>
                     <option value="zurich">Ζυρίχη (Ελβετία)</option>
                 </optgroup>
             </select>
