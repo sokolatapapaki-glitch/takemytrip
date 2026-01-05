@@ -334,19 +334,6 @@ function getDestinationStepHTML() {
                         <option value="Ακριβό">💰💰💰 Ακριβό</option>
                     </select>
                 </div>
-                
-                <div class="form-group">
-                    <label class="form-label"><i class="fas fa-calendar-day"></i> Μέρες Διαμονής</label>
-                    <select class="form-control" id="days-stay">
-                        <option value="">-- Επιλέξτε --</option>
-                        <option value="2">2 μέρες (Σαβ-Κυρ)</option>
-                        <option value="3">3 μέρες (Σαβ-Δευ)</option>
-                        <option value="4">4 μέρες</option>
-                        <option value="5" selected>5 μέρες</option>
-                        <option value="7">7 μέρες (Μια εβδομάδα)</option>
-                        <option value="10">10+ μέρες</option>
-                    </select>
-                </div>
             </div>
             
             <div class="grid grid-2">
@@ -721,6 +708,38 @@ function getSummaryStepHTML() {
                     </div>
                 </div>
                 
+                <!-- ΝΕΟ: Επιλογή Ημερών για Πρόγραμμα -->
+                <div class="card" style="margin: 30px 0; background: #f0f7ff; border-left: 4px solid var(--primary);">
+                    <h3><i class="fas fa-calendar-alt"></i> Διάρκεια Ταξιδιού</h3>
+                    <p style="color: var(--gray); margin-bottom: 15px;">
+                        Επιλέξτε πόσες μέρες θα διαρκέσει το ταξίδι σας για να δημιουργηθεί το ημερήσιο πρόγραμμα.
+                    </p>
+                    
+                    <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                        <select class="form-control" id="program-days" style="width: 200px; font-size: 16px; padding: 12px;">
+                            <option value="0" ${state.selectedDays === 0 ? 'selected disabled' : 'disabled'}>-- Επιλέξτε μέρες --</option>
+                            <option value="2" ${state.selectedDays === 2 ? 'selected' : ''}>2 μέρες</option>
+                            <option value="3" ${state.selectedDays === 3 ? 'selected' : ''}>3 μέρες</option>
+                            <option value="4" ${state.selectedDays === 4 ? 'selected' : ''}>4 μέρες</option>
+                            <option value="5" ${state.selectedDays === 5 ? 'selected' : ''}>5 μέρες</option>
+                            <option value="7" ${state.selectedDays === 7 ? 'selected' : ''}>7 μέρες (Μια εβδομάδα)</option>
+                            <option value="10" ${state.selectedDays === 10 ? 'selected' : ''}>10+ μέρες</option>
+                        </select>
+                        
+                        <button class="btn btn-primary" onclick="updateProgramDays()" style="padding: 12px 25px;">
+                            <i class="fas fa-sync-alt"></i> Ενημέρωση Προγράμματος
+                        </button>
+                        
+                        <span id="days-display" style="color: var(--primary); font-weight: bold; font-size: 16px;">
+                            ${state.selectedDays > 0 ? '✅ ' + state.selectedDays + ' μέρες επιλέχθηκαν' : '⚠️ Δεν έχετε επιλέξει ακόμα'}
+                        </span>
+                    </div>
+                    
+                    <div style="margin-top: 15px; font-size: 14px; color: #666; background: white; padding: 10px; border-radius: 6px;">
+                        <i class="fas fa-info-circle"></i> Οι ημέρες χρησιμοποιούνται <strong>μόνο</strong> για τη δημιουργία του προγράμματος, όχι για φιλτράρισμα.
+                    </div>
+                </div>
+                
                 <!-- Selected Activities -->
                 <div class="card" id="selected-activities-section">
                     <h3><i class="fas fa-star"></i> Επιλεγμένες Δραστηριότητες</h3>
@@ -756,7 +775,6 @@ function getSummaryStepHTML() {
         </div>
     `;
 }
-
 // ==================== STEP 6: MAP ====================
 function getMapStepHTML() {
     return `
@@ -906,13 +924,12 @@ async function filterDestinations() {
     const weather = document.getElementById('weather').value;
     const vacationType = document.getElementById('vacation-type').value;
     const costLevel = document.getElementById('cost-level').value;
-    const daysStay = document.getElementById('days-stay').value;
     const themeParks = document.getElementById('theme-parks').value;
     // 🆕 ΝΕΟ ΦΙΛΤΡΟ (αντικατέστησε το travel-type):
     const strollerFilter = document.getElementById('stroller-friendly-filter').value;
     
     console.log('🎯 Εφαρμογή φίλτρων:', {
-        distance, weather, vacationType, costLevel, daysStay, themeParks, strollerFilter
+        distance, weather, vacationType, costLevel, themeParks, strollerFilter
     });
     
     // 📊 ΟΛΟΚΛΗΡΩΜΕΝΟΣ ΠΙΝΑΚΑΣ ΠΟΛΕΩΝ (22 πόλεις με το νέο πεδίο strollerFriendly)
@@ -1275,7 +1292,6 @@ function resetFilters() {
     document.getElementById('weather').value = '';
     document.getElementById('vacation-type').value = '';
     document.getElementById('cost-level').value = '';
-    document.getElementById('days-stay').value = '';
     document.getElementById('theme-parks').value = '';
     document.getElementById('travel-budget').value = '';
     document.getElementById('budget-currency').value = 'EUR';
@@ -2404,5 +2420,33 @@ function addClickableMarker(coords, title, activityId) {
     
     return marker;
 }
-
+// ==================== PROGRAM DAYS UPDATE ====================
+function updateProgramDays() {
+    const daysSelect = document.getElementById('program-days');
+    const selectedValue = daysSelect.value;
+    
+    if (!selectedValue || selectedValue === '0') {
+        alert('⚠️ Παρακαλώ επιλέξτε αριθμό ημερών από το dropdown');
+        return;
+    }
+    
+    const selectedDays = parseInt(selectedValue);
+    
+    if (selectedDays > 0) {
+        // 1. Αποθήκευση στο state
+        state.selectedDays = selectedDays;
+        
+        // 2. Ενημέρωση εμφάνισης
+        document.getElementById('days-display').textContent = '✅ ' + selectedDays + ' μέρες επιλέχθηκαν';
+        
+        // 3. Ενημέρωση προγράμματος
+        createDailyProgram();
+        
+        // 4. Αποθήκευση
+        saveState();
+        
+        // 5. Μήνυμα (προαιρετικό)
+        console.log(`📅 Ενημέρωση προγράμματος για ${selectedDays} μέρες`);
+    }
+}
 console.log('✅ Script.js loaded successfully!');
