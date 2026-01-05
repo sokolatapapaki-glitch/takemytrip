@@ -834,7 +834,7 @@ function getMapStepHTML() {
                         <i class="fas fa-map-pin"></i> Προβολή Σημείων
                     </button>
                     
-                    <button class="btn btn-accent" onclick="showRouteBetweenPoints()">
+                    <button class="btn btn-accent" onclick="()">
                         <i class="fas fa-route"></i> Διαδρομή
                     </button>
                 </div>
@@ -1485,6 +1485,7 @@ window.travelMap = L.map('map').setView(coords, 13);
             .openPopup();
             
         console.log('✅ Χάρτης δημιουργήθηκε');
+        setupClickToConnect();
         
     } catch (error) {
         mapElement.innerHTML = `
@@ -1521,7 +1522,6 @@ const center = window.travelMap.getCenter();        L.marker(center)
             .openPopup();
     }
 }
-
 function showActivityMap() {
     if (!window.travelMap) {
         alert('Παρακαλώ πρώτα φορτώστε τον χάρτη');
@@ -1558,15 +1558,15 @@ function showActivityMap() {
         const fullActivity = state.currentCityActivities.find(a => a.id === activity.id);
         
         if (fullActivity && fullActivity.location) {
-            // ΑΛΛΑΓΗ: Χρησιμοποιούμε location.lat και location.lng
+            // Χρησιμοποιούμε location.lat και location.lng
             const coords = [fullActivity.location.lat, fullActivity.location.lng];
-            const marker = L.marker(coords)
-                .addTo(window.travelMap)
-                .bindPopup(`
-                    <b>${fullActivity.name}</b><br>
-                    <small>Κόστος: ${activity.price}€</small><br>
-                    <small>Κατηγορία: ${fullActivity.category || 'Γενική'}</small>
-                `);
+            
+            // ΜΟΝΟ ΑΥΤΗ Η ΓΡΑΜΜΗ - clickable markers
+            const marker = addClickableMarker(
+                coords, 
+                fullActivity.name, 
+                fullActivity.id
+            );
             
             activityCount++;
         } else {
@@ -1575,7 +1575,7 @@ function showActivityMap() {
     });
     
     if (activityCount > 0) {
-        alert(`✅ Προστέθηκαν ${activityCount} πινέζες στον χάρτη`);
+        alert(`✅ Προστέθηκαν ${activityCount} πινέζες στον χάρτη\n\n🎯 Κάντε κλικ σε μια πινέζα για να επιλέξετε ως "ΑΠΟ"\n🎯 Μετά κάντε κλικ σε άλλη για "ΠΡΟΣ"\n🎯 Θα ενωθούν αυτόματα!`);
     } else {
         alert('ℹ️ Οι επιλεγμένες δραστηριότητες δεν έχουν συντεταγμένες');
     }
@@ -1607,90 +1607,7 @@ function showRouteBetweenPoints() {
         alert('Παρακαλώ πρώτα φορτώστε τον χάρτη');
         return;
     }
-    
-    // Ελέγχουμε αν έχουμε αρκετές δραστηριότητες
-    if (state.selectedActivities.length < 2) {
-        alert('Χρειάζεστε τουλάχιστον 2 επιλεγμένες δραστηριότητες για να δημιουργήσετε διαδρομή');
-        return;
-    }
-    
-    // Απλή έκδοση πρώτα: Ενώνουμε την πρώτη με τη δεύτερη δραστηριότητα
-    const firstActivity = state.currentCityActivities.find(a => a.id === state.selectedActivities[0].id);
-    const secondActivity = state.currentCityActivities.find(a => a.id === state.selectedActivities[1].id);
-    
-    if (!firstActivity || !secondActivity || !firstActivity.location || !secondActivity.location) {
-        alert('Δεν βρέθηκαν πληροφορίες για τις δραστηριότητες');
-        return;
-    }
-    
-    const fromCoords = [firstActivity.location.lat, firstActivity.location.lng];
-    const toCoords = [secondActivity.location.lat, secondActivity.location.lng];
-    
-    // 1. Σχεδιάζουμε γραμμή στον χάρτη
-    drawRouteLine(fromCoords, toCoords);
-    
-    // 2. Ανοίγουμε Google Maps
-    openGoogleMapsRoute(fromCoords, toCoords);
-}
-
-function drawRouteLine(fromCoords, toCoords) {
-    // Διαγραφή προηγούμενης γραμμής αν υπάρχει
-    if (window.currentRouteLine) {
-        window.travelMap.removeLayer(window.currentRouteLine);
-    }
-    
-    console.log('📏 Σχεδίαση γραμμής από:', fromCoords, 'προς:', toCoords);
-    
-    // Δημιουργία γραμμής
-    window.currentRouteLine = L.polyline([fromCoords, toCoords], {
-        color: '#FF6B6B', // Κόκκινο χρώμα
-        weight: 5, // Πάχος γραμμής
-        opacity: 0.8,
-        dashArray: '10, 10', // Παύλες
-        lineCap: 'round'
-    }).addTo(window.travelMap);
-    
-    // Προσθήκη μπλε μαρκαδόρων στα άκρα
-    L.marker(fromCoords, { 
-        icon: L.divIcon({
-            html: '📍',
-            iconSize: [30, 30],
-            className: 'route-marker'
-        })
-    }).addTo(window.travelMap)
-      .bindPopup('🏁 Από')
-      .openPopup();
-    
-    L.marker(toCoords, { 
-        icon: L.divIcon({
-            html: '🎯',
-            iconSize: [30, 30],
-            className: 'route-marker'
-        })
-    }).addTo(window.travelMap)
-      .bindPopup('⭐ Προς')
-      .openPopup();
-    
-    // Προσαρμογή zoom για να φαίνονται και τα 2 σημεία
-    const bounds = L.latLngBounds([fromCoords, toCoords]);
-    window.travelMap.fitBounds(bounds, { padding: [100, 100] });
-    
-    alert('✅ Προστέθηκε γραμμή στον χάρτη!');
-}
-function openGoogleMapsRoute(fromCoords, toCoords) {
-    // Δημιουργία Google Maps URL για περπάτημα
-    const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${fromCoords[0]},${fromCoords[1]}&destination=${toCoords[0]},${toCoords[1]}&travelmode=walking`;
-    
-    console.log('🗺️ Άνοιγμα Google Maps:', googleMapsUrl);
-    
-    // Άνοιγμα νέας καρτέλας
-    const newWindow = window.open(googleMapsUrl, '_blank');
-    
-    if (newWindow) {
-        alert('✅ Άνοιξε Google Maps σε νέα καρτέλα!\n\nΜπορείτε να δείτε:\n• Απόσταση\n• Χρόνο μετακίνησης\n• Οδηγίες περπατήματος\n\n(Αν η καρτέλα δεν άνοιξε, ελέγξτε τα popup blockers)');
-    } else {
-        alert('⚠️ Δεν άνοιξε η καρτέλα. Πιθανότατα τα popup είναι μπλοκαρισμένα.\n\nURL για αντιγραφή:\n' + googleMapsUrl);
-    }
+    alert('🛣️ Διαδρομή μεταξύ σημείων');
 }
 
 function getCityCoordinates(cityId) {
@@ -2150,4 +2067,118 @@ function getPriceForAge(prices, age) {
     // 6. Αν δεν βρέθηκε τίποτα
     return '?';
 }
+// ==================== CLICK-TO-CONNECT SYSTEM ====================
+let firstClickedMarker = null;
+let secondClickedMarker = null;
+let connectionLine = null;
+
+// Κάθε φορά που φορτώνει ο χάρτης, ρυθμίζουμε το σύστημα
+function setupClickToConnect() {
+    console.log('🔄 Ρύθμιση click-to-connect system');
+    
+    // Διαγραφή παλιών listeners
+    if (window.travelMap) {
+        window.travelMap.off('click');
+    }
+}
+
+// Συνάρτηση που ενώνει 2 σημεία
+function connectTwoPoints(point1, point2, marker1, marker2) {
+    console.log('🔗 Σύνδεση σημείων:', point1, point2);
+    
+    // 1. Διαγραφή παλιάς γραμμής
+    if (connectionLine && window.travelMap) {
+        window.travelMap.removeLayer(connectionLine);
+    }
+    
+    // 2. Σχεδίαση νέας γραμμής
+    connectionLine = L.polyline([point1, point2], {
+        color: '#FF0000',
+        weight: 4,
+        opacity: 0.7,
+        dashArray: '10, 5',
+        lineCap: 'round'
+    }).addTo(window.travelMap);
+    
+    // 3. Ενημέρωση popups
+    if (marker1 && marker1.getPopup()) {
+        marker1.setPopupContent('📍 Από<br><small>(κλικ για Google Maps)</small>');
+    }
+    
+    if (marker2 && marker2.getPopup()) {
+        marker2.setPopupContent('🎯 Προς<br><small>(κλικ για Google Maps)</small>');
+    }
+    
+    // 4. Άνοιγμα Google Maps
+    const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${point1[0]},${point1[1]}&destination=${point2[0]},${point2[1]}&travelmode=walking`;
+    
+    // 5. Προσθήκη κλικ στα markers για Google Maps
+    marker1.on('click', function() {
+        window.open(googleMapsUrl, '_blank');
+    });
+    
+    marker2.on('click', function() {
+        window.open(googleMapsUrl, '_blank');
+    });
+    
+    alert(`✅ Ενώθηκαν 2 σημεία!\n\nΚάντε κλικ σε οποιαδήποτε πινέζα για Google Maps.\n\n📍 Από → 🎯 Προς`);
+}
+
+// Βοηθητική: Προσθήκη marker με δυνατότητα κλικ
+function addClickableMarker(coords, title, activityId) {
+    if (!window.travelMap) return null;
+    
+       const marker = L.marker(coords).addTo(window.travelMap);  // <-- ΑΥΤΗ Η ΓΡΑΜΜΗ ΠΡΕΠΕΙ ΝΑ ΥΠΑΡΧΕΙ
+    
+    marker.bindPopup(`<b>${title}</b><br><small>Κλικ για επιλογή ως ΑΠΟ</small>`);
+    
+    marker.on('click', function(e) {
+        // Αν είναι πρώτο κλικ
+        if (!firstClickedMarker) {
+            firstClickedMarker = {
+                coords: coords,
+                marker: marker,
+                title: title,
+                activityId: activityId
+            };
+            
+            marker.setPopupContent(`<b>${title}</b><br>✅ Επιλέχθηκε ως ΑΠΟ<br><small>Κλικ σε άλλη πινέζα για ΠΡΟΣ</small>`);
+            alert(`📍 Επιλέξατε: "${title}" ως σημείο ΑΠΟ\n\nΤώρα κάντε κλικ στο σημείο ΠΡΟΣ`);
+            
+        } 
+        // Αν είναι δεύτερο κλικ (και όχι το ίδιο)
+        else if (!secondClickedMarker && firstClickedMarker.activityId !== activityId) {
+            secondClickedMarker = {
+                coords: coords,
+                marker: marker,
+                title: title,
+                activityId: activityId
+            };
+            
+            marker.setPopupContent(`<b>${title}</b><br>✅ Επιλέχθηκε ως ΠΡΟΣ<br><small>Γραμμή σχεδιάστηκε!</small>`);
+            
+            // Σύνδεση των δύο σημείων
+            connectTwoPoints(
+                firstClickedMarker.coords,
+                secondClickedMarker.coords,
+                firstClickedMarker.marker,
+                secondClickedMarker.marker
+            );
+            
+            // Επαναφορά για νέα σύνδεση
+            setTimeout(() => {
+                firstClickedMarker = null;
+                secondClickedMarker = null;
+            }, 5000);
+            
+        } 
+        // Αν κάνουμε κλικ στο ίδιο σημείο
+        else if (firstClickedMarker && firstClickedMarker.activityId === activityId) {
+            alert('⚠️ Έχετε ήδη επιλέξει αυτό το σημείο ως ΑΠΟ\n\nΕπιλέξτε διαφορετική πινέζα για ΠΡΟΣ');
+        }
+    });
+    
+    return marker;
+}
+
 console.log('✅ Script.js loaded successfully!');
