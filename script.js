@@ -262,7 +262,7 @@ function fixDestinationButtons() {
         if (buttonText.includes('Επαναφορά')) {
             event.preventDefault();
             event.stopPropagation();
-            resetFilters();
+            ();
             return false;
         }
     });
@@ -390,7 +390,7 @@ function getDestinationStepHTML() {
                     <i class="fas fa-bolt"></i> Γρήγορες Προτάσεις
                 </button>
                 
-                <button class="btn btn-outline" onclick="resetFilters()" style="padding: 16px 30px; border-color: var(--danger); color: var(--danger);">
+                <button class="btn btn-outline" onclick="()" style="padding: 16px 30px; border-color: var(--danger); color: var(--danger);">
                     <i class="fas fa-redo"></i> Επαναφορά
                 </button>
             </div>
@@ -1129,7 +1129,7 @@ async function filterDestinations() {
                     <br>
                     <strong>Συμβουλή:</strong> Χαλαρώστε κάποιο κριτήριο ή δοκιμάστε "Γρήγορες Προτάσεις".
                 </p>
-                <button class="btn btn-primary" onclick="resetFilters()">
+                <button class="btn btn-primary" onclick="()">
                     <i class="fas fa-redo"></i> Επαναφορά Φίλτρων
                 </button>
                 <button class="btn btn-outline" onclick="showQuickRecommendations()" style="margin-left: 10px;">
@@ -1270,22 +1270,28 @@ function showQuickRecommendations() {
 function resetFilters() {
     console.log('🔄 Επαναφορά φίλτρων');
     
-    document.getElementById('travel-type').value = '';
+    // 🛠️ ΔΙΟΡΘΩΣΗ: Χρησιμοποίησε τα ΣΩΣΤΑ IDs που υπάρχουν τώρα στο HTML
     document.getElementById('distance').value = '';
     document.getElementById('weather').value = '';
     document.getElementById('vacation-type').value = '';
     document.getElementById('cost-level').value = '';
     document.getElementById('days-stay').value = '';
+    document.getElementById('theme-parks').value = '';
     document.getElementById('travel-budget').value = '';
+    document.getElementById('budget-currency').value = 'EUR';
+    // 🆕 ΝΕΟ ΦΙΛΤΡΟ (αντί για το παλιό travel-type):
+    document.getElementById('stroller-friendly-filter').value = '';
     
     const resultsDiv = document.getElementById('destination-results');
-    resultsDiv.innerHTML = `
-        <div style="text-align: center; padding: 60px 20px; background: var(--light); border-radius: var(--radius-lg); margin-top: 20px;">
-            <div style="font-size: 64px; margin-bottom: 20px; color: var(--primary);">🗺️</div>
-            <h2 style="color: var(--dark); margin-bottom: 15px;">Φίλτρα Επαναφέρθηκαν</h2>
-            <p style="color: var(--gray);">Χρησιμοποιήστε τα φίλτρα για νέα αναζήτηση</p>
-        </div>
-    `;
+    if (resultsDiv) {
+        resultsDiv.innerHTML = `
+            <div style="text-align: center; padding: 60px 20px; background: var(--light); border-radius: var(--radius-lg); margin-top: 20px;">
+                <div style="font-size: 64px; margin-bottom: 20px; color: var(--primary);">🗺️</div>
+                <h2 style="color: var(--dark); margin-bottom: 15px;">Φίλτρα Επαναφέρθηκαν</h2>
+                <p style="color: var(--gray);">Χρησιμοποιήστε τα φίλτρα για νέα αναζήτηση</p>
+            </div>
+        `;
+    }
 }
 
 function showPopularDestinations() {
@@ -1301,9 +1307,14 @@ function showBudgetDestinations() {
 }
 
 function showFamilyDestinations() {
-    document.getElementById('travel-type').value = 'Οικογένεια';
+    console.log('👨‍👩‍👧‍👦 Φιλτράρισμα για οικογένειες');
+    
+    // ΔΕΝ υπάρχει πια travel-type, οπότε βάζουμε μόνο τα σχετικά φίλτρα
     document.getElementById('theme-parks').value = 'has-parks';
     document.getElementById('cost-level').value = 'Μέτριο';
+    document.getElementById('vacation-type').value = 'Πόλη';
+    
+    // Αμέσως αναζήτηση
     filterDestinations();
 }
 
