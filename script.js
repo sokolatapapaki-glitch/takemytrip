@@ -34,7 +34,7 @@ function initApp() {
     setupMobileNavigation();
     showStep(state.currentStep);
     setupEventListeners();
-    updateBudgetTracker();
+    updateActivitiesCost();
     console.log('✅ Αρχικοποίηση ολοκληρώθηκε');
 }
 
@@ -855,7 +855,7 @@ function saveManualDestination() {
     state.selectedBudget = parseInt(budget) || 0;
     
     document.getElementById('current-destination-display').textContent = cityName;
-    updateBudgetTracker();
+    updateActivitiesCost();
     
     closeManualDestinationModal();
     
@@ -1605,7 +1605,7 @@ function updateActivitiesTotal() {
     });
     
     document.getElementById('activities-total').textContent = total + '€';
-    updateBudgetTracker();
+    updateActivitiesCost();
 }
 
 function setupSummaryStep() {
@@ -1976,22 +1976,36 @@ function showRouteBetweenPoints() {
     alert('🛣️ Διαδρομή μεταξύ σημείων');
 }
 // ==================== HELPER FUNCTIONS ====================
-function updateBudgetTracker() {
-    const total = state.selectedBudget;
-    const spent = calculateTotalSpent();
+function updateActivitiesCost() {
+    const totalCost = calculateTotalSpent();
     
-    const totalEl = document.getElementById('budget-total');
-    const spentEl = document.getElementById('budget-spent');
-    const remainingEl = document.getElementById('budget-remaining');
-    const progressEl = document.getElementById('budget-progress-bar');
-    
-    if (totalEl) totalEl.textContent = total + '€';
-    if (spentEl) spentEl.textContent = spent + '€';
-    if (remainingEl) remainingEl.textContent = (total - spent) + '€';
-    if (progressEl) {
-        const progress = total > 0 ? (spent / total * 100) : 0;
-        progressEl.style.width = Math.min(progress, 100) + '%';
+    // Ενημέρωση στον πίνακα δραστηριοτήτων
+    const activitiesTotalEl = document.getElementById('activities-total');
+    if (activitiesTotalEl) {
+        activitiesTotalEl.textContent = totalCost + '€';
     }
+    
+    // Ενημέρωση στο summary (αν υπάρχει)
+    const summaryTotalEl = document.getElementById('summary-activities-total');
+    if (!summaryTotalEl) {
+        // Δημιούργησε ένα στοιχείο αν δεν υπάρχει
+        const summarySection = document.querySelector('#selected-activities-section');
+        if (summarySection) {
+            summarySection.innerHTML += `
+                <div style="margin-top: 20px; padding: 15px; background: var(--primary-light); color: white; border-radius: 8px; text-align: center;">
+                    <h4 style="color: white; margin-bottom: 5px;">
+                        <i class="fas fa-money-bill-wave"></i> Συνολικό Κόστος Δραστηριοτήτων
+                    </h4>
+                    <h2 style="font-size: 36px; margin: 0;">${totalCost}€</h2>
+                    <p style="opacity: 0.9; margin: 5px 0 0 0;">
+                        Για ${state.familyMembers.length} άτομα
+                    </p>
+                </div>
+            `;
+        }
+    }
+    
+    console.log('💰 Συνολικό κόστος δραστηριοτήτων:', totalCost + '€');
 }
 
 function calculateTotalSpent() {
