@@ -3,8 +3,7 @@ const state = {
     selectedDestination: null,
     selectedDestinationId: null,
     selectedDays: 0,
-    selectedBudget: 0,
-    familyMembers: [
+        familyMembers: [
         { name: "Πατέρας", age: 42 },
         { name: "Μητέρα", age: 40 }
     ],
@@ -342,18 +341,6 @@ function getDestinationStepHTML() {
                     <small class="text-muted">Ιδανικό για οικογένειες με παιδιά</small>
                 </div>
                 
-                <div class="form-group">
-                    <label class="form-label"><i class="fas fa-money-bill-wave"></i> Προϋπολογισμός Ταξιδιού</label>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="number" class="form-control" id="travel-budget" placeholder="π.χ. 1500" style="flex: 1;">
-                        <select class="form-control" id="budget-currency" style="width: 100px;">
-                            <option value="EUR">€</option>
-                            <option value="USD">$</option>
-                            <option value="GBP">£</option>
-                        </select>
-                    </div>
-                    <small class="text-muted">Συνολικό ποσό για το ταξίδι (προαιρετικό)</small>
-                </div>
             </div>
             
             <!-- Οι γρήγορες επιλογές, το κουμπί αναζήτησης και τα αποτελέσματα παραμένουν ΑΜΕΤΑΒΛΗΤΑ -->
@@ -386,14 +373,6 @@ function getDestinationStepHTML() {
 
 function setupDestinationStep() {
     console.log('📍 Ρύθμιση βήματος προορισμού');
-    
-    if (state.selectedDays > 0) {
-        document.getElementById('days-stay').value = state.selectedDays;
-    }
-    
-    if (state.selectedBudget > 0) {
-        document.getElementById('travel-budget').value = state.selectedBudget;
-    }
     
     if (state.selectedDestination) {
         showSelectedDestination();
