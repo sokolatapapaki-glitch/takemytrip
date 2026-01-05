@@ -551,11 +551,32 @@ function getHotelStepHTML() {
                 <strong>Σημείωση:</strong> Η αναζήτηση θα σας ανακατευθύνει στην επίσημη ιστοσελίδα 
                 <strong>Booking.com</strong>
             </div>
-            <div style="text-align: center; margin: 40px 0;">
-                <button class="btn btn-primary" onclick="searchHotels()" style="min-width: 300px; padding: 18px;">
-                    <i class="fas fa-search"></i> Αναζήτηση Ξενοδοχείων
-                </button>
-            </div>
+            <!-- Προειδοποίηση για πλατφόρμες -->
+<div class="alert alert-info" style="
+    background: #fff3cd; 
+    border-left: 4px solid #ffc107; 
+    padding: 15px; 
+    margin: 20px 0; 
+    border-radius: 8px;
+    text-align: left;
+">
+    <i class="fas fa-external-link-alt" style="color: #ffc107; margin-right: 10px;"></i>
+    <strong>Σημείωση:</strong> Η αναζήτηση θα σας ανακατευθύνει στις πλατφόρμες 
+    <strong>Booking.com</strong> ή <strong>Expedia</strong>
+</div>
+
+<!-- Κουμπιά αναζήτησης -->
+<div style="text-align: center; margin: 40px 0; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+    <!-- ΚΟΥΜΠΙ ΓΙΑ BOOKING.COM -->
+    <button class="btn btn-primary" onclick="searchBookingHotels()" style="min-width: 280px; padding: 18px;">
+        <i class="fas fa-search"></i> Αναζήτηση σε Booking.com
+    </button>
+    
+    <!-- ΚΟΥΜΠΙ ΓΙΑ EXPEDIA -->
+    <button class="btn btn-accent" onclick="searchExpediaHotels()" style="min-width: 280px; padding: 18px;">
+        <i class="fas fa-hotel"></i> Αναζήτηση σε Expedia
+    </button>
+</div>
             
             <div style="text-align: center; margin-top: 40px;">
                 <button class="btn btn-primary" onclick="showStep('activities')">
@@ -1335,7 +1356,7 @@ function showFamilyDestinations() {
 }
 
 // ==================== SUPPORTING FUNCTIONS ====================
-function searchHotels() {
+function searchBookingHotels() {
     const destination = document.getElementById('hotel-destination').value;
     const checkin = document.getElementById('hotel-checkin').value;
     const checkout = document.getElementById('hotel-checkout').value;
@@ -1364,7 +1385,57 @@ function searchHotels() {
         window.open(bookingUrl, '_blank');
     }
 }
-
+function searchExpediaHotels() {
+    const destination = document.getElementById('hotel-destination').value;
+    const checkin = document.getElementById('hotel-checkin').value;
+    const checkout = document.getElementById('hotel-checkout').value;
+    const adults = document.getElementById('hotel-adults').value;
+    const children = document.getElementById('hotel-children').value;
+    const rooms = document.getElementById('hotel-rooms').value;
+    
+    if (!destination) {
+        alert('⚠️ Παρακαλώ επιλέξτε προορισμό πρώτα');
+        return;
+    }
+    
+    // Σημαντικό: Χρησιμοποιώ το affiliate link που μου έδωσες.
+    // Βασικό URL με tracking.
+    // Βάζω τα απαραίτητα parameters της Expedia πρώτα[citation:1].
+    let expediaBaseUrl = `https://www.anrdoezrs.net/click-101567630-14574920?url=https%3A%2F%2Fwww.expedia.co.uk%2FHotel-Search%3F`;
+    
+    // Προσθήκη βασικών παραμέτρων όπως στο link σου[citation:1].
+    expediaBaseUrl += `locale=el_GR&currency=EUR`;
+    
+    // Προσθήκη των στοιχείων αναζήτησης
+    expediaBaseUrl += `&destination=${encodeURIComponent(destination)}`;
+    
+    // Μετατροπή ημερομηνιών από YYYY-MM-DD σε μορφή για URL.
+    // Η Expedia χρησιμοποιεί YYYY-MM-DD στα παραδείγματά της[citation:1].
+    expediaBaseUrl += `&startDate=${checkin}`;
+    expediaBaseUrl += `&endDate=${checkout}`;
+    expediaBaseUrl += `&adults=${adults}`;
+    
+    // Προσθήκη παιδιών και δωματίων.
+    if (children > 0) {
+        expediaBaseUrl += `&children=${children}`;
+        // Προσοχή: Για ακριβή τιμές χρειάζεται και ηλικίες παιδιών (childAge1=).
+        // Τώρα απλά βάζουμε τον αριθμό.
+    }
+    expediaBaseUrl += `&rooms=${rooms}`;
+    
+    // Επιβεβαίωση πριν την ανακατεύθυνση
+    const userConfirmed = confirm(
+        '🏨 Αναζήτηση Ξενοδοχείων - Expedia\n\n' +
+        `Προορισμός: ${destination}\n` +
+        `Check-in: ${checkin} | Check-out: ${checkout}\n` +
+        `Άτομα: ${adults} ενήλικοι, ${children} παιδιά | Δωμάτια: ${rooms}\n\n` +
+        'Θα ανοίξει νέα καρτέλα στην ιστοσελίδα Expedia.'
+    );
+    
+    if (userConfirmed) {
+        window.open(expediaBaseUrl, '_blank');
+    }
+}
 async function setupActivitiesStep() {
     console.log('🎯 Ρύθμιση βήματος δραστηριοτήτων για:', state.selectedDestinationId);
     
@@ -2657,7 +2728,8 @@ window.showQuickRecommendations = showQuickRecommendations;
 window.showPopularDestinations = showPopularDestinations;
 window.showBudgetDestinations = showBudgetDestinations;
 window.showFamilyDestinations = showFamilyDestinations;
-window.searchHotels = searchHotels;
+window.searchBookingHotels = searchBookingHotels;
+window.searchExpediaHotels = searchExpediaHotels;  // <-- ΠΡΟΣΘΗΚΗ ΑΥΤΗ
 window.setupFlightStep = setupFlightStep;
 window.setupHotelStep = setupHotelStep;
 window.setupActivitiesStep = setupActivitiesStep;
