@@ -259,12 +259,12 @@ function fixDestinationButtons() {
             return false;
         }
         
-        if (buttonText.includes('Επαναφορά')) {
-            event.preventDefault();
-            event.stopPropagation();
-            ();
-            return false;
-        }
+       if (buttonText.includes('Επαναφορά')) {
+    event.preventDefault();
+    event.stopPropagation();
+    resetFilters();  // <-- ΠΡΟΣΘΕΣΕ resetFilters
+    return false;
+}
     });
 }
 
@@ -390,9 +390,9 @@ function getDestinationStepHTML() {
                     <i class="fas fa-bolt"></i> Γρήγορες Προτάσεις
                 </button>
                 
-                <button class="btn btn-outline" onclick="()" style="padding: 16px 30px; border-color: var(--danger); color: var(--danger);">
-                    <i class="fas fa-redo"></i> Επαναφορά
-                </button>
+                <button class="btn btn-outline" onclick="resetFilters()" style="padding: 16px 30px; border-color: var(--danger); color: var(--danger);">
+    <i class="fas fa-redo"></i> Επαναφορά
+</button>
             </div>
             
             <div id="destination-results">
@@ -787,9 +787,9 @@ function getMapStepHTML() {
                         <i class="fas fa-map-pin"></i> Προβολή Σημείων
                     </button>
                     
-                    <button class="btn btn-accent" onclick="()">
-                        <i class="fas fa-route"></i> Διαδρομή
-                    </button>
+                   <button class="btn btn-accent" onclick="showRouteBetweenPoints()">
+    <i class="fas fa-route"></i> Διαδρομή
+</button>
                 </div>
                 
                 <div id="custom-points-container" style="display: none;">
@@ -1129,9 +1129,9 @@ async function filterDestinations() {
                     <br>
                     <strong>Συμβουλή:</strong> Χαλαρώστε κάποιο κριτήριο ή δοκιμάστε "Γρήγορες Προτάσεις".
                 </p>
-                <button class="btn btn-primary" onclick="()">
-                    <i class="fas fa-redo"></i> Επαναφορά Φίλτρων
-                </button>
+<button class="btn btn-primary" onclick="resetFilters()">
+    <i class="fas fa-redo"></i> Επαναφορά Φίλτρων
+</button>
                 <button class="btn btn-outline" onclick="showQuickRecommendations()" style="margin-left: 10px;">
                     <i class="fas fa-bolt"></i> Γρήγορες Προτάσεις
                 </button>
