@@ -555,15 +555,33 @@ function getHotelStepHTML() {
 
 <!-- Κουμπιά αναζήτησης -->
 <div style="text-align: center; margin: 40px 0; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-    <!-- ΚΟΥΜΠΙ ΓΙΑ BOOKING.COM -->
-    <button class="btn btn-primary" onclick="searchBookingHotels()" style="min-width: 280px; padding: 18px;">
+
+    <!-- ΚΟΥΜΠΙ ΓΙΑ BOOKING.COM - ΜΕ ΜΟΝΙΜΗ ΣΚΙΑ -->
+    <button class="btn btn-primary" onclick="searchBookingHotels()" 
+            style="min-width: 280px; padding: 18px; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2);"
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(33, 150, 243, 0.4)';"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(33, 150, 243, 0.2)';">
         <i class="fas fa-search"></i> Αναζήτηση σε Booking.com
     </button>
-    
-    <!-- ΚΟΥΜΠΙ ΓΙΑ EXPEDIA -->
-    <button class="btn btn-accent" onclick="searchExpediaHotels()" style="min-width: 280px; padding: 18px;">
-        <i class="fas fa-hotel"></i> Αναζήτηση σε Expedia
-    </button>
+
+    <!-- ΚΟΥΜΠΙ ΓΙΑ EXPEDIA + ΠΛΑΙΣΙΟ ΜΗΝΥΜΑΤΟΣ -->
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <!-- ΚΟΥΜΠΙ -->
+        <button class="btn btn-accent" onclick="searchExpediaHotels()" 
+                style="min-width: 280px; padding: 18px; background: linear-gradient(135deg, #ff9800, #ff5722); border: none; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(255, 87, 34, 0.2); margin-bottom: 8px;"
+                onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(255, 87, 34, 0.5)';"
+                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(255, 87, 34, 0.2)';">
+            <i class="fas fa-hotel"></i> Αναζήτηση σε Expedia
+        </button>
+        
+        <!-- ΠΛΑΙΣΙΟ ΜΗΝΥΜΑΤΟΣ -->
+        <div style="font-size: 11px; color: #555; background: #f9f9f9; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #ff9800; max-width: 280px; text-align: center; line-height: 1.3;">
+            <i class="fas fa-info-circle" style="color: #ff9800; margin-right: 5px;"></i>
+            Αν κλείσεις μέσω EXPEDIA, η εφαρμογή μας θα πάρει μια μικρή προμήθεια 
+            <strong>χωρίς επιπλέον κόστος για σένα</strong>.
+        </div>
+    </div>
+
 </div>
             
             <div style="text-align: center; margin-top: 40px;">
