@@ -168,7 +168,7 @@ function loadStepContent(stepName) {
             setupFlightStep();
             break;
         case 'hotel':
-            stepContent.innerHTML = ();
+            stepContent.innerHTML = getHotelStepHTML();
             setupHotelStep();
             break;
         case 'activities':
@@ -293,7 +293,6 @@ function getDestinationStepHTML() {
                         <option value="">Όλες οι αποστάσεις</option>
                         <option value="1.5">Έως 1.5 ώρες</option>
                         <option value="2.5">Έως 2.5 ώρες</option>
-                       <option value="">Όλες οι αποστάσεις</option>
                         <option value="5">Έως 5 ώρες</option>
                         <option value="10">Οποιαδήποτε απόσταση</option>
                     </select>
@@ -305,7 +304,6 @@ function getDestinationStepHTML() {
                     <select class="form-control" id="weather">
                         <option value="">Όλοι οι καιροί</option>
                         <option value="Ζεστό">☀️ Πιο ζεστό από Ελλάδα</option>
-                        <option value="">Όλοι οι καιροί</option>
                         <option value="Κρύο">⛄ Πιο κρύο</option>
                     </select>
                 </div>
@@ -318,7 +316,6 @@ function getDestinationStepHTML() {
                         <option value="">Όλοι οι τύποι</option>
                         <option value="Πολιτισμός">🏛️ Πολιτισμός & Μουσεία</option>
                         <option value="Θάλασσα">🏖️ Θαλάσσια & Παραλίες</option>
-                        <option value="">Όλοι οι τύποι</option>
                         <option value="Βουνό">🏔️ Βουνό & Χιονοδρομικά</option>
                         <option value="Φυσική">🌳 Φυσική Ομορφία</option>
                         </select>
@@ -329,7 +326,6 @@ function getDestinationStepHTML() {
                     <select class="form-control" id="cost-level">
                         <option value="">Όλα τα επίπεδα</option>
                         <option value="Οικονομικό">💰 Οικονομικό</option>
-                        <option value="">Όλα τα επίπεδα</option>
                         <option value="Ακριβό">💰💰💰 Ακριβό</option>
                     </select>
                 </div>
