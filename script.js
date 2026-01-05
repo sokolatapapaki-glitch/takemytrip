@@ -96,7 +96,6 @@ function loadSavedDataNow(saved) {
         state.selectedDestination = data.selectedDestinationName || null;
         state.selectedDestinationId = data.selectedDestinationId || null;
         state.selectedDays = data.selectedDaysStay || 0;
-        state.selectedBudget = data.selectedBudget || 0;
         state.familyMembers = data.familyMembers || state.familyMembers;
         state.selectedActivities = data.selectedActivities || [];
         
@@ -209,14 +208,7 @@ function setupEventListeners() {
         }
     });
     
-    document.addEventListener('input', function(e) {
-        if (e.target.id === 'travel-budget') {
-            state.selectedBudget = parseInt(e.target.value) || 0;
-            updateBudgetTracker();
-            saveState();
-        }
-    });
-    
+       
     console.log('✅ Event listeners εγκαταστάθηκαν');
 }
 
@@ -2015,7 +2007,6 @@ function saveState() {
         selectedDestinationName: state.selectedDestination,
         selectedDestinationId: state.selectedDestinationId,
         selectedDaysStay: state.selectedDays,
-        selectedBudget: state.selectedBudget,
         familyMembers: state.familyMembers,
         selectedActivities: state.selectedActivities
     };
