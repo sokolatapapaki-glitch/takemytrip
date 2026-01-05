@@ -35,6 +35,23 @@ function initApp() {
     showStep(state.currentStep);
     setupEventListeners();
     updateActivitiesCost();
+    
+    // ΔΙΟΡΘΩΣΗ: Κρύψε το αεροπλάνακι!
+    setTimeout(function() {
+        const loadingOverlay = document.getElementById('loading-overlay');
+        if (loadingOverlay) {
+            loadingOverlay.style.display = 'none';
+            console.log('✅ Αεροπλάνακι κρύφτηκε!');
+        }
+        
+        // Παραμένει η αφαίρεση διπλών κουμπιών (αν υπάρχουν)
+        const duplicateButtons = document.getElementById('search-buttons-container');
+        if (duplicateButtons) {
+            duplicateButtons.style.display = 'none';
+            console.log('✅ Αφαίρεση διπλών κουμπιών');
+        }
+    }, 1500);
+    
     console.log('✅ Αρχικοποίηση ολοκληρώθηκε');
 }
 
