@@ -969,3 +969,27 @@ body {
     font-size: 14px;
     border-radius: var(--radius-lg);
 }
+/* ==================== PROGRAM ANIMATIONS ==================== */
+@keyframes fadeIn {
+    from { 
+        opacity: 0.5; 
+        transform: translateY(10px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+.day-program {
+    animation: fadeIn 0.5s ease;
+}
+
+.activity-schedule-item {
+    transition: all 0.3s ease;
+}
+
+.activity-schedule-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
