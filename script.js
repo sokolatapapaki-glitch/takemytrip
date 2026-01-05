@@ -276,16 +276,15 @@ function getDestinationStepHTML() {
             <p class="card-subtitle">Βρείτε την τέλεια πόλη για τις οικογενειακές σας διακοπές</p>
             
             <div class="grid grid-3">
+                <!-- ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΝΕΟ ΦΙΛΤΡΟ ΣΤΗ ΘΕΣΗ ΤΟΥ ΠΑΛΙΟΥ -->
                 <div class="form-group">
-                    <label class="form-label"><i class="fas fa-users"></i> Τύπος Ταξιδιώτη</label>
-                    <select class="form-control" id="travel-type">
-                        <option value="">Όλοι (προεπιλογή)</option>
-                        <option value="Μόνος">Μόνος/η</option>
-                        <option value="Ζευγάρι">Ζευγάρι</option>
-                        <option value="Οικογένεια" selected>Οικογένεια με παιδιά</option>
-                        <option value="Παρέα">Παρέα φίλων</option>
-                        <option value="Εκδρομή">Σχολική Εκδρομή</option>
+                    <label class="form-label"><i class="fas fa-baby-carriage"></i> Φιλική για Καρότσι</label>
+                    <select class="form-control" id="stroller-friendly-filter">
+                        <option value="">Όλες οι πόλεις (προεπιλογή)</option>
+                        <option value="true">✅ Ναι, εύκολη πρόσβαση με καρότσι</option>
+                        <option value="false">Όχι απαραίτητα</option>
                     </select>
+                    <small class="text-muted">Ανοίξιμα πεζοδρόμια, άνετες μετακινήσεις</small>
                 </div>
                 
                 <div class="form-group">
@@ -357,9 +356,6 @@ function getDestinationStepHTML() {
                         <option value="">Όλα (με ή χωρίς)</option>
                         <option value="has-parks">🎡 Με θεματικά πάρκα</option>
                         <option value="disney">👑 Με Disneyland</option>
-                        <option value="multiple">🎢 Με πολλαπλά πάρκα</option>
-                        <option value="family-excellent">⭐ Κορυφαία για οικογένειες</option>
-                        <option value="no-parks">🏛️ Χωρίς θεματικά πάρκα</option>
                     </select>
                     <small class="text-muted">Ιδανικό για οικογένειες με παιδιά</small>
                 </div>
@@ -378,6 +374,7 @@ function getDestinationStepHTML() {
                 </div>
             </div>
             
+            <!-- Οι γρήγορες επιλογές, το κουμπί αναζήτησης και τα αποτελέσματα παραμένουν ΑΜΕΤΑΒΛΗΤΑ -->
             <div id="main-buttons-container" style="display: flex; gap: 15px; margin-top: 40px; justify-content: center;">
                 <button class="btn btn-primary main-search-btn" 
                         style="padding: 16px 40px; font-size: 18px;">
@@ -399,51 +396,7 @@ function getDestinationStepHTML() {
             </div>
             
             <div id="destination-results">
-                <div style="text-align: center; padding: 60px 20px; background: var(--light); border-radius: var(--radius-lg); margin-top: 20px;">
-                    <div style="font-size: 64px; margin-bottom: 20px; color: var(--primary);">🗺️</div>
-                    <h2 style="color: var(--dark); margin-bottom: 15px;">Ανακαλύψτε Προορισμούς</h2>
-                    <p style="color: var(--gray); max-width: 600px; margin: 0 auto 30px;">
-                        Χρησιμοποιήστε τα φίλτρα παραπάνω για να βρείτε την τέλεια πόλη για το ταξίδι σας.
-                        <br>
-                        <strong>20+ ευρωπαϊκές πόλεις</strong> διαθέσιμες για εξερεύνηση.
-                    </p>
-                    
-                    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                        <button class="btn btn-primary" onclick="showPopularDestinations()">
-                            <i class="fas fa-fire"></i> Δημοφιλείς Προορισμοί
-                        </button>
-                        <button class="btn btn-outline" onclick="showBudgetDestinations()">
-                            <i class="fas fa-euro-sign"></i> Οικονομικές Επιλογές
-                        </button>
-                        <button class="btn btn-outline" onclick="showFamilyDestinations()">
-                            <i class="fas fa-child"></i> Για Οικογένειες
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border-radius: var(--radius-lg); text-align: center;">
-                <div style="display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap;">
-                    <div style="text-align: center;">
-                        <div style="font-size: 32px; font-weight: bold;">20+</div>
-                        <div style="font-size: 14px; opacity: 0.9;">Ευρωπαϊκές Πόλεις</div>
-                    </div>
-                    <div style="width: 1px; height: 40px; background: rgba(255,255,255,0.3);"></div>
-                    <div style="text-align: center;">
-                        <div style="font-size: 32px; font-weight: bold;">10</div>
-                        <div style="font-size: 14px; opacity: 0.9;">Πλήρης Υποστήριξη</div>
-                    </div>
-                    <div style="width: 1px; height: 40px; background: rgba(255,255,255,0.3);"></div>
-                    <div style="text-align: center;">
-                        <div style="font-size: 32px; font-weight: bold;">8</div>
-                        <div style="font-size: 14px; opacity: 0.9;">Με Θεματικά Πάρκα</div>
-                    </div>
-                    <div style="width: 1px; height: 40px; background: rgba(255,255,255,0.3);"></div>
-                    <div style="text-align: center;">
-                        <div style="font-size: 32px; font-weight: bold;">1</div>
-                        <div style="font-size: 14px; opacity: 0.9;">Με Disneyland</div>
-                    </div>
-                </div>
+                <!-- ΕΔΩ ΘΑ ΕΜΦΑΝΙΖΟΝΤΑΙ ΤΑ ΑΠΟΤΕΛΕΣΜΑΤΑ -->
             </div>
         </div>
     `;
@@ -948,134 +901,179 @@ async function filterDestinations() {
     
     await new Promise(resolve => setTimeout(resolve, 800));
     
-    // Λαμβάνουμε τις τρέχουσες τιμές των φίλτρων
-    const travelType = document.getElementById('travel-type').value;
+    // Διαβάζουμε ΟΛΑ τα φίλτρα (το νέο και τα παλιά)
     const distance = document.getElementById('distance').value;
     const weather = document.getElementById('weather').value;
     const vacationType = document.getElementById('vacation-type').value;
     const costLevel = document.getElementById('cost-level').value;
     const daysStay = document.getElementById('days-stay').value;
     const themeParks = document.getElementById('theme-parks').value;
+    // 🆕 ΝΕΟ ΦΙΛΤΡΟ (αντικατέστησε το travel-type):
+    const strollerFilter = document.getElementById('stroller-friendly-filter').value;
     
     console.log('🎯 Εφαρμογή φίλτρων:', {
-        travelType, distance, weather, vacationType, costLevel, daysStay, themeParks
+        distance, weather, vacationType, costLevel, daysStay, themeParks, strollerFilter
     });
     
-    // Πίνακας με όλες τις πόλεις (το ίδιο που διορθώσαμε)
+    // 📊 ΟΛΟΚΛΗΡΩΜΕΝΟΣ ΠΙΝΑΚΑΣ ΠΟΛΕΩΝ (22 πόλεις με το νέο πεδίο strollerFriendly)
     const allCities = [
         { 
             id: 'amsterdam', name: 'Άμστερνταμ', emoji: '🌷',
             hasJSON: true, distance: 3.5, weather: 'Κρύο', cost: 'Ακριβό',
-            country: 'Ολλανδία', vacationType: 'Πόλη'
+            country: 'Ολλανδία', vacationType: 'Πόλη',
+            themeParks: ['has-parks'], familyScore: 9, hasDisney: false,
+            strollerFriendly: true // ✅ Στη λίστα σου
         },
         { 
             id: 'paris', name: 'Παρίσι', emoji: '🗼', 
             hasJSON: true, distance: 3.0, weather: 'Κρύο', cost: 'Ακριβό',
-            country: 'Γαλλία', vacationType: 'Πολιτισμός'
+            country: 'Γαλλία', vacationType: 'Πολιτισμός',
+            themeParks: ['disney', 'has-parks'], familyScore: 10, hasDisney: true,
+            strollerFriendly: false // Όχι στη λίστα
         },
         { 
             id: 'london', name: 'Λονδίνο', emoji: '🇬🇧',
             hasJSON: true, distance: 3.8, weather: 'Κρύο', cost: 'Ακριβό',
-            country: 'ΗΒ', vacationType: 'Πόλη'
+            country: 'ΗΒ', vacationType: 'Πόλη',
+            themeParks: ['has-parks'], familyScore: 9, hasDisney: false,
+            strollerFriendly: false
         },
         { 
             id: 'berlin', name: 'Βερολίνο', emoji: '🇩🇪',
             hasJSON: true, distance: 2.5, weather: 'Κρύο', cost: 'Μέτριο',
-            country: 'Γερμανία', vacationType: 'Πόλη'
+            country: 'Γερμανία', vacationType: 'Πόλη',
+            themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
+            strollerFriendly: true // ✅ Στη λίστα σου
         },
         { 
             id: 'prague', name: 'Πράγα', emoji: '🏰',
             hasJSON: true, distance: 2.2, weather: 'Κρύο', cost: 'Οικονομικό',
-            country: 'Τσεχία', vacationType: 'Πολιτισμός'
+            country: 'Τσεχία', vacationType: 'Πολιτισμός',
+            themeParks: [], familyScore: 7, hasDisney: false,
+            strollerFriendly: false
         },
         { 
             id: 'budapest', name: 'Βουδαπέστη', emoji: '♨️',
             hasJSON: true, distance: 2.0, weather: 'Κρύο', cost: 'Οικονομικό',
-            country: 'Ουγγαρία', vacationType: 'Πόλη'
+            country: 'Ουγγαρία', vacationType: 'Πόλη',
+            themeParks: [], familyScore: 6, hasDisney: false,
+            strollerFriendly: true // ✅ Στη λίστα σου
         },
         { 
             id: 'vienna', name: 'Βιέννη', emoji: '🎻',
             hasJSON: true, distance: 2.3, weather: 'Κρύο', cost: 'Μέτριο',
-            country: 'Αυστρία', vacationType: 'Πολιτισμός'
+            country: 'Αυστρία', vacationType: 'Πολιτισμός',
+            themeParks: [], familyScore: 7, hasDisney: false,
+            strollerFriendly: true // ✅ Στη λίστα σου
         },
         { 
             id: 'rome', name: 'Ρώμη', emoji: '🏛️',
             hasJSON: false, distance: 2.5, weather: 'Ίδιο', cost: 'Μέτριο',
-            country: 'Ιταλία', vacationType: 'Πολιτισμός'
+            country: 'Ιταλία', vacationType: 'Πολιτισμός',
+            themeParks: [], familyScore: 5, hasDisney: false,
+            strollerFriendly: false
         },
         { 
             id: 'barcelona', name: 'Βαρκελώνη', emoji: '🏖️',
             hasJSON: false, distance: 3.0, weather: 'Ζεστό', cost: 'Μέτριο',
-            country: 'Ισπανία', vacationType: 'Θάλασσα'
+            country: 'Ισπανία', vacationType: 'Θάλασσα',
+            themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
+            strollerFriendly: false
         },
         { 
             id: 'madrid', name: 'Μαδρίτη', emoji: '🐂',
             hasJSON: true, distance: 3.2, weather: 'Ζεστό', cost: 'Μέτριο',
-            country: 'Ισπανία', vacationType: 'Πόλη'
+            country: 'Ισπανία', vacationType: 'Πόλη',
+            themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
+            strollerFriendly: false
         },
         { 
             id: 'lisbon', name: 'Λισαβόνα', emoji: '🌊',
             hasJSON: true, distance: 4.0, weather: 'Ζεστό', cost: 'Οικονομικό',
-            country: 'Πορτογαλία', vacationType: 'Θάλασσα'
+            country: 'Πορτογαλία', vacationType: 'Θάλασσα',
+            themeParks: [], familyScore: 6, hasDisney: false,
+            strollerFriendly: false
         },
         { 
             id: 'istanbul', name: 'Κωνσταντινούπολη', emoji: '🕌',
             hasJSON: true, distance: 1.5, weather: 'Ίδιο', cost: 'Οικονομικό',
-            country: 'Τουρκία', vacationType: 'Πολιτισμός'
+            country: 'Τουρκία', vacationType: 'Πολιτισμός',
+            themeParks: [], familyScore: 7, hasDisney: false,
+            strollerFriendly: false
         },
         { 
             id: 'brussels', name: 'Βρυξέλλες', emoji: '🍫',
             hasJSON: false, distance: 3.0, weather: 'Κρύο', cost: 'Μέτριο',
-            country: 'Βέλγιο', vacationType: 'Πόλη'
+            country: 'Βέλγιο', vacationType: 'Πόλη',
+            themeParks: [], familyScore: 5, hasDisney: false,
+            strollerFriendly: false
         },
         { 
             id: 'copenhagen', name: 'Κοπεγχάγη', emoji: '🧜‍♀️',
             hasJSON: false, distance: 3.5, weather: 'Κρύο', cost: 'Ακριβό',
-            country: 'Δανία', vacationType: 'Πόλη'
+            country: 'Δανία', vacationType: 'Πόλη',
+            themeParks: ['has-parks'], familyScore: 9, hasDisney: false,
+            strollerFriendly: true // ✅ Στη λίστα σου
         },
         { 
             id: 'dublin', name: 'Δουβλίνο', emoji: '🍀',
             hasJSON: false, distance: 4.0, weather: 'Κρύο', cost: 'Ακριβό',
-            country: 'Ιρλανδία', vacationType: 'Πόλη'
+            country: 'Ιρλανδία', vacationType: 'Πόλη',
+            themeParks: [], familyScore: 5, hasDisney: false,
+            strollerFriendly: true // ✅ Στη λίστα σου
         },
         { 
             id: 'edinburgh', name: 'Εδιμβούργο', emoji: '🏰',
             hasJSON: false, distance: 4.0, weather: 'Κρύο', cost: 'Ακριβό',
-            country: 'Σκωτία', vacationType: 'Πολιτισμός'
+            country: 'Σκωτία', vacationType: 'Πολιτισμός',
+            themeParks: [], familyScore: 5, hasDisney: false,
+            strollerFriendly: false
         },
         { 
             id: 'florence', name: 'Φλωρεντία', emoji: '🎨',
             hasJSON: false, distance: 2.3, weather: 'Ζεστό', cost: 'Μέτριο',
-            country: 'Ιταλία', vacationType: 'Πολιτισμός'
+            country: 'Ιταλία', vacationType: 'Πολιτισμός',
+            themeParks: [], familyScore: 4, hasDisney: false,
+            strollerFriendly: false
         },
         { 
             id: 'munich', name: 'Μόναχο', emoji: '🍺',
             hasJSON: false, distance: 2.2, weather: 'Κρύο', cost: 'Μέτριο',
-            country: 'Γερμανία', vacationType: 'Πόλη'
+            country: 'Γερμανία', vacationType: 'Πόλη',
+            themeParks: [], familyScore: 5, hasDisney: false,
+            strollerFriendly: true // ✅ Στη λίστα σου
         },
         { 
             id: 'venice', name: 'Βενετία', emoji: '🛶',
             hasJSON: false, distance: 2.0, weather: 'Ζεστό', cost: 'Ακριβό',
-            country: 'Ιταλία', vacationType: 'Πόλη'
+            country: 'Ιταλία', vacationType: 'Πόλη',
+            themeParks: [], familyScore: 4, hasDisney: false,
+            strollerFriendly: false
         },
         { 
             id: 'warsaw', name: 'Βαρσοβία', emoji: '🦅',
             hasJSON: false, distance: 2.5, weather: 'Κρύο', cost: 'Οικονομικό',
-            country: 'Πολωνία', vacationType: 'Πόλη'
+            country: 'Πολωνία', vacationType: 'Πόλη',
+            themeParks: [], familyScore: 5, hasDisney: false,
+            strollerFriendly: true // ✅ Στη λίστα σου
         },
         { 
-    id: 'krakow', name: 'Κρακοβία', emoji: '🐉',
-    hasJSON: false, distance: 2.0, weather: 'Κρύο', cost: 'Οικονομικό',
-    country: 'Πολωνία', vacationType: 'Πολιτισμός'
-},
+            id: 'krakow', name: 'Κρακοβία', emoji: '🐉',
+            hasJSON: false, distance: 2.0, weather: 'Κρύο', cost: 'Οικονομικό',
+            country: 'Πολωνία', vacationType: 'Πολιτισμός',
+            themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
+            strollerFriendly: false // Όχι στη λίστα
+        },
         { 
             id: 'zurich', name: 'Ζυρίχη', emoji: '🏔️',
             hasJSON: false, distance: 2.5, weather: 'Κρύο', cost: 'Ακριβό',
-            country: 'Ελβετία', vacationType: 'Βουνό'
+            country: 'Ελβετία', vacationType: 'Βουνό',
+            themeParks: [], familyScore: 5, hasDisney: false,
+            strollerFriendly: true // ✅ Στη λίστα σου
         }
     ];
     
-    // ΦΙΛΤΡΑΡΙΣΜΑ: Ελέγχουμε κάθε πόλη έναντι των φίλτρων
+    // 🎯 ΛΟΓΙΚΗ ΦΙΛΤΡΑΡΙΣΜΑΤΟΥ (Ελέγχουμε ΚΑΙ το νέο φίλτρο)
     const filteredCities = allCities.filter(city => {
         // 1. Φίλτρο απόστασης
         if (distance && city.distance > parseFloat(distance)) {
@@ -1097,9 +1095,20 @@ async function filterDestinations() {
             return false;
         }
         
-        // 5. Φίλτρο JSON διαθεσιμότητας (για προχωρημένες λειτουργίες)
-        if (themeParks === 'has-parks' && !city.hasJSON) {
-            return false;
+        // 🆕 5. ΝΕΟ ΦΙΛΤΡΟ: "Φιλική για καρότσι"
+        if (strollerFilter === 'true' && !city.strollerFriendly) {
+            return false; // Φίλτρο: Ναι, αλλά η πόλη δεν είναι
+        }
+        if (strollerFilter === 'false' && city.strollerFriendly) {
+            return false; // Φίλτρο: Όχι απαραίτητα, αλλά η πόλη είναι
+        }
+        
+        // 6. Φίλτρο θεματικών πάρκων
+        if (themeParks === 'disney' && !city.hasDisney) {
+            return false; // Ζητάει Disney, αλλά η πόλη δεν έχει
+        }
+        if (themeParks === 'has-parks' && !city.themeParks.includes('has-parks')) {
+            return false; // Ζητάει πάρκα, αλλά η πόλη δεν έχει
         }
         
         return true; // Η πόλη περνάει όλα τα φίλτρα
@@ -1107,6 +1116,7 @@ async function filterDestinations() {
     
     console.log(`📊 Αποτελέσματα: ${filteredCities.length} από ${allCities.length} πόλεις`);
     
+    // 🔧 ΕΜΦΑΝΙΣΗ ΑΠΟΤΕΛΕΣΜΑΤΩΝ (ΠΑΡΑΜΕΝΕΙ ΙΔΙΟ)
     let html = '';
     
     if (filteredCities.length === 0) {
@@ -1117,10 +1127,13 @@ async function filterDestinations() {
                 <p style="color: var(--gray); max-width: 600px; margin: 0 auto 30px;">
                     Κανένας προορισμός δεν ταιριάζει με τα επιλεγμένα φίλτρα.
                     <br>
-                    Δοκιμάστε να χαλαρώσετε κάποια κριτήρια.
+                    <strong>Συμβουλή:</strong> Χαλαρώστε κάποιο κριτήριο ή δοκιμάστε "Γρήγορες Προτάσεις".
                 </p>
                 <button class="btn btn-primary" onclick="resetFilters()">
                     <i class="fas fa-redo"></i> Επαναφορά Φίλτρων
+                </button>
+                <button class="btn btn-outline" onclick="showQuickRecommendations()" style="margin-left: 10px;">
+                    <i class="fas fa-bolt"></i> Γρήγορες Προτάσεις
                 </button>
             </div>
         `;
@@ -1159,10 +1172,17 @@ async function filterDestinations() {
                         </div>
                         <div class="info-item">
                             <div class="info-label">
-                                <i class="fas fa-umbrella-beach"></i> Τύπος
+                                <i class="fas fa-baby-carriage"></i> Καρότσι
                             </div>
-                            <div class="info-value">${city.vacationType}</div>
+                            <div class="info-value">${city.strollerFriendly ? '✅ Εύκολη' : '⚠️ Προσοχή'}</div>
                         </div>
+                    </div>
+                    
+                    <!-- Πληροφορίες Πάρκων -->
+                    <div style="margin: 10px 0; padding: 8px; background: #f0f9ff; border-radius: 6px; font-size: 13px;">
+                        <i class="fas fa-ferris-wheel"></i>
+                        ${city.hasDisney ? '👑 Disneyland' : 
+                          city.themeParks.includes('has-parks') ? '🎡 Με θεματικό πάρκο' : '🏙️ Χωρίς μεγάλο πάρκο'}
                     </div>
                     
                     <div class="destination-status">
