@@ -556,7 +556,7 @@ function getHotelStepHTML() {
 <!-- Κουμπιά αναζήτησης -->
 <div style="text-align: center; margin: 40px 0; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
 
-    <!-- ΚΟΥΜΠΙ ΓΙΑ BOOKING.COM - ΜΕ ΜΟΝΙΜΗ ΣΚΙΑ -->
+    <!-- ========== 1. BOOKING.COM ========== -->
     <button class="btn btn-primary" onclick="searchBookingHotels()" 
             style="min-width: 280px; padding: 18px; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2);"
             onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(33, 150, 243, 0.4)';"
@@ -564,7 +564,7 @@ function getHotelStepHTML() {
         <i class="fas fa-search"></i> Αναζήτηση σε Booking.com
     </button>
 
-    <!-- ΚΟΥΜΠΙ ΓΙΑ EXPEDIA + ΠΛΑΙΣΙΟ ΜΗΝΥΜΑΤΟΣ -->
+    <!-- ========== 2. EXPEDIA ========== -->
     <div style="display: flex; flex-direction: column; align-items: center;">
         <!-- ΚΟΥΜΠΙ -->
         <button class="btn btn-accent" onclick="searchExpediaHotels()" 
@@ -579,6 +579,25 @@ function getHotelStepHTML() {
             <i class="fas fa-info-circle" style="color: #ff9800; margin-right: 5px;"></i>
             Αν κλείσεις μέσω EXPEDIA, η εφαρμογή μας θα πάρει μια μικρή προμήθεια 
             <strong>χωρίς επιπλέον κόστος για σένα</strong>.
+        </div>
+    </div>
+
+    <!-- ========== 3. TICKETSELLER.GR ========== -->
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <!-- ΚΟΥΜΠΙ -->
+        <button class="btn" onclick="window.open('https://ticketseller.gr/el/home-2/', '_blank')" 
+                style="min-width: 280px; padding: 18px; background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; border: none; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2); margin-bottom: 8px;"
+                onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(76, 175, 80, 0.4)';"
+                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(76, 175, 80, 0.2)';">
+            <i class="fas fa-ticket-alt"></i> TicketSeller.gr
+        </button>
+        
+        <!-- ΠΛΑΙΣΙΟ ΜΗΝΥΜΑΤΟΣ -->
+        <div style="font-size: 11px; color: #555; background: #f9f9f9; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #4CAF50; max-width: 280px; text-align: center; line-height: 1.3;">
+            <i class="fas fa-percentage" style="color: #4CAF50; margin-right: 5px;"></i>
+            Αν κλείσεις μέσω <strong>TicketSeller</strong>, έχεις έκπτωση!
+            <br>
+            <small>Στείλε email στο: <strong>takethekids2@gmail.com</strong></small>
         </div>
     </div>
 
