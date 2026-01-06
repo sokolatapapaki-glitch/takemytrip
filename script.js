@@ -783,9 +783,8 @@ function getSummaryStepHTML() {
                         </div>
                     ` : `
                         <div style="margin-top: 20px;">
-                            <button class="btn btn-primary" onclick="generateGeographicProgram()"
-        style="width: 100%; padding: 15px; font-size: 18px; margin-bottom: 20px;">
-                                    
+                            <button class="btn btn-primary" onclick="generateGeographicProgram()" 
+                                    style="width: 100%; padding: 15px; font-size: 18px; margin-bottom: 20px;">
                                 <i class="fas fa-map-marked-alt"></i> ΔΗΜΙΟΥΡΓΙΑ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ
                             </button>
                             
@@ -873,7 +872,7 @@ function getSummaryStepHTML() {
                     </button>
                     
                     ${state.selectedActivities.length > 0 && state.selectedDays > 0 ? `
-                        <button class="btn btn-accent" onclick="()" 
+                        <button class="btn btn-accent" onclick="generateGeographicProgram()" 
                                 style="padding: 15px 30px; font-size: 18px; border-radius: 12px; background: #10B981; border: none;">
                             <i class="fas fa-sync-alt"></i> Ανανέωση Προγράμματος
                         </button>
@@ -2135,15 +2134,16 @@ function setupSummaryStep() {
         state.selectedDays = 3;
     }
     
-    // Αυτόματη πρόταση ημερών από ομαδοποίηση
+    // 🔴 ΠΡΟΣΘΗΚΗ: ΑΥΤΟΜΑΤΗ ΠΡΟΤΑΣΗ ΗΜΕΡΩΝ ΑΠΟ ΟΜΑΔΟΠΟΙΗΣΗ
     const suggestedDays = suggestDaysFromGroups();
     if (suggestedDays > 0 && state.selectedDays !== suggestedDays) {
         console.log(`📅 Πρόταση από ομαδοποίηση: ${suggestedDays} μέρες`);
         
+        // Ενημέρωση του dropdown αν θέλεις
         const daysSelect = document.getElementById('program-days');
         if (daysSelect && daysSelect.querySelector(`option[value="${suggestedDays}"]`)) {
             daysSelect.value = suggestedDays;
-            state.selectedDays = suggestedDays;
+            state.selectedDays = suggestedDays; // Ενημέρωση state
         }
     }
     
@@ -2153,6 +2153,7 @@ function setupSummaryStep() {
         if (daysSelect) {
             daysSelect.value = state.selectedDays;
             
+            // Αφαίρεση παλιού event listener και προσθήκη νέου
             const newDaysSelect = daysSelect.cloneNode(true);
             daysSelect.parentNode.replaceChild(newDaysSelect, daysSelect);
             
@@ -2167,10 +2168,12 @@ function setupSummaryStep() {
                         daysDisplay.style.color = 'var(--success)';
                     }
                     
-                    generateGeographicProgram();  // <-- ΑΥΤΟ ΕΙΝΑΙ ΣΩΣΤΟ
+                    generateGeographicProgram();  // <-- ΔΙΟΡΘΩΣΗ ΕΔΩ
                     saveState();
                     
                     console.log(`📅 Ενημέρωση προγράμματος για ${selectedDays} μέρες`);
+                    
+                    // Εμφάνιση μηνύματος
                     showToast(`📅 Οι ημέρες ενημερώθηκαν σε ${selectedDays}`, 'success');
                 }
             });
@@ -2186,23 +2189,28 @@ function setupSummaryStep() {
         }
         
         // 3. Δημιουργία προγράμματος
-        generateGeographicProgram();  // <-- ΚΑΙ ΕΔΩ ΣΩΣΤΟ
+        generateGeographicProgram();  // <-- ΔΙΟΡΘΩΣΗ ΚΑΙ ΕΔΩ
         
         // 4. Ενημέρωση συνολικού κόστους
         updateActivitiesCost();
         
-        // 5. Εμφάνιση μηνύματος για ομαδοποίηση
+        // 5. Εμφάνιση μηνύματος για ομαδοποίηση (αν υπάρχει πρόταση)
         if (suggestedDays > 0) {
             setTimeout(() => {
                 showToast(`
                     <div style="text-align: left; max-width: 350px;">
                         <strong style="color: #4F46E5;">📅 Πρόταση Διάρκειας</strong><br><br>
+                        
                         <div style="background: #F0F9FF; padding: 12px; border-radius: 8px; border-left: 4px solid #4F46E5;">
                             Βάσει ομαδοποίησης των δραστηριοτήτων σας:<br>
                             <strong style="font-size: 18px; color: #4F46E5;">${suggestedDays} μέρες</strong><br>
                             <small style="color: #666;">
                                 (Βρέθηκαν ${state.selectedActivities.length} δραστηριότητες σε ${suggestedDays} γεωγραφικές περιοχές)
                             </small>
+                        </div>
+                        
+                        <div style="margin-top: 10px; font-size: 12px; color: #666;">
+                            <i class="fas fa-info-circle"></i> Μπορείτε να αλλάξετε τις μέρες από το dropdown
                         </div>
                     </div>
                 `, 'info');
