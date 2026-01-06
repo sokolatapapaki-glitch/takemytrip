@@ -1156,7 +1156,50 @@ function generateGeographicProgram() {
     
     console.log(`✅ Το πρόγραμμα δημιουργήθηκε επιτυχώς για ${state.selectedDays} μέρες`);
 }
-
+// ==================== FORCE REFRESH PROGRAM ====================
+function forceRefreshProgram() {
+    console.log('🔄 Αναγκαστική ανανέωση προγράμματος');
+    
+    // Επαναφόρτωση των ημερών από το dropdown
+    const daysSelect = document.getElementById('program-days');
+    if (daysSelect && daysSelect.value) {
+        state.selectedDays = parseInt(daysSelect.value);
+        saveState();
+    }
+    
+    // Ενημέρωση UI
+    const daysDisplay = document.getElementById('days-display');
+    if (daysDisplay) {
+        daysDisplay.textContent = '✅ ' + state.selectedDays + ' μέρες επιλέχθηκαν';
+        daysDisplay.style.color = 'var(--success)';
+    }
+    
+    // Γέμισμα με loading indicator
+    const programDiv = document.getElementById('geographic-program');
+    if (programDiv) {
+        programDiv.innerHTML = `
+            <div style="padding: 40px 20px; text-align: center;">
+                <div class="loading-spinner" style="
+                    width: 50px;
+                    height: 50px;
+                    border: 4px solid #f3f3f3;
+                    border-top: 4px solid var(--primary);
+                    border-radius: 50%;
+                    animation: spin 1s linear infinite;
+                    margin: 0 auto 20px auto;
+                "></div>
+                <h4 style="color: var(--dark); margin-bottom: 10px;">Επαναϋπολογισμός...</h4>
+                <p style="color: var(--gray);">Ομαδοποίηση δραστηριοτήτων για ${state.selectedDays} μέρες</p>
+            </div>
+        `;
+    }
+    
+    // Καλέσε το πρόγραμμα με καθυστέρηση
+    setTimeout(() => {
+        generateGeographicProgram();
+        showToast(`✅ Το πρόγραμμα ανανεώθηκε για ${state.selectedDays} μέρες`, 'success');
+    }, 800);
+}
 // ==================== ΣΥΝΑΡΤΗΣΕΙΣ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΙΣΜΟΥ ====================
 
 function distributeGroupsToDays(groups, totalDays) {
@@ -2275,6 +2318,7 @@ function updateActivitiesTotal() {
 }
 
 // ==================== STEP 5: SETUP SUMMARY ====================
+// ==================== STEP 5: SETUP SUMMARY ====================
 function setupSummaryStep() {
     console.log('📋 Ρύθμιση summary βήματος');
     
@@ -2436,6 +2480,150 @@ function setupSummaryStep() {
     }, 100);
 }
 
+// ==================== ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ: CREATE SUGGESTED PROGRAM ====================
+function createSuggestedProgram() {
+    // Αυτό δημιουργεί ένα απλό προτεινόμενο πρόγραμμα χωρίς να καλεί τη γενική συνάρτηση
+    const programDiv = document.getElementById('geographic-program');
+    if (!programDiv || state.selectedActivities.length === 0 || state.selectedDays === 0) {
+        return;
+    }
+    
+    const activitiesCount = state.selectedActivities.length;
+    const daysCount = state.selectedDays;
+    const activitiesPerDay = Math.ceil(activitiesCount / daysCount);
+    
+    let html = `
+        <div style="padding: 20px;">
+            <div style="text-align: center; margin-bottom: 25px;">
+                <h3 style="color: var(--primary); margin-bottom: 10px;">📅 Πρόγραμμα Ταξιδιού</h3>
+                <p style="color: var(--gray);">
+                    ${activitiesCount} δραστηριότητες διανεμήθηκαν σε ${daysCount} μέρες
+                </p>
+            </div>
+    `;
+    
+    // Δημιούργησε μια απλή κατανομή
+    for (let day = 1; day <= daysCount; day++) {
+        const startIndex = (day - 1) * activitiesPerDay;
+        const endIndex = Math.min(startIndex + activitiesPerDay, activitiesCount);
+        const dayActivities = state.selectedActivities.slice(startIndex, endIndex);
+        const dayCost = dayActivities.reduce((sum, act) => sum + (act.price || 0), 0);
+        
+        html += `
+            <div style="
+                margin-bottom: 20px; 
+                padding: 15px; 
+                background: white; 
+                border-radius: 10px;
+                border-left: 4px solid ${getDayColor(day)};
+                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            ">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h4 style="color: ${getDayColor(day)}; margin: 0;">
+                        ΜΕΡΑ ${day}
+                    </h4>
+                    <span style="background: ${getDayColor(day)}20; color: ${getDayColor(day)}; padding: 4px 10px; border-radius: 20px; font-size: 12px;">
+                        ${dayActivities.length} δραστηριότητες
+                    </span>
+                </div>
+                
+                <div style="margin-top: 10px;">
+                    ${dayActivities.map(activity => `
+                        <div style="
+                            display: flex; 
+                            justify-content: space-between; 
+                            padding: 8px 0; 
+                            border-bottom: 1px solid #f0f0f0;
+                        ">
+                            <span style="color: var(--dark);">${activity.name}</span>
+                            <span style="color: var(--primary); font-weight: bold;">${activity.price || 0}€</span>
+                        </div>
+                    `).join('')}
+                </div>
+                
+                <div style="
+                    margin-top: 10px; 
+                    padding-top: 10px; 
+                    border-top: 1px dashed #ddd;
+                    display: flex; 
+                    justify-content: space-between;
+                    font-weight: bold;
+                ">
+                    <span>ΣΥΝΟΛΟ ΜΕΡΑΣ:</span>
+                    <span style="color: ${getDayColor(day)};">${dayCost}€</span>
+                </div>
+            </div>
+        `;
+    }
+    
+    const totalCost = state.selectedActivities.reduce((sum, act) => sum + (act.price || 0), 0);
+    
+    html += `
+            <div style="
+                margin-top: 25px; 
+                padding: 15px; 
+                background: linear-gradient(135deg, var(--primary), #4F46E5); 
+                color: white; 
+                border-radius: 10px;
+                text-align: center;
+            ">
+                <h4 style="color: white; margin-bottom: 10px;">
+                    <i class="fas fa-calculator"></i> ΣΥΝΟΛΙΚΟ ΚΟΣΤΟΣ
+                </h4>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="text-align: left;">
+                        <div style="font-size: 14px; opacity: 0.9;">${activitiesCount} δραστηριότητες</div>
+                        <div style="font-size: 14px; opacity: 0.9;">${daysCount} μέρες</div>
+                    </div>
+                    <div style="font-size: 36px; font-weight: bold;">${totalCost}€</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <button onclick="generateGeographicProgram()" 
+                        class="btn btn-primary"
+                        style="padding: 12px 30px; font-size: 16px;">
+                    <i class="fas fa-sync-alt"></i> ΔΗΜΙΟΥΡΓΙΑ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ
+                </button>
+                <p style="color: var(--gray); font-size: 13px; margin-top: 10px;">
+                    Δημιουργήστε βελτιστοποιημένο πρόγραμμα με βάση τις τοποθεσίες των δραστηριοτήτων
+                </p>
+            </div>
+        </div>
+    `;
+    
+    programDiv.innerHTML = html;
+}
+
+// ==================== ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ: SUGGEST DAYS FROM GROUPS ====================
+function suggestDaysFromGroups() {
+    if (state.selectedActivities.length === 0) return 0;
+    
+    // Πάρε τις πλήρεις πληροφορίες για τις επιλεγμένες δραστηριότητες
+    const selectedFullActivities = state.selectedActivities.map(selected => 
+        state.currentCityActivities.find(a => a.id === selected.id)
+    ).filter(a => a !== undefined);
+    
+    const groups = groupActivitiesByProximity(selectedFullActivities, 2.0);
+    
+    if (groups.length === 0) return 0;
+    
+    // Υπολόγισε προτεινόμενες μέρες
+    let suggestedDays = groups.length;
+    
+    // Αν υπάρχουν πολλές δραστηριότητες σε μία ομάδα, πρόσθεσε μέρες
+    groups.forEach(group => {
+        if (group.count >= 3) suggestedDays += 1;
+        if (group.count >= 5) suggestedDays += 1;
+    });
+    
+    // Μίνιμουμ 2 μέρες, μέγιστο 7
+    suggestedDays = Math.max(2, Math.min(suggestedDays, 7));
+    
+    console.log(`📅 Προτεινόμενες μέρες από ομαδοποίηση: ${suggestedDays}`);
+    
+    return suggestedDays;
+}
 // ==================== ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ: CREATE SUGGESTED PROGRAM ====================
 function createSuggestedProgram() {
     // Αυτό δημιουργεί ένα απλό προτεινόμενο πρόγραμμα χωρίς να καλεί τη γενική συνάρτηση
@@ -3760,14 +3948,11 @@ function calculateDistance(point1, point2) {
 }
 
 
-// ==================== PROGRAM DAYS UPDATE ====================
+
 // ==================== PROGRAM DAYS UPDATE (FIXED) ====================
 function updateProgramDays() {
     const daysSelect = document.getElementById('program-days');
-    if (!daysSelect) {
-        console.error('❌ Δεν βρέθηκε το daysSelect');
-        return;
-    }
+    if (!daysSelect) return;
     
     const selectedValue = daysSelect.value;
     
@@ -3787,32 +3972,14 @@ function updateProgramDays() {
             daysDisplay.style.color = 'var(--success)';
         }
         
-        // 🚨 ΚΡΙΤΙΚΗ ΔΙΟΡΘΩΣΗ: Ανανέωση του προγράμματος ΜΕΤΑ την αποθήκευση
         saveState();
         
-        // Ενημέρωση των στοιχείων UI
-        const programSection = document.getElementById('geographic-program-section');
-        if (programSection) {
-            programSection.style.display = 'block';
-        }
+        // 🚨 ΑΦΑΙΡΕΣΑ ΤΗΝ ΚΛΗΣΗ: generateGeographicProgram();
+        // Τώρα η generateGeographicProgram() θα καλείται ΜΟΝΟ όταν ο χρήστης πατήσει "ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΓΡΑΜΜΑΤΟΣ"
         
-        // Ενημέρωση του status
-        const statusDiv = document.getElementById('program-status');
-        if (statusDiv) {
-            statusDiv.innerHTML = `<i class="fas fa-clock"></i> Ενημερώνεται για ${selectedDays} μέρες`;
-            statusDiv.style.background = '#FEF3C7';
-            statusDiv.style.color = '#92400E';
-        }
+        console.log(`📅 Ενημέρωση ημερών σε: ${selectedDays}`);
         
-        console.log(`📅 Ενημέρωση προγράμματος για ${selectedDays} μέρες`);
-        
-        // 🚨 ΚΑΛΕΣΕ ΤΗΝ ΓΕΝΙΚΗ ΣΥΝΑΡΤΗΣΗ ΜΕ ΚΑΘΥΣΤΕΡΗΣΗ
-        setTimeout(() => {
-            generateGeographicProgram();
-        }, 100);
-        
-        // Εμφάνιση μηνύματος
-        showToast(`📅 Οι ημέρες ενημερώθηκαν σε ${selectedDays}. Ανανέωση προγράμματος...`, 'success');
+        showToast(`📅 Οι ημέρες ενημερώθηκαν σε ${selectedDays}. Πατήστε "Δημιουργία Προγράμματος"`, 'success');
     }
 }
 // ==================== GROUP ACTIVITIES BY PROXIMITY ====================
@@ -5030,6 +5197,32 @@ window.clearMap = clearMap;
 window.showGroupedMap = showGroupedMap;            
 window.initializeMapInStep = initializeMapInStep;
 window.clearMapPoints = clearMapPoints;
+window.forceRefreshProgram = forceRefreshProgram;
+window.createSuggestedProgram = createSuggestedProgram;
+window.getDayColor = getDayColor;
+
+// ==================== CSS ANIMATIONS FOR PROGRAM ====================
+// Προσθήκη CSS animation για το spinner (για το βήμα 5)
+if (!document.querySelector('#program-spinner-style')) {
+    const style = document.createElement('style');
+    style.id = 'program-spinner-style';
+    style.textContent = `
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+    `;
+    document.head.appendChild(style);
+}
 
 console.log('✅ Script.js loaded successfully!');
 
