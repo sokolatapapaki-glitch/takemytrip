@@ -3,9 +3,9 @@ const state = {
     selectedDestination: null,
     selectedDestinationId: null,
     selectedDays: 0,
-        familyMembers: [
-        { name: "Πατέρας", age: 42 },
-        { name: "Μητέρα", age: 40 }
+           familyMembers: [
+        { name: "Ενήλικας 1", age: "" },
+        { name: "Ενήλικας 2", age: "" }
     ],
     currentStep: 'destination',
     currentCityActivities: [],
@@ -608,19 +608,12 @@ function setupHotelStep() {
     checkin.min = today.toISOString().split('T')[0];
     checkout.min = today.toISOString().split('T')[0];
     
-    // ΚΑΝΕΝΑ default value
+    // ΚΑΝΕΝΑ default value - ΤΑ ΠΕΔΙΑ ΜΕΝΟΥΝ ΚΕΝΑ
     
     // Αυτόματη ενημέρωση checkout όταν αλλάζει το checkin
     checkin.addEventListener('change', function() {
         if (this.value) {
-            const checkinDate = new Date(this.value);
-            const newCheckout = new Date(checkinDate.getTime() + 3 * 24 * 60 * 60 * 1000);
-            checkout.min = this.value;
-            
-            // Προσθήκη checkout μόνο αν δεν έχει τιμή
-            if (!checkout.value) {
-                checkout.value = newCheckout.toISOString().split('T')[0];
-            }
+            checkout.min = this.value; // Το checkout πρέπει να είναι μετά το checkin
         }
     });
 }
@@ -651,10 +644,12 @@ function getActivitiesStepHTML() {
                                 <div style="font-size: 24px;">${index === 0 ? '👨' : index === 1 ? '👩' : '🧒'}</div>
                                 <input type="text" class="form-control" value="${member.name}" 
                                        onchange="updateFamilyMemberName(${index}, this.value)">
-                                <input type="number" class="form-control" value="${member.age}" min="0" max="120"
-                                       onchange="updateFamilyMemberAge(${index}, this.value)">
+                                    <input type="number" class="form-control" value="${member.age}" min="0" max="120" placeholder="Ηλικία"
+           onchange="updateFamilyMemberAge(${index}, this.value)">
                                 <span>ετών</span>
-                                ${index >= 2 ? `<button class="btn btn-outline" onclick="removeFamilyMember(${index})" style="padding: 8px 12px;"><i class="fas fa-times"></i></button>` : ''}
+                                <button class="btn btn-outline" onclick="removeFamilyMember(${index})" style="padding: 8px 12px; ${index < 2 && state.familyMembers.length <= 2 ? 'opacity: 0.5; cursor: not-allowed;' : ''}" ${index < 2 && state.familyMembers.length <= 2 ? 'disabled' : ''}>
+    <i class="fas fa-times"></i>
+</button>
                             </div>
                         `).join('')}
                     </div>
@@ -1636,9 +1631,24 @@ function calculateFamilyCost(prices) {
     console.log('💰 Διαθέσιμες τιμές:', Object.keys(prices).map(k => `${k}: ${prices[k]}€`).join(', '));
     
     let total = 0;
+    let membersWithAge = 0;
     
     state.familyMembers.forEach((member) => {
-        const age = member.age;
+        let age = member.age;
+        
+        // ΚΡΙΤΙΚΟ: Αν η ηλικία είναι κενή string, null, undefined ή NaN, ΤΗΝ ΑΓΝΟΟΥΜΕ
+        if (age === "" || age === null || age === undefined) {
+            console.log(`⚠️ Μέλος "${member.name}" δεν έχει ηλικία - ΑΓΝΟΕΙΤΑΙ`);
+            return; // βγαίνει από αυτή την επανάληψη, συνεχίζει στο επόμενο
+        }
+        
+        // Μετατροπή σε αριθμό
+        age = parseInt(age);
+        if (isNaN(age)) {
+            console.log(`⚠️ Μέλος "${member.name}" έχει μη έγκυρη ηλικία "${member.age}" - ΑΓΝΟΕΙΤΑΙ`);
+            return;
+        }
+        
         let price = 0;
         
         // 1. Προσπάθεια: Βρες ακριβή τιμή για συγκεκριμένη ηλικία
@@ -1670,9 +1680,12 @@ function calculateFamilyCost(prices) {
         }
         
         total += price;
+        membersWithAge++;
+        
+        console.log(`  👤 ${member.name} (${age}): ${price}€`);
     });
     
-    console.log(`💰 Συνολικό κόστος: ${total}€ για ${state.familyMembers.length} άτομα`);
+    console.log(`💰 Συνολικό κόστος: ${total}€ για ${membersWithAge} από τα ${state.familyMembers.length} άτομα`);
     return total;
 }
 function toggleActivitySelection(activityId) {
@@ -2189,7 +2202,13 @@ function updateFamilyMemberName(index, name) {
 }
 
 function updateFamilyMemberAge(index, age) {
-    state.familyMembers[index].age = parseInt(age) || 0;
+    // Αν είναι κενή τιμή ή NaN, αφήνουμε κενό string
+    if (age === "" || isNaN(parseInt(age))) {
+        state.familyMembers[index].age = "";
+    } else {
+        state.familyMembers[index].age = parseInt(age);
+    }
+    updateActivitiesTotal(); // Ενημέρωση κόστους
 }
 
 function addFamilyMember(type) {
@@ -2202,9 +2221,12 @@ function addFamilyMember(type) {
 }
 
 function removeFamilyMember(index) {
-    if (state.familyMembers.length > 2) {
+    // Μπορούμε να αφαιρέσουμε ΚΑΙ τους 2 πρώτους, αρκεί να μείνει τουλάχιστον 1 άτομο
+    if (state.familyMembers.length > 1) {
         state.familyMembers.splice(index, 1);
         showStep('activities');
+    } else {
+        alert("Πρέπει να υπάρχει τουλάχιστον 1 μέλος στην οικογένεια");
     }
 }
 
