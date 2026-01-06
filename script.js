@@ -647,7 +647,7 @@ function getActivitiesStepHTML() {
                                     <input type="number" class="form-control" value="${member.age}" min="0" max="120" placeholder="Ηλικία"
            onchange="updateFamilyMemberAge(${index}, this.value)">
                                 <span>ετών</span>
-                                <button class="btn btn-outline" onclick="removeFamilyMember(${index})" style="padding: 8px 12px; ${index < 2 && state.familyMembers.length <= 2 ? 'opacity: 0.5; cursor: not-allowed;' : ''}" ${index < 2 && state.familyMembers.length <= 2 ? 'disabled' : ''}>
+                                <button class="btn btn-outline" onclick="removeFamilyMember(${index})" style="padding: 8px 12px;">
     <i class="fas fa-times"></i>
 </button>
                             </div>
@@ -2221,12 +2221,14 @@ function addFamilyMember(type) {
 }
 
 function removeFamilyMember(index) {
-    // Μπορούμε να αφαιρέσουμε ΚΑΙ τους 2 πρώτους, αρκεί να μείνει τουλάχιστον 1 άτομο
-    if (state.familyMembers.length > 1) {
+    // Μπορούμε να αφαιρέσουμε ΟΛΟΥΣ τους ενήλικες, ακόμα και αν μένει 0 άτομα
+    // Αλλά πρέπει να μείνει τουλάχιστον 1 κουμπί προσθήκης
+    if (state.familyMembers.length > 0) {
         state.familyMembers.splice(index, 1);
         showStep('activities');
+        console.log(`➖ Αφαιρέθηκε μέλος. Μένησαν: ${state.familyMembers.length} άτομα`);
     } else {
-        alert("Πρέπει να υπάρχει τουλάχιστον 1 μέλος στην οικογένεια");
+        alert("ℹ️ Δεν υπάρχουν άλλα μέλη για διαγραφή");
     }
 }
 
