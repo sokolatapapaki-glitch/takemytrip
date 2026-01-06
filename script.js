@@ -701,6 +701,7 @@ function getActivitiesStepHTML() {
 }
 
 // ==================== STEP 5: SUMMARY ====================
+// ==================== STEP 5: SUMMARY ====================
 function getSummaryStepHTML() {
     return `
         <div class="card">
@@ -776,6 +777,19 @@ function getSummaryStepHTML() {
                                 </div>`
                             ).join('')}
                     </div>
+                    
+                    <!-- Συνολικό Κόστος Δραστηριοτήτων -->
+                    ${state.selectedActivities.length > 0 ? `
+                        <div style="margin-top: 20px; padding: 15px; background: var(--primary-light); color: white; border-radius: 8px; text-align: center;">
+                            <h4 style="color: white; margin-bottom: 5px;">
+                                <i class="fas fa-money-bill-wave"></i> Συνολικό Κόστος Δραστηριοτήτων
+                            </h4>
+                            <h2 style="font-size: 36px; margin: 0;">${calculateTotalSpent()}€</h2>
+                            <p style="opacity: 0.9; margin: 5px 0 0 0;">
+                                Για ${state.familyMembers.length} άτομα
+                            </p>
+                        </div>
+                    ` : ''}
                 </div>
                 
                 <!-- Daily Program - ΑΚΡΙΒΩΣ ΟΠΩΣ ΣΤΟ ΠΑΛΙΟ -->
@@ -797,6 +811,13 @@ function getSummaryStepHTML() {
                                        background: #3eb489; color: white; border: none; 
                                        cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;">
                             <i class="fas fa-map-marked-alt"></i> Συνέχεια στον Χάρτη
+                        </button>
+                        
+                        <!-- ΚΟΥΜΠΙ ΓΙΑ ΟΜΑΔΟΠΟΙΗΣΗ - ΠΡΟΣΘΗΚΗ -->
+                        <button class="btn btn-outline" onclick="showGroupedActivitiesOnMap()" 
+                                style="margin-left: 15px; padding: 18px 25px; font-size: 18px; 
+                                       border-color: #4F46E5; color: #4F46E5;">
+                            <i class="fas fa-layer-group"></i> Προβολή Ομαδοποίησης
                         </button>
                     </div>
                 </div>
@@ -842,6 +863,11 @@ function getMapStepHTML() {
                         <i class="fas fa-map-pin"></i> Προβολή Σημείων
                     </button>
                     
+                    <!-- 🔴 ΚΟΥΜΠΙ ΟΜΑΔΟΠΟΙΗΣΗΣ - ΠΡΟΣΘΗΚΗ ΕΔΩ -->
+                    <button class="btn btn-accent" onclick="showGroupedActivitiesOnMap()">
+                        <i class="fas fa-layer-group"></i> Ομαδοποίηση
+                    </button>
+                    
                     <button class="btn btn-accent" onclick="showRouteBetweenPoints()">
                         <i class="fas fa-route"></i> Διαδρομή
                     </button>
@@ -861,7 +887,6 @@ function getMapStepHTML() {
         </div>
     `;
 }
-
 // ==================== MANUAL DESTINATION MODAL ====================
 function showManualDestinationModal() {
     console.log('📋 Άνοιγμα dropdown για χειροκίνητη επιλογή');
@@ -1743,6 +1768,79 @@ function setupSummaryStep() {
         state.selectedDays = 3;
     }
     
+    // 🔴 ΠΡΟΣΘΗΚΗ: ΑΥΤΟΜΑΤΗ ΠΡΟΤΑΣΗ ΗΜΕΡΩΝ ΑΠΟ ΟΜΑΔΟΠΟΙΗΣΗ
+    const suggestedDays = suggestDaysFromGroups();
+    if (suggestedDays > 0 && state.selectedDays !== suggestedDays) {
+        console.log(`📅 Πρόταση από ομαδοποίηση: ${suggestedDays} μέρες`);
+        
+        // Ενημέρωση του dropdown αν θέλεις
+        const daysSelect = document.getElementById('program-days');
+        if (daysSelect && daysSelect.querySelector(`option[value="${suggestedDays}"]`)) {
+            daysSelect.value = suggestedDays;
+        }
+        
+        // Προαιρετικό: Εμφάνιση μηνύματος στον χρήστη
+        setTimeout(() => {
+            showToast(`
+                <div style="text-align: left; max-width: 350px;">
+                    <strong style="color: #4F46E5;">📅 Πρόταση Διάρκειας</strong><br><br>
+                    
+                    <div style="background: #F0F9FF; padding: 12px; border-radius: 8px; border-left: 4px solid #4F46E5;">
+                        Βάσει ομαδοποίησης των δραστηριοτήτων σας:<br>
+                        <strong style="font-size: 18px; color: #4F46E5;">${suggestedDays} μέρες</strong><br>
+                        <small style="color: #666;">
+                            (Βρέθηκαν ${state.selectedActivities.length} δραστηριότητες σε ${suggestedDays} γεωγραφικές περιοχές)
+                        </small>
+                    </div>
+                    
+                    <div style="margin-top: 10px; font-size: 12px; color: #666;">
+                        <i class="fas fa-info-circle"></i> Μπορείτε να αλλάξετε τις μέρες από το dropdown
+                    </div>
+                </div>
+            `, 'info');
+        }, 1500);
+    }
+    
+    setTimeout(() => {
+        const daysSelect = document.getElementById('program-days');
+        if (daysSelect) {
+            daysSelect.value = state.selectedDays;
+            
+            const newDaysSelect = daysSelect.cloneNode(true);
+            daysSelect.parentNode.replaceChild(newDaysSelect, daysSelect);
+            
+            newDaysSelect.addEventListener('change', function() {
+                const selectedDays = parseInt(this.value);
+                if (selectedDays > 0) {
+                    state.selectedDays = selectedDays;
+                    
+                    const daysDisplay = document.getElementById('days-display');
+                    if (daysDisplay) {
+                        daysDisplay.textContent = '✅ ' + selectedDays + ' μέρες επιλέχθηκαν';
+                        daysDisplay.style.color = 'var(--success)';
+                    }
+                    
+                    createDailyProgram();
+                    saveState();
+                    
+                    console.log(`📅 Ενημέρωση προγράμματος για ${selectedDays} μέρες`);
+                }
+            });
+        }
+        
+        const daysDisplay = document.getElementById('days-display');
+        if (daysDisplay) {
+            daysDisplay.textContent = state.selectedDays > 0 
+                ? '✅ ' + state.selectedDays + ' μέρες επιλέχθηκαν'
+                : '⚠️ Δεν έχετε επιλέξει ακόμα';
+            daysDisplay.style.color = state.selectedDays > 0 ? 'var(--success)' : 'var(--warning)';
+        }
+        
+        createDailyProgram();
+        
+    }, 100);
+}
+    
     setTimeout(() => {
         const daysSelect = document.getElementById('program-days');
         if (daysSelect) {
@@ -1886,51 +1984,326 @@ function setupMapStep() {
 }
 
 function initializeMap() {
+    console.log('🗺️ Αρχικοποίηση χάρτη...');
     const mapElement = document.getElementById('map');
-    if (!mapElement) return;
     
-    if (window.travelMap) window.travelMap.remove();
+    if (!mapElement) {
+        console.error('❌ Δεν βρέθηκε το map element');
+        document.getElementById('map-container').innerHTML = `
+            <div style="height: 500px; display: flex; align-items: center; justify-content: center; background: var(--light); color: var(--gray);">
+                <div style="text-align: center;">
+                    <i class="fas fa-exclamation-triangle fa-2x" style="margin-bottom: 15px; color: var(--danger);"></i>
+                    <h4>Σφάλμα φόρτωσης χάρτη</h4>
+                    <p>Το στοιχείο του χάρτη δεν βρέθηκε</p>
+                </div>
+            </div>
+        `;
+        return;
+    }
+    
+    // Καθαρισμός του χάρτη αν υπάρχει ήδη
+    if (window.travelMap) {
+        try {
+            window.travelMap.remove();
+            console.log('🗺️ Παλιός χάρτης διαγράφηκε');
+        } catch(e) {
+            console.log('ℹ️ Δεν υπήρχε ενεργός χάρτης');
+        }
+    }
+    
+    // Καθαρισμός των global μεταβλητών
+    window.firstPoint = null;
+    window.secondPoint = null;
+    window.currentRoutePolyline = null;
+    window.selectedMarkers = [];
+    selectedPointA = null;
+    selectedPointB = null;
+    currentRouteLine = null;
     
     try {
         if (typeof L === 'undefined') {
-            throw new Error('Leaflet not loaded');
+            throw new Error('Η βιβλιοθήκη Leaflet δεν φορτώθηκε. Παρακαλώ ανανεώστε τη σελίδα.');
         }
         
         const cityCoords = getCityCoordinates(state.selectedDestinationId);
         
         if (!cityCoords) {
-            throw new Error(`Δεν βρέθηκαν συντεταγμένες για ${state.selectedDestination}`);
+            throw new Error(`Δεν βρέθηκαν συντεταγμένες για την πόλη: ${state.selectedDestination}`);
         }
         
-        window.travelMap = L.map('map').setView(cityCoords, 13);   
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(window.travelMap)
+        console.log(`📍 Συντεταγμένες πόλης: ${cityCoords[0]}, ${cityCoords[1]}`);
         
-        L.marker(cityCoords) 
-            .addTo(window.travelMap)
-            .bindPopup(`<b>${state.selectedDestination}</b>`)
-            .openPopup();
-            
+        // Δημιουργία χάρτη
+        window.travelMap = L.map('map', {
+            zoomControl: true,
+            scrollWheelZoom: true,
+            doubleClickZoom: true,
+            touchZoom: true,
+            boxZoom: true,
+            keyboard: true,
+            dragging: true,
+            attributionControl: true
+        }).setView(cityCoords, 13);
+        
         console.log('✅ Χάρτης δημιουργήθηκε');
         
+        // Προσθήκη OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 19,
+            minZoom: 3
+        }).addTo(window.travelMap);
+        
+        // Προσθήκη marker για την πόλη
+        const cityMarker = L.marker(cityCoords, {
+            icon: L.divIcon({
+                html: `
+                    <div style="
+                        background: #4F46E5; 
+                        color: white; 
+                        width: 50px; 
+                        height: 50px; 
+                        border-radius: 50%; 
+                        display: flex; 
+                        align-items: center; 
+                        justify-content: center;
+                        font-weight: bold;
+                        font-size: 24px;
+                        border: 3px solid white;
+                        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+                        cursor: pointer;
+                    ">
+                        🏙️
+                    </div>
+                `,
+                className: 'city-marker',
+                iconSize: [50, 50],
+                iconAnchor: [25, 50]
+            })
+        }).addTo(window.travelMap);
+        
+        cityMarker.bindPopup(`
+            <div style="text-align: center; padding: 10px; min-width: 200px;">
+                <h3 style="margin: 0 0 5px 0; color: #4F46E5;">${state.selectedDestination}</h3>
+                <p style="margin: 0; color: #666;">
+                    <i class="fas fa-map-marker-alt"></i> Κέντρο πόλης
+                </p>
+                <hr style="margin: 10px 0;">
+                <p style="margin: 0; font-size: 12px; color: #888;">
+                    👆 Κάντε κλικ στο κουμπί <strong>"Προβολή Σημείων"</strong> για τις δραστηριότητες
+                </p>
+            </div>
+        `).openPopup();
+        
+        // Προσθήκη scale control
+        L.control.scale({ imperial: false, metric: true }).addTo(window.travelMap);
+        
+        // Προσθήκη fullscreen control (αν υπάρχει η βιβλιοθήκη)
+        if (L.control.fullscreen) {
+            L.control.fullscreen({
+                position: 'topright',
+                title: 'Πλήρης οθόνη',
+                titleCancel: 'Έξοδος πλήρους οθόνης',
+                forceSeparateButton: true
+            }).addTo(window.travelMap);
+        }
+        
+        // Προσθήκη custom controls
+        const customControl = L.Control.extend({
+            options: { position: 'topleft' },
+            onAdd: function(map) {
+                const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control custom-control');
+                container.innerHTML = `
+                    <div style="
+                        background: white;
+                        border-radius: 8px;
+                        padding: 8px;
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                        font-family: 'Roboto', sans-serif;
+                        font-size: 12px;
+                        color: #333;
+                        min-width: 180px;
+                    ">
+                        <div style="display: flex; align-items: center; margin-bottom: 5px;">
+                            <div style="width: 12px; height: 12px; background: #4F46E5; border-radius: 50%; margin-right: 8px;"></div>
+                            <span>🏙️ Κέντρο πόλης</span>
+                        </div>
+                        <div style="display: flex; align-items: center; margin-bottom: 5px;">
+                            <div style="width: 12px; height: 12px; background: #10B981; border-radius: 50%; margin-right: 8px;"></div>
+                            <span>📍 Σημείο ΑΠΟ</span>
+                        </div>
+                        <div style="display: flex; align-items: center;">
+                            <div style="width: 12px; height: 12px; background: #EF4444; border-radius: 50%; margin-right: 8px;"></div>
+                            <span>🎯 Σημείο ΠΡΟΣ</span>
+                        </div>
+                        <hr style="margin: 8px 0; border-color: #eee;">
+                        <div style="font-weight: bold; color: #4F46E5; text-align: center;">
+                            ${state.selectedDestination}
+                        </div>
+                    </div>
+                `;
+                
+                // Αποτροπή κλικ στο container να επηρεάζει τον χάρτη
+                L.DomEvent.disableClickPropagation(container);
+                return container;
+            }
+        });
+        
+        window.travelMap.addControl(new customControl());
+        
+        // Προσθήκη loading animation για 1 δευτερόλεπτο (για οπτική επαλήθευση)
+        const loadingDiv = L.DomUtil.create('div', 'map-loading-overlay');
+        loadingDiv.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-md);
+        `;
+        loadingDiv.innerHTML = `
+            <div style="text-align: center; padding: 20px;">
+                <div style="font-size: 48px; margin-bottom: 20px;">🗺️</div>
+                <h3 style="color: var(--primary); margin-bottom: 10px;">Φόρτωση Χάρτη</h3>
+                <p style="color: var(--gray);">${state.selectedDestination}</p>
+                <div class="loading-spinner" style="
+                    width: 40px;
+                    height: 40px;
+                    border: 4px solid #f3f3f3;
+                    border-top: 4px solid var(--primary);
+                    border-radius: 50%;
+                    animation: spin 1s linear infinite;
+                    margin: 20px auto;
+                "></div>
+            </div>
+        `;
+        
+        mapElement.appendChild(loadingDiv);
+        
+        // Αφαίρεση loading animation μετά από 1 δευτερόλεπτο
+        setTimeout(() => {
+            if (loadingDiv.parentNode) {
+                loadingDiv.style.opacity = '0';
+                loadingDiv.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => {
+                    if (loadingDiv.parentNode) {
+                        loadingDiv.remove();
+                    }
+                }, 300);
+            }
+            
+            // Εμφάνιση οδηγιών χρήσης
+            showToast(`
+                <div style="max-width: 350px; text-align: left;">
+                    <strong style="color: #4F46E5; font-size: 16px;">🗺️ Οδηγίες Χρήσης Χάρτη</strong><br><br>
+                    
+                    <div style="background: #F0F9FF; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
+                        <strong>1️⃣ Πρώτα:</strong><br>
+                        Κάντε κλικ στο κουμπί <strong>"Προβολή Σημείων"</strong> για να φορτώσετε τις δραστηριότητες
+                    </div>
+                    
+                    <div style="background: #FEF3C7; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
+                        <strong>2️⃣ Επιλογή:</strong><br>
+                        Κάντε κλικ σε 2 πινέζες για να επιλέξετε <span style="color: #10B981;">ΑΠΟ</span> και <span style="color: #EF4444;">ΠΡΟΣ</span>
+                    </div>
+                    
+                    <div style="background: #E0F2FE; padding: 10px; border-radius: 8px;">
+                        <strong>3️⃣ Διαδρομή:</strong><br>
+                        Θα εμφανιστεί <strong>αυτόματα</strong> με απόσταση, χρόνους και κουμπιά Google Maps
+                    </div>
+                    
+                    <div style="margin-top: 10px; padding: 8px; background: #4F46E5; color: white; border-radius: 6px; text-align: center; font-weight: bold;">
+                        🎯 Έτοιμο για χρήση!
+                    </div>
+                </div>
+            `, 'info');
+            
+            console.log('✅ Χάρτης φορτώθηκε πλήρως');
+            
+        }, 1000);
+        
+        // Προσθήκη animation για το marker της πόλης
+        setTimeout(() => {
+            if (cityMarker && cityMarker._icon) {
+                cityMarker._icon.style.animation = 'bounce 0.5s ease 2';
+            }
+        }, 1500);
+        
+        // Προσθήκη CSS animations αν δεν υπάρχουν
+        if (!document.querySelector('#map-animations')) {
+            const style = document.createElement('style');
+            style.id = 'map-animations';
+            style.textContent = `
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+                @keyframes bounce {
+                    0%, 100% { transform: translateY(0) scale(1); }
+                    50% { transform: translateY(-10px) scale(1.1); }
+                }
+                @keyframes pulse {
+                    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+                    70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+                    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+                }
+                @keyframes pulse-red {
+                    0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+                    70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+                    100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+                }
+                .leaflet-control.custom-control {
+                    background: transparent;
+                    border: none;
+                    box-shadow: none;
+                }
+                .selected-marker-a {
+                    animation: pulse 1.5s infinite !important;
+                }
+                .selected-marker-b {
+                    animation: pulse-red 1.5s infinite !important;
+                }
+            `;
+            document.head.appendChild(style);
+        }
         
     } catch (error) {
+        console.error('❌ Σφάλμα αρχικοποίησης χάρτη:', error);
+        
         mapElement.innerHTML = `
-            <div style="height:100%; display:flex; align-items:center; justify-content:center; background:#f8f9fa; color:#666; text-align:center;">
-                <div>
-                    <i class="fas fa-exclamation-triangle" style="font-size:48px; margin-bottom:20px; color:#dc3545;"></i>
-                    <h4>Σφάλμα φόρτωσης χάρτη</h4>
-                    <p>${error.message}</p>
-                    <button onclick="reloadMap()" class="btn btn-primary" style="margin-top:20px;">
-                        <i class="fas fa-sync-alt"></i> Δοκιμάστε ξανά
+            <div style="height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#f8f9fa; color:#666; text-align:center; padding: 40px;">
+                <div style="font-size: 64px; margin-bottom: 20px; color: #dc3545;">🗺️</div>
+                <h4 style="margin: 0 0 15px 0; color: #343a40;">Σφάλμα φόρτωσης χάρτη</h4>
+                <p style="margin: 0 0 20px 0; color: #6c757d; max-width: 500px;">
+                    ${error.message}
+                </p>
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button onclick="initializeMap()" class="btn btn-primary" style="padding: 10px 20px;">
+                        <i class="fas fa-sync-alt"></i> Δοκιμή ξανά
                     </button>
+                    <button onclick="showStep('summary')" class="btn btn-outline" style="padding: 10px 20px;">
+                        <i class="fas fa-arrow-left"></i> Επιστροφή
+                    </button>
+                </div>
+                <div style="margin-top: 30px; padding: 15px; background: white; border-radius: 8px; border-left: 4px solid #6f42c1; text-align: left; max-width: 500px;">
+                    <strong><i class="fas fa-lightbulb"></i> Συμβουλές επίλυσης:</strong>
+                    <ul style="margin: 10px 0 0 0; padding-left: 20px;">
+                        <li>Ελέγξτε τη σύνδεση στο internet</li>
+                        <li>Ανανεώστε τη σελίδα (F5)</li>
+                        <li>Δοκιμάστε άλλο πρόγραμμα περιήγησης</li>
+                        <li>Επικοινωνήστε με την υποστήριξη αν το πρόβλημα συνεχίζεται</li>
+                    </ul>
                 </div>
             </div>
         `;
     }
 }
-
 function reloadMap() {
     initializeMap();
 }
@@ -2012,6 +2385,7 @@ function createEnhancedPopup(activity) {
 
 
 // 4. ΒΕΛΤΙΩΜΕΝΗ showActivityMap() (ΜΕ ΤΑ ΝΕΑ POPUPS ΚΑΙ ΕΝΩΣΕΙΣ)
+// ==================== ΒΕΛΤΙΩΜΕΝΗ showActivityMap() ====================
 function showActivityMap() {
     if (!window.travelMap) {
         alert('Παρακαλώ πρώτα φορτώστε τον χάρτη');
@@ -2020,62 +2394,134 @@ function showActivityMap() {
     
     console.log('📍 Προσθήκη πινέζων για τις επιλεγμένες δραστηριότητες');
     
-    // Καθαρισμός όλων των πινέζων
+    // 1. Καθαρισμός όλων των πινέζων
     window.travelMap.eachLayer(function(layer) {
         if (layer instanceof L.Marker) {
             window.travelMap.removeLayer(layer);
         }
     });
     
-    // Αφαίρεση τυχόν διαδρομών
+    // 2. Αφαίρεση τυχόν διαδρομών
     if (currentRouteLine) {
         window.travelMap.removeLayer(currentRouteLine);
         currentRouteLine = null;
     }
     
-    // Επαναφορά επιλογών
+    // 3. Επαναφορά επιλογών
     selectedPointA = null;
     selectedPointB = null;
     
-    // Προσθήκη πινέζας για την πόλη
+    // 4. Προσθήκη πινέζας για την πόλη
     const cityCoords = getCityCoordinates(state.selectedDestinationId);
     if (cityCoords) {
         L.marker(cityCoords)
             .addTo(window.travelMap)
             .bindPopup(`<b>${state.selectedDestination}</b><br>Κύκλος πόλης`)
             .openPopup();
+            
+        // Ζουμάρισμα στο κέντρο της πόλης
+        window.travelMap.setView(cityCoords, 13);
     }
     
     if (state.selectedActivities.length === 0) {
-        alert('Δεν έχετε επιλέξει καμία δραστηριότητα ακόμα');
+        alert('⚠️ Δεν έχετε επιλέξει καμία δραστηριότητα ακόμα\n\nΠαρακαλώ πηγαίνετε στο βήμα "Δραστηριότητες" και επιλέξτε κάποιες.');
         return;
     }
     
     let activityCount = 0;
+    const markers = [];
     
+    // 5. Προσθήκη πινέζας για ΚΑΘΕ επιλεγμένη δραστηριότητα
     state.selectedActivities.forEach(activity => {
         const fullActivity = state.currentCityActivities.find(a => a.id === activity.id);
         
+        let coords;
+        let markerTitle = activity.name;
+        let activityData = fullActivity || activity;
+        
         if (fullActivity && fullActivity.location) {
-            const coords = [fullActivity.location.lat, fullActivity.location.lng];
-            
-            // Χρήση της νέας συνάρτησης με το click-to-connect
-            createMarkerWithConnectFunction(coords, fullActivity.name, fullActivity);
-            
-            activityCount++;
+            // Έχει location στο JSON
+            coords = [fullActivity.location.lat, fullActivity.location.lng];
+            console.log(`📍 Βρήκα location για ${activity.name}:`, coords);
         } else {
-            console.log('⚠️ Δραστηριότητα χωρίς location:', fullActivity?.name);
+            // Δεν έχει location - χρησιμοποίησε τυχαίες συντεταγμένες κοντά στο κέντρο
+            if (cityCoords) {
+                const randomLat = cityCoords[0] + (Math.random() - 0.5) * 0.03;
+                const randomLng = cityCoords[1] + (Math.random() - 0.5) * 0.03;
+                coords = [randomLat, randomLng];
+                console.log(`📍 Χωρίς location για ${activity.name} - τυχαίες συντεταγμένες:`, coords);
+            } else {
+                coords = [51.5074, -0.1278]; // Default: Λονδίνο
+            }
+            
+            // Βεβαιώσου ότι το activityData έχει τα απαραίτητα πεδία
+            activityData = {
+                ...activityData,
+                name: activity.name,
+                description: fullActivity?.description || 'Επιλεγμένη δραστηριότητα',
+                price: activity.price || 0,
+                duration_hours: fullActivity?.duration_hours || '?',
+                category: fullActivity?.category || 'attraction',
+                location: {
+                    lat: coords[0],
+                    lng: coords[1]
+                }
+            };
+        }
+        
+        // Βεβαιώσου ότι το activityData έχει location
+        if (!activityData.location) {
+            activityData.location = {
+                lat: coords[0],
+                lng: coords[1]
+            };
+        }
+        
+        // 🔴 ΚΡΙΤΙΚΗ ΚΛΗΣΗ: Χρησιμοποίησε τη νέα συνάρτηση!
+        const marker = createMarkerWithConnectFunction(coords, markerTitle, activityData);
+        if (marker) {
+            markers.push(marker);
+            activityCount++;
         }
     });
     
-    // Ενημέρωση χρήστη με τα νέα οδηγία
+    // 6. Αν έχουμε markers, προσπάθησε να ζουμάρεις να τα δείξεις όλα
+    if (markers.length > 0 && cityCoords) {
+        // Δημιούργησε bounds που περιλαμβάνουν όλα τα markers
+        const markerGroup = L.featureGroup(markers);
+        window.travelMap.fitBounds(markerGroup.getBounds().pad(0.1));
+    }
+    
+    // 7. Ενημέρωση χρήστη με τα νέα οδηγία
     showToast(`
-        <strong>🎯 Οδηγίες Χρήσης:</strong><br><br>
-        1. Κάντε κλικ σε μια πινέζα για να επιλέξετε ως <strong>ΑΠΟ</strong><br>
-        2. Κάντε κλικ σε άλλη πινέζα για να επιλέξετε ως <strong>ΠΡΟΣ</strong><br>
-        3. Η διαδρομή θα σχεδιαστεί αυτόματα<br><br>
-        <small>Επιλέχθηκαν ${activityCount} πινέζα(ες)</small>
+        <div style="text-align: left; max-width: 350px;">
+            <strong style="font-size: 16px; color: #4F46E5;">🗺️ Οδηγίες Χρήσης Χάρτη</strong><br><br>
+            
+            <div style="background: #F0F9FF; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                <strong>🎯 Βήμα 1: Επιλογή Σημείων</strong><br>
+                • Κάντε κλικ σε μια πινέζα για <span style="color: #10B981; font-weight: bold;">ΑΠΟ</span><br>
+                • Κάντε κλικ σε άλλη για <span style="color: #EF4444; font-weight: bold;">ΠΡΟΣ</span>
+            </div>
+            
+            <div style="background: #FEF3C7; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                <strong>🛣️ Βήμα 2: Διαδρομή</strong><br>
+                • Η διαδρομή θα σχεδιαστεί <strong>αυτόματα</strong><br>
+                • Θα δείτε απόσταση και χρόνους
+            </div>
+            
+            <div style="background: #E0F2FE; padding: 10px; border-radius: 8px;">
+                <strong>📱 Βήμα 3: Οδηγίες</strong><br>
+                • Πατήστε κουμπιά Google Maps για <strong>πραγματικές οδηγίες</strong><br>
+                • Επιλέξτε μεταφορικό μέσο (περπάτημα, αυτοκίνητο, ΜΜΜ, ποδήλατο)
+            </div>
+            
+            <div style="margin-top: 10px; padding: 8px; background: #4F46E5; color: white; border-radius: 6px; text-align: center; font-weight: bold;">
+                ✅ Εμφανίστηκαν ${activityCount} πινέζες
+            </div>
+        </div>
     `, 'info');
+    
+    console.log(`✅ Εμφανίστηκαν ${activityCount} πινέζες δραστηριοτήτων`);
 }
 function getCityCoordinates(cityId) {
     const coordinates = {
@@ -2116,7 +2562,16 @@ function showRouteBetweenPoints() {
         alert('Παρακαλώ πρώτα φορτώστε τον χάρτη');
         return;
     }
-    alert('🛣️ Διαδρομή μεταξύ σημείων');
+    
+    // ΕΝΗΜΕΡΩΣΗ: Άνοιξε πληροφορίες διαδρομής αν υπάρχουν σημεία
+    if (selectedPointA && selectedPointB) {
+        // Απλά ανοίγει το popup της διαδρομής
+        if (currentRouteLine) {
+            currentRouteLine.openPopup();
+        }
+    } else {
+        alert('🛣️ Παρακαλώ επιλέξτε δύο σημεία πρώτα\n\n1. Κάντε κλικ σε μια πινέζα (γίνεται πράσινη)\n2. Κάντε κλικ σε άλλη πινέζα (γίνεται κόκκινη)');
+    }
 }
 
 // ==================== HELPER FUNCTIONS ====================
@@ -2505,6 +2960,7 @@ function calculateDistance(point1, point2) {
     return R * c; // Απόσταση σε km
 }
 
+
 // ==================== PROGRAM DAYS UPDATE ====================
 function updateProgramDays() {
     const daysSelect = document.getElementById('program-days');
@@ -2542,7 +2998,281 @@ function updateProgramDays() {
         }
     }
 }
+// ==================== GROUP ACTIVITIES BY PROXIMITY ====================
+function groupActivitiesByProximity(activities, maxDistanceKm = 2) {
+    console.log(`📍 Ομαδοποίηση ${activities.length} δραστηριοτήτων (έως ${maxDistanceKm} km)`);
+    
+    if (!activities || activities.length === 0) {
+        console.log('⚠️ Δεν υπάρχουν δραστηριότητες για ομαδοποίηση');
+        return [];
+    }
+    
+    const groups = [];
+    const processed = new Set();
+    
+    // Φίλτραρε μόνο δραστηριότητες με location
+    const activitiesWithLocation = activities.filter(activity => 
+        activity && activity.location && 
+        activity.location.lat && activity.location.lng
+    );
+    
+    console.log(`📊 ${activitiesWithLocation.length} από ${activities.length} έχουν τοποθεσία`);
+    
+    activitiesWithLocation.forEach((activity, index) => {
+        if (processed.has(index)) return;
+        
+        const group = [activity];
+        processed.add(index);
+        
+        // Βρες όλες τις κοντινές δραστηριότητες
+        activitiesWithLocation.forEach((otherActivity, otherIndex) => {
+            if (processed.has(otherIndex) || index === otherIndex) return;
+            
+            const distance = calculateDistance(
+                [activity.location.lat, activity.location.lng],
+                [otherActivity.location.lat, otherActivity.location.lng]
+            );
+            
+            if (distance <= maxDistanceKm) {
+                group.push(otherActivity);
+                processed.add(otherIndex);
+                console.log(`   🔗 ${activity.name} ↔ ${otherActivity.name}: ${distance.toFixed(2)} km`);
+            }
+        });
+        
+        if (group.length > 0) {
+            groups.push({
+                center: calculateGroupCenter(group),
+                activities: group,
+                count: group.length,
+                radius: maxDistanceKm
+            });
+        }
+    });
+    
+    // Προσθήκη μονών δραστηριοτήτων (χωρίς γειτονιές)
+    activitiesWithLocation.forEach((activity, index) => {
+        if (!processed.has(index)) {
+            groups.push({
+                center: [activity.location.lat, activity.location.lng],
+                activities: [activity],
+                count: 1,
+                radius: 0
+            });
+        }
+    });
+    
+    console.log(`✅ Δημιουργήθηκαν ${groups.length} ομάδες`);
+    
+    // Ταξινόμηση ομάδων (μεγαλύτερες πρώτες)
+    groups.sort((a, b) => b.count - a.count);
+    
+    return groups;
+}
 
+// Βοηθητική συνάρτηση για υπολογισμό κέντρου ομάδας
+function calculateGroupCenter(activities) {
+    if (!activities || activities.length === 0) return null;
+    
+    if (activities.length === 1) {
+        return [activities[0].location.lat, activities[0].location.lng];
+    }
+    
+    let totalLat = 0;
+    let totalLng = 0;
+    
+    activities.forEach(activity => {
+        totalLat += activity.location.lat;
+        totalLng += activity.location.lng;
+    });
+    
+    return [totalLat / activities.length, totalLng / activities.length];
+}
+// Βοηθητική για χρώματα ομάδων
+function getGroupColor(index) {
+    const colors = [
+        '#4F46E5', // Indigo
+        '#10B981', // Emerald
+        '#F59E0B', // Amber
+        '#EF4444', // Red
+        '#8B5CF6', // Violet
+        '#EC4899', // Pink
+        '#14B8A6', // Teal
+        '#F97316'  // Orange
+    ];
+    return colors[index % colors.length];
+}
+// Συνάρτηση για εμφάνιση ομαδοποιημένων δραστηριοτήτων στο χάρτη
+function showGroupedActivitiesOnMap() {
+    if (!window.travelMap) {
+        alert('Παρακαλώ πρώτα φορτώστε τον χάρτη');
+        return;
+    }
+    
+    if (state.selectedActivities.length === 0) {
+        alert('Δεν έχετε επιλέξει καμία δραστηριότητα');
+        return;
+    }
+    
+    // Πάρε τις πλήρεις πληροφορίες για τις επιλεγμένες δραστηριότητες
+    const selectedFullActivities = state.selectedActivities.map(selected => 
+        state.currentCityActivities.find(a => a.id === selected.id)
+    ).filter(a => a !== undefined);
+    
+    // Ομαδοποίησε με βάση την τοποθεσία
+    const groups = groupActivitiesByProximity(selectedFullActivities, 1.5); // 1.5 km radius
+    
+    if (groups.length === 0) {
+        alert('Δεν βρέθηκαν ομάδες δραστηριοτήτων');
+        return;
+    }
+    
+    // Καθαρισμός χάρτη
+    window.travelMap.eachLayer(layer => {
+        if (layer instanceof L.Marker) window.travelMap.removeLayer(layer);
+    });
+    
+    // Προσθήκη κάθε ομάδας στον χάρτη
+    groups.forEach((group, index) => {
+        const color = getGroupColor(index);
+        
+        // Προσθήκη marker για το κέντρο της ομάδας
+        const groupMarker = L.marker(group.center, {
+            icon: L.divIcon({
+                html: `
+                    <div style="
+                        background: ${color}; 
+                        color: white; 
+                        width: 60px; 
+                        height: 60px; 
+                        border-radius: 50%; 
+                        display: flex; 
+                        align-items: center; 
+                        justify-content: center;
+                        font-weight: bold;
+                        font-size: 20px;
+                        border: 3px solid white;
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                        cursor: pointer;
+                    ">
+                        ${group.count}📍
+                    </div>
+                `,
+                iconSize: [60, 60],
+                iconAnchor: [30, 60]
+            })
+        }).addTo(window.travelMap);
+        
+        // Popup για την ομάδα
+        let popupContent = `
+            <div style="max-width: 300px; padding: 10px;">
+                <h4 style="margin: 0 0 10px 0; color: ${color};">
+                    <i class="fas fa-layer-group"></i> Ομάδα ${index + 1}
+                </h4>
+                <p style="margin: 0 0 15px 0; color: #666;">
+                    <strong>${group.count} δραστηριότητες</strong> σε ακτίνα ${group.radius} km
+                </p>
+        `;
+        
+        group.activities.forEach((activity, i) => {
+            popupContent += `
+                <div style="
+                    padding: 8px; 
+                    margin-bottom: 5px; 
+                    background: #f8f9fa; 
+                    border-radius: 6px;
+                    border-left: 3px solid ${color};
+                ">
+                    <strong>${i + 1}. ${activity.name}</strong><br>
+                    <small style="color: #666;">
+                        <i class="fas fa-clock"></i> ${activity.duration_hours || '?'} ώρες • 
+                        <i class="fas fa-tag"></i> ${activity.price || '0'}€
+                    </small>
+                </div>
+            `;
+        });
+        
+        popupContent += `
+                <hr style="margin: 10px 0;">
+                <div style="font-size: 12px; color: #888; text-align: center;">
+                    <i class="fas fa-lightbulb"></i> <strong>Συμβουλή:</strong> Επισκεφτείτε όλες σε μία μέρα!
+                </div>
+            </div>
+        `;
+        
+        groupMarker.bindPopup(popupContent);
+        
+        // Προσθήκη circle για την ακτίνα της ομάδας
+        if (group.radius > 0 && group.count > 1) {
+            L.circle(group.center, {
+                radius: group.radius * 1000, // Μετατροπή σε μέτρα
+                color: color,
+                fillColor: color,
+                fillOpacity: 0.1,
+                weight: 2
+            }).addTo(window.travelMap);
+        }
+        
+        // Προσθήκη markers για κάθε δραστηριότητα της ομάδας
+        group.activities.forEach(activity => {
+            createMarkerWithConnectFunction(
+                [activity.location.lat, activity.location.lng],
+                activity.name,
+                activity
+            );
+        });
+    });
+    
+    // Ενημέρωση χρήστη
+    showToast(`
+        <div style="max-width: 350px; text-align: left;">
+            <strong style="color: #4F46E5;">📍 Ομαδοποιήθηκαν οι δραστηριότητες!</strong><br><br>
+            
+            <div style="background: #F0F9FF; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                <strong>🎯 ${groups.length} ομάδες βρέθηκαν:</strong><br>
+                ${groups.map((g, i) => 
+                    `<div style="display: flex; align-items: center; margin-top: 5px;">
+                        <div style="width: 12px; height: 12px; background: ${getGroupColor(i)}; border-radius: 50%; margin-right: 8px;"></div>
+                        Ομάδα ${i + 1}: <strong>${g.count} δραστηριότητες</strong>
+                    </div>`
+                ).join('')}
+            </div>
+            
+            <div style="background: #E0F2FE; padding: 10px; border-radius: 8px;">
+                <strong>💡 Συμβουλή:</strong><br>
+                Οι δραστηριότητες της ίδιας ομάδας μπορούν να επισκεφτούν σε μία μέρα!
+            </div>
+        </div>
+    `, 'info');
+}
+
+
+// Συνάρτηση για προτάσεις ημερών βάσει ομάδων
+function suggestDaysFromGroups() {
+    const selectedFullActivities = state.selectedActivities.map(selected => 
+        state.currentCityActivities.find(a => a.id === selected.id)
+    ).filter(a => a !== undefined);
+    
+    const groups = groupActivitiesByProximity(selectedFullActivities, 1.5);
+    
+    if (groups.length === 0) return 0;
+    
+    // Υπολόγισε προτεινόμενες μέρες
+    let suggestedDays = groups.length;
+    
+    // Αν υπάρχουν πολλές δραστηριότητες σε μία ομάδα, πρόσθεσε μέρες
+    groups.forEach(group => {
+        if (group.count >= 3) suggestedDays += 1;
+        if (group.count >= 5) suggestedDays += 1;
+    });
+    
+    // Μίνιμουμ 2 μέρες, μέγιστο 7
+    suggestedDays = Math.max(2, Math.min(suggestedDays, 7));
+    
+    console.log(`📅 Προτεινόμενες μέρες από ομαδοποίηση: ${suggestedDays}`);
+    
+    return suggestedDays;
+}
 // ==================== HELPER FUNCTIONS ====================
 function getPriceInfo(prices) {
     if (!prices || typeof prices !== 'object') {
@@ -2704,42 +3434,73 @@ function showToast(message, type = 'info') {
 }
 
 function createMarkerWithConnectFunction(coords, title, activityData) {
-    if (!window.travelMap) return null;
+    if (!window.travelMap) {
+        console.error('❌ Χάρτης δεν είναι διαθέσιμος');
+        return null;
+    }
     
-    // Δημιουργία πινέζας
+    // Βεβαιώσου ότι το activityData έχει τα απαραίτητα πεδία
+    const safeActivityData = {
+        name: title,
+        description: activityData?.description || 'Επιλεγμένη δραστηριότητα',
+        price: activityData?.price || 0,
+        duration_hours: activityData?.duration_hours || '?',
+        category: activityData?.category || 'attraction',
+        location: activityData?.location || { lat: coords[0], lng: coords[1] },
+        restaurant: activityData?.restaurant || '🍽️ Τοπικά εστιατόρια στην περιοχή'
+    };
+    
+    console.log(`📍 Δημιουργία marker για: ${title}`, coords);
+    
+    // Δημιουργία πινέζας με χρώμα που αλλάζει ανάλογα με την κατάσταση
+    const getMarkerColor = () => {
+        if (selectedPointA && selectedPointA.title === title) return '#10B981'; // Πράσινο για Α
+        if (selectedPointB && selectedPointB.title === title) return '#EF4444'; // Κόκκινο για Β
+        return '#4F46E5'; // Μπλε για κανονικό
+    };
+    
+    const getMarkerLetter = () => {
+        if (selectedPointA && selectedPointA.title === title) return 'A';
+        if (selectedPointB && selectedPointB.title === title) return 'B';
+        return '📍';
+    };
+    
     const marker = L.marker(coords, {
         icon: L.divIcon({
             html: `
                 <div style="
-                    background: #4F46E5; 
+                    background: ${getMarkerColor()}; 
                     color: white; 
-                    width: 40px; 
-                    height: 40px; 
+                    width: 42px; 
+                    height: 42px; 
                     border-radius: 50%; 
                     display: flex; 
                     align-items: center; 
                     justify-content: center;
                     font-weight: bold;
-                    font-size: 16px;
+                    font-size: 18px;
                     border: 3px solid white;
-                    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+                    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
                     cursor: pointer;
+                    transition: all 0.3s ease;
                 ">
-                    📍
+                    ${getMarkerLetter()}
                 </div>
             `,
             className: 'clickable-marker',
-            iconSize: [40, 40],
-            iconAnchor: [20, 40]
+            iconSize: [42, 42],
+            iconAnchor: [21, 42]
         })
     }).addTo(window.travelMap);
     
-    // Αποθήκευση δεδομένων για μελλοντική χρήση
-    marker.options.activityData = activityData;
+    // Αποθήκευση δεδομένων
+    marker.options.activityData = safeActivityData;
+    marker.options.originalTitle = title;
+    marker.options.coords = coords;
     
     // Συνάρτηση που καλείται όταν κάνουμε κλικ
     const handleMarkerClick = function(e) {
-        console.log(`📍 Κλικ στο: ${title}`);
+        console.log(`📍 Κλικ στο: ${title}`, e.latlng);
         
         // Αν δεν έχουμε επιλέξει πρώτο σημείο
         if (!selectedPointA) {
@@ -2747,48 +3508,20 @@ function createMarkerWithConnectFunction(coords, title, activityData) {
                 marker: marker,
                 coords: coords,
                 title: title,
-                data: activityData
+                data: safeActivityData,
+                latlng: e.latlng
             };
             
-            // Αλλαγή εμφάνισης του πρώτου σημείου
-            marker.setIcon(L.divIcon({
-                html: `
-                    <div style="
-                        background: #10B981; 
-                        color: white; 
-                        width: 50px; 
-                        height: 50px; 
-                        border-radius: 50%; 
-                        display: flex; 
-                        align-items: center; 
-                        justify-content: center;
-                        font-weight: bold;
-                        font-size: 18px;
-                        border: 3px solid white;
-                        box-shadow: 0 2px 8px rgba(16, 185, 129, 0.5);
-                        cursor: pointer;
-                    ">
-                        Α
-                    </div>
-                `,
-                className: 'selected-marker-a',
-                iconSize: [50, 50],
-                iconAnchor: [25, 50]
-            }));
+            // Ανανέωση εμφάνισης
+            updateMarkerAppearance();
             
-            marker.bindPopup(`
-                <div style="text-align: center; padding: 10px; min-width: 200px;">
-                    <h4 style="margin: 0 0 10px 0; color: #10B981;">📍 ΑΠΟ</h4>
-                    <p style="margin: 0; font-weight: bold;">${title}</p>
-                    <p style="margin: 5px 0 0 0; color: #666; font-size: 12px;">
-                        ✅ Επιλέχθηκε ως σημείο εκκίνησης<br>
-                        Κάντε κλικ σε άλλη πινέζα για επιλογή προορισμού
-                    </p>
+            showToast(`
+                <div style="background: #D1FAE5; padding: 12px; border-radius: 8px; border-left: 4px solid #10B981;">
+                    <strong style="color: #065F46;">✅ Επιλέχθηκε ως σημείο ΑΠΟ:</strong><br>
+                    <span style="font-weight: bold;">${title}</span><br>
+                    <small style="color: #047857;">Κάντε κλικ σε άλλη πινέζα για επιλογή προορισμού</small>
                 </div>
-            `).openPopup();
-            
-            // Ενημέρωση χρήστη
-            showToast(`✅ Επιλέξατε: <strong>${title}</strong> ως σημείο ΑΠΟ<br>Κάντε κλικ σε άλλη πινέζα για ΠΡΟΣ`, 'info');
+            `, 'info');
             
         } 
         // Αν έχουμε ήδη πρώτο σημείο και κάνουμε κλικ σε διαφορετικό
@@ -2797,49 +3530,17 @@ function createMarkerWithConnectFunction(coords, title, activityData) {
                 marker: marker,
                 coords: coords,
                 title: title,
-                data: activityData
+                data: safeActivityData,
+                latlng: e.latlng
             };
             
-            // Αλλαγή εμφάνισης του δεύτερου σημείου
-            marker.setIcon(L.divIcon({
-                html: `
-                    <div style="
-                        background: #EF4444; 
-                        color: white; 
-                        width: 50px; 
-                        height: 50px; 
-                        border-radius: 50%; 
-                        display: flex; 
-                        align-items: center; 
-                        justify-content: center;
-                        font-weight: bold;
-                        font-size: 18px;
-                        border: 3px solid white;
-                        box-shadow: 0 2px 8px rgba(239, 68, 68, 0.5);
-                        cursor: pointer;
-                    ">
-                        Β
-                    </div>
-                `,
-                className: 'selected-marker-b',
-                iconSize: [50, 50],
-                iconAnchor: [25, 50]
-            }));
-            
-            marker.bindPopup(`
-                <div style="text-align: center; padding: 10px; min-width: 200px;">
-                    <h4 style="margin: 0 0 10px 0; color: #EF4444;">🎯 ΠΡΟΣ</h4>
-                    <p style="margin: 0; font-weight: bold;">${title}</p>
-                    <p style="margin: 5px 0 0 0; color: #666; font-size: 12px;">
-                        ✅ Επιλέχθηκε ως προορισμός<br>
-                        Διαδρομή σχεδιάστηκε!
-                    </p>
-                </div>
-            `).openPopup();
+            // Ανανέωση εμφάνισης
+            updateMarkerAppearance();
             
             // Σχεδίαση διαδρομής
-             drawRouteBetweenPoints();
-
+            setTimeout(() => {
+                drawRouteBetweenPoints();
+            }, 300);
             
         } 
         // Αν κάνουμε κλικ στο ίδιο σημείο ξανά
@@ -2852,72 +3553,118 @@ function createMarkerWithConnectFunction(coords, title, activityData) {
         }
         // Αν έχουμε ήδη δύο σημεία και κάνουμε κλικ σε τρίτο
         else if (selectedPointA && selectedPointB) {
-            // Απελευθέρωση του πρώτου και μετατόπιση
-            resetMarkerAppearance(selectedPointA.marker);
-            resetMarkerAppearance(selectedPointB.marker);
-            
-            if (currentRouteLine) {
-                window.travelMap.removeLayer(currentRouteLine);
-                currentRouteLine = null;
-            }
+            // Επαναφορά
+            resetSelection();
             
             // Ξεκινάμε από το αρχικό
             selectedPointA = {
                 marker: marker,
                 coords: coords,
                 title: title,
-                data: activityData
+                data: safeActivityData,
+                latlng: e.latlng
             };
             
-            selectedPointB = null;
+            // Ανανέωση εμφάνισης
+            updateMarkerAppearance();
             
-            marker.setIcon(L.divIcon({
-                html: `
-                    <div style="
-                        background: #10B981; 
-                        color: white; 
-                        width: 50px; 
-                        height: 50px; 
-                        border-radius: 50%; 
-                        display: flex; 
-                        align-items: center; 
-                        justify-content: center;
-                        font-weight: bold;
-                        font-size: 18px;
-                        border: 3px solid white;
-                        box-shadow: 0 2px 8px rgba(16, 185, 129, 0.5);
-                        cursor: pointer;
-                    ">
-                        Α
-                    </div>
-                `,
-                className: 'selected-marker-a',
-                iconSize: [50, 50],
-                iconAnchor: [25, 50]
-            }));
-            
-            marker.bindPopup(`
-                <div style="text-align: center; padding: 10px; min-width: 200px;">
-                    <h4 style="margin: 0 0 10px 0; color: #10B981;">📍 ΑΠΟ</h4>
-                    <p style="margin: 0; font-weight: bold;">${title}</p>
-                    <p style="margin: 5px 0 0 0; color: #666; font-size: 12px;">
-                        ✅ Επιλέχθηκε ως σημείο εκκίνησης<br>
-                        Κάντε κλικ σε άλλη πινέζα για επιλογή προορισμού
-                    </p>
+            showToast(`
+                <div style="background: #FEF3C7; padding: 12px; border-radius: 8px; border-left: 4px solid #F59E0B;">
+                    <strong style="color: #92400E;">🔄 Νέα επιλογή:</strong><br>
+                    <span style="font-weight: bold;">${title}</span> ως νέο σημείο ΑΠΟ<br>
+                    <small style="color: #B45309;">Κάντε κλικ σε άλλη πινέζα για προορισμό</small>
                 </div>
-            `).openPopup();
-            
-            showToast(`🔄 Επαναφορά επιλογών. Επιλέξατε: <strong>${title}</strong> ως νέο σημείο ΑΠΟ`, 'info');
+            `, 'info');
         }
     };
+    
+    // Συνάρτηση ανανέωσης εμφάνισης
+    function updateMarkerAppearance() {
+        const isPointA = selectedPointA && selectedPointA.marker === marker;
+        const isPointB = selectedPointB && selectedPointB.marker === marker;
+        
+        const color = isPointA ? '#10B981' : isPointB ? '#EF4444' : '#4F46E5';
+        const letter = isPointA ? 'A' : isPointB ? 'B' : '📍';
+        const size = isPointA || isPointB ? '50px' : '42px';
+        const fontSize = isPointA || isPointB ? '20px' : '18px';
+        
+        marker.setIcon(L.divIcon({
+            html: `
+                <div style="
+                    background: ${color}; 
+                    color: white; 
+                    width: ${size}; 
+                    height: ${size}; 
+                    border-radius: 50%; 
+                    display: flex; 
+                    align-items: center; 
+                    justify-content: center;
+                    font-weight: bold;
+                    font-size: ${fontSize};
+                    border: 3px solid white;
+                    box-shadow: 0 3px 15px ${color}80;
+                    cursor: pointer;
+                    animation: ${isPointA || isPointB ? 'pulse 1.5s infinite' : 'none'};
+                ">
+                    ${letter}
+                </div>
+            `,
+            className: isPointA ? 'selected-marker-a' : isPointB ? 'selected-marker-b' : 'clickable-marker',
+            iconSize: [parseInt(size), parseInt(size)],
+            iconAnchor: [parseInt(size)/2, parseInt(size)]
+        }));
+        
+        // Ενημέρωση popup
+        const popupContent = isPointA ? 
+            `<div style="text-align: center; padding: 10px;">
+                <h4 style="margin: 0 0 10px 0; color: #10B981;">📍 ΑΠΟ</h4>
+                <p style="margin: 0; font-weight: bold;">${title}</p>
+                <p style="margin: 5px 0 0 0; color: #666; font-size: 12px;">
+                    ✅ Επιλέχθηκε ως σημείο εκκίνησης
+                </p>
+            </div>` :
+            isPointB ?
+            `<div style="text-align: center; padding: 10px;">
+                <h4 style="margin: 0 0 10px 0; color: #EF4444;">🎯 ΠΡΟΣ</h4>
+                <p style="margin: 0; font-weight: bold;">${title}</p>
+                <p style="margin: 5px 0 0 0; color: #666; font-size: 12px;">
+                    ✅ Επιλέχθηκε ως προορισμός
+                </p>
+            </div>` :
+            createEnhancedPopup(safeActivityData);
+        
+        marker.bindPopup(popupContent);
+        
+        if (isPointA || isPointB) {
+            marker.openPopup();
+        }
+    }
     
     // Επισύναψη event listener
     marker.on('click', handleMarkerClick);
     
     // Αρχικό popup
-    marker.bindPopup(createEnhancedPopup(activityData));
+    marker.bindPopup(createEnhancedPopup(safeActivityData));
     
     return marker;
+}
+
+// Βοηθητική συνάρτηση για επαναφορά επιλογών
+function resetSelection() {
+    if (selectedPointA && selectedPointA.marker) {
+        resetMarkerAppearance(selectedPointA.marker);
+    }
+    if (selectedPointB && selectedPointB.marker) {
+        resetMarkerAppearance(selectedPointB.marker);
+    }
+    
+    if (currentRouteLine) {
+        window.travelMap.removeLayer(currentRouteLine);
+        currentRouteLine = null;
+    }
+    
+    selectedPointA = null;
+    selectedPointB = null;
 }
 
 function drawRouteBetweenPoints() {
@@ -3130,6 +3877,7 @@ function resetMarkerAppearance(marker) {
 addConnectStyles();
 
 // ==================== WINDOW FUNCTIONS ====================
+// ==================== WINDOW FUNCTIONS ====================
 window.showStep = showStep;
 window.filterDestinations = filterDestinations;
 window.resetFilters = resetFilters;
@@ -3161,16 +3909,26 @@ window.updateFamilyMembers = updateFamilyMembers;
 window.calculateSmartCombos = calculateSmartCombos;
 window.clearSelectedActivities = clearSelectedActivities;
 window.updateProgramDays = updateProgramDays;
-window.groupActivitiesByProximity = groupActivitiesByProximity;
-window.calculateDistance = calculateDistance;  // ΚΡΑΤΑ ΑΥΤΟ! ΧΡΕΙΑΖΕΤΑΙ
+window.groupActivitiesByProximity = groupActivitiesByProximity; 
+window.showGroupedActivitiesOnMap = showGroupedActivitiesOnMap;
+window.suggestDaysFromGroups = suggestDaysFromGroups;
+window.calculateDistance = calculateDistance;
 window.translateCategory = translateCategory;
 window.createEnhancedPopup = createEnhancedPopup;
 window.getPriceForAge = getPriceForAge;
 
-// ========== ΝΕΑ ΠΟΥ ΠΡΕΠΕΙ ΝΑ ΠΡΟΣΘΕΣΕΙΣ ==========
+// ========== ΝΕΕΣ ΣΥΝΑΡΤΗΣΕΙΣ ΧΑΡΤΗ ==========
 window.createMarkerWithConnectFunction = createMarkerWithConnectFunction;
 window.drawRouteBetweenPoints = drawRouteBetweenPoints;
 window.showToast = showToast;
 window.resetMarkerAppearance = resetMarkerAppearance;
+window.resetSelection = resetSelection;
+
+// ========== ΕΠΙΠΛΕΟΝ ΠΟΥ ΜΠΟΡΕΙ ΝΑ ΧΡΕΙΑΖΟΝΤΑΙ ==========
+window.getCityCoordinates = getCityCoordinates;  // ΚΡΙΤΙΚΗ! Χρειάζεται για τον χάρτη
+window.getActivityEmoji = getActivityEmoji;      // Για τις κάρτες δραστηριοτήτων
+window.calculateFamilyCost = calculateFamilyCost; // Για υπολογισμούς τιμών
+window.updateActivitiesTotal = updateActivitiesTotal; // Για ενημέρωση κόστους
+window.saveState = saveState; // Για αποθήκευση
 
 console.log('✅ Script.js loaded successfully!');
