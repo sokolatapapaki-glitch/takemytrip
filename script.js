@@ -898,7 +898,7 @@ function closeManualDestinationModal() {
 function saveManualDestination() {
     const citySelect = document.getElementById('manual-city-select');
     const days = document.getElementById('manual-days').value;
-    const budget = document.getElementById('manual-budget').value;
+    
     
     if (!citySelect.value) {
         alert('⚠️ Παρακαλώ επιλέξτε πόλη από τη λίστα');
@@ -927,8 +927,7 @@ function saveManualDestination() {
     state.selectedDestination = cityName;
     state.selectedDestinationId = cityId;
     state.selectedDays = parseInt(days) || 5;
-    state.selectedBudget = parseInt(budget) || 0;
-    
+        
     document.getElementById('current-destination-display').textContent = cityName;
     updateActivitiesCost();
     
@@ -2347,18 +2346,7 @@ function createDestinationDropdown() {
             <input type="number" class="form-control" id="manual-days" min="1" max="30" value="5"
                    style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px;">
         </div>
-        
-        <div class="form-group" style="margin-bottom: 25px;">
-            <label class="form-label" style="display: block; margin-bottom: 8px; color: #1A202C; font-weight: 500;">
-                Προϋπολογισμός (προαιρετικό)
-            </label>
-            <input type="number" class="form-control" id="manual-budget" placeholder="π.χ. 1500"
-                   style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px;">
-            <small style="display: block; margin-top: 6px; color: #666; font-size: 13px;">
-                Συνολικό ποσό για το ταξίδι
-            </small>
-        </div>
-        
+               
         <div id="city-info-container" style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4F46E5;">
             <h4 style="color: #4F46E5; margin: 0 0 10px 0; font-size: 16px;">
                 <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
