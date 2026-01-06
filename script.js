@@ -1568,14 +1568,14 @@ async function filterDestinations() {
             strollerFriendly: false
         },
         { 
-            id: 'london', name: 'Λονδίνο', emoji: '🇬🇧',
+            id: 'london', name: 'Λονδίνο', emoji: '🎡',
             hasJSON: true, distance: 3.8, cost: 'Ακριβό',
             country: 'ΗΒ', vacationType: 'Πόλη',
             themeParks: ['has-parks'], familyScore: 9, hasDisney: false,
             strollerFriendly: false
         },
         { 
-            id: 'berlin', name: 'Βερολίνο', emoji: '🇩🇪',
+            id: 'berlin', name: 'Βερολίνο', emoji: '🧱',
             hasJSON: true, distance: 2.5, cost: 'Μέτριο',
             country: 'Γερμανία', vacationType: 'Πόλη',
             themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
@@ -1807,7 +1807,7 @@ async function filterDestinations() {
                     <div style="margin: 10px 0; padding: 8px; background: #f0f9ff; border-radius: 6px; font-size: 13px;">
                         <i class="fas fa-ferris-wheel"></i>
                         ${city.hasDisney ? '👑 Disneyland' : 
-                          city.themeParks.includes('has-parks') ? '🎡 Με θεματικό πάρκο' : '🏙️ Χωρίς μεγάλο πάρκο'}
+                          city.themeParks.includes('has-parks') ? '🎡 Με θεματικό πάρκο' : '🏙️ Χωρίς θεματικό πάρκο'}
                     </div>
                     
                     <div class="destination-status">
