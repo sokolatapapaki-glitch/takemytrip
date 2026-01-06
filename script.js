@@ -2838,7 +2838,8 @@ function createMarkerWithConnectFunction(coords, title, activityData) {
             `).openPopup();
             
             // Σχεδίαση διαδρομής
-            ();
+             drawRouteBetweenPoints();
+
             
         } 
         // Αν κάνουμε κλικ στο ίδιο σημείο ξανά
