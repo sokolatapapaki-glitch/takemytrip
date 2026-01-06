@@ -311,15 +311,6 @@ function getDestinationStepHTML() {
                     <small class="text-muted">Από Αθήνα</small>
                 </div>
                 
-                <div class="form-group">
-                    <label class="form-label"><i class="fas fa-cloud-sun"></i> Καιρός</label>
-                    <select class="form-control" id="weather">
-                        <option value="">Όλοι οι καιροί</option>
-                        <option value="Ζεστό">☀️ Πιο ζεστό από Ελλάδα</option>
-                        <option value="Ίδιο">🌡️ Ίδια Θερμοκρασία</option>
-                        <option value="Κρύο">⛄ Πιο κρύο</option>
-                    </select>
-                </div>
             </div>
             
             <div class="grid grid-3">
@@ -965,7 +956,6 @@ async function filterDestinations() {
     
     // Διαβάζουμε ΟΛΑ τα φίλτρα (το νέο και τα παλιά)
     const distance = document.getElementById('distance').value;
-    const weather = document.getElementById('weather').value;
     const vacationType = document.getElementById('vacation-type').value;
     const costLevel = document.getElementById('cost-level').value;
     const themeParks = document.getElementById('theme-parks').value;
@@ -980,160 +970,159 @@ async function filterDestinations() {
 const allCities = [
     { 
         id: 'amsterdam', name: 'Άμστερνταμ', emoji: '🌷',
-        hasJSON: true, distance: 3.5, weather: 'Κρύο', cost: 'Ακριβό',
+        hasJSON: true, distance: 3.5, cost: 'Ακριβό',
         country: 'Ολλανδία', vacationType: 'Πόλη',
         themeParks: ['has-parks'], familyScore: 9, hasDisney: false,
-        strollerFriendly: true // ✅ Στη λίστα σου
+        strollerFriendly: true
     },
     { 
         id: 'paris', name: 'Παρίσι', emoji: '🗼', 
-        hasJSON: true, distance: 3.0, weather: 'Κρύο', cost: 'Ακριβό',
+        hasJSON: true, distance: 3.0, cost: 'Ακριβό',
         country: 'Γαλλία', vacationType: 'Πολιτισμός',
         themeParks: ['disney', 'has-parks'], familyScore: 10, hasDisney: true,
-        strollerFriendly: false // Όχι στη λίστα
+        strollerFriendly: false
     },
     { 
         id: 'london', name: 'Λονδίνο', emoji: '🇬🇧',
-        hasJSON: true, distance: 3.8, weather: 'Κρύο', cost: 'Ακριβό',
+        hasJSON: true, distance: 3.8, cost: 'Ακριβό',
         country: 'ΗΒ', vacationType: 'Πόλη',
         themeParks: ['has-parks'], familyScore: 9, hasDisney: false,
         strollerFriendly: false
     },
     { 
         id: 'berlin', name: 'Βερολίνο', emoji: '🇩🇪',
-        hasJSON: true, distance: 2.5, weather: 'Κρύο', cost: 'Μέτριο',
+        hasJSON: true, distance: 2.5, cost: 'Μέτριο',
         country: 'Γερμανία', vacationType: 'Πόλη',
         themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
-        strollerFriendly: true // ✅ Στη λίστα σου
+        strollerFriendly: true
     },
     { 
         id: 'prague', name: 'Πράγα', emoji: '🏰',
-        hasJSON: true, distance: 2.2, weather: 'Κρύο', cost: 'Οικονομικό',
+        hasJSON: true, distance: 2.2, cost: 'Οικονομικό',
         country: 'Τσεχία', vacationType: 'Πολιτισμός',
         themeParks: [], familyScore: 7, hasDisney: false,
         strollerFriendly: false
     },
     { 
         id: 'budapest', name: 'Βουδαπέστη', emoji: '♨️',
-        hasJSON: true, distance: 2.0, weather: 'Κρύο', cost: 'Οικονομικό',
+        hasJSON: true, distance: 2.0, cost: 'Οικονομικό',
         country: 'Ουγγαρία', vacationType: 'Πόλη',
         themeParks: [], familyScore: 6, hasDisney: false,
-        strollerFriendly: true // ✅ Στη λίστα σου
+        strollerFriendly: true
     },
     { 
         id: 'vienna', name: 'Βιέννη', emoji: '🎻',
-        hasJSON: true, distance: 2.3, weather: 'Κρύο', cost: 'Μέτριο',
+        hasJSON: true, distance: 2.3, cost: 'Μέτριο',
         country: 'Αυστρία', vacationType: 'Πολιτισμός',
         themeParks: [], familyScore: 7, hasDisney: false,
-        strollerFriendly: true // ✅ Στη λίστα σου
+        strollerFriendly: true
     },
     { 
         id: 'rome', name: 'Ρώμη', emoji: '🏛️',
-        hasJSON: false, distance: 2.5, weather: 'Ίδιο', cost: 'Μέτριο',
+        hasJSON: false, distance: 2.5, cost: 'Μέτριο',
         country: 'Ιταλία', vacationType: 'Πολιτισμός',
         themeParks: [], familyScore: 5, hasDisney: false,
         strollerFriendly: false
     },
     { 
         id: 'barcelona', name: 'Βαρκελώνη', emoji: '🏖️',
-        hasJSON: false, distance: 3.0, weather: 'Ζεστό', cost: 'Μέτριο',
+        hasJSON: false, distance: 3.0, cost: 'Μέτριο',
         country: 'Ισπανία', vacationType: 'Θάλασσα',
         themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
         strollerFriendly: false
     },
     { 
         id: 'madrid', name: 'Μαδρίτη', emoji: '🐂',
-        hasJSON: true, distance: 3.2, weather: 'Ζεστό', cost: 'Μέτριο',
+        hasJSON: true, distance: 3.2, cost: 'Μέτριο',
         country: 'Ισπανία', vacationType: 'Πόλη',
         themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
         strollerFriendly: false
     },
     { 
         id: 'lisbon', name: 'Λισαβόνα', emoji: '🌊',
-        hasJSON: true, distance: 4.0, weather: 'Ζεστό', cost: 'Οικονομικό',
+        hasJSON: true, distance: 4.0, cost: 'Οικονομικό',
         country: 'Πορτογαλία', vacationType: 'Θάλασσα',
         themeParks: [], familyScore: 6, hasDisney: false,
         strollerFriendly: false
     },
     { 
         id: 'istanbul', name: 'Κωνσταντινούπολη', emoji: '🕌',
-        hasJSON: true, distance: 1.5, weather: 'Ίδιο', cost: 'Οικονομικό',
+        hasJSON: true, distance: 1.5, cost: 'Οικονομικό',
         country: 'Τουρκία', vacationType: 'Πολιτισμός',
         themeParks: [], familyScore: 7, hasDisney: false,
         strollerFriendly: false
     },
     { 
         id: 'brussels', name: 'Βρυξέλλες', emoji: '🍫',
-        hasJSON: false, distance: 3.0, weather: 'Κρύο', cost: 'Μέτριο',
+        hasJSON: false, distance: 3.0, cost: 'Μέτριο',
         country: 'Βέλγιο', vacationType: 'Πόλη',
         themeParks: [], familyScore: 5, hasDisney: false,
         strollerFriendly: false
     },
     { 
         id: 'copenhagen', name: 'Κοπεγχάγη', emoji: '🧜‍♀️',
-        hasJSON: false, distance: 3.5, weather: 'Κρύο', cost: 'Ακριβό',
+        hasJSON: false, distance: 3.5, cost: 'Ακριβό',
         country: 'Δανία', vacationType: 'Πόλη',
         themeParks: ['has-parks'], familyScore: 9, hasDisney: false,
-        strollerFriendly: true // ✅ Στη λίστα σου
+        strollerFriendly: true
     },
     { 
         id: 'dublin', name: 'Δουβλίνο', emoji: '🍀',
-        hasJSON: false, distance: 4.0, weather: 'Κρύο', cost: 'Ακριβό',
+        hasJSON: false, distance: 4.0, cost: 'Ακριβό',
         country: 'Ιρλανδία', vacationType: 'Πόλη',
         themeParks: [], familyScore: 5, hasDisney: false,
-        strollerFriendly: true // ✅ Στη λίστα σου
+        strollerFriendly: true
     },
     { 
         id: 'edinburgh', name: 'Εδιμβούργο', emoji: '🏰',
-        hasJSON: false, distance: 4.0, weather: 'Κρύο', cost: 'Ακριβό',
+        hasJSON: false, distance: 4.0, cost: 'Ακριβό',
         country: 'Σκωτία', vacationType: 'Πολιτισμός',
         themeParks: [], familyScore: 5, hasDisney: false,
         strollerFriendly: false
     },
     { 
         id: 'florence', name: 'Φλωρεντία', emoji: '🎨',
-        hasJSON: false, distance: 2.3, weather: 'Ζεστό', cost: 'Μέτριο',
+        hasJSON: false, distance: 2.3, cost: 'Μέτριο',
         country: 'Ιταλία', vacationType: 'Πολιτισμός',
         themeParks: [], familyScore: 4, hasDisney: false,
         strollerFriendly: false
     },
     { 
         id: 'munich', name: 'Μόναχο', emoji: '🍺',
-        hasJSON: false, distance: 2.2, weather: 'Κρύο', cost: 'Μέτριο',
+        hasJSON: false, distance: 2.2, cost: 'Μέτριο',
         country: 'Γερμανία', vacationType: 'Πόλη',
         themeParks: [], familyScore: 5, hasDisney: false,
-        strollerFriendly: true // ✅ Στη λίστα σου
+        strollerFriendly: true
     },
     { 
         id: 'venice', name: 'Βενετία', emoji: '🛶',
-        hasJSON: false, distance: 2.0, weather: 'Ζεστό', cost: 'Ακριβό',
+        hasJSON: false, distance: 2.0, cost: 'Ακριβό',
         country: 'Ιταλία', vacationType: 'Πόλη',
         themeParks: [], familyScore: 4, hasDisney: false,
         strollerFriendly: false
     },
     { 
         id: 'warsaw', name: 'Βαρσοβία', emoji: '🦅',
-        hasJSON: false, distance: 2.5, weather: 'Κρύο', cost: 'Οικονομικό',
+        hasJSON: false, distance: 2.5, cost: 'Οικονομικό',
         country: 'Πολωνία', vacationType: 'Πόλη',
         themeParks: [], familyScore: 5, hasDisney: false,
-        strollerFriendly: true // ✅ Στη λίστα σου
+        strollerFriendly: true
     },
     { 
         id: 'krakow', name: 'Κρακοβία', emoji: '🐉',
-        hasJSON: false, distance: 2.0, weather: 'Κρύο', cost: 'Οικονομικό',
+        hasJSON: false, distance: 2.0, cost: 'Οικονομικό',
         country: 'Πολωνία', vacationType: 'Πολιτισμός',
         themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
-        strollerFriendly: false // Όχι στη λίστα
+        strollerFriendly: false
     },
     { 
         id: 'zurich', name: 'Ζυρίχη', emoji: '🏔️',
-        hasJSON: false, distance: 2.5, weather: 'Κρύο', cost: 'Ακριβό',
+        hasJSON: false, distance: 2.5, cost: 'Ακριβό',
         country: 'Ελβετία', vacationType: 'Βουνό',
         themeParks: [], familyScore: 5, hasDisney: false,
-        strollerFriendly: true // ✅ Στη λίστα σου
+        strollerFriendly: true
     }
 ];
-    
     // 🎯 ΛΟΓΙΚΗ ΦΙΛΤΡΑΡΙΣΜΑΤΟΥ
     const filteredCities = allCities.filter(city => {
         // 1. Φίλτρο απόστασης
@@ -1141,11 +1130,7 @@ const allCities = [
             return false;
         }
         
-        // 2. Φίλτρο καιρού
-        if (weather && city.weather !== weather) {
-            return false;
-        }
-        
+              
         // 3. Φίλτρο κόστους
         if (costLevel && city.cost !== costLevel) {
             return false;
