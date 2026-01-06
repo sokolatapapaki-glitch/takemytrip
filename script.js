@@ -319,7 +319,7 @@ function getDestinationStepHTML() {
                     <select class="form-control" id="vacation-type">
                         <option value="">Όλοι οι τύποι</option>
                         <option value="Πολιτισμός">🏛️ Πολιτισμός & Μουσεία</option>
-                        <option value="Θάλασσα">🏖️ Θαλάσσια & Παραλίες</option>
+                        <option value="Θάλασσα">🏖️ Θάλασσα & Παραλίες</option>
                         <option value="Βουνό">🏔️ Βουνό & Χιονοδρομικά</option>
                         <option value="Φυσική">🌳 Φυσική Ομορφία</option>
                     </select>
