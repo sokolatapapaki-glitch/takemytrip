@@ -782,7 +782,7 @@ function getSummaryStepHTML() {
                 <div class="card" id="daily-program-section" style="margin-top: 30px;">
                     <h3><i class="fas fa-calendar-day"></i> Ημερήσιο Πρόγραμμα</h3>
                     
-                    <!-- ΕΔΩ ΘΑ ΕΜΦΑΝΙΣΤΕΙ ΤΟ ΠΡΟΓΡΑΜΜΑ ΑΠΟ ΤΟ ΠΑΛΙΟ -->
+                    <!-- ΕΔΩ ΘΑ ΕΜΦΑΝΙΣΤΕΙ ΤΟ ΠΡΟΓΡΑΜΜΑ -->
                     <div id="daily-program" class="summary-content" 
                          style="min-height: 150px; padding: 20px; border-radius: 15px; background: #e0fff0; border: 2px dashed #3eb489;">
                         <p style="text-align: center; color: var(--gray);">
@@ -790,7 +790,7 @@ function getSummaryStepHTML() {
                         </p>
                     </div>
                     
-                    <!-- ΚΟΥΜΠΙ ΟΠΩΣ ΣΤΟ ΠΑΛΙΟ -->
+                    <!-- ΚΟΥΜΠΙ -->
                     <div class="step-5-btn-container" style="text-align: center; margin-top: 30px;">
                         <button class="step-5-btn" onclick="showStep('map')" 
                                 style="padding: 18px 40px; font-size: 20px; border-radius: 16px; 
@@ -963,166 +963,167 @@ async function filterDestinations() {
     const strollerFilter = document.getElementById('stroller-friendly-filter').value;
     
     console.log('🎯 Εφαρμογή φίλτρων:', {
-        distance, weather, vacationType, costLevel, themeParks, strollerFilter
+        distance, vacationType, costLevel, themeParks, strollerFilter
     });
     
     // 📊 ΟΛΟΚΛΗΡΩΜΕΝΟΣ ΠΙΝΑΚΑΣ ΠΟΛΕΩΝ (22 πόλεις με το νέο πεδίο strollerFriendly)
-const allCities = [
-    { 
-        id: 'amsterdam', name: 'Άμστερνταμ', emoji: '🌷',
-        hasJSON: true, distance: 3.5, cost: 'Ακριβό',
-        country: 'Ολλανδία', vacationType: 'Πόλη',
-        themeParks: ['has-parks'], familyScore: 9, hasDisney: false,
-        strollerFriendly: true
-    },
-    { 
-        id: 'paris', name: 'Παρίσι', emoji: '🗼', 
-        hasJSON: true, distance: 3.0, cost: 'Ακριβό',
-        country: 'Γαλλία', vacationType: 'Πολιτισμός',
-        themeParks: ['disney', 'has-parks'], familyScore: 10, hasDisney: true,
-        strollerFriendly: false
-    },
-    { 
-        id: 'london', name: 'Λονδίνο', emoji: '🇬🇧',
-        hasJSON: true, distance: 3.8, cost: 'Ακριβό',
-        country: 'ΗΒ', vacationType: 'Πόλη',
-        themeParks: ['has-parks'], familyScore: 9, hasDisney: false,
-        strollerFriendly: false
-    },
-    { 
-        id: 'berlin', name: 'Βερολίνο', emoji: '🇩🇪',
-        hasJSON: true, distance: 2.5, cost: 'Μέτριο',
-        country: 'Γερμανία', vacationType: 'Πόλη',
-        themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
-        strollerFriendly: true
-    },
-    { 
-        id: 'prague', name: 'Πράγα', emoji: '🏰',
-        hasJSON: true, distance: 2.2, cost: 'Οικονομικό',
-        country: 'Τσεχία', vacationType: 'Πολιτισμός',
-        themeParks: [], familyScore: 7, hasDisney: false,
-        strollerFriendly: false
-    },
-    { 
-        id: 'budapest', name: 'Βουδαπέστη', emoji: '♨️',
-        hasJSON: true, distance: 2.0, cost: 'Οικονομικό',
-        country: 'Ουγγαρία', vacationType: 'Πόλη',
-        themeParks: [], familyScore: 6, hasDisney: false,
-        strollerFriendly: true
-    },
-    { 
-        id: 'vienna', name: 'Βιέννη', emoji: '🎻',
-        hasJSON: true, distance: 2.3, cost: 'Μέτριο',
-        country: 'Αυστρία', vacationType: 'Πολιτισμός',
-        themeParks: [], familyScore: 7, hasDisney: false,
-        strollerFriendly: true
-    },
-    { 
-        id: 'rome', name: 'Ρώμη', emoji: '🏛️',
-        hasJSON: false, distance: 2.5, cost: 'Μέτριο',
-        country: 'Ιταλία', vacationType: 'Πολιτισμός',
-        themeParks: [], familyScore: 5, hasDisney: false,
-        strollerFriendly: false
-    },
-    { 
-        id: 'barcelona', name: 'Βαρκελώνη', emoji: '🏖️',
-        hasJSON: false, distance: 3.0, cost: 'Μέτριο',
-        country: 'Ισπανία', vacationType: 'Θάλασσα',
-        themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
-        strollerFriendly: false
-    },
-    { 
-        id: 'madrid', name: 'Μαδρίτη', emoji: '🐂',
-        hasJSON: true, distance: 3.2, cost: 'Μέτριο',
-        country: 'Ισπανία', vacationType: 'Πόλη',
-        themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
-        strollerFriendly: false
-    },
-    { 
-        id: 'lisbon', name: 'Λισαβόνα', emoji: '🌊',
-        hasJSON: true, distance: 4.0, cost: 'Οικονομικό',
-        country: 'Πορτογαλία', vacationType: 'Θάλασσα',
-        themeParks: [], familyScore: 6, hasDisney: false,
-        strollerFriendly: false
-    },
-    { 
-        id: 'istanbul', name: 'Κωνσταντινούπολη', emoji: '🕌',
-        hasJSON: true, distance: 1.5, cost: 'Οικονομικό',
-        country: 'Τουρκία', vacationType: 'Πολιτισμός',
-        themeParks: [], familyScore: 7, hasDisney: false,
-        strollerFriendly: false
-    },
-    { 
-        id: 'brussels', name: 'Βρυξέλλες', emoji: '🍫',
-        hasJSON: false, distance: 3.0, cost: 'Μέτριο',
-        country: 'Βέλγιο', vacationType: 'Πόλη',
-        themeParks: [], familyScore: 5, hasDisney: false,
-        strollerFriendly: false
-    },
-    { 
-        id: 'copenhagen', name: 'Κοπεγχάγη', emoji: '🧜‍♀️',
-        hasJSON: false, distance: 3.5, cost: 'Ακριβό',
-        country: 'Δανία', vacationType: 'Πόλη',
-        themeParks: ['has-parks'], familyScore: 9, hasDisney: false,
-        strollerFriendly: true
-    },
-    { 
-        id: 'dublin', name: 'Δουβλίνο', emoji: '🍀',
-        hasJSON: false, distance: 4.0, cost: 'Ακριβό',
-        country: 'Ιρλανδία', vacationType: 'Πόλη',
-        themeParks: [], familyScore: 5, hasDisney: false,
-        strollerFriendly: true
-    },
-    { 
-        id: 'edinburgh', name: 'Εδιμβούργο', emoji: '🏰',
-        hasJSON: false, distance: 4.0, cost: 'Ακριβό',
-        country: 'Σκωτία', vacationType: 'Πολιτισμός',
-        themeParks: [], familyScore: 5, hasDisney: false,
-        strollerFriendly: false
-    },
-    { 
-        id: 'florence', name: 'Φλωρεντία', emoji: '🎨',
-        hasJSON: false, distance: 2.3, cost: 'Μέτριο',
-        country: 'Ιταλία', vacationType: 'Πολιτισμός',
-        themeParks: [], familyScore: 4, hasDisney: false,
-        strollerFriendly: false
-    },
-    { 
-        id: 'munich', name: 'Μόναχο', emoji: '🍺',
-        hasJSON: false, distance: 2.2, cost: 'Μέτριο',
-        country: 'Γερμανία', vacationType: 'Πόλη',
-        themeParks: [], familyScore: 5, hasDisney: false,
-        strollerFriendly: true
-    },
-    { 
-        id: 'venice', name: 'Βενετία', emoji: '🛶',
-        hasJSON: false, distance: 2.0, cost: 'Ακριβό',
-        country: 'Ιταλία', vacationType: 'Πόλη',
-        themeParks: [], familyScore: 4, hasDisney: false,
-        strollerFriendly: false
-    },
-    { 
-        id: 'warsaw', name: 'Βαρσοβία', emoji: '🦅',
-        hasJSON: false, distance: 2.5, cost: 'Οικονομικό',
-        country: 'Πολωνία', vacationType: 'Πόλη',
-        themeParks: [], familyScore: 5, hasDisney: false,
-        strollerFriendly: true
-    },
-    { 
-        id: 'krakow', name: 'Κρακοβία', emoji: '🐉',
-        hasJSON: false, distance: 2.0, cost: 'Οικονομικό',
-        country: 'Πολωνία', vacationType: 'Πολιτισμός',
-        themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
-        strollerFriendly: false
-    },
-    { 
-        id: 'zurich', name: 'Ζυρίχη', emoji: '🏔️',
-        hasJSON: false, distance: 2.5, cost: 'Ακριβό',
-        country: 'Ελβετία', vacationType: 'Βουνό',
-        themeParks: [], familyScore: 5, hasDisney: false,
-        strollerFriendly: true
-    }
-];
+    const allCities = [
+        { 
+            id: 'amsterdam', name: 'Άμστερνταμ', emoji: '🌷',
+            hasJSON: true, distance: 3.5, cost: 'Ακριβό',
+            country: 'Ολλανδία', vacationType: 'Πόλη',
+            themeParks: ['has-parks'], familyScore: 9, hasDisney: false,
+            strollerFriendly: true
+        },
+        { 
+            id: 'paris', name: 'Παρίσι', emoji: '🗼', 
+            hasJSON: true, distance: 3.0, cost: 'Ακριβό',
+            country: 'Γαλλία', vacationType: 'Πολιτισμός',
+            themeParks: ['disney', 'has-parks'], familyScore: 10, hasDisney: true,
+            strollerFriendly: false
+        },
+        { 
+            id: 'london', name: 'Λονδίνο', emoji: '🇬🇧',
+            hasJSON: true, distance: 3.8, cost: 'Ακριβό',
+            country: 'ΗΒ', vacationType: 'Πόλη',
+            themeParks: ['has-parks'], familyScore: 9, hasDisney: false,
+            strollerFriendly: false
+        },
+        { 
+            id: 'berlin', name: 'Βερολίνο', emoji: '🇩🇪',
+            hasJSON: true, distance: 2.5, cost: 'Μέτριο',
+            country: 'Γερμανία', vacationType: 'Πόλη',
+            themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
+            strollerFriendly: true
+        },
+        { 
+            id: 'prague', name: 'Πράγα', emoji: '🏰',
+            hasJSON: true, distance: 2.2, cost: 'Οικονομικό',
+            country: 'Τσεχία', vacationType: 'Πολιτισμός',
+            themeParks: [], familyScore: 7, hasDisney: false,
+            strollerFriendly: false
+        },
+        { 
+            id: 'budapest', name: 'Βουδαπέστη', emoji: '♨️',
+            hasJSON: true, distance: 2.0, cost: 'Οικονομικό',
+            country: 'Ουγγαρία', vacationType: 'Πόλη',
+            themeParks: [], familyScore: 6, hasDisney: false,
+            strollerFriendly: true
+        },
+        { 
+            id: 'vienna', name: 'Βιέννη', emoji: '🎻',
+            hasJSON: true, distance: 2.3, cost: 'Μέτριο',
+            country: 'Αυστρία', vacationType: 'Πολιτισμός',
+            themeParks: [], familyScore: 7, hasDisney: false,
+            strollerFriendly: true
+        },
+        { 
+            id: 'rome', name: 'Ρώμη', emoji: '🏛️',
+            hasJSON: false, distance: 2.5, cost: 'Μέτριο',
+            country: 'Ιταλία', vacationType: 'Πολιτισμός',
+            themeParks: [], familyScore: 5, hasDisney: false,
+            strollerFriendly: false
+        },
+        { 
+            id: 'barcelona', name: 'Βαρκελώνη', emoji: '🏖️',
+            hasJSON: false, distance: 3.0, cost: 'Μέτριο',
+            country: 'Ισπανία', vacationType: 'Θάλασσα',
+            themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
+            strollerFriendly: false
+        },
+        { 
+            id: 'madrid', name: 'Μαδρίτη', emoji: '🐂',
+            hasJSON: true, distance: 3.2, cost: 'Μέτριο',
+            country: 'Ισπανία', vacationType: 'Πόλη',
+            themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
+            strollerFriendly: false
+        },
+        { 
+            id: 'lisbon', name: 'Λισαβόνα', emoji: '🌊',
+            hasJSON: true, distance: 4.0, cost: 'Οικονομικό',
+            country: 'Πορτογαλία', vacationType: 'Θάλασσα',
+            themeParks: [], familyScore: 6, hasDisney: false,
+            strollerFriendly: false
+        },
+        { 
+            id: 'istanbul', name: 'Κωνσταντινούπολη', emoji: '🕌',
+            hasJSON: true, distance: 1.5, cost: 'Οικονομικό',
+            country: 'Τουρκία', vacationType: 'Πολιτισμός',
+            themeParks: [], familyScore: 7, hasDisney: false,
+            strollerFriendly: false
+        },
+        { 
+            id: 'brussels', name: 'Βρυξέλλες', emoji: '🍫',
+            hasJSON: false, distance: 3.0, cost: 'Μέτριο',
+            country: 'Βέλγιο', vacationType: 'Πόλη',
+            themeParks: [], familyScore: 5, hasDisney: false,
+            strollerFriendly: false
+        },
+        { 
+            id: 'copenhagen', name: 'Κοπεγχάγη', emoji: '🧜‍♀️',
+            hasJSON: false, distance: 3.5, cost: 'Ακριβό',
+            country: 'Δανία', vacationType: 'Πόλη',
+            themeParks: ['has-parks'], familyScore: 9, hasDisney: false,
+            strollerFriendly: true
+        },
+        { 
+            id: 'dublin', name: 'Δουβλίνο', emoji: '🍀',
+            hasJSON: false, distance: 4.0, cost: 'Ακριβό',
+            country: 'Ιρλανδία', vacationType: 'Πόλη',
+            themeParks: [], familyScore: 5, hasDisney: false,
+            strollerFriendly: true
+        },
+        { 
+            id: 'edinburgh', name: 'Εδιμβούργο', emoji: '🏰',
+            hasJSON: false, distance: 4.0, cost: 'Ακριβό',
+            country: 'Σκωτία', vacationType: 'Πολιτισμός',
+            themeParks: [], familyScore: 5, hasDisney: false,
+            strollerFriendly: false
+        },
+        { 
+            id: 'florence', name: 'Φλωρεντία', emoji: '🎨',
+            hasJSON: false, distance: 2.3, cost: 'Μέτριο',
+            country: 'Ιταλία', vacationType: 'Πολιτισμός',
+            themeParks: [], familyScore: 4, hasDisney: false,
+            strollerFriendly: false
+        },
+        { 
+            id: 'munich', name: 'Μόναχο', emoji: '🍺',
+            hasJSON: false, distance: 2.2, cost: 'Μέτριο',
+            country: 'Γερμανία', vacationType: 'Πόλη',
+            themeParks: [], familyScore: 5, hasDisney: false,
+            strollerFriendly: true
+        },
+        { 
+            id: 'venice', name: 'Βενετία', emoji: '🛶',
+            hasJSON: false, distance: 2.0, cost: 'Ακριβό',
+            country: 'Ιταλία', vacationType: 'Πόλη',
+            themeParks: [], familyScore: 4, hasDisney: false,
+            strollerFriendly: false
+        },
+        { 
+            id: 'warsaw', name: 'Βαρσοβία', emoji: '🦅',
+            hasJSON: false, distance: 2.5, cost: 'Οικονομικό',
+            country: 'Πολωνία', vacationType: 'Πόλη',
+            themeParks: [], familyScore: 5, hasDisney: false,
+            strollerFriendly: true
+        },
+        { 
+            id: 'krakow', name: 'Κρακοβία', emoji: '🐉',
+            hasJSON: false, distance: 2.0, cost: 'Οικονομικό',
+            country: 'Πολωνία', vacationType: 'Πολιτισμός',
+            themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
+            strollerFriendly: false
+        },
+        { 
+            id: 'zurich', name: 'Ζυρίχη', emoji: '🏔️',
+            hasJSON: false, distance: 2.5, cost: 'Ακριβό',
+            country: 'Ελβετία', vacationType: 'Βουνό',
+            themeParks: [], familyScore: 5, hasDisney: false,
+            strollerFriendly: true
+        }
+    ];
+    
     // 🎯 ΛΟΓΙΚΗ ΦΙΛΤΡΑΡΙΣΜΑΤΟΥ
     const filteredCities = allCities.filter(city => {
         // 1. Φίλτρο απόστασης
@@ -1130,7 +1131,6 @@ const allCities = [
             return false;
         }
         
-              
         // 3. Φίλτρο κόστους
         if (costLevel && city.cost !== costLevel) {
             return false;
@@ -1203,12 +1203,6 @@ const allCities = [
                                 <i class="fas fa-plane"></i> Απόσταση
                             </div>
                             <div class="info-value">${city.distance} ώρες</div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-label">
-                                <i class="fas fa-cloud"></i> Καιρός
-                            </div>
-                            <div class="info-value">${city.weather}</div>
                         </div>
                         <div class="info-item">
                             <div class="info-label">
@@ -1318,7 +1312,6 @@ function resetFilters() {
     console.log('🔄 Επαναφορά φίλτρων');
     
     document.getElementById('distance').value = '';
-    document.getElementById('weather').value = '';
     document.getElementById('vacation-type').value = '';
     document.getElementById('cost-level').value = '';
     document.getElementById('theme-parks').value = '';
@@ -1756,7 +1749,7 @@ function setupSummaryStep() {
                         daysDisplay.style.color = 'var(--success)';
                     }
                     
-                    createGeographicProgram(
+                    createDailyProgram(); // Διορθωμένο: Αφαίρεση της invalid κλήσης
                     saveState();
                     
                     console.log(`📅 Ενημέρωση προγράμματος για ${selectedDays} μέρες`);
@@ -1772,7 +1765,7 @@ function setupSummaryStep() {
             daysDisplay.style.color = state.selectedDays > 0 ? 'var(--success)' : 'var(--warning)';
         }
         
-        createGeographicProgram(
+        createDailyProgram(); // Διορθωμένο: Αφαίρεση της invalid κλήσης
         
     }, 100);
 }
@@ -2561,18 +2554,6 @@ function showSelectedDestination() {
 }
 
 // ==================== GEOGRAPHIC PLANNING HELPERS ====================
-function calculateDistance(lat1, lon1, lat2, lon2) {
-    const R = 6371; // Ακτίνα Γης σε km
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a = 
-        Math.sin(dLat/2) * Math.sin(dLat/2) +
-        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
-        Math.sin(dLon/2) * Math.sin(dLon/2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    return R * c;
-}
-
 function translateCategory(cat) {
     const translations = {
         'attraction': 'Αξιοθέατα',
@@ -2602,441 +2583,104 @@ function getActivityIcon(category) {
     return icons[category] || 'fa-map-marker-alt';
 }
 
-// ==================== GEOGRAPHIC PROGRAM PLANNER ====================
-// ==================== STEP 5: SMART DAILY PROGRAM (FROM OLD FILE) ====================
-function createSmartDailyProgram(activities, days) {
-    console.log('📅 Δημιουργία έξυπνου προγράμματος:', activities.length, 'δραστηριότητες για', days, 'μέρες');
+// ==================== PROGRAM DAYS UPDATE ====================
+function updateProgramDays() {
+    const daysSelect = document.getElementById('program-days');
+    if (!daysSelect) return;
     
-    // 1. ΕΞΥΠΝΟΣ ΧΩΡΙΣΜΟΣ (όταν υπάρχουν συντεταγμένες)
-    const activitiesWithCoords = activities.filter(act => act.lat && act.lng);
+    const selectedValue = daysSelect.value;
     
-    if (activitiesWithCoords.length === 0) {
-        // 2. ΑΠΛΟΣ ΧΩΡΙΣΜΟΣ (όταν δεν υπάρχουν συντεταγμένες)
-        if (!activities || activities.length === 0) {
-            return '<p>Δεν έχετε επιλέξει δραστηριότητες.</p>';
-        }
-        
-        if (!days || days <= 0) days = 1;
-        
-        let programHTML = '<p>🗺️ <strong>Απλό Πρόγραμμα:</strong></p>';
-        const activitiesPerDay = Math.ceil(activities.length / days);
-        
-        for (let day = 0; day < days; day++) {
-            const startIndex = day * activitiesPerDay;
-            const endIndex = Math.min(startIndex + activitiesPerDay, activities.length);
-            const dayActivities = activities.slice(startIndex, endIndex);
-            
-            if (dayActivities.length === 0) continue;
-            
-            const morningActivities = dayActivities.slice(0, Math.ceil(dayActivities.length / 2));
-            const afternoonActivities = dayActivities.slice(Math.ceil(dayActivities.length / 2));
-            
-            programHTML += `
-                <div style="margin: 15px 0; padding: 12px; background: white; border-radius: 8px; border-left: 4px solid #ff7f50;">
-                    <h4 style="margin: 0 0 8px 0; color: #ff7f50;">📍 Ημέρα ${day + 1}</h4>
-                    
-                    ${morningActivities.length > 0 ? `
-                    <div style="margin-bottom: 8px;">
-                        <h5 style="margin: 0 0 4px 0; color: #3eb489;">🌅 Πρωινό (9:00-13:00)</h5>
-                        <ul style="margin: 0; padding-left: 20px;">
-                            ${morningActivities.map(act => `<li>${act.name}</li>`).join('')}
-                        </ul>
-                    </div>` : ''}
-                    
-                    ${afternoonActivities.length > 0 ? `
-                    <div style="margin-bottom: 6px;">
-                        <h5 style="margin: 0 0 4px 0; color: #4c7af0;">🌇 Απογευματινό (14:00-18:00)</h5>
-                        <ul style="margin: 0; padding-left: 20px;">
-                            ${afternoonActivities.map(act => `<li>${act.name}</li>`).join('')}
-                        </ul>
-                    </div>` : ''}
-                </div>
-            `;
-        }
-        
-        return programHTML;
-    }
-    
-    // ΕΞΥΠΝΟΣ ΧΩΡΙΣΜΟΣ (όταν υπάρχουν συντεταγμένες)
-    const clusters = createSmartClusters(activitiesWithCoords, days);
-    
-    let programHTML = '<p>🗺️ <strong>Έξυπνο Πρόγραμμα με Βάση την Απόσταση & Χρόνο:</strong></p>';
-    
-    clusters.forEach((cluster, index) => {
-        const morningActivities = cluster.slice(0, Math.ceil(cluster.length / 2));
-        const afternoonActivities = cluster.slice(Math.ceil(cluster.length / 2));
-        
-        programHTML += `
-            <div style="margin: 15px 0; padding: 12px; background: white; border-radius: 8px; border-left: 4px solid #ff7f50;">
-                <h4 style="margin: 0 0 8px 0; color: #ff7f50;">📍 Ημέρα ${index + 1} - Έξυπνο Πλάνο</h4>
-                
-                ${morningActivities.length > 0 ? `
-                <div style="margin-bottom: 8px;">
-                    <h5 style="margin: 0 0 4px 0; color: #3eb489;">🌅 Πρωινό (9:00-13:00)</h5>
-                    <ul style="margin: 0; padding-left: 20px;">
-                        ${morningActivities.map(act => `<li>${act.name}</li>`).join('')}
-                    </ul>
-                </div>` : ''}
-                
-                ${afternoonActivities.length > 0 ? `
-                <div style="margin-bottom: 6px;">
-                    <h5 style="margin: 0 0 4px 0; color: #4c7af0;">🌇 Απογευματινό (14:00-18:00)</h5>
-                    <ul style="margin: 0; padding-left: 20px;">
-                        ${afternoonActivities.map(act => `<li>${act.name}</li>`).join('')}
-                    </ul>
-                </div>` : ''}
-                
-                <div style="background: #f8f9fa; padding: 6px; border-radius: 4px; margin-top: 6px;">
-                    <p style="margin: 0; font-size: 0.8em; color: #666;">
-                        ✅ <strong>Βελτιστοποιημένη Διαδρομή</strong> | 
-                        🚶 <strong>Ελάχιστες Μετακινήσεις</strong> | 
-                        ⏱️ <strong>Ισορροπημένος Χρόνος</strong>
-                    </p>
-                </div>
-            </div>
-        `;
-    });
-    
-    return programHTML;
-}
-
-function createSmartClusters(activities, numClusters) {
-    console.log('🗺️ Δημιουργία έξυπνων ομάδων (clusters)...');
-    
-    if (activities.length <= numClusters) {
-        const clusters = [];
-        for (let i = 0; i < numClusters; i++) {
-            clusters.push(activities[i] ? [activities[i]] : []);
-        }
-        return clusters.filter(cluster => cluster.length > 0);
-    }
-   
-    // Βρες το κέντρο όλων των δραστηριοτήτων
-    const centerLat = activities.reduce((sum, act) => sum + act.lat, 0) / activities.length;
-    const centerLng = activities.reduce((sum, act) => sum + act.lng, 0) / activities.length;
-   
-    // Υπολόγισε απόσταση από το κέντρο για κάθε δραστηριότητα
-    const activitiesWithDistance = activities.map(act => {
-        const distance = Math.sqrt(
-            Math.pow(act.lat - centerLat, 2) + Math.pow(act.lng - centerLng, 2)
-        );
-        return { ...act, distance };
-    });
-   
-    // Ταξινόμησε με βάση την απόσταση (πρώτα τα κοντινότερα στο κέντρο)
-    const sortedByDistance = [...activitiesWithDistance].sort((a, b) => a.distance - b.distance);
-   
-    // Χώρισε σε clusters
-    const clusterSize = Math.ceil(sortedByDistance.length / numClusters);
-    const clusters = [];
-   
-    for (let i = 0; i < numClusters; i++) {
-        const start = i * clusterSize;
-        const end = start + clusterSize;
-        const cluster = sortedByDistance.slice(start, end).map(act => {
-            const { distance, ...activityWithoutDistance } = act;
-            return activityWithoutDistance;
-        });
-       
-        if (cluster.length > 0) {
-            // Ταξινόμησε βορρά-νότου για βελτίωση της ροής
-            cluster.sort((a, b) => a.lat - b.lat);
-            clusters.push(cluster);
-        }
-    }
-   
-    return clusters;
-}
-
-function setupSummaryStep() {
-    console.log('📋 Ρύθμιση summary βήματος (έκδοση ΠΑΛΙΟΥ)');
-    
-    if (!state.selectedDestination) {
-        console.log('⚠️ Δεν υπάρχει επιλεγμένος προορισμός');
+    if (!selectedValue || selectedValue === '0') {
+        alert('⚠️ Παρακαλώ επιλέξτε αριθμό ημερών από το dropdown');
         return;
     }
     
-    if (state.selectedDays === 0) {
-        state.selectedDays = 3;
-    }
+    const selectedDays = parseInt(selectedValue);
     
-    setTimeout(() => {
-        const daysSelect = document.getElementById('program-days');
-        if (daysSelect) {
-            daysSelect.value = state.selectedDays;
-            
-            const newDaysSelect = daysSelect.cloneNode(true);
-            daysSelect.parentNode.replaceChild(newDaysSelect, daysSelect);
-            
-            newDaysSelect.addEventListener('change', function() {
-                const selectedDays = parseInt(this.value);
-                if (selectedDays > 0) {
-                    state.selectedDays = selectedDays;
-                    
-                    const daysDisplay = document.getElementById('days-display');
-                    if (daysDisplay) {
-                        daysDisplay.textContent = '✅ ' + selectedDays + ' μέρες επιλέχθηκαν';
-                        daysDisplay.style.color = 'var(--success)';
-                    }
-                    
-                    createSmartDailyProgramDisplay();
-                    saveState();
-                    
-                    console.log(`📅 Ενημέρωση προγράμματος για ${selectedDays} μέρες`);
-                }
-            });
-        }
+    if (selectedDays > 0) {
+        state.selectedDays = selectedDays;
         
         const daysDisplay = document.getElementById('days-display');
         if (daysDisplay) {
-            daysDisplay.textContent = state.selectedDays > 0 
-                ? '✅ ' + state.selectedDays + ' μέρες επιλέχθηκαν'
-                : '⚠️ Δεν έχετε επιλέξει ακόμα';
-            daysDisplay.style.color = state.selectedDays > 0 ? 'var(--success)' : 'var(--warning)';
+            daysDisplay.textContent = '✅ ' + selectedDays + ' μέρες επιλέχθηκαν';
+            daysDisplay.style.color = 'var(--success)';
         }
         
-        createSmartDailyProgramDisplay();
+        createDailyProgram();
+        saveState();
         
-    }, 100);
-}
-
-function createSmartDailyProgramDisplay() {
-    console.log('🎯 Δημιουργία έξυπνου προγράμματος (από ΠΑΛΙΟ)...');
-    
-    const dailyProgram = document.getElementById('daily-program');
-    if (!dailyProgram) {
-        console.error('❌ Δεν βρέθηκε daily-program element');
-        return;
-    }
-    
-    const days = state.selectedDays || 3;
-    const totalActivities = state.selectedActivities.length;
-    
-    if (totalActivities === 0) {
-        dailyProgram.innerHTML = `
-            <div style="text-align: center; padding: 40px; color: var(--gray);">
-                <i class="fas fa-calendar-alt fa-3x" style="margin-bottom: 20px; opacity: 0.5;"></i>
-                <h4>Δεν υπάρχουν επιλεγμένες δραστηριότητες</h4>
-                <p>Επιστρέψτε στο βήμα "Δραστηριότητες" για να επιλέξετε</p>
-                <button onclick="showStep('activities')" class="btn btn-primary" style="margin-top: 15px;">
-                    <i class="fas fa-arrow-left"></i> Επιστροφή στις Δραστηριότητες
-                </button>
-            </div>
-        `;
-        return;
-    }
-    
-    // Δημιούργησε τη λίστα δραστηριοτήτων με συντεταγμένες
-    const activitiesWithLocation = state.selectedActivities.map(selectedAct => {
-        const fullActivity = state.currentCityActivities.find(
-            a => a.id === selectedAct.id
-        );
+        console.log(`📅 Ενημέρωση προγράμματος για ${selectedDays} μέρες`);
         
-        if (fullActivity && fullActivity.location) {
-            return {
-                id: selectedAct.id,
-                name: selectedAct.name,
-                price: selectedAct.price || 0,
-                lat: fullActivity.location.lat,
-                lng: fullActivity.location.lng,
-                category: fullActivity.category,
-                duration: fullActivity.duration_hours || 2
-            };
-        } else {
-            const cityCoords = getCityCoordinates(state.selectedDestinationId) || [52.3702, 4.8952];
-            return {
-                id: selectedAct.id,
-                name: selectedAct.name,
-                price: selectedAct.price || 0,
-                lat: cityCoords[0],
-                lng: cityCoords[1],
-                category: selectedAct.category || 'attraction',
-                duration: 2
-            };
+        const programSection = document.getElementById('daily-program-section');
+        if (programSection) {
+            programSection.style.animation = 'none';
+            setTimeout(() => {
+                programSection.style.animation = 'fadeIn 0.5s ease';
+            }, 10);
         }
-    }).filter(act => act !== null);
-    
-    console.log(`📍 Διαθέσιμες δραστηριότητες με συντεταγμένες: ${activitiesWithLocation.length}/${totalActivities}`);
-    
-    // Χρήση της ΠΑΛΙΑΣ συνάρτησης createSmartDailyProgram
-    const programHTML = createSmartDailyProgram(activitiesWithLocation, days);
-    
-    dailyProgram.innerHTML = `
-        <div class="summary-content" style="
-            text-align: center; 
-            font-size: 1.2em; 
-            padding: 20px; 
-            border: 2px dashed #3eb489; 
-            border-radius: 15px; 
-            background: #e0fff0;
-            margin-bottom: 30px;
-        ">
-            <h3 style="color: #ff7f50; margin-bottom: 20px;">
-                <i class="fas fa-map-marked-alt"></i> Το Πρόγραμμα Ταξιδιού Σας
-            </h3>
-            ${programHTML}
-        </div>
-        
-        <div class="total-overall" style="
-            max-width: 1000px; 
-            margin: auto; 
-            margin-bottom: 30px; 
-            background: #fff; 
-            padding: 20px; 
-            border-radius: 16px; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
-            text-align: center; 
-            font-size: 26px; 
-            font-weight: bold; 
-            color: #fff; 
-            background-color: #ff7f50;
-        ">
-            <i class="fas fa-suitcase"></i> Τέλειο Πρόγραμμα για ${state.selectedDestination}!
-        </div>
-        
-        <div style="text-align: center; margin-top: 20px;">
-            <button class="btn btn-primary" onclick="showStep('map')" style="
-                padding: 18px 40px; 
-                font-size: 20px; 
-                border-radius: 16px; 
-                background: #3eb489; 
-                color: white; 
-                border: none; 
-                cursor: pointer; 
-                transition: transform 0.2s, box-shadow 0.2s;
-            ">
-                <i class="fas fa-map-marked-alt"></i> Συνέχεια στον Χάρτη
-            </button>
-        </div>
-    `;
-    
-    console.log('✅ Έξυπνο πρόγραμμα δημιουργήθηκε (από ΠΑΛΙΟ)');
+    }
 }
-function groupActivitiesByProximity(activities, days) {
-    console.log(`📊 Ομαδοποίηση ${activities.length} δραστηριοτήτων σε ${days} μέρες`);
+
+// ==================== HELPER FUNCTIONS ====================
+function getPriceInfo(prices) {
+    if (!prices || typeof prices !== 'object') {
+        return 'Άγνωστες τιμές';
+    }
     
-    if (activities.length <= days) {
-        const groups = [];
-        activities.forEach((act, index) => {
-            groups[index] = [act];
-        });
-        while (groups.length < days) {
-            groups.push([]);
+    if (prices['0'] === 0 && prices['4'] === 0) {
+        return 'Βρέφη δωρεάν (0-4)';
+    }
+    if (prices['0'] === 0 && prices['18'] === 0) {
+        return 'Παιδιά δωρεάν (0-18)';
+    }
+    
+    const allPrices = Object.values(prices)
+        .filter(p => typeof p === 'number' && !isNaN(p));
+    
+    if (allPrices.length === 0) {
+        return 'Άγνωστες τιμές';
+    }
+    
+    const min = Math.min(...allPrices);
+    const max = Math.max(...allPrices);
+    
+    if (min === max) {
+        return `${min}€ για όλους`;
+    } else if (min === 0) {
+        return `${max}€ (βρέφη δωρεάν)`;
+    } else {
+        return `${min}-${max}€`;
+    }
+}
+
+function getPriceForAge(prices, age) {
+    if (!prices) return '?';
+    
+    if (prices[age] !== undefined && prices[age] !== null) {
+        return prices[age] + '€';
+    }
+    
+    if (age >= 18 && prices.adult !== undefined) {
+        return prices.adult + '€';
+    }
+    
+    if (age >= 5 && age <= 17) {
+        if (prices.child !== undefined) return prices.child + '€';
+        if (prices['10'] !== undefined) return prices['10'] + '€';
+        if (prices['5'] !== undefined) return prices['5'] + '€';
+    }
+    
+    if (age <= 4 && prices['0'] !== undefined) {
+        return prices['0'] === 0 ? 'ΔΩΡΕΑΝ' : prices['0'] + '€';
+    }
+    
+    for (let i = age; i >= 0; i--) {
+        if (prices[i] !== undefined) {
+            return prices[i] + '€';
         }
-        return groups.slice(0, days);
     }
     
-    const groups = Array(days).fill().map(() => []);
-    const cityCenter = getCityCoordinates(state.selectedDestinationId) || [52.3702, 4.8952];
-    
-    const activitiesWithDistance = activities.map(act => ({
-        ...act,
-        distance: calculateDistance(act.lat, act.lng, cityCenter[0], cityCenter[1])
-    }));
-    
-    activitiesWithDistance.sort((a, b) => a.distance - b.distance);
-    
-    const chunkSize = Math.ceil(activities.length / days);
-    
-    for (let i = 0; i < days; i++) {
-        const start = i * chunkSize;
-        const end = Math.min(start + chunkSize, activitiesWithDistance.length);
-        groups[i] = activitiesWithDistance.slice(start, end).map(act => ({
-            id: act.id,
-            name: act.name,
-            price: act.price,
-            category: act.category,
-            duration: act.duration
-        }));
-    }
-    
-    console.log('📈 Ομάδες δημιουργήθηκαν:', groups.map(g => g.length));
-    return groups;
-}
-
-function createDayProgramHTML(activities, dayNumber) {
-    const dayTotal = activities.reduce((sum, act) => sum + (act.price || 0), 0);
-    const totalDuration = activities.reduce((sum, act) => sum + (act.duration || 2), 0);
-    const categories = activities.map(a => a.category).filter(c => c);
-    const mainCategory = categories.length > 0 ? categories[0] : 'attraction';
-    
-    return `
-        <div class="day-program" style="margin-bottom: 30px; padding: 20px; background: white; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid var(--primary-light);">
-                <div>
-                    <h3 style="color: var(--primary); margin: 0; display: flex; align-items: center; gap: 10px;">
-                        <i class="fas fa-calendar-day"></i>
-                        Μέρα ${dayNumber}
-                        <span style="font-size: 14px; color: var(--gray); font-weight: normal;">
-                            (${translateCategory(mainCategory)})
-                        </span>
-                    </h3>
-                    <p style="color: var(--gray); margin: 5px 0 0 0; font-size: 14px;">
-                        ${activities.length} δραστηριότητες • ${totalDuration} ώρες • ${dayTotal}€
-                    </p>
-                </div>
-                <div style="background: var(--primary-light); color: white; padding: 8px 15px; border-radius: 20px; font-weight: bold;">
-                    Ημέρα ${dayNumber}
-                </div>
-            </div>
-            
-            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-                <h4 style="color: var(--dark); margin-bottom: 10px; font-size: 16px;">
-                    <i class="fas fa-route"></i> Προτεινόμενο Πρόγραμμα
-                </h4>
-                <div style="font-size: 14px; color: var(--gray);">
-                    <p>Όλες οι σημερινές δραστηριότητες είναι σε κοντινή απόσταση μεταξύ τους.</p>
-                    <p><strong>Συμβουλή:</strong> Χρησιμοποιήστε τον χάρτη για βέλτιστη διαδρομή.</p>
-                </div>
-            </div>
-            
-            <div style="margin-bottom: 20px;">
-                <h4 style="color: var(--dark); margin-bottom: 15px; font-size: 16px;">
-                    <i class="fas fa-list-check"></i> Σημερινές Δραστηριότητες
-                </h4>
-                
-                ${activities.map((activity, index) => `
-                    <div class="activity-schedule-item" style="
-                        display: flex; align-items: center; gap: 15px; 
-                        padding: 15px; margin-bottom: 10px; 
-                        background: ${index % 2 === 0 ? '#f8f9fa' : 'white'};
-                        border-radius: 8px; border-left: 4px solid var(--primary);
-                    ">
-                        <div style="font-size: 20px; color: var(--primary); min-width: 40px; text-align: center;">
-                            ${index + 1}
-                        </div>
-                        <div style="flex: 1;">
-                            <div style="font-weight: bold; color: var(--dark); margin-bottom: 5px;">
-                                ${activity.name}
-                            </div>
-                            <div style="display: flex; gap: 15px; font-size: 13px; color: var(--gray);">
-                                <span><i class="fas ${getActivityIcon(activity.category)}"></i> ${translateCategory(activity.category)}</span>
-                                <span><i class="fas fa-clock"></i> ${activity.duration || 2} ώρες</span>
-                                <span><i class="fas fa-euro-sign"></i> ${activity.price || 0}€</span>
-                            </div>
-                        </div>
-                        <div style="font-size: 24px;">
-                            ${getTimeEmoji(index)}
-                        </div>
-                    </div>
-                `).join('')}
-            </div>
-            
-            <div style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 15px; border-radius: 8px; text-align: center;">
-                <div style="font-size: 24px; font-weight: bold; margin-bottom: 5px;">
-                    ${dayTotal}€
-                </div>
-                <div style="font-size: 14px; opacity: 0.9;">
-                    Συνολικό κόστος για τη μέρα
-                </div>
-            </div>
-        </div>
-    `;
-}
-
-function getTimeEmoji(index) {
-    const emojis = ['🌅', '☀️', '⛅', '🌇', '🌙'];
-    return emojis[index % emojis.length] || '🕐';
+    return '?';
 }
 
 // ==================== CLICK-TO-CONNECT SYSTEM ====================
@@ -3139,106 +2783,6 @@ function addClickableMarker(coords, title, activityId) {
     return marker;
 }
 
-// ==================== PROGRAM DAYS UPDATE ====================
-function updateProgramDays() {
-    const daysSelect = document.getElementById('program-days');
-    if (!daysSelect) return;
-    
-    const selectedValue = daysSelect.value;
-    
-    if (!selectedValue || selectedValue === '0') {
-        alert('⚠️ Παρακαλώ επιλέξτε αριθμό ημερών από το dropdown');
-        return;
-    }
-    
-    const selectedDays = parseInt(selectedValue);
-    
-    if (selectedDays > 0) {
-        state.selectedDays = selectedDays;
-        
-        const daysDisplay = document.getElementById('days-display');
-        if (daysDisplay) {
-            daysDisplay.textContent = '✅ ' + selectedDays + ' μέρες επιλέχθηκαν';
-            daysDisplay.style.color = 'var(--success)';
-        }
-        
-        createGeographicProgram();
-        saveState();
-        
-        console.log(`📅 Ενημέρωση προγράμματος για ${selectedDays} μέρες`);
-        
-        const programSection = document.getElementById('daily-program-section');
-        if (programSection) {
-            programSection.style.animation = 'none';
-            setTimeout(() => {
-                programSection.style.animation = 'fadeIn 0.5s ease';
-            }, 10);
-        }
-    }
-}
-
-// ==================== HELPER FUNCTIONS ====================
-function getPriceInfo(prices) {
-    if (!prices || typeof prices !== 'object') {
-        return 'Άγνωστες τιμές';
-    }
-    
-    if (prices['0'] === 0 && prices['4'] === 0) {
-        return 'Βρέφη δωρεάν (0-4)';
-    }
-    if (prices['0'] === 0 && prices['18'] === 0) {
-        return 'Παιδιά δωρεάν (0-18)';
-    }
-    
-    const allPrices = Object.values(prices)
-        .filter(p => typeof p === 'number' && !isNaN(p));
-    
-    if (allPrices.length === 0) {
-        return 'Άγνωστες τιμές';
-    }
-    
-    const min = Math.min(...allPrices);
-    const max = Math.max(...allPrices);
-    
-    if (min === max) {
-        return `${min}€ για όλους`;
-    } else if (min === 0) {
-        return `${max}€ (βρέφη δωρεάν)`;
-    } else {
-        return `${min}-${max}€`;
-    }
-}
-
-function getPriceForAge(prices, age) {
-    if (!prices) return '?';
-    
-    if (prices[age] !== undefined && prices[age] !== null) {
-        return prices[age] + '€';
-    }
-    
-    if (age >= 18 && prices.adult !== undefined) {
-        return prices.adult + '€';
-    }
-    
-    if (age >= 5 && age <= 17) {
-        if (prices.child !== undefined) return prices.child + '€';
-        if (prices['10'] !== undefined) return prices['10'] + '€';
-        if (prices['5'] !== undefined) return prices['5'] + '€';
-    }
-    
-    if (age <= 4 && prices['0'] !== undefined) {
-        return prices['0'] === 0 ? 'ΔΩΡΕΑΝ' : prices['0'] + '€';
-    }
-    
-    for (let i = age; i >= 0; i--) {
-        if (prices[i] !== undefined) {
-            return prices[i] + '€';
-        }
-    }
-    
-    return '?';
-}
-
 // ==================== WINDOW FUNCTIONS ====================
 window.showStep = showStep;
 window.filterDestinations = filterDestinations;
@@ -3270,11 +2814,12 @@ window.removeFamilyMember = removeFamilyMember;
 window.updateFamilyMembers = updateFamilyMembers;
 window.calculateSmartCombos = calculateSmartCombos;
 window.clearSelectedActivities = clearSelectedActivities;
-window.createGeographicProgram = createGeographicProgram;
+window.updateProgramDays = updateProgramDays;
 window.groupActivitiesByProximity = groupActivitiesByProximity;
 window.calculateDistance = calculateDistance;
 window.translateCategory = translateCategory;
 window.createEnhancedPopup = createEnhancedPopup;
 window.connectPointsWithRoute = connectPointsWithRoute;
+window.getPriceForAge = getPriceForAge;
 
 console.log('✅ Script.js loaded successfully!');
