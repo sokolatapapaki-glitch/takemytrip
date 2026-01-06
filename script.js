@@ -1611,6 +1611,7 @@ function calculateFamilyCost(prices) {
     }
     
     console.log('💰 Διαθέσιμες τιμές:', Object.keys(prices).map(k => `${k}: ${prices[k]}€`).join(', '));
+    console.log('👨‍👩‍👧‍👦 Μέλη:', state.familyMembers);
     
     let total = 0;
     let membersWithAge = 0;
@@ -1618,22 +1619,25 @@ function calculateFamilyCost(prices) {
     state.familyMembers.forEach((member) => {
         let age = member.age;
         
+        // 🔴 ΚΡΙΤΙΚΗ ΔΙΟΡΘΩΣΗ: Αγνόησε ΤΕΛΕΙΩΣ τα μέλη με κενή/μη έγκυρη ηλικία
         if (age === "" || age === null || age === undefined) {
-            console.log(`⚠️ Μέλος "${member.name}" δεν έχει ηλικία - ΑΓΝΟΕΙΤΑΙ`);
-            return;
+            console.log(`⚠️ Μέλος "${member.name}" δεν έχει ηλικία - ΑΓΝΟΕΙΤΑΙ ΟΛΟΚΛΗΡΩΣ`);
+            return; // Αυτό είναι το κλειδί - επιστροφή χωρίς να προσθέσει τίποτα
         }
         
         age = parseInt(age);
-        if (isNaN(age)) {
+        if (isNaN(age) || age < 0 || age > 120) {
             console.log(`⚠️ Μέλος "${member.name}" έχει μη έγκυρη ηλικία "${member.age}" - ΑΓΝΟΕΙΤΑΙ`);
-            return;
+            return; // Αγνόησε και αυτό
         }
         
         let price = 0;
         
+        // Προσπάθησε να βρεις ακριβή τιμή για την ηλικία
         if (prices[age] !== undefined && prices[age] !== null) {
             price = prices[age];
         }
+        // Αν δεν βρέθηκε ακριβής τιμή, δοκίμασε γενικές κατηγορίες
         else if (age >= 18 && prices.adult !== undefined) {
             price = prices.adult;
         }
@@ -1647,11 +1651,12 @@ function calculateFamilyCost(prices) {
             }
         }
         else if (age <= 4 && prices['0'] !== undefined) {
-            price = prices['0'];
+            price = prices['0']; // Μπορεί να είναι 0 (δωρεάν) ή κάποια τιμή
         }
         else {
-            price = 0;
+            // Αν δεν βρέθηκε τιμή, χρησιμοποίησε μια προκαθορισμένη
             console.warn(`⚠️ Δεν βρέθηκε τιμή για ηλικία ${age}. Στο JSON υπάρχουν: ${Object.keys(prices).join(', ')}`);
+            price = 0; // Προεπιλογή στο 0 αντί για undefined
         }
         
         total += price;
@@ -1661,6 +1666,13 @@ function calculateFamilyCost(prices) {
     });
     
     console.log(`💰 Συνολικό κόστος: ${total}€ για ${membersWithAge} από τα ${state.familyMembers.length} άτομα`);
+    
+    // 🔴 ΕΝΗΜΕΡΩΣΗ: Αν δεν έχουμε κανένα μέλος με έγκυρη ηλικία, επέστρεψε 0
+    if (membersWithAge === 0) {
+        console.log('⚠️ Κανένα μέλος δεν έχει έγκυρη ηλικία! Επιστροφή 0€');
+        return 0;
+    }
+    
     return total;
 }
 
@@ -1674,18 +1686,19 @@ function toggleActivitySelection(activityId) {
         return;
     }
     
+    // 🔴 ΒΕΛΤΙΩΣΗ: Υπολόγισε πάντα το κόστος από την αρχή
+    const familyCost = calculateFamilyCost(activity.prices);
+    
     const existingIndex = state.selectedActivities.findIndex(a => a.id === activityId);
     
     if (existingIndex > -1) {
         state.selectedActivities.splice(existingIndex, 1);
         console.log(`➖ Αφαίρεση: ${activity.name}`);
     } else {
-        const familyCost = calculateFamilyCost(activity.prices);
-        
         state.selectedActivities.push({
             id: activityId,
             name: activity.name,
-            price: familyCost,
+            price: familyCost, // Χρησιμοποίησε την νέα τιμή
             duration: activity.duration_hours,
             category: activity.category
         });
@@ -2357,8 +2370,43 @@ function removeFamilyMember(index) {
 }
 
 function updateFamilyMembers() {
+    console.log('👨‍👩‍👧‍👦 Ενημέρωση οικογενειακών μελών...');
+    
+    // 1. Φίλτραρε κενά μέλη
+    const originalLength = state.familyMembers.length;
+    state.familyMembers = state.familyMembers.filter(member => {
+        const hasValidName = member.name && member.name.trim() !== "";
+        const ageNum = parseInt(member.age);
+        const hasValidAge = !isNaN(ageNum) && ageNum >= 0 && ageNum <= 120;
+        return hasValidName && hasValidAge;
+    });
+    
+    // 2. Αποθήκευση
     saveState();
-    alert('✅ Τα μέλη της οικογένειας ενημερώθηκαν!');
+    
+    // 3. Ανανέωση τιμών επιλεγμένων δραστηριοτήτων
+    state.selectedActivities.forEach(activity => {
+        const original = state.currentCityActivities.find(a => a.id === activity.id);
+        if (original) {
+            activity.price = calculateFamilyCost(original.prices);
+        }
+    });
+    
+    // 4. Ανανέωση εμφάνισης
+    updateActivitiesTotal();
+    
+    // 5. Επαναφόρτωση βήματος (αν είναι ανοιχτό)
+    if (state.currentStep === 'activities') {
+        setTimeout(() => {
+            setupActivitiesStep();
+        }, 100);
+    }
+    
+    // 6. Μήνυμα
+    const removed = originalLength - state.familyMembers.length;
+    alert(`✅ Ενημέρωση ολοκληρώθηκε!\n\n` +
+          (removed > 0 ? `🧹 Αφαιρέθηκαν ${removed} κενά μέλη.\n\n` : '') +
+          `👨‍👩‍👧‍👦 Τώρα έχετε ${state.familyMembers.length} έγκυρα μέλη.`);
 }
 
 function calculateSmartCombos() {
