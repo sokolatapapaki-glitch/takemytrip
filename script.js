@@ -4126,7 +4126,33 @@ function resetMarkerAppearance(marker) {
 
 // Καλείται κατά την αρχικοποίηση
 addConnectStyles();
+// ==================== ΠΑΛΙΕΣ ΣΥΝΑΡΤΗΣΕΙΣ ΠΟΥ ΧΡΕΙΑΖΟΝΤΑΙ ΑΚΟΜΑ ====================
 
+function createDailyProgram() {
+    console.log('📅 createDailyProgram καλείται (παλιά έκδοση)');
+    // Απλή έκδοση που απλά ενημερώνει πως δεν χρησιμοποιείται πια
+    const dailyProgram = document.getElementById('daily-program');
+    if (dailyProgram) {
+        dailyProgram.innerHTML = `
+            <div style="text-align: center; padding: 40px; color: var(--gray);">
+                <i class="fas fa-info-circle fa-3x" style="margin-bottom: 20px;"></i>
+                <h4>Αυτό το πρόγραμμα αντικαταστάθηκε</h4>
+                <p>Χρησιμοποιήστε το <strong>Γεωγραφικό Πρόγραμμα</strong> παραπάνω</p>
+            </div>
+        `;
+    }
+}
+
+function calculateOptimalDays() {
+    console.log('🧮 calculateOptimalDays καλείται');
+    // Απλή έκδοση που δείχνει μήνυμα
+    alert('ℹ️ Η λειτουργία αυτόματου υπολογισμού απενεργοποιήθηκε.\n\nΕπιλέξτε μόνοι σας τις μέρες από το dropdown.');
+    return 0;
+}
+
+// ==================== WINDOW FUNCTIONS ====================
+window.showStep = showStep;
+// ... τα υπόλοιπα window ...
 
 // ==================== WINDOW FUNCTIONS ====================
 window.showStep = showStep;
