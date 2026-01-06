@@ -428,18 +428,20 @@ function getFlightStepHTML() {
                     <input type="text" class="form-control" value="Αθήνα" readonly>
                 </div>
                 
-                <div class="form-group">
-                    <label class="form-label">Προς</label>
-                    <input type="text" class="form-control" id="flight-destination" 
-                           value="${state.selectedDestination || ''}" ${state.selectedDestination ? 'readonly' : ''}>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Ημερομηνία</label>
-                    <input type="date" class="form-control" id="flight-date" 
-                           value="${new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}">
-                </div>
-            </div>
+                <div class="grid grid-2">  <!-- ΑΠΟ grid-3 ΣΕ grid-2 -->
+    <div class="form-group">
+        <label class="form-label">Από</label>
+        <input type="text" class="form-control" value="Αθήνα" readonly>
+    </div>
+    
+    <div class="form-group">
+        <label class="form-label">Προς</label>
+        <input type="text" class="form-control" id="flight-destination" 
+               value="${state.selectedDestination || ''}" ${state.selectedDestination ? 'readonly' : ''}>
+    </div>
+    
+    <!-- ΔΙΑΓΡΑΦΗΚΕ ΤΟ ΤΡΙΤΟ ΠΕΔΙΟ (ΗΜΕΡΟΜΗΝΙΑ) -->
+</div>
             
             <div style="text-align: center; margin: 40px 0;">
                 <h3 style="margin-bottom: 20px; color: var(--dark);">🔍 Αναζήτηση στις πλατφόρμες:</h3>
@@ -473,13 +475,6 @@ function getFlightStepHTML() {
     `;
 }
 
-function setupFlightStep() {
-    const flightDate = document.getElementById('flight-date');
-    const today = new Date();
-    const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
-    flightDate.min = today.toISOString().split('T')[0];
-    flightDate.value = nextWeek.toISOString().split('T')[0];
-}
 
 // ==================== STEP 3: HOTEL ====================
 function getHotelStepHTML() {
