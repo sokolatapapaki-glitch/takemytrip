@@ -3899,7 +3899,7 @@ window.resetMarkerAppearance = resetMarkerAppearance;
 window.resetSelection = resetSelection;
 
 // ========== ΕΠΙΠΛΕΟΝ ΠΟΥ ΜΠΟΡΕΙ ΝΑ ΧΡΕΙΑΖΟΝΤΑΙ ==========
-window.= getCityCoordinates;
+window.getCityCoordinates = getCityCoordinates;
 window.getActivityEmoji = getActivityEmoji;
 window.calculateFamilyCost = calculateFamilyCost;
 window.updateActivitiesTotal = updateActivitiesTotal;
