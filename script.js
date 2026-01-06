@@ -484,16 +484,14 @@ function getHotelStepHTML() {
                            value="${state.selectedDestination || ''}">
                 </div>
                 
-                <div class="form-group">
+                               <div class="form-group">
                     <label class="form-label">Check-in</label>
-                    <input type="date" class="form-control" id="hotel-checkin" 
-                           value="${new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}">
+                    <input type="date" class="form-control" id="hotel-checkin">
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Check-out</label>
-                    <input type="date" class="form-control" id="hotel-checkout" 
-                           value="${new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}">
+                    <input type="date" class="form-control" id="hotel-checkout">
                 </div>
             </div>
             
