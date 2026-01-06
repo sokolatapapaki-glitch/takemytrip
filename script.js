@@ -2726,7 +2726,6 @@ window.showBudgetDestinations = showBudgetDestinations;
 window.showFamilyDestinations = showFamilyDestinations;
 window.searchBookingHotels = searchBookingHotels;
 window.searchExpediaHotels = searchExpediaHotels;  // <-- ΠΡΟΣΘΗΚΗ ΑΥΤΗ
-window.setupFlightStep = setupFlightStep;
 window.setupHotelStep = setupHotelStep;
 window.setupActivitiesStep = setupActivitiesStep;
 window.toggleActivitySelection = toggleActivitySelection;
