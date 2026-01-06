@@ -3876,7 +3876,7 @@ function resetMarkerAppearance(marker) {
 // Καλείται κατά την αρχικοποίηση
 addConnectStyles();
 
-// ==================== WINDOW FUNCTIONS ====================
+
 // ==================== WINDOW FUNCTIONS ====================
 window.showStep = showStep;
 window.filterDestinations = filterDestinations;
@@ -3925,10 +3925,10 @@ window.resetMarkerAppearance = resetMarkerAppearance;
 window.resetSelection = resetSelection;
 
 // ========== ΕΠΙΠΛΕΟΝ ΠΟΥ ΜΠΟΡΕΙ ΝΑ ΧΡΕΙΑΖΟΝΤΑΙ ==========
-window.getCityCoordinates = getCityCoordinates;  // ΚΡΙΤΙΚΗ! Χρειάζεται για τον χάρτη
-window.getActivityEmoji = getActivityEmoji;      // Για τις κάρτες δραστηριοτήτων
-window.calculateFamilyCost = calculateFamilyCost; // Για υπολογισμούς τιμών
-window.updateActivitiesTotal = updateActivitiesTotal; // Για ενημέρωση κόστους
-window.saveState = saveState; // Για αποθήκευση
+window.getCityCoordinates = getCityCoordinates;
+window.getActivityEmoji = getActivityEmoji;
+window.calculateFamilyCost = calculateFamilyCost;
+window.updateActivitiesTotal = updateActivitiesTotal;
+window.saveState = saveState;
 
 console.log('✅ Script.js loaded successfully!');
