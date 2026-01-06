@@ -993,3 +993,77 @@ body {
     transform: translateX(5px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
+/* ==================== STEP 5: PROGRAM STYLE (FROM OLD FILE) ==================== */
+.summary-content {
+    text-align: center;
+    font-size: 1.2em;
+    padding: 40px;
+    border: 2px dashed #3eb489;
+    border-radius: 15px;
+    background: #e0fff0;
+    margin-bottom: 30px;
+}
+
+.total-overall { 
+    max-width: 1000px; 
+    margin: auto; 
+    margin-bottom: 30px; 
+    background: #fff; 
+    padding: 20px; 
+    border-radius: 16px; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+    text-align: center; 
+    font-size: 26px; 
+    font-weight: bold; 
+    color: #fff; 
+    background-color: #ff7f50; 
+}
+
+.step-5-btn-container { 
+    text-align: center; 
+    margin-top: 30px; 
+}
+
+.step-5-btn { 
+    padding: 18px 40px; 
+    font-size: 20px; 
+    border-radius: 16px; 
+    background: #3eb489; 
+    color: white; 
+    border: none; 
+    cursor: pointer; 
+    transition: transform 0.2s, box-shadow 0.2s; 
+}
+
+.step-5-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(62, 180, 137, 0.3);
+}
+
+/* Ημέρα στο πρόγραμμα */
+.day-program-card {
+    margin: 15px 0; 
+    padding: 20px; 
+    background: white; 
+    border-radius: 12px; 
+    border-left: 6px solid #ff7f50;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+
+.day-program-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.day-morning {
+    color: #3eb489;
+    font-weight: 600;
+    margin: 15px 0 8px 0;
+}
+
+.day-afternoon {
+    color: #4c7af0;
+    font-weight: 600;
+    margin: 15px 0 8px 0;
+}
