@@ -1812,7 +1812,7 @@ async function filterDestinations() {
                     
                     <div class="destination-status">
                         <div class="status-badge ${city.hasJSON ? 'success' : 'warning'}">
-                            ${city.hasJSON ? '✅ Πλήρης Υποστήριξη' : '🛠️ Περιορισμένη'}
+                            ${city.hasJSON ? '✅ Πλήρης Υποστήριξη' : '🛠️ Σύντομα θα ολοκληρωθεί'}
                         </div>
                     </div>
                     
