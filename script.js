@@ -199,6 +199,38 @@ function loadStepContent(stepName) {
             stepContent.innerHTML = getSummaryStepHTML();
             setupSummaryStep();
             break;
+       function loadStepContent(stepName) {
+    const stepContent = document.getElementById('step-content');
+    
+    if (window.travelMap && stepName !== 'map') {
+        try {
+            window.travelMap.remove();
+            window.travelMap = null;
+        } catch(e) {
+            console.log('ℹ️ Δεν υπήρχε ενεργός χάρτης');
+        }
+    }
+    
+    switch(stepName) {
+        case 'destination':
+            stepContent.innerHTML = getDestinationStepHTML();
+            setupDestinationStep();
+            break;
+        case 'flight':
+            stepContent.innerHTML = getFlightStepHTML();
+            break;
+        case 'hotel':
+            stepContent.innerHTML = getHotelStepHTML();
+            setupHotelStep();
+            break;
+        case 'activities':
+            stepContent.innerHTML = getActivitiesStepHTML();
+            setupActivitiesStep();
+            break;
+        case 'summary':
+            stepContent.innerHTML = getSummaryStepHTML();
+            setupSummaryStep();
+            break;
         case 'map':
             stepContent.innerHTML = getMapStepHTML();
             setTimeout(() => {
@@ -1200,50 +1232,57 @@ function getGroupColor(index) {
 }
 
 // ==================== STEP 6: MAP ====================
+// ==================== STEP 6: MAP (SIMPLIFIED) ====================
 function getMapStepHTML() {
     return `
         <div class="card">
-            <h1 class="card-title"><i class="fas fa-map"></i> Διαδραστικός Χάρτης</h1>
+            <h1 class="card-title"><i class="fas fa-map"></i> Απλός Διαδραστικός Χάρτης</h1>
             <p class="card-subtitle">${state.selectedDestination ? 'Χάρτης για: ' + state.selectedDestination : 'Δεν έχετε επιλέξει προορισμό'}</p>
             
             ${!state.selectedDestination ? `
                 <div class="alert alert-warning">
                     <i class="fas fa-exclamation-triangle"></i>
                     Δεν έχετε επιλέξει προορισμό. Παρακαλώ επιστρέψτε στο βήμα 1.
+                    <button class="btn btn-primary" onclick="showStep('destination')" style="margin-top: 10px;">
+                        <i class="fas fa-arrow-left"></i> Επιστροφή
+                    </button>
                 </div>
             ` : `
+                <!-- ΟΛΟΚΛΗΡΩΜΕΝΟΣ ΧΑΡΤΗΣ -->
                 <div id="map-container" style="height: 500px; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 20px; border: 2px solid var(--border);">
-                    <div id="map" style="height: 100%; width: 100%;"></div>
+                    <div id="simple-map" style="height: 100%; width: 100%;"></div>
                 </div>
                 
+                <!-- ΚΟΥΜΠΙΑ ΕΛΕΓΧΟΥ -->
                 <div style="display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap;">
-                    <button class="btn btn-outline" onclick="reloadMap()">
-                        <i class="fas fa-sync-alt"></i> Επαναφόρτωση
+                    <button class="btn btn-primary" onclick="loadActivitiesOnMap()">
+                        <i class="fas fa-map-pin"></i> Φόρτωση Δραστηριοτήτων
                     </button>
                     
-                    <button class="btn btn-primary" onclick="addCustomPoint()">
-                        <i class="fas fa-plus"></i> Προσθήκη Σημείου
-                    </button>
-                    
-                    <button class="btn btn-secondary" onclick="showActivityMap()">
-                        <i class="fas fa-map-pin"></i> Προβολή Σημείων
-                    </button>
-                    
-                    <!-- 🔴 ΚΟΥΜΠΙ ΟΜΑΔΟΠΟΙΗΣΗΣ - ΠΡΟΣΘΗΚΗ ΕΔΩ -->
-                    <button class="btn btn-accent" onclick="showGroupedActivitiesOnMap()">
+                    <button class="btn btn-accent" onclick="showGroupedMap()">
                         <i class="fas fa-layer-group"></i> Ομαδοποίηση
                     </button>
                     
-                    <button class="btn btn-accent" onclick="showRouteBetweenPoints()">
-                        <i class="fas fa-route"></i> Διαδρομή
+                    <button class="btn btn-secondary" onclick="clearMap()">
+                        <i class="fas fa-trash"></i> Καθαρισμός
                     </button>
+                    
+                    <div id="map-status" style="flex: 1; padding: 10px; background: #f0f7ff; border-radius: 6px; font-size: 13px;">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Ετοιμότητα:</strong> Πατήστε "Φόρτωση Δραστηριοτήτων"
+                    </div>
                 </div>
                 
-                <div id="custom-points-container" style="display: none;">
-                    <h3><i class="fas fa-map-pin"></i> Προσωπικά Σημεία</h3>
-                    <div id="custom-points-list"></div>
+                <!-- ΟΔΗΓΙΕΣ -->
+                <div class="alert alert-info">
+                    <i class="fas fa-graduation-cap"></i>
+                    <strong>Πώς λειτουργεί:</strong>
+                    1. Πατήστε "Φόρτωση Δραστηριοτήτων" για τις επιλογές σας.<br>
+                    2. Κάντε κλικ σε 2 πινέζες για διαδρομή.<br>
+                    3. Πατήστε "Ομαδοποίηση" για να δείτε περιοχές.
                 </div>
                 
+                <!-- ΕΠΙΣΤΡΟΦΗ -->
                 <div style="text-align: center; margin-top: 30px;">
                     <button class="btn btn-outline" onclick="showStep('summary')">
                         <i class="fas fa-arrow-left"></i> Επιστροφή στο Πρόγραμμα
@@ -4148,7 +4187,89 @@ function calculateOptimalDays() {
     alert('ℹ️ Η λειτουργία αυτόματου υπολογισμού απενεργοποιήθηκε.\n\nΕπιλέξτε μόνοι σας τις μέρες από το dropdown.');
     return 0;
 }
+// ==================== SIMPLIFIED MAP FUNCTIONS ====================
 
+function loadActivitiesOnMap() {
+    alert('📌 Θα φορτώσουμε τις δραστηριότητες στο επόμενο βήμα!\n\nΓια τώρα, ο χάρτης είναι σε λειτουργία.');
+    
+    // Προς το παρών, απλά ενημέρωση
+    document.getElementById('map-status').innerHTML = `
+        <i class="fas fa-check-circle" style="color: #10B981;"></i>
+        <strong>Έτοιμο:</strong> Ο χάρτης είναι έτοιμος για χρήση
+    `;
+}
+
+function clearMap() {
+    alert('🗺️ Η λειτουργία καθαρισμού θα προστεθεί στο επόμενο βήμα');
+}
+
+function showGroupedMap() {
+    alert('👥 Η ομαδοποίηση θα προστεθεί στο επόμενο βήμα');
+}
+ // ==================== SIMPLE MAP INITIALIZATION ====================
+function initializeSimpleMap() {
+    console.log('🗺️ Αρχικοποίηση απλού χάρτη για:', state.selectedDestination);
+    
+    const mapElement = document.getElementById('simple-map');
+    if (!mapElement) {
+        console.error('❌ Δεν βρέθηκε map element');
+        return;
+    }
+    
+    // 1. Καθαρισμός προηγούμενου χάρτη
+    if (window.simpleMap) {
+        window.simpleMap.remove();
+    }
+    
+    // 2. Βρες συντεταγμένες πόλης
+    const cityCoords = getCityCoordinates(state.selectedDestinationId);
+    if (!cityCoords) {
+        mapElement.innerHTML = `
+            <div style="height:100%; display:flex; align-items:center; justify-content:center; background:#f8f9fa; color:#666;">
+                <div style="text-align:center;">
+                    <i class="fas fa-map-marked-alt fa-2x" style="margin-bottom:15px;"></i>
+                    <h4>Δεν βρέθηκαν συντεταγμένες</h4>
+                    <p>Για την πόλη: ${state.selectedDestination}</p>
+                </div>
+            </div>
+        `;
+        return;
+    }
+    
+    // 3. Δημιουργία χάρτη
+    window.simpleMap = L.map('simple-map').setView(cityCoords, 13);
+    
+    // 4. Προσθήκη χάρτη OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 18
+    }).addTo(window.simpleMap);
+    
+    // 5. Προσθήκη marker για την πόλη
+    L.marker(cityCoords)
+        .addTo(window.simpleMap)
+        .bindPopup(`
+            <div style="text-align:center; padding:10px;">
+                <h4 style="margin:0 0 5px 0; color:#4F46E5;">${state.selectedDestination}</h4>
+                <p style="margin:0; color:#666; font-size:14px;">Κέντρο πόλης</p>
+                <p style="margin:5px 0 0 0; color:#888; font-size:12px;">
+                    <i class="fas fa-info-circle"></i> Πατήστε "Φόρτωση Δραστηριοτήτων"
+                </p>
+            </div>
+        `)
+        .openPopup();
+    
+    console.log('✅ Απλός χάρτης αρχικοποιήθηκε');
+    
+    // 6. Ενημέρωση status
+    const statusEl = document.getElementById('map-status');
+    if (statusEl) {
+        statusEl.innerHTML = `
+            <i class="fas fa-check-circle" style="color: #10B981;"></i>
+            <strong>Έτοιμο:</strong> Χάρτης φορτώθηκε για ${state.selectedDestination}
+        `;
+    }
+}           
 // ==================== WINDOW FUNCTIONS ====================
 window.showStep = showStep;
 // ... τα υπόλοιπα window ...
@@ -4206,5 +4327,7 @@ window.getActivityEmoji = getActivityEmoji;
 window.calculateFamilyCost = calculateFamilyCost;
 window.updateActivitiesTotal = updateActivitiesTotal;
 window.saveState = saveState;
+window.initializeSimpleMap = initializeSimpleMap;
+            
 
 console.log('✅ Script.js loaded successfully!');
