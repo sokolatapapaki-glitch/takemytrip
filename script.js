@@ -174,10 +174,10 @@ function loadStepContent(stepName) {
     }
     
     switch(stepName) {
-        case 'destination':
-            stepContent.innerHTML = ();
-            setupDestinationStep();
-            break;
+       case 'destination':
+    stepContent.innerHTML = getDestinationStepHTML();  // <-- ΣΩΣΤΟ!
+    setupDestinationStep();
+    break;
         case 'flight':
             stepContent.innerHTML = getFlightStepHTML();
             break;
