@@ -687,8 +687,8 @@ function getActivitiesStepHTML() {
                     </button>
                 </div>
                 
-                <!-- Total Cost -->
-                <div class="card" style="background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: white; text-align: center;">
+                                <!-- Total Cost -->
+                <div class="card" style="background: linear-gradient(135deg, #8B5CF6, #7C3AED); color: white; text-align: center; border: none;">
                     <h3 style="color: white; margin-bottom: 10px;">Συνολικό Κόστος</h3>
                     <h1 id="activities-total" style="font-size: 48px; margin: 0;">0€</h1>
                     <p style="opacity: 0.9;">Για ${state.familyMembers.length} άτομα</p>
