@@ -175,7 +175,7 @@ function loadStepContent(stepName) {
     
     switch(stepName) {
         case 'destination':
-            stepContent.innerHTML = getDestinationStepHTML();
+            stepContent.innerHTML = ();
             setupDestinationStep();
             break;
         case 'flight':
@@ -311,6 +311,7 @@ function getDestinationStepHTML() {
                     <select class="form-control" id="weather">
                         <option value="">Όλοι οι καιροί</option>
                         <option value="Ζεστό">☀️ Πιο ζεστό από Ελλάδα</option>
+                        <option value="Ίδιο">🌡️ Ίδια Θερμοκρασία</option>  <!-- ΠΡΟΣΘΗΚΗ -->
                         <option value="Κρύο">⛄ Πιο κρύο</option>
                     </select>
                 </div>
@@ -333,6 +334,7 @@ function getDestinationStepHTML() {
                     <select class="form-control" id="cost-level">
                         <option value="">Όλα τα επίπεδα</option>
                         <option value="Οικονομικό">💰 Οικονομικό</option>
+                         <option value="Μέτριο">💰💰 Μέτριο</option>  <!-- ΠΡΟΣΘΗΚΗ -->
                         <option value="Ακριβό">💰💰💰 Ακριβό</option>
                     </select>
                 </div>
