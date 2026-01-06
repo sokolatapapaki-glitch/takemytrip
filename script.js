@@ -2346,18 +2346,7 @@ function createDestinationDropdown() {
             <input type="number" class="form-control" id="manual-days" min="1" max="30" value="5"
                    style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px;">
         </div>
-               
-        <div id="city-info-container" style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4F46E5;">
-            <h4 style="color: #4F46E5; margin: 0 0 10px 0; font-size: 16px;">
-                <i class="fas fa-info-circle" style="margin-right: 8px;"></i>
-                Πληροφορίες:
-            </h4>
-            <p style="color: #666; font-size: 14px; margin: 0;">
-                <span id="selected-city-info">Επιλέξτε πόλη για πληροφορίες</span>
-            </p>
-            <div id="city-details" style="font-size: 13px; color: #666; margin-top: 8px;"></div>
-        </div>
-        
+              
         <div style="display: flex; gap: 12px; margin-top: 25px;">
             <button onclick="saveManualDestination()" 
                     style="flex: 1; padding: 14px; background: #4F46E5; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
@@ -2375,10 +2364,10 @@ function createDestinationDropdown() {
     document.body.appendChild(dropdownContainer);
     destinationDropdown = dropdownContainer;
     
-    const citySelect = dropdownContainer.querySelector('#manual-city-select');
-    citySelect.addEventListener('change', function() {
-        updateCityInfo(this.value, this.options[this.selectedIndex].text);
-    });
+        const citySelect = dropdownContainer.querySelector('#manual-city-select');
+    // ΑΠΕΝΕΡΓΟΠΟΙΗΣΗ: citySelect.addEventListener('change', function() {
+    //     updateCityInfo(this.value, this.options[this.selectedIndex].text);
+    // });
     
     document.addEventListener('click', function(event) {
         if (isDropdownVisible && destinationDropdown && 
