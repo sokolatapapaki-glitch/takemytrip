@@ -787,20 +787,33 @@ function getSummaryStepHTML() {
                     </div>
                 </div>
                 
-                <!-- Daily Program -->
-                <div class="card" id="daily-program-section">
+                <!-- Daily Program - ΑΚΡΙΒΩΣ ΟΠΩΣ ΣΤΟ ΠΑΛΙΟ -->
+                <div class="card" id="daily-program-section" style="margin-top: 30px;">
                     <h3><i class="fas fa-calendar-day"></i> Ημερήσιο Πρόγραμμα</h3>
-                    <div id="daily-program" style="min-height: 100px; padding: 20px; background: #f8f9fa; border-radius: var(--radius-md);">
+                    
+                    <!-- ΕΔΩ ΘΑ ΕΜΦΑΝΙΣΤΕΙ ΤΟ ΠΡΟΓΡΑΜΜΑ ΑΠΟ ΤΟ ΠΑΛΙΟ -->
+                    <div id="daily-program" class="summary-content" 
+                         style="min-height: 150px; padding: 20px; border-radius: 15px; background: #e0fff0; border: 2px dashed #3eb489;">
                         <p style="text-align: center; color: var(--gray);">
                             <i class="fas fa-spinner fa-spin"></i> Δημιουργία προγράμματος...
                         </p>
                     </div>
+                    
+                    <!-- ΚΟΥΜΠΙ ΟΠΩΣ ΣΤΟ ΠΑΛΙΟ -->
+                    <div class="step-5-btn-container" style="text-align: center; margin-top: 30px;">
+                        <button class="step-5-btn" onclick="showStep('map')" 
+                                style="padding: 18px 40px; font-size: 20px; border-radius: 16px; 
+                                       background: #3eb489; color: white; border: none; 
+                                       cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;">
+                            <i class="fas fa-map-marked-alt"></i> Συνέχεια στον Χάρτη
+                        </button>
+                    </div>
                 </div>
                 
-                <!-- Next Button -->
-                <div style="text-align: center; margin-top: 40px;">
-                    <button class="btn btn-primary" onclick="showStep('map')" style="padding: 18px 50px; font-size: 18px;">
-                        <i class="fas fa-map"></i> Συνέχεια στον Χάρτη
+                <!-- ΕΠΙΠΛΕΟΝ ΚΟΥΜΠΙ ΓΙΑ ΟΠΤΙΚΗ ΣΥΝΕΧΕΙΑ (προαιρετικό) -->
+                <div style="text-align: center; margin-top: 40px; opacity: 0.8;">
+                    <button class="btn btn-outline" onclick="showStep('activities')" style="padding: 12px 25px;">
+                        <i class="fas fa-arrow-left"></i> Επιστροφή στις Δραστηριότητες
                     </button>
                 </div>
             `}
