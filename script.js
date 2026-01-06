@@ -1756,7 +1756,7 @@ function setupSummaryStep() {
                         daysDisplay.style.color = 'var(--success)';
                     }
                     
-                    crm();
+                    createGeographicProgram(
                     saveState();
                     
                     console.log(`📅 Ενημέρωση προγράμματος για ${selectedDays} μέρες`);
@@ -1772,7 +1772,7 @@ function setupSummaryStep() {
             daysDisplay.style.color = state.selectedDays > 0 ? 'var(--success)' : 'var(--warning)';
         }
         
-        crm();
+        createGeographicProgram(
         
     }, 100);
 }
