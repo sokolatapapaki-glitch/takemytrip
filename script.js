@@ -2838,7 +2838,7 @@ function createMarkerWithConnectFunction(coords, title, activityData) {
             `).openPopup();
             
             // Σχεδίαση διαδρομής
-            drawRouteBetweenPoints();
+            ();
             
         } 
         // Αν κάνουμε κλικ στο ίδιο σημείο ξανά
@@ -2920,8 +2920,17 @@ function createMarkerWithConnectFunction(coords, title, activityData) {
 }
 
 function drawRouteBetweenPoints() {
+    console.log('🔍 ΕΛΕΓΧΟΣ: drawRouteBetweenPoints καλείται');
+    console.log('📍 selectedPointA:', selectedPointA);
+    console.log('📍 selectedPointB:', selectedPointB);
+    console.log('📍 window.travelMap:', window.travelMap);
+    
     if (!selectedPointA || !selectedPointB || !window.travelMap) {
-        console.error('❌ Δεν υπάρχουν δύο σημεία για σύνδεση');
+        console.error('❌ ΛΕΙΠΟΥΝ ΣΤΟΙΧΕΙΑ:', {
+            selectedPointA: !!selectedPointA,
+            selectedPointB: !!selectedPointB,
+            travelMap: !!window.travelMap
+        });
         return;
     }
     
