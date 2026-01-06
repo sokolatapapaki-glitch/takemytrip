@@ -791,9 +791,8 @@ function getSummaryStepHTML() {
                             </button>
                             
                             <p style="text-align: center; color: var(--gray); font-size: 14px; margin-bottom: 20px;">
-                                Θα ομαδοποιήσουμε τις <strong>${state.selectedActivities.length} δραστηριότητες</strong><br>
-                                σε <strong>${state.selectedDays || '?'} μέρες</strong> με βάση την τοποθεσία τους
-                            </p>
+    <i class="fas fa-info-circle"></i> Πατήστε το κουμπί για δημιουργία βελτιστοποιημένου προγράμματος
+</p>
                         </div>
                         
                         <!-- Συνολικό Κόστος -->
