@@ -199,57 +199,28 @@ function loadStepContent(stepName) {
             stepContent.innerHTML = getSummaryStepHTML();
             setupSummaryStep();
             break;
-       function loadStepContent(stepName) {
-    const stepContent = document.getElementById('step-content');
+        case 'map':
+            stepContent.innerHTML = getMapStepHTML();
+            setTimeout(() => {
+                if (typeof L !== 'undefined') {
+                    initializeSimpleMap(); // <-- ΑΛΛΑΓΗ ΕΔΩ
+                } else {
+                    console.error('❌ Leaflet δεν φορτώθηκε');
+                    document.getElementById('map-container').innerHTML = `
+                        <div style="height: 500px; display: flex; align-items: center; justify-content: center; background: var(--light); color: var(--gray);">
+                            <div style="text-align: center;">
+                                <i class="fas fa-exclamation-triangle fa-2x" style="margin-bottom: 15px;"></i>
+                                <h4>Χάρτης μη διαθέσιμος</h4>
+                                <p>Δοκιμάστε να ανανεώσετε τη σελίδα</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            }, 500);
+            break;
+    } // Κλείνει το switch
     
-    if (window.travelMap && stepName !== 'map') {
-        try {
-            window.travelMap.remove();
-            window.travelMap = null;
-        } catch(e) {
-            console.log('ℹ️ Δεν υπήρχε ενεργός χάρτης');
-        }
-    }
-    
-    switch(stepName) {
-        case 'destination':
-            stepContent.innerHTML = getDestinationStepHTML();
-            setupDestinationStep();
-            break;
-        case 'flight':
-            stepContent.innerHTML = getFlightStepHTML();
-            break;
-        case 'hotel':
-            stepContent.innerHTML = getHotelStepHTML();
-            setupHotelStep();
-            break;
-        case 'activities':
-            stepContent.innerHTML = getActivitiesStepHTML();
-            setupActivitiesStep();
-            break;
-        case 'summary':
-            stepContent.innerHTML = getSummaryStepHTML();
-            setupSummaryStep();
-            break;
- case 'map':
-    stepContent.innerHTML = getMapStepHTML();
-    setTimeout(() => {
-        if (typeof L !== 'undefined') {
-            initializeSimpleMap(); // <-- ΑΛΛΑΓΗ ΕΔΩ
-        } else {
-            console.error('❌ Leaflet δεν φορτώθηκε');
-            document.getElementById('map-container').innerHTML = `
-                <div style="height: 500px; display: flex; align-items: center; justify-content: center; background: var(--light); color: var(--gray);">
-                    <div style="text-align: center;">
-                        <i class="fas fa-exclamation-triangle fa-2x" style="margin-bottom: 15px;"></i>
-                        <h4>Χάρτης μη διαθέσιμος</h4>
-                        <p>Δοκιμάστε να ανανεώσετε τη σελίδα</p>
-                    </div>
-                </div>
-            `;
-        }
-    }, 500);
-    break;       
+} // ΑΥΤΗ ΑΝΕΒΑΣΕ ΤΗΝ ΑΓΚΥΛΗ ΕΔΩ - ΠΡΟΣΘΕΣΕ ΑΥΤΗ ΤΗ ΓΡΑΜΜΗ
 
 // ==================== EVENT LISTENERS ====================
 function setupEventListeners() {
