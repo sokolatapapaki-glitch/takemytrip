@@ -3234,7 +3234,7 @@ function updateProgramDays() {
             daysDisplay.style.color = 'var(--success)';
         }
         
-        ();
+         generateGeographicProgram();
         saveState();
         
         console.log(`📅 Ενημέρωση προγράμματος για ${selectedDays} μέρες`);
