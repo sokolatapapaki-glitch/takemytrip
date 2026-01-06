@@ -1777,35 +1777,17 @@ function setupSummaryStep() {
         const daysSelect = document.getElementById('program-days');
         if (daysSelect && daysSelect.querySelector(`option[value="${suggestedDays}"]`)) {
             daysSelect.value = suggestedDays;
+            state.selectedDays = suggestedDays; // Ενημέρωση state
         }
-        
-        // Προαιρετικό: Εμφάνιση μηνύματος στον χρήστη
-        setTimeout(() => {
-            showToast(`
-                <div style="text-align: left; max-width: 350px;">
-                    <strong style="color: #4F46E5;">📅 Πρόταση Διάρκειας</strong><br><br>
-                    
-                    <div style="background: #F0F9FF; padding: 12px; border-radius: 8px; border-left: 4px solid #4F46E5;">
-                        Βάσει ομαδοποίησης των δραστηριοτήτων σας:<br>
-                        <strong style="font-size: 18px; color: #4F46E5;">${suggestedDays} μέρες</strong><br>
-                        <small style="color: #666;">
-                            (Βρέθηκαν ${state.selectedActivities.length} δραστηριότητες σε ${suggestedDays} γεωγραφικές περιοχές)
-                        </small>
-                    </div>
-                    
-                    <div style="margin-top: 10px; font-size: 12px; color: #666;">
-                        <i class="fas fa-info-circle"></i> Μπορείτε να αλλάξετε τις μέρες από το dropdown
-                    </div>
-                </div>
-            `, 'info');
-        }, 1500);
     }
     
     setTimeout(() => {
+        // 1. Ρύθμιση dropdown ημερών
         const daysSelect = document.getElementById('program-days');
         if (daysSelect) {
             daysSelect.value = state.selectedDays;
             
+            // Αφαίρεση παλιού event listener και προσθήκη νέου
             const newDaysSelect = daysSelect.cloneNode(true);
             daysSelect.parentNode.replaceChild(newDaysSelect, daysSelect);
             
@@ -1824,10 +1806,14 @@ function setupSummaryStep() {
                     saveState();
                     
                     console.log(`📅 Ενημέρωση προγράμματος για ${selectedDays} μέρες`);
+                    
+                    // Εμφάνιση μηνύματος
+                    showToast(`📅 Οι ημέρες ενημερώθηκαν σε ${selectedDays}`, 'success');
                 }
             });
         }
         
+        // 2. Ενημέρωση εμφάνισης ημερών
         const daysDisplay = document.getElementById('days-display');
         if (daysDisplay) {
             daysDisplay.textContent = state.selectedDays > 0 
@@ -1836,50 +1822,38 @@ function setupSummaryStep() {
             daysDisplay.style.color = state.selectedDays > 0 ? 'var(--success)' : 'var(--warning)';
         }
         
+        // 3. Δημιουργία προγράμματος
         createDailyProgram();
         
-    }, 100);
-}
-    
-    setTimeout(() => {
-        const daysSelect = document.getElementById('program-days');
-        if (daysSelect) {
-            daysSelect.value = state.selectedDays;
-            
-            const newDaysSelect = daysSelect.cloneNode(true);
-            daysSelect.parentNode.replaceChild(newDaysSelect, daysSelect);
-            
-            newDaysSelect.addEventListener('change', function() {
-                const selectedDays = parseInt(this.value);
-                if (selectedDays > 0) {
-                    state.selectedDays = selectedDays;
-                    
-                    const daysDisplay = document.getElementById('days-display');
-                    if (daysDisplay) {
-                        daysDisplay.textContent = '✅ ' + selectedDays + ' μέρες επιλέχθηκαν';
-                        daysDisplay.style.color = 'var(--success)';
-                    }
-                    
-                    createDailyProgram(); // Διορθωμένο: Αφαίρεση της invalid κλήσης
-                    saveState();
-                    
-                    console.log(`📅 Ενημέρωση προγράμματος για ${selectedDays} μέρες`);
-                }
-            });
-        }
+        // 4. Ενημέρωση συνολικού κόστους
+        updateActivitiesCost();
         
-        const daysDisplay = document.getElementById('days-display');
-        if (daysDisplay) {
-            daysDisplay.textContent = state.selectedDays > 0 
-                ? '✅ ' + state.selectedDays + ' μέρες επιλέχθηκαν'
-                : '⚠️ Δεν έχετε επιλέξει ακόμα';
-            daysDisplay.style.color = state.selectedDays > 0 ? 'var(--success)' : 'var(--warning)';
+        // 5. Εμφάνιση μηνύματος για ομαδοποίηση (αν υπάρχει πρόταση)
+        if (suggestedDays > 0) {
+            setTimeout(() => {
+                showToast(`
+                    <div style="text-align: left; max-width: 350px;">
+                        <strong style="color: #4F46E5;">📅 Πρόταση Διάρκειας</strong><br><br>
+                        
+                        <div style="background: #F0F9FF; padding: 12px; border-radius: 8px; border-left: 4px solid #4F46E5;">
+                            Βάσει ομαδοποίησης των δραστηριοτήτων σας:<br>
+                            <strong style="font-size: 18px; color: #4F46E5;">${suggestedDays} μέρες</strong><br>
+                            <small style="color: #666;">
+                                (Βρέθηκαν ${state.selectedActivities.length} δραστηριότητες σε ${suggestedDays} γεωγραφικές περιοχές)
+                            </small>
+                        </div>
+                        
+                        <div style="margin-top: 10px; font-size: 12px; color: #666;">
+                            <i class="fas fa-info-circle"></i> Μπορείτε να αλλάξετε τις μέρες από το dropdown
+                        </div>
+                    </div>
+                `, 'info');
+            }, 500);
         }
-        
-        createDailyProgram(); // Διορθωμένο: Αφαίρεση της invalid κλήσης
         
     }, 100);
 }
+
 
 function createDailyProgram() {
     const dailyProgram = document.getElementById('daily-program');
@@ -3925,7 +3899,7 @@ window.resetMarkerAppearance = resetMarkerAppearance;
 window.resetSelection = resetSelection;
 
 // ========== ΕΠΙΠΛΕΟΝ ΠΟΥ ΜΠΟΡΕΙ ΝΑ ΧΡΕΙΑΖΟΝΤΑΙ ==========
-window.getCityCoordinates = getCityCoordinates;
+window.= getCityCoordinates;
 window.getActivityEmoji = getActivityEmoji;
 window.calculateFamilyCost = calculateFamilyCost;
 window.updateActivitiesTotal = updateActivitiesTotal;
