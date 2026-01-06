@@ -783,8 +783,9 @@ function getSummaryStepHTML() {
                         </div>
                     ` : `
                         <div style="margin-top: 20px;">
-                            <button class="btn btn-primary" onclick="()" 
-                                    style="width: 100%; padding: 15px; font-size: 18px; margin-bottom: 20px;">
+                            <button class="btn btn-primary" onclick="generateGeographicProgram()"
+        style="width: 100%; padding: 15px; font-size: 18px; margin-bottom: 20px;">
+                                    
                                 <i class="fas fa-map-marked-alt"></i> ΔΗΜΙΟΥΡΓΙΑ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ
                             </button>
                             
@@ -856,7 +857,7 @@ function getSummaryStepHTML() {
                                     για να ομαδοποιήσουμε τις ${state.selectedActivities.length} δραστηριότητες<br>
                                     σε ${state.selectedDays} μέρες με βάση την τοποθεσία τους
                                 </p>
-                                <button onclick="()" class="btn btn-primary" style="padding: 15px 40px; font-size: 18px;">
+                                <button onclick="generateGeographicProgram()" class="btn btn-primary" style="padding: 15px 40px; font-size: 18px;">
                                     <i class="fas fa-map-marked-alt"></i> ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΓΡΑΜΜΑΤΟΣ
                                 </button>
                             </div>
@@ -2168,7 +2169,7 @@ function setupSummaryStep() {
                         daysDisplay.style.color = 'var(--success)';
                     }
                     
-                    createDailyProgram();
+                    ();
                     saveState();
                     
                     console.log(`📅 Ενημέρωση προγράμματος για ${selectedDays} μέρες`);
@@ -2189,7 +2190,7 @@ function setupSummaryStep() {
         }
         
         // 3. Δημιουργία προγράμματος
-        createDailyProgram();
+        ();
         
         // 4. Ενημέρωση συνολικού κόστους
         updateActivitiesCost();
@@ -3235,7 +3236,7 @@ function updateProgramDays() {
             daysDisplay.style.color = 'var(--success)';
         }
         
-        createDailyProgram();
+        ();
         saveState();
         
         console.log(`📅 Ενημέρωση προγράμματος για ${selectedDays} μέρες`);
