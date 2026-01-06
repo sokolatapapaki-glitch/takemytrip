@@ -2135,16 +2135,15 @@ function setupSummaryStep() {
         state.selectedDays = 3;
     }
     
-    // 🔴 ΠΡΟΣΘΗΚΗ: ΑΥΤΟΜΑΤΗ ΠΡΟΤΑΣΗ ΗΜΕΡΩΝ ΑΠΟ ΟΜΑΔΟΠΟΙΗΣΗ
+    // Αυτόματη πρόταση ημερών από ομαδοποίηση
     const suggestedDays = suggestDaysFromGroups();
     if (suggestedDays > 0 && state.selectedDays !== suggestedDays) {
         console.log(`📅 Πρόταση από ομαδοποίηση: ${suggestedDays} μέρες`);
         
-        // Ενημέρωση του dropdown αν θέλεις
         const daysSelect = document.getElementById('program-days');
         if (daysSelect && daysSelect.querySelector(`option[value="${suggestedDays}"]`)) {
             daysSelect.value = suggestedDays;
-            state.selectedDays = suggestedDays; // Ενημέρωση state
+            state.selectedDays = suggestedDays;
         }
     }
     
@@ -2154,7 +2153,6 @@ function setupSummaryStep() {
         if (daysSelect) {
             daysSelect.value = state.selectedDays;
             
-            // Αφαίρεση παλιού event listener και προσθήκη νέου
             const newDaysSelect = daysSelect.cloneNode(true);
             daysSelect.parentNode.replaceChild(newDaysSelect, daysSelect);
             
@@ -2169,12 +2167,10 @@ function setupSummaryStep() {
                         daysDisplay.style.color = 'var(--success)';
                     }
                     
-                    ();
+                    generateGeographicProgram();  // <-- ΑΥΤΟ ΕΙΝΑΙ ΣΩΣΤΟ
                     saveState();
                     
                     console.log(`📅 Ενημέρωση προγράμματος για ${selectedDays} μέρες`);
-                    
-                    // Εμφάνιση μηνύματος
                     showToast(`📅 Οι ημέρες ενημερώθηκαν σε ${selectedDays}`, 'success');
                 }
             });
@@ -2190,28 +2186,23 @@ function setupSummaryStep() {
         }
         
         // 3. Δημιουργία προγράμματος
-        ();
+        generateGeographicProgram();  // <-- ΚΑΙ ΕΔΩ ΣΩΣΤΟ
         
         // 4. Ενημέρωση συνολικού κόστους
         updateActivitiesCost();
         
-        // 5. Εμφάνιση μηνύματος για ομαδοποίηση (αν υπάρχει πρόταση)
+        // 5. Εμφάνιση μηνύματος για ομαδοποίηση
         if (suggestedDays > 0) {
             setTimeout(() => {
                 showToast(`
                     <div style="text-align: left; max-width: 350px;">
                         <strong style="color: #4F46E5;">📅 Πρόταση Διάρκειας</strong><br><br>
-                        
                         <div style="background: #F0F9FF; padding: 12px; border-radius: 8px; border-left: 4px solid #4F46E5;">
                             Βάσει ομαδοποίησης των δραστηριοτήτων σας:<br>
                             <strong style="font-size: 18px; color: #4F46E5;">${suggestedDays} μέρες</strong><br>
                             <small style="color: #666;">
                                 (Βρέθηκαν ${state.selectedActivities.length} δραστηριότητες σε ${suggestedDays} γεωγραφικές περιοχές)
                             </small>
-                        </div>
-                        
-                        <div style="margin-top: 10px; font-size: 12px; color: #666;">
-                            <i class="fas fa-info-circle"></i> Μπορείτε να αλλάξετε τις μέρες από το dropdown
                         </div>
                     </div>
                 `, 'info');
@@ -2220,7 +2211,6 @@ function setupSummaryStep() {
         
     }, 100);
 }
-
 
 
 
