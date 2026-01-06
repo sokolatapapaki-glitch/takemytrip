@@ -179,7 +179,7 @@ function loadStepContent(stepName) {
             setupDestinationStep();
             break;
         case 'flight':
-            stepContent.innerHTML = getFlightStepHTML();
+            stepContent.innerHTML = ();
             break;
         case 'hotel':
             stepContent.innerHTML = getHotelStepHTML();
@@ -421,26 +421,19 @@ function getFlightStepHTML() {
             <h1 class="card-title"><i class="fas fa-plane"></i> Αναζήτηση Πτήσεων</h1>
             <p class="card-subtitle">Βρείτε τις καλύτερες πτήσεις για το ταξίδι σας</p>
             
-            <div class="grid grid-3">
+            <!-- ΕΝΑ ΜΟΝΟ GRID ΜΕ 2 ΣΤΗΛΕΣ -->
+            <div class="grid grid-2">
                 <div class="form-group">
                     <label class="form-label">Από</label>
                     <input type="text" class="form-control" value="Αθήνα" readonly>
                 </div>
                 
-                <div class="grid grid-2">  <!-- ΑΠΟ grid-3 ΣΕ grid-2 -->
-    <div class="form-group">
-        <label class="form-label">Από</label>
-        <input type="text" class="form-control" value="Αθήνα" readonly>
-    </div>
-    
-    <div class="form-group">
-        <label class="form-label">Προς</label>
-        <input type="text" class="form-control" id="flight-destination" 
-               value="${state.selectedDestination || ''}" ${state.selectedDestination ? 'readonly' : ''}>
-    </div>
-    
-    <!-- ΔΙΑΓΡΑΦΗΚΕ ΤΟ ΤΡΙΤΟ ΠΕΔΙΟ (ΗΜΕΡΟΜΗΝΙΑ) -->
-</div>
+                <div class="form-group">
+                    <label class="form-label">Προς</label>
+                    <input type="text" class="form-control" id="flight-destination" 
+                           value="${state.selectedDestination || ''}" ${state.selectedDestination ? 'readonly' : ''}">
+                </div>
+            </div>
             
             <div style="text-align: center; margin: 40px 0;">
                 <h3 style="margin-bottom: 20px; color: var(--dark);">🔍 Αναζήτηση στις πλατφόρμες:</h3>
