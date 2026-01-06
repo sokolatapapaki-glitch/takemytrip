@@ -761,9 +761,9 @@ function getSummaryStepHTML() {
                             <i class="fas fa-sync-alt"></i> Ενημέρωση Προγράμματος
                         </button>
                         
-                        <span id="days-display" style="color: var(--primary); font-weight: bold; font-size: 16px;">
-                            ${state.selectedDays > 0 ? '✅ ' + state.selectedDays + ' μέρες επιλέχθηκαν' : '⚠️ Δεν έχετε επιλέξει ακόμα'}
-                        </span>
+                        <span id="days-display" style="color: black; font-weight: bold; font-size: 16px;">
+    ${state.selectedDays > 0 ? '✅ ' + state.selectedDays + ' μέρες επιλέχθηκαν' : '⚠️ Δεν έχετε επιλέξει ακόμα'}
+</span>
                     </div>
                     
                     <div style="margin-top: 15px; font-size: 14px; color: #666; background: white; padding: 10px; border-radius: 6px;">
@@ -1434,7 +1434,7 @@ function getMapStepHTML() {
                     1. Πατήστε "Προβολή Σημείων" για να φορτώσετε τις δραστηριότητες σας<br>
                     2. Κάντε κλικ σε 2 πινέζες για επιλογή <span style="color: #10B981;">ΑΠΟ</span> και <span style="color: #EF4444;">ΠΡΟΣ</span><br>
                     3. Η διαδρομή θα σχεδιαστεί αυτόματα με απόσταση και χρόνους<br>
-                    4. Πατήστε στα κουμπιά Google Maps για πραγματικές οδηγίες
+                    4. Πατήστε στο κουμπί: Διαδρομή για Google Maps οδηγίες
                 </div>
                 
                 <!-- ΕΠΙΣΤΡΟΦΗ -->
@@ -3483,23 +3483,23 @@ function showActivityMap() {
         <div style="text-align: left; max-width: 350px;">
             <strong style="font-size: 16px; color: #4F46E5;">🗺️ Οδηγίες Χρήσης Χάρτη</strong><br><br>
             
-            <div style="background: #F0F9FF; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
-                <strong>🎯 Βήμα 1: Επιλογή Σημείων</strong><br>
-                • Κάντε κλικ σε μια πινέζα για <span style="color: #10B981; font-weight: bold;">ΑΠΟ</span><br>
-                • Κάντε κλικ σε άλλη για <span style="color: #EF4444; font-weight: bold;">ΠΡΟΣ</span>
-            </div>
+           <div style="background: #F0F9FF; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+    <strong style="color: #000000;">🎯 Βήμα 1: Επιλογή Σημείων</strong><br>
+    <span style="color: #000000;">• Κάντε κλικ σε μια πινέζα για <span style="color: #10B981; font-weight: bold;">ΑΠΟ</span></span><br>
+    <span style="color: #000000;">• Κάντε κλικ σε άλλη για <span style="color: #EF4444; font-weight: bold;">ΠΡΟΣ</span></span>
+</div>
             
             <div style="background: #FEF3C7; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
-                <strong>🛣️ Βήμα 2: Διαδρομή</strong><br>
-                • Η διαδρομή θα σχεδιαστεί <strong>αυτόματα</strong><br>
-                • Θα δείτε απόσταση και χρόνους
-            </div>
+    <strong style="color: #000000;">🛣️ Βήμα 2: Διαδρομή</strong><br>
+    <span style="color: #000000;">• Η διαδρομή θα σχεδιαστεί <strong>αυτόματα</strong></span><br>
+    <span style="color: #000000;">• Θα δείτε απόσταση και χρόνους</span>
+</div>
             
-            <div style="background: #E0F2FE; padding: 10px; border-radius: 8px;">
-                <strong>📱 Βήμα 3: Οδηγίες</strong><br>
-                • Πατήστε κουμπιά Google Maps για <strong>πραγματικές οδηγίες</strong><br>
-                • Επιλέξτε μεταφορικό μέσο (περπάτημα, αυτοκίνητο, ΜΜΜ, ποδήλατο)
-            </div>
+           <div style="background: #E0F2FE; padding: 10px; border-radius: 8px;">
+    <strong style="color: #000000;">📱 Βήμα 3: Οδηγίες</strong><br>
+    <span style="color: #000000;">• Πατήστε κουμπιά Google Maps για <strong>πραγματικές οδηγίες</strong></span><br>
+    <span style="color: #000000;">• Επιλέξτε μεταφορικό μέσο (περπάτημα, αυτοκίνητο, ΜΜΜ, ποδήλατο)</span>
+</div>
             
             <div style="margin-top: 10px; padding: 8px; background: #4F46E5; color: white; border-radius: 6px; text-align: center; font-weight: bold;">
                 ✅ Εμφανίστηκαν ${activityCount} πινέζες
