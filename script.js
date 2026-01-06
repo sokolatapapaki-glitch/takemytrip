@@ -231,27 +231,25 @@ function loadStepContent(stepName) {
             stepContent.innerHTML = getSummaryStepHTML();
             setupSummaryStep();
             break;
-        case 'map':
-            stepContent.innerHTML = getMapStepHTML();
-            setTimeout(() => {
-                if (typeof L !== 'undefined') {
-                    setupMapStep();
-                } else {
-                    console.error('❌ Leaflet δεν φορτώθηκε');
-                    document.getElementById('map-container').innerHTML = `
-                        <div style="height: 500px; display: flex; align-items: center; justify-content: center; background: var(--light); color: var(--gray);">
-                            <div style="text-align: center;">
-                                <i class="fas fa-exclamation-triangle fa-2x" style="margin-bottom: 15px;"></i>
-                                <h4>Χάρτης μη διαθέσιμος</h4>
-                                <p>Δοκιμάστε να ανανεώσετε τη σελίδα</p>
-                            </div>
-                        </div>
-                    `;
-                }
-            }, 500);
-            break;
-    }
-}
+ case 'map':
+    stepContent.innerHTML = getMapStepHTML();
+    setTimeout(() => {
+        if (typeof L !== 'undefined') {
+            initializeSimpleMap(); // <-- ΑΛΛΑΓΗ ΕΔΩ
+        } else {
+            console.error('❌ Leaflet δεν φορτώθηκε');
+            document.getElementById('map-container').innerHTML = `
+                <div style="height: 500px; display: flex; align-items: center; justify-content: center; background: var(--light); color: var(--gray);">
+                    <div style="text-align: center;">
+                        <i class="fas fa-exclamation-triangle fa-2x" style="margin-bottom: 15px;"></i>
+                        <h4>Χάρτης μη διαθέσιμος</h4>
+                        <p>Δοκιμάστε να ανανεώσετε τη σελίδα</p>
+                    </div>
+                </div>
+            `;
+        }
+    }, 500);
+    break;       
 
 // ==================== EVENT LISTENERS ====================
 function setupEventListeners() {
@@ -4269,7 +4267,183 @@ function initializeSimpleMap() {
             <strong>Έτοιμο:</strong> Χάρτης φορτώθηκε για ${state.selectedDestination}
         `;
     }
-}           
+} 
+// ==================== SIMPLIFIED MAP FUNCTIONS ====================
+
+function loadActivitiesOnMap() {
+    alert('📌 Θα φορτώσουμε τις δραστηριότητες στο επόμενο βήμα!\n\nΓια τώρα, ο χάρτης είναι σε λειτουργία.');
+    
+    // Προς το παρών, απλά ενημέρωση
+    const statusEl = document.getElementById('map-status');
+    if (statusEl) {
+        statusEl.innerHTML = `
+            <i class="fas fa-check-circle" style="color: #10B981;"></i>
+            <strong>Έτοιμο:</strong> Ο χάρτης είναι έτοιμος για χρήση
+        `;
+    }
+}
+
+function clearMap() {
+    alert('🗺️ Η λειτουργία καθαρισμού θα προστεθεί στο επόμενο βήμα');
+}
+
+function showGroupedMap() {
+    alert('👥 Η ομαδοποίηση θα προστεθεί στο επόμενο βήμα');
+}
+
+// ==================== SIMPLE MAP INITIALIZATION ====================
+function initializeSimpleMap() {
+    console.log('🗺️ Αρχικοποίηση απλού χάρτη για:', state.selectedDestination);
+    
+    const mapElement = document.getElementById('simple-map');
+    if (!mapElement) {
+        console.error('❌ Δεν βρέθηκε map element');
+        return;
+    }
+    
+    // 1. Καθαρισμός προηγούμενου χάρτη
+    if (window.simpleMap) {
+        window.simpleMap.remove();
+    }
+    
+    // 2. Βρες συντεταγμένες πόλης
+    const cityCoords = getCityCoordinates(state.selectedDestinationId);
+    if (!cityCoords) {
+        mapElement.innerHTML = `
+            <div style="height:100%; display:flex; align-items:center; justify-content:center; background:#f8f9fa; color:#666;">
+                <div style="text-align:center;">
+                    <i class="fas fa-map-marked-alt fa-2x" style="margin-bottom:15px;"></i>
+                    <h4>Δεν βρέθηκαν συντεταγμένες</h4>
+                    <p>Για την πόλη: ${state.selectedDestination}</p>
+                </div>
+            </div>
+        `;
+        return;
+    }
+    
+    // 3. Δημιουργία χάρτη
+    window.simpleMap = L.map('simple-map').setView(cityCoords, 13);
+    
+    // 4. Προσθήκη χάρτη OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 18
+    }).addTo(window.simpleMap);
+    
+    // 5. Προσθήκη marker για την πόλη
+    L.marker(cityCoords)
+        .addTo(window.simpleMap)
+        .bindPopup(`
+            <div style="text-align:center; padding:10px;">
+                <h4 style="margin:0 0 5px 0; color:#4F46E5;">${state.selectedDestination}</h4>
+                <p style="margin:0; color:#666; font-size:14px;">Κέντρο πόλης</p>
+                <p style="margin:5px 0 0 0; color:#888; font-size:12px;">
+                    <i class="fas fa-info-circle"></i> Πατήστε "Φόρτωση Δραστηριοτήτων"
+                </p>
+            </div>
+        `)
+        .openPopup();
+    
+    console.log('✅ Απλός χάρτης αρχικοποιήθηκε');
+    
+    // 6. Ενημέρωση status
+    const statusEl = document.getElementById('map-status');
+    if (statusEl) {
+        statusEl.innerHTML = `
+            <i class="fas fa-check-circle" style="color: #10B981;"></i>
+            <strong>Έτοιμο:</strong> Χάρτης φορτώθηκε για ${state.selectedDestination}
+        `;
+    }
+}
+// ==================== SIMPLIFIED MAP FUNCTIONS ====================
+
+function loadActivitiesOnMap() {
+    alert('📌 Θα φορτώσουμε τις δραστηριότητες στο επόμενο βήμα!\n\nΓια τώρα, ο χάρτης είναι σε λειτουργία.');
+    
+    // Προς το παρών, απλά ενημέρωση
+    const statusEl = document.getElementById('map-status');
+    if (statusEl) {
+        statusEl.innerHTML = `
+            <i class="fas fa-check-circle" style="color: #10B981;"></i>
+            <strong>Έτοιμο:</strong> Ο χάρτης είναι έτοιμος για χρήση
+        `;
+    }
+}
+
+function clearMap() {
+    alert('🗺️ Η λειτουργία καθαρισμού θα προστεθεί στο επόμενο βήμα');
+}
+
+function showGroupedMap() {
+    alert('👥 Η ομαδοποίηση θα προστεθεί στο επόμενο βήμα');
+}
+
+// ==================== SIMPLE MAP INITIALIZATION ====================
+function initializeSimpleMap() {
+    console.log('🗺️ Αρχικοποίηση απλού χάρτη για:', state.selectedDestination);
+    
+    const mapElement = document.getElementById('simple-map');
+    if (!mapElement) {
+        console.error('❌ Δεν βρέθηκε map element');
+        return;
+    }
+    
+    // 1. Καθαρισμός προηγούμενου χάρτη
+    if (window.simpleMap) {
+        window.simpleMap.remove();
+    }
+    
+    // 2. Βρες συντεταγμένες πόλης
+    const cityCoords = getCityCoordinates(state.selectedDestinationId);
+    if (!cityCoords) {
+        mapElement.innerHTML = `
+            <div style="height:100%; display:flex; align-items:center; justify-content:center; background:#f8f9fa; color:#666;">
+                <div style="text-align:center;">
+                    <i class="fas fa-map-marked-alt fa-2x" style="margin-bottom:15px;"></i>
+                    <h4>Δεν βρέθηκαν συντεταγμένες</h4>
+                    <p>Για την πόλη: ${state.selectedDestination}</p>
+                </div>
+            </div>
+        `;
+        return;
+    }
+    
+    // 3. Δημιουργία χάρτη
+    window.simpleMap = L.map('simple-map').setView(cityCoords, 13);
+    
+    // 4. Προσθήκη χάρτη OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 18
+    }).addTo(window.simpleMap);
+    
+    // 5. Προσθήκη marker για την πόλη
+    L.marker(cityCoords)
+        .addTo(window.simpleMap)
+        .bindPopup(`
+            <div style="text-align:center; padding:10px;">
+                <h4 style="margin:0 0 5px 0; color:#4F46E5;">${state.selectedDestination}</h4>
+                <p style="margin:0; color:#666; font-size:14px;">Κέντρο πόλης</p>
+                <p style="margin:5px 0 0 0; color:#888; font-size:12px;">
+                    <i class="fas fa-info-circle"></i> Πατήστε "Φόρτωση Δραστηριοτήτων"
+                </p>
+            </div>
+        `)
+        .openPopup();
+    
+    console.log('✅ Απλός χάρτης αρχικοποιήθηκε');
+    
+    // 6. Ενημέρωση status
+    const statusEl = document.getElementById('map-status');
+    if (statusEl) {
+        statusEl.innerHTML = `
+            <i class="fas fa-check-circle" style="color: #10B981;"></i>
+            <strong>Έτοιμο:</strong> Χάρτης φορτώθηκε για ${state.selectedDestination}
+        `;
+    }
+}
+
+
 // ==================== WINDOW FUNCTIONS ====================
 window.showStep = showStep;
 // ... τα υπόλοιπα window ...
@@ -4328,6 +4502,9 @@ window.calculateFamilyCost = calculateFamilyCost;
 window.updateActivitiesTotal = updateActivitiesTotal;
 window.saveState = saveState;
 window.initializeSimpleMap = initializeSimpleMap;
+window.loadActivitiesOnMap = loadActivitiesOnMap;
+window.clearMap = clearMap;
+window.showGroupedMap = showGroupedMap;            
             
 
 console.log('✅ Script.js loaded successfully!');
