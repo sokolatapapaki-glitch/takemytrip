@@ -3009,16 +3009,16 @@ const bikeTime = Math.round(distance * 8);      // Ποδήλατο
                         <div style="font-size: 14px; font-weight: bold;">${carTime} λεπτά</div>
                         <div style="font-size: 10px; color: var(--gray);">Αυτοκίνητο*</div>
                     </div>
-                    <div style="text-align: center; padding: 8px; background: #e8f5e9; border-radius: 4px;">
-                        <div style="font-size: 18px;">🚇</div>
-                        <div style="font-size: 14px; font-weight: bold;">${transitTime} λεπτά</div>
-                        <div style="font-size: 10px; color: var(--gray);">ΜΜΜ*</div>
-                    </div>
-                    <div style="text-align: center; padding: 8px; background: #f3e5f5; border-radius: 4px;">
-                        <div style="font-size: 18px;">🚲</div>
-                        <div style="font-size: 14px; font-weight: bold;">${bikeTime} λεπτά</div>
-                        <div style="font-size: 10px; color: var(--gray);">Ποδήλατο*</div>
-                    </div>
+                        <div style="text-align: center; padding: 8px; background: #e8f5e9; border-radius: 4px;">
+        <div style="font-size: 18px;">🚇</div>
+        <div style="font-size: 14px; font-weight: bold;">~${Math.round(distance * 5)} λεπτά</div>
+        <div style="font-size: 10px; color: var(--gray);">ΜΜΜ*</div>
+    </div>
+    <div style="text-align: center; padding: 8px; background: #f3e5f5; border-radius: 4px;">
+        <div style="font-size: 18px;">🚲</div>
+        <div style="font-size: 14px; font-weight: bold;">~${Math.round(distance * 8)} λεπτά</div>
+        <div style="font-size: 10px; color: var(--gray);">Ποδήλατο*</div>
+    </div>
                 </div>
                 <p style="font-size: 10px; color: #666; text-align: center; margin-top: 8px; margin-bottom: 0;">
                     *Εκτίμηση. Για πραγματικές οδηγίες πατήστε ένα κουμπί.
