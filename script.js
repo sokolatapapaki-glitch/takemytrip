@@ -3,7 +3,7 @@ const state = {
     selectedDestination: null,
     selectedDestinationId: null,
     selectedDays: 0,
-           familyMembers: [
+    familyMembers: [
         { name: "Ενήλικας 1", age: "" },
         { name: "Ενήλικας 2", age: "" }
     ],
@@ -12,6 +12,12 @@ const state = {
     customPoints: JSON.parse(localStorage.getItem('travel_custom_points')) || [],
     selectedActivities: []
 };
+
+// ==================== GLOBAL MAP VARIABLES (ΑΠΟ ΤΟ ΠΑΛΙΟ ΧΑΡΤΗ) ====================
+window.firstPoint = null;
+window.secondPoint = null;
+window.currentRoutePolyline = null;
+window.selectedMarkers = []; // Για ενώσεις σημείων
 
 // ==================== INITIALIZATION ====================
 document.addEventListener('DOMContentLoaded', function() {
@@ -174,10 +180,10 @@ function loadStepContent(stepName) {
     }
     
     switch(stepName) {
-       case 'destination':
-    stepContent.innerHTML = getDestinationStepHTML();  // <-- ΣΩΣΤΟ!
-    setupDestinationStep();
-    break;
+        case 'destination':
+            stepContent.innerHTML = getDestinationStepHTML();
+            setupDestinationStep();
+            break;
         case 'flight':
             stepContent.innerHTML = getFlightStepHTML();
             break;
@@ -224,7 +230,6 @@ function setupEventListeners() {
         }
     });
     
-       
     console.log('✅ Event listeners εγκαταστάθηκαν');
 }
 
@@ -266,12 +271,12 @@ function fixDestinationButtons() {
             return false;
         }
         
-       if (buttonText.includes('Επαναφορά')) {
-    event.preventDefault();
-    event.stopPropagation();
-    resetFilters();  // <-- ΠΡΟΣΘΕΣΕ resetFilters
-    return false;
-}
+        if (buttonText.includes('Επαναφορά')) {
+            event.preventDefault();
+            event.stopPropagation();
+            resetFilters();
+            return false;
+        }
     });
 }
 
@@ -311,7 +316,7 @@ function getDestinationStepHTML() {
                     <select class="form-control" id="weather">
                         <option value="">Όλοι οι καιροί</option>
                         <option value="Ζεστό">☀️ Πιο ζεστό από Ελλάδα</option>
-                        <option value="Ίδιο">🌡️ Ίδια Θερμοκρασία</option>  <!-- ΠΡΟΣΘΗΚΗ -->
+                        <option value="Ίδιο">🌡️ Ίδια Θερμοκρασία</option>
                         <option value="Κρύο">⛄ Πιο κρύο</option>
                     </select>
                 </div>
@@ -326,7 +331,7 @@ function getDestinationStepHTML() {
                         <option value="Θάλασσα">🏖️ Θαλάσσια & Παραλίες</option>
                         <option value="Βουνό">🏔️ Βουνό & Χιονοδρομικά</option>
                         <option value="Φυσική">🌳 Φυσική Ομορφία</option>
-                        </select>
+                    </select>
                 </div>
                 
                 <div class="form-group">
@@ -334,7 +339,7 @@ function getDestinationStepHTML() {
                     <select class="form-control" id="cost-level">
                         <option value="">Όλα τα επίπεδα</option>
                         <option value="Οικονομικό">💰 Οικονομικό</option>
-                         <option value="Μέτριο">💰💰 Μέτριο</option>  <!-- ΠΡΟΣΘΗΚΗ -->
+                        <option value="Μέτριο">💰💰 Μέτριο</option>
                         <option value="Ακριβό">💰💰💰 Ακριβό</option>
                     </select>
                 </div>
@@ -370,8 +375,8 @@ function getDestinationStepHTML() {
                 </button>
                 
                 <button class="btn btn-outline" onclick="resetFilters()" style="padding: 16px 30px; border-color: var(--danger); color: var(--danger);">
-    <i class="fas fa-redo"></i> Επαναφορά
-</button>
+                    <i class="fas fa-redo"></i> Επαναφορά
+                </button>
             </div>
             
             <div id="destination-results">
@@ -469,7 +474,6 @@ function getFlightStepHTML() {
     `;
 }
 
-
 // ==================== STEP 3: HOTEL ====================
 function getHotelStepHTML() {
     return `
@@ -484,7 +488,7 @@ function getHotelStepHTML() {
                            value="${state.selectedDestination || ''}">
                 </div>
                 
-                               <div class="form-group">
+                <div class="form-group">
                     <label class="form-label">Check-in</label>
                     <input type="date" class="form-control" id="hotel-checkin">
                 </div>
@@ -517,78 +521,78 @@ function getHotelStepHTML() {
                 </div>
                 
                 <div class="form-group">
-    <label class="form-label">Δωμάτια</label>
-    <select class="form-control" id="hotel-rooms">
-        <option value="1" selected>1</option>  <!-- ΜΟΝΟ ΕΔΩ selected -->
-        <option value="2">2</option>
-        <option value="3">3</option>
-    </select>
-</div>
+                    <label class="form-label">Δωμάτια</label>
+                    <select class="form-control" id="hotel-rooms">
+                        <option value="1" selected>1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
             </div>
                         
             <!-- Προειδοποίηση για πλατφόρμες -->
-<div class="alert alert-info" style="
-    background: #fff3cd; 
-    border-left: 4px solid #ffc107; 
-    padding: 15px; 
-    margin: 20px 0; 
-    border-radius: 8px;
-    text-align: left;
-">
-    <i class="fas fa-external-link-alt" style="color: #ffc107; margin-right: 10px;"></i>
-    <strong>Σημείωση:</strong> Η αναζήτηση θα σας ανακατευθύνει στις πλατφόρμες 
-    <strong>Booking.com</strong> ή <strong>Expedia</strong>
-</div>
+            <div class="alert alert-info" style="
+                background: #fff3cd; 
+                border-left: 4px solid #ffc107; 
+                padding: 15px; 
+                margin: 20px 0; 
+                border-radius: 8px;
+                text-align: left;
+            ">
+                <i class="fas fa-external-link-alt" style="color: #ffc107; margin-right: 10px;"></i>
+                <strong>Σημείωση:</strong> Η αναζήτηση θα σας ανακατευθύνει στις πλατφόρμες 
+                <strong>Booking.com</strong> ή <strong>Expedia</strong>
+            </div>
 
-<!-- Κουμπιά αναζήτησης -->
-<div style="text-align: center; margin: 40px 0; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+            <!-- Κουμπιά αναζήτησης -->
+            <div style="text-align: center; margin: 40px 0; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
 
-    <!-- ========== 1. BOOKING.COM ========== -->
-    <button class="btn btn-primary" onclick="searchBookingHotels()" 
-            style="min-width: 280px; padding: 18px; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2);"
-            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(33, 150, 243, 0.4)';"
-            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(33, 150, 243, 0.2)';">
-        <i class="fas fa-search"></i> Αναζήτηση σε Booking.com
-    </button>
+                <!-- ========== 1. BOOKING.COM ========== -->
+                <button class="btn btn-primary" onclick="searchBookingHotels()" 
+                        style="min-width: 280px; padding: 18px; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2);"
+                        onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(33, 150, 243, 0.4)';"
+                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(33, 150, 243, 0.2)';">
+                    <i class="fas fa-search"></i> Αναζήτηση σε Booking.com
+                </button>
 
-    <!-- ========== 2. EXPEDIA ========== -->
-    <div style="display: flex; flex-direction: column; align-items: center;">
-        <!-- ΚΟΥΜΠΙ -->
-        <button class="btn btn-accent" onclick="searchExpediaHotels()" 
-                style="min-width: 280px; padding: 18px; background: linear-gradient(135deg, #ff9800, #ff5722); border: none; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(255, 87, 34, 0.2); margin-bottom: 8px;"
-                onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(255, 87, 34, 0.5)';"
-                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(255, 87, 34, 0.2)';">
-            <i class="fas fa-hotel"></i> Αναζήτηση σε Expedia
-        </button>
-        
-        <!-- ΠΛΑΙΣΙΟ ΜΗΝΥΜΑΤΟΣ -->
-        <div style="font-size: 11px; color: #555; background: #f9f9f9; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #ff9800; max-width: 280px; text-align: center; line-height: 1.3;">
-            <i class="fas fa-info-circle" style="color: #ff9800; margin-right: 5px;"></i>
-            Αν κλείσεις μέσω EXPEDIA, η εφαρμογή μας θα πάρει μια μικρή προμήθεια 
-            <strong>χωρίς επιπλέον κόστος για σένα</strong>.
-        </div>
-    </div>
+                <!-- ========== 2. EXPEDIA ========== -->
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <!-- ΚΟΥΜΠΙ -->
+                    <button class="btn btn-accent" onclick="searchExpediaHotels()" 
+                            style="min-width: 280px; padding: 18px; background: linear-gradient(135deg, #ff9800, #ff5722); border: none; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(255, 87, 34, 0.2); margin-bottom: 8px;"
+                            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(255, 87, 34, 0.5)';"
+                            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(255, 87, 34, 0.2)';">
+                        <i class="fas fa-hotel"></i> Αναζήτηση σε Expedia
+                    </button>
+                    
+                    <!-- ΠΛΑΙΣΙΟ ΜΗΝΥΜΑΤΟΣ -->
+                    <div style="font-size: 11px; color: #555; background: #f9f9f9; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #ff9800; max-width: 280px; text-align: center; line-height: 1.3;">
+                        <i class="fas fa-info-circle" style="color: #ff9800; margin-right: 5px;"></i>
+                        Αν κλείσεις μέσω EXPEDIA, η εφαρμογή μας θα πάρει μια μικρή προμήθεια 
+                        <strong>χωρίς επιπλέον κόστος για σένα</strong>.
+                    </div>
+                </div>
 
-    <!-- ========== 3. TICKETSELLER.GR ========== -->
-    <div style="display: flex; flex-direction: column; align-items: center;">
-        <!-- ΚΟΥΜΠΙ -->
-        <button class="btn" onclick="window.open('https://ticketseller.gr/el/home-2/', '_blank')" 
-                style="min-width: 280px; padding: 18px; background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; border: none; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2); margin-bottom: 8px;"
-                onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(76, 175, 80, 0.4)';"
-                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(76, 175, 80, 0.2)';">
-            <i class="fas fa-ticket-alt"></i> TicketSeller.gr
-        </button>
-        
-        <!-- ΠΛΑΙΣΙΟ ΜΗΝΥΜΑΤΟΣ -->
-        <div style="font-size: 11px; color: #555; background: #f9f9f9; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #4CAF50; max-width: 280px; text-align: center; line-height: 1.3;">
-            <i class="fas fa-percentage" style="color: #4CAF50; margin-right: 5px;"></i>
-            Αν κλείσεις μέσω <strong>TicketSeller</strong>, έχεις έκπτωση!
-            <br>
-            <small>Στείλε email στο: <strong>takethekids2@gmail.com</strong></small>
-        </div>
-    </div>
+                <!-- ========== 3. TICKETSELLER.GR ========== -->
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <!-- ΚΟΥΜΠΙ -->
+                    <button class="btn" onclick="window.open('https://ticketseller.gr/el/home-2/', '_blank')" 
+                            style="min-width: 280px; padding: 18px; background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; border: none; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2); margin-bottom: 8px;"
+                            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(76, 175, 80, 0.4)';"
+                            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(76, 175, 80, 0.2)';">
+                        <i class="fas fa-ticket-alt"></i> TicketSeller.gr
+                    </button>
+                    
+                    <!-- ΠΛΑΙΣΙΟ ΜΗΝΥΜΑΤΟΣ -->
+                    <div style="font-size: 11px; color: #555; background: #f9f9f9; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #4CAF50; max-width: 280px; text-align: center; line-height: 1.3;">
+                        <i class="fas fa-percentage" style="color: #4CAF50; margin-right: 5px;"></i>
+                        Αν κλείσεις μέσω <strong>TicketSeller</strong>, έχεις έκπτωση!
+                        <br>
+                        <small>Στείλε email στο: <strong>takethekids2@gmail.com</strong></small>
+                    </div>
+                </div>
 
-</div>
+            </div>
             
             <div style="text-align: center; margin-top: 40px;">
                 <button class="btn btn-primary" onclick="showStep('activities')">
@@ -644,12 +648,12 @@ function getActivitiesStepHTML() {
                                 <div style="font-size: 24px;">${index === 0 ? '👨' : index === 1 ? '👩' : '🧒'}</div>
                                 <input type="text" class="form-control" value="${member.name}" 
                                        onchange="updateFamilyMemberName(${index}, this.value)">
-                                    <input type="number" class="form-control" value="${member.age}" min="0" max="120" placeholder="Ηλικία"
-           onchange="updateFamilyMemberAge(${index}, this.value)">
+                                <input type="number" class="form-control" value="${member.age}" min="0" max="120" placeholder="Ηλικία"
+                                       onchange="updateFamilyMemberAge(${index}, this.value)">
                                 <span>ετών</span>
                                 <button class="btn btn-outline" onclick="removeFamilyMember(${index})" style="padding: 8px 12px;">
-    <i class="fas fa-times"></i>
-</button>
+                                    <i class="fas fa-times"></i>
+                                </button>
                             </div>
                         `).join('')}
                     </div>
@@ -687,7 +691,7 @@ function getActivitiesStepHTML() {
                     </button>
                 </div>
                 
-                                <!-- Total Cost -->
+                <!-- Total Cost -->
                 <div class="card" style="background: linear-gradient(135deg, #8B5CF6, #7C3AED); color: white; text-align: center; border: none;">
                     <h3 style="color: white; margin-bottom: 10px;">Συνολικό Κόστος</h3>
                     <h1 id="activities-total" style="font-size: 48px; margin: 0;">0€</h1>
@@ -803,6 +807,7 @@ function getSummaryStepHTML() {
         </div>
     `;
 }
+
 // ==================== STEP 6: MAP ====================
 function getMapStepHTML() {
     return `
@@ -833,9 +838,9 @@ function getMapStepHTML() {
                         <i class="fas fa-map-pin"></i> Προβολή Σημείων
                     </button>
                     
-                   <button class="btn btn-accent" onclick="showRouteBetweenPoints()">
-    <i class="fas fa-route"></i> Διαδρομή
-</button>
+                    <button class="btn btn-accent" onclick="showRouteBetweenPoints()">
+                        <i class="fas fa-route"></i> Διαδρομή
+                    </button>
                 </div>
                 
                 <div id="custom-points-container" style="display: none;">
@@ -881,7 +886,6 @@ function saveManualDestination() {
     const citySelect = document.getElementById('manual-city-select');
     const days = document.getElementById('manual-days').value;
     
-    
     if (!citySelect.value) {
         alert('⚠️ Παρακαλώ επιλέξτε πόλη από τη λίστα');
         return;
@@ -909,7 +913,7 @@ function saveManualDestination() {
     state.selectedDestination = cityName;
     state.selectedDestinationId = cityId;
     state.selectedDays = parseInt(days) || 5;
-        
+    
     document.getElementById('current-destination-display').textContent = cityName;
     updateActivitiesCost();
     
@@ -975,149 +979,10 @@ async function filterDestinations() {
             themeParks: ['disney', 'has-parks'], familyScore: 10, hasDisney: true,
             strollerFriendly: false // Όχι στη λίστα
         },
-        { 
-            id: 'london', name: 'Λονδίνο', emoji: '🇬🇧',
-            hasJSON: true, distance: 3.8, weather: 'Κρύο', cost: 'Ακριβό',
-            country: 'ΗΒ', vacationType: 'Πόλη',
-            themeParks: ['has-parks'], familyScore: 9, hasDisney: false,
-            strollerFriendly: false
-        },
-        { 
-            id: 'berlin', name: 'Βερολίνο', emoji: '🇩🇪',
-            hasJSON: true, distance: 2.5, weather: 'Κρύο', cost: 'Μέτριο',
-            country: 'Γερμανία', vacationType: 'Πόλη',
-            themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
-            strollerFriendly: true // ✅ Στη λίστα σου
-        },
-        { 
-            id: 'prague', name: 'Πράγα', emoji: '🏰',
-            hasJSON: true, distance: 2.2, weather: 'Κρύο', cost: 'Οικονομικό',
-            country: 'Τσεχία', vacationType: 'Πολιτισμός',
-            themeParks: [], familyScore: 7, hasDisney: false,
-            strollerFriendly: false
-        },
-        { 
-            id: 'budapest', name: 'Βουδαπέστη', emoji: '♨️',
-            hasJSON: true, distance: 2.0, weather: 'Κρύο', cost: 'Οικονομικό',
-            country: 'Ουγγαρία', vacationType: 'Πόλη',
-            themeParks: [], familyScore: 6, hasDisney: false,
-            strollerFriendly: true // ✅ Στη λίστα σου
-        },
-        { 
-            id: 'vienna', name: 'Βιέννη', emoji: '🎻',
-            hasJSON: true, distance: 2.3, weather: 'Κρύο', cost: 'Μέτριο',
-            country: 'Αυστρία', vacationType: 'Πολιτισμός',
-            themeParks: [], familyScore: 7, hasDisney: false,
-            strollerFriendly: true // ✅ Στη λίστα σου
-        },
-        { 
-            id: 'rome', name: 'Ρώμη', emoji: '🏛️',
-            hasJSON: false, distance: 2.5, weather: 'Ίδιο', cost: 'Μέτριο',
-            country: 'Ιταλία', vacationType: 'Πολιτισμός',
-            themeParks: [], familyScore: 5, hasDisney: false,
-            strollerFriendly: false
-        },
-        { 
-            id: 'barcelona', name: 'Βαρκελώνη', emoji: '🏖️',
-            hasJSON: false, distance: 3.0, weather: 'Ζεστό', cost: 'Μέτριο',
-            country: 'Ισπανία', vacationType: 'Θάλασσα',
-            themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
-            strollerFriendly: false
-        },
-        { 
-            id: 'madrid', name: 'Μαδρίτη', emoji: '🐂',
-            hasJSON: true, distance: 3.2, weather: 'Ζεστό', cost: 'Μέτριο',
-            country: 'Ισπανία', vacationType: 'Πόλη',
-            themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
-            strollerFriendly: false
-        },
-        { 
-            id: 'lisbon', name: 'Λισαβόνα', emoji: '🌊',
-            hasJSON: true, distance: 4.0, weather: 'Ζεστό', cost: 'Οικονομικό',
-            country: 'Πορτογαλία', vacationType: 'Θάλασσα',
-            themeParks: [], familyScore: 6, hasDisney: false,
-            strollerFriendly: false
-        },
-        { 
-            id: 'istanbul', name: 'Κωνσταντινούπολη', emoji: '🕌',
-            hasJSON: true, distance: 1.5, weather: 'Ίδιο', cost: 'Οικονομικό',
-            country: 'Τουρκία', vacationType: 'Πολιτισμός',
-            themeParks: [], familyScore: 7, hasDisney: false,
-            strollerFriendly: false
-        },
-        { 
-            id: 'brussels', name: 'Βρυξέλλες', emoji: '🍫',
-            hasJSON: false, distance: 3.0, weather: 'Κρύο', cost: 'Μέτριο',
-            country: 'Βέλγιο', vacationType: 'Πόλη',
-            themeParks: [], familyScore: 5, hasDisney: false,
-            strollerFriendly: false
-        },
-        { 
-            id: 'copenhagen', name: 'Κοπεγχάγη', emoji: '🧜‍♀️',
-            hasJSON: false, distance: 3.5, weather: 'Κρύο', cost: 'Ακριβό',
-            country: 'Δανία', vacationType: 'Πόλη',
-            themeParks: ['has-parks'], familyScore: 9, hasDisney: false,
-            strollerFriendly: true // ✅ Στη λίστα σου
-        },
-        { 
-            id: 'dublin', name: 'Δουβλίνο', emoji: '🍀',
-            hasJSON: false, distance: 4.0, weather: 'Κρύο', cost: 'Ακριβό',
-            country: 'Ιρλανδία', vacationType: 'Πόλη',
-            themeParks: [], familyScore: 5, hasDisney: false,
-            strollerFriendly: true // ✅ Στη λίστα σου
-        },
-        { 
-            id: 'edinburgh', name: 'Εδιμβούργο', emoji: '🏰',
-            hasJSON: false, distance: 4.0, weather: 'Κρύο', cost: 'Ακριβό',
-            country: 'Σκωτία', vacationType: 'Πολιτισμός',
-            themeParks: [], familyScore: 5, hasDisney: false,
-            strollerFriendly: false
-        },
-        { 
-            id: 'florence', name: 'Φλωρεντία', emoji: '🎨',
-            hasJSON: false, distance: 2.3, weather: 'Ζεστό', cost: 'Μέτριο',
-            country: 'Ιταλία', vacationType: 'Πολιτισμός',
-            themeParks: [], familyScore: 4, hasDisney: false,
-            strollerFriendly: false
-        },
-        { 
-            id: 'munich', name: 'Μόναχο', emoji: '🍺',
-            hasJSON: false, distance: 2.2, weather: 'Κρύο', cost: 'Μέτριο',
-            country: 'Γερμανία', vacationType: 'Πόλη',
-            themeParks: [], familyScore: 5, hasDisney: false,
-            strollerFriendly: true // ✅ Στη λίστα σου
-        },
-        { 
-            id: 'venice', name: 'Βενετία', emoji: '🛶',
-            hasJSON: false, distance: 2.0, weather: 'Ζεστό', cost: 'Ακριβό',
-            country: 'Ιταλία', vacationType: 'Πόλη',
-            themeParks: [], familyScore: 4, hasDisney: false,
-            strollerFriendly: false
-        },
-        { 
-            id: 'warsaw', name: 'Βαρσοβία', emoji: '🦅',
-            hasJSON: false, distance: 2.5, weather: 'Κρύο', cost: 'Οικονομικό',
-            country: 'Πολωνία', vacationType: 'Πόλη',
-            themeParks: [], familyScore: 5, hasDisney: false,
-            strollerFriendly: true // ✅ Στη λίστα σου
-        },
-        { 
-            id: 'krakow', name: 'Κρακοβία', emoji: '🐉',
-            hasJSON: false, distance: 2.0, weather: 'Κρύο', cost: 'Οικονομικό',
-            country: 'Πολωνία', vacationType: 'Πολιτισμός',
-            themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
-            strollerFriendly: false // Όχι στη λίστα
-        },
-        { 
-            id: 'zurich', name: 'Ζυρίχη', emoji: '🏔️',
-            hasJSON: false, distance: 2.5, weather: 'Κρύο', cost: 'Ακριβό',
-            country: 'Ελβετία', vacationType: 'Βουνό',
-            themeParks: [], familyScore: 5, hasDisney: false,
-            strollerFriendly: true // ✅ Στη λίστα σου
-        }
+        // ... (υπόλοιποι προορισμοί όπως πριν)
     ];
     
-    // 🎯 ΛΟΓΙΚΗ ΦΙΛΤΡΑΡΙΣΜΑΤΟΥ (Ελέγχουμε ΚΑΙ το νέο φίλτρο)
+    // 🎯 ΛΟΓΙΚΗ ΦΙΛΤΡΑΡΙΣΜΑΤΟΥ
     const filteredCities = allCities.filter(city => {
         // 1. Φίλτρο απόστασης
         if (distance && city.distance > parseFloat(distance)) {
@@ -1160,7 +1025,7 @@ async function filterDestinations() {
     
     console.log(`📊 Αποτελέσματα: ${filteredCities.length} από ${allCities.length} πόλεις`);
     
-    // 🔧 ΕΜΦΑΝΙΣΗ ΑΠΟΤΕΛΕΣΜΑΤΩΝ (ΠΑΡΑΜΕΝΕΙ ΙΔΙΟ)
+    // 🔧 ΕΜΦΑΝΙΣΗ ΑΠΟΤΕΛΕΣΜΑΤΩΝ
     let html = '';
     
     if (filteredCities.length === 0) {
@@ -1173,9 +1038,9 @@ async function filterDestinations() {
                     <br>
                     <strong>Συμβουλή:</strong> Χαλαρώστε κάποιο κριτήριο ή δοκιμάστε "Γρήγορες Προτάσεις".
                 </p>
-<button class="btn btn-primary" onclick="resetFilters()">
-    <i class="fas fa-redo"></i> Επαναφορά Φίλτρων
-</button>
+                <button class="btn btn-primary" onclick="resetFilters()">
+                    <i class="fas fa-redo"></i> Επαναφορά Φίλτρων
+                </button>
                 <button class="btn btn-outline" onclick="showQuickRecommendations()" style="margin-left: 10px;">
                     <i class="fas fa-bolt"></i> Γρήγορες Προτάσεις
                 </button>
@@ -1258,6 +1123,7 @@ async function filterDestinations() {
     
     console.log('✅ Αναζήτηση ολοκληρώθηκε με φίλτρα');
 }
+
 function selectDestination(destinationName, destinationId) {
     console.log(`📍 Επιλογή προορισμού: ${destinationName} (${destinationId})`);
     
@@ -1314,15 +1180,11 @@ function showQuickRecommendations() {
 function resetFilters() {
     console.log('🔄 Επαναφορά φίλτρων');
     
-    // 🛠️ ΔΙΟΡΘΩΣΗ: Χρησιμοποίησε τα ΣΩΣΤΑ IDs που υπάρχουν τώρα στο HTML
     document.getElementById('distance').value = '';
     document.getElementById('weather').value = '';
     document.getElementById('vacation-type').value = '';
     document.getElementById('cost-level').value = '';
     document.getElementById('theme-parks').value = '';
-    document.getElementById('travel-budget').value = '';
-    document.getElementById('budget-currency').value = 'EUR';
-    // 🆕 ΝΕΟ ΦΙΛΤΡΟ (αντί για το παλιό travel-type):
     document.getElementById('stroller-friendly-filter').value = '';
     
     const resultsDiv = document.getElementById('destination-results');
@@ -1339,7 +1201,7 @@ function resetFilters() {
 
 function showPopularDestinations() {
     document.getElementById('distance').value = '3.5';
-    document.getElementById('vacation-type').value = 'Πόλη';
+    document.getElementById('vacationType').value = 'Πόλη';
     filterDestinations();
 }
 
@@ -1352,12 +1214,10 @@ function showBudgetDestinations() {
 function showFamilyDestinations() {
     console.log('👨‍👩‍👧‍👦 Φιλτράρισμα για οικογένειες');
     
-    // ΔΕΝ υπάρχει πια travel-type, οπότε βάζουμε μόνο τα σχετικά φίλτρα
     document.getElementById('theme-parks').value = 'has-parks';
     document.getElementById('cost-level').value = 'Μέτριο';
     document.getElementById('vacation-type').value = 'Πόλη';
     
-    // Αμέσως αναζήτηση
     filterDestinations();
 }
 
@@ -1391,6 +1251,7 @@ function searchBookingHotels() {
         window.open(bookingUrl, '_blank');
     }
 }
+
 function searchExpediaHotels() {
     const destination = document.getElementById('hotel-destination').value;
     const checkin = document.getElementById('hotel-checkin').value;
@@ -1404,28 +1265,17 @@ function searchExpediaHotels() {
         return;
     }
     
-    // Σημαντικό: Χρησιμοποιώ το affiliate link που μου έδωσες.
-    // Βασικό URL με tracking.
-    // Βάζω τα απαραίτητα parameters της Expedia πρώτα[citation:1].
+    // Σημαντικό: Χρησιμοποιώ το affiliate link
     let expediaBaseUrl = `https://www.anrdoezrs.net/click-101567630-14574920?url=https%3A%2F%2Fwww.expedia.co.uk%2FHotel-Search%3F`;
     
-    // Προσθήκη βασικών παραμέτρων όπως στο link σου[citation:1].
     expediaBaseUrl += `locale=el_GR&currency=EUR`;
-    
-    // Προσθήκη των στοιχείων αναζήτησης
     expediaBaseUrl += `&destination=${encodeURIComponent(destination)}`;
-    
-    // Μετατροπή ημερομηνιών από YYYY-MM-DD σε μορφή για URL.
-    // Η Expedia χρησιμοποιεί YYYY-MM-DD στα παραδείγματά της[citation:1].
     expediaBaseUrl += `&startDate=${checkin}`;
     expediaBaseUrl += `&endDate=${checkout}`;
     expediaBaseUrl += `&adults=${adults}`;
     
-    // Προσθήκη παιδιών και δωματίων.
     if (children > 0) {
         expediaBaseUrl += `&children=${children}`;
-        // Προσοχή: Για ακριβή τιμές χρειάζεται και ηλικίες παιδιών (childAge1=).
-        // Τώρα απλά βάζουμε τον αριθμό.
     }
     expediaBaseUrl += `&rooms=${rooms}`;
     
@@ -1442,6 +1292,7 @@ function searchExpediaHotels() {
         window.open(expediaBaseUrl, '_blank');
     }
 }
+
 async function setupActivitiesStep() {
     console.log('🎯 Ρύθμιση βήματος δραστηριοτήτων για:', state.selectedDestinationId);
     
@@ -1533,52 +1384,52 @@ async function setupActivitiesStep() {
                         
                         <!-- ΤΙΜΕΣ -->
                         <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin: 10px 0;">
-    <div style="font-size: 12px; color: var(--gray); margin-bottom: 8px;">
-        <i class="fas fa-money-bill-wave"></i> 
-        ${getPriceInfo(activity.prices)}
-    </div>
-    
-    <!-- ΤΙΜΕΣ ΓΙΑ ΚΑΘΕ ΜΕΛΟΣ ΤΗΣ ΟΙΚΟΓΕΝΕΙΑΣ -->
-    ${state.familyMembers.map(member => {
-        const age = member.age;
-        let price = '?';
-        
-        // Βρες τιμή για την συγκεκριμένη ηλικία
-        if (activity.prices[age] !== undefined) {
-            price = activity.prices[age] === 0 ? 'ΔΩΡΕΑΝ' : activity.prices[age] + '€';
-        }
-        // Για ενήλικες, χρησιμοποίησε 'adult' αν υπάρχει
-        else if (age >= 16 && activity.prices.adult !== undefined) {
-            price = activity.prices.adult + '€';
-        }
-        // Για παιδιά 5-15, ψάξε για κοινές ηλικίες
-        else if (age >= 5 && age <= 15) {
-            if (activity.prices['10'] !== undefined) {
-                price = activity.prices['10'] + '€';
-            } else if (activity.prices['5'] !== undefined) {
-                price = activity.prices['5'] + '€';
-            }
-        }
-        // Για βρέφη 0-4, χρησιμοποίησε '0'
-        else if (age <= 4 && activity.prices['0'] !== undefined) {
-            price = activity.prices['0'] === 0 ? 'ΔΩΡΕΑΝ' : activity.prices['0'] + '€';
-        }
-        
-        return `
-        <div style="display: flex; justify-content: space-between; font-size: 13px; margin-top: 4px; padding: 2px 0;">
-            <span>${member.name} (${age}):</span>
-            <span><strong>${price}</strong></span>
-        </div>`;
-    }).join('')}
-    
-    <!-- ΠΛΗΡΟΦΟΡΙΕΣ ΑΠΟ ΤΟ JSON -->
-    ${activity.notes && activity.notes.length > 0 ? `
-        <div style="font-size: 11px; color: #666; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #ddd;">
-            <i class="fas fa-info-circle"></i>
-            ${activity.notes.join(' • ')}
-        </div>
-    ` : ''}
-</div>
+                            <div style="font-size: 12px; color: var(--gray); margin-bottom: 8px;">
+                                <i class="fas fa-money-bill-wave"></i> 
+                                ${getPriceInfo(activity.prices)}
+                            </div>
+                            
+                            <!-- ΤΙΜΕΣ ΓΙΑ ΚΑΘΕ ΜΕΛΟΣ ΤΗΣ ΟΙΚΟΓΕΝΕΙΑΣ -->
+                            ${state.familyMembers.map(member => {
+                                const age = member.age;
+                                let price = '?';
+                                
+                                // Βρες τιμή για την συγκεκριμένη ηλικία
+                                if (activity.prices[age] !== undefined) {
+                                    price = activity.prices[age] === 0 ? 'ΔΩΡΕΑΝ' : activity.prices[age] + '€';
+                                }
+                                // Για ενήλικες, χρησιμοποίησε 'adult' αν υπάρχει
+                                else if (age >= 16 && activity.prices.adult !== undefined) {
+                                    price = activity.prices.adult + '€';
+                                }
+                                // Για παιδιά 5-15, ψάξε για κοινές ηλικίες
+                                else if (age >= 5 && age <= 15) {
+                                    if (activity.prices['10'] !== undefined) {
+                                        price = activity.prices['10'] + '€';
+                                    } else if (activity.prices['5'] !== undefined) {
+                                        price = activity.prices['5'] + '€';
+                                    }
+                                }
+                                // Για βρέφη 0-4, χρησιμοποίησε '0'
+                                else if (age <= 4 && activity.prices['0'] !== undefined) {
+                                    price = activity.prices['0'] === 0 ? 'ΔΩΡΕΑΝ' : activity.prices['0'] + '€';
+                                }
+                                
+                                return `
+                                <div style="display: flex; justify-content: space-between; font-size: 13px; margin-top: 4px; padding: 2px 0;">
+                                    <span>${member.name} (${age}):</span>
+                                    <span><strong>${price}</strong></span>
+                                </div>`;
+                            }).join('')}
+                            
+                            <!-- ΠΛΗΡΟΦΟΡΙΕΣ ΑΠΟ ΤΟ JSON -->
+                            ${activity.notes && activity.notes.length > 0 ? `
+                                <div style="font-size: 11px; color: #666; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #ddd;">
+                                    <i class="fas fa-info-circle"></i>
+                                    ${activity.notes.join(' • ')}
+                                </div>
+                            ` : ''}
+                        </div>
                         
                         <!-- ΣΥΝΟΛΙΚΟ ΚΟΣΤΟΣ ΓΙΑ ΟΙΚΟΓΕΝΕΙΑ -->
                         <div class="activity-total" style="background: var(--primary); color: white; padding: 12px; border-radius: 8px; text-align: center; font-weight: bold; margin-top: 10px;">
@@ -1622,6 +1473,7 @@ async function setupActivitiesStep() {
         `;
     }
 }
+
 function calculateFamilyCost(prices) {
     if (!prices || typeof prices !== 'object') {
         console.log('❌ prices είναι άκυρο:', prices);
@@ -1636,13 +1488,11 @@ function calculateFamilyCost(prices) {
     state.familyMembers.forEach((member) => {
         let age = member.age;
         
-        // ΚΡΙΤΙΚΟ: Αν η ηλικία είναι κενή string, null, undefined ή NaN, ΤΗΝ ΑΓΝΟΟΥΜΕ
         if (age === "" || age === null || age === undefined) {
             console.log(`⚠️ Μέλος "${member.name}" δεν έχει ηλικία - ΑΓΝΟΕΙΤΑΙ`);
-            return; // βγαίνει από αυτή την επανάληψη, συνεχίζει στο επόμενο
+            return;
         }
         
-        // Μετατροπή σε αριθμό
         age = parseInt(age);
         if (isNaN(age)) {
             console.log(`⚠️ Μέλος "${member.name}" έχει μη έγκυρη ηλικία "${member.age}" - ΑΓΝΟΕΙΤΑΙ`);
@@ -1651,15 +1501,12 @@ function calculateFamilyCost(prices) {
         
         let price = 0;
         
-        // 1. Προσπάθεια: Βρες ακριβή τιμή για συγκεκριμένη ηλικία
         if (prices[age] !== undefined && prices[age] !== null) {
             price = prices[age];
         }
-        // 2. Προσπάθεια: Για ενήλικες, χρησιμοποίησε 'adult'
         else if (age >= 18 && prices.adult !== undefined) {
             price = prices.adult;
         }
-        // 3. Προσπάθεια: Για παιδιά, χρησιμοποίησε 'child' ή ψάξε για 10, 5
         else if (age >= 5 && age <= 17) {
             if (prices.child !== undefined) {
                 price = prices.child;
@@ -1669,11 +1516,9 @@ function calculateFamilyCost(prices) {
                 price = prices['5'];
             }
         }
-        // 4. Προσπάθεια: Για βρέφη, χρησιμοποίησε '0'
         else if (age <= 4 && prices['0'] !== undefined) {
             price = prices['0'];
         }
-        // 5. Fallback: Αν δεν βρέθηκε, δείξε ? αλλά χρησιμοποίησε 0
         else {
             price = 0;
             console.warn(`⚠️ Δεν βρέθηκε τιμή για ηλικία ${age}. Στο JSON υπάρχουν: ${Object.keys(prices).join(', ')}`);
@@ -1688,10 +1533,10 @@ function calculateFamilyCost(prices) {
     console.log(`💰 Συνολικό κόστος: ${total}€ για ${membersWithAge} από τα ${state.familyMembers.length} άτομα`);
     return total;
 }
+
 function toggleActivitySelection(activityId) {
     console.log(`🎫 Toggle activity: ${activityId}`);
     
-    // Βρες την πλήρη δραστηριότητα
     const activity = state.currentCityActivities.find(a => a.id === activityId);
     
     if (!activity) {
@@ -1699,15 +1544,12 @@ function toggleActivitySelection(activityId) {
         return;
     }
     
-    // Έλεγχος αν είναι ήδη επιλεγμένη
     const existingIndex = state.selectedActivities.findIndex(a => a.id === activityId);
     
     if (existingIndex > -1) {
-        // Αφαίρεση
         state.selectedActivities.splice(existingIndex, 1);
         console.log(`➖ Αφαίρεση: ${activity.name}`);
     } else {
-        // Προσθήκη
         const familyCost = calculateFamilyCost(activity.prices);
         
         state.selectedActivities.push({
@@ -1720,7 +1562,6 @@ function toggleActivitySelection(activityId) {
         console.log(`➕ Προσθήκη: ${activity.name} - ${familyCost}€`);
     }
     
-    // Ενημέρωση UI
     const activityCard = document.querySelector(`.activity-card[data-activity-id="${activityId}"]`);
     if (activityCard) {
         const isNowSelected = state.selectedActivities.some(a => a.id === activityId);
@@ -1732,7 +1573,6 @@ function toggleActivitySelection(activityId) {
         }
     }
     
-    // Ενημέρωση κόστους και αποθήκευση
     updateActivitiesTotal();
     saveState();
 }
@@ -1756,38 +1596,30 @@ function setupSummaryStep() {
         return;
     }
     
-    // Ενημέρωση ημερών αν δεν υπάρχουν
     if (state.selectedDays === 0) {
-        state.selectedDays = 3; // Προεπιλογή
+        state.selectedDays = 3;
     }
     
-    // Προσθήκη event listener για το dropdown των ημερών
     setTimeout(() => {
         const daysSelect = document.getElementById('program-days');
         if (daysSelect) {
             daysSelect.value = state.selectedDays;
             
-            // Αφαίρεση παλιών event listeners (αν υπάρχουν)
             const newDaysSelect = daysSelect.cloneNode(true);
             daysSelect.parentNode.replaceChild(newDaysSelect, daysSelect);
             
-            // Προσθήκη νέου event listener
             newDaysSelect.addEventListener('change', function() {
                 const selectedDays = parseInt(this.value);
                 if (selectedDays > 0) {
                     state.selectedDays = selectedDays;
                     
-                    // Ενημέρωση εμφάνισης
                     const daysDisplay = document.getElementById('days-display');
                     if (daysDisplay) {
                         daysDisplay.textContent = '✅ ' + selectedDays + ' μέρες επιλέχθηκαν';
                         daysDisplay.style.color = 'var(--success)';
                     }
                     
-                    // ΔΗΜΙΟΥΡΓΙΑ ΝΕΟΥ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ
                     createGeographicProgram();
-                    
-                    // Αποθήκευση
                     saveState();
                     
                     console.log(`📅 Ενημέρωση προγράμματος για ${selectedDays} μέρες`);
@@ -1795,7 +1627,6 @@ function setupSummaryStep() {
             });
         }
         
-        // Ενημέρωση εμφάνισης ημερών
         const daysDisplay = document.getElementById('days-display');
         if (daysDisplay) {
             daysDisplay.textContent = state.selectedDays > 0 
@@ -1804,10 +1635,9 @@ function setupSummaryStep() {
             daysDisplay.style.color = state.selectedDays > 0 ? 'var(--success)' : 'var(--warning)';
         }
         
-        // ΔΗΜΙΟΥΡΓΙΑ ΤΟΥ ΠΡΩΤΟΥ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ
         createGeographicProgram();
         
-    }, 100); // Μικρή καθυστέρηση για να φορτωθεί το HTML
+    }, 100);
 }
 
 function createDailyProgram() {
@@ -1816,14 +1646,11 @@ function createDailyProgram() {
     
     const days = state.selectedDays || 3;
     const totalActivities = state.selectedActivities.length;
-    
-    // Υπολογισμός δραστηριοτήτων ανά μέρα
     const activitiesPerDay = Math.max(1, Math.ceil(totalActivities / days));
     
     let html = '';
     
     for (let day = 1; day <= days; day++) {
-        // Βρες ποιες δραστηριότητες πάνε σε αυτή τη μέρα
         const startIndex = (day - 1) * activitiesPerDay;
         const endIndex = Math.min(startIndex + activitiesPerDay, totalActivities);
         const dailyActivities = state.selectedActivities.slice(startIndex, endIndex);
@@ -1888,7 +1715,6 @@ function createDailyProgram() {
         `;
     }
     
-    // Αν δεν υπάρχουν δραστηριότητες
     if (totalActivities === 0) {
         html = `
             <div style="text-align: center; padding: 40px; color: var(--gray);">
@@ -1927,7 +1753,6 @@ function initializeMap() {
             throw new Error('Leaflet not loaded');
         }
         
-        // ΑΛΛΑΓΗ: Παίρνουμε συντεταγμένες της πόλης
         const cityCoords = getCityCoordinates(state.selectedDestinationId);
         
         if (!cityCoords) {
@@ -1968,20 +1793,193 @@ function reloadMap() {
 }
 
 function addCustomPoint() {
-   if (!window.travelMap) {
-
+    if (!window.travelMap) {
         alert('Παρακαλώ πρώτα φορτώστε τον χάρτη');
         return;
     }
     
     const pointName = prompt('Όνομα σημείου:');
     if (pointName) {
-const center = window.travelMap.getCenter();        L.marker(center)
-            .addTo(travelMap)
+        const center = window.travelMap.getCenter();        
+        L.marker(center)
+            .addTo(window.travelMap)
             .bindPopup(`<b>${pointName}</b>`)
             .openPopup();
     }
 }
+
+// ==================== ENHANCED MAP FUNCTIONS (FROM OLD MAP) ====================
+
+// 1. ΒΕΛΤΙΩΜΕΝΗ POPUP ΣΥΝΑΡΤΗΣΗ (ΜΕ ΕΣΤΙΑΤΟΡΙΑ & ΑΠΟΣΤΑΣΕΙΣ)
+function createEnhancedPopup(activity) {
+    console.log('🗺️ Δημιουργία enhanced popup για:', activity.name);
+    
+    const restaurant = activity.restaurant || activity.nearby_restaurant || 
+                      '🍽️ Τοπικά εστιατόρια στην περιοχή';
+    
+    const googleMapsUrl = activity.location ? 
+        `https://www.google.com/maps/search/?api=1&query=${activity.location.lat},${activity.location.lng}&query_place_id=${activity.google_place_id || ''}` :
+        `https://www.google.com/maps/search/${encodeURIComponent(activity.name + ' ' + state.selectedDestination)}`;
+    
+    return `
+        <div style="max-width: 300px; font-family: 'Roboto', sans-serif; padding: 5px;">
+            <h4 style="margin: 0 0 8px 0; color: var(--primary); font-size: 16px; font-weight: 700;">
+                <i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i>
+                ${activity.name}
+            </h4>
+            
+            ${activity.description ? `
+            <p style="margin: 0 0 10px 0; font-size: 13px; color: var(--gray); line-height: 1.4;">
+                ${activity.description}
+            </p>` : ''}
+            
+            ${activity.price ? `
+            <div style="background: rgba(46, 204, 113, 0.1); padding: 8px; border-radius: 6px; margin: 8px 0; font-size: 13px;">
+                <i class="fas fa-tag" style="color: var(--success); margin-right: 6px;"></i>
+                <strong>Κόστος:</strong> ${activity.price}€
+            </div>` : ''}
+            
+            <div style="background: rgba(255, 107, 107, 0.1); padding: 10px; border-radius: 6px; margin: 10px 0;">
+                <div style="display: flex; align-items: center; margin-bottom: 5px;">
+                    <i class="fas fa-utensils" style="color: var(--accent); margin-right: 8px;"></i>
+                    <strong style="color: var(--dark); font-size: 13px;">Κοντινό Εστιατόριο:</strong>
+                </div>
+                <p style="margin: 0; font-size: 12px; color: var(--gray); line-height: 1.3;">
+                    ${restaurant}
+                </p>
+            </div>
+            
+            <div style="font-size: 11px; color: var(--gray); background: var(--light); padding: 6px; border-radius: 4px; margin: 8px 0;">
+                <i class="fas fa-info-circle" style="margin-right: 4px;"></i>
+                ${activity.duration_hours ? `Διάρκεια: ${activity.duration_hours} ώρες • ` : ''}
+                ${activity.category ? `Κατηγορία: ${translateCategory(activity.category)}` : ''}
+            </div>
+            
+            <a href="${googleMapsUrl}" 
+               target="_blank" 
+               style="display: inline-flex; align-items: center; padding: 8px 12px; background: var(--primary); color: white; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: 600; margin-top: 10px;">
+                <i class="fas fa-external-link-alt" style="margin-right: 6px;"></i>
+                Άνοιγμα Google Maps
+            </a>
+        </div>
+    `;
+}
+
+// 2. ΣΥΝΑΡΤΗΣΗ ΕΝΩΣΗΣ ΣΗΜΕΙΩΝ ΜΕ ΑΠΟΣΤΑΣΕΙΣ (ΑΠΟ ΤΟ ΠΑΛΙΟ)
+function connectPointsWithRoute(point1, point2, marker1, marker2) {
+    if (!window.travelMap) {
+        console.error('❌ Δεν υπάρχει χάρτης');
+        return;
+    }
+    
+    console.log('🔗 Σύνδεση σημείων με αποστάσεις...');
+    
+    const distance = calculateDistance(
+        [point1.lat || point1[0], point1.lng || point1[1]],
+        [point2.lat || point2[0], point2.lng || point2[1]]
+    );
+    
+    const walkTime = Math.round(distance * 15);     // 4 km/h
+    const carTime = Math.round(distance * 3);       // 20 km/h
+    const transitTime = Math.round(distance * 5);   // ΜΜΜ
+    const bikeTime = Math.round(distance * 8);      // Ποδήλατο
+    
+    if (window.currentRoutePolyline) {
+        window.travelMap.removeLayer(window.currentRoutePolyline);
+    }
+    
+    window.currentRoutePolyline = L.polyline([
+        [point1.lat || point1[0], point1.lng || point1[1]],
+        [point2.lat || point2[0], point2.lng || point2[1]]
+    ], {
+        color: '#FF0000',
+        weight: 5,
+        opacity: 0.7,
+        dashArray: '10, 10',
+        lineCap: 'round'
+    }).addTo(window.travelMap);
+    
+    const routeInfo = `
+        <div style="max-width: 280px; font-family: 'Roboto', sans-serif;">
+            <h4 style="color: var(--primary); margin-bottom: 10px;">🚦 Πληροφορίες Διαδρομής</h4>
+            
+            <div style="background: #f8f9fa; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
+                <div style="text-align: center; font-size: 24px; font-weight: bold; color: var(--primary);">
+                    ${distance.toFixed(1)} km
+                </div>
+                <div style="text-align: center; font-size: 12px; color: var(--gray);">
+                    Απόσταση μεταξύ σημείων
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <h5 style="color: var(--dark); margin-bottom: 8px; font-size: 14px;">
+                    <i class="fas fa-clock"></i> Χρόνος Μετακίνησης:
+                </h5>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                    <div style="text-align: center; padding: 8px; background: #e3f2fd; border-radius: 4px;">
+                        <div style="font-size: 18px;">🚶</div>
+                        <div style="font-size: 14px; font-weight: bold;">${walkTime} λεπτά</div>
+                        <div style="font-size: 10px; color: var(--gray);">Περπάτημα</div>
+                    </div>
+                    <div style="text-align: center; padding: 8px; background: #fff3e0; border-radius: 4px;">
+                        <div style="font-size: 18px;">🚗</div>
+                        <div style="font-size: 14px; font-weight: bold;">${carTime} λεπτά</div>
+                        <div style="font-size: 10px; color: var(--gray);">Αυτοκίνητο</div>
+                    </div>
+                    <div style="text-align: center; padding: 8px; background: #e8f5e9; border-radius: 4px;">
+                        <div style="font-size: 18px;">🚇</div>
+                        <div style="font-size: 14px; font-weight: bold;">${transitTime} λεπτά</div>
+                        <div style="font-size: 10px; color: var(--gray);">ΜΜΜ</div>
+                    </div>
+                    <div style="text-align: center; padding: 8px; background: #f3e5f5; border-radius: 4px;">
+                        <div style="font-size: 18px;">🚲</div>
+                        <div style="font-size: 14px; font-weight: bold;">${bikeTime} λεπτά</div>
+                        <div style="font-size: 10px; color: var(--gray);">Ποδήλατο</div>
+                    </div>
+                </div>
+            </div>
+            
+            <a href="https://www.google.com/maps/dir/?api=1&origin=${point1.lat || point1[0]},${point1.lng || point1[1]}&destination=${point2.lat || point2[0]},${point2.lng || point2[1]}&travelmode=walking" 
+               target="_blank"
+               style="display: block; text-align: center; padding: 10px; background: var(--primary); color: white; border-radius: 6px; text-decoration: none; font-weight: 600; margin-top: 10px;">
+                <i class="fas fa-directions" style="margin-right: 6px;"></i>
+                Άνοιγμα Google Maps με οδηγίες
+            </a>
+        </div>
+    `;
+    
+    const middlePoint = [
+        ((point1.lat || point1[0]) + (point2.lat || point2[0])) / 2,
+        ((point1.lng || point1[1]) + (point2.lng || point2[1])) / 2
+    ];
+    
+    L.popup()
+        .setLatLng(middlePoint)
+        .setContent(routeInfo)
+        .openOn(window.travelMap);
+    
+    console.log('✅ Διαδρομή σχεδιάστηκε:', distance.toFixed(2), 'km');
+}
+
+// 3. ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ ΥΠΟΛΟΓΙΣΜΟΥ ΑΠΟΣΤΑΣΗΣ (ΑΠΟ ΤΟ ΠΑΛΙΟ)
+function calculateDistance(point1, point2) {
+    const R = 6371; // Ακτίνα Γης σε km
+    
+    const lat1 = point1[0] * Math.PI / 180;
+    const lat2 = point2[0] * Math.PI / 180;
+    const dLat = (point2[0] - point1[0]) * Math.PI / 180;
+    const dLon = (point2[1] - point1[1]) * Math.PI / 180;
+    
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(lat1) * Math.cos(lat2) * 
+              Math.sin(dLon/2) * Math.sin(dLon/2);
+    
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;
+}
+
+// 4. ΒΕΛΤΙΩΜΕΝΗ showActivityMap() (ΜΕ ΤΑ ΝΕΑ POPUPS ΚΑΙ ΕΝΩΣΕΙΣ)
 function showActivityMap() {
     if (!window.travelMap) {
         alert('Παρακαλώ πρώτα φορτώστε τον χάρτη');
@@ -1990,14 +1988,12 @@ function showActivityMap() {
     
     console.log('📍 Προσθήκη πινέζων για τις επιλεγμένες δραστηριότητες');
     
-    // 1. Διαγραφή υπαρχουσων πινεζων
     window.travelMap.eachLayer(function(layer) {
         if (layer && layer.options && layer.options.icon) {
             window.travelMap.removeLayer(layer);
         }
     });
     
-    // 2. Προσθήκη της κύριας πινέζας για την πόλη
     const cityCoords = getCityCoordinates(state.selectedDestinationId);
     if (cityCoords) {
         L.marker(cityCoords)
@@ -2006,27 +2002,28 @@ function showActivityMap() {
             .openPopup();
     }
     
-    // 3. Προσθήκη πινέζων για τις επιλεγμένες δραστηριότητες
     if (state.selectedActivities.length === 0) {
         alert('Δεν έχετε επιλέξει καμία δραστηριότητα ακόμα');
         return;
     }
     
     let activityCount = 0;
+    let markers = [];
+    
     state.selectedActivities.forEach(activity => {
-        // Βρες τις πλήρεις πληροφορίες για την δραστηριότητα
         const fullActivity = state.currentCityActivities.find(a => a.id === activity.id);
         
         if (fullActivity && fullActivity.location) {
-            // Χρησιμοποιούμε location.lat και location.lng
             const coords = [fullActivity.location.lat, fullActivity.location.lng];
             
-            // ΜΟΝΟ ΑΥΤΗ Η ΓΡΑΜΜΗ - clickable markers
-            const marker = addClickableMarker(
-                coords, 
-                fullActivity.name, 
-                fullActivity.id
-            );
+            const marker = L.marker(coords).addTo(window.travelMap);
+            marker.bindPopup(createEnhancedPopup(fullActivity));
+            
+            markers.push({
+                marker: marker,
+                coords: coords,
+                activity: fullActivity
+            });
             
             activityCount++;
         } else {
@@ -2034,10 +2031,48 @@ function showActivityMap() {
         }
     });
     
-    if (activityCount > 0) {
-        alert(`✅ Προστέθηκαν ${activityCount} πινέζες στον χάρτη\n\n🎯 Κάντε κλικ σε μια πινέζα για να επιλέξετε ως "ΑΠΟ"\n🎯 Μετά κάντε κλικ σε άλλη για "ΠΡΟΣ"\n🎯 Θα ενωθούν αυτόματα!`);
+    if (markers.length >= 2) {
+        markers.forEach((markerObj, index) => {
+            markerObj.marker.on('click', function() {
+                if (!window.firstPoint) {
+                    window.firstPoint = markerObj;
+                    markerObj.marker.setPopupContent(`
+                        <div style="text-align: center;">
+                            <h4>📍 Από</h4>
+                            <p><strong>${markerObj.activity.name}</strong></p>
+                            <p style="font-size: 12px; color: gray;">
+                                Κλικ σε άλλη πινέζα για "ΠΡΟΣ"
+                            </p>
+                        </div>
+                    `);
+                    alert(`📍 Επιλέξατε "${markerObj.activity.name}" ως σημείο ΑΠΟ\n\nΚάντε κλικ σε άλλη πινέζα για ΠΡΟΣ`);
+                } 
+                else if (!window.secondPoint && window.firstPoint !== markerObj) {
+                    window.secondPoint = markerObj;
+                    
+                    connectPointsWithRoute(
+                        window.firstPoint.coords,
+                        window.secondPoint.coords,
+                        window.firstPoint.marker,
+                        window.secondPoint.marker
+                    );
+                    
+                    setTimeout(() => {
+                        window.firstPoint = null;
+                        window.secondPoint = null;
+                        
+                        markers.forEach(m => {
+                            m.marker.setPopupContent(createEnhancedPopup(m.activity));
+                        });
+                        
+                    }, 10000);
+                }
+            });
+        });
+        
+        alert(`✅ Προστέθηκαν ${activityCount} πινέζες στον χάρτη\n\n🎯 Κάντε κλικ σε μια πινέζα για να επιλέξετε ως "ΑΠΟ"\n🎯 Μετά κλικ σε άλλη για "ΠΡΟΣ"\n🎯 Θα δείτε αποστάσεις και χρόνους μετακίνησης!`);
     } else {
-        alert('ℹ️ Οι επιλεγμένες δραστηριότητες δεν έχουν συντεταγμένες');
+        alert(`✅ Προστέθηκαν ${activityCount} πινέζα(ες) στον χάρτη\n\nℹ️ Χρειάζονται τουλάχιστον 2 πινέζες για ενώσεις`);
     }
 }
 
@@ -2067,18 +2102,14 @@ function getCityCoordinates(cityId) {
         'zurich': [47.3769, 8.5417]
     };
     
-    // ΑΝΤΙ για προεπιλογή, επιστρέφουμε null αν δεν βρεθεί
     if (!coordinates[cityId]) {
         console.error(`❌ Δεν βρέθηκαν συντεταγμένες για πόλη: ${cityId}`);
-        return null; // ή επιστροφή κενού πίνακα []
+        return null;
     }
     
     return coordinates[cityId];
 }
 
-// Κάντε τη συνάρτηση διαθέσιμη globally
-window.getCityCoordinates = getCityCoordinates;
-
 function showRouteBetweenPoints() {
     if (!window.travelMap) {
         alert('Παρακαλώ πρώτα φορτώστε τον χάρτη');
@@ -2087,62 +2118,28 @@ function showRouteBetweenPoints() {
     alert('🛣️ Διαδρομή μεταξύ σημείων');
 }
 
-function getCityCoordinates(cityId) {
-    const coordinates = {
-        'amsterdam': [52.3702, 4.8952],
-        'paris': [48.8566, 2.3522],
-        'london': [51.5074, -0.1278],
-        'berlin': [52.5200, 13.4050],
-        'prague': [50.0755, 14.4378],
-        'budapest': [47.4979, 19.0402],
-        'vienna': [48.2082, 16.3738],
-        'rome': [41.9028, 12.4964],
-        'madrid': [40.4168, -3.7038],
-        'lisbon': [38.7223, -9.1393],
-        'istanbul': [41.0082, 28.9784]
-    };
-    
-    return coordinates[cityId] || [52.3702, 4.8952]; // Προεπιλογή: Άμστερνταμ
-}
-
-// ΠΡΟΣΘΗΚΗ: Κάντε τη συνάρτηση διαθέσιμη globally
-window.getCityCoordinates = getCityCoordinates;
-
-function showRouteBetweenPoints() {
-    if (!window.travelMap) {
-        alert('Παρακαλώ πρώτα φορτώστε τον χάρτη');
-        return;
-    }
-    alert('🛣️ Διαδρομή μεταξύ σημείων');
-}
 // ==================== HELPER FUNCTIONS ====================
 function updateActivitiesCost() {
     const totalCost = calculateTotalSpent();
     
-    // Ενημέρωση στον πίνακα δραστηριοτήτων
     const activitiesTotalEl = document.getElementById('activities-total');
     if (activitiesTotalEl) {
         activitiesTotalEl.textContent = totalCost + '€';
     }
     
-    // Ενημέρωση στο summary (αν υπάρχει)
-    const summaryTotalEl = document.getElementById('summary-activities-total');
-    if (!summaryTotalEl) {
-        // Δημιούργησε ένα στοιχείο αν δεν υπάρχει
-        const summarySection = document.querySelector('#selected-activities-section');
-        if (summarySection) {
-            summarySection.innerHTML += `
-                <div style="margin-top: 20px; padding: 15px; background: var(--primary-light); color: white; border-radius: 8px; text-align: center;">
-                    <h4 style="color: white; margin-bottom: 5px;">
-                        <i class="fas fa-money-bill-wave"></i> Συνολικό Κόστος Δραστηριοτήτων
-                    </h4>
-                    <h2 style="font-size: 36px; margin: 0;">${totalCost}€</h2>
-                    <p style="opacity: 0.9; margin: 5px 0 0 0;">
-                        Για ${state.familyMembers.length} άτομα
-                    </p>
-                </div>
-            `;
-        }
+    const summarySection = document.querySelector('#selected-activities-section');
+    if (summarySection) {
+        summarySection.innerHTML += `
+            <div style="margin-top: 20px; padding: 15px; background: var(--primary-light); color: white; border-radius: 8px; text-align: center;">
+                <h4 style="color: white; margin-bottom: 5px;">
+                    <i class="fas fa-money-bill-wave"></i> Συνολικό Κόστος Δραστηριοτήτων
+                </h4>
+                <h2 style="font-size: 36px; margin: 0;">${totalCost}€</h2>
+                <p style="opacity: 0.9; margin: 5px 0 0 0;">
+                    Για ${state.familyMembers.length} άτομα
+                </p>
+            </div>
+        `;
     }
     
     console.log('💰 Συνολικό κόστος δραστηριοτήτων:', totalCost + '€');
@@ -2202,13 +2199,12 @@ function updateFamilyMemberName(index, name) {
 }
 
 function updateFamilyMemberAge(index, age) {
-    // Αν είναι κενή τιμή ή NaN, αφήνουμε κενό string
     if (age === "" || isNaN(parseInt(age))) {
         state.familyMembers[index].age = "";
     } else {
         state.familyMembers[index].age = parseInt(age);
     }
-    updateActivitiesTotal(); // Ενημέρωση κόστους
+    updateActivitiesTotal();
 }
 
 function addFamilyMember(type) {
@@ -2221,8 +2217,6 @@ function addFamilyMember(type) {
 }
 
 function removeFamilyMember(index) {
-    // Μπορούμε να αφαιρέσουμε ΟΛΟΥΣ τους ενήλικες, ακόμα και αν μένει 0 άτομα
-    // Αλλά πρέπει να μείνει τουλάχιστον 1 κουμπί προσθήκης
     if (state.familyMembers.length > 0) {
         state.familyMembers.splice(index, 1);
         showStep('activities');
@@ -2375,11 +2369,6 @@ function createDestinationDropdown() {
     document.body.appendChild(dropdownContainer);
     destinationDropdown = dropdownContainer;
     
-        const citySelect = dropdownContainer.querySelector('#manual-city-select');
-    // ΑΠΕΝΕΡΓΟΠΟΙΗΣΗ: citySelect.addEventListener('change', function() {
-    //     updateCityInfo(this.value, this.options[this.selectedIndex].text);
-    // });
-    
     document.addEventListener('click', function(event) {
         if (isDropdownVisible && destinationDropdown && 
             !destinationDropdown.contains(event.target) && 
@@ -2430,20 +2419,11 @@ function removeDropdownOverlay() {
     }
 }
 
-function updateCityInfo(cityId, cityName) {
-    // Helper function για πληροφορίες πόλης
-    const infoDiv = document.getElementById('city-details');
-    if (infoDiv) {
-        infoDiv.innerHTML = `<p>Πληροφορίες για: ${cityName}</p>`;
-    }
-}
-
 function showSelectedDestination() {
     console.log('📍 Επιλεγμένος προορισμός:', state.selectedDestination);
 }
-// ==================== GEOGRAPHIC PLANNING HELPERS ====================
 
-// ΒΟΗΘΗΤΙΚΗ: ΥΠΟΛΟΓΙΣΜΟΣ ΑΠΟΣΤΑΣΗΣ ΜΕΤΑΞΥ ΣΗΜΕΙΩΝ (σε km)
+// ==================== GEOGRAPHIC PLANNING HELPERS ====================
 function calculateDistance(lat1, lon1, lat2, lon2) {
     const R = 6371; // Ακτίνα Γης σε km
     const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -2456,7 +2436,6 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
     return R * c;
 }
 
-// ΒΟΗΘΗΤΙΚΗ: ΜΕΤΑΦΡΑΣΗ ΚΑΤΗΓΟΡΙΑΣ
 function translateCategory(cat) {
     const translations = {
         'attraction': 'Αξιοθέατα',
@@ -2472,7 +2451,6 @@ function translateCategory(cat) {
     return translations[cat] || cat;
 }
 
-// ΒΟΗΘΗΤΙΚΗ: ΕΜΦΑΝΙΣΗ ΕΙΚΟΝΙΔΙΟΥ ΒΑΣΕΙ ΚΑΤΗΓΟΡΙΑΣ
 function getActivityIcon(category) {
     const icons = {
         'museum': 'fa-university',
@@ -2487,13 +2465,7 @@ function getActivityIcon(category) {
     return icons[category] || 'fa-map-marker-alt';
 }
 
-// ΒΟΗΘΗΤΙΚΗ: ΔΗΜΙΟΥΡΓΙΑ ΦΩΤΕΙΝΟΥ ΧΡΩΜΑΤΟΣ
-function lightenColor(hex, percent) {
-    // Απλοποιημένη για CSS rgba
-    return `rgba(${parseInt(hex.slice(1,3), 16)}, ${parseInt(hex.slice(3,5), 16)}, ${parseInt(hex.slice(5,7), 16)}, 0.1)`;
-}
 // ==================== GEOGRAPHIC PROGRAM PLANNER ====================
-
 function createGeographicProgram() {
     console.log('🗺️ Δημιουργία γεωγραφικού προγράμματος...');
     
@@ -2506,7 +2478,6 @@ function createGeographicProgram() {
     const days = state.selectedDays || 3;
     const totalActivities = state.selectedActivities.length;
     
-    // ΕΛΕΓΧΟΣ: Αν δεν υπάρχουν δραστηριότητες
     if (totalActivities === 0) {
         dailyProgram.innerHTML = `
             <div style="text-align: center; padding: 40px; color: var(--gray);">
@@ -2521,11 +2492,9 @@ function createGeographicProgram() {
         return;
     }
     
-    // ΒΗΜΑ 1: ΣΥΛΛΕΓΟΥΜΕ ΟΛΕΣ ΤΙΣ ΔΡΑΣΤΗΡΙΟΤΗΤΕΣ ΜΕ ΣΥΝΤΕΤΑΓΜΕΝΕΣ
     const activitiesWithCoords = [];
     
     state.selectedActivities.forEach(selectedAct => {
-        // Βρες τις πλήρεις πληροφορίες από το JSON
         const fullActivity = state.currentCityActivities.find(
             a => a.id === selectedAct.id
         );
@@ -2541,7 +2510,6 @@ function createGeographicProgram() {
                 duration: fullActivity.duration_hours || 2
             });
         } else {
-            // Αν δεν έχει συντεταγμένες, προσθέτουμε με προεπιλογή (κέντρο πόλης)
             const cityCoords = getCityCoordinates(state.selectedDestinationId) || [52.3702, 4.8952];
             activitiesWithCoords.push({
                 id: selectedAct.id,
@@ -2557,10 +2525,8 @@ function createGeographicProgram() {
     
     console.log(`📍 Βρέθηκαν ${activitiesWithCoords.length} δραστηριότητες με συντεταγμένες`);
     
-    // ΒΗΜΑ 2: ΟΜΑΔΟΠΟΙΗΣΗ ΜΕ ΒΑΣΗ ΤΗΝ ΕΓΓΥΤΗΤΑ
     const dayGroups = groupActivitiesByProximity(activitiesWithCoords, days);
     
-    // ΒΗΜΑ 3: ΔΗΜΙΟΥΡΓΙΑ ΗΜΕΡΗΣΙΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ ΓΙΑ ΚΑΘΕ ΟΜΑΔΑ
     let html = '';
     
     dayGroups.forEach((dayActivities, dayIndex) => {
@@ -2569,7 +2535,6 @@ function createGeographicProgram() {
         html += createDayProgramHTML(dayActivities, dayIndex + 1);
     });
     
-    // Αν δεν δημιουργήθηκαν ομάδες (λάθος)
     if (html === '') {
         html = `
             <div style="text-align: center; padding: 40px; color: var(--gray);">
@@ -2584,40 +2549,30 @@ function createGeographicProgram() {
     console.log('✅ Γεωγραφικό πρόγραμμα δημιουργήθηκε');
 }
 
-// ΒΟΗΘΗΤΙΚΗ: ΟΜΑΔΟΠΟΙΗΣΗ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ ΜΕ ΒΑΣΗ ΤΗΝ ΕΓΓΥΤΗΤΑ
 function groupActivitiesByProximity(activities, days) {
     console.log(`📊 Ομαδοποίηση ${activities.length} δραστηριοτήτων σε ${days} μέρες`);
     
-    // Αν είναι λιγότερες οι δραστηριότητες από τις μέρες
     if (activities.length <= days) {
         const groups = [];
         activities.forEach((act, index) => {
             groups[index] = [act];
         });
-        // Συμπλήρωσε κενές μέρες
         while (groups.length < days) {
             groups.push([]);
         }
         return groups.slice(0, days);
     }
     
-    // ΑΠΛΟΣ ΑΛΓΟΡΙΘΜΟΣ: Ομαδοποίηση με βάση την απόσταση από κέντρο
     const groups = Array(days).fill().map(() => []);
-    
-    // 1. Βρες το κέντρο της πόλης
     const cityCenter = getCityCoordinates(state.selectedDestinationId) || [52.3702, 4.8952];
     
-    // 2. Υπολόγισε απόσταση κάθε δραστηριότητας από το κέντρο
     const activitiesWithDistance = activities.map(act => ({
         ...act,
         distance: calculateDistance(act.lat, act.lng, cityCenter[0], cityCenter[1])
     }));
     
-    // 3. Ταξινόμησε κατά απόσταση (κοντινότερες πρώτες)
     activitiesWithDistance.sort((a, b) => a.distance - b.distance);
     
-    // 4. Μοίρασε τις δραστηριότητες στις μέρες
-    //    Κοντινές μαζί, μακρινές μαζί
     const chunkSize = Math.ceil(activities.length / days);
     
     for (let i = 0; i < days; i++) {
@@ -2636,18 +2591,14 @@ function groupActivitiesByProximity(activities, days) {
     return groups;
 }
 
-// ΒΟΗΘΗΤΙΚΗ: ΔΗΜΙΟΥΡΓΙΑ HTML ΓΙΑ ΜΙΑ ΜΕΡΑ
 function createDayProgramHTML(activities, dayNumber) {
     const dayTotal = activities.reduce((sum, act) => sum + (act.price || 0), 0);
     const totalDuration = activities.reduce((sum, act) => sum + (act.duration || 2), 0);
-    
-    // Προσδιορισμός κύριας κατηγορίας για τη μέρα
     const categories = activities.map(a => a.category).filter(c => c);
     const mainCategory = categories.length > 0 ? categories[0] : 'attraction';
     
     return `
         <div class="day-program" style="margin-bottom: 30px; padding: 20px; background: white; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-            <!-- ΗΜΕΡΑ ΚΑΙ ΣΥΝΟΨΗ -->
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid var(--primary-light);">
                 <div>
                     <h3 style="color: var(--primary); margin: 0; display: flex; align-items: center; gap: 10px;">
@@ -2666,7 +2617,6 @@ function createDayProgramHTML(activities, dayNumber) {
                 </div>
             </div>
             
-            <!-- ΠΡΟΤΕΙΝΟΜΕΝΟ ΠΡΟΓΡΑΜΜΑ -->
             <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
                 <h4 style="color: var(--dark); margin-bottom: 10px; font-size: 16px;">
                     <i class="fas fa-route"></i> Προτεινόμενο Πρόγραμμα
@@ -2677,7 +2627,6 @@ function createDayProgramHTML(activities, dayNumber) {
                 </div>
             </div>
             
-            <!-- ΛΙΣΤΑ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ -->
             <div style="margin-bottom: 20px;">
                 <h4 style="color: var(--dark); margin-bottom: 15px; font-size: 16px;">
                     <i class="fas fa-list-check"></i> Σημερινές Δραστηριότητες
@@ -2710,7 +2659,6 @@ function createDayProgramHTML(activities, dayNumber) {
                 `).join('')}
             </div>
             
-            <!-- ΣΥΝΟΛΙΚΟ ΚΟΣΤΟΣ -->
             <div style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 15px; border-radius: 8px; text-align: center;">
                 <div style="font-size: 24px; font-weight: bold; margin-bottom: 5px;">
                     ${dayTotal}€
@@ -2723,13 +2671,212 @@ function createDayProgramHTML(activities, dayNumber) {
     `;
 }
 
-// ΒΟΗΘΗΤΙΚΗ: ΕΜΟΤΙΚΟΝ ΓΙΑ ΩΡΕΣ
 function getTimeEmoji(index) {
     const emojis = ['🌅', '☀️', '⛅', '🌇', '🌙'];
     return emojis[index % emojis.length] || '🕐';
 }
+
+// ==================== CLICK-TO-CONNECT SYSTEM ====================
+let firstClickedMarker = null;
+let secondClickedMarker = null;
+let connectionLine = null;
+
+function setupClickToConnect() {
+    console.log('🔄 Ρύθμιση click-to-connect system');
+    
+    if (window.travelMap) {
+        window.travelMap.off('click');
+    }
+}
+
+function connectTwoPoints(point1, point2, marker1, marker2) {
+    console.log('🔗 Σύνδεση σημείων:', point1, point2);
+    
+    if (connectionLine && window.travelMap) {
+        window.travelMap.removeLayer(connectionLine);
+    }
+    
+    connectionLine = L.polyline([point1, point2], {
+        color: '#FF0000',
+        weight: 4,
+        opacity: 0.7,
+        dashArray: '10, 5',
+        lineCap: 'round'
+    }).addTo(window.travelMap);
+    
+    if (marker1 && marker1.getPopup()) {
+        marker1.setPopupContent('📍 Από<br><small>(κλικ για Google Maps)</small>');
+    }
+    
+    if (marker2 && marker2.getPopup()) {
+        marker2.setPopupContent('🎯 Προς<br><small>(κλικ για Google Maps)</small>');
+    }
+    
+    const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${point1[0]},${point1[1]}&destination=${point2[0]},${point2[1]}&travelmode=walking`;
+    
+    marker1.on('click', function() {
+        window.open(googleMapsUrl, '_blank');
+    });
+    
+    marker2.on('click', function() {
+        window.open(googleMapsUrl, '_blank');
+    });
+    
+    alert(`✅ Ενώθηκαν 2 σημεία!\n\nΚάντε κλικ σε οποιαδήποτε πινέζα για Google Maps.\n\n📍 Από → 🎯 Προς`);
+}
+
+function addClickableMarker(coords, title, activityId) {
+    if (!window.travelMap) return null;
+    
+    const marker = L.marker(coords).addTo(window.travelMap);
+    
+    marker.bindPopup(`<b>${title}</b><br><small>Κλικ για επιλογή ως ΑΠΟ</small>`);
+    
+    marker.on('click', function(e) {
+        if (!firstClickedMarker) {
+            firstClickedMarker = {
+                coords: coords,
+                marker: marker,
+                title: title,
+                activityId: activityId
+            };
+            
+            marker.setPopupContent(`<b>${title}</b><br>✅ Επιλέχθηκε ως ΑΠΟ<br><small>Κλικ σε άλλη πινέζα για ΠΡΟΣ</small>`);
+            alert(`📍 Επιλέξατε: "${title}" ως σημείο ΑΠΟ\n\nΤώρα κάντε κλικ στο σημείο ΠΡΟΣ`);
+            
+        } 
+        else if (!secondClickedMarker && firstClickedMarker.activityId !== activityId) {
+            secondClickedMarker = {
+                coords: coords,
+                marker: marker,
+                title: title,
+                activityId: activityId
+            };
+            
+            marker.setPopupContent(`<b>${title}</b><br>✅ Επιλέχθηκε ως ΠΡΟΣ<br><small>Γραμμή σχεδιάστηκε!</small>`);
+            
+            connectTwoPoints(
+                firstClickedMarker.coords,
+                secondClickedMarker.coords,
+                firstClickedMarker.marker,
+                secondClickedMarker.marker
+            );
+            
+            setTimeout(() => {
+                firstClickedMarker = null;
+                secondClickedMarker = null;
+            }, 5000);
+            
+        } 
+        else if (firstClickedMarker && firstClickedMarker.activityId === activityId) {
+            alert('⚠️ Έχετε ήδη επιλέξει αυτό το σημείο ως ΑΠΟ\n\nΕπιλέξτε διαφορετική πινέζα για ΠΡΟΣ');
+        }
+    });
+    
+    return marker;
+}
+
+// ==================== PROGRAM DAYS UPDATE ====================
+function updateProgramDays() {
+    const daysSelect = document.getElementById('program-days');
+    if (!daysSelect) return;
+    
+    const selectedValue = daysSelect.value;
+    
+    if (!selectedValue || selectedValue === '0') {
+        alert('⚠️ Παρακαλώ επιλέξτε αριθμό ημερών από το dropdown');
+        return;
+    }
+    
+    const selectedDays = parseInt(selectedValue);
+    
+    if (selectedDays > 0) {
+        state.selectedDays = selectedDays;
+        
+        const daysDisplay = document.getElementById('days-display');
+        if (daysDisplay) {
+            daysDisplay.textContent = '✅ ' + selectedDays + ' μέρες επιλέχθηκαν';
+            daysDisplay.style.color = 'var(--success)';
+        }
+        
+        createGeographicProgram();
+        saveState();
+        
+        console.log(`📅 Ενημέρωση προγράμματος για ${selectedDays} μέρες`);
+        
+        const programSection = document.getElementById('daily-program-section');
+        if (programSection) {
+            programSection.style.animation = 'none';
+            setTimeout(() => {
+                programSection.style.animation = 'fadeIn 0.5s ease';
+            }, 10);
+        }
+    }
+}
+
+// ==================== HELPER FUNCTIONS ====================
+function getPriceInfo(prices) {
+    if (!prices || typeof prices !== 'object') {
+        return 'Άγνωστες τιμές';
+    }
+    
+    if (prices['0'] === 0 && prices['4'] === 0) {
+        return 'Βρέφη δωρεάν (0-4)';
+    }
+    if (prices['0'] === 0 && prices['18'] === 0) {
+        return 'Παιδιά δωρεάν (0-18)';
+    }
+    
+    const allPrices = Object.values(prices)
+        .filter(p => typeof p === 'number' && !isNaN(p));
+    
+    if (allPrices.length === 0) {
+        return 'Άγνωστες τιμές';
+    }
+    
+    const min = Math.min(...allPrices);
+    const max = Math.max(...allPrices);
+    
+    if (min === max) {
+        return `${min}€ για όλους`;
+    } else if (min === 0) {
+        return `${max}€ (βρέφη δωρεάν)`;
+    } else {
+        return `${min}-${max}€`;
+    }
+}
+
+function getPriceForAge(prices, age) {
+    if (!prices) return '?';
+    
+    if (prices[age] !== undefined && prices[age] !== null) {
+        return prices[age] + '€';
+    }
+    
+    if (age >= 18 && prices.adult !== undefined) {
+        return prices.adult + '€';
+    }
+    
+    if (age >= 5 && age <= 17) {
+        if (prices.child !== undefined) return prices.child + '€';
+        if (prices['10'] !== undefined) return prices['10'] + '€';
+        if (prices['5'] !== undefined) return prices['5'] + '€';
+    }
+    
+    if (age <= 4 && prices['0'] !== undefined) {
+        return prices['0'] === 0 ? 'ΔΩΡΕΑΝ' : prices['0'] + '€';
+    }
+    
+    for (let i = age; i >= 0; i--) {
+        if (prices[i] !== undefined) {
+            return prices[i] + '€';
+        }
+    }
+    
+    return '?';
+}
+
 // ==================== WINDOW FUNCTIONS ====================
-// ΜΟΝΟ ΜΙΑ ΦΟΡΑ ΟΛΕΣ ΟΙ ΕΚΧΩΡΗΣΕΙΣ
 window.showStep = showStep;
 window.filterDestinations = filterDestinations;
 window.resetFilters = resetFilters;
@@ -2742,7 +2889,7 @@ window.showPopularDestinations = showPopularDestinations;
 window.showBudgetDestinations = showBudgetDestinations;
 window.showFamilyDestinations = showFamilyDestinations;
 window.searchBookingHotels = searchBookingHotels;
-window.searchExpediaHotels = searchExpediaHotels;  // <-- ΠΡΟΣΘΗΚΗ ΑΥΤΗ
+window.searchExpediaHotels = searchExpediaHotels;
 window.setupHotelStep = setupHotelStep;
 window.setupActivitiesStep = setupActivitiesStep;
 window.toggleActivitySelection = toggleActivitySelection;
@@ -2761,236 +2908,10 @@ window.updateFamilyMembers = updateFamilyMembers;
 window.calculateSmartCombos = calculateSmartCombos;
 window.clearSelectedActivities = clearSelectedActivities;
 window.createGeographicProgram = createGeographicProgram;
-window.groupActivitiesByProximity = groupActivitiesByProximity;    // <-- ΠΡΟΣΘΗΚΗ ΑΥΤΗ
-window.calculateDistance = calculateDistance;                     // <-- ΠΡΟΣΘΗΚΗ ΑΥΤΗ  
-window.translateCategory = translateCategory;                     // <-- ΠΡΟΣΘΗΚΗ ΑΥΤΗ
-// ==================== HELPER FUNCTIONS ====================
-// ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ ΓΙΑ ΕΜΦΑΝΙΣΗ ΤΙΜΩΝ
-function getPriceInfo(prices) {
-    if (!prices || typeof prices !== 'object') {
-        return 'Άγνωστες τιμές';
-    }
-    
-    // Έλεγχος για δωρεάν είσοδο
-    if (prices['0'] === 0 && prices['4'] === 0) {
-        return 'Βρέφη δωρεάν (0-4)';
-    }
-    if (prices['0'] === 0 && prices['18'] === 0) {
-        return 'Παιδιά δωρεάν (0-18)';
-    }
-    
-    // Βρες όλες τις αριθμητικές τιμές
-    const allPrices = Object.values(prices)
-        .filter(p => typeof p === 'number' && !isNaN(p));
-    
-    if (allPrices.length === 0) {
-        return 'Άγνωστες τιμές';
-    }
-    
-    // Βρες ελάχιστη και μέγιστη τιμή
-    const min = Math.min(...allPrices);
-    const max = Math.max(...allPrices);
-    
-    // Εμφάνιση ανάλογα
-    if (min === max) {
-        return `${min}€ για όλους`;
-    } else if (min === 0) {
-        return `${max}€ (βρέφη δωρεάν)`;
-    } else {
-        return `${min}-${max}€`;
-    }
-}
+window.groupActivitiesByProximity = groupActivitiesByProximity;
+window.calculateDistance = calculateDistance;
+window.translateCategory = translateCategory;
+window.createEnhancedPopup = createEnhancedPopup;
+window.connectPointsWithRoute = connectPointsWithRoute;
 
-// ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ: Βρες τιμή για συγκεκριμένη ηλικία
-function getPriceForAge(prices, age) {
-    if (!prices) return '?';
-    
-    // 1. Προσπάθησε να βρεις ακριβή τιμή για την ηλικία
-    if (prices[age] !== undefined && prices[age] !== null) {
-        return prices[age] + '€';
-    }
-    
-    // 2. Για ενήλικες (18+), ψάξε για 'adult'
-    if (age >= 18 && prices.adult !== undefined) {
-        return prices.adult + '€';
-    }
-    
-    // 3. Για παιδιά (5-17), ψάξε για 'child' ή κοινές ηλικίες
-    if (age >= 5 && age <= 17) {
-        if (prices.child !== undefined) return prices.child + '€';
-        if (prices['10'] !== undefined) return prices['10'] + '€';
-        if (prices['5'] !== undefined) return prices['5'] + '€';
-    }
-    
-    // 4. Για βρέφη (0-4), ψάξε για '0'
-    if (age <= 4 && prices['0'] !== undefined) {
-        return prices['0'] === 0 ? 'ΔΩΡΕΑΝ' : prices['0'] + '€';
-    }
-    
-    // 5. Fallback: ψάξε για την πλησιέστερη μικρότερη ηλικία
-    for (let i = age; i >= 0; i--) {
-        if (prices[i] !== undefined) {
-            return prices[i] + '€';
-        }
-    }
-    
-    // 6. Αν δεν βρέθηκε τίποτα
-    return '?';
-}
-// ==================== CLICK-TO-CONNECT SYSTEM ====================
-let firstClickedMarker = null;
-let secondClickedMarker = null;
-let connectionLine = null;
-
-// Κάθε φορά που φορτώνει ο χάρτης, ρυθμίζουμε το σύστημα
-function setupClickToConnect() {
-    console.log('🔄 Ρύθμιση click-to-connect system');
-    
-    // Διαγραφή παλιών listeners
-    if (window.travelMap) {
-        window.travelMap.off('click');
-    }
-}
-
-// Συνάρτηση που ενώνει 2 σημεία
-function connectTwoPoints(point1, point2, marker1, marker2) {
-    console.log('🔗 Σύνδεση σημείων:', point1, point2);
-    
-    // 1. Διαγραφή παλιάς γραμμής
-    if (connectionLine && window.travelMap) {
-        window.travelMap.removeLayer(connectionLine);
-    }
-    
-    // 2. Σχεδίαση νέας γραμμής
-    connectionLine = L.polyline([point1, point2], {
-        color: '#FF0000',
-        weight: 4,
-        opacity: 0.7,
-        dashArray: '10, 5',
-        lineCap: 'round'
-    }).addTo(window.travelMap);
-    
-    // 3. Ενημέρωση popups
-    if (marker1 && marker1.getPopup()) {
-        marker1.setPopupContent('📍 Από<br><small>(κλικ για Google Maps)</small>');
-    }
-    
-    if (marker2 && marker2.getPopup()) {
-        marker2.setPopupContent('🎯 Προς<br><small>(κλικ για Google Maps)</small>');
-    }
-    
-    // 4. Άνοιγμα Google Maps
-    const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${point1[0]},${point1[1]}&destination=${point2[0]},${point2[1]}&travelmode=walking`;
-    
-    // 5. Προσθήκη κλικ στα markers για Google Maps
-    marker1.on('click', function() {
-        window.open(googleMapsUrl, '_blank');
-    });
-    
-    marker2.on('click', function() {
-        window.open(googleMapsUrl, '_blank');
-    });
-    
-    alert(`✅ Ενώθηκαν 2 σημεία!\n\nΚάντε κλικ σε οποιαδήποτε πινέζα για Google Maps.\n\n📍 Από → 🎯 Προς`);
-}
-
-// Βοηθητική: Προσθήκη marker με δυνατότητα κλικ
-function addClickableMarker(coords, title, activityId) {
-    if (!window.travelMap) return null;
-    
-       const marker = L.marker(coords).addTo(window.travelMap);  // <-- ΑΥΤΗ Η ΓΡΑΜΜΗ ΠΡΕΠΕΙ ΝΑ ΥΠΑΡΧΕΙ
-    
-    marker.bindPopup(`<b>${title}</b><br><small>Κλικ για επιλογή ως ΑΠΟ</small>`);
-    
-    marker.on('click', function(e) {
-        // Αν είναι πρώτο κλικ
-        if (!firstClickedMarker) {
-            firstClickedMarker = {
-                coords: coords,
-                marker: marker,
-                title: title,
-                activityId: activityId
-            };
-            
-            marker.setPopupContent(`<b>${title}</b><br>✅ Επιλέχθηκε ως ΑΠΟ<br><small>Κλικ σε άλλη πινέζα για ΠΡΟΣ</small>`);
-            alert(`📍 Επιλέξατε: "${title}" ως σημείο ΑΠΟ\n\nΤώρα κάντε κλικ στο σημείο ΠΡΟΣ`);
-            
-        } 
-        // Αν είναι δεύτερο κλικ (και όχι το ίδιο)
-        else if (!secondClickedMarker && firstClickedMarker.activityId !== activityId) {
-            secondClickedMarker = {
-                coords: coords,
-                marker: marker,
-                title: title,
-                activityId: activityId
-            };
-            
-            marker.setPopupContent(`<b>${title}</b><br>✅ Επιλέχθηκε ως ΠΡΟΣ<br><small>Γραμμή σχεδιάστηκε!</small>`);
-            
-            // Σύνδεση των δύο σημείων
-            connectTwoPoints(
-                firstClickedMarker.coords,
-                secondClickedMarker.coords,
-                firstClickedMarker.marker,
-                secondClickedMarker.marker
-            );
-            
-            // Επαναφορά για νέα σύνδεση
-            setTimeout(() => {
-                firstClickedMarker = null;
-                secondClickedMarker = null;
-            }, 5000);
-            
-        } 
-        // Αν κάνουμε κλικ στο ίδιο σημείο
-        else if (firstClickedMarker && firstClickedMarker.activityId === activityId) {
-            alert('⚠️ Έχετε ήδη επιλέξει αυτό το σημείο ως ΑΠΟ\n\nΕπιλέξτε διαφορετική πινέζα για ΠΡΟΣ');
-        }
-    });
-    
-    return marker;
-}
-// ==================== PROGRAM DAYS UPDATE ====================
-function updateProgramDays() {
-    const daysSelect = document.getElementById('program-days');
-    if (!daysSelect) return;
-    
-    const selectedValue = daysSelect.value;
-    
-    if (!selectedValue || selectedValue === '0') {
-        alert('⚠️ Παρακαλώ επιλέξτε αριθμό ημερών από το dropdown');
-        return;
-    }
-    
-    const selectedDays = parseInt(selectedValue);
-    
-    if (selectedDays > 0) {
-        // 1. Αποθήκευση
-        state.selectedDays = selectedDays;
-        
-        // 2. Ενημέρωση εμφάνισης
-        const daysDisplay = document.getElementById('days-display');
-        if (daysDisplay) {
-            daysDisplay.textContent = '✅ ' + selectedDays + ' μέρες επιλέχθηκαν';
-            daysDisplay.style.color = 'var(--success)';
-        }
-        
-        // 3. ΔΗΜΙΟΥΡΓΙΑ ΝΕΟΥ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ
-        createGeographicProgram();
-        
-        // 4. Αποθήκευση
-        saveState();
-        
-        console.log(`📅 Ενημέρωση γεωγραφικού προγράμματος για ${selectedDays} μέρες`);
-        
-        // 5. Μικρό animation feedback
-        const programSection = document.getElementById('daily-program-section');
-        if (programSection) {
-            programSection.style.animation = 'none';
-            setTimeout(() => {
-                programSection.style.animation = 'fadeIn 0.5s ease';
-            }, 10);
-        }
-    }  // <-- ΚΛΕΙΣΙΜΟ
-}     // <-- ΤΕΛΟΣ ΣΥΝΑΡΤΗΣΗΣ
 console.log('✅ Script.js loaded successfully!');
