@@ -180,7 +180,6 @@ function loadStepContent(stepName) {
             break;
         case 'flight':
             stepContent.innerHTML = getFlightStepHTML();
-            setupFlightStep();
             break;
         case 'hotel':
             stepContent.innerHTML = getHotelStepHTML();
