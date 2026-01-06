@@ -4442,13 +4442,6 @@ function initializeSimpleMap() {
         `;
     }
 }
-
-
-// ==================== WINDOW FUNCTIONS ====================
-window.showStep = showStep;
-// ... τα υπόλοιπα window ...
-
-// ==================== WINDOW FUNCTIONS ====================
 window.showStep = showStep;
 window.filterDestinations = filterDestinations;
 window.resetFilters = resetFilters;
@@ -4505,6 +4498,7 @@ window.initializeSimpleMap = initializeSimpleMap;
 window.loadActivitiesOnMap = loadActivitiesOnMap;
 window.clearMap = clearMap;
 window.showGroupedMap = showGroupedMap;            
-            
 
 console.log('✅ Script.js loaded successfully!');
+
+
