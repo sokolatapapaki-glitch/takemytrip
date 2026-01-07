@@ -25,8 +25,10 @@ function calculateSmartCombos() {
     }
     
     // 2. ΕΠΙΣΤΡΕΦΟΥΝ ΜΟΝΟ ΕΠΙΛΕΓΜΕΝΕΣ
-    const selectedActivities = currentActivities.filter(act => act.selected === true);
-    
+    // Έλεγξε αν υπάρχουν επιλεγμένες στο state.selectedActivities
+const selectedActivities = (state && state.selectedActivities && state.selectedActivities.length > 0) 
+    ? state.selectedActivities.map(selected => currentActivities.find(a => a.id === selected.id)).filter(a => a)
+    : currentActivities.filter(act => act.selected === true);
     if (selectedActivities.length === 0) {
         alert("⚠️ Δεν έχετε επιλέξει δραστηριότητες! Κάντε κλικ στις κάρτες.");
         return;
