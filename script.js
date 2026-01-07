@@ -904,9 +904,7 @@ function generateGeographicProgram() {
         selectedDays: state.selectedDays
     });
     
-    // Βεβαιώσου ότι ο χρήστης βλέπει το Console
-    alert('🔍 ΚΟΙΤΑΣΤΕ CONSOLE (F12) ΓΙΑ ΔΙΑΓΝΩΣΤΙΚΑ');
-
+   
     console.log('🎯 generateGeographicProgram ΚΑΛΕΙΤΑΙ!');
     
     // 1. ΒΕΒΑΙΩΣΟΥ ΟΤΙ ΥΠΑΡΧΕΙ ΤΟ DROPDOWN
