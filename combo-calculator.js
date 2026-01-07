@@ -48,15 +48,15 @@ const selectedActivities = (state && state.selectedActivities && state.selectedA
     // 4. ΑΝΑΖΗΤΗΣΗ COMBO ΒΑΣΕΙ ΠΟΛΗΣ
     let availableCombos = [];
     
-    if (state.selectedDestination.includes("Λονδίνο")) {
-        availableCombos = findLondonCombos(selectedActivities, ageGroups);
-    } else if (selectedDestinationName.includes("Βιέννη")) {
-        availableCombos = findViennaCombos(selectedActivities, ageGroups);
-    } else if (selectedDestinationName.includes("Βερολίνο")) {
-        availableCombos = findBerlinCombos(selectedActivities, ageGroups);
-    } else {
-        availableCombos = findGenericCombos(selectedActivities, ageGroups);
-    }
+   if (state.selectedDestination.includes("Λονδίνο")) {
+    availableCombos = findLondonCombos(selectedActivities, ageGroups);
+} else if (state.selectedDestination.includes("Βιέννη")) {
+    availableCombos = findViennaCombos(selectedActivities, ageGroups);
+} else if (state.selectedDestination.includes("Βερολίνο")) {
+    availableCombos = findBerlinCombos(selectedActivities, ageGroups);
+} else {
+    availableCombos = findGenericCombos(selectedActivities, ageGroups);
+}
     
     // 5. ΥΠΟΛΟΓΙΣΜΟΣ ΚΑΛΥΤΕΡΟΥ COMBO
     let bestCombo = null;
