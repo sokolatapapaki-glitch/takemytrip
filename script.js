@@ -895,6 +895,7 @@ function getSummaryStepHTML() {
 
 
 // ==================== ΑΠΛΟΠΟΙΗΜΕΝΗ ΣΥΝΑΡΤΗΣΗ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ ====================
+// ==================== ΑΠΛΟΠΟΙΗΜΕΝΗ ΣΥΝΑΡΤΗΣΗ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ ====================
 function generateGeographicProgram() {
     console.log('🎯 generateGeographicProgram ΚΑΛΕΙΤΑΙ!');
     
@@ -921,7 +922,8 @@ function generateGeographicProgram() {
         alert('⚠️ Δεν υπάρχουν επιλεγμένες δραστηριότητες');
         return;
     }
-        // 🔴 ΝΕΟ ΕΛΕΓΧΟΣ: ΟΧΙ ΠΡΟΓΡΑΜΜΑ ΧΩΡΙΣ ΗΛΙΚΙΕΣ
+    
+    // 🔴 ΝΕΟ ΕΛΕΓΧΟΣ: ΟΧΙ ΠΡΟΓΡΡΑΜΜΑ ΧΩΡΙΣ ΗΛΙΚΙΕΣ
     const hasAnyAge = state.familyMembers.some(member => {
         const age = parseInt(member.age);
         return !isNaN(age) && age >= 0 && age <= 120;
@@ -932,9 +934,6 @@ function generateGeographicProgram() {
         return;
     }
     
-    // 3. ΣΥΝΕΧΙΖΕΙΣ ΜΕ ΤΟΝ ΥΠΟΛΟΙΠΟ ΚΩΔΙΚΑ ΣΟΥ
-    // ΜΗΝ ΑΛΛΑΞΕΙΣ ΤΙΠΟΤΑ ΑΠΟ ΕΔΩ ΚΑΙ ΚΑΤΩ
-    
     if (!state.selectedDays || state.selectedDays < 1) {
         alert('⚠️ Παρακαλώ επιλέξτε πρώτα πόσες μέρες θα διαρκέσει το ταξίδι σας');
         return;
@@ -944,19 +943,22 @@ function generateGeographicProgram() {
     console.log(`   📅 Μέρες: ${state.selectedDays}`);
     console.log(`   📊 Δραστηριότητες: ${state.selectedActivities.length}`);
     
-    // 1. Βρες τις πλήρεις πληροφορίες για τις επιλεγμένες δραστηριότητες
-    console.log('🔍 Ψάχνω για currentCityActivities:', state.currentCityActivities?.length || 0);
-    
+    // 1. ΔΙΑΒΑΣΕ ΤΙΣ ΔΡΑΣΤΗΡΙΟΤΗΤΕΣ ΑΠΟ ΤΟ JSON ΑΝ ΔΕΝ ΥΠΑΡΧΟΥΝ
     if (!state.currentCityActivities || state.currentCityActivities.length === 0) {
-        alert('⚠️ Ουπς! Οι δραστηριότητες δεν φορτώθηκαν σωστά.\n\nΠαρακαλώ:\n1. Επιστρέψτε στις Δραστηριότητες\n2. Περιμένετε να φορτώσουν\n3. Επιστρέψτε εδώ');
-        return;
+        console.log('⚠️ currentCityActivities είναι άδειο, προσπαθώ να φορτώσω ξανά...');
+        loadActivitiesForProgram();
+        return; // Η loadActivitiesForProgram() θα ξανακαλέσει αυτή τη συνάρτηση
     }
+    
+    // 2. Βρες τις πλήρεις πληροφορίες για τις επιλεγμένες δραστηριότητες
+    console.log('🔍 Ψάχνω για currentCityActivities:', state.currentCityActivities.length);
     
     const fullActivities = state.selectedActivities.map(selected => {
         const originalActivity = state.currentCityActivities.find(a => a.id === selected.id);
         
         if (!originalActivity) {
             console.error('❌ Δεν βρέθηκε η δραστηριότητα:', selected.id, selected.name);
+            return null;
         }
         
         return {
@@ -964,11 +966,16 @@ function generateGeographicProgram() {
             ...originalActivity,
             location: originalActivity?.location || null
         };
-    }).filter(a => a !== undefined && a.location); // 🔴 ΦΙΛΤΡΑΡΕ ΜΟΝΟ ΕΓΚΥΡΕΣ
+    }).filter(a => a !== null && a.location);
     
     console.log(`📍 Δραστηριότητες με location: ${fullActivities.length}/${state.selectedActivities.length}`);
     
-    // 2. Ομαδοποίηση με βάση την τοποθεσία (μόνο αυτές με location)
+    if (fullActivities.length === 0) {
+        alert('⚠️ Δεν βρέθηκαν πληροφορίες τοποθεσίας για τις επιλεγμένες δραστηριότητες.\n\nΠαρακαλώ επιστρέψτε στις Δραστηριότητες και επιλέξτε ξανά.');
+        return;
+    }
+    
+    // 3. Ομαδοποίηση με βάση την τοποθεσία (μόνο αυτές με location)
     const activitiesWithLocation = fullActivities.filter(a => a.location);
     let activityGroups = [];
     
@@ -986,7 +993,7 @@ function generateGeographicProgram() {
     
     console.log(`📍 Βρέθηκαν ${activityGroups.length} γεωγραφικές περιοχές/ομάδες`);
     
-    // 3. Αν δεν έχουμε ομάδες, δημιούργησε μία ομάδα για κάθε δραστηριότητα
+    // 4. Αν δεν έχουμε ομάδες, δημιούργησε μία ομάδα για κάθε δραστηριότητα
     if (activityGroups.length === 0) {
         activityGroups = fullActivities.map(activity => ({
             center: null,
@@ -996,17 +1003,19 @@ function generateGeographicProgram() {
         }));
     }
     
-    // 4. Κατανομή ομάδων στις μέρες που επέλεξε ο χρήστης
+    // 5. Κατανομή ομάδων στις μέρες που επέλεξε ο χρήστης
     const daysProgram = distributeGroupsToDays(activityGroups, state.selectedDays);
     
-    // 5. Δημιουργία HTML για το πρόγραμμα
+    // 6. Δημιουργία HTML για το πρόγραμμα
     const programDiv = document.getElementById('geographic-program');
     if (!programDiv) {
         console.error('❌ Δεν βρέθηκε το geographic-program div');
         return;
     }
-        console.log('✅ ΒΡΕΘΗΚΕ το geographic-program div!');
+    
+    console.log('✅ ΒΡΕΘΗΚΕ το geographic-program div!');
     console.log('📏 Μέγεθος div:', programDiv.offsetWidth, 'x', programDiv.offsetHeight);
+    
     let html = '';
     
     if (activityGroups.length === 0) {
@@ -1175,7 +1184,8 @@ function generateGeographicProgram() {
     }
     
     programDiv.innerHTML = html;
-     // 🔴 ΝΕΟ: ΑΥΤΟΜΑΤΟ SCROLL ΣΤΟ ΠΡΟΓΡΑΜΜΑ
+    
+    // 🔴 ΝΕΟ: ΑΥΤΟΜΑΤΟ SCROLL ΣΤΟ ΠΡΟΓΡΑΜΜΑ
     setTimeout(() => {
         programDiv.scrollIntoView({
             behavior: 'smooth',
@@ -1202,6 +1212,32 @@ function generateGeographicProgram() {
     showToast(`✅ Δημιουργήθηκε γεωγραφικό πρόγραμμα για ${state.selectedDays} μέρες`, 'success');
     
     console.log(`✅ Το πρόγραμμα δημιουργήθηκε επιτυχώς για ${state.selectedDays} μέρες`);
+}
+
+// 🔴 ΝΕΑ ΣΥΝΑΡΤΗΣΗ: Φόρτωση δραστηριοτήτων για το πρόγραμμα
+function loadActivitiesForProgram() {
+    console.log('🔄 Φόρτωση δραστηριοτήτων για το πρόγραμμα...');
+    
+    if (!state.selectedDestinationId) {
+        alert('❌ Δεν υπάρχει επιλεγμένος προορισμός');
+        return;
+    }
+    
+    fetch(`data/${state.selectedDestinationId}.json`)
+        .then(response => response.json())
+        .then(cityData => {
+            state.currentCityActivities = cityData.activities;
+            console.log('✅ Δραστηριότητες φορτώθηκαν:', state.currentCityActivities.length);
+            
+            // Ξανακάλεσε τη generateGeographicProgram τώρα που έχουμε τα δεδομένα
+            setTimeout(() => {
+                generateGeographicProgram();
+            }, 500);
+        })
+        .catch(error => {
+            console.error('❌ Σφάλμα φόρτωσης:', error);
+            alert('⚠️ Δεν μπορούν να φορτωθούν οι δραστηριότητες. Παρακαλώ ανανεώστε τη σελίδα.');
+        });
 }
 // ==================== FORCE REFRESH PROGRAM ====================
 function forceRefreshProgram() {
