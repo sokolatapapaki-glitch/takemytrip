@@ -945,16 +945,28 @@ function generateGeographicProgram() {
     console.log(`   📊 Δραστηριότητες: ${state.selectedActivities.length}`);
     
     // 1. Βρες τις πλήρεις πληροφορίες για τις επιλεγμένες δραστηριότητες
+    console.log('🔍 Ψάχνω για currentCityActivities:', state.currentCityActivities?.length || 0);
+    
+    if (!state.currentCityActivities || state.currentCityActivities.length === 0) {
+        alert('⚠️ Ουπς! Οι δραστηριότητες δεν φορτώθηκαν σωστά.\n\nΠαρακαλώ:\n1. Επιστρέψτε στις Δραστηριότητες\n2. Περιμένετε να φορτώσουν\n3. Επιστρέψτε εδώ');
+        return;
+    }
+    
     const fullActivities = state.selectedActivities.map(selected => {
         const originalActivity = state.currentCityActivities.find(a => a.id === selected.id);
+        
+        if (!originalActivity) {
+            console.error('❌ Δεν βρέθηκε η δραστηριότητα:', selected.id, selected.name);
+        }
+        
         return {
             ...selected,
             ...originalActivity,
             location: originalActivity?.location || null
         };
-    }).filter(a => a !== undefined);
+    }).filter(a => a !== undefined && a.location); // 🔴 ΦΙΛΤΡΑΡΕ ΜΟΝΟ ΕΓΚΥΡΕΣ
     
-    console.log(`📍 Δραστηριότητες με location: ${fullActivities.filter(a => a.location).length}/${fullActivities.length}`);
+    console.log(`📍 Δραστηριότητες με location: ${fullActivities.length}/${state.selectedActivities.length}`);
     
     // 2. Ομαδοποίηση με βάση την τοποθεσία (μόνο αυτές με location)
     const activitiesWithLocation = fullActivities.filter(a => a.location);
@@ -2246,7 +2258,9 @@ async function setupActivitiesStep() {
         updateActivitiesTotal();
         
         console.log('✅ Δραστηριότητες εμφανίστηκαν επιτυχώς');
-        
+             // 🔴 ΝΕΟ: ΑΠΟΘΗΚΕΥΣΗ ΤΩΝ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ ΓΙΑ ΤΟ ΒΗΜΑ 5
+        console.log('💾 Αποθηκεύτηκαν', state.currentCityActivities.length, 'δραστηριότητες για το πρόγραμμα');
+        saveState();   
     } catch (error) {
         console.error('❌ Σφάλμα φόρτωσης:', error);
         
