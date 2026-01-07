@@ -983,7 +983,8 @@ function generateGeographicProgram() {
         console.error('❌ Δεν βρέθηκε το geographic-program div');
         return;
     }
-    
+        console.log('✅ ΒΡΕΘΗΚΕ το geographic-program div!');
+    console.log('📏 Μέγεθος div:', programDiv.offsetWidth, 'x', programDiv.offsetHeight);
     let html = '';
     
     if (activityGroups.length === 0) {
