@@ -819,12 +819,7 @@ function getSummaryStepHTML() {
                                     style="width: 100%; padding: 15px; font-size: 18px; margin-bottom: 20px;">
                                 <i class="fas fa-map-marked-alt"></i> ΔΗΜΙΟΥΡΓΙΑ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ
                             </button>
-                            <!-- ΠΡΟΣΘΗΚΗ ΝΕΟΥ ΚΟΥΜΠΙΟΥ ΕΔΩ -->
-<button class="btn btn-warning" onclick="testNewClustering()" 
-        style="width: 100%; padding: 15px; font-size: 18px; margin-bottom: 20px;">
-    🧪 ΔΟΚΙΜΗ ΝΕΑΣ ΜΕΘΟΔΟΥ
-</button>
-                            
+                                                       
                             <p style="text-align: center; color: var(--gray); font-size: 14px; margin-bottom: 20px;">
                                 <i class="fas fa-info-circle"></i> Πατήστε το κουμπί για δημιουργία βελτιστοποιημένου προγράμματος
                             </p>
