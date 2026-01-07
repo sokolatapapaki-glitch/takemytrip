@@ -4028,32 +4028,32 @@ function createDestinationDropdown() {
             <select class="form-control" id="manual-city-select" 
                     style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; background: white;">
                 <option value="">-- Επιλέξτε πόλη --</option>
-                <optgroup label="✅ Πλήρης Υποστήριξη">
-                    <option value="amsterdam">Άμστερνταμ (Ολλανδία)</option>
-                    <option value="berlin">Βερολίνο (Γερμανία)</option>
-                    <option value="budapest">Βουδαπέστη (Ουγγαρία)</option>
-                    <option value="istanbul">Κωνσταντινούπολη (Τουρκία)</option>
-                    <option value="lisbon">Λισαβόνα (Πορτογαλία)</option>
-                    <option value="london">Λονδίνο (ΗΒ)</option>
-                    <option value="madrid">Μαδρίτη (Ισπανία)</option>
-                    <option value="paris">Παρίσι (Γαλλία)</option>
-                    <option value="prague">Πράγα (Τσεχία)</option>
-                    <option value="vienna">Βιέννη (Αυστρία)</option>
-                </optgroup>
-                <optgroup label="🛠️ Σύντομα Διαθέσιμες">
-                    <option value="rome">Ρώμη (Ιταλία)</option>
-                    <option value="barcelona">Βαρκελώνη (Ισπανία)</option>
-                    <option value="brussels">Βρυξέλλες (Βέλγιο)</option>
-                    <option value="copenhagen">Κοπεγχάγη (Δανία)</option>
-                    <option value="dublin">Δουβλίνο (Ιρλανδία)</option>
-                    <option value="edinburgh">Εδιμβούργο (Σκωτία)</option>
-                    <option value="florence">Φλωρεντία (Ιταλία)</option>
-                    <option value="munich">Μόναχο (Γερμανία)</option>
-                    <option value="venice">Βενετία (Ιταλία)</option>
-                    <option value="warsaw">Βαρσοβία (Πολωνία)</option>
-                    <option value="krakow">Κρακοβία (Πολωνία)</option>
-                    <option value="zurich">Ζυρίχη (Ελβετία)</option>
-                </optgroup>
+               <optgroup label="✅ Πλήρης Υποστήριξη">
+    <option value="amsterdam">Άμστερνταμ (Ολλανδία)</option>
+    <option value="vienna">Βιέννη (Αυστρία)</option>
+    <option value="berlin">Βερολίνο (Γερμανία)</option>
+    <option value="budapest">Βουδαπέστη (Ουγγαρία)</option>
+    <option value="istanbul">Κωνσταντινούπολη (Τουρκία)</option>
+    <option value="lisbon">Λισαβόνα (Πορτογαλία)</option>
+    <option value="london">Λονδίνο (ΗΒ)</option>
+    <option value="madrid">Μαδρίτη (Ισπανία)</option>
+    <option value="paris">Παρίσι (Γαλλία)</option>
+    <option value="prague">Πράγα (Τσεχία)</option>
+</optgroup>
+<optgroup label="🛠️ Σύντομα Διαθέσιμες">
+    <option value="barcelona">Βαρκελώνη (Ισπανία)</option>
+    <option value="warsaw">Βαρσοβία (Πολωνία)</option>
+    <option value="brussels">Βρυξέλλες (Βέλγιο)</option>
+    <option value="venice">Βενετία (Ιταλία)</option>
+    <option value="dublin">Δουβλίνο (Ιρλανδία)</option>
+    <option value="edinburgh">Εδιμβούργο (Σκωτία)</option>
+    <option value="zurich">Ζυρίχη (Ελβετία)</option>
+    <option value="copenhagen">Κοπεγχάγη (Δανία)</option>
+    <option value="krakow">Κρακοβία (Πολωνία)</option>
+    <option value="munich">Μόναχο (Γερμανία)</option>
+    <option value="rome">Ρώμη (Ιταλία)</option>
+    <option value="florence">Φλωρεντία (Ιταλία)</option>
+ </optgroup>
             </select>
             <small style="display: block; margin-top: 6px; color: #666; font-size: 13px;">
                 Μόνο πόλεις από την λίστα μας. ✅ = πλήρης υποστήριξη, 🛠️ = σύντομα
