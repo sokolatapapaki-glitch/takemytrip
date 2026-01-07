@@ -838,8 +838,8 @@ function getSummaryStepHTML() {
                     `}
                 </div>
                 
-                <!-- Geographic Program -->
-                <div class="card" id="geographic-program-section" style="margin-top: 30px; ${state.selectedDays === 0 ? 'display: none;' : ''}">
+                <!-- Geographic Program -->          
+                <div class="card" id="geographic-program-section" style="margin-top: 30px;">
                     <h3><i class="fas fa-route"></i> Γεωγραφικό Πρόγραμμα</h3>
                     
                     <!-- 🔴 ΕΔΩ ΘΑ ΕΜΦΑΝΙΖΕΤΑΙ ΤΟ ΔΗΜΙΟΥΡΓΗΜΕΝΟ ΠΡΟΓΡΑΜΜΑ -->
