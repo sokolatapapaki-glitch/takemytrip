@@ -5614,6 +5614,39 @@ if (document.readyState === 'loading') {
 }
 
 console.log('✅ Script.js loaded successfully!');
-console.log('✅ Script.js loaded successfully!');
+// ==================== ΝΕΑ ΣΥΝΑΡΤΗΣΗ SMART CLUSTERING ====================
+function createSmartClusters(activities, numClusters) {
+    console.log('🧪 Δοκιμή νέας μεθόδου ομαδοποίησης');
+    console.log(`📊 Δραστηριότητες: ${activities.length}, Ομάδες: ${numClusters}`);
+    
+    // ΠΡΟΣΟΧΗ: Αυτή είναι ΠΡΟΣΩΡΙΝΗ έκδοση για δοκιμή
+    // Απλώς χωρίζει τις δραστηριότητες σε ίσα μέρη
+    
+    if (!activities || activities.length === 0) {
+        console.log('⚠️ Δεν υπάρχουν δραστηριότητες');
+        return [];
+    }
+    
+    if (numClusters <= 0) numClusters = 1;
+    
+    // Πολύ απλός διαχωρισμός
+    const clusterSize = Math.ceil(activities.length / numClusters);
+    const clusters = [];
+    
+    for (let i = 0; i < numClusters; i++) {
+        const start = i * clusterSize;
+        const end = Math.min(start + clusterSize, activities.length);
+        const cluster = activities.slice(start, end);
+        
+        if (cluster.length > 0) {
+            clusters.push(cluster);
+            console.log(`   Ομάδα ${i+1}: ${cluster.length} δραστηριότητες`);
+        }
+    }
+    
+    console.log(`✅ Δημιουργήθηκαν ${clusters.length} ομάδες`);
+    return clusters;
+}
+// ==================== ΤΕΛΟΣ ΝΕΑΣ ΣΥΝΑΡΤΗΣΗΣ ====================
 
 
