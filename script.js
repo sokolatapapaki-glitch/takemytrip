@@ -3709,7 +3709,9 @@ function updateFamilyMembers() {
 }
 
 function calculateSmartCombos() {
-    alert('ℹ️ Η λειτουργία "Έξυπνο Combo" θα είναι διαθέσιμη σύντομα!');
+    // Άφησε το function άδειο ή απλά κλήση της πραγματικής συνάρτησης
+    // Θα καλέσει αυτόματα την συνάρτηση από το combo-calculator.js
+    return;
 }
 
 function clearSelectedActivities() {
