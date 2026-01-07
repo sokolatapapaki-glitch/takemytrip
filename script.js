@@ -736,9 +736,6 @@ function getActivitiesStepHTML() {
     `;
 }
 
-
-
-// ==================== STEP 5: SUMMARY ====================
 // ==================== STEP 5: SUMMARY ====================
 function getSummaryStepHTML() {
     return `
@@ -781,6 +778,7 @@ function getSummaryStepHTML() {
                     </p>
                     
                     <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                        <!-- 🔴 ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΚΡΙΤΙΚΟ ΣΤΟΙΧΕΙΟ ΠΟΥ ΛΕΙΠΕΙ -->
                         <select class="form-control" id="program-days" style="width: 200px; font-size: 16px; padding: 12px;">
                             <option value="0" ${state.selectedDays === 0 ? 'selected disabled' : 'disabled'}>-- Επιλέξτε μέρες --</option>
                             <option value="2" ${state.selectedDays === 2 ? 'selected' : ''}>2 μέρες</option>
@@ -796,13 +794,9 @@ function getSummaryStepHTML() {
                             <i class="fas fa-sync-alt"></i> Ενημέρωση Προγράμματος
                         </button>
                         
-                        <span id="days-display" style="color: black; font-weight: bold; font-size: 16px;">
-    ${state.selectedDays > 0 ? '✅ ' + state.selectedDays + ' μέρες επιλέχθηκαν' : '⚠️ Δεν έχετε επιλέξει ακόμα'}
-</span>
-                    </div>
-                    
-                    <div style="margin-top: 15px; font-size: 14px; color: #666; background: white; padding: 10px; border-radius: 6px;">
-                        <i class="fas fa-info-circle"></i> Οι δραστηριότητες θα ομαδοποιηθούν γεωγραφικά <strong>βάσει των ημερών που επιλέγετε</strong>.
+                        <span id="days-display" style="color: var(--success); font-weight: bold; font-size: 16px;">
+                            ${state.selectedDays > 0 ? '✅ ' + state.selectedDays + ' μέρες επιλέχθηκαν' : '⚠️ Δεν έχετε επιλέξει ακόμα'}
+                        </span>
                     </div>
                 </div>
                 
@@ -820,50 +814,35 @@ function getSummaryStepHTML() {
                         </div>
                     ` : `
                         <div style="margin-top: 20px;">
+                            <!-- 🔴 ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΚΟΥΜΠΙ ΠΟΥ ΔΕΝ ΔΟΥΛΕΥΕΙ -->
                             <button class="btn btn-primary" onclick="generateGeographicProgram()" 
                                     style="width: 100%; padding: 15px; font-size: 18px; margin-bottom: 20px;">
                                 <i class="fas fa-map-marked-alt"></i> ΔΗΜΙΟΥΡΓΙΑ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ
                             </button>
                             
                             <p style="text-align: center; color: var(--gray); font-size: 14px; margin-bottom: 20px;">
-    <i class="fas fa-info-circle"></i> Πατήστε το κουμπί για δημιουργία βελτιστοποιημένου προγράμματος
-</p>
+                                <i class="fas fa-info-circle"></i> Πατήστε το κουμπί για δημιουργία βελτιστοποιημένου προγράμματος
+                            </p>
                         </div>
                         
                         <!-- Συνολικό Κόστος -->
                         <div style="padding: 15px; background: linear-gradient(135deg, var(--primary), #4F46E5); color: white; border-radius: 8px; text-align: center; margin-top: 20px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <div style="text-align: left;">
-                                    <h4 style="color: white; margin-bottom: 5px; font-size: 16px;">
-                                        <i class="fas fa-money-bill-wave"></i> Συνολικό Κόστος
-                                    </h4>
-                                    <p style="opacity: 0.9; margin: 0; font-size: 14px;">
-                                        Για ${state.familyMembers.length} άτομα
-                                    </p>
-                                </div>
-                                <h2 style="font-size: 36px; margin: 0;">${calculateTotalSpent()}€</h2>
-                            </div>
+                            <h4 style="color: white; margin-bottom: 5px;">
+                                <i class="fas fa-money-bill-wave"></i> Συνολικό Κόστος
+                            </h4>
+                            <h2 style="font-size: 36px; margin: 0;">${calculateTotalSpent()}€</h2>
+                            <p style="opacity: 0.9; margin: 5px 0 0 0;">
+                                Για ${state.familyMembers.length} άτομα
+                            </p>
                         </div>
                     `}
                 </div>
                 
                 <!-- Geographic Program -->
                 <div class="card" id="geographic-program-section" style="margin-top: 30px; ${state.selectedDays === 0 ? 'display: none;' : ''}">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <h3 style="margin: 0;">
-                            <i class="fas fa-route"></i> Γεωγραφικό Πρόγραμμα
-                            <span style="font-size: 14px; color: var(--gray); margin-left: 10px;">
-                                (${state.selectedDays} μέρες)
-                            </span>
-                        </h3>
-                        <div id="program-status" style="background: #f0f7ff; padding: 8px 15px; border-radius: 20px; font-size: 14px; color: var(--primary);">
-                            ${state.selectedActivities.length > 0 ? 
-                                `<i class="fas fa-clock"></i> Έτοιμο για δημιουργία` : 
-                                `<i class="fas fa-info-circle"></i> Περιμένετε επιλογές`}
-                        </div>
-                    </div>
+                    <h3><i class="fas fa-route"></i> Γεωγραφικό Πρόγραμμα</h3>
                     
-                    <!-- ΕΔΩ ΘΑ ΕΜΦΑΝΙΣΤΕΙ ΤΟ ΠΡΟΓΡΑΜΜΑ -->
+                    <!-- 🔴 ΕΔΩ ΘΑ ΕΜΦΑΝΙΖΕΤΑΙ ΤΟ ΔΗΜΙΟΥΡΓΗΜΕΝΟ ΠΡΟΓΡΑΜΜΑ -->
                     <div id="geographic-program" 
                          style="min-height: 150px; padding: 20px; border-radius: 15px; background: #f0f7ff; border: 2px dashed var(--primary-light); text-align: center;">
                         
@@ -901,20 +880,11 @@ function getSummaryStepHTML() {
                 </div>
                 
                 <!-- ΚΟΥΜΠΙΑ -->
-                <div class="step-5-btn-container" style="text-align: center; margin-top: 30px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                    <button class="btn btn-primary" onclick="showStep('map')" 
-                            style="padding: 15px 40px; font-size: 18px; border-radius: 12px; background: var(--primary); border: none;">
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn btn-primary" onclick="showStep('map')" style="margin-right: 10px;">
                         <i class="fas fa-map-marked-alt"></i> Συνέχεια στον Χάρτη
                     </button>
-                    
-                    <!-- 🚨 ΝΕΟ ΚΟΥΜΠΙ: ΑΜΕΣΗ ΑΝΑΝΕΩΣΗ -->
-                    <button class="btn btn-accent" onclick="forceRefreshProgram()" 
-                            style="padding: 15px 30px; font-size: 18px; border-radius: 12px; background: #10B981; border: none;">
-                        <i class="fas fa-sync-alt"></i> Άμεση Ανανέωση
-                    </button>
-                    
-                    <button class="btn btn-outline" onclick="showStep('activities')" 
-                            style="padding: 15px 25px; font-size: 16px; border-color: var(--gray); color: var(--gray);">
+                    <button class="btn btn-outline" onclick="showStep('activities')">
                         <i class="fas fa-arrow-left"></i> Επιστροφή
                     </button>
                 </div>
@@ -923,24 +893,37 @@ function getSummaryStepHTML() {
     `;
 }
 
+
 // ==================== ΑΠΛΟΠΟΙΗΜΕΝΗ ΣΥΝΑΡΤΗΣΗ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ ====================
 function generateGeographicProgram() {
-    // 🔴 ΚΡΙΤΙΚΗ ΔΙΟΡΘΩΣΗ: Επαναφόρτωση των selectedDays από το dropdown
+    console.log('🎯 generateGeographicProgram ΚΑΛΕΙΤΑΙ!');
+    
+    // 1. ΒΕΒΑΙΩΣΟΥ ΟΤΙ ΥΠΑΡΧΕΙ ΤΟ DROPDOWN
     const daysSelect = document.getElementById('program-days');
-    if (daysSelect && daysSelect.value) {
-        const currentSelectedDays = parseInt(daysSelect.value);
-        if (currentSelectedDays !== state.selectedDays) {
-            console.log(`🔄 Διορθωση: State είχε ${state.selectedDays} αλλά dropdown είχε ${currentSelectedDays}`);
-            state.selectedDays = currentSelectedDays;
-            saveState();
-        }
+    console.log('🔍 Dropdown:', daysSelect);
+    
+    if (!daysSelect) {
+        alert('❌ Σφάλμα: Δεν βρέθηκε η επιλογή ημερών. Παρακαλώ ανανεώστε τη σελίδα.');
+        return;
     }
+    
+    if (!daysSelect.value || daysSelect.value === '0') {
+        alert('⚠️ Παρακαλώ επιλέξτε πρώτα πόσες μέρες θα διαρκέσει το ταξίδι');
+        return;
+    }
+    
+    // 2. ΑΠΛΗ ΕΝΗΜΕΡΩΣΗ
+    state.selectedDays = parseInt(daysSelect.value);
+    console.log('📅 Επιλέχθηκαν:', state.selectedDays, 'μέρες');
     
     // Έλεγχος βασικών προϋποθέσεων
     if (state.selectedActivities.length === 0) {
         alert('⚠️ Δεν υπάρχουν επιλεγμένες δραστηριότητες');
         return;
     }
+    
+    // 3. ΣΥΝΕΧΙΖΕΙΣ ΜΕ ΤΟΝ ΥΠΟΛΟΙΠΟ ΚΩΔΙΚΑ ΣΟΥ
+    // ΜΗΝ ΑΛΛΑΞΕΙΣ ΤΙΠΟΤΑ ΑΠΟ ΕΔΩ ΚΑΙ ΚΑΤΩ
     
     if (!state.selectedDays || state.selectedDays < 1) {
         alert('⚠️ Παρακαλώ επιλέξτε πρώτα πόσες μέρες θα διαρκέσει το ταξίδι σας');
