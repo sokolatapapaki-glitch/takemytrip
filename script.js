@@ -895,8 +895,18 @@ function getSummaryStepHTML() {
 
 
 // ==================== ΑΠΛΟΠΟΙΗΜΕΝΗ ΣΥΝΑΡΤΗΣΗ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ ====================
-// ==================== ΑΠΛΟΠΟΙΗΜΕΝΗ ΣΥΝΑΡΤΗΣΗ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ ====================
 function generateGeographicProgram() {
+    console.log('🎯 ========== ΑΡΧΗ generateGeographicProgram ==========');
+    console.log('📊 State:', {
+        selectedDestinationId: state.selectedDestinationId,
+        selectedActivities: state.selectedActivities.length,
+        currentCityActivities: state.currentCityActivities?.length || 0,
+        selectedDays: state.selectedDays
+    });
+    
+    // Βεβαιώσου ότι ο χρήστης βλέπει το Console
+    alert('🔍 ΚΟΙΤΑΣΤΕ CONSOLE (F12) ΓΙΑ ΔΙΑΓΝΩΣΤΙΚΑ');
+
     console.log('🎯 generateGeographicProgram ΚΑΛΕΙΤΑΙ!');
     
     // 1. ΒΕΒΑΙΩΣΟΥ ΟΤΙ ΥΠΑΡΧΕΙ ΤΟ DROPDOWN
@@ -1212,6 +1222,7 @@ function generateGeographicProgram() {
     showToast(`✅ Δημιουργήθηκε γεωγραφικό πρόγραμμα για ${state.selectedDays} μέρες`, 'success');
     
     console.log(`✅ Το πρόγραμμα δημιουργήθηκε επιτυχώς για ${state.selectedDays} μέρες`);
+    console.log('🎯 ========== ΤΕΛΟΣ generateGeographicProgram ==========');
 }
 
 // 🔴 ΝΕΑ ΣΥΝΑΡΤΗΣΗ: Φόρτωση δραστηριοτήτων για το πρόγραμμα
