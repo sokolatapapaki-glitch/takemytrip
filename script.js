@@ -1257,32 +1257,80 @@ function distributeGroupsToDays(groups, totalDays) {
     
     console.log(`📊 Ομαδοποιήσεις για κατανομή:`, sortedGroups.map((g, i) => `Ομάδα ${i+1}: ${g.count} δραστηριότητες`));
     
-    // 2. Απλή κατανομή: κάθε μέρα παίρνει μια ομάδα με τη σειρά
-    sortedGroups.forEach((group, index) => {
-        const dayIndex = index % totalDays;
-        days[dayIndex].groups.push(group);
-        days[dayIndex].totalActivities += group.activities.length;
+       // 2. ΕΞΥΠΝΗ ΚΑΤΑΝΟΜΗ ΜΕ ΒΑΣΗ ΜΕΓΕΘΟΣ CLUSTER
+    console.log('🎯 Νέα λογική: 1-4=1μέρα, 5-7=2μέρες, 8+=3μέρες');
+    
+    sortedGroups.forEach((group) => {
+        const activitiesCount = group.activities.length;
         
-        // Υπολογισμός κόστους για την ομάδα
-        const groupCost = group.activities.reduce((sum, activity) => {
-            const price = parseFloat(activity.price) || 0;
-            return sum + price;
-        }, 0);
+        // 🔴 ΚΑΝΟΝΕΣ ΧΩΡΙΣΜΟΥ CLUSTER
+        let neededDays = 1;
+        if (activitiesCount >= 8) neededDays = 3;
+        else if (activitiesCount >= 5) neededDays = 2;
+        // αλλιώς neededDays = 1 (προεπιλογή)
         
-        days[dayIndex].totalCost += groupCost;
+        console.log(`   📦 Cluster "${group.activities[0]?.name?.substring(0, 20) || 'Ομάδα'}" (${activitiesCount} δραστ.): Χρειάζεται ${neededDays} μέρες`);
         
-        // Υπολογισμός χρόνου για την ομάδα
-        const groupTime = group.activities.reduce((sum, activity) => {
-            const duration = parseFloat(activity.duration_hours) || 1.5;
-            return sum + duration;
-        }, 0);
-        
-        // Προσθήκη 30 λεπτών μεταξύ δραστηριοτήτων
-        const travelTime = group.activities.length > 1 ? (group.activities.length - 1) * 0.5 : 0;
-        days[dayIndex].estimatedTime += groupTime + travelTime;
-        
-        console.log(`   📌 Ομάδα ${index+1} (${group.activities.length} δραστ.) → Μέρα ${dayIndex+1}`);
+        // Αν χρειάζεται μόνο 1 μέρα, βάλ'το στην πιο άδεια μέρα
+        if (neededDays === 1) {
+            const emptiestDayIndex = days.reduce((minIndex, day, index) => 
+                day.totalActivities < days[minIndex].totalActivities ? index : minIndex, 0
+            );
+            
+            days[emptiestDayIndex].groups.push(group);
+            days[emptiestDayIndex].totalActivities += activitiesCount;
+            updateDayStats(days[emptiestDayIndex], group);
+            
+            console.log(`     → Μία μέρα: Μέρα ${emptiestDayIndex + 1}`);
+        } 
+        // Αν χρειάζεται >1 μέρες, χώρισέ το
+        else {
+            // Βρες τις neededDays πιο άδειες μέρες
+            const sortedDayIndices = days.map((day, index) => ({ index, total: day.totalActivities }))
+                                         .sort((a, b) => a.total - b.total)
+                                         .slice(0, neededDays)
+                                         .map(d => d.index);
+            
+            // Χώρισε τις δραστηριότητες αναλογικά
+            const activitiesPerDay = Math.ceil(activitiesCount / neededDays);
+            
+            sortedDayIndices.forEach((dayIndex, dayOffset) => {
+                const startIdx = dayOffset * activitiesPerDay;
+                const endIdx = Math.min(startIdx + activitiesPerDay, activitiesCount);
+                const sliceActivities = group.activities.slice(startIdx, endIdx);
+                
+                if (sliceActivities.length > 0) {
+                    const subGroup = {
+                        ...group,
+                        activities: sliceActivities,
+                        count: sliceActivities.length
+                    };
+                    
+                    days[dayIndex].groups.push(subGroup);
+                    days[dayIndex].totalActivities += sliceActivities.length;
+                    updateDayStats(days[dayIndex], subGroup);
+                    
+                    console.log(`     → Μέρα ${dayIndex + 1}: ${sliceActivities.length} δραστηριότητες`);
+                }
+            });
+        }
     });
+    
+    // Βοηθητική συνάρτηση για ενημέρωση στατιστικών
+    function updateDayStats(day, group) {
+        const groupCost = group.activities.reduce((sum, activity) => {
+            return sum + (parseFloat(activity.price) || 0);
+        }, 0);
+        
+        const groupTime = group.activities.reduce((sum, activity) => {
+            return sum + (parseFloat(activity.duration_hours) || 1.5);
+        }, 0);
+        
+        const travelTime = group.activities.length > 1 ? (group.activities.length - 1) * 0.5 : 0;
+        
+        day.totalCost += groupCost;
+        day.estimatedTime += groupTime + travelTime;
+    }
     
     // 3. Στρογγυλοποίηση χρόνων
     days.forEach(day => {
