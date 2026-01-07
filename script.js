@@ -5621,35 +5621,111 @@ if (document.readyState === 'loading') {
 console.log('✅ Script.js loaded successfully!');
 // ==================== ΝΕΑ ΣΥΝΑΡΤΗΣΗ SMART CLUSTERING ====================
 function createSmartClusters(activities, numClusters) {
-    console.log('🧪 Δοκιμή νέας μεθόδου ομαδοποίησης');
-    console.log(`📊 Δραστηριότητες: ${activities.length}, Ομάδες: ${numClusters}`);
-    
-    // ΠΡΟΣΟΧΗ: Αυτή είναι ΠΡΟΣΩΡΙΝΗ έκδοση για δοκιμή
-    // Απλώς χωρίζει τις δραστηριότητες σε ίσα μέρη
+    console.log('🧠 [SMART] Έξυπνη ομαδοποίηση με βάση το κέντρο βάρους');
     
     if (!activities || activities.length === 0) {
-        console.log('⚠️ Δεν υπάρχουν δραστηριότητες');
+        console.log('⚠️ [SMART] Δεν υπάρχουν δραστηριότητες');
         return [];
     }
     
     if (numClusters <= 0) numClusters = 1;
+    if (activities.length <= numClusters) {
+        console.log(`ℹ️ [SMART] Λίγες δραστηριότητες (${activities.length}) για ${numClusters} ομάδες`);
+        return activities.map(act => [act]);
+    }
     
-    // Πολύ απλός διαχωρισμός
-    const clusterSize = Math.ceil(activities.length / numClusters);
+    // 1. ΔΙΑΧΩΡΙΣΜΟΣ: Δραστηριότητες με και χωρίς location
+    const activitiesWithLocation = activities.filter(a => a.location && 
+                                                      typeof a.location.lat === 'number' && 
+                                                      typeof a.location.lng === 'number');
+    
+    const activitiesWithoutLocation = activities.filter(a => !a.location || 
+                                                           typeof a.location.lat !== 'number' || 
+                                                           typeof a.location.lng !== 'number');
+    
+    console.log(`📍 [SMART] ${activitiesWithLocation.length} με location, ${activitiesWithoutLocation.length} χωρίς`);
+    
+    // 2. ΥΠΟΛΟΓΙΣΜΟΣ ΚΕΝΤΡΟΥ ΒΑΡΟΥΣ (ΜΟΝΟ ΓΙΑ ΑΥΤΕΣ ΜΕ LOCATION)
+    let centerLat, centerLng;
+    
+    if (activitiesWithLocation.length > 0) {
+        centerLat = activitiesWithLocation.reduce((sum, act) => sum + act.location.lat, 0) / activitiesWithLocation.length;
+        centerLng = activitiesWithLocation.reduce((sum, act) => sum + act.location.lng, 0) / activitiesWithLocation.length;
+        console.log(`🎯 [SMART] Κέντρο βάρους: ${centerLat.toFixed(6)}, ${centerLng.toFixed(6)}`);
+    } else {
+        // Αν καμία δεν έχει location, χρησιμοποιούμε απλή κατανομή
+        console.log('⚠️ [SMART] Καμία δραστηριότητα δεν έχει location - απλή κατανομή');
+        const clusterSize = Math.ceil(activities.length / numClusters);
+        const clusters = [];
+        for (let i = 0; i < numClusters; i++) {
+            const start = i * clusterSize;
+            const end = Math.min(start + clusterSize, activities.length);
+            clusters.push(activities.slice(start, end));
+        }
+        return clusters.filter(c => c.length > 0);
+    }
+    
+    // 3. ΥΠΟΛΟΓΙΣΜΟΣ ΑΠΟΣΤΑΣΗΣ ΑΠΟ ΤΟ ΚΕΝΤΡΟ
+    const activitiesWithDistance = activitiesWithLocation.map(act => {
+        // Euclidean distance in degrees
+        const latDiff = act.location.lat - centerLat;
+        const lngDiff = act.location.lng - centerLng;
+        const distance = Math.sqrt(latDiff * latDiff + lngDiff * lngDiff);
+        
+        return {
+            activity: act,
+            distance: distance,
+            name: act.name || 'Άγνωστη'
+        };
+    });
+    
+    // 4. ΤΑΞΙΝΟΜΗΣΗ ΑΠΟ ΚΟΝΤΙΝΟΤΕΡΟ ΠΡΟΣ ΠΙΟ ΜΑΚΡΙΑ
+    const sortedByDistance = [...activitiesWithDistance].sort((a, b) => a.distance - b.distance);
+    
+    console.log('📏 [SMART] Ταξινόμηση απόστασης από κέντρο:');
+    sortedByDistance.forEach((item, i) => {
+        console.log(`   ${i+1}. ${item.name.substring(0, 30)} - ${item.distance.toFixed(6)}°`);
+    });
+    
+    // 5. ΔΗΜΙΟΥΡΓΙΑ CLUSTERS
+    const clusterSize = Math.ceil(sortedByDistance.length / numClusters);
     const clusters = [];
+    
+    console.log(`📦 [SMART] Χωρισμός σε ${numClusters} ομάδες, ~${clusterSize} δραστηριότητες ανά ομάδα`);
     
     for (let i = 0; i < numClusters; i++) {
         const start = i * clusterSize;
-        const end = Math.min(start + clusterSize, activities.length);
-        const cluster = activities.slice(start, end);
+        const end = Math.min(start + clusterSize, sortedByDistance.length);
+        const cluster = sortedByDistance.slice(start, end).map(item => item.activity);
         
         if (cluster.length > 0) {
+            // Ταξινόμηση Βορρά → Νότου (για φυσική ροή)
+            cluster.sort((a, b) => (b.location?.lat || 0) - (a.location?.lat || 0));
             clusters.push(cluster);
-            console.log(`   Ομάδα ${i+1}: ${cluster.length} δραστηριότητες`);
         }
     }
     
-    console.log(`✅ Δημιουργήθηκαν ${clusters.length} ομάδες`);
+    // 6. ΠΡΟΣΘΗΚΗ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ ΧΩΡΙΣ LOCATION
+    if (activitiesWithoutLocation.length > 0) {
+        console.log(`➕ [SMART] Προσθήκη ${activitiesWithoutLocation.length} δραστηριοτήτων χωρίς location`);
+        
+        // Μοιράζουμε ίσα στις ομάδες
+        activitiesWithoutLocation.forEach((act, index) => {
+            const targetCluster = clusters[index % clusters.length];
+            if (targetCluster) {
+                targetCluster.push(act);
+            }
+        });
+    }
+    
+    // 7. ΑΠΟΤΕΛΕΣΜΑΤΑ
+    console.log(`✅ [SMART] Δημιουργήθηκαν ${clusters.length} ομάδες:`);
+    clusters.forEach((cluster, i) => {
+        const withLoc = cluster.filter(a => a.location).length;
+        const withoutLoc = cluster.length - withLoc;
+        console.log(`   Ομάδα ${i+1}: ${cluster.length} δραστηριότητες (${withLoc} με location, ${withoutLoc} χωρίς)`);
+    });
+    
     return clusters;
 }
 // ==================== ΤΕΛΟΣ ΝΕΑΣ ΣΥΝΑΡΤΗΣΗΣ ====================
