@@ -98,7 +98,19 @@ function categorizeFamilyMembers() {
         "18+": 0
     };
    
-    familyMembers.forEach(member => {
+    // ΧΡΗΣΗ state.familyMembers αντι για familyMembers
+    const members = (typeof state !== 'undefined' && state.familyMembers) 
+        ? state.familyMembers 
+        : (window.familyMembers || []);
+    
+    if (!members || members.length === 0) {
+        console.warn("⚠️ Δεν βρέθηκαν μέλη οικογένειας");
+        return categories;
+    }
+    
+    console.log("👪 Μέλη για κατηγοριοποίηση:", members);
+    
+    members.forEach(member => {
         if (member.age <= 2) {
             categories["0-2"]++;
         } else if (member.age <= 5) {
@@ -111,7 +123,8 @@ function categorizeFamilyMembers() {
             categories["18+"]++;
         }
     });
-   
+    
+    console.log("📊 Κατηγορίες:", categories);
     return categories;
 }
 
