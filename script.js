@@ -1508,7 +1508,6 @@ function closeManualDestinationModal() {
 
 function saveManualDestination() {
     const citySelect = document.getElementById('manual-city-select');
-    const days = document.getElementById('manual-days').value;
     
     if (!citySelect.value) {
         alert('⚠️ Παρακαλώ επιλέξτε πόλη από τη λίστα');
@@ -1534,16 +1533,18 @@ function saveManualDestination() {
         }
     }
     
+    // 🔴 ΑΛΛΑΓΗ: ΔΕΝ ΠΑΙΡΝΟΥΜΕ ΗΜΕΡΕΣ ΑΠΟ INPUT
+    // Απλά θέτουμε 0 ώστε να επιλέξει ο χρήστης στο βήμα 5
     state.selectedDestination = cityName;
     state.selectedDestinationId = cityId;
-    state.selectedDays = parseInt(days) || 5;
+    state.selectedDays = 0; // <-- ΒΑΖΟΥΜΕ 0, Ο ΧΡΗΣΤΗΣ ΘΑ ΤΙΣ ΕΠΙΛΕΞΕΙ ΣΤΟ ΒΗΜΑ 5
     
     document.getElementById('current-destination-display').textContent = cityName;
     updateActivitiesCost();
     
     closeManualDestinationModal();
     
-    alert(`✅ Επιλέξατε: ${cityName}\n\nΤώρα μπορείτε να συνεχίσετε στις πτήσεις.`);
+    alert(`✅ Επιλέξατε: ${cityName}\n\nΣυνέχεια στις πτήσεις. Μπορείτε να ορίσετε τις μέρες στο βήμα "Πρόγραμμα".`);
     
     saveState();
     
@@ -4058,15 +4059,7 @@ function createDestinationDropdown() {
             <small style="display: block; margin-top: 6px; color: #666; font-size: 13px;">
                 Μόνο πόλεις από την λίστα μας. ✅ = πλήρης υποστήριξη, 🛠️ = σύντομα
             </small>
-        </div>
-        
-        <div class="form-group" style="margin-bottom: 20px;">
-            <label class="form-label" style="display: block; margin-bottom: 8px; color: #1A202C; font-weight: 500;">
-                Διάρκεια Ταξιδιού (μέρες)
-            </label>
-            <input type="number" class="form-control" id="manual-days" min="1" max="30" value="5"
-                   style="width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px;">
-        </div>
+        </div>  
               
         <div style="display: flex; gap: 12px; margin-top: 25px;">
             <button onclick="saveManualDestination()" 
