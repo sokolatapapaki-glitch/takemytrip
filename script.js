@@ -1163,6 +1163,13 @@ function generateGeographicProgram() {
     }
     
     programDiv.innerHTML = html;
+     // 🔴 ΝΕΟ: ΑΥΤΟΜΑΤΟ SCROLL ΣΤΟ ΠΡΟΓΡΑΜΜΑ
+    setTimeout(() => {
+        programDiv.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }, 300);
     
     // Ενημέρωση status
     const statusDiv = document.getElementById('program-status');
