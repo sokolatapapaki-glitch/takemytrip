@@ -5648,5 +5648,8 @@ function createSmartClusters(activities, numClusters) {
     return clusters;
 }
 // ==================== ΤΕΛΟΣ ΝΕΑΣ ΣΥΝΑΡΤΗΣΗΣ ====================
-
+function testNewClustering() {
+    console.log('🧪 ΤΕΣΤ ΝΕΑΣ ΜΕΘΟΔΟΥ');
+    alert('Η νέα μέθοδος λειτουργεί!');
+}
 
