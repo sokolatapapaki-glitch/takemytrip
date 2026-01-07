@@ -199,13 +199,30 @@ function loadStepContent(stepName) {
             setupSummaryStep();
             break;
         case 'map':
-            stepContent.innerHTML = getMapStepHTML();
-            setTimeout(() => {
-                if (typeof L !== 'undefined') {
-                    initializeMapInStep(); // Θα τη διορθώσουμε στο επόμενο βήμα
-                }
-            }, 500);
-            break;
+    stepContent.innerHTML = getMapStepHTML();
+    setTimeout(() => {
+        if (typeof L !== 'undefined') {
+            // ΠΡΟΣΘΕΣΑΜΕ TRY-CATCH ΓΙΑ ΝΑ ΜΗΝ ΚΡΑΣΑΡΕΙ Η ΕΦΑΡΜΟΓΗ
+            try {
+                initializeMapInStep();
+            } catch (error) {
+                console.error('❌ Σφάλμα αρχικοποίησης χάρτη:', error);
+                document.getElementById('map-container').innerHTML = `
+                    <div style="padding: 40px; text-align: center; color: #666;">
+                        <i class="fas fa-exclamation-triangle fa-3x"></i>
+                        <h3>Σφάλμα φόρτωσης χάρτη</h3>
+                        <p>${error.message}</p>
+                        <button onclick="showStep('summary')" class="btn btn-primary">
+                            <i class="fas fa-arrow-left"></i> Επιστροφή
+                        </button>
+                    </div>
+                `;
+            }
+        } else {
+            console.error('❌ Leaflet library not loaded');
+        }
+    }, 500);
+    break;
     } // Τέλος του switch
     
 } // Τέλος της loadStepContent function
