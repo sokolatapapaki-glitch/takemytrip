@@ -166,7 +166,6 @@ function updateStepUI(activeStep) {
         activeElement.classList.add('active');
     }
 }
-
 function loadStepContent(stepName) {
     const stepContent = document.getElementById('step-content');
     
@@ -199,28 +198,18 @@ function loadStepContent(stepName) {
             stepContent.innerHTML = getSummaryStepHTML();
             setupSummaryStep();
             break;
-case 'map':
-    stepContent.innerHTML = getMapStepHTML();
-    setTimeout(() => {
-        if (typeof L !== 'undefined') {
-            initializeMapInStep(); // <-- ΑΛΛΑΓΗ ΕΔΩ
-        } else {
-            console.error('❌ Leaflet δεν φορτώθηκε');
-            document.getElementById('map-container').innerHTML = `
-                <div style="height: 500px; display: flex; align-items: center; justify-content: center; background: var(--light); color: var(--gray);">
-                    <div style="text-align: center;">
-                        <i class="fas fa-exclamation-triangle fa-2x" style="margin-bottom: 15px;"></i>
-                        <h4>Χάρτης μη διαθέσιμος</h4>
-                        <p>Δοκιμάστε να ανανεώσετε τη σελίδα</p>
-                    </div>
-                </div>
-            `;
-        }
-    }, 500);
-    break;
-    } // Κλείνει το switch
+        case 'map':
+            stepContent.innerHTML = getMapStepHTML();
+            setTimeout(() => {
+                if (typeof L !== 'undefined') {
+                    initializeMapInStep(); // Θα τη διορθώσουμε στο επόμενο βήμα
+                }
+            }, 500);
+            break;
+    } // Τέλος του switch
     
-} // ΑΥΤΗ ΑΝΕΒΑΣΕ ΤΗΝ ΑΓΚΥΛΗ ΕΔΩ - ΠΡΟΣΘΕΣΕ ΑΥΤΗ ΤΗ ΓΡΑΜΜΗ
+} // Τέλος της loadStepContent function
+
 
 // ==================== EVENT LISTENERS ====================
 function setupEventListeners() {
