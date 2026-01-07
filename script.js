@@ -668,7 +668,34 @@ function getActivitiesStepHTML() {
                         </button>
                     </div>
                 </div>
-                
+               <div style="margin: 20px 0; padding: 15px; background: linear-gradient(to right, #f0f9ff, #ffffff); border-radius: 10px; border: 2px solid #E0F2FE; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
+    <div style="display: flex; align-items: flex-start; gap: 12px;">
+        <div style="font-size: 28px; color: #4F46E5; background: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(79, 70, 229, 0.15);">
+            💡
+        </div>
+        <div style="flex: 1;">
+            <h4 style="margin: 0 0 10px 0; color: #1A202C; font-size: 17px; display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-info-circle" style="color: #4F46E5;"></i> 
+                Σημαντική Πληροφορία για τις Τιμές
+            </h4>
+            <div style="background: white; padding: 12px; border-radius: 8px; border: 1px solid #E2E8F0;">
+                <p style="margin: 0; color: #4A5568; line-height: 1.6; font-size: 15px;">
+                    <span style="color: #4F46E5; font-weight: bold;">📊 Οι τιμές είναι ενδεικτικές:</span> 
+                    Μπορεί να υπάρχουν διαφορές λόγω εποχικότητας, προσφορών ή ηλικιακών κατηγοριών.
+                </p>
+                <p style="margin: 10px 0 0 0; color: #4A5568; line-height: 1.6; font-size: 15px;">
+                    <span style="color: #10B981; font-weight: bold;">✅ Προτείνουμε:</span> 
+                    Να ελέγχετε πάντα τις <strong>τελικές τιμές</strong> στα επίσημα site ή στα ταμεία 
+                    πριν από οποιαδήποτε κράτηση/αγορά.
+                </p>
+                <p style="margin: 10px 0 0 0; color: #F59E0B; line-height: 1.6; font-size: 14px;">
+                    <i class="fas fa-lightbulb" style="margin-right: 6px;"></i>
+                    <strong>Χρήσιμη συμβουλή:</strong> Κλείστε online για καλύτερες τιμές!
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
                 <!-- Activities Container -->
                 <div id="activities-list" class="grid grid-3">
                     <div class="loading" style="text-align: center; padding: 40px; grid-column: 1 / -1;">
