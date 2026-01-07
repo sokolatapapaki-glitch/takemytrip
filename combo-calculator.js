@@ -4,7 +4,20 @@ function calculateSmartCombos() {
     console.log("🎯 Έναρξη έξυπνου υπολογισμού combos...");
     
     // 1. ΒΡΕΣ ΤΙΣ ΤΡΕΧΟΥΣΕΣ ΔΡΑΣΤΗΡΙΟΤΗΤΕΣ
-    let currentActivities = window.currentCityActivities || [];
+    // Προσπάθησε πρώτα από το state, μετά από το window
+    let currentActivities = [];
+    
+    if (typeof state !== 'undefined' && state.currentCityActivities) {
+        currentActivities = state.currentCityActivities;
+        console.log("📊 Βρήκα δραστηριότητες από state:", currentActivities.length);
+    } else if (typeof window !== 'undefined' && window.currentCityActivities) {
+        currentActivities = window.currentCityActivities;
+        console.log("📊 Βρήκα δραστηριότητες από window:", currentActivities.length);
+    } else {
+        console.error("❌ Δεν βρέθηκαν δραστηριότητες!");
+        alert("⚠️ Δεν υπάρχουν διαθέσιμες δραστηριότητες. Παρακαλώ φορτώστε πρώτα δραστηριότητες.");
+        return;
+    }
     
     if (!currentActivities || currentActivities.length === 0) {
         alert("⚠️ Δεν υπάρχουν διαθέσιμες δραστηριότητες.");
