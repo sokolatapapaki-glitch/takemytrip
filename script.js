@@ -5654,7 +5654,75 @@ function createSmartClusters(activities, numClusters) {
 }
 // ==================== ΤΕΛΟΣ ΝΕΑΣ ΣΥΝΑΡΤΗΣΗΣ ====================
 function testNewClustering() {
-    console.log('🧪 ΤΕΣΤ ΝΕΑΣ ΜΕΘΟΔΟΥ');
-    alert('Η νέα μέθοδος λειτουργεί!');
+    console.log('🧪 === ΣΥΓΚΡΙΣΗ ΠΑΛΙΑΣ vs ΝΕΑΣ ΜΕΘΟΔΟΥ ===');
+    
+    // Έλεγχος ότι έχουμε δεδομένα
+    if (!state.selectedActivities || state.selectedActivities.length === 0) {
+        alert('⚠️ Δεν έχετε επιλέξει δραστηριότητες!\nΠαρακαλώ πηγαίνετε στο βήμα 4.');
+        return;
+    }
+    
+    if (!state.currentCityActivities || state.currentCityActivities.length === 0) {
+        alert('⚠️ Δεν υπάρχουν πληροφορίες για τις δραστηριότητες!');
+        return;
+    }
+    
+    // 1. Πάρε τις πλήρεις πληροφορίες για τις επιλεγμένες δραστηριότητες
+    const fullActivities = state.selectedActivities.map(selected => {
+        const original = state.currentCityActivities.find(a => a.id === selected.id);
+        return original ? {
+            ...selected,
+            ...original,
+            location: original.location || null
+        } : null;
+    }).filter(a => a !== null);
+    
+    console.log(`📊 Σύνολο: ${fullActivities.length} δραστηριότητες`);
+    console.log(`📍 Με location: ${fullActivities.filter(a => a.location).length}`);
+    
+    const days = state.selectedDays || 3;
+    console.log(`📅 Ημέρες: ${days}`);
+    
+    // 2. ΔΟΚΙΜΗ ΠΑΛΙΑΣ ΜΕΘΟΔΟΥ
+    console.log('\n🔄 === ΠΑΛΙΑ ΜΕΘΟΔΟΥ (groupActivitiesByProximity) ===');
+    let oldGroups = [];
+    if (typeof groupActivitiesByProximity === 'function') {
+        oldGroups = groupActivitiesByProximity(fullActivities, 2.5);
+        console.log(`✅ Βρέθηκαν ${oldGroups.length} ομάδες:`);
+        oldGroups.forEach((group, i) => {
+            console.log(`   Ομάδα ${i+1}: ${group.count} δραστηριότητες`);
+        });
+    } else {
+        console.log('❌ Η παλιά συνάρτηση δεν υπάρχει!');
+    }
+    
+    // 3. ΔΟΚΙΜΗ ΝΕΑΣ ΜΕΘΟΔΟΥ
+    console.log('\n🧠 === ΝΕΑ ΜΕΘΟΔΟΥ (createSmartClusters) ===');
+    const newClusters = createSmartClusters(fullActivities, days);
+    console.log(`✅ Δημιουργήθηκαν ${newClusters.length} ομάδες:`);
+    newClusters.forEach((cluster, i) => {
+        console.log(`   Ομάδα ${i+1}: ${cluster.length} δραστηριότητες`);
+        // Εμφάνιση ονομάτων (μόνο τα πρώτα 3)
+        cluster.slice(0, 3).forEach((act, j) => {
+            console.log(`     ${j+1}. ${act.name.substring(0, 40)}${act.name.length > 40 ? '...' : ''}`);
+        });
+        if (cluster.length > 3) {
+            console.log(`     ... και ${cluster.length - 3} ακόμη`);
+        }
+    });
+    
+    // 4. ΣΥΓΚΡΙΣΗ ΑΠΟΤΕΛΕΣΜΑΤΩΝ
+    console.log('\n📈 === ΣΥΓΚΡΙΣΗ ΑΠΟΤΕΛΕΣΜΑΤΩΝ ===');
+    console.log(`🔹 Παλιά μέθοδος: ${oldGroups.length} ομάδες, συνολικά ${oldGroups.reduce((sum, g) => sum + g.count, 0)} δραστηριότητες`);
+    console.log(`🔹 Νέα μέθοδος: ${newClusters.length} ομάδες, συνολικά ${newClusters.reduce((sum, c) => sum + c.length, 0)} δραστηριότητες`);
+    
+    // 5. ΑΠΟΤΕΛΕΣΜΑ ΣΕ ΑΛΕΡΤ
+    alert(`🧪 Σύγκριση ολοκληρώθηκε!\n\n` +
+          `📊 Σύνολο: ${fullActivities.length} δραστηριότητες\n` +
+          `🔄 Παλιά μέθοδος: ${oldGroups.length} ομάδες\n` +
+          `🧠 Νέα μέθοδος: ${newClusters.length} ομάδες\n\n` +
+          `📖 Άνοιξε την Console (F12) για λεπτομέρειες.`);
+    
+    console.log('✅ === ΤΕΛΟΣ ΣΥΓΚΡΙΣΗΣ ===');
 }
 
