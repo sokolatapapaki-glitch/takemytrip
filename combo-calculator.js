@@ -2,6 +2,11 @@
 
 function calculateSmartCombos() {
     console.log("🎯 Έναρξη έξυπνου υπολογισμού combos...");
+// 🔴 ΠΡΟΣΘΗΚΗ ΑΥΤΗ:
+    if (!state || !state.selectedDestination) {
+        alert('⚠️ Δεν έχετε επιλέξει προορισμό!');
+        return;
+    }
     
     // 1. ΒΡΕΣ ΤΙΣ ΤΡΕΧΟΥΣΕΣ ΔΡΑΣΤΗΡΙΟΤΗΤΕΣ
     // Προσπάθησε πρώτα από το state, μετά από το window
@@ -43,7 +48,7 @@ const selectedActivities = (state && state.selectedActivities && state.selectedA
     // 4. ΑΝΑΖΗΤΗΣΗ COMBO ΒΑΣΕΙ ΠΟΛΗΣ
     let availableCombos = [];
     
-    if (selectedDestinationName.includes("Λονδίνο")) {
+    if (state.selectedDestination.includes("Λονδίνο")) {
         availableCombos = findLondonCombos(selectedActivities, ageGroups);
     } else if (selectedDestinationName.includes("Βιέννη")) {
         availableCombos = findViennaCombos(selectedActivities, ageGroups);
@@ -457,7 +462,7 @@ function displayComboResults(results, regularCost) {
             
             <div style="background: #f3e5f5; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
                 <h3 style="color: #7b1fa2;">📊 Κόστος ΧΩΡΙΣ Combos: <strong>${regularCost.toFixed(2)} €</strong></h3>
-                <p style="color: #666;">🏙️ Πόλη: ${selectedDestinationName} | 👨‍👩‍👧‍👦 Μέλη: ${familyMembers.length}</p>
+                <p style="color: #666;">🏙️ Πόλη: ${state.selectedDestination} | 👨‍👩‍👧‍👦 Μέλη: ${state.familyMembers.length}</p>
             </div>
     `;
     
@@ -567,7 +572,7 @@ function displayComboResults(results, regularCost) {
                 <p>Οι επιλεγμένες σας δραστηριότητες δεν έχουν διαθέσιμα οικονομικά combos.</p>
         `;
         
-        if (selectedDestinationName.includes('Λονδίνο')) {
+        if (state.selectedDestination.includes('Λονδίνο')) {
             contentHTML += `
                 <p>💡 Συμβουλή: Για Λονδίνο, τα καλύτερα combos υπάρχουν για 2+ από:</p>
                 <ul style="text-align: left; display: inline-block; margin: 10px 0;">
@@ -606,7 +611,7 @@ function displayComboResults(results, regularCost) {
                         `<li>ℹ️ <strong>Δεν βρέθηκε εξοικονόμηση</strong></li>`
                     }
                     <li>🎯 <strong>Βρέθηκαν:</strong> ${results.allCombos.length} combos</li>
-                    <li>👨‍👩‍👧‍👦 <strong>Μέλη οικογένειας:</strong> ${familyMembers.length} άτομα</li>
+                    <li>👨‍👩‍👧‍👦 <strong>Μέλη οικογένειας:</strong> ${state.familyMembers.length} άτομα</li>
                 </ul>
             </div>
         </div>
