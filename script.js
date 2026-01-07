@@ -993,7 +993,7 @@ function generateGeographicProgram() {
     let activityGroups = [];
     
     if (activitiesWithLocation.length > 0) {
-        activityGroups = groupActivitiesByProximity(activitiesWithLocation, 2.5); // 2.5km radius
+        activityGroups = createSmartClusters(activitiesWithLocation, state.selectedDays); // 2.5km radius
     } else {
         // Αν καμία δεν έχει location, δημιούργησε μια ομάδα για κάθε δραστηριότητα
         activityGroups = fullActivities.map(activity => ({
