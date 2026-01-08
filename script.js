@@ -203,7 +203,7 @@ function loadStepContent(stepName) {
             setupActivitiesStep();
             break;
         case 'summary':
-            stepContent.innerHTML = ();
+            stepContent.innerHTML = getSummaryStepHTML();  // <-- ΠΡΟΣΘΕΣΕ ΑΥΤΟ
             setupSummaryStep();
             break;
         case 'map':
@@ -847,7 +847,7 @@ function getSummaryStepHTML() {
         </div>
     `;
 }
-// ==================== ΑΠΛΟΠΟΙΗΜΕΝΗ ΣΥΝΑΡΤΗΣΗ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ ====================
+
 // ==================== ΑΠΛΟΠΟΙΗΜΕΝΗ ΣΥΝΑΡΤΗΣΗ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ ====================
 function generateGeographicProgram() {
     console.log('🎯 ========== ΑΡΧΗ generateGeographicProgram ==========');
