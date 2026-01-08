@@ -762,7 +762,7 @@ function getSummaryStepHTML() {
                 <div class="card" style="margin: 30px 0; background: #f0f7ff; border-left: 4px solid var(--primary);">
                     <h3><i class="fas fa-calendar-alt"></i> Διάρκεια Ταξιδιού</h3>
                     <p style="color: var(--gray); margin-bottom: 15px;">
-                        Επιλέξτε πόσες μέρες θα διαρκέσει το ταξίδι σας και πατήστε δημιουργία.
+                        Επιλέξτε πόσες μέρες θα διαρκέσει το ταξίδι σας. Το πρόγραμμα δημιουργείται αυτόματα.  
                     </p>
                     
                     <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
@@ -2468,7 +2468,7 @@ forceRefreshProgram();
                     σε ${state.selectedDays} μέρες με βάση την τοποθεσία τους
                 </p>
                 <button onclick="generateGeographicProgram()" class="btn btn-primary" style="padding: 15px 40px; font-size: 18px;">
-                    <i class="fas fa-map-marked-alt"></i> ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΓΡΑΜΜΑΤΟΣ
+                    <i class="fas fa-map-marked-alt"></i> ΠΡΟΓΡΑΜΜΑ
                 </button>
             </div>
         `;
