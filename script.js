@@ -815,8 +815,8 @@ function getSummaryStepHTML() {
                     ` : `
                         <div style="margin-top: 20px;">
                             <!-- 🔴 ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΚΟΥΜΠΙ ΠΟΥ ΔΕΝ ΔΟΥΛΕΥΕΙ -->
-                            <button class="btn btn-primary" onclick="()" 
-                                    style="width: 100%; padding: 15px; font-size: 18px; margin-bottom: 20px;">
+                            <button class="btn btn-primary" onclick="generateGeographicProgram()" 
+                                     style="width: 100%; padding: 15px; font-size: 18px; margin-bottom: 20px;">
                                 <i class="fas fa-map-marked-alt"></i> ΔΗΜΙΟΥΡΓΙΑ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ
                             </button>
                                                        
@@ -1428,67 +1428,6 @@ function getGroupColor(index) {
     return colors[index % colors.length];
 }
 // ==================== ΣΥΝΑΡΤΗΣΕΙΣ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΙΣΜΟΥ ====================
-
-function distributeGroupsToDays(groups, totalDays) {
-    console.log(`📅 Κατανομή ${groups.length} ομάδων σε ${totalDays} μέρες`);
-    
-    if (groups.length === 0 || totalDays < 1) {
-        console.error('❌ Μη έγκυρα δεδομένα για κατανομή');
-        return [];
-    }
-    
-    const days = Array.from({ length: totalDays }, () => ({ 
-        groups: [], 
-        totalActivities: 0,
-        totalCost: 0,
-        estimatedTime: 0
-    }));
-    
-    // 1. Ταξινόμηση ομάδων (μεγαλύτερες πρώτες)
-    const sortedGroups = [...groups].sort((a, b) => b.count - a.count);
-    
-    console.log(`📊 Ομαδοποιήσεις για κατανομή:`, sortedGroups.map((g, i) => `Ομάδα ${i+1}: ${g.count} δραστηριότητες`));
-    
-    // 2. Απλή κατανομή: κάθε μέρα παίρνει μια ομάδα με τη σειρά
-    sortedGroups.forEach((group, index) => {
-        const dayIndex = index % totalDays;
-        days[dayIndex].groups.push(group);
-        days[dayIndex].totalActivities += group.activities.length;
-        
-        // Υπολογισμός κόστους για την ομάδα
-        const groupCost = group.activities.reduce((sum, activity) => {
-            const price = parseFloat(activity.price) || 0;
-            return sum + price;
-        }, 0);
-        
-        days[dayIndex].totalCost += groupCost;
-        
-        // Υπολογισμός χρόνου για την ομάδα
-        const groupTime = group.activities.reduce((sum, activity) => {
-            const duration = parseFloat(activity.duration_hours) || 1.5;
-            return sum + duration;
-        }, 0);
-        
-        // Προσθήκη 30 λεπτών μεταξύ δραστηριοτήτων
-        const travelTime = group.activities.length > 1 ? (group.activities.length - 1) * 0.5 : 0;
-        days[dayIndex].estimatedTime += groupTime + travelTime;
-        
-        console.log(`   📌 Ομάδα ${index+1} (${group.activities.length} δραστ.) → Μέρα ${dayIndex+1}`);
-    });
-    
-    // 3. Στρογγυλοποίηση χρόνων
-    days.forEach(day => {
-        day.estimatedTime = Math.ceil(day.estimatedTime);
-    });
-    
-    // 4. Αφαίρεση κενών ημερών (αν υπάρχουν λιγότερες ομάδες από μέρες)
-    const nonEmptyDays = days.filter(day => day.totalActivities > 0);
-    
-    console.log(`✅ Κατανεμήθηκαν ${sortedGroups.length} ομάδες:`, 
-        nonEmptyDays.map((d, i) => `Μ${i+1}:${d.totalActivities}δραστ.`).join(', '));
-    
-    return nonEmptyDays;
-}
 
 function getDayColor(dayNumber) {
     const colors = [
@@ -3556,7 +3495,8 @@ function showActivityMap() {
     }
     
     let activityCount = 0;
-    const markers = [];
+    // markers array already exists globally as window.selectedMarkers
+
     
     // 5. Προσθήκη πινέζας για ΚΑΘΕ επιλεγμένη δραστηριότητα
     state.selectedActivities.forEach(activity => {
