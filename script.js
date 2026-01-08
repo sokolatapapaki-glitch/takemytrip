@@ -1365,48 +1365,23 @@ function distributeGroupsToDays(groups, totalDays) {
     return nonEmptyDays;
 }
 
+const COLOR_PALETTE = [
+    '#4F46E5', '#10B981', '#F59E0B', '#EF4444',
+    '#8B5CF6', '#EC4899', '#14B8A6', '#F97316'
+];
+
 function getDayColor(dayNumber) {
-    const colors = [
-        '#4F46E5', // Indigo
-        '#10B981', // Emerald
-        '#F59E0B', // Amber
-        '#EF4444', // Red
-        '#8B5CF6', // Violet
-        '#EC4899', // Pink
-        '#14B8A6', // Teal
-        '#F97316'  // Orange
-    ];
-    return colors[(dayNumber - 1) % colors.length];
+    return COLOR_PALETTE[(dayNumber - 1) % COLOR_PALETTE.length];
 }
 
 function getGroupColor(index) {
-    const colors = [
-        '#4F46E5', // Indigo
-        '#10B981', // Emerald
-        '#F59E0B', // Amber
-        '#EF4444', // Red
-        '#8B5CF6', // Violet
-        '#EC4899', // Pink
-        '#14B8A6', // Teal
-        '#F97316'  // Orange
-    ];
-    return colors[index % colors.length];
+    return COLOR_PALETTE[index % COLOR_PALETTE.length];
 }
+
+
 // ==================== ΣΥΝΑΡΤΗΣΕΙΣ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΙΣΜΟΥ ====================
 
-function getDayColor(dayNumber) {
-    const colors = [
-        '#4F46E5', // Indigo
-        '#10B981', // Emerald
-        '#F59E0B', // Amber
-        '#EF4444', // Red
-        '#8B5CF6', // Violet
-        '#EC4899', // Pink
-        '#14B8A6', // Teal
-        '#F97316'  // Orange
-    ];
-    return colors[(dayNumber - 1) % colors.length];
-}
+
 
 function getGroupColor(index) {
     const colors = [
