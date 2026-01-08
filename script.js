@@ -203,7 +203,7 @@ function loadStepContent(stepName) {
             setupActivitiesStep();
             break;
         case 'summary':
-            stepContent.innerHTML = getSummaryStepHTML();
+            stepContent.innerHTML = ();
             setupSummaryStep();
             break;
         case 'map':
@@ -745,6 +745,7 @@ function getActivitiesStepHTML() {
 }
 
 // ==================== STEP 5: SUMMARY ====================
+// ==================== STEP 5: SUMMARY ====================
 function getSummaryStepHTML() {
     return `
         <div class="card">
@@ -789,46 +790,11 @@ function getSummaryStepHTML() {
                     </div>
                 </div>
                 
-                <!-- Selected Activities -->
-                <div class="card" id="selected-activities-section" style="margin-bottom: 30px;">
-                    <h3><i class="fas fa-star"></i> Επιλεγμένες Δραστηριότητες (${state.selectedActivities.length})</h3>
-                    
-                    ${state.selectedActivities.length === 0 ? `
-                        <div style="text-align: center; padding: 40px; color: var(--gray);">
-                            <i class="fas fa-info-circle fa-2x" style="margin-bottom: 15px;"></i>
-                            <p>Δεν έχετε επιλέξει δραστηριότητες ακόμα</p>
-                            <button onclick="showStep('activities')" class="btn btn-primary" style="margin-top: 15px;">
-                                <i class="fas fa-arrow-left"></i> Επιστροφή στις Δραστηριότητες
-                            </button>
-                        </div>
-                    ` : `
-                        <div style="margin-top: 20px;">
-                            <!-- Λίστα επιλεγμένων δραστηριοτήτων -->
-                            <div style="max-height: 200px; overflow-y: auto; padding: 15px; background: #f8f9fa; border-radius: 8px;">
-                                ${state.selectedActivities.map(activity => `
-                                    <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e0e0e0;">
-                                        <span>${activity.name}</span>
-                                        <span style="color: var(--primary); font-weight: bold;">${activity.price || 0}€</span>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                        
-                        <!-- Συνολικό Κόστος -->
-                        <div style="padding: 15px; background: linear-gradient(135deg, var(--primary), #4F46E5); color: white; border-radius: 8px; text-align: center; margin-top: 20px;">
-                            <h4 style="color: white; margin-bottom: 5px;">
-                                <i class="fas fa-money-bill-wave"></i> Συνολικό Κόστος
-                            </h4>
-                            <h2 style="font-size: 36px; margin: 0;">${calculateTotalSpent()}€</h2>
-                            <p style="opacity: 0.9; margin: 5px 0 0 0;">
-                                Για ${state.familyMembers.length} άτομα
-                            </p>
-                        </div>
-                    `}
-                </div>
+                <!-- ΑΥΤΟ ΕΙΝΑΙ ΠΟΥ ΑΦΑΙΡΕΣΑΜΕ: ΟΛΟ ΤΟ SELECTED ACTIVITIES SECTION -->
+                <!-- ΤΟ ΑΦΗΝΩ ΣΚΟΠΙΜΟ ΚΕΝΟ - ΕΔΩ ΘΑ ΕΜΦΑΝΙΖΕΤΑΙ ΤΟ ΠΡΟΓΡΑΜΜΑ -->
                 
-                <!-- Geographic Program -->          
-                <div class="card" id="geographic-program-section" style="margin-top: 30px;">
+                <!-- Geographic Program - ΤΩΡΑ ΕΜΦΑΝΙΖΕΤΑΙ ΕΔΩ ΚΑΤΩ -->
+                <div class="card" id="geographic-program-section" style="margin-top: 30px; display: none;">
                     <h3><i class="fas fa-route"></i> Γεωγραφικό Πρόγραμμα</h3>
                     
                     <!-- ΕΔΩ ΘΑ ΕΜΦΑΝΙΖΕΤΑΙ ΤΟ ΔΗΜΙΟΥΡΓΗΜΕΝΟ ΠΡΟΓΡΑΜΜΑ -->
@@ -881,6 +847,7 @@ function getSummaryStepHTML() {
         </div>
     `;
 }
+// ==================== ΑΠΛΟΠΟΙΗΜΕΝΗ ΣΥΝΑΡΤΗΣΗ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ ====================
 // ==================== ΑΠΛΟΠΟΙΗΜΕΝΗ ΣΥΝΑΡΤΗΣΗ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ ====================
 function generateGeographicProgram() {
     console.log('🎯 ========== ΑΡΧΗ generateGeographicProgram ==========');
@@ -968,12 +935,12 @@ function generateGeographicProgram() {
         return;
     }
     
-    // 3. Ομαδοποίηση με βάση την τοποθεσία (μόνο αυτές με location)
-    const activitiesWithLocation = fullActivities.filter(a => a.location);
+    // 3. Ομαδοποίηση με βάση την τοποθεσία
     let activityGroups = [];
     
-    if (activitiesWithLocation.length > 0) {
-        activityGroups = createSmartClusters(activitiesWithLocation, state.selectedDays); // 2.5km radius
+    // Χρησιμοποιούμε την έξυπνη ομαδοποίηση που δημιουργήσαμε
+    if (fullActivities.length > 0) {
+        activityGroups = createSmartClusters(fullActivities, state.selectedDays);
     } else {
         // Αν καμία δεν έχει location, δημιούργησε μια ομάδα για κάθε δραστηριότητα
         activityGroups = fullActivities.map(activity => ({
@@ -999,16 +966,18 @@ function generateGeographicProgram() {
     // 5. Κατανομή ομάδων στις μέρες που επέλεξε ο χρήστης
     const daysProgram = distributeGroupsToDays(activityGroups, state.selectedDays);
     
-    // 6. Δημιουργία HTML για το πρόγραμμα
+    // 🔴 ΚΡΙΤΙΚΗ ΑΛΛΑΓΗ: Βρίσκουμε το div του προγράμματος
+    const programSection = document.getElementById('geographic-program-section');
     const programDiv = document.getElementById('geographic-program');
-    if (!programDiv) {
+    
+    if (!programSection || !programDiv) {
         console.error('❌ Δεν βρέθηκε το geographic-program div');
         return;
     }
     
-    console.log('✅ ΒΡΕΘΗΚΕ το geographic-program div!');
-    console.log('📏 Μέγεθος div:', programDiv.offsetWidth, 'x', programDiv.offsetHeight);
+    console.log('✅ ΒΡΕΘΗΚΕ το geographic-program-section div!');
     
+    // 6. Δημιουργία HTML για το πρόγραμμα
     let html = '';
     
     if (activityGroups.length === 0) {
@@ -1176,9 +1145,25 @@ function generateGeographicProgram() {
         `;
     }
     
+    // 🔴 ΚΡΙΤΙΚΗ ΑΛΛΑΓΗ: Εμφάνιση του προγράμματος
     programDiv.innerHTML = html;
+    programSection.style.display = 'block';
     
-      
+    // 🔴 ΚΡΙΤΙΚΗ ΑΛΛΑΓΗ: ΣΚΡΟΛΑΡΟΥΜΕ ΣΤΟ ΠΡΟΓΡΑΜΜΑ
+    setTimeout(() => {
+        programSection.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start'
+        });
+        
+        // Προσθήκη animation για να ξεχωρίζει
+        programSection.style.animation = 'none';
+        programSection.offsetHeight; // Trigger reflow
+        programSection.style.animation = 'pulse 2s';
+        
+        console.log('✅ Το πρόγραμμα εμφανίστηκε και σκρολάραμε σε αυτό');
+    }, 100);
+    
     // Ενημέρωση status
     const statusDiv = document.getElementById('program-status');
     if (statusDiv) {
@@ -5308,6 +5293,63 @@ if (!document.querySelector('#program-spinner-style')) {
     `;
     document.head.appendChild(style);
 }
+// 🔵🔵🔵 ΠΡΟΣΘΕΣΕ ΑΥΤΟ ΓΙΑ ΤΟ ΝΕΟ ΠΡΟΓΡΑΜΜΑ 🔵🔵🔵
+if (!document.querySelector('#program-animations')) {
+    const style = document.createElement('style');
+    style.id = 'program-animations';
+    style.textContent = `
+        @keyframes pulse {
+            0% { 
+                box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4);
+            }
+            70% { 
+                box-shadow: 0 0 0 15px rgba(79, 70, 229, 0);
+            }
+            100% { 
+                box-shadow: 0 0 0 0 rgba(79, 70, 229, 0);
+            }
+        }
+        
+        @keyframes slideDown {
+            from { 
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        #geographic-program-section {
+            display: block !important;
+            animation: slideDown 0.5s ease-out;
+            border: 3px solid #4F46E5;
+            background: linear-gradient(to bottom, #ffffff, #f8faff);
+            margin-top: 30px;
+            border-radius: 15px;
+        }
+        
+        .day-card {
+            transition: all 0.3s ease;
+            animation: slideDown 0.6s ease-out;
+            animation-fill-mode: both;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            border-left: 4px solid #4F46E5;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        
+        .day-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+    `;
+    document.head.appendChild(style);
+}
+
 // ==================== EXPORT FUNCTIONS TO WINDOW ====================
 // (ΟΠΟΥ ΕΧΕΙΣ ΟΛΑ ΤΑ window.* = ... ΤΩΡΑ)
 
@@ -5315,27 +5357,6 @@ window.showStep = showStep;
 window.filterDestinations = filterDestinations;
 // ... όλα τα υπόλοιπα window.* ...
 
-// ==================== CSS ANIMATIONS FOR PROGRAM ====================
-if (!document.querySelector('#program-spinner-style')) {
-    const style = document.createElement('style');
-    style.id = 'program-spinner-style';
-    style.textContent = `
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-    `;
-    document.head.appendChild(style);
-}
 
 // ==================== DYNAMIC LOADING OF COMBO CALCULATOR ====================
 function loadComboCalculator() {
