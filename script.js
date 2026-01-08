@@ -154,6 +154,14 @@ function showStep(stepName) {
     loadStepContent(stepName);
     document.getElementById('mobile-step-selector').value = stepName;
     saveState();
+     // 🔵 ΑΠΕΝΕΡΓΟΠΟΙΗΣΗ ΑΥΤΟΜΑΤΟΥ SCROLL
+    setTimeout(() => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'instant'  // Ή 'auto'
+        });
+    }, 100);
 }
 
 function updateStepUI(activeStep) {
