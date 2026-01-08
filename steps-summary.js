@@ -52,9 +52,9 @@ function getSummaryStepHTML() {
                             <option value="14" ${state.selectedDays === 14 ? 'selected' : ''}>14 μέρες</option>
                         </select>
                         
-                        <button class="btn btn-primary" onclick="updateProgramDays()" style="padding: 12px 25px;">
-                            <i class="fas fa-sync-alt"></i> Ενημέρωση Προγράμματος
-                        </button>
+                       <button class="btn btn-primary" onclick="updateProgramDaysAndGenerate()">
+    <i class="fas fa-sync-alt"></i> Ενημέρωση & Δημιουργία Προγράμματος
+</button>
                         
                         <span id="days-display" style="color: var(--success); font-weight: bold; font-size: 16px;">
                             ${state.selectedDays > 0 ? '✅ ' + state.selectedDays + ' μέρες επιλέχθηκαν' : '⚠️ Δεν έχετε επιλέξει ακόμα'}
