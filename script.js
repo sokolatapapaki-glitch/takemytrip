@@ -896,29 +896,14 @@ function getSummaryStepHTML() {
 
 // ==================== ΑΠΛΟΠΟΙΗΜΕΝΗ ΣΥΝΑΡΤΗΣΗ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ ====================
 function generateGeographicProgram() {
-     // 🔴 ΚΡΙΤΙΚΗ ΔΙΟΡΘΩΣΗ - ΠΡΟΣΘΕΣΕ ΑΥΤΕΣ ΤΙΣ 4 ΓΡΑΜΜΕΣ:
-    const daysSelect = document.getElementById('program-days');
-    if (daysSelect && daysSelect.value) {
-        state.selectedDays = parseInt(daysSelect.value);
-    }
-    // 🔴 ΤΕΛΟΣ ΔΙΟΡΘΩΣΗΣ
     console.log('🎯 ========== ΑΡΧΗ generateGeographicProgram ==========');
-    console.log('📊 State:', {
-        selectedDestinationId: state.selectedDestinationId,
-        selectedActivities: state.selectedActivities.length,
-        currentCityActivities: state.currentCityActivities?.length || 0,
-        selectedDays: state.selectedDays
-    });
     
-   
-    console.log('🎯 generateGeographicProgram ΚΑΛΕΙΤΑΙ!');
-    
-    // 1. ΒΕΒΑΙΩΣΟΥ ΟΤΙ ΥΠΑΡΧΕΙ ΤΟ DROPDOWN
+    // 🔴 ΚΡΙΤΙΚΗ ΔΙΟΡΘΩΣΗ: ΔΙΑΒΑΣΕ ΤΙΣ ΗΜΕΡΕΣ ΑΠΟ ΤΟ DROPDOWN
     const daysSelect = document.getElementById('program-days');
-    console.log('🔍 Dropdown:', daysSelect);
+    console.log('🔍 Dropdown value:', daysSelect ? daysSelect.value : 'NOT FOUND');
     
     if (!daysSelect) {
-        alert('❌ Σφάλμα: Δεν βρέθηκε η επιλογή ημερών. Παρακαλώ ανανεώστε τη σελίδα.');
+        alert('❌ Σφάλμα: Δεν βρέθηκε η επιλογή ημερών.');
         return;
     }
     
@@ -927,9 +912,16 @@ function generateGeographicProgram() {
         return;
     }
     
-    // 2. ΑΠΛΗ ΕΝΗΜΕΡΩΣΗ
+    // Ενημέρωση state με την τρέχουσα τιμή
     state.selectedDays = parseInt(daysSelect.value);
     console.log('📅 Επιλέχθηκαν:', state.selectedDays, 'μέρες');
+    
+    console.log('📊 State:', {
+        selectedDestinationId: state.selectedDestinationId,
+        selectedActivities: state.selectedActivities.length,
+        currentCityActivities: state.currentCityActivities?.length || 0,
+        selectedDays: state.selectedDays
+    });
     
     // Έλεγχος βασικών προϋποθέσεων
     if (state.selectedActivities.length === 0) {
@@ -1228,7 +1220,6 @@ function generateGeographicProgram() {
     console.log(`✅ Το πρόγραμμα δημιουργήθηκε επιτυχώς για ${state.selectedDays} μέρες`);
     console.log('🎯 ========== ΤΕΛΟΣ generateGeographicProgram ==========');
 }
-
 // 🔴 ΝΕΑ ΣΥΝΑΡΤΗΣΗ: Φόρτωση δραστηριοτήτων για το πρόγραμμα
 function loadActivitiesForProgram() {
     console.log('🔄 Φόρτωση δραστηριοτήτων για το πρόγραμμα...');
