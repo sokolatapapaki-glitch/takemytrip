@@ -2311,7 +2311,7 @@ function updateActivitiesTotal() {
     updateActivitiesCost();
 }
 
-// ==================== STEP 5: SETUP SUMMARY ====================
+
 // ==================== STEP 5: SETUP SUMMARY ====================
 function setupSummaryStep() {
     console.log('📋 Ρύθμιση summary βήματος');
@@ -2321,11 +2321,6 @@ function setupSummaryStep() {
         return;
     }
     
-    // 🔴 ΚΡΙΤΙΚΟ: Εάν δεν έχουμε μέρες, βάλε προεπιλογή
-    if (!state.selectedDays || state.selectedDays < 1) {
-        state.selectedDays = 3;
-        console.log(`📅 Βάζω προεπιλογή ${state.selectedDays} μέρες`);
-    }
     
     // 🔴 ΠΡΟΣΘΗΚΗ: ΑΥΤΟΜΑΤΗ ΠΡΟΤΑΣΗ ΗΜΕΡΩΝ ΑΠΟ ΟΜΑΔΟΠΟΙΗΣΗ
     if (state.selectedActivities.length > 0) {
@@ -2402,7 +2397,8 @@ forceRefreshProgram();
         }
         
         // 3. Δημιουργία προγράμματος ΜΟΝΟ αν υπάρχουν δραστηριότητες ΚΑΙ μέρες
-        if (state.selectedActivities.length > 0 && state.selectedDays > 0) {
+       // 3. Δημιουργία προγράμματος ΜΟΝΟ αν υπάρχουν δραστηριότητες
+if (state.selectedActivities.length > 0) { 
     console.log(`📊 Έτοιμος για δημιουργία προγράμματος: ${state.selectedActivities.length} δραστηριότητες, ${state.selectedDays} μέρες`);
     
     // Εμφάνιση ΜΟΝΟ του κουμπιού, ΟΧΙ loading
