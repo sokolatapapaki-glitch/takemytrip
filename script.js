@@ -3547,17 +3547,17 @@ function showActivityMap() {
         // 🔴 ΚΡΙΤΙΚΗ ΚΛΗΣΗ: Χρησιμοποίησε τη νέα συνάρτηση!
         const marker = createMarkerWithConnectFunction(coords, markerTitle, activityData);
         if (marker) {
-            markers.push(marker);
+            window.selectedMarkers.push(marker);  // <-- 🔵 ΑΥΤΗ ΕΙΝΑΙ Η ΔΙΟΡΘΩΣΗ
             activityCount++;
         }
     });
     
     // 6. Αν έχουμε markers, προσπάθησε να ζουμάρεις να τα δείξεις όλα
-    if (markers.length > 0 && cityCoords) {
-        // Δημιούργησε bounds που περιλαμβάνουν όλα τα markers
-        const markerGroup = L.featureGroup(markers);
-        window.travelMap.fitBounds(markerGroup.getBounds().pad(0.1));
-    }
+    if (window.selectedMarkers.length > 0 && cityCoords) {
+    // Δημιούργησε bounds που περιλαμβάνουν όλα τα markers
+    const markerGroup = L.featureGroup(window.selectedMarkers);
+    window.travelMap.fitBounds(markerGroup.getBounds().pad(0.1));
+}
     
     // 7. Ενημέρωση χρήστη με τα νέα οδηγία
     showToast(`
