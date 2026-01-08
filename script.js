@@ -935,7 +935,7 @@ function generateProgramHTMLOld(daysProgram, activityGroups) {
                     </h3>
                     <div style="display: flex; justify-content: center; gap: 20px; margin-top: 10px; font-size: 14px;">
                         <span><i class="fas fa-clock"></i> ~${Math.round(dayTime)} ώρες</span>
-                        <span><i class="fas fa-euro-sign"></i> ${dayCost}€</span>
+                        <span><i class="fas fa-euro-sign"></i> ${dayCost.toFixed(2)}€</span>
                         <span><i class="fas fa-map-marker-alt"></i> ${groupCount} περιοχή${groupCount !== 1 ? 'ές' : ''}</span>
                     </div>
                 </div>
@@ -972,8 +972,9 @@ function generateProgramHTMLOld(daysProgram, activityGroups) {
                                         </div>
                                         <div style="text-align: right; min-width: 80px;">
                                             <div style="font-weight: bold; color: ${getGroupColor(groupIndex)}; font-size: 18px;">
-                                                ${activity.price || '0'}€
-                                            </div>
+    ${(activity.price || 0).toFixed(2)}€
+</div>
+                                               
                                             <div style="font-size: 12px; color: var(--gray);">
                                                 <i class="fas fa-clock"></i> ${activity.duration_hours || '?'}h
                                             </div>
@@ -1002,7 +1003,7 @@ function generateProgramHTMLOld(daysProgram, activityGroups) {
                         <span>•</span>
                         <span>~${Math.round(dayTime)} ώρες</span>
                         <span>•</span>
-                        <span>${dayCost}€</span>
+                        <span>${dayCost.toFixed(2)}€</span>
                     </div>
                 </div>
             </div>
@@ -1039,7 +1040,7 @@ function generateProgramHTMLOld(daysProgram, activityGroups) {
                     <div style="font-size: 12px; opacity: 0.8;">Δραστηριότητες</div>
                 </div>
                 <div>
-                    <div style="font-size: 24px; font-weight: bold; color: #EF4444;">${totalCost}€</div>
+                    <div style="font-size: 24px; font-weight: bold; color: #EF4444;">${totalCost.toFixed(2)}€</div>
                     <div style="font-size: 12px; opacity: 0.8;">Συνολικό κόστος</div>
                 </div>
             </div>
