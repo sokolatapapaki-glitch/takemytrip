@@ -815,7 +815,7 @@ function getSummaryStepHTML() {
                     ` : `
                         <div style="margin-top: 20px;">
                             <!-- 🔴 ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΚΟΥΜΠΙ ΠΟΥ ΔΕΝ ΔΟΥΛΕΥΕΙ -->
-                            <button class="btn btn-primary" onclick="generateGeographicProgram()" 
+                            <button class="btn btn-primary" onclick="()" 
                                     style="width: 100%; padding: 15px; font-size: 18px; margin-bottom: 20px;">
                                 <i class="fas fa-map-marked-alt"></i> ΔΗΜΙΟΥΡΓΙΑ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ
                             </button>
@@ -896,6 +896,12 @@ function getSummaryStepHTML() {
 
 // ==================== ΑΠΛΟΠΟΙΗΜΕΝΗ ΣΥΝΑΡΤΗΣΗ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ ====================
 function generateGeographicProgram() {
+     // 🔴 ΚΡΙΤΙΚΗ ΔΙΟΡΘΩΣΗ - ΠΡΟΣΘΕΣΕ ΑΥΤΕΣ ΤΙΣ 4 ΓΡΑΜΜΕΣ:
+    const daysSelect = document.getElementById('program-days');
+    if (daysSelect && daysSelect.value) {
+        state.selectedDays = parseInt(daysSelect.value);
+    }
+    // 🔴 ΤΕΛΟΣ ΔΙΟΡΘΩΣΗΣ
     console.log('🎯 ========== ΑΡΧΗ generateGeographicProgram ==========');
     console.log('📊 State:', {
         selectedDestinationId: state.selectedDestinationId,
