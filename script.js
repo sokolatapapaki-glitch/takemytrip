@@ -2471,6 +2471,8 @@ function setupSummaryStep() {
                     
                     // Εμφάνιση μηνύματος
                     showToast(`📅 Οι ημέρες ενημερώθηκαν σε ${selectedDays}. Πατήστε "Δημιουργία Προγράμματος"`, 'success');
+                   // 🔵 🔵 🔵 ΠΡΟΣΘΗΚΗ: Αυτόματη ανανέωση προγράμματος
+forceRefreshProgram();
                 }
             });
         }
