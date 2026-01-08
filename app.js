@@ -3821,6 +3821,64 @@ function updateProgramDays() {
         showToast(`📅 Οι ημέρες ενημερώθηκαν σε ${selectedDays}. Πατήστε "Δημιουργία Προγράμματος"`, 'success');
     }
 }
+function updateProgramDaysAndGenerate() {
+    const daysSelect = document.getElementById('program-days');
+    if (!daysSelect) return;
+    
+    const selectedValue = daysSelect.value;
+    
+    if (!selectedValue || selectedValue === '0') {
+        alert('⚠️ Παρακαλώ επιλέξτε αριθμό ημερών από το dropdown');
+        return;
+    }
+    
+    const selectedDays = parseInt(selectedValue);
+    state.selectedDays = selectedDays;
+    
+    // Ενημέρωση UI
+    const daysDisplay = document.getElementById('days-display');
+    if (daysDisplay) {
+        daysDisplay.textContent = '✅ ' + selectedDays + ' μέρες επιλέχθηκαν';
+        daysDisplay.style.color = 'var(--success)';
+    }
+    
+    saveState();
+    
+    console.log(`📅 Ενημέρωση ημερών σε: ${selectedDays}`);
+    
+    // Αυτόματη δημιουργία προγράμματος αν υπάρχουν δραστηριότητες
+    if (state.selectedActivities && state.selectedActivities.length > 0) {
+        console.log('🔄 Αυτόματη δημιουργία προγράμματος λόγω αλλαγής ημερών');
+        
+        // Μικρή καθυστέρηση για UX
+        setTimeout(() => {
+            if (typeof generateGeographicProgram === 'function') {
+                generateGeographicProgram();
+            } else {
+                console.warn('⚠️ Η generateGeographicProgram δεν είναι διαθέσιμη ακόμα');
+                // Εναλλακτική: ανανέωση του display
+                const programDiv = document.getElementById('geographic-program');
+                if (programDiv) {
+                    programDiv.innerHTML = `
+                        <div style="text-align: center; padding: 30px;">
+                            <div style="font-size: 48px; margin-bottom: 20px;">📅</div>
+                            <h4>Ενημερώθηκαν οι μέρες: ${selectedDays}</h4>
+                            <p style="color: var(--gray); margin: 10px 0;">
+                                Για να δημιουργήσετε το πρόγραμμα, πατήστε:
+                            </p>
+                            <button onclick="generateGeographicProgram()" class="btn btn-primary">
+                                <i class="fas fa-map-marked-alt"></i> ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΓΡΑΜΜΑΤΟΣ
+                            </button>
+                        </div>
+                    `;
+                }
+            }
+        }, 300);
+    } else {
+        showToast(`✅ Οι μέρες ενημερώθηκαν σε ${selectedDays}. Προσθέστε δραστηριότητες.`, 'info');
+    }
+}
+
 
 // ========== GROUP ACTIVITIES BY PROXIMITY ==========
 function groupActivitiesByProximity(activities, maxDistanceKm = 2) {
