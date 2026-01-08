@@ -2486,43 +2486,37 @@ function setupSummaryStep() {
         
         // 3. Δημιουργία προγράμματος ΜΟΝΟ αν υπάρχουν δραστηριότητες ΚΑΙ μέρες
         if (state.selectedActivities.length > 0 && state.selectedDays > 0) {
-            console.log(`📊 Έτοιμος για δημιουργία προγράμματος: ${state.selectedActivities.length} δραστηριότητες, ${state.selectedDays} μέρες`);
-            
-            // Εμφάνιση loading indicator
-            const programDiv = document.getElementById('geographic-program');
-            if (programDiv) {
-                programDiv.innerHTML = `
-                    <div style="padding: 30px 20px; text-align: center;">
-                        <div class="loading-spinner" style="
-                            width: 40px;
-                            height: 40px;
-                            border: 4px solid #f3f3f3;
-                            border-top: 4px solid var(--primary);
-                            border-radius: 50%;
-                            animation: spin 1s linear infinite;
-                            margin: 0 auto 20px auto;
-                        "></div>
-                        <h4 style="color: var(--dark); margin-bottom: 10px;">Προετοιμασία προγράμματος</h4>
-                        <p style="color: var(--gray);">
-                            ${state.selectedActivities.length} δραστηριότητες για ${state.selectedDays} μέρες
-                        </p>
-                        <button onclick="generateGeographicProgram()" class="btn btn-primary" style="margin-top: 15px;">
-                            <i class="fas fa-play-circle"></i> ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΓΡΑΜΜΑΤΟΣ
-                        </button>
-                    </div>
-                `;
-            }
-            
-            // Ενημέρωση status
-            const statusDiv = document.getElementById('program-status');
-            if (statusDiv) {
-                statusDiv.innerHTML = `<i class="fas fa-check-circle"></i> Έτοιμο για δημιουργία προγράμματος`;
-                statusDiv.style.background = '#D1FAE5';
-                statusDiv.style.color = '#065F46';
-            }
-        } else {
-            console.log('⚠️ Δεν υπάρχουν αρκετά δεδομένα για πρόγραμμα');
-        }
+    console.log(`📊 Έτοιμος για δημιουργία προγράμματος: ${state.selectedActivities.length} δραστηριότητες, ${state.selectedDays} μέρες`);
+    
+    // Εμφάνιση ΜΟΝΟ του κουμπιού, ΟΧΙ loading
+    const programDiv = document.getElementById('geographic-program');
+    if (programDiv) {
+        programDiv.innerHTML = `
+            <div style="padding: 30px 20px; text-align: center;">
+                <div style="font-size: 48px; margin-bottom: 15px; color: var(--primary);">📍</div>
+                <h4 style="color: var(--dark); margin-bottom: 10px;">Έτοιμο για Προγραμματισμό!</h4>
+                <p style="color: var(--gray); margin-bottom: 20px;">
+                    Πατήστε "ΔΗΜΙΟΥΡΓΙΑ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ"<br>
+                    για να ομαδοποιήσουμε τις ${state.selectedActivities.length} δραστηριότητες<br>
+                    σε ${state.selectedDays} μέρες με βάση την τοποθεσία τους
+                </p>
+                <button onclick="generateGeographicProgram()" class="btn btn-primary" style="padding: 15px 40px; font-size: 18px;">
+                    <i class="fas fa-map-marked-alt"></i> ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΓΡΑΜΜΑΤΟΣ
+                </button>
+            </div>
+        `;
+    }
+    
+    // Ενημέρωση status
+    const statusDiv = document.getElementById('program-status');
+    if (statusDiv) {
+        statusDiv.innerHTML = `<i class="fas fa-check-circle"></i> Έτοιμο για δημιουργία προγράμματος`;
+        statusDiv.style.background = '#D1FAE5';
+        statusDiv.style.color = '#065F46';
+    }
+} else {
+    console.log('⚠️ Δεν υπάρχουν αρκετά δεδομένα για πρόγραμμα');
+}
         
         // 4. Ενημέρωση συνολικού κόστους
         updateActivitiesCost();
