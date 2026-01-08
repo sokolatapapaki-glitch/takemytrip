@@ -858,6 +858,35 @@ function getFullActivitiesWithLocation() {
         } : null;
     }).filter(a => a !== null && a.location);
 }
+function displayGeographicProgram(daysProgram, activityGroups) {
+    const programSection = document.getElementById('geographic-program-section');
+    const programDiv = document.getElementById('geographic-program');
+    
+    if (!programSection || !programDiv) {
+        console.error('❌ Δεν βρέθηκαν τα στοιχεία για εμφάνιση');
+        return;
+    }
+    
+    if (activityGroups.length === 0) {
+        programDiv.innerHTML = `
+            <div style="padding: 40px 20px; text-align: center;">
+                <div style="font-size: 48px; margin-bottom: 15px; color: #9CA3AF;">🧭</div>
+                <h4 style="color: var(--dark); margin-bottom: 10px;">Δεν βρέθηκαν πληροφορίες τοποθεσίας</h4>
+                <p style="color: var(--gray);">
+                    Οι επιλεγμένες δραστηριότητες δεν έχουν πληροφορίες τοποθεσίας.<br>
+                    Δοκιμάστε να τις δείτε στον χάρτη πρώτα.
+                </p>
+                <button onclick="showStep('map')" class="btn btn-primary" style="margin-top: 15px;">
+                    <i class="fas fa-map"></i> Προβολή στον Χάρτη
+                </button>
+            </div>
+        `;
+    } else {
+        programDiv.innerHTML = generateProgramHTML(daysProgram);
+    }
+    
+    programSection.style.display = 'block';
+}
 // ==================== ΑΠΛΟΠΟΙΗΜΕΝΗ ΣΥΝΑΡΤΗΣΗ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ ====================
 function generateGeographicProgram() {
     console.log('🎯 ========== ΑΡΧΗ generateGeographicProgram ==========');
@@ -962,204 +991,8 @@ console.log(`📍 Δραστηριότητες με location: ${fullActivities.l
     // 5. Κατανομή ομάδων στις μέρες που επέλεξε ο χρήστης
     const daysProgram = distributeGroupsToDays(activityGroups, state.selectedDays);
     
-    // 🔴 ΚΡΙΤΙΚΗ ΑΛΛΑΓΗ: Βρίσκουμε το div του προγράμματος
-    const programSection = document.getElementById('geographic-program-section');
-    const programDiv = document.getElementById('geographic-program');
-    
-    if (!programSection || !programDiv) {
-        console.error('❌ Δεν βρέθηκε το geographic-program div');
-        return;
-    }
-    
-    console.log('✅ ΒΡΕΘΗΚΕ το geographic-program-section div!');
-    
-    // 6. Δημιουργία HTML για το πρόγραμμα
-    let html = '';
-    
-    if (activityGroups.length === 0) {
-        html = `
-            <div style="padding: 40px 20px; text-align: center;">
-                <div style="font-size: 48px; margin-bottom: 20px; color: #9CA3AF;">🧭</div>
-                <h4 style="color: var(--dark); margin-bottom: 10px;">Δεν βρέθηκαν πληροφορίες τοποθεσίας</h4>
-                <p style="color: var(--gray);">
-                    Οι επιλεγμένες δραστηριότητες δεν έχουν πληροφορίες τοποθεσίας.<br>
-                    Δοκιμάστε να τις δείτε στον χάρτη πρώτα.
-                </p>
-                <button onclick="showStep('map')" class="btn btn-primary" style="margin-top: 15px;">
-                    <i class="fas fa-map"></i> Προβολή στον Χάρτη
-                </button>
-            </div>
-        `;
-    } else {
-        // Εμφάνιση κάθε μέρας
-        daysProgram.forEach((day, dayIndex) => {
-            const dayNumber = dayIndex + 1;
-            const groupCount = day.groups.length;
-            const activityCount = day.totalActivities;
-            const dayCost = day.totalCost || 0;
-            const dayTime = day.estimatedTime || day.groups.reduce((sum, g) => 
-                sum + g.activities.reduce((time, a) => time + (parseFloat(a.duration_hours) || 1), 0), 0);
-            
-            html += `
-                <div class="day-card" style="
-                    margin-bottom: 25px; 
-                    padding: 20px; 
-                    background: white; 
-                    border-radius: 12px; 
-                    border: 2px solid ${getDayColor(dayNumber)};
-                    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-                ">
-                    <!-- ΗΜΕΡΑ HEADER -->
-                    <div style="
-                        background: ${getDayColor(dayNumber)}; 
-                        color: white; 
-                        padding: 15px; 
-                        border-radius: 8px;
-                        margin-bottom: 20px;
-                        text-align: center;
-                    ">
-                        <h3 style="margin: 0; color: white; font-size: 20px;">
-                            ΜΕΡΑ ${dayNumber}
-                            <span style="font-size: 14px; opacity: 0.9; margin-left: 10px;">
-                                (${activityCount} δραστηριότητα${activityCount !== 1 ? 'τες' : ''})
-                            </span>
-                        </h3>
-                        <div style="display: flex; justify-content: center; gap: 20px; margin-top: 10px; font-size: 14px;">
-                            <span><i class="fas fa-clock"></i> ~${Math.round(dayTime)} ώρες</span>
-                            <span><i class="fas fa-euro-sign"></i> ${dayCost}€</span>
-                            <span><i class="fas fa-map-marker-alt"></i> ${groupCount} περιοχή${groupCount !== 1 ? 'ές' : ''}</span>
-                        </div>
-                    </div>
-                    
-                    <!-- ΛΙΣΤΑ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ -->
-                    <div style="padding: 0 10px;">
-                        ${day.groups.map((group, groupIndex) => `
-                            <div style="margin-bottom: 20px;">
-                                <h4 style="color: var(--dark); margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid #E5E7EB;">
-                                    <i class="fas fa-map-pin" style="color: ${getGroupColor(groupIndex)};"></i>
-                                    Περιοχή ${groupIndex + 1}
-                                    <span style="font-size: 13px; color: var(--gray); margin-left: 8px;">
-                                        (${group.activities.length} δραστηριότητα${group.activities.length !== 1 ? 'τες' : ''})
-                                    </span>
-                                </h4>
-                                
-                                ${group.activities.map(activity => `
-                                    <div style="
-                                        padding: 12px; 
-                                        margin-bottom: 8px; 
-                                        background: #F9FAFB; 
-                                        border-radius: 8px;
-                                        border-left: 3px solid ${getGroupColor(groupIndex)};
-                                    ">
-                                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                                            <div style="flex: 1;">
-                                                <div style="font-weight: bold; color: var(--dark); margin-bottom: 5px;">
-                                                    ${activity.name}
-                                                </div>
-                                                <div style="font-size: 13px; color: var(--gray);">
-                                                    ${activity.category ? `${translateCategory(activity.category)} • ` : ''}
-                                                    ${activity.duration_hours || '1-2'} ώρες
-                                                </div>
-                                            </div>
-                                            <div style="text-align: right; min-width: 80px;">
-                                                <div style="font-weight: bold; color: ${getGroupColor(groupIndex)}; font-size: 18px;">
-                                                    ${activity.price || '0'}€
-                                                </div>
-                                                <div style="font-size: 12px; color: var(--gray);">
-                                                    <i class="fas fa-clock"></i> ${activity.duration_hours || '?'}h
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        `).join('')}
-                    </div>
-                    
-                    <!-- ΣΥΝΟΛΟ ΜΕΡΑΣ -->
-                    <div style="
-                        margin-top: 20px; 
-                        padding: 15px; 
-                        background: #F0F9FF; 
-                        border-radius: 8px;
-                        text-align: center;
-                        border: 1px solid ${getDayColor(dayNumber)}40;
-                    ">
-                        <div style="font-weight: bold; color: ${getDayColor(dayNumber)}; margin-bottom: 5px;">
-                            <i class="fas fa-check-circle"></i> ΣΥΝΟΛΟ ΜΕΡΑΣ ${dayNumber}
-                        </div>
-                        <div style="display: flex; justify-content: center; gap: 20px; font-size: 14px; color: var(--gray);">
-                            <span>${activityCount} δραστηριότητες</span>
-                            <span>•</span>
-                            <span>~${Math.round(dayTime)} ώρες</span>
-                            <span>•</span>
-                            <span>${dayCost}€</span>
-                        </div>
-                    </div>
-                </div>
-            `;
-        });
-        
-        // ΣΥΝΟΛΙΚΟ ΣΤΑΤΙΣΤΙΚΟ
-        const totalActivities = daysProgram.reduce((sum, day) => sum + day.totalActivities, 0);
-        const totalCost = daysProgram.reduce((sum, day) => sum + (day.totalCost || 0), 0);
-        const totalTime = daysProgram.reduce((sum, day) => sum + (day.estimatedTime || 0), 0);
-        
-        html += `
-            <div style="
-                margin-top: 30px; 
-                padding: 20px; 
-                background: linear-gradient(135deg, #1A202C, #2D3748); 
-                color: white; 
-                border-radius: 12px;
-            ">
-                <h4 style="color: white; margin-bottom: 15px; text-align: center;">
-                    <i class="fas fa-chart-bar"></i> ΣΥΝΟΛΙΚΟ ΣΤΑΤΙΣΤΙΚΟ
-                </h4>
-                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; text-align: center;">
-                    <div>
-                        <div style="font-size: 24px; font-weight: bold; color: #4F46E5;">${state.selectedDays}</div>
-                        <div style="font-size: 12px; opacity: 0.8;">Μέρες</div>
-                    </div>
-                    <div>
-                        <div style="font-size: 24px; font-weight: bold; color: #10B981;">${activityGroups.length}</div>
-                        <div style="font-size: 12px; opacity: 0.8;">Γεωγραφικές περιοχές</div>
-                    </div>
-                    <div>
-                        <div style="font-size: 24px; font-weight: bold; color: #F59E0B;">${totalActivities}</div>
-                        <div style="font-size: 12px; opacity: 0.8;">Δραστηριότητες</div>
-                    </div>
-                    <div>
-                        <div style="font-size: 24px; font-weight: bold; color: #EF4444;">${totalCost}€</div>
-                        <div style="font-size: 12px; opacity: 0.8;">Συνολικό κόστος</div>
-                    </div>
-                </div>
-                <p style="text-align: center; margin-top: 15px; font-size: 13px; opacity: 0.8;">
-                    <i class="fas fa-lightbulb"></i> Οι δραστηριότητες ομαδοποιήθηκαν με βάση την απόσταση για ελάχιστες μετακινήσεις
-                </p>
-            </div>
-        `;
-    }
-    
-    // 🔴 ΚΡΙΤΙΚΗ ΑΛΛΑΓΗ: Εμφάνιση του προγράμματος
-    programDiv.innerHTML = html;
-    programSection.style.display = 'block';
-    
-    // 🔴 ΚΡΙΤΙΚΗ ΑΛΛΑΓΗ: ΣΚΡΟΛΑΡΟΥΜΕ ΣΤΟ ΠΡΟΓΡΑΜΜΑ
-    setTimeout(() => {
-        programSection.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'start'
-        });
-        
-        // Προσθήκη animation για να ξεχωρίζει
-        programSection.style.animation = 'none';
-        programSection.offsetHeight; // Trigger reflow
-        programSection.style.animation = 'pulse 2s';
-        
-        console.log('✅ Το πρόγραμμα εμφανίστηκε και σκρολάραμε σε αυτό');
-    }, 100);
-    
+    // 7. ΕΜΦΑΝΙΣΗ ΤΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ
+displayGeographicProgram(daysProgram, activityGroups);
     // Ενημέρωση status
     const statusDiv = document.getElementById('program-status');
     if (statusDiv) {
