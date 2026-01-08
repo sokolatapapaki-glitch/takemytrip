@@ -4986,6 +4986,7 @@ window.updateFamilyMembers = updateFamilyMembers;
 window.calculateSmartCombos = calculateSmartCombos;
 window.clearSelectedActivities = clearSelectedActivities;
 window.updateProgramDays = updateProgramDays;
+window.updateProgramDaysAndGenerate = updateProgramDaysAndGenerate;
 window.groupActivitiesByProximity = groupActivitiesByProximity; 
 window.showGroupedActivitiesOnMap = showGroupedActivitiesOnMap;
 window.suggestDaysFromGroups = suggestDaysFromGroups;
