@@ -1379,26 +1379,7 @@ function getGroupColor(index) {
 }
 
 
-// ==================== ΣΥΝΑΡΤΗΣΕΙΣ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΙΣΜΟΥ ====================
 
-
-
-function getGroupColor(index) {
-    const colors = [
-        '#4F46E5', // Indigo
-        '#10B981', // Emerald
-        '#F59E0B', // Amber
-        '#EF4444', // Red
-        '#8B5CF6', // Violet
-        '#EC4899', // Pink
-        '#14B8A6', // Teal
-        '#F97316'  // Orange
-    ];
-    return colors[index % colors.length];
-}
-
-
-// ==================== STEP 6: MAP (SIMPLIFIED) ====================
 // ==================== STEP 6: MAP (FIXED) ====================
 function getMapStepHTML() {
     return `
@@ -2495,150 +2476,6 @@ forceRefreshProgram();
     }, 100);
 }
 
-// ==================== ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ: CREATE SUGGESTED PROGRAM ====================
-function createSuggestedProgram() {
-    // Αυτό δημιουργεί ένα απλό προτεινόμενο πρόγραμμα χωρίς να καλεί τη γενική συνάρτηση
-    const programDiv = document.getElementById('geographic-program');
-    if (!programDiv || state.selectedActivities.length === 0 || state.selectedDays === 0) {
-        return;
-    }
-    
-    const activitiesCount = state.selectedActivities.length;
-    const daysCount = state.selectedDays;
-    const activitiesPerDay = Math.ceil(activitiesCount / daysCount);
-    
-    let html = `
-        <div style="padding: 20px;">
-            <div style="text-align: center; margin-bottom: 25px;">
-                <h3 style="color: var(--primary); margin-bottom: 10px;">📅 Πρόγραμμα Ταξιδιού</h3>
-                <p style="color: var(--gray);">
-                    ${activitiesCount} δραστηριότητες διανεμήθηκαν σε ${daysCount} μέρες
-                </p>
-            </div>
-    `;
-    
-    // Δημιούργησε μια απλή κατανομή
-    for (let day = 1; day <= daysCount; day++) {
-        const startIndex = (day - 1) * activitiesPerDay;
-        const endIndex = Math.min(startIndex + activitiesPerDay, activitiesCount);
-        const dayActivities = state.selectedActivities.slice(startIndex, endIndex);
-        const dayCost = dayActivities.reduce((sum, act) => sum + (act.price || 0), 0);
-        
-        html += `
-            <div style="
-                margin-bottom: 20px; 
-                padding: 15px; 
-                background: white; 
-                border-radius: 10px;
-                border-left: 4px solid ${getDayColor(day)};
-                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            ">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <h4 style="color: ${getDayColor(day)}; margin: 0;">
-                        ΜΕΡΑ ${day}
-                    </h4>
-                    <span style="background: ${getDayColor(day)}20; color: ${getDayColor(day)}; padding: 4px 10px; border-radius: 20px; font-size: 12px;">
-                        ${dayActivities.length} δραστηριότητες
-                    </span>
-                </div>
-                
-                <div style="margin-top: 10px;">
-                    ${dayActivities.map(activity => `
-                        <div style="
-                            display: flex; 
-                            justify-content: space-between; 
-                            padding: 8px 0; 
-                            border-bottom: 1px solid #f0f0f0;
-                        ">
-                            <span style="color: var(--dark);">${activity.name}</span>
-                            <span style="color: var(--primary); font-weight: bold;">${activity.price || 0}€</span>
-                        </div>
-                    `).join('')}
-                </div>
-                
-                <div style="
-                    margin-top: 10px; 
-                    padding-top: 10px; 
-                    border-top: 1px dashed #ddd;
-                    display: flex; 
-                    justify-content: space-between;
-                    font-weight: bold;
-                ">
-                    <span>ΣΥΝΟΛΟ ΜΕΡΑΣ:</span>
-                    <span style="color: ${getDayColor(day)};">${dayCost}€</span>
-                </div>
-            </div>
-        `;
-    }
-    
-    const totalCost = state.selectedActivities.reduce((sum, act) => sum + (act.price || 0), 0);
-    
-    html += `
-            <div style="
-                margin-top: 25px; 
-                padding: 15px; 
-                background: linear-gradient(135deg, var(--primary), #4F46E5); 
-                color: white; 
-                border-radius: 10px;
-                text-align: center;
-            ">
-                <h4 style="color: white; margin-bottom: 10px;">
-                    <i class="fas fa-calculator"></i> ΣΥΝΟΛΙΚΟ ΚΟΣΤΟΣ
-                </h4>
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div style="text-align: left;">
-                        <div style="font-size: 14px; opacity: 0.9;">${activitiesCount} δραστηριότητες</div>
-                        <div style="font-size: 14px; opacity: 0.9;">${daysCount} μέρες</div>
-                    </div>
-                    <div style="font-size: 36px; font-weight: bold;">${totalCost}€</div>
-                </div>
-            </div>
-            
-            <div style="text-align: center; margin-top: 20px;">
-                <button onclick="generateGeographicProgram()" 
-                        class="btn btn-primary"
-                        style="padding: 12px 30px; font-size: 16px;">
-                    <i class="fas fa-sync-alt"></i> ΔΗΜΙΟΥΡΓΙΑ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ
-                </button>
-                <p style="color: var(--gray); font-size: 13px; margin-top: 10px;">
-                    Δημιουργήστε βελτιστοποιημένο πρόγραμμα με βάση τις τοποθεσίες των δραστηριοτήτων
-                </p>
-            </div>
-        </div>
-    `;
-    
-    programDiv.innerHTML = html;
-}
-
-// ==================== ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ: SUGGEST DAYS FROM GROUPS ====================
-function suggestDaysFromGroups() {
-    if (state.selectedActivities.length === 0) return 0;
-    
-    // Πάρε τις πλήρεις πληροφορίες για τις επιλεγμένες δραστηριότητες
-    const selectedFullActivities = state.selectedActivities.map(selected => 
-        state.currentCityActivities.find(a => a.id === selected.id)
-    ).filter(a => a !== undefined);
-    
-    const groups = groupActivitiesByProximity(selectedFullActivities, 2.0);
-    
-    if (groups.length === 0) return 0;
-    
-    // Υπολόγισε προτεινόμενες μέρες
-    let suggestedDays = groups.length;
-    
-    // Αν υπάρχουν πολλές δραστηριότητες σε μία ομάδα, πρόσθεσε μέρες
-    groups.forEach(group => {
-        if (group.count >= 3) suggestedDays += 1;
-        if (group.count >= 5) suggestedDays += 1;
-    });
-    
-    // Μίνιμουμ 2 μέρες, μέγιστο 7
-    suggestedDays = Math.max(2, Math.min(suggestedDays, 7));
-    
-    console.log(`📅 Προτεινόμενες μέρες από ομαδοποίηση: ${suggestedDays}`);
-    
-    return suggestedDays;
-}
 // ==================== ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ: CREATE SUGGESTED PROGRAM ====================
 function createSuggestedProgram() {
     // Αυτό δημιουργεί ένα απλό προτεινόμενο πρόγραμμα χωρίς να καλεί τη γενική συνάρτηση
@@ -4443,32 +4280,6 @@ function showGroupedActivitiesOnMap() {
 }
 
 
-// Συνάρτηση για προτάσεις ημερών βάσει ομάδων
-function suggestDaysFromGroups() {
-    const selectedFullActivities = state.selectedActivities.map(selected => 
-        state.currentCityActivities.find(a => a.id === selected.id)
-    ).filter(a => a !== undefined);
-    
-    const groups = groupActivitiesByProximity(selectedFullActivities, 1.5);
-    
-    if (groups.length === 0) return 0;
-    
-    // Υπολόγισε προτεινόμενες μέρες
-    let suggestedDays = groups.length;
-    
-    // Αν υπάρχουν πολλές δραστηριότητες σε μία ομάδα, πρόσθεσε μέρες
-    groups.forEach(group => {
-        if (group.count >= 3) suggestedDays += 1;
-        if (group.count >= 5) suggestedDays += 1;
-    });
-    
-    // Μίνιμουμ 2 μέρες, μέγιστο 7
-    suggestedDays = Math.max(2, Math.min(suggestedDays, 7));
-    
-    console.log(`📅 Προτεινόμενες μέρες από ομαδοποίηση: ${suggestedDays}`);
-    
-    return suggestedDays;
-}
 // ==================== HELPER FUNCTIONS ====================
 function getPriceInfo(prices) {
     if (!prices || typeof prices !== 'object') {
