@@ -847,7 +847,17 @@ function getSummaryStepHTML() {
         </div>
     `;
 }
-
+// ==================== ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ ΓΙΑ GEOGRAPHIC PROGRAM ====================
+function getFullActivitiesWithLocation() {
+    return state.selectedActivities.map(selected => {
+        const original = state.currentCityActivities.find(a => a.id === selected.id);
+        return original ? {
+            ...selected,
+            ...original,
+            location: original.location || null
+        } : null;
+    }).filter(a => a !== null && a.location);
+}
 // ==================== ΑΠΛΟΠΟΙΗΜΕΝΗ ΣΥΝΑΡΤΗΣΗ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ ====================
 function generateGeographicProgram() {
     console.log('🎯 ========== ΑΡΧΗ generateGeographicProgram ==========');
@@ -910,23 +920,9 @@ function generateGeographicProgram() {
         return; // Η loadActivitiesForProgram() θα ξανακαλέσει αυτή τη συνάρτηση
     }
     
-    // 2. Βρες τις πλήρεις πληροφορίες για τις επιλεγμένες δραστηριότητες
-    console.log('🔍 Ψάχνω για currentCityActivities:', state.currentCityActivities.length);
-    
-    const fullActivities = state.selectedActivities.map(selected => {
-        const originalActivity = state.currentCityActivities.find(a => a.id === selected.id);
-        
-        if (!originalActivity) {
-            console.error('❌ Δεν βρέθηκε η δραστηριότητα:', selected.id, selected.name);
-            return null;
-        }
-        
-        return {
-            ...selected,
-            ...originalActivity,
-            location: originalActivity?.location || null
-        };
-    }).filter(a => a !== null && a.location);
+   // 2. Βρες τις πλήρεις πληροφορίες για τις επιλεγμένες δραστηριότητες
+const fullActivities = getFullActivitiesWithLocation();
+console.log(`📍 Δραστηριότητες με location: ${fullActivities.length}/${state.selectedActivities.length}`);
     
     console.log(`📍 Δραστηριότητες με location: ${fullActivities.length}/${state.selectedActivities.length}`);
     
