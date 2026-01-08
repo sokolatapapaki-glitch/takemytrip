@@ -2440,33 +2440,8 @@ forceRefreshProgram();
         
         // 5. 🔴 ΚΡΙΤΙΚΟ: Δημιουργία προτεινόμενου προγράμματος
         createSuggestedProgram();
-        
-        // 6. Εμφάνιση μηνύματος για ομαδοποίηση (αν υπάρχει πρόταση)
-        if (state.selectedActivities.length > 0) {
-            const suggestedDays = suggestDaysFromGroups();
-            if (suggestedDays > 0 && suggestedDays !== state.selectedDays) {
-                setTimeout(() => {
-                    showToast(`
-                        <div style="text-align: left; max-width: 350px;">
-                            <strong style="color: #4F46E5;">📅 Πρόταση Διάρκειας</strong><br><br>
-                            
-                            <div style="background: #F0F9FF; padding: 12px; border-radius: 8px; border-left: 4px solid #4F46E5;">
-                                Βάσει ομαδοποίησης των δραστηριοτήτων σας:<br>
-                                <strong style="font-size: 18px; color: #4F46E5;">${suggestedDays} μέρες</strong><br>
-                                <small style="color: #666;">
-                                    (Βρέθηκαν ${state.selectedActivities.length} δραστηριότητες σε ${suggestedDays} γεωγραφικές περιοχές)
-                                </small>
-                            </div>
-                            
-                            <div style="margin-top: 10px; font-size: 12px; color: #666;">
-                                <i class="fas fa-info-circle"></i> Μπορείτε να αλλάξετε τις μέρες από το dropdown
-                            </div>
-                        </div>
-                    `, 'info');
-                }, 1000);
-            }
-        }
-        
+       
+            
     }, 100);
 }
 
