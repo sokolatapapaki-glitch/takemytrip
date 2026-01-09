@@ -376,21 +376,16 @@ function getDestinationStepHTML() {
             </div>
             
             <!-- Οι γρήγορες επιλογές, το κουμπί αναζήτησης και τα αποτελέσματα παραμένουν ΑΜΕΤΑΒΛΗΤΑ -->
-            <div id="main-buttons-container" style="display: flex; flex-direction: column; gap: 10px; margin-top: 30px; align-items: center; width: 100%;">
-                <button class="btn btn-primary main-search-btn" 
-                        style="padding: 14px 20px; font-size: 16px; width: 90%; max-width: 300px;"
-                    <i class="fas fa-search"></i> 🔍 ΑΝΑΖΗΤΗΣΗ ΠΡΟΟΡΙΣΜΩΝ
-                </button>
-                
-                <button class="btn btn-primary main-already-btn" 
-                        style="padding: 14px 20px; font-size: 16px; width: 90%; max-width: 300px;"
-                    <i class="fas fa-arrow-right"></i> ΕΧΩ ΗΔΗ ΒΡΕΙ ΠΡΟΟΡΙΣΜΟ
-                </button>
-                
-                <button class="btn btn-outline" onclick="showQuickRecommendations()" style="padding: 16px 30px;">
-                    <i class="fas fa-bolt"></i> Γρήγορες Προτάσεις
-                </button>
-            </div>
+            <div id="main-buttons-container" style="text-align: center; margin: 30px 0;">
+    <button class="btn btn-primary main-already-btn" 
+            style="padding: 14px 25px; font-size: 16px; width: 90%; max-width: 300px; border-radius: 8px;">
+        <i class="fas fa-map-marker-alt"></i> ΕΧΩ ΗΔΗ ΒΡΕΙ ΠΡΟΟΡΙΣΜΟ
+    </button>
+    
+    <p style="margin-top: 15px; color: var(--gray); font-size: 14px;">
+        <i class="fas fa-info-circle"></i> Ή χρησιμοποίησε τα φίλτρα πάνω για αναζήτηση
+    </p>
+</div>
             
             <div id="destination-results">
                 <!-- ΕΔΩ ΘΑ ΕΜΦΑΝΙΖΟΝΤΑΙ ΤΑ ΑΠΟΤΕΛΕΣΜΑΤΑ -->
