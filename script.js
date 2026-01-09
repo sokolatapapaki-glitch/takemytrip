@@ -3325,10 +3325,28 @@ function showActivityMap() {
     });
     
     // 6. Αν έχουμε markers, προσπάθησε να ζουμάρεις να τα δείξεις όλα
-    if (window.selectedMarkers.length > 0 && cityCoords) {
-    // Δημιούργησε bounds που περιλαμβάνουν όλα τα markers
-    const markerGroup = L.featureGroup(window.selectedMarkers);
-    window.travelMap.fitBounds(markerGroup.getBounds().pad(0.1));
+if (window.selectedMarkers.length > 0 && cityCoords) {
+    try {
+        // Φίλτραρε μόνο τα έγκυρα markers
+        const validMarkers = window.selectedMarkers.filter(marker => 
+            marker && typeof marker.getLatLng === 'function'
+        );
+        
+        if (validMarkers.length > 0) {
+            // Δημιούργησε bounds που περιλαμβάνουν όλα τα markers
+            const bounds = L.latLngBounds([]);
+            validMarkers.forEach(marker => {
+                bounds.extend(marker.getLatLng());
+            });
+            
+            window.travelMap.fitBounds(bounds.pad(0.1));
+            console.log(`✅ Ζουμάρισμα σε ${validMarkers.length} markers`);
+        }
+    } catch (error) {
+        console.error('❌ Σφάλμα ζουμαρίσματος:', error);
+        // Απλό ζουμάρισμα στο κέντρο αν αποτύχει
+        window.travelMap.setView(cityCoords, 13);
+    }
 }
     
     // 7. Ενημέρωση χρήστη με τα νέα οδηγία
