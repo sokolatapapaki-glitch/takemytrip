@@ -4446,6 +4446,43 @@ function createMarkerWithConnectFunction(coords, title, activityData) {
         restaurant: activityData?.restaurant,
         fullData: activityData
     });
+    
+    // ========== ΚΑΙΝΟΥΡΓΙΟ: ΕΥΡΕΣΗ RESTAURANT ΑΠΟ ΤΑ ORIGINAL ΔΕΔΟΜΕΝΑ ==========
+    // Αν δεν έχει restaurant, ψάξε το από τα αρχικά δεδομένα
+    if (!activityData?.restaurant) {
+        // 1. Ψάξε με βάση το όνομα
+        let originalActivity = state.currentCityActivities?.find(a => 
+            a.name === title || 
+            a.name?.includes(title.substring(0, 20)) || 
+            title.includes(a.name?.substring(0, 20))
+        );
+        
+        // 2. Αν δεν βρέθηκε, ψάξε με βάση το ID
+        if (!originalActivity && activityData?.id) {
+            originalActivity = state.currentCityActivities?.find(a => a.id === activityData.id);
+        }
+        
+        // 3. Αν βρέθηκε, προσθέσε το restaurant
+        if (originalActivity?.restaurant) {
+            activityData.restaurant = originalActivity.restaurant;
+            console.log('✅ Βρέθηκε restaurant για:', title, '=', originalActivity.restaurant);
+        } else {
+            console.log('⚠️ Δεν βρέθηκε restaurant για:', title);
+        }
+    }
+    
+    // Βεβαιώσου ότι το activityData έχει τα απαραίτητα πεδία
+    const safeActivityData = {
+        name: title,
+        description: activityData?.description || 'Επιλεγμένη δραστηριότητα',
+        price: activityData?.price || 0,
+        duration_hours: activityData?.duration_hours || '?',
+        category: activityData?.category || 'attraction',
+        location: activityData?.location || { lat: coords[0], lng: coords[1] },
+        restaurant: activityData?.restaurant || null  // <-- ΕΔΩ
+    };
+    
+    console.log('📍 Δημιουργία marker για:', title, 'με restaurant:', !!safeActivityData.restaurant);
     if (!window.travelMap) {
         console.error('❌ Χάρτης δεν είναι διαθέσιμος');
         return null;
