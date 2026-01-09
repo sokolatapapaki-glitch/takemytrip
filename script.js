@@ -2069,15 +2069,15 @@ async function setupActivitiesStep() {
                 const isSelected = state.selectedActivities.some(a => a.id === activity.id);
                 
                 html += `
-                    <div class="activity-card ${isSelected ? 'selected' : ''}" 
-                         onclick="toggleActivitySelection(${activity.id})" 
-                         data-activity-id="${activity.id}">
-                        
-                               <div class="activity-header">
+                    <div class="activity-card ${isSelected ? 'selected' : ''} ${activity.top ? 'top-activity' : ''}" 
+         onclick="toggleActivitySelection(${activity.id})" 
+         data-activity-id="${activity.id}">
+        
+        <div class="activity-header">
             <div class="activity-emoji">${getActivityEmoji(activity.category)}</div>
             <div class="activity-title">
                 ${activity.name}
-                ${activity.top ? '<span class="top-badge">⭐ TOP</span>' : ''}
+                ${activity.top ? '<span class="top-badge"></span>' : ''}
             </div>
             <div class="activity-star">${isSelected ? '⭐' : '☆'}</div>
         </div>
