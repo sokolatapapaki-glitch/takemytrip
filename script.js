@@ -446,35 +446,30 @@ function getFlightStepHTML() {
                 <div class="form-group">
                     <label class="form-label">Προς</label>
                     <input type="text" class="form-control" id="flight-destination" 
-                           value="${state.selectedDestination || ''}" ${state.selectedDestination ? 'readonly' : ''}">
+                           value="${state.selectedDestination || ''}" ${state.selectedDestination ? 'readonly' : ''}>
                 </div>
             </div>
             
-            <div style="text-align: center; margin: 40px 0;">
+            <div style="text-align: center; margin: 30px 0;">
                 <h3 style="margin-bottom: 20px; color: var(--dark);">🔍 Αναζήτηση στις πλατφόρμες:</h3>
                 
-                <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-                    <a href="https://www.google.com/flights" target="_blank" class="btn btn-primary" style="min-width: 200px;">
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-bottom: 30px;">
+                    <a href="https://www.google.com/flights" target="_blank" class="btn btn-primary" style="min-width: 180px; padding: 14px;">
                         <i class="fas fa-globe"></i> Google Flights
                     </a>
                     
-                    <a href="https://www.skyscanner.net" target="_blank" class="btn btn-secondary" style="min-width: 200px;">
+                    <a href="https://www.skyscanner.net" target="_blank" class="btn btn-secondary" style="min-width: 180px; padding: 14px;">
                         <i class="fas fa-plane-departure"></i> Skyscanner
                     </a>
                     
-                    <a href="https://www.kayak.com" target="_blank" class="btn btn-accent" style="min-width: 200px;">
+                    <a href="https://www.kayak.com" target="_blank" class="btn btn-accent" style="min-width: 180px; padding: 14px;">
                         <i class="fas fa-search"></i> Kayak
                     </a>
                 </div>
-            </div>
-            
-            <div class="alert alert-info" style="background: #e3f2fd; padding: 15px; border-radius: var(--radius-md); border-left: 4px solid #2196f3;">
-                <i class="fas fa-info-circle"></i>
-                <strong>Συμβουλή:</strong> Συγκρίνετε τιμές σε πολλαπλές πλατφόρμες για την καλύτερη προσφορά.
-            </div>
-            
-            <div style="text-align: center; margin-top: 40px;">
-                <button class="btn btn-primary" onclick="showStep('hotel')">
+                
+                <!-- ΚΟΥΜΠΙ ΣΥΝΕΧΕΙΑΣ (ΠΙΟ ΠΑΝΩ ΤΩΡΑ) -->
+                <button class="btn btn-primary" onclick="showStep('hotel')" 
+                        style="padding: 14px 40px; font-size: 16px; border-radius: 8px;">
                     <i class="fas fa-arrow-right"></i> Συνέχεια στα Ξενοδοχεία
                 </button>
             </div>
