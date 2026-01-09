@@ -1391,6 +1391,7 @@ function getGroupColor(index) {
 
 
 // ==================== STEP 6: MAP (FIXED) ====================
+// ==================== STEP 6: MAP (FIXED) ====================
 function getMapStepHTML() {
     return `
         <div class="card">
@@ -1434,6 +1435,7 @@ function getMapStepHTML() {
                         <strong>Ετοιμότητα:</strong> Πατήστε "Προβολή Σημείων" για τις δραστηριότητες σας
                     </div>
                 </div>
+                
                 <!-- 🔴 ΒΗΜΑ 2: ΦΙΛΤΡΟ ΗΜΕΡΩΝ (ΕΜΦΑΝΙΖΕΤΑΙ ΜΟΝΟ ΑΝ ΥΠΑΡΧΕΙ ΠΡΟΓΡΑΜΜΑ) -->
                 ${state.geographicProgram ? `
                 <div id="day-filter-container" class="card" style="margin-bottom: 20px; background: #f8f9fa;">
@@ -1493,9 +1495,6 @@ function getMapStepHTML() {
                 </div>
                 `}
                 
-                <!-- ΟΔΗΓΙΕΣ -->
-                <div class="alert alert-info">
-                    <i class="fas fa-graduation-cap"></i>
                 <!-- ΟΔΗΓΙΕΣ -->
                 <div class="alert alert-info">
                     <i class="fas fa-graduation-cap"></i>
@@ -2487,7 +2486,6 @@ function setupSummaryStep() {
                     // Εμφάνιση μηνύματος
                     showToast(`📅 Οι ημέρες ενημερώθηκαν σε ${selectedDays}. Πατήστε "Δημιουργία Προγράμματος"`, 'success');
                    // 🔵 🔵 🔵 ΠΡΟΣΘΗΚΗ: Αυτόματη ανανέωση προγράμματος
-forceRefreshProgram();
                 }
             });
         }
