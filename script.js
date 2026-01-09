@@ -484,28 +484,27 @@ function getHotelStepHTML() {
             <h1 class="card-title"><i class="fas fa-hotel"></i> Αναζήτηση Ξενοδοχείων</h1>
             <p class="card-subtitle">Βρείτε το τέλειο ξενοδοχείο για την οικογένειά σας</p>
             
-            <div class="grid grid-3">
+            <!-- ΚΟΜΠΑΚΤ ΦΟΡΜΑ - 2 ΣΤΗΛΕΣ -->
+            <div class="grid grid-2" style="gap: 12px;">
                 <div class="form-group">
                     <label class="form-label">Προορισμός</label>
                     <input type="text" class="form-control" id="hotel-destination" 
-                           value="${state.selectedDestination || ''}">
+                           value="${state.selectedDestination || ''}" style="padding: 10px;">
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Check-in</label>
-                    <input type="date" class="form-control" id="hotel-checkin">
+                    <input type="date" class="form-control" id="hotel-checkin" style="padding: 10px;">
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Check-out</label>
-                    <input type="date" class="form-control" id="hotel-checkout">
+                    <input type="date" class="form-control" id="hotel-checkout" style="padding: 10px;">
                 </div>
-            </div>
-            
-            <div class="grid grid-3">
+                
                 <div class="form-group">
                     <label class="form-label">Ενήλικοι</label>
-                    <select class="form-control" id="hotel-adults">
+                    <select class="form-control" id="hotel-adults" style="padding: 10px;">
                         <option value="1">1</option>
                         <option value="2" selected>2</option>
                         <option value="3">3</option>
@@ -515,7 +514,7 @@ function getHotelStepHTML() {
                 
                 <div class="form-group">
                     <label class="form-label">Παιδιά</label>
-                    <select class="form-control" id="hotel-children">
+                    <select class="form-control" id="hotel-children" style="padding: 10px;">
                         <option value="0">0</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -525,80 +524,55 @@ function getHotelStepHTML() {
                 
                 <div class="form-group">
                     <label class="form-label">Δωμάτια</label>
-                    <select class="form-control" id="hotel-rooms">
+                    <select class="form-control" id="hotel-rooms" style="padding: 10px;">
                         <option value="1" selected>1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
                     </select>
                 </div>
             </div>
-                        
-            <!-- Προειδοποίηση για πλατφόρμες -->
+            
+            <!-- ΕΝΔΕΙΞΗ ΜΕ ΣΩΣΤΟ WORD-WRAP -->
             <div class="alert alert-info" style="
                 background: #fff3cd; 
                 border-left: 4px solid #ffc107; 
-                padding: 15px; 
+                padding: 12px; 
                 margin: 20px 0; 
-                border-radius: 8px;
-                text-align: left;
+                border-radius: 8px; 
+                word-wrap: break-word;
+                font-size: 14px;
             ">
                 <i class="fas fa-external-link-alt" style="color: #ffc107; margin-right: 10px;"></i>
                 <strong>Σημείωση:</strong> Η αναζήτηση θα σας ανακατευθύνει στις πλατφόρμες 
                 <strong>Booking.com</strong> ή <strong>Expedia</strong>
             </div>
 
-            <!-- Κουμπιά αναζήτησης -->
-            <div style="text-align: center; margin: 40px 0; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+            <!-- ΚΟΥΜΠΙΑ ΑΝΑΖΗΤΗΣΗΣ (ΤΩΡΑ ΠΙΟ ΚΟΝΤΑ) -->
+            <div style="text-align: center; margin: 25px 0;">
+                <div style="display: flex; flex-direction: column; gap: 15px; align-items: center;">
+                    <!-- 1. BOOKING.COM -->
+                    <button class="btn btn-primary" onclick="searchBookingHotels()" 
+                            style="width: 90%; max-width: 280px; padding: 14px; font-size: 15px;">
+                        <i class="fas fa-search"></i> Αναζήτηση σε Booking.com
+                    </button>
 
-                <!-- ========== 1. BOOKING.COM ========== -->
-                <button class="btn btn-primary" onclick="searchBookingHotels()" 
-                        style="min-width: 280px; padding: 18px; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2);"
-                        onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(33, 150, 243, 0.4)';"
-                        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(33, 150, 243, 0.2)';">
-                    <i class="fas fa-search"></i> Αναζήτηση σε Booking.com
-                </button>
-
-                <!-- ========== 2. EXPEDIA ========== -->
-                <div style="display: flex; flex-direction: column; align-items: center;">
-                    <!-- ΚΟΥΜΠΙ -->
+                    <!-- 2. EXPEDIA -->
                     <button class="btn btn-accent" onclick="searchExpediaHotels()" 
-                            style="min-width: 280px; padding: 18px; background: linear-gradient(135deg, #ff9800, #ff5722); border: none; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(255, 87, 34, 0.2); margin-bottom: 8px;"
-                            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(255, 87, 34, 0.5)';"
-                            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(255, 87, 34, 0.2)';">
+                            style="width: 90%; max-width: 280px; padding: 14px; font-size: 15px; background: linear-gradient(135deg, #ff9800, #ff5722); border: none;">
                         <i class="fas fa-hotel"></i> Αναζήτηση σε Expedia
                     </button>
-                    
-                    <!-- ΠΛΑΙΣΙΟ ΜΗΝΥΜΑΤΟΣ -->
-                    <div style="font-size: 11px; color: #555; background: #f9f9f9; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #ff9800; max-width: 280px; text-align: center; line-height: 1.3;">
-                        <i class="fas fa-info-circle" style="color: #ff9800; margin-right: 5px;"></i>
-                        Αν κλείσεις μέσω EXPEDIA, η εφαρμογή μας θα πάρει μια μικρή προμήθεια 
-                        <strong>χωρίς επιπλέον κόστος για σένα</strong>.
-                    </div>
-                </div>
 
-                <!-- ========== 3. TICKETSELLER.GR ========== -->
-                <div style="display: flex; flex-direction: column; align-items: center;">
-                    <!-- ΚΟΥΜΠΙ -->
+                    <!-- 3. TICKETSELLER.GR -->
                     <button class="btn" onclick="window.open('https://ticketseller.gr/el/home-2/', '_blank')" 
-                            style="min-width: 280px; padding: 18px; background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; border: none; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2); margin-bottom: 8px;"
-                            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(76, 175, 80, 0.4)';"
-                            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(76, 175, 80, 0.2)';">
+                            style="width: 90%; max-width: 280px; padding: 14px; font-size: 15px; background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; border: none;">
                         <i class="fas fa-ticket-alt"></i> TicketSeller.gr
                     </button>
-                    
-                    <!-- ΠΛΑΙΣΙΟ ΜΗΝΥΜΑΤΟΣ -->
-                    <div style="font-size: 11px; color: #555; background: #f9f9f9; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #4CAF50; max-width: 280px; text-align: center; line-height: 1.3;">
-                        <i class="fas fa-percentage" style="color: #4CAF50; margin-right: 5px;"></i>
-                        Αν κλείσεις μέσω <strong>TicketSeller</strong>, έχεις έκπτωση!
-                        <br>
-                        <small>Στείλε email στο: <strong>takethekids2@gmail.com</strong></small>
-                    </div>
                 </div>
-
             </div>
             
-            <div style="text-align: center; margin-top: 40px;">
-                <button class="btn btn-primary" onclick="showStep('activities')">
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn btn-primary" onclick="showStep('activities')" 
+                        style="padding: 12px 30px; font-size: 15px; border-radius: 8px;">
                     <i class="fas fa-arrow-right"></i> Συνέχεια στις Δραστηριότητες
                 </button>
             </div>
