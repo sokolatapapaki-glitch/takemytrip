@@ -131,17 +131,72 @@ function loadSavedDataNow(saved) {
 }
 
 // ==================== STEP MANAGEMENT ====================
+// ==================== STEP NAVIGATION FIX ====================
 function setupStepNavigation() {
+    console.log('📍 Ρύθμιση navigation για βήματα...');
+    
+    // 1. Για τα κουμπιά στο desktop menu
     document.querySelectorAll('.step').forEach(step => {
         step.addEventListener('click', function() {
             const stepName = this.dataset.step;
+            console.log(`📱 Επιλογή βήματος: ${stepName}`);
             showStep(stepName);
         });
     });
     
-    document.getElementById('mobile-step-selector').addEventListener('change', function() {
-        showStep(this.value);
-    });
+    // 2. Για το mobile dropdown
+    const mobileSelector = document.getElementById('mobile-step-selector');
+    if (mobileSelector) {
+        mobileSelector.addEventListener('change', function() {
+            const stepName = this.value;
+            if (stepName) {
+                console.log(`📱 Mobile επιλογή: ${stepName}`);
+                showStep(stepName);
+            }
+        });
+    }
+    
+    console.log('✅ Step navigation ρυθμίστηκε');
+}
+
+// ==================== MOBILE NAVIGATION FIX ====================
+function setupMobileNavigation() {
+    console.log('📱 Ρύθμιση mobile navigation');
+    
+    const mobileSelector = document.getElementById('mobile-step-selector');
+    if (!mobileSelector) return;
+    
+    // Βεβαιώσου ότι το dropdown έχει όλες τις επιλογές
+    if (mobileSelector.options.length === 0) {
+        const steps = ['destination', 'flight', 'hotel', 'activities', 'summary', 'map'];
+        steps.forEach(step => {
+            const option = document.createElement('option');
+            option.value = step;
+            option.textContent = getStepName(step);
+            mobileSelector.appendChild(option);
+        });
+    }
+    
+    // Ενημέρωση τιμής όταν αλλάζει βήμα
+    const originalShowStep = showStep;
+    showStep = function(stepName) {
+        originalShowStep(stepName);
+        if (mobileSelector && mobileSelector.value !== stepName) {
+            mobileSelector.value = stepName;
+        }
+    };
+}
+
+function getStepName(stepId) {
+    const stepNames = {
+        'destination': '📍 Προορισμός',
+        'flight': '✈️ Πτήσεις', 
+        'hotel': '🏨 Ξενοδοχεία',
+        'activities': '🎫 Δραστηριότητες',
+        'summary': '📅 Πρόγραμμα',
+        'map': '🗺️ Χάρτης'
+    };
+    return stepNames[stepId] || stepId;
 }
 
 function showStep(stepName) {
@@ -5591,6 +5646,7 @@ async function initApp() {
         await Promise.all([
             loadSavedData(),
             setupMobileNavigation()
+            setupStepNavigation() // 🚨 ΠΡΟΣΘΗΚΗ ΕΔΩ!
         ]);
         
         // 3. ΡΥΘΜΙΣΗ EVENT LISTENERS (Χωρίς να περιμένουμε)
