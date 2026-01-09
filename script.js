@@ -2073,11 +2073,14 @@ async function setupActivitiesStep() {
                          onclick="toggleActivitySelection(${activity.id})" 
                          data-activity-id="${activity.id}">
                         
-                        <div class="activity-header">
-                            <div class="activity-emoji">${getActivityEmoji(activity.category)}</div>
-                            <div class="activity-title">${activity.name}</div>
-                            <div class="activity-star">${isSelected ? '⭐' : '☆'}</div>
-                        </div>
+                               <div class="activity-header">
+            <div class="activity-emoji">${getActivityEmoji(activity.category)}</div>
+            <div class="activity-title">
+                ${activity.name}
+                ${activity.top ? '<span class="top-badge">⭐ TOP</span>' : ''}
+            </div>
+            <div class="activity-star">${isSelected ? '⭐' : '☆'}</div>
+        </div>
                         
                         <div class="activity-description">
                             ${activity.description || 'Δραστηριότητα για οικογένειες'}
