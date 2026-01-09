@@ -114,7 +114,7 @@ function loadSavedData() {
 }
 
 function loadSavedDataNow(saved) {
-     {
+    try {
         const data = JSON.parse(saved);
         state.selectedDestination = data.selectedDestinationName || null;
         state.selectedDestinationId = data.selectedDestinationId || null;
