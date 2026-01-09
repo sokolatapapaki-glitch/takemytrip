@@ -51,17 +51,13 @@ function setupMobileNavigation() {
     }
     
     // Ενημέρωση τιμής όταν αλλάζει βήμα
+    const originalShowStep = showStep;
     showStep = function(stepName) {
-        // Καλεί το StepManager αντί για την παλιά showStep
-        StepManager.show(stepName);
-        
-        // Ενημερώνει το mobile selector
+        originalShowStep(stepName);
         if (mobileSelector && mobileSelector.value !== stepName) {
             mobileSelector.value = stepName;
         }
     };
-    
-    console.log('✅ Mobile navigation ρυθμίστηκε');
 }
 function getStepName(stepId) {
     const stepNames = {
@@ -130,7 +126,8 @@ function setupStepNavigation() {
     document.querySelectorAll('.step').forEach(step => {
         step.addEventListener('click', function() {
             const stepName = this.dataset.step;
-            StepManager.show(stepName);
+            console.log(`📱 Επιλογή βήματος: ${stepName}`);
+            showStep(stepName);
         });
     });
     
@@ -140,7 +137,8 @@ function setupStepNavigation() {
         mobileSelector.addEventListener('change', function() {
             const stepName = this.value;
             if (stepName) {
-                StepManager.show(stepName);
+                console.log(`📱 Mobile επιλογή: ${stepName}`);
+                showStep(stepName);
             }
         });
     }
@@ -225,7 +223,7 @@ function loadStepContent(stepName) {
                         <i class="fas fa-exclamation-triangle fa-3x"></i>
                         <h3>Σφάλμα φόρτωσης χάρτη</h3>
                         <p>${error.message}</p>
-                        <button onclick="StepManager.show('summary')" class="btn btn-primary">
+                        <button onclick="showStep('summary')" class="btn btn-primary">
                             <i class="fas fa-arrow-left"></i> Επιστροφή
                         </button>
                     </div>
@@ -481,7 +479,7 @@ function getFlightStepHTML() {
             </div>
             
             <div style="text-align: center; margin-top: 40px;">
-                <button class="btn btn-primary" onclick="StepManager.show('hotel')">
+                <button class="btn btn-primary" onclick="showStep('hotel')">
                     <i class="fas fa-arrow-right"></i> Συνέχεια στα Ξενοδοχεία
                 </button>
             </div>
@@ -610,7 +608,7 @@ function getHotelStepHTML() {
             </div>
             
             <div style="text-align: center; margin-top: 40px;">
-                <button class="btn btn-primary" onclick="StepManager.show('summary')">
+                <button class="btn btn-primary" onclick="showStep('activities')">
                     <i class="fas fa-arrow-right"></i> Συνέχεια στις Δραστηριότητες
                 </button>
             </div>
@@ -648,7 +646,7 @@ function getActivitiesStepHTML() {
                 <div class="alert alert-warning">
                     <i class="fas fa-exclamation-triangle"></i>
                     Δεν έχετε επιλέξει προορισμό. Παρακαλώ επιστρέψτε στο βήμα 1.
-                    <button class="btn btn-primary" onclick="StepManager.show('destination')" style="margin-top: 10px;">
+                    <button class="btn btn-primary" onclick="showStep('destination')" style="margin-top: 10px;">
                         <i class="fas fa-arrow-left"></i> Επιστροφή
                     </button>
                 </div>
@@ -744,7 +742,7 @@ function getActivitiesStepHTML() {
                 
                 <!-- Next Button -->
                 <div style="text-align: center; margin-top: 40px;">
-                    <button class="btn btn-primary" onclick="StepManager.show('summary')" style="padding: 18px 50px; font-size: 18px;">
+                    <button class="btn btn-primary" onclick="showStep('summary')" style="padding: 18px 50px; font-size: 18px;">
                         <i class="fas fa-arrow-right"></i> Συνέχεια στο Πρόγραμμα
                     </button>
                 </div>
@@ -842,10 +840,10 @@ function getSummaryStepHTML() {
                 
                 <!-- ΚΟΥΜΠΙΑ -->
                 <div style="text-align: center; margin-top: 30px;">
-                    <button class="btn btn-primary" onclick="StepManager.show('map')" style="margin-right: 10px;">
+                    <button class="btn btn-primary" onclick="showStep('map')" style="margin-right: 10px;">
                         <i class="fas fa-map-marked-alt"></i> Συνέχεια στον Χάρτη
                     </button>
-                    <button class="btn btn-outline" onclick="StepManager.show('activities')">
+                    <button class="btn btn-outline" onclick="showStep('activities')">
                         <i class="fas fa-arrow-left"></i> Επιστροφή
                     </button>
                 </div>
@@ -883,7 +881,7 @@ function displayGeographicProgram(daysProgram, activityGroups) {
                     Οι επιλεγμένες δραστηριότητες δεν έχουν πληροφορίες τοποθεσίας.<br>
                     Δοκιμάστε να τις δείτε στον χάρτη πρώτα.
                 </p>
-                <button onclick="StepManager.show('map')" class="btn btn-primary" style="margin-top: 15px;">
+                <button onclick="showStep('map')" class="btn btn-primary" style="margin-top: 15px;">
                     <i class="fas fa-map"></i> Προβολή στον Χάρτη
                 </button>
             </div>
@@ -1404,7 +1402,7 @@ function getMapStepHTML() {
                 <div class="alert alert-warning">
                     <i class="fas fa-exclamation-triangle"></i>
                     Δεν έχετε επιλέξει προορισμό. Παρακαλώ επιστρέψτε στο βήμα 1.
-                    <button class="btn btn-primary" onclick="StepManager.show('destination')" style="margin-top: 10px;">
+                    <button class="btn btn-primary" onclick="showStep('destination')" style="margin-top: 10px;">
                         <i class="fas fa-arrow-left"></i> Επιστροφή
                     </button>
                 </div>
@@ -1509,7 +1507,7 @@ function getMapStepHTML() {
                 
                 <!-- ΕΠΙΣΤΡΟΦΗ -->
                 <div style="text-align: center; margin-top: 30px;">
-                    <button class="btn btn-outline" onclick="StepManager.show('summary')">
+                    <button class="btn btn-outline" onclick="showStep('summary')">
                         <i class="fas fa-arrow-left"></i> Επιστροφή στο Πρόγραμμα
                     </button>
                 </div>
@@ -1584,7 +1582,7 @@ function saveManualDestination() {
     saveState();
     
     setTimeout(() => {
-        StepManager.show('flight');
+        showStep('flight');
     }, 1000);
 }
 
@@ -1925,7 +1923,7 @@ function selectDestination(destinationName, destinationId) {
             <div style="font-size: 48px; margin-bottom: 20px;">✅</div>
             <h2>Επιλέξατε: ${destinationName}</h2>
             <p style="margin: 20px 0;">Προχωρήστε στο επόμενο βήμα για πτήσεις</p>
-            <button class="btn btn-primary" onclick="StepManager.show('flight')">
+            <button class="btn btn-primary" onclick="showStep('flight')">
                 <i class="fas fa-arrow-right"></i> Συνέχεια στις Πτήσεις
             </button>
         </div>
@@ -2280,7 +2278,7 @@ async function setupActivitiesStep() {
                     <button onclick="setupActivitiesStep()" class="btn btn-primary" style="margin-top: 15px;">
                         <i class="fas fa-sync-alt"></i> Δοκιμή ξανά
                     </button>
-                    <button onclick="StepManager.show('destination')" class="btn btn-outline" style="margin-top: 15px; margin-left: 10px;">
+                    <button onclick="showStep('destination')" class="btn btn-outline" style="margin-top: 15px; margin-left: 10px;">
                         <i class="fas fa-arrow-left"></i> Επιστροφή σε Προορισμό
                     </button>
                 </div>
@@ -3007,7 +3005,7 @@ function initializeMap() {
                     <button onclick="initializeMap()" class="btn btn-primary" style="padding: 10px 20px;">
                         <i class="fas fa-sync-alt"></i> Δοκιμή ξανά
                     </button>
-                    <button onclick="StepManager.show('summary')" class="btn btn-outline" style="padding: 10px 20px;">
+                    <button onclick="showStep('summary')" class="btn btn-outline" style="padding: 10px 20px;">
                         <i class="fas fa-arrow-left"></i> Επιστροφή
                     </button>
                 </div>
@@ -3165,7 +3163,7 @@ function initializeMapInStep() {
                     <button onclick="initializeMapInStep()" class="btn btn-primary" style="padding: 10px 20px;">
                         <i class="fas fa-sync-alt"></i> Δοκιμή ξανά
                     </button>
-                    <button onclick="StepManager.show('summary')" class="btn btn-outline" style="padding: 10px 20px;">
+                    <button onclick="showStep('summary')" class="btn btn-outline" style="padding: 10px 20px;">
                         <i class="fas fa-arrow-left"></i> Επιστροφή
                     </button>
                 </div>
@@ -3603,13 +3601,13 @@ function addFamilyMember(type) {
         age: type === 'adult' ? 30 : 10
     };
     state.familyMembers.push(newMember);
-    StepManager.show('activities');
+    showStep('activities');
 }
 
 function removeFamilyMember(index) {
     if (state.familyMembers.length > 0) {
         state.familyMembers.splice(index, 1);
-        StepManager.show('activities');
+        showStep('activities');
         console.log(`➖ Αφαιρέθηκε μέλος. Μένησαν: ${state.familyMembers.length} άτομα`);
     } else {
         alert("ℹ️ Δεν υπάρχουν άλλα μέλη για διαγραφή");
@@ -5457,6 +5455,9 @@ window.selectAllDays = selectAllDays;
 window.deselectAllDays = deselectAllDays;
 window.applyDayFilter = applyDayFilter;
 
+window.showStep = showStep;
+window.filterDestinations = filterDestinations;
+
 // ========== ΕΠΙΠΛΕΟΝ ΠΟΥ ΜΠΟΡΕΙ ΝΑ ΧΡΕΙΑΖΟΝΤΑΙ ==========
 window.getCityCoordinates = getCityCoordinates;
 window.getActivityEmoji = getActivityEmoji;
@@ -5471,7 +5472,6 @@ window.clearMapPoints = clearMapPoints;
 window.forceRefreshProgram = forceRefreshProgram;
 window.createSuggestedProgram = createSuggestedProgram;
 window.getDayColor = getDayColor;
-window.StepManager = StepManager;
 
 // ==================== CSS ANIMATIONS FOR PROGRAM ====================
 // Προσθήκη CSS animation για το spinner (για το βήμα 5)
@@ -5600,7 +5600,7 @@ async function initApp() {
         setTimeout(() => setupEventListeners(), 0);
         
         // 4. ΕΜΦΑΝΙΣΗ ΤΟΥ ΣΩΣΤΟΥ ΒΗΜΑΤΟΣ
-        StepManager.show(state.currentStep);
+        showStep(state.currentStep);
         
         // 5. ΑΝΑΝΕΩΣΗ ΚΟΣΤΟΥΣ
         updateActivitiesCost();
@@ -5656,181 +5656,7 @@ async function initApp() {
         }
     }
 }
-// ==================== STEP MANAGER (ΒΗΜΑ 2) ====================
-const StepManager = {
-    currentStep: 'destination',
-    isLoading: false,
-    
-    async show(stepName) {
-        // 1. ΕΛΕΓΧΟΙ
-        if (this.isLoading || this.currentStep === stepName) return;
-        
-        console.log(`📱 Μεταφορά στο βήμα: ${stepName}`);
-        this.isLoading = true;
-        this.currentStep = stepName;
-        state.currentStep = stepName;
-        
-        try {
-            // 2. ΕΝΗΜΕΡΩΣΗ UI
-            this.updateStepUI(stepName);
-            
-            // 3. ΦΟΡΤΩΣΗ ΠΕΡΙΕΧΟΜΕΝΟΥ
-            await this.loadStepContent(stepName);
-            
-            // 4. ΕΝΗΜΕΡΩΣΗ MOBILE SELECTOR
-            const mobileSelector = document.getElementById('mobile-step-selector');
-            if (mobileSelector) {
-                mobileSelector.value = stepName;
-            }
-            
-            // 5. ΑΠΟΘΗΚΕΥΣΗ ΚΑΤΑΣΤΑΣΗΣ
-            saveState();
-            
-            // 6. SCROLL ΣΤΗΝ ΚΟΡΥΦΗ
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            
-        } catch (error) {
-            console.error(`❌ Σφάλμα φόρτωσης βήματος ${stepName}:`, error);
-            this.showError(stepName, error);
-        } finally {
-            this.isLoading = false;
-        }
-    },
-    
-    updateStepUI(activeStep) {
-        // Ενημέρωση των κουμπιών στο desktop menu
-        document.querySelectorAll('.step').forEach(step => {
-            step.classList.remove('active');
-            if (step.dataset.step === activeStep) {
-                step.classList.add('active');
-            }
-        });
-        
-        // Ενημέρωση του mobile selector
-        const mobileSelector = document.getElementById('mobile-step-selector');
-        if (mobileSelector) {
-            mobileSelector.value = activeStep;
-        }
-    },
-    
-    async loadStepContent(stepName) {
-        const stepContent = document.getElementById('step-content');
-        if (!stepContent) return;
-        
-        // 🔴 ΠΡΟΣΟΧΗ: Αυτό είναι το κρίσιμο μέρος για τον χάρτη
-        if (stepName !== 'map' && window.travelMap) {
-            this.cleanupMap();
-        }
-        
-        // Εμφάνιση loading state
-        stepContent.innerHTML = this.getLoadingHTML(stepName);
-        
-        // Φόρτωση περιεχομένου (χωρίς timeout για τώρα)
-        const html = this.getStepHTML(stepName);
-        stepContent.innerHTML = html;
-        
-        // Αρχικοποίηση του βήματος
-        await this.initializeStep(stepName);
-    },
-    
-    getLoadingHTML(stepName) {
-        const stepNames = {
-            'destination': 'Προορισμός',
-            'flight': 'Πτήσεις',
-            'hotel': 'Ξενοδοχεία',
-            'activities': 'Δραστηριότητες',
-            'summary': 'Πρόγραμμα',
-            'map': 'Χάρτης'
-        };
-        
-        return `
-            <div class="card" style="min-height: 400px; display: flex; align-items: center; justify-content: center;">
-                <div style="text-align: center;">
-                    <div class="loading-spinner" style="width: 50px; height: 50px; border: 4px solid #f3f3f3; border-top: 4px solid #4F46E5; border-radius: 50%; margin: 0 auto 20px; animation: spin 1s linear infinite;"></div>
-                    <h3 style="color: var(--dark); margin-bottom: 10px;">Φόρτωση...</h3>
-                    <p style="color: var(--gray);">${stepNames[stepName] || stepName}</p>
-                </div>
-            </div>
-        `;
-    },
-    
-    getStepHTML(stepName) {
-        switch(stepName) {
-            case 'destination': return getDestinationStepHTML();
-            case 'flight': return getFlightStepHTML();
-            case 'hotel': return getHotelStepHTML();
-            case 'activities': return getActivitiesStepHTML();
-            case 'summary': return getSummaryStepHTML();
-            case 'map': return getMapStepHTML();
-            default: return '<div class="alert alert-danger">Άγνωστο βήμα</div>';
-        }
-    },
-    
-    async initializeStep(stepName) {
-        const initializers = {
-            'destination': () => {
-                if (state.selectedDestination) {
-                    showSelectedDestination();
-                }
-                fixDestinationButtons();
-            },
-            'hotel': () => setupHotelStep(),
-            'activities': () => setupActivitiesStep(),
-            'summary': () => setupSummaryStep(),
-            'map': () => {
-                // Χάρτης αρχικοποιείται με καθυστέρηση για να φορτώσει το DOM
-                setTimeout(() => {
-                    if (typeof L !== 'undefined') {
-                        try {
-                            initializeMapInStep();
-                        } catch (error) {
-                            console.error('Σφάλμα αρχικοποίησης χάρτη:', error);
-                        }
-                    }
-                }, 100);
-            }
-        };
-        
-        if (initializers[stepName]) {
-            await initializers[stepName]();
-        }
-    },
-    
-    cleanupMap() {
-        console.log('🗺️ Καθαρισμός χάρτη...');
-        if (window.travelMap) {
-            try {
-                window.travelMap.remove();
-                window.travelMap = null;
-                console.log('✅ Χάρτης καθαρίστηκε');
-            } catch(e) {
-                console.log('ℹ️ Δεν υπήρχε ενεργός χάρτης');
-            }
-        }
-        
-        // Καθαρισμός global μεταβλητών
-        window.firstPoint = null;
-        window.secondPoint = null;
-        window.currentRoutePolyline = null;
-        window.selectedMarkers = [];
-    },
-    
-    showError(stepName, error) {
-        const stepContent = document.getElementById('step-content');
-        if (stepContent) {
-            stepContent.innerHTML = `
-                <div class="alert alert-danger">
-                    <h4><i class="fas fa-exclamation-triangle"></i> Σφάλμα φόρτωσης</h4>
-                    <p>Δεν μπορεί να φορτωθεί το βήμα: ${stepName}</p>
-                    <p><small>${error.message}</small></p>
-                    <button onclick="StepManager.show('${state.currentStep}')" class="btn btn-primary">
-                        <i class="fas fa-redo"></i> Δοκιμή ξανά
-                    </button>
-                </div>
-            `;
-        }
-    }
-};
+
 // ==================== ΒΟΗΘΗΤΙΚΕΣ ΣΥΝΑΡΤΗΣΕΙΣ ====================
 
 function cleanupDuplicateButtons() {
@@ -6100,4 +5926,3 @@ function testNewClustering() {
     
     console.log('✅ === ΤΕΛΟΣ ΣΥΓΚΡΙΣΗΣ ===');
 }
-
