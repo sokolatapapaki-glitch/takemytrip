@@ -1119,3 +1119,49 @@ body {
         padding: 3px 8px;
     }
 }
+.restaurant-recommendation {
+    background: linear-gradient(135deg, #fff5f5, #fff);
+    border-left: 4px solid #EF4444;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 10px 0;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.1);
+}
+
+.restaurant-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.restaurant-header i {
+    color: #EF4444;
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+.restaurant-title {
+    font-weight: 700;
+    color: #EF4444;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.restaurant-content p {
+    margin: 0 0 8px 0;
+    color: #1F2937;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.restaurant-tip {
+    color: #6B7280;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.restaurant-tip i {
+    color: #F59E0B;
+}
