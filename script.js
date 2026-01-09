@@ -3317,7 +3317,7 @@ function showActivityMap() {
         }
         
         // 🔴 ΚΡΙΤΙΚΗ ΚΛΗΣΗ: Χρησιμοποίησε τη νέα συνάρτηση!
-        const marker = createMarkerWithConnectFunction(coords, markerTitle, activityData);
+        const marker = (coords, markerTitle, activityData);
         if (marker) {
             window.selectedMarkers.push(marker);  // <-- 🔵 ΑΥΤΗ ΕΙΝΑΙ Η ΔΙΟΡΘΩΣΗ
             activityCount++;
@@ -4616,6 +4616,77 @@ function createMarkerWithConnectFunction(coords, title, activityData) {
             `, 'info');
         }
     };
+    
+    // Συνάρτηση ανανέωσης εμφάνισης
+    function updateMarkerAppearance() {
+        const isPointA = selectedPointA && selectedPointA.marker === marker;
+        const isPointB = selectedPointB && selectedPointB.marker === marker;
+        
+        const color = isPointA ? '#10B981' : isPointB ? '#EF4444' : '#4F46E5';
+        const letter = isPointA ? 'A' : isPointB ? 'B' : '📍';
+        const size = isPointA || isPointB ? '50px' : '42px';
+        const fontSize = isPointA || isPointB ? '20px' : '18px';
+        
+        marker.setIcon(L.divIcon({
+            html: `
+                <div style="
+                    background: ${color}; 
+                    color: white; 
+                    width: ${size}; 
+                    height: ${size}; 
+                    border-radius: 50%; 
+                    display: flex; 
+                    align-items: center; 
+                    justify-content: center;
+                    font-weight: bold;
+                    font-size: ${fontSize};
+                    border: 3px solid white;
+                    box-shadow: 0 3px 15px ${color}80;
+                    cursor: pointer;
+                    animation: ${isPointA || isPointB ? 'pulse 1.5s infinite' : 'none'};
+                ">
+                    ${letter}
+                </div>
+            `,
+            className: isPointA ? 'selected-marker-a' : isPointB ? 'selected-marker-b' : 'clickable-marker',
+            iconSize: [parseInt(size), parseInt(size)],
+            iconAnchor: [parseInt(size)/2, parseInt(size)]
+        }));
+        
+        // Ενημέρωση popup
+        const popupContent = isPointA ? 
+            `<div style="text-align: center; padding: 10px;">
+                <h4 style="margin: 0 0 10px 0; color: #10B981;">📍 ΑΠΟ</h4>
+                <p style="margin: 0; font-weight: bold;">${title}</p>
+                <p style="margin: 5px 0 0 0; color: #666; font-size: 12px;">
+                    ✅ Επιλέχθηκε ως σημείο εκκίνησης
+                </p>
+            </div>` :
+            isPointB ?
+            `<div style="text-align: center; padding: 10px;">
+                <h4 style="margin: 0 0 10px 0; color: #EF4444;">🎯 ΠΡΟΣ</h4>
+                <p style="margin: 0; font-weight: bold;">${title}</p>
+                <p style="margin: 5px 0 0 0; color: #666; font-size: 12px;">
+                    ✅ Επιλέχθηκε ως προορισμός
+                </p>
+            </div>` :
+            createEnhancedPopup(safeActivityData);
+        
+        marker.bindPopup(popupContent);
+        
+        if (isPointA || isPointB) {
+            marker.openPopup();
+        }
+    }
+    
+    // Επισύναψη event listener
+    marker.on('click', handleMarkerClick);
+    
+    // Αρχικό popup
+    marker.bindPopup(createEnhancedPopup(safeActivityData));
+    
+    return marker;
+}
     
     // Συνάρτηση ανανέωσης εμφάνισης
     function updateMarkerAppearance() {
