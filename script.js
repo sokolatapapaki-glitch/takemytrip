@@ -203,9 +203,12 @@ function loadStepContent(stepName) {
     setupActivitiesStep();
     break;
         case 'summary':
-            stepContent.innerHTML = getSummaryStepHTML();  // <-- ΠΡΟΣΘΕΣΕ ΑΥΤΟ
-            setupSummaryStep();
-            break;
+    stepContent.innerHTML = getSummaryStepHTML();
+    // ΧΡΗΣΙΜΟΠΟΙΗΣΕ ΣΥΓΚΕΚΡΙΜΕΝΗ ΣΥΝΑΡΤΗΣΗ, ΟΧΙ setupSummaryStep()
+    setTimeout(() => {
+        setupSummaryStep();
+    }, 50);
+    break;
         case 'map':
     stepContent.innerHTML = getMapStepHTML();
     setTimeout(() => {
