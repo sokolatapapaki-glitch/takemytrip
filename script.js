@@ -782,7 +782,7 @@ function getSummaryStepHTML() {
                         </select>
                         
                         <!-- ΚΟΥΜΠΙ ΔΗΜΙΟΥΡΓΙΑΣ -->
-                        <button onclick="generateGeographicProgram()" class="btn btn-primary" style="flex: 1; min-width: 200px; padding: 12px 25px; font-size: 16px;">
+                        <button onclick="()" class="btn btn-primary" style="flex: 1; min-width: 200px; padding: 12px 25px; font-size: 16px;">
                             <i class="fas fa-map-marked-alt"></i> ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΓΡΑΜΜΑΤΟΣ
                         </button>
                     </div>
@@ -1178,7 +1178,18 @@ displayGeographicProgram(daysProgram, activityGroups);
     
     // Εμφάνιση μηνύματος
     showToast(`✅ Δημιουργήθηκε γεωγραφικό πρόγραμμα για ${state.selectedDays} μέρες`, 'success');
+    // 🔴 ΒΗΜΑ 1: ΑΠΟΘΗΚΕΥΣΗ ΠΡΟΓΡΑΜΜΑΤΟΣ ΓΙΑ ΤΟΝ ΧΑΡΤΗ
+    state.geographicProgram = {
+        days: daysProgram,           // Το πρόγραμμα ανά ημέρα
+        groups: activityGroups,      // Οι ομάδες δραστηριοτήτων
+        totalDays: state.selectedDays, // Πόσες μέρες
+        generatedAt: new Date().toISOString()
+    };
     
+    console.log('💾 Αποθηκεύτηκε το πρόγραμμα για τον χάρτη:', {
+        daysCount: daysProgram.length,
+        totalActivities: fullActivities.length
+    });
     console.log(`✅ Το πρόγραμμα δημιουργήθηκε επιτυχώς για ${state.selectedDays} μέρες`);
     console.log('🎯 ========== ΤΕΛΟΣ generateGeographicProgram ==========');
 }
