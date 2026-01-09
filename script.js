@@ -3317,7 +3317,7 @@ function showActivityMap() {
         }
         
         // 🔴 ΚΡΙΤΙΚΗ ΚΛΗΣΗ: Χρησιμοποίησε τη νέα συνάρτηση!
-        const marker = (coords, markerTitle, activityData);
+        const marker = createMarkerWithConnectFunction(coords, markerTitle, activityData);
         if (marker) {
             window.selectedMarkers.push(marker);  // <-- 🔵 ΑΥΤΗ ΕΙΝΑΙ Η ΔΙΟΡΘΩΣΗ
             activityCount++;
