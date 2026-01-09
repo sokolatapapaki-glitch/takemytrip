@@ -4447,61 +4447,51 @@ function createMarkerWithConnectFunction(coords, title, activityData) {
         fullData: activityData
     });
     
-    // ========== ΚΑΙΝΟΥΡΓΙΟ: ΕΥΡΕΣΗ RESTAURANT ΑΠΟ ΤΑ ORIGINAL ΔΕΔΟΜΕΝΑ ==========
+    // ========== ΔΗΜΙΟΥΡΓΙΑ ΝΕΟΥ ΑΝΤΙΚΕΙΜΕΝΟΥ ΜΕ RESTAURANT ==========
+    let enhancedData = { ...activityData }; // Δημιουργία αντιγράφου
+    
     // Αν δεν έχει restaurant, ψάξε το από τα αρχικά δεδομένα
-    if (!activityData?.restaurant) {
+    if (!enhancedData?.restaurant) {
         // 1. Ψάξε με βάση το όνομα
         let originalActivity = state.currentCityActivities?.find(a => 
             a.name === title || 
-            a.name?.includes(title.substring(0, 20)) || 
-            title.includes(a.name?.substring(0, 20))
+            (a.name && title && a.name.includes(title.substring(0, 20))) || 
+            (a.name && title && title.includes(a.name.substring(0, 20)))
         );
         
         // 2. Αν δεν βρέθηκε, ψάξε με βάση το ID
-        if (!originalActivity && activityData?.id) {
-            originalActivity = state.currentCityActivities?.find(a => a.id === activityData.id);
+        if (!originalActivity && enhancedData?.id) {
+            originalActivity = state.currentCityActivities?.find(a => a.id === enhancedData.id);
         }
         
         // 3. Αν βρέθηκε, προσθέσε το restaurant
         if (originalActivity?.restaurant) {
-            activityData.restaurant = originalActivity.restaurant;
+            enhancedData.restaurant = originalActivity.restaurant;
             console.log('✅ Βρέθηκε restaurant για:', title, '=', originalActivity.restaurant);
         } else {
             console.log('⚠️ Δεν βρέθηκε restaurant για:', title);
         }
     }
     
-    // Βεβαιώσου ότι το activityData έχει τα απαραίτητα πεδία
+    // Βεβαιώσου ότι το enhancedData έχει τα απαραίτητα πεδία
     const safeActivityData = {
         name: title,
-        description: activityData?.description || 'Επιλεγμένη δραστηριότητα',
-        price: activityData?.price || 0,
-        duration_hours: activityData?.duration_hours || '?',
-        category: activityData?.category || 'attraction',
-        location: activityData?.location || { lat: coords[0], lng: coords[1] },
-        restaurant: activityData?.restaurant || null  // <-- ΕΔΩ
+        description: enhancedData?.description || 'Επιλεγμένη δραστηριότητα',
+        price: enhancedData?.price || 0,
+        duration_hours: enhancedData?.duration_hours || '?',
+        category: enhancedData?.category || 'attraction',
+        location: enhancedData?.location || { lat: coords[0], lng: coords[1] },
+        restaurant: enhancedData?.restaurant || null
     };
     
     console.log('📍 Δημιουργία marker για:', title, 'με restaurant:', !!safeActivityData.restaurant);
+    
     if (!window.travelMap) {
         console.error('❌ Χάρτης δεν είναι διαθέσιμος');
         return null;
     }
     
-    // Βεβαιώσου ότι το activityData έχει τα απαραίτητα πεδία
-    const safeActivityData = {
-        name: title,
-        description: activityData?.description || 'Επιλεγμένη δραστηριότητα',
-        price: activityData?.price || 0,
-        duration_hours: activityData?.duration_hours || '?',
-        category: activityData?.category || 'attraction',
-        location: activityData?.location || { lat: coords[0], lng: coords[1] },
-        restaurant: activityData?.restaurant || '🍽️ Τοπικά εστιατόρια στην περιοχή'
-    };
-    
-    console.log(`📍 Δημιουργία marker για: ${title}`, coords);
-    
-    // Δημιουργία πινέζας με χρώμα που αλλάζει ανάλογα με την κατάσταση
+    // Χρώμα πινέζας ανάλογα με την κατάσταση
     const getMarkerColor = () => {
         if (selectedPointA && selectedPointA.title === title) return '#10B981'; // Πράσινο για Α
         if (selectedPointB && selectedPointB.title === title) return '#EF4444'; // Κόκκινο για Β
@@ -4627,6 +4617,76 @@ function createMarkerWithConnectFunction(coords, title, activityData) {
         }
     };
     
+    // Συνάρτηση ανανέωσης εμφάνισης
+    function updateMarkerAppearance() {
+        const isPointA = selectedPointA && selectedPointA.marker === marker;
+        const isPointB = selectedPointB && selectedPointB.marker === marker;
+        
+        const color = isPointA ? '#10B981' : isPointB ? '#EF4444' : '#4F46E5';
+        const letter = isPointA ? 'A' : isPointB ? 'B' : '📍';
+        const size = isPointA || isPointB ? '50px' : '42px';
+        const fontSize = isPointA || isPointB ? '20px' : '18px';
+        
+        marker.setIcon(L.divIcon({
+            html: `
+                <div style="
+                    background: ${color}; 
+                    color: white; 
+                    width: ${size}; 
+                    height: ${size}; 
+                    border-radius: 50%; 
+                    display: flex; 
+                    align-items: center; 
+                    justify-content: center;
+                    font-weight: bold;
+                    font-size: ${fontSize};
+                    border: 3px solid white;
+                    box-shadow: 0 3px 15px ${color}80;
+                    cursor: pointer;
+                    animation: ${isPointA || isPointB ? 'pulse 1.5s infinite' : 'none'};
+                ">
+                    ${letter}
+                </div>
+            `,
+            className: isPointA ? 'selected-marker-a' : isPointB ? 'selected-marker-b' : 'clickable-marker',
+            iconSize: [parseInt(size), parseInt(size)],
+            iconAnchor: [parseInt(size)/2, parseInt(size)]
+        }));
+        
+        // Ενημέρωση popup
+        const popupContent = isPointA ? 
+            `<div style="text-align: center; padding: 10px;">
+                <h4 style="margin: 0 0 10px 0; color: #10B981;">📍 ΑΠΟ</h4>
+                <p style="margin: 0; font-weight: bold;">${title}</p>
+                <p style="margin: 5px 0 0 0; color: #666; font-size: 12px;">
+                    ✅ Επιλέχθηκε ως σημείο εκκίνησης
+                </p>
+            </div>` :
+            isPointB ?
+            `<div style="text-align: center; padding: 10px;">
+                <h4 style="margin: 0 0 10px 0; color: #EF4444;">🎯 ΠΡΟΣ</h4>
+                <p style="margin: 0; font-weight: bold;">${title}</p>
+                <p style="margin: 5px 0 0 0; color: #666; font-size: 12px;">
+                    ✅ Επιλέχθηκε ως προορισμός
+                </p>
+            </div>` :
+            createEnhancedPopup(safeActivityData);
+        
+        marker.bindPopup(popupContent);
+        
+        if (isPointA || isPointB) {
+            marker.openPopup();
+        }
+    }
+    
+    // Επισύναψη event listener
+    marker.on('click', handleMarkerClick);
+    
+    // Αρχικό popup
+    marker.bindPopup(createEnhancedPopup(safeActivityData));
+    
+    return marker;
+}
     // Συνάρτηση ανανέωσης εμφάνισης
     function updateMarkerAppearance() {
         const isPointA = selectedPointA && selectedPointA.marker === marker;
