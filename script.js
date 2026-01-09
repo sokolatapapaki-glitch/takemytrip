@@ -4440,6 +4440,12 @@ function showToast(message, type = 'info') {
 }
 
 function createMarkerWithConnectFunction(coords, title, activityData) {
+    console.log('🔍 [DEBUG] Δεδομένα για popup:', {
+        name: title,
+        hasRestaurant: !!activityData?.restaurant,
+        restaurant: activityData?.restaurant,
+        fullData: activityData
+    });
     if (!window.travelMap) {
         console.error('❌ Χάρτης δεν είναι διαθέσιμος');
         return null;
