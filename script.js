@@ -19,18 +19,16 @@ window.secondPoint = null;
 window.currentRoutePolyline = null;
 window.selectedMarkers = []; // Για ενώσεις σημείων
 
+
 // ==================== INITIALIZATION ====================
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 Εφαρμογή φορτώνεται...');
+    
+    // Άμεση εκκίνηση (χωρίς καθυστέρηση)
     initApp();
     
-    setTimeout(function() {
-        const duplicateButtons = document.getElementById('search-buttons-container');
-        if (duplicateButtons) {
-            duplicateButtons.style.display = 'none';
-            console.log('✅ Αφαίρεση διπλών κουμπιών');
-        }
-    }, 500);
+    // Αφαίρεση του παλιού timeout για διπλά κουμπιά
+    // (τώρα γίνεται μέσα στην initApp)
 });
 
 function initApp() {
@@ -5581,7 +5579,119 @@ if (document.readyState === 'loading') {
 } else {
     loadComboCalculator();
 }
+// ==================== ΒΕΛΤΙΣΤΟΠΟΙΗΜΕΝΗ INITIALIZATION ====================
+async function initApp() {
+    console.log('🚀 Αρχικοποίηση εφαρμογής (βελτιστοποιημένη)...');
+    
+    try {
+        // 1. ΜΕΤΡΗΣΗ ΧΡΟΝΟΥ ΑΡΧΙΚΟΠΟΙΗΣΗΣ
+        const initStartTime = performance.now();
+        
+        // 2. ΤΑΥΤΟΧΡΟΝΗ ΦΟΡΤΩΣΗ (Παράλληλη εκτέλεση πολλών εργασιών)
+        await Promise.all([
+            loadSavedData(),
+            setupMobileNavigation()
+        ]);
+        
+        // 3. ΡΥΘΜΙΣΗ EVENT LISTENERS (Χωρίς να περιμένουμε)
+        setTimeout(() => setupEventListeners(), 0);
+        
+        // 4. ΕΜΦΑΝΙΣΗ ΤΟΥ ΣΩΣΤΟΥ ΒΗΜΑΤΟΣ
+        showStep(state.currentStep);
+        
+        // 5. ΑΝΑΝΕΩΣΗ ΚΟΣΤΟΥΣ
+        updateActivitiesCost();
+        
+        // 6. ΑΠΟΚΡΥΨΗ LOADING ΜΕΤΑ ΑΠΟ ΣΥΓΚΕΚΡΙΜΕΝΟ ΧΡΟΝΟ
+        setTimeout(() => {
+            const loadingOverlay = document.getElementById('loading-overlay');
+            if (loadingOverlay) {
+                loadingOverlay.style.opacity = '0';
+                loadingOverlay.style.transition = 'opacity 0.5s ease';
+                
+                setTimeout(() => {
+                    loadingOverlay.style.display = 'none';
+                    console.log('✅ Αεροπλάνακι κρύφτηκε (ομαλά)');
+                    
+                    // Επιπλέον cleanup αν χρειάζεται
+                    cleanupDuplicateButtons();
+                    
+                }, 500);
+            }
+        }, 1000); // Μειώσαμε το χρόνο από 1500 σε 1000ms
+        
+        // 7. ΕΚΤΥΠΩΣΗ ΣΤΑΤΙΣΤΙΚΩΝ
+        const initEndTime = performance.now();
+        console.log(`✅ Αρχικοποίηση ολοκληρώθηκε σε ${(initEndTime - initStartTime).toFixed(0)}ms`);
+        
+    } catch (error) {
+        console.error('❌ ΚΡΙΤΙΚΟ ΣΦΑΛΜΑ αρχικοποίησης:', error);
+        
+        // 8. ΕΜΦΑΝΙΣΗ ΦΙΛΙΚΟΥ ΜΗΝΥΜΑΤΟΣ ΣΦΑΛΜΑΤΟΣ
+        showEmergencyError(
+            'Σφάλμα φόρτωσης εφαρμογής',
+            'Παρακαλώ ανανεώστε τη σελίδα ή επικοινωνήστε με την υποστήριξη.',
+            error.message
+        );
+        
+        // 9. ΠΑΡΑΜΕΝΟΥΜΕ ΣΤΟ LOADING STATE
+        const loadingOverlay = document.getElementById('loading-overlay');
+        if (loadingOverlay) {
+            loadingOverlay.innerHTML = `
+                <div style="text-align: center; padding: 40px; color: white;">
+                    <div style="font-size: 64px; margin-bottom: 20px;">⚠️</div>
+                    <h3 style="color: white; margin-bottom: 15px;">Σφάλμα Φόρτωσης</h3>
+                    <p style="margin-bottom: 25px;">${error.message}</p>
+                    <button onclick="location.reload()" 
+                            style="padding: 12px 30px; background: white; color: #4F46E5; 
+                                   border: none; border-radius: 8px; font-weight: bold; 
+                                   cursor: pointer;">
+                        <i class="fas fa-redo"></i> Ανανέωση Σελίδας
+                    </button>
+                </div>
+            `;
+        }
+    }
+}
 
+// ==================== ΒΟΗΘΗΤΙΚΕΣ ΣΥΝΑΡΤΗΣΕΙΣ ====================
+
+function cleanupDuplicateButtons() {
+    console.log('🧹 Καθαρισμός διπλών κουμπιών...');
+    
+    const duplicateButtons = document.getElementById('search-buttons-container');
+    if (duplicateButtons) {
+        duplicateButtons.style.display = 'none';
+        console.log('✅ Διπλά κουμπιά αφαιρέθηκαν');
+    }
+}
+
+function showEmergencyError(title, message, technicalDetails = '') {
+    // Απλοποιημένη έκδοση - θα την ολοκληρώσουμε στο επόμενο βήμα
+    alert(`⚠️ ${title}\n\n${message}\n\nΛεπτομέρειες: ${technicalDetails}`);
+}
+
+// Απλοποιημένη version για τώρα
+function setupEventListeners() {
+    console.log('🔧 Ρύθμιση event listeners...');
+    
+    try {
+        const resetButton = document.getElementById('reset-all');
+        if (resetButton) {
+            resetButton.addEventListener('click', function() {
+                if (confirm('⚠️ Θέλετε να διαγράψετε όλα τα δεδομένα;')) {
+                    localStorage.clear();
+                    sessionStorage.clear();
+                    location.reload();
+                }
+            });
+        }
+        
+        console.log('✅ Event listeners εγκαταστάθηκαν');
+    } catch (error) {
+        console.warn('⚠️ Μερικά event listeners απέτυχαν:', error);
+    }
+}
 console.log('✅ Script.js loaded successfully!');
 // ==================== ΝΕΑ ΣΥΝΑΡΤΗΣΗ SMART CLUSTERING ====================
 function createSmartClusters(activities, numClusters) {
