@@ -329,9 +329,6 @@ function getDestinationStepHTML() {
                     <small class="text-muted">Από Αθήνα</small>
                 </div>
                 
-            </div>
-            
-            <div class="grid grid-3">
                 <div class="form-group">
                     <label class="form-label"><i class="fas fa-umbrella-beach"></i> Τύπος Διακοπών</label>
                     <select class="form-control" id="vacation-type">
@@ -342,7 +339,9 @@ function getDestinationStepHTML() {
                         <option value="Φυσική">🌳 Φυσική Ομορφία</option>
                     </select>
                 </div>
-                
+            </div>
+            
+            <div class="grid grid-3">
                 <div class="form-group">
                     <label class="form-label"><i class="fas fa-wallet"></i> Επίπεδο Κόστους</label>
                     <select class="form-control" id="cost-level">
@@ -352,9 +351,7 @@ function getDestinationStepHTML() {
                         <option value="Ακριβό">💰💰💰 Ακριβό</option>
                     </select>
                 </div>
-            </div>
-            
-            <div class="grid grid-2">
+                
                 <div class="form-group">
                     <label class="form-label"><i class="fas fa-ferris-wheel"></i> Θεματικά Πάρκα & Διασκέδαση</label>
                     <select class="form-control" id="theme-parks">
@@ -365,6 +362,17 @@ function getDestinationStepHTML() {
                     <small class="text-muted">Ιδανικό για οικογένειες με παιδιά</small>
                 </div>
                 
+                <div class="form-group">
+                    <label class="form-label">&nbsp;</label>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn btn-primary" onclick="filterDestinations()" style="flex: 1;">
+                            <i class="fas fa-search"></i> Αναζήτηση
+                        </button>
+                        <button class="btn btn-outline" onclick="resetFilters()" style="flex: 1;">
+                            <i class="fas fa-redo"></i> Επαναφορά
+                        </button>
+                    </div>
+                </div>
             </div>
             
             <!-- Οι γρήγορες επιλογές, το κουμπί αναζήτησης και τα αποτελέσματα παραμένουν ΑΜΕΤΑΒΛΗΤΑ -->
@@ -381,10 +389,6 @@ function getDestinationStepHTML() {
                 
                 <button class="btn btn-outline" onclick="showQuickRecommendations()" style="padding: 16px 30px;">
                     <i class="fas fa-bolt"></i> Γρήγορες Προτάσεις
-                </button>
-                
-                <button class="btn btn-outline" onclick="resetFilters()" style="padding: 16px 30px; border-color: var(--danger); color: var(--danger);">
-                    <i class="fas fa-redo"></i> Επαναφορά
                 </button>
             </div>
             
@@ -747,7 +751,7 @@ function getActivitiesStepHTML() {
     `;
 }
 
-// ==================== STEP 5: SUMMARY ====================
+
 // ==================== STEP 5: SUMMARY ====================
 function getSummaryStepHTML() {
     return `
@@ -782,7 +786,7 @@ function getSummaryStepHTML() {
                         </select>
                         
                         <!-- ΚΟΥΜΠΙ ΔΗΜΙΟΥΡΓΙΑΣ -->
-                        <button onclick="()" class="btn btn-primary" style="flex: 1; min-width: 200px; padding: 12px 25px; font-size: 16px;">
+                        <button onclick="generateGeographicProgram()" class="btn btn-primary" style="flex: 1; min-width: 200px; padding: 12px 25px; font-size: 16px;">
                             <i class="fas fa-map-marked-alt"></i> ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΓΡΑΜΜΑΤΟΣ
                         </button>
                     </div>
@@ -792,9 +796,6 @@ function getSummaryStepHTML() {
                         ${state.selectedDays > 0 ? '✅ ' + state.selectedDays + ' μέρες επιλέχθηκαν' : '⚠️ Επιλέξτε πρώτα μέρες'}
                     </div>
                 </div>
-                
-                <!-- ΑΥΤΟ ΕΙΝΑΙ ΠΟΥ ΑΦΑΙΡΕΣΑΜΕ: ΟΛΟ ΤΟ SELECTED ACTIVITIES SECTION -->
-                <!-- ΤΟ ΑΦΗΝΩ ΣΚΟΠΙΜΟ ΚΕΝΟ - ΕΔΩ ΘΑ ΕΜΦΑΝΙΖΕΤΑΙ ΤΟ ΠΡΟΓΡΑΜΜΑ -->
                 
                 <!-- Geographic Program - ΤΩΡΑ ΕΜΦΑΝΙΖΕΤΑΙ ΕΔΩ ΚΑΤΩ -->
                 <div class="card" id="geographic-program-section" style="margin-top: 30px; display: none;">
@@ -850,6 +851,7 @@ function getSummaryStepHTML() {
         </div>
     `;
 }
+
 // ==================== ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ ΓΙΑ GEOGRAPHIC PROGRAM ====================
 function getFullActivitiesWithLocation() {
     return state.selectedActivities.map(selected => {
