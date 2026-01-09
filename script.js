@@ -200,7 +200,7 @@ function loadStepContent(stepName) {
             break;
         case 'activities':
             stepContent.innerHTML = getActivitiesStepHTML();
-            setupActivitiesStep();
+            ();
             break;
         case 'summary':
             stepContent.innerHTML = getSummaryStepHTML();  // <-- ΠΡΟΣΘΕΣΕ ΑΥΤΟ
@@ -2052,7 +2052,15 @@ async function setupActivitiesStep() {
         
         // ΒΗΜΑ: Δημιούργησε τις κάρτες δραστηριοτήτων
         let html = '';
-        
+        if (state.currentCityActivities.length === 0) {
+            html = `
+                <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <p>Δεν βρέθηκαν διαθέσιμες δραστηριότητες για την πόλη ${cityData.city}.</p>
+                    </div>
+                </div>
+            `;
        } else {
     // ΤΑΞΙΝΟΜΗΣΗ: TOP πρώτα, μετά οι υπόλοιπες
     const sortedActivities = [...state.currentCityActivities].sort((a, b) => {
