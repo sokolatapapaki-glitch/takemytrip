@@ -3157,63 +3157,69 @@ function addCustomPoint() {
 }
 
 // ==================== ENHANCED MAP FUNCTIONS (FROM OLD MAP) ====================
-
-// 1. ΒΕΛΤΙΩΜΕΝΗ POPUP ΣΥΝΑΡΤΗΣΗ (ΜΕ ΕΣΤΙΑΤΟΡΙΑ & ΑΠΟΣΤΑΣΕΙΣ)
 function createEnhancedPopup(activity) {
     console.log('🗺️ Δημιουργία enhanced popup για:', activity.name);
     
-    const restaurant = activity.restaurant || activity.nearby_restaurant || 
-                      '🍽️ Τοπικά εστιατόρια στην περιοχή';
-    
+    // Google Maps URL για τη δραστηριότητα
     const googleMapsUrl = activity.location ? 
-        `https://www.google.com/maps/search/?api=1&query=${activity.location.lat},${activity.location.lng}&query_place_id=${activity.google_place_id || ''}` :
+        `https://www.google.com/maps/search/?api=1&query=${activity.location.lat},${activity.location.lng}` :
         `https://www.google.com/maps/search/${encodeURIComponent(activity.name + ' ' + state.selectedDestination)}`;
     
     return `
-        <div style="max-width: 300px; font-family: 'Roboto', sans-serif; padding: 5px;">
-            <h4 style="margin: 0 0 8px 0; color: var(--primary); font-size: 16px; font-weight: 700;">
+        <div style="max-width: 300px; font-family: 'Roboto', sans-serif; padding: 8px;">
+            <!-- ΤΙΤΛΟΣ -->
+            <h4 style="margin: 0 0 8px 0; color: #4F46E5; font-size: 16px; font-weight: 700;">
                 <i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i>
                 ${activity.name}
             </h4>
             
+            <!-- ΠΕΡΙΓΡΑΦΗ -->
             ${activity.description ? `
-            <p style="margin: 0 0 10px 0; font-size: 13px; color: var(--gray); line-height: 1.4;">
+            <p style="margin: 0 0 10px 0; font-size: 13px; color: #4B5563; line-height: 1.4;">
                 ${activity.description}
             </p>` : ''}
             
-            ${activity.price ? `
+            <!-- ΚΟΣΤΟΣ -->
+            ${activity.price || activity.prices ? `
             <div style="background: rgba(46, 204, 113, 0.1); padding: 8px; border-radius: 6px; margin: 8px 0; font-size: 13px;">
-                <i class="fas fa-tag" style="color: var(--success); margin-right: 6px;"></i>
-                <strong>Κόστος:</strong> ${activity.price}€
+                <i class="fas fa-tag" style="color: #10B981; margin-right: 6px;"></i>
+                <strong>Κόστος:</strong> ${activity.price ? activity.price + '€' : 'Δείτε τις τιμές'}
             </div>` : ''}
             
-            <div style="background: rgba(255, 107, 107, 0.1); padding: 10px; border-radius: 6px; margin: 10px 0;">
-                <div style="display: flex; align-items: center; margin-bottom: 5px;">
-                    <i class="fas fa-utensils" style="color: var(--accent); margin-right: 8px;"></i>
-                    <strong style="color: var(--dark); font-size: 13px;">Κοντινό Εστιατόριο:</strong>
+            <!-- ΚΑΙΝΟΥΡΓΙΟ: ΠΡΟΤΕΙΝΟΜΕΝΟ ΕΣΤΙΑΤΟΡΙΟ -->
+            ${activity.restaurant ? `
+            <div style="background: rgba(239, 68, 68, 0.08); padding: 10px; border-radius: 6px; margin: 10px 0; border-left: 3px solid #EF4444;">
+                <div style="display: flex; align-items: center; margin-bottom: 6px;">
+                    <i class="fas fa-utensils" style="color: #EF4444; margin-right: 8px; font-size: 14px;"></i>
+                    <strong style="color: #1F2937; font-size: 13px;">Κοντινό Εστιατόριο:</strong>
                 </div>
-                <p style="margin: 0; font-size: 12px; color: var(--gray); line-height: 1.3;">
-                    ${restaurant}
-                </p>
-            </div>
+                <div style="font-size: 13px; color: #374151; line-height: 1.4;">
+                    ${activity.restaurant.replace(/<a /g, '<a target="_blank" rel="noopener" style="color: #3B82F6; text-decoration: none; font-weight: 600;" ')}
+                </div>
+                <div style="font-size: 11px; color: #6B7280; margin-top: 6px; display: flex; align-items: center;">
+                    <i class="fas fa-lightbulb" style="margin-right: 4px; color: #F59E0B;"></i>
+                    Ιδανικό για φαγητό μετά την επίσκεψη
+                </div>
+            </div>` : ''}
             
-            <div style="font-size: 11px; color: var(--gray); background: var(--light); padding: 6px; border-radius: 4px; margin: 8px 0;">
+            <!-- ΠΛΗΡΟΦΟΡΙΕΣ -->
+            <div style="font-size: 12px; color: #6B7280; background: #F9FAFB; padding: 6px; border-radius: 4px; margin: 8px 0;">
                 <i class="fas fa-info-circle" style="margin-right: 4px;"></i>
                 ${activity.duration_hours ? `Διάρκεια: ${activity.duration_hours} ώρες • ` : ''}
                 ${activity.category ? `Κατηγορία: ${translateCategory(activity.category)}` : ''}
             </div>
             
+            <!-- ΚΟΥΜΠΙ GOOGLE MAPS -->
             <a href="${googleMapsUrl}" 
                target="_blank" 
-               style="display: inline-flex; align-items: center; padding: 8px 12px; background: var(--primary); color: white; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: 600; margin-top: 10px;">
+               rel="noopener"
+               style="display: inline-flex; align-items: center; padding: 8px 12px; background: #4F46E5; color: white; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: 600; margin-top: 10px;">
                 <i class="fas fa-external-link-alt" style="margin-right: 6px;"></i>
                 Άνοιγμα Google Maps
             </a>
         </div>
     `;
 }
-
-
 
 
 // 4. ΒΕΛΤΙΩΜΕΝΗ showActivityMap() (ΜΕ ΤΑ ΝΕΑ POPUPS ΚΑΙ ΕΝΩΣΕΙΣ)
