@@ -198,10 +198,10 @@ function loadStepContent(stepName) {
             stepContent.innerHTML = getHotelStepHTML();
             setupHotelStep();
             break;
-        case 'activities':
-            stepContent.innerHTML = getActivitiesStepHTML();
-            ();
-            break;
+       case 'activities':
+    stepContent.innerHTML = getActivitiesStepHTML();
+    setupActivitiesStep();
+    break;
         case 'summary':
             stepContent.innerHTML = getSummaryStepHTML();  // <-- ΠΡΟΣΘΕΣΕ ΑΥΤΟ
             setupSummaryStep();
