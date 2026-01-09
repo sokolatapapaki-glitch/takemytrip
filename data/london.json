@@ -46,6 +46,7 @@
       "website": "https://www.hrp.org.uk/tower-of-london/",
       "notes": ["Δωρεάν για κάτω των 5.", "Κράτηση απαιτείται."],
       "tags": ["castle", "history", "crown jewels"],
+      "top": true,
       "duration_hours": 3,
       "best_time": "morning"
     },
@@ -222,6 +223,7 @@
       "website": "https://www.britishmuseum.org/",
       "notes": ["ΔΩΡΕΑΝ είσοδος. Συνεισφορά προαιρετική."],
       "tags": ["museum", "free", "history", "art"],
+      "top": true,
       "duration_hours": 4,
       "best_time": "morning"
     },
@@ -310,6 +312,7 @@
       "website": "https://skygarden.london/",
       "notes": ["ΔΩΡΕΑΝ, αλλά απαιτείται ΚΡΑΤΗΣΗ online."],
       "tags": ["view", "free", "garden", "skyscraper"],
+      "top": true,
       "duration_hours": 1,
       "best_time": "any"
     },
@@ -640,6 +643,7 @@
       "website": "https://www.madametussauds.com/london/",
       "notes": ["Συχνά περιλαμβάνεται σε Combo Passes."],
       "tags": ["wax", "museum", "celebrities"],
+      "top": true,
       "duration_hours": 2,
       "best_time": "afternoon"
     },
@@ -662,6 +666,7 @@
       "website": "https://www.visitsealife.com/london/",
       "notes": ["Συχνά περιλαμβάνεται σε Combo Passes."],
       "tags": ["aquarium", "fish", "family"],
+      "top": true,
       "duration_hours": 1.5,
       "best_time": "any"
     },
