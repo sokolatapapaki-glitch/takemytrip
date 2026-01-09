@@ -2053,25 +2053,26 @@ async function setupActivitiesStep() {
         // ΒΗΜΑ: Δημιούργησε τις κάρτες δραστηριοτήτων
         let html = '';
         
-        if (state.currentCityActivities.length === 0) {
-            html = `
-                <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
-                    <div class="alert alert-info">
-                        <i class="fas fa-info-circle"></i>
-                        <p>Δεν βρέθηκαν διαθέσιμες δραστηριότητες για την πόλη ${cityData.city}.</p>
-                    </div>
-                </div>
-            `;
-        } else {
-            state.currentCityActivities.forEach((activity) => {
-                // Υπολόγισε το κόστος για την οικογένεια
-                const familyCost = calculateFamilyCost(activity.prices);
-                const isSelected = state.selectedActivities.some(a => a.id === activity.id);
-                
-                html += `
-                    <div class="activity-card ${isSelected ? 'selected' : ''} ${activity.top ? 'top-activity' : ''}" 
-         onclick="toggleActivitySelection(${activity.id})" 
-         data-activity-id="${activity.id}">
+       } else {
+    // ΤΑΞΙΝΟΜΗΣΗ: TOP πρώτα, μετά οι υπόλοιπες
+    const sortedActivities = [...state.currentCityActivities].sort((a, b) => {
+        // Αν η a είναι top και η b όχι → a πρώτη
+        if (a.top && !b.top) return -1;
+        // Αν η b είναι top και η a όχι → b πρώτη
+        if (!a.top && b.top) return 1;
+        // Αν και οι δύο είναι top ή και οι δύο δεν είναι → αλφαβητική
+        return a.name.localeCompare(b.name);
+    });
+    
+    sortedActivities.forEach((activity) => {
+        // Υπολόγισε το κόστος για την οικογένεια
+        const familyCost = calculateFamilyCost(activity.prices);
+        const isSelected = state.selectedActivities.some(a => a.id === activity.id);
+        
+        html += `
+            <div class="activity-card ${isSelected ? 'selected' : ''} ${activity.top ? 'top-activity' : ''}" 
+                 onclick="toggleActivitySelection(${activity.id})" 
+                 data-activity-id="${activity.id}">
         
         <div class="activity-header">
             <div class="activity-emoji">${getActivityEmoji(activity.category)}</div>
