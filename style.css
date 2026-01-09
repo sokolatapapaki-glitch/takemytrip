@@ -1067,3 +1067,55 @@ body {
     font-weight: 600;
     margin: 15px 0 8px 0;
 }
+/* ==================== TOP💯 ACTIVITIES BADGE ==================== */
+.top-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #FF6B6B, #FF8E53); /* Κοραλ/πορτοκαλί */
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 15px;
+    margin-left: 8px;
+    vertical-align: middle;
+    border: 1px solid #FF8E53;
+    box-shadow: 0 2px 6px rgba(255, 107, 107, 0.3);
+    letter-spacing: 0.5px;
+}
+
+.top-badge::before {
+    content: 'TOP';
+    margin-right: 4px;
+}
+
+.top-badge::after {
+    content: ' 💯';
+    font-size: 12px;
+}
+
+.activity-card.top-activity {
+    border: 2px solid #FF6B6B;
+    background: linear-gradient(to bottom, #FFF5F5, #FFFFFF);
+    position: relative;
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.15);
+}
+
+/* Λωρίδα από πάνω */
+.activity-card.top-activity::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #FF6B6B, #FF8E53, #FF6B6B);
+    border-radius: 8px 8px 0 0;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .top-badge {
+        font-size: 10px;
+        padding: 3px 8px;
+    }
+}
