@@ -2101,6 +2101,21 @@ async function setupActivitiesStep() {
                                 <i class="fas fa-tag"></i> ${activity.category || 'Γενική'}
                             </span>
                         </div>
+                         <!-- ΚΑΙΝΟΥΡΓΙΟ: ΠΡΟΤΕΙΝΟΜΕΝΟ ΕΣΤΙΑΤΟΡΙΟ -->
+            ${activity.restaurant ? `
+                <div class="restaurant-recommendation">
+                    <div class="restaurant-header">
+                        <i class="fas fa-utensils"></i>
+                        <span class="restaurant-title">ΣΥΝΙΣΤΩΜΕΝΟ ΕΣΤΙΑΤΟΡΙΟ</span>
+                    </div>
+                    <div class="restaurant-content">
+                        <p>${activity.restaurant.replace(/<a /g, '<a target="_blank" rel="noopener" ')}</p>
+                        <small class="restaurant-tip">
+                            <i class="fas fa-lightbulb"></i> Κοντινό στην δραστηριότητα, ιδανικό για φαγητό μετά
+                        </small>
+                    </div>
+                </div>
+            ` : ''}
                         
                         <!-- ΤΙΜΕΣ -->
                         <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin: 10px 0;">
