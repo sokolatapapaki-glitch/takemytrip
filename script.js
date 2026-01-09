@@ -376,14 +376,14 @@ function getDestinationStepHTML() {
             </div>
             
             <!-- Οι γρήγορες επιλογές, το κουμπί αναζήτησης και τα αποτελέσματα παραμένουν ΑΜΕΤΑΒΛΗΤΑ -->
-            <div id="main-buttons-container" style="display: flex; gap: 15px; margin-top: 40px; justify-content: center;">
+            <div id="main-buttons-container" style="display: flex; flex-direction: column; gap: 10px; margin-top: 30px; align-items: center; width: 100%;">
                 <button class="btn btn-primary main-search-btn" 
-                        style="padding: 16px 40px; font-size: 18px;">
+                        style="padding: 14px 20px; font-size: 16px; width: 90%; max-width: 300px;"
                     <i class="fas fa-search"></i> 🔍 ΑΝΑΖΗΤΗΣΗ ΠΡΟΟΡΙΣΜΩΝ
                 </button>
                 
                 <button class="btn btn-primary main-already-btn" 
-                        style="padding: 16px 40px; font-size: 18px;">
+                        style="padding: 14px 20px; font-size: 16px; width: 90%; max-width: 300px;"
                     <i class="fas fa-arrow-right"></i> ΕΧΩ ΗΔΗ ΒΡΕΙ ΠΡΟΟΡΙΣΜΟ
                 </button>
                 
