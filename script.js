@@ -114,7 +114,7 @@ function loadSavedData() {
 }
 
 function loadSavedDataNow(saved) {
-    try {
+     {
         const data = JSON.parse(saved);
         state.selectedDestination = data.selectedDestinationName || null;
         state.selectedDestinationId = data.selectedDestinationId || null;
@@ -2187,6 +2187,7 @@ async function setupActivitiesStep() {
         `;
     }
 }
+
 
 function calculateFamilyCost(prices) {
     if (!prices || typeof prices !== 'object') {
