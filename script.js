@@ -1597,54 +1597,32 @@ function getMapStepHTML() {
                 </div>
                 `}
                 
-                <!-- ΟΔΗΓΙΕΣ ΧΡΗΣΗΣ ΧΑΡΤΗ -->
+<!-- ΟΔΗΓΙΕΣ ΧΡΗΣΗΣ ΧΑΡΤΗ -->
 <div class="map-instructions-card">
     <div class="map-instructions-header">
         <i class="fas fa-graduation-cap"></i>
         <h4>Οδηγίες Χρήσης Χάρτη</h4>
     </div>
     
-    <div class="map-instructions-steps">
-        <div class="instruction-step">
-            <div class="step-number">1</div>
-            <div class="step-content">
-                <strong>Φόρτωση Δραστηριοτήτων:</strong>
-                <p>Πατήστε <span class="step-highlight">"Προβολή Σημείων"</span> για να φορτωθούν οι επιλεγμένες σας δραστηριότητες στον χάρτη.</p>
-            </div>
-        </div>
+    <div class="map-instructions-content">
+        <p><i class="fas fa-map-pin" style="color: #4F46E5;"></i> 
+           <strong>1. Πατήστε "Προβολή Σημείων"</strong> για να φορτώσετε τις δραστηριότητες σας</p>
         
-        <div class="instruction-step">
-            <div class="step-number">2</div>
-            <div class="step-content">
-                <strong>Επιλογή Σημείων:</strong>
-                <p>Κάντε κλικ σε μια πινέζα για <span class="step-from">ΑΠΟ</span> και σε άλλη για <span class="step-to">ΠΡΟΣ</span>.</p>
-                <div class="step-hint">
-                    <i class="fas fa-lightbulb"></i>
-                    <span>Θα δείτε πράσινη και κόκκινη ένδειξη</span>
-                </div>
-            </div>
-        </div>
+        <p><i class="fas fa-mouse-pointer" style="color: #10B981;"></i> 
+           <strong>2. Κάντε κλικ σε 2 πινέζες</strong> για επιλογή 
+           <span class="step-from">ΑΠΟ</span> και <span class="step-to">ΠΡΟΣ</span></p>
         
-        <div class="instruction-step">
-            <div class="step-number">3</div>
-            <div class="step-content">
-                <strong>Διαδρομή:</strong>
-                <p>Η διαδρομή θα σχεδιαστεί <strong>αυτόματα</strong> με απόσταση και εκτιμώμενους χρόνους.</p>
-            </div>
-        </div>
+        <p><i class="fas fa-route" style="color: #F59E0B;"></i> 
+           <strong>3. Η διαδρομή θα σχεδιαστεί αυτόματα</strong> με απόσταση και χρόνους</p>
         
-        <div class="instruction-step">
-            <div class="step-number">4</div>
-            <div class="step-content">
-                <strong>Google Maps Οδηγίες:</strong>
-                <p>Κάντε κλικ στα κουμπιά για <strong>πραγματικές οδηγίες</strong> (περπάτημα, αυτοκίνητο, ΜΜΜ, ποδήλατο).</p>
-            </div>
-        </div>
+        <p><i class="fas fa-directions" style="color: #EF4444;"></i> 
+           <strong>4. Πατήστε στο κουμπί:</strong> Διαδρομή για Google Maps οδηγίες</p>
     </div>
     
     <div class="map-instructions-tip">
-        <i class="fas fa-info-circle"></i>
-        <span><strong>Tip:</strong> Χρησιμοποιήστε το φίλτρο ημερών για να δείτε μόνο συγκεκριμένες μέρες!</span>
+        <i class="fas fa-lightbulb"></i>
+        <span>Οι πινέζες γίνονται <span class="step-from">πράσινες</span> για ΑΠΟ και 
+              <span class="step-to">κόκκινες</span> για ΠΡΟΣ!</span>
     </div>
 </div>
                 
