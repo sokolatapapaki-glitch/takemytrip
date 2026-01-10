@@ -3762,7 +3762,8 @@ function saveState() {
         selectedDestinationId: state.selectedDestinationId,
         selectedDaysStay: state.selectedDays,
         familyMembers: state.familyMembers,
-        selectedActivities: state.selectedActivities
+        selectedActivities: state.selectedActivities,
+        currentStep: state.currentStep // <-- ΠΡΟΣΘΗΚΗ ΑΥΤΗ
     };
     
     localStorage.setItem('travelPlannerData', JSON.stringify(data));
