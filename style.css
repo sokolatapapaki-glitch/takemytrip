@@ -1444,113 +1444,81 @@ body {
 }
 /* ==================== MAP INSTRUCTIONS ==================== */
 .map-instructions-card {
-    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
     border-radius: 12px;
-    border: 2px solid #0ea5e9;
+    border: 2px solid #e2e8f0;
     padding: 20px;
     margin-top: 25px;
-    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .map-instructions-header {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     padding-bottom: 15px;
-    border-bottom: 2px solid rgba(14, 165, 233, 0.3);
+    border-bottom: 2px solid #e2e8f0;
 }
 
 .map-instructions-header i {
     font-size: 24px;
-    color: #0ea5e9;
+    color: #4F46E5;
 }
 
 .map-instructions-header h4 {
     margin: 0;
-    color: #0369a1;
+    color: #1e293b;
     font-size: 18px;
 }
 
-.map-instructions-steps {
+.map-instructions-content {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
 }
 
-.instruction-step {
+.map-instructions-content p {
+    margin: 0;
+    padding: 10px 12px;
+    background: white;
+    border-radius: 8px;
+    border-left: 4px solid #4F46E5;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #475569;
     display: flex;
-    gap: 15px;
     align-items: flex-start;
+    gap: 10px;
 }
 
-.step-number {
-    background: #0ea5e9;
-    color: white;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
+.map-instructions-content p i {
     font-size: 16px;
+    margin-top: 2px;
     flex-shrink: 0;
 }
 
-.step-content {
-    flex: 1;
-}
-
-.step-content strong {
-    color: #0369a1;
-    font-size: 15px;
-    display: block;
-    margin-bottom: 4px;
-}
-
-.step-content p {
-    margin: 0;
-    color: #475569;
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-.step-highlight {
-    background: #fef3c7;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-weight: bold;
-    color: #92400e;
+.map-instructions-content strong {
+    color: #1e293b;
+    margin-right: 5px;
 }
 
 .step-from {
     color: #10b981;
     font-weight: bold;
-    padding: 2px 6px;
     background: rgba(16, 185, 129, 0.1);
+    padding: 2px 6px;
     border-radius: 4px;
+    margin: 0 3px;
 }
 
 .step-to {
     color: #ef4444;
     font-weight: bold;
-    padding: 2px 6px;
     background: rgba(239, 68, 68, 0.1);
+    padding: 2px 6px;
     border-radius: 4px;
-}
-
-.step-hint {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 6px;
-    font-size: 13px;
-    color: #64748b;
-}
-
-.step-hint i {
-    color: #f59e0b;
+    margin: 0 3px;
 }
 
 .map-instructions-tip {
@@ -1558,16 +1526,16 @@ body {
     align-items: center;
     gap: 8px;
     margin-top: 20px;
-    padding: 12px;
-    background: rgba(14, 165, 233, 0.1);
+    padding: 12px 15px;
+    background: rgba(79, 70, 229, 0.08);
     border-radius: 8px;
-    border-left: 4px solid #0ea5e9;
-    color: #0369a1;
+    color: #4F46E5;
     font-size: 14px;
+    border: 1px solid rgba(79, 70, 229, 0.2);
 }
 
 .map-instructions-tip i {
-    color: #0ea5e9;
+    color: #4F46E5;
 }
 
 /* Responsive */
@@ -1576,12 +1544,13 @@ body {
         padding: 15px;
     }
     
-    .instruction-step {
+    .map-instructions-content p {
         flex-direction: column;
-        gap: 10px;
+        gap: 6px;
+        padding: 12px;
     }
     
-    .step-number {
+    .map-instructions-content p i {
         align-self: flex-start;
     }
     
