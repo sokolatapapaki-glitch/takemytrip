@@ -5525,7 +5525,6 @@ window.showBudgetDestinations = showBudgetDestinations;
 window.showFamilyDestinations = showFamilyDestinations;
 window.searchBookingHotels = searchBookingHotels;
 window.searchExpediaHotels = searchExpediaHotels;
-window.setupHotelStep = setupHotelStep;
 window.setupActivitiesStep = setupActivitiesStep;
 window.toggleActivitySelection = toggleActivitySelection;
 window.setupSummaryStep = setupSummaryStep;
