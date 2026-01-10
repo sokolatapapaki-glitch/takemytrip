@@ -748,32 +748,48 @@ function getActivitiesStepHTML() {
 </div>
                     
                 </div>
-               <div style="margin: 20px 0; padding: 15px; background: linear-gradient(to right, #f0f9ff, #ffffff); border-radius: 10px; border: 2px solid #E0F2FE; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
-    <div style="display: flex; align-items: flex-start; gap: 12px;">
-        <div style="font-size: 28px; color: #4F46E5; background: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(79, 70, 229, 0.15);">
+              <div style="margin: 20px 0; padding: 12px; background: linear-gradient(to bottom, #f0f9ff, #ffffff); border-radius: 10px; border: 2px solid #E0F2FE; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
+    
+    <!-- ΚΕΦΑΛΙ -->
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+        <div style="font-size: 24px; color: #4F46E5; background: white; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
             💡
         </div>
-        <div style="flex: 1;">
-            <h4 style="margin: 0 0 10px 0; color: #1A202C; font-size: 17px; display: flex; align-items: center; gap: 8px;">
-                <i class="fas fa-info-circle" style="color: #4F46E5;"></i> 
-                Σημαντική Πληροφορία για τις Τιμές
-            </h4>
-            <div style="background: white; padding: 12px; border-radius: 8px; border: 1px solid #E2E8F0;">
-                <p style="margin: 0; color: #4A5568; line-height: 1.6; font-size: 15px;">
-                    <span style="color: #4F46E5; font-weight: bold;">📊 Οι τιμές είναι ενδεικτικές:</span> 
-                    Μπορεί να υπάρχουν διαφορές λόγω εποχικότητας, προσφορών ή ηλικιακών κατηγοριών.
-                </p>
-                <p style="margin: 10px 0 0 0; color: #4A5568; line-height: 1.6; font-size: 15px;">
-                    <span style="color: #10B981; font-weight: bold;">✅ Προτείνουμε:</span> 
-                    Να ελέγχετε πάντα τις <strong>τελικές τιμές</strong> στα επίσημα site ή στα ταμεία 
-                    πριν από οποιαδήποτε κράτηση/αγορά.
-                </p>
-                <p style="margin: 10px 0 0 0; color: #F59E0B; line-height: 1.6; font-size: 14px;">
-                    <i class="fas fa-lightbulb" style="margin-right: 6px;"></i>
-                    <strong>Χρήσιμη συμβουλή:</strong> Κλείστε online για καλύτερες τιμές!
-                </p>
+        <h4 style="margin: 0; color: #1A202C; font-size: 16px;">
+            <i class="fas fa-info-circle" style="color: #4F46E5; margin-right: 6px;"></i> 
+            Σημαντικές Πληροφορίες
+        </h4>
+    </div>
+    
+    <!-- ΠΕΡΙΕΧΟΜΕΝΟ -->
+    <div style="background: white; padding: 12px; border-radius: 8px; border: 1px solid #E2E8F0;">
+        
+        <!-- ΠΑΡΑΓΡΑΦΟΣ 1 -->
+        <div style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed #e2e8f0;">
+            <div style="color: #4F46E5; font-weight: bold; font-size: 14px; margin-bottom: 4px;">
+                📊 Οι τιμές είναι ενδεικτικές
+            </div>
+            <div style="color: #4A5568; font-size: 14px; line-height: 1.5;">
+                Μπορεί να υπάρχουν διαφορές λόγω εποχικότητας, προσφορών ή ηλικιακών κατηγοριών.
             </div>
         </div>
+        
+        <!-- ΠΑΡΑΓΡΑΦΟΣ 2 -->
+        <div style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed #e2e8f0;">
+            <div style="color: #10B981; font-weight: bold; font-size: 14px; margin-bottom: 4px;">
+                ✅ Προτείνουμε
+            </div>
+            <div style="color: #4A5568; font-size: 14px; line-height: 1.5;">
+                Να ελέγχετε πάντα τις <strong>τελικές τιμές</strong> στα επίσημα site ή στα ταμεία πριν από κράτηση/αγορά.
+            </div>
+        </div>
+        
+        <!-- ΠΑΡΑΓΡΑΦΟΣ 3 -->
+        <div style="color: #F59E0B; font-size: 13px; line-height: 1.5;">
+            <i class="fas fa-lightbulb" style="margin-right: 6px;"></i>
+            <strong>Χρήσιμη συμβουλή:</strong> Κλείστε online για καλύτερες τιμές!
+        </div>
+        
     </div>
 </div>
                 <!-- Activities Container -->
@@ -785,18 +801,49 @@ function getActivitiesStepHTML() {
                 </div>
                 
                 <!-- Smart Combo Button και Καθαρισμός -->
-                <div style="display: flex; gap: 15px; justify-content: center; margin: 30px 0; flex-wrap: wrap;">
-                    <button class="btn btn-accent" onclick="calculateSmartCombos()" 
-        id="smart-combo-btn"
-        style="padding: 18px 40px; font-size: 18px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none;">
-    <i class="fas fa-calculator"></i> 🧮 Έξυπνο Combo
-</button>
-                    
-                    <button class="btn btn-outline" onclick="clearSelectedActivities()" 
-                            style="padding: 18px 40px; font-size: 18px; border-color: var(--danger); color: var(--danger);">
-                        <i class="fas fa-trash-alt"></i> Καθαρισμός Επιλογών
-                    </button>
-                </div>
+                <div style="display: flex; flex-direction: column; gap: 12px; margin: 25px 0;">
+    
+    <!-- Κουμπί 1: Έξυπνο Combo -->
+    <button class="btn btn-accent" onclick="calculateSmartCombos()" 
+            id="smart-combo-btn"
+            style="
+                padding: 16px 20px; 
+                font-size: 16px; 
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                border: none; 
+                border-radius: 10px;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                white-space: nowrap;
+            ">
+        <i class="fas fa-calculator"></i> 
+        <span>🧮 Έξυπνο Combo</span>
+    </button>
+    
+    <!-- Κουμπί 2: Καθαρισμός -->
+    <button class="btn btn-outline" onclick="clearSelectedActivities()" 
+            style="
+                padding: 16px 20px; 
+                font-size: 16px; 
+                border: 2px solid var(--danger); 
+                color: var(--danger);
+                background: transparent;
+                border-radius: 10px;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                white-space: nowrap;
+            ">
+        <i class="fas fa-trash-alt"></i> 
+        <span>Καθαρισμός Επιλογών</span>
+    </button>
+    
+</div>
                 
                 <!-- Total Cost -->
                 <div class="card" style="background: linear-gradient(135deg, #8B5CF6, #7C3AED); color: white; text-align: center; border: none;">
