@@ -1441,20 +1441,20 @@ function distributeGroupsToDays(groups, totalDays) {
         days[emptiestDayIndex].groups.push(group);
         days[emptiestDayIndex].totalActivities += group.count;
         
-        // Υπολόγισε κόστος και χρόνο - ΑΠΛΗ ΕΚΔΟΧΗ
-let groupCost = 0;
-let groupTime = 0;
+        // Υπολόγισε κόστος και χρόνο
+        let groupCost = 0;
+        let groupTime = 0;
 
-group.activities.forEach(activity => {
-    groupCost += (parseFloat(activity.price) || 0);
-    groupTime += (parseFloat(activity.duration_hours) || 1.5);
-});
+        group.activities.forEach(activity => {
+            groupCost += (parseFloat(activity.price) || 0);
+            groupTime += (parseFloat(activity.duration_hours) || 1.5);
+        });
 
-// Χρόνος μετακίνησης εντός συστάδας
-const travelTime = (group.activities.length - 1) * 0.3;
+        // Χρόνος μετακίνησης εντός συστάδας
+        const travelTime = (group.activities.length - 1) * 0.3;
 
-days[emptiestDayIndex].totalCost += groupCost;
-days[emptiestDayIndex].estimatedTime += groupTime + travelTime;
+        days[emptiestDayIndex].totalCost += groupCost;
+        days[emptiestDayIndex].estimatedTime += groupTime + travelTime;
         
         console.log(`   📦 Σύσταδα ${index + 1} (${group.count} δραστ.) → Μέρα ${emptiestDayIndex + 1}`);
     });
@@ -1469,41 +1469,6 @@ days[emptiestDayIndex].estimatedTime += groupTime + travelTime;
     
     return nonEmptyDays;
 }
-    
-    // Βοηθητική συνάρτηση για ενημέρωση στατιστικών
-    function updateDayStats(day, group) {
-        const groupCost = group.activities.reduce((sum, activity) => {
-            return sum + (parseFloat(activity.price) || 0);
-        }, 0);
-        
-        const groupTime = group.activities.reduce((sum, activity) => {
-            return sum + (parseFloat(activity.duration_hours) || 1.5);
-        }, 0);
-        
-        const travelTime = group.activities.length > 1 ? (group.activities.length - 1) * 0.5 : 0;
-        
-        day.totalCost += groupCost;
-        day.estimatedTime += groupTime + travelTime;
-    }
-    
-    // 3. Στρογγυλοποίηση χρόνων
-    days.forEach(day => {
-        day.estimatedTime = Math.ceil(day.estimatedTime);
-    });
-    
-    // 4. Αφαίρεση κενών ημερών (αν υπάρχουν λιγότερες ομάδες από μέρες)
-    const nonEmptyDays = days.filter(day => day.totalActivities > 0);
-    
-    console.log(`✅ Κατανεμήθηκαν ${sortedGroups.length} ομάδες:`, 
-        nonEmptyDays.map((d, i) => `Μ${i+1}:${d.totalActivities}δραστ.`).join(', '));
-    
-    return nonEmptyDays;
-}
-
-const COLOR_PALETTE = [
-    '#4F46E5', '#10B981', '#F59E0B', '#EF4444',
-    '#8B5CF6', '#EC4899', '#14B8A6', '#F97316'
-];
 
 function getDayColor(dayNumber) {
     return COLOR_PALETTE[(dayNumber - 1) % COLOR_PALETTE.length];
@@ -1514,8 +1479,6 @@ function getGroupColor(index) {
 }
 
 
-
-// ==================== STEP 6: MAP (FIXED) ====================
 // ==================== STEP 6: MAP (FIXED) ====================
 function getMapStepHTML() {
     return `
