@@ -1165,3 +1165,77 @@ body {
 .restaurant-tip i {
     color: #F59E0B;
 }
+/* ==================== FAMILY MEMBERS RESPONSIVE ==================== */
+.family-member-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.family-member {
+    padding: 15px;
+    background: white;
+    border-radius: var(--radius-md);
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.family-member:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-color: var(--primary);
+}
+
+/* Desktop: 2 columns */
+@media (min-width: 768px) {
+    .family-member-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .family-member input[type="text"],
+    .family-member input[type="number"] {
+        max-width: 200px;
+    }
+}
+
+/* Mobile: 1 column, full width */
+@media (max-width: 767px) {
+    .family-member {
+        margin-bottom: 15px;
+    }
+    
+    .family-member input[type="text"],
+    .family-member input[type="number"] {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+/* Input styling */
+.family-member input[type="text"],
+.family-member input[type="number"] {
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.family-member input[type="text"]:focus,
+.family-member input[type="number"]:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* Delete button */
+.family-member .btn-outline {
+    padding: 6px 10px;
+    min-width: 40px;
+    border-color: #ef4444;
+    color: #ef4444;
+}
+
+.family-member .btn-outline:hover {
+    background-color: #fee2e2;
+}
