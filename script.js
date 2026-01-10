@@ -700,28 +700,28 @@ function getActivitiesStepHTML() {
     border: 1px solid #e2e8f0;
 ">
     <!-- Πρώτη γραμμή: Όνομα και Εικονίδιο -->
-    <div style="display: flex; align-items: center; gap: 10px; width: 100%;">
-        <div style="font-size: 28px; flex-shrink: 0;">${index === 0 ? '👨' : index === 1 ? '👩' : '🧒'}</div>
-        <input type="text" class="form-control" value="${member.name}" 
-               onchange="updateFamilyMemberName(${index}, this.value)"
-               placeholder="Όνομα"
+<div style="display: flex; align-items: center; gap: 10px; width: 100%;">
+    <div style="font-size: 24px; flex-shrink: 0; width: 40px; text-align: center;">${index === 0 ? '👨' : index === 1 ? '👩' : '🧒'}</div>
+    <input type="text" class="form-control" value="${member.name}" 
+           onchange="updateFamilyMemberName(${index}, this.value)"
+           placeholder="Όνομα"
+           style="flex: 1; min-width: 0; max-width: 250px;">
+</div>
+
+<!-- Δεύτερη γραμμή: Ηλικία και Κουμπί Διαγραφής -->
+<div style="display: flex; align-items: center; gap: 10px; width: 100%;">
+    <div style="display: flex; align-items: center; flex: 1; max-width: 250px;">
+        <input type="number" class="form-control" value="${member.age}" 
+               min="0" max="120" placeholder="Ηλικία"
+               onchange="updateFamilyMemberAge(${index}, this.value)"
                style="flex: 1; min-width: 0;">
+        <span style="margin-left: 8px; color: #64748b; white-space: nowrap; min-width: 45px;">ετών</span>
     </div>
-    
-    <!-- Δεύτερη γραμμή: Ηλικία και Κουμπί Διαγραφής -->
-    <div style="display: flex; align-items: center; gap: 10px; width: 100%;">
-        <div style="display: flex; align-items: center; flex: 1;">
-            <input type="number" class="form-control" value="${member.age}" 
-                   min="0" max="120" placeholder="Ηλικία"
-                   onchange="updateFamilyMemberAge(${index}, this.value)"
-                   style="flex: 1; min-width: 0;">
-            <span style="margin-left: 8px; color: #64748b; white-space: nowrap;">ετών</span>
-        </div>
-        <button class="btn btn-outline" onclick="removeFamilyMember(${index})" 
-                style="padding: 8px 12px; flex-shrink: 0;">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
+    <button class="btn btn-outline" onclick="removeFamilyMember(${index})" 
+            style="padding: 6px 10px; flex-shrink: 0; min-width: 40px;">
+        <i class="fas fa-times"></i>
+    </button>
+</div>
 </div>
                         `).join('')}
                     </div>
