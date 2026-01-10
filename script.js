@@ -32,25 +32,25 @@ window.selectedMarkers = []; // Για ενώσεις σημείων
 function initApp() {
     console.log('🚀 Εκκίνηση εφαρμογής...');
     
-    // 1. Ρύθμιση mobile navigation
+    // 1. Φόρτωση αποθηκευμένων δεδομένων
+    loadSavedData();
+    
+    // 2. Ρύθμιση mobile navigation
     setupMobileNavigation();
     
-    // 2. Ρύθμιση navigation για βήματα
+    // 3. Ρύθμιση navigation για βήματα
     setupStepNavigation();
     
-    // 3. Ρύθμιση event listeners
+    // 4. Ρύθμιση event listeners
     setupEventListeners();
     
-    // 4. Fix για κουμπιά προορισμού
+    // 5. Fix για κουμπιά προορισμού
     fixDestinationButtons();
-    
-    // 5. Φόρτωση αποθηκευμένων δεδομένων (ΤΩΡΑ στο τέλος!)
-    loadSavedData();
     
     // 6. Εμφάνιση του σωστού βήματος
     setTimeout(() => {
         showStep(state.currentStep);
-        console.log('✅ Εφαρμογή αρχικοποιήθηκε στο βήμα:', state.currentStep);
+        console.log('✅ Εφαρμογή αρχικοποιήθηκε');
     }, 100);
 }
 
@@ -122,18 +122,11 @@ function loadSavedData() {
 function loadSavedDataNow(saved) {
     try {
         const data = JSON.parse(saved);
-        console.log('🎯 [DEBUG] loadSavedDataNow φορτώνει:', data);  // <-- ΝΕΟ
-        
         state.selectedDestination = data.selectedDestinationName || null;
         state.selectedDestinationId = data.selectedDestinationId || null;
         state.selectedDays = data.selectedDaysStay || 0;
         state.familyMembers = data.familyMembers || state.familyMembers;
         state.selectedActivities = data.selectedActivities || [];
-        
-        if (data.currentStep) {
-            state.currentStep = data.currentStep;
-            console.log('🎯 [DEBUG] currentStep θέθηκε σε:', state.currentStep);  // <-- ΝΕΟ
-        }
         
         if (state.selectedDestination) {
             document.getElementById('current-destination-display').textContent = state.selectedDestination;
@@ -149,7 +142,6 @@ function loadSavedTrip() {
     console.log('📂 Φόρτωση αποθηκευμένου ταξιδιού...');
     
     const saved = localStorage.getItem('travelPlannerData');
-    console.log('🔍 Αποθηκευμένα δεδομένα:', saved); // <-- ΠΡΟΣΘΗΚΗ
     
     if (!saved) {
         alert('⚠️ Δεν βρέθηκε αποθηκευμένο ταξίδι!');
@@ -158,7 +150,6 @@ function loadSavedTrip() {
     
     try {
         const data = JSON.parse(saved);
-        console.log('📊 Δεδομένα που βρέθηκαν:', data); // <-- ΠΡΟΣΘΗΚΗ
         
         // 1. Φόρτωση βασικών δεδομένων
         state.selectedDestination = data.selectedDestinationName || null;
@@ -166,12 +157,6 @@ function loadSavedTrip() {
         state.selectedDays = data.selectedDaysStay || 0;
         state.familyMembers = data.familyMembers || state.familyMembers;
         state.selectedActivities = data.selectedActivities || [];
-        
-        console.log('🔄 State μετά φόρτωσης:', { // <-- ΠΡΟΣΘΗΚΗ
-            destination: state.selectedDestination,
-            days: state.selectedDays,
-            activities: state.selectedActivities.length
-        });
         
         // 2. Ενημέρωση UI
         document.getElementById('current-destination-display').textContent = 
@@ -191,7 +176,7 @@ function loadSavedTrip() {
                     <i class="fas fa-check-circle"></i> Ταξίδι φορτώθηκε!
                 </h4>
                 <p style="margin: 0;">
-                    <strong>${state.selectedDestination || "Χωρίς προορισμό"}</strong><br>
+                    <strong>${state.selectedDestination}</strong><br>
                     <small>${state.selectedDays} μέρες • ${state.selectedActivities.length} δραστηριότητες</small>
                 </p>
             </div>
@@ -199,7 +184,6 @@ function loadSavedTrip() {
         
         // 6. Πήγαινε στο σωστό βήμα
         setTimeout(() => {
-            console.log('🎯 Πηγαίνω στο βήμα:', lastStep); // <-- ΠΡΟΣΘΗΚΗ
             showStep(lastStep);
             console.log('✅ Αποθηκευμένο ταξίδι φορτώθηκε:', data);
         }, 500);
@@ -3770,7 +3754,7 @@ function saveState() {
         selectedActivities: state.selectedActivities,
         currentStep: state.currentStep // <-- ΠΡΟΣΘΗΚΗ ΑΥΤΗ
     };
-    console.log('💾 Αποθήκευση state:', data); // <-- ΝΕΗ ΓΡΑΜΜΗ
+    
     localStorage.setItem('travelPlannerData', JSON.stringify(data));
 }
 
@@ -5807,29 +5791,30 @@ if (document.readyState === 'loading') {
     loadComboCalculator();
 }
 // ==================== ΒΕΛΤΙΣΤΟΠΟΙΗΜΕΝΗ INITIALIZATION ====================
-// ==================== ΒΕΛΤΙΣΤΟΠΟΙΗΜΕΝΗ INITIALIZATION ====================
-function optimizedInit() {
+async function initApp() {
     console.log('🚀 Αρχικοποίηση εφαρμογής (βελτιστοποιημένη)...');
     
     try {
-        // 1. ΒΑΣΙΚΕΣ ΑΡΧΙΚΟΠΟΙΗΣΕΙΣ
-        setupMobileNavigation();
-        setupStepNavigation();
-        setupEventListeners();
-        fixDestinationButtons();
+        // 1. ΜΕΤΡΗΣΗ ΧΡΟΝΟΥ ΑΡΧΙΚΟΠΟΙΗΣΗΣ
+        const initStartTime = performance.now();
         
-        // 2. ΦΟΡΤΩΣΗ ΑΠΟΘΗΚΕΥΜΕΝΩΝ (με delay για UI)
-        setTimeout(() => {
-            loadSavedData();
-        }, 300);
+        // 2. ΤΑΥΤΟΧΡΟΝΗ ΦΟΡΤΩΣΗ (Παράλληλη εκτέλεση πολλών εργασιών)
+        await Promise.all([
+            loadSavedData(),
+            setupMobileNavigation(),
+            setupStepNavigation() // 🚨 ΠΡΟΣΘΗΚΗ ΕΔΩ!
+        ]);
         
-        // 3. ΕΜΦΑΝΙΣΗ ΤΟΥ ΣΩΣΤΟΥ ΒΗΜΑΤΟΣ
-        setTimeout(() => {
-            showStep(state.currentStep);
-            console.log('✅ Εφαρμογή αρχικοποιήθηκε στο βήμα:', state.currentStep);
-        }, 100);
+        // 3. ΡΥΘΜΙΣΗ EVENT LISTENERS (Χωρίς να περιμένουμε)
+        setTimeout(() => setupEventListeners(), 0);
         
-        // 4. ΑΠΟΚΡΥΨΗ LOADING (αν υπάρχει)
+        // 4. ΕΜΦΑΝΙΣΗ ΤΟΥ ΣΩΣΤΟΥ ΒΗΜΑΤΟΣ
+        showStep(state.currentStep);
+        
+        // 5. ΑΝΑΝΕΩΣΗ ΚΟΣΤΟΥΣ
+        updateActivitiesCost();
+        
+        // 6. ΑΠΟΚΡΥΨΗ LOADING ΜΕΤΑ ΑΠΟ ΣΥΓΚΕΚΡΙΜΕΝΟ ΧΡΟΝΟ
         setTimeout(() => {
             const loadingOverlay = document.getElementById('loading-overlay');
             if (loadingOverlay) {
@@ -5838,61 +5823,46 @@ function optimizedInit() {
                 
                 setTimeout(() => {
                     loadingOverlay.style.display = 'none';
-                    console.log('✅ Αεροπλάνακι κρύφτηκε');
+                    console.log('✅ Αεροπλάνακι κρύφτηκε (ομαλά)');
                     
-                    // Cleanup αν χρειάζεται
+                    // Επιπλέον cleanup αν χρειάζεται
                     cleanupDuplicateButtons();
                     
                 }, 500);
             }
-        }, 1000);
+        }, 1000); // Μειώσαμε το χρόνο από 1500 σε 1000ms
         
-        console.log('✅ Βελτιστοποιημένη αρχικοποίηση ολοκληρώθηκε');
+        // 7. ΕΚΤΥΠΩΣΗ ΣΤΑΤΙΣΤΙΚΩΝ
+        const initEndTime = performance.now();
+        console.log(`✅ Αρχικοποίηση ολοκληρώθηκε σε ${(initEndTime - initStartTime).toFixed(0)}ms`);
         
     } catch (error) {
-        console.error('❌ Σφάλμα αρχικοποίησης:', error);
+        console.error('❌ ΚΡΙΤΙΚΟ ΣΦΑΛΜΑ αρχικοποίησης:', error);
+        
+        // 8. ΕΜΦΑΝΙΣΗ ΦΙΛΙΚΟΥ ΜΗΝΥΜΑΤΟΣ ΣΦΑΛΜΑΤΟΣ
         showEmergencyError(
             'Σφάλμα φόρτωσης εφαρμογής',
-            'Παρακαλώ ανανεώστε τη σελίδα.',
+            'Παρακαλώ ανανεώστε τη σελίδα ή επικοινωνήστε με την υποστήριξη.',
             error.message
         );
-    }
-}
-
-// ==================== ΒΟΗΘΗΤΙΚΕΣ ΣΥΝΑΡΤΗΣΕΙΣ ====================
-
-function cleanupDuplicateButtons() {
-    console.log('🧹 Καθαρισμός διπλών κουμπιών...');
-    
-    const duplicateButtons = document.getElementById('search-buttons-container');
-    if (duplicateButtons) {
-        duplicateButtons.style.display = 'none';
-        console.log('✅ Διπλά κουμπιά αφαιρέθηκαν');
-    }
-}
-
-function showEmergencyError(title, message, technicalDetails = '') {
-    alert(`⚠️ ${title}\n\n${message}\n\nΛεπτομέρειες: ${technicalDetails}`);
-}
-
-function setupEventListeners() {
-    console.log('🔧 Ρύθμιση event listeners...');
-    
-    try {
-        const resetButton = document.getElementById('reset-all');
-        if (resetButton) {
-            resetButton.addEventListener('click', function() {
-                if (confirm('⚠️ Θέλετε να διαγράψετε όλα τα δεδομένα;')) {
-                    localStorage.clear();
-                    sessionStorage.clear();
-                    location.reload();
-                }
-            });
-        }
         
-        console.log('✅ Event listeners εγκαταστάθηκαν');
-    } catch (error) {
-        console.warn('⚠️ Μερικά event listeners απέτυχαν:', error);
+        // 9. ΠΑΡΑΜΕΝΟΥΜΕ ΣΤΟ LOADING STATE
+        const loadingOverlay = document.getElementById('loading-overlay');
+        if (loadingOverlay) {
+            loadingOverlay.innerHTML = `
+                <div style="text-align: center; padding: 40px; color: white;">
+                    <div style="font-size: 64px; margin-bottom: 20px;">⚠️</div>
+                    <h3 style="color: white; margin-bottom: 15px;">Σφάλμα Φόρτωσης</h3>
+                    <p style="margin-bottom: 25px;">${error.message}</p>
+                    <button onclick="location.reload()" 
+                            style="padding: 12px 30px; background: white; color: #4F46E5; 
+                                   border: none; border-radius: 8px; font-weight: bold; 
+                                   cursor: pointer;">
+                        <i class="fas fa-redo"></i> Ανανέωση Σελίδας
+                    </button>
+                </div>
+            `;
+        }
     }
 }
 
@@ -6250,19 +6220,3 @@ function testNewClustering() {
     
     console.log('✅ === ΤΕΛΟΣ ΣΥΓΚΡΙΣΗΣ ===');
 }
-// ==================== ΑΠΛΗ ΕΚΚΙΝΗΣΗ ====================
-function startApp() {
-    console.log('🚀 Εκκίνηση εφαρμογής...');
-    initApp(); // <-- Χρησιμοποίησε την υπάρχουσα συνάρτηση
-}
-
-// Ξεκίνα όταν το DOM είναι έτοιμο
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', startApp);
-} else {
-    startApp();
-}
-
-// ΤΕΛΟΣ
-console.log('✅ Script loaded');
-// ΜΗΝ γράψεις τίποτα μετά από αυτό
