@@ -109,13 +109,10 @@ function loadSavedData() {
     const saved = localStorage.getItem('travelPlannerData');
     
     if (saved && !sessionStorage.getItem('userChoiceMade')) {
-        setTimeout(() => {
-            const userChoice = confirm(
-                'Βρέθηκε προηγούμενο ταξίδι!\n\n' +
-                'Κάντε κλικ:\n' +
-                '• "OK" για να συνεχίσετε το προηγούμενο ταξίδι\n' +
-                '• "Cancel" για να ξεκινήσετε νέο ταξίδι'
-            );
+    // Αντί για auto-confirm, απλά εμφανίζουμε μήνυμα
+    console.log('📂 Υπάρχει αποθηκευμένο ταξίδι. Ο χρήστης μπορεί να το φορτώσει με το κουμπί.');
+    sessionStorage.setItem('userChoiceMade', 'true'); // Για να μην ενοχλεί
+}
             
             sessionStorage.setItem('userChoiceMade', 'true');
             
@@ -151,7 +148,62 @@ function loadSavedDataNow(saved) {
         console.error('Σφάλμα φόρτωσης δεδομένων:', error);
     }
 }
-
+// ==================== LOAD SAVED TRIP FUNCTION ====================
+function loadSavedTrip() {
+    console.log('📂 Φόρτωση αποθηκευμένου ταξιδιού...');
+    
+    const saved = localStorage.getItem('travelPlannerData');
+    
+    if (!saved) {
+        alert('⚠️ Δεν βρέθηκε αποθηκευμένο ταξίδι!');
+        return;
+    }
+    
+    try {
+        const data = JSON.parse(saved);
+        
+        // 1. Φόρτωση βασικών δεδομένων
+        state.selectedDestination = data.selectedDestinationName || null;
+        state.selectedDestinationId = data.selectedDestinationId || null;
+        state.selectedDays = data.selectedDaysStay || 0;
+        state.familyMembers = data.familyMembers || state.familyMembers;
+        state.selectedActivities = data.selectedActivities || [];
+        
+        // 2. Ενημέρωση UI
+        document.getElementById('current-destination-display').textContent = 
+            state.selectedDestination || 'Δεν έχει επιλεγεί';
+        
+        // 3. Εμφάνιση του βήματος που είχε μείνει
+        const lastStep = data.currentStep || 'destination';
+        state.currentStep = lastStep;
+        
+        // 4. Ενημέρωση session για να μην ξαναρωτήσει
+        sessionStorage.setItem('userChoiceMade', 'true');
+        
+        // 5. Μήνυμα επιτυχίας
+        showToast(`
+            <div style="text-align: center; padding: 10px;">
+                <h4 style="color: #10B981; margin-bottom: 8px;">
+                    <i class="fas fa-check-circle"></i> Ταξίδι φορτώθηκε!
+                </h4>
+                <p style="margin: 0;">
+                    <strong>${state.selectedDestination}</strong><br>
+                    <small>${state.selectedDays} μέρες • ${state.selectedActivities.length} δραστηριότητες</small>
+                </p>
+            </div>
+        `, 'success');
+        
+        // 6. Πήγαινε στο σωστό βήμα
+        setTimeout(() => {
+            showStep(lastStep);
+            console.log('✅ Αποθηκευμένο ταξίδι φορτώθηκε:', data);
+        }, 500);
+        
+    } catch (error) {
+        console.error('❌ Σφάλμα φόρτωσης ταξιδιού:', error);
+        alert('⚠️ Δεν ήταν δυνατή η φόρτωση του ταξιδιού. Ίσως τα δεδομένα είναι κατεστραμμένα.');
+    }
+}
 // ==================== STEP MANAGEMENT ====================
 function setupStepNavigation() {
     console.log('📍 Ρύθμιση navigation για βήματα...');
@@ -409,7 +461,7 @@ function getDestinationStepHTML() {
                 </div>
             </div>
             
-            <!-- ΚΕΝΤΡΙΚΑ ΚΟΥΜΠΙΑ -->
+           <!-- ΚΕΝΤΡΙΚΑ ΚΟΥΜΠΙΑ -->
 <div id="main-buttons-container" style="text-align: center; margin: 30px 0;">
     <!-- 1. ΚΟΥΜΠΙ ΑΠΟΘΗΚΕΥΜΕΝΟΥ ΤΑΞΙΔΙΟΥ (ΕΑΝ ΥΠΑΡΧΕΙ) -->
     ${localStorage.getItem('travelPlannerData') ? `
