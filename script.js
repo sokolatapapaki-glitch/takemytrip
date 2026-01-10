@@ -683,71 +683,61 @@ function getActivitiesStepHTML() {
                     </button>
                 </div>
             ` : `
-                <!-- Family Members Section -->
-                <div class="card" style="background: #f8f9fa; margin-bottom: 30px;">
-                    <h3><i class="fas fa-users"></i> Τα Μέλη Της Οικογένειας</h3>
-                    
-                    <div id="family-members-container">
-                        ${state.familyMembers.map((member, index) => `
-                           <div class="family-member" style="
-    display: flex; 
-    flex-direction: column; 
-    gap: 10px; 
-    margin-bottom: 15px; 
-    padding: 15px; 
-    background: white; 
-    border-radius: var(--radius-md);
-    border: 1px solid #e2e8f0;
-">
-    <!-- Πρώτη γραμμή: Όνομα και Εικονίδιο -->
-<div style="display: flex; align-items: center; gap: 10px; width: 100%;">
-    <div style="font-size: 24px; flex-shrink: 0; width: 40px; text-align: center;">${index === 0 ? '👨' : index === 1 ? '👩' : '🧒'}</div>
-    <input type="text" class="form-control" value="${member.name}" 
-           onchange="updateFamilyMemberName(${index}, this.value)"
-           placeholder="Όνομα"
-           style="flex: 1; min-width: 0; max-width: 250px;">
-</div>
-
-<!-- Δεύτερη γραμμή: Ηλικία και Κουμπί Διαγραφής -->
-<div style="display: flex; align-items: center; gap: 10px; width: 100%;">
-    <div style="display: flex; align-items: center; flex: 1; max-width: 250px;">
-        <input type="number" class="form-control" value="${member.age}" 
-               min="0" max="120" placeholder="Ηλικία"
-               onchange="updateFamilyMemberAge(${index}, this.value)"
-               style="flex: 1; min-width: 0;">
-        <span style="margin-left: 8px; color: #64748b; white-space: nowrap; min-width: 45px;">ετών</span>
-    </div>
-    <button class="btn btn-outline" onclick="removeFamilyMember(${index})" 
-            style="padding: 6px 10px; flex-shrink: 0; min-width: 40px;">
-        <i class="fas fa-times"></i>
-    </button>
-</div>
-</div>
-                        `).join('')}
+             <!-- Family Members Section -->
+<div class="card" style="background: #f8f9fa; margin-bottom: 30px;">
+    <h3><i class="fas fa-users"></i> Τα Μέλη Της Οικογένειας</h3>
+    
+    <div id="family-members-container" class="family-member-container">
+        ${state.familyMembers.map((member, index) => `
+            <div class="family-member">
+                <!-- Πρώτη γραμμή: Όνομα και Εικονίδιο -->
+                <div class="family-member-row">
+                    <div class="family-member-icon">
+                        ${index === 0 ? '👨' : index === 1 ? '👩' : '🧒'}
                     </div>
-                    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
-    
-    <!-- Γραμμή 1: Κουμπιά Προσθήκης -->
-    <div style="display: flex; gap: 10px; width: 100%;">
-        <button class="btn btn-outline" onclick="addFamilyMember('adult')"
-                style="flex: 1; white-space: nowrap;">
-            <i class="fas fa-plus"></i> Προσθήκη Ενήλικα
-        </button>
-        <button class="btn btn-outline" onclick="addFamilyMember('child')"
-                style="flex: 1; white-space: nowrap;">
-            <i class="fas fa-plus"></i> Προσθήκη Παιδιού
-        </button>
+                    <input type="text" 
+                           class="form-control family-input" 
+                           value="${member.name}" 
+                           onchange="updateFamilyMemberName(${index}, this.value)"
+                           placeholder="Όνομα">
+                </div>
+                
+                <!-- Δεύτερη γραμμή: Ηλικία και Κουμπί Διαγραφής -->
+                <div class="family-member-row">
+                    <div class="family-age-container">
+                        <input type="number" 
+                               class="form-control family-input" 
+                               value="${member.age}" 
+                               min="0" 
+                               max="120" 
+                               placeholder="Ηλικία"
+                               onchange="updateFamilyMemberAge(${index}, this.value)">
+                        <span class="age-label">ετών</span>
+                    </div>
+                    <button class="btn btn-outline family-delete-btn" 
+                            onclick="removeFamilyMember(${index})">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        `).join('')}
     </div>
     
-    <!-- Γραμμή 2: Κουμπί Ενημέρωσης -->
-    <button class="btn btn-primary" onclick="updateFamilyMembers()"
-            style="width: 100%; padding: 12px;">
-        <i class="fas fa-save"></i> Ενημέρωση Οικογένειας
-    </button>
-    
+    <!-- Κουμπιά Δράσης -->
+    <div class="family-actions">
+        <div class="family-add-buttons">
+            <button class="btn btn-outline" onclick="addFamilyMember('adult')">
+                <i class="fas fa-plus"></i> Προσθήκη Ενήλικα
+            </button>
+            <button class="btn btn-outline" onclick="addFamilyMember('child')">
+                <i class="fas fa-plus"></i> Προσθήκη Παιδιού
+            </button>
+        </div>
+        <button class="btn btn-primary family-update-btn" onclick="updateFamilyMembers()">
+            <i class="fas fa-save"></i> Ενημέρωση Οικογένειας
+        </button>
+    </div>
 </div>
-                    
-                </div>
               <div style="margin: 20px 0; padding: 12px; background: linear-gradient(to bottom, #f0f9ff, #ffffff); border-radius: 10px; border: 2px solid #E0F2FE; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
     
     <!-- ΚΕΦΑΛΙ -->
