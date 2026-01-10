@@ -557,13 +557,13 @@ function getHotelStepHTML() {
                 
                 <!-- BOOKING.COM -->
                 <button class="btn btn-primary" onclick="searchBookingHotels()" 
-                        style="width: 100%; padding: 10px 12px; margin: 6px 0; font-size: 14px;">
+                        style="width: 100%; padding: 11px 12px; margin: 6px 0; font-size: 15px; font-weight: 600;"
                     <i class="fas fa-search"></i> Booking.com
                 </button>
                 
                 <!-- EXPEDIA -->
                 <button class="btn" onclick="searchExpediaHotels()" 
-                        style="width: 100%; padding: 10px 12px; margin: 6px 0; font-size: 14px; 
+                        style="width: 100%; padding: 11px 12px; margin: 6px 0; font-size: 15px; font-weight: 600;"
                                background: linear-gradient(135deg, #ff9800, #ff5722); color: white; border: none;">
                     <i class="fas fa-hotel"></i> Expedia
                     <small style="font-size: 11px; margin-left: 5px;">(προμήθεια για εμάς)</small>
@@ -571,10 +571,10 @@ function getHotelStepHTML() {
                 
                 <!-- TICKETSELLER -->
                 <button class="btn" onclick="window.open('https://ticketseller.gr/el/home-2/', '_blank')" 
-                        style="width: 100%; padding: 10px 12px; margin: 6px 0; font-size: 14px; 
+                        style="width: 100%; padding: 11px 12px; margin: 6px 0; font-size: 15px; font-weight: 600;" 
                                background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; border: none;">
                     <i class="fas fa-ticket-alt"></i> TicketSeller
-                    <small style="font-size: 11px; margin-left: 5px;">(για την έκπτωση mail στο: takethekids2@gmail.com)</small>
+                    <small style="font-size: 11px; margin-left: 5px;">(για να λάβετε έκπτωση στείλτε mail στο: takethekids2@gmail.com)</small>
                 </button>
                 
             </div>
