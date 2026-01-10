@@ -1389,3 +1389,56 @@ body {
         flex-wrap: wrap;
     }
 }
+/* ==================== PROGRAM STATISTICS ==================== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.stat-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px 10px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.stat-number {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+.stat-label {
+    font-size: 11px;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Desktop: 4 columns */
+@media (min-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+    }
+    
+    .stat-number {
+        font-size: 24px;
+    }
+}
+
+/* Mobile: 2 columns (already set above) */
+@media (max-width: 767px) {
+    .stat-number {
+        font-size: 18px;
+    }
+    
+    .stat-item {
+        padding: 12px 8px;
+    }
+}
