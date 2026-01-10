@@ -483,119 +483,107 @@ function getHotelStepHTML() {
         <div class="card">
             <h1 class="card-title"><i class="fas fa-hotel"></i> Αναζήτηση Ξενοδοχείων</h1>
             
-            <!-- ΠΡΟΟΡΙΣΜΟΣ ΜΟΝΟΣ ΤΟΥ -->
+            <!-- ULTRA-COMPACT FORM -->
             <div style="margin-bottom: 20px;">
-                <div class="form-group">
-                    <label class="form-label">Προορισμός</label>
+                <!-- ΠΡΟΟΡΙΣΜΟΣ -->
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label class="form-label" style="font-size: 13px;">📍 Προορισμός</label>
                     <input type="text" class="form-control" id="hotel-destination" 
-                           value="${state.selectedDestination || ''}" style="padding: 12px;">
+                           value="${state.selectedDestination || ''}" 
+                           style="padding: 10px; height: 42px;">
+                </div>
+                
+                <!-- HORIZONTAL ROW -->
+                <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px;">
+                    <!-- CHECK-IN -->
+                    <div style="flex: 1; min-width: 120px;">
+                        <label style="font-size: 13px; display: block; margin-bottom: 4px;">📅 Check-in</label>
+                        <input type="date" class="form-control" id="hotel-checkin" 
+                               style="padding: 8px; height: 38px; width: 100%;">
+                    </div>
+                    
+                    <!-- CHECK-OUT -->
+                    <div style="flex: 1; min-width: 120px;">
+                        <label style="font-size: 13px; display: block; margin-bottom: 4px;">📅 Check-out</label>
+                        <input type="date" class="form-control" id="hotel-checkout" 
+                               style="padding: 8px; height: 38px; width: 100%;">
+                    </div>
+                    
+                    <!-- ΕΝΗΛΙΚΟΙ -->
+                    <div style="flex: 1; min-width: 80px;">
+                        <label style="font-size: 13px; display: block; margin-bottom: 4px;">👨 Ενήλ.</label>
+                        <select class="form-control" id="hotel-adults" 
+                                style="padding: 8px; height: 38px; width: 100%;">
+                            <option value="2" selected>2</option>
+                            <option value="1">1</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+                    
+                    <!-- ΠΑΙΔΙΑ -->
+                    <div style="flex: 1; min-width: 80px;">
+                        <label style="font-size: 13px; display: block; margin-bottom: 4px;">🧒 Παιδ.</label>
+                        <select class="form-control" id="hotel-children" 
+                                style="padding: 8px; height: 38px; width: 100%;">
+                            <option value="0" selected>0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                    
+                    <!-- ΔΩΜΑΤΙΑ -->
+                    <div style="flex: 1; min-width: 80px;">
+                        <label style="font-size: 13px; display: block; margin-bottom: 4px;">🚪 Δωμ.</label>
+                        <select class="form-control" id="hotel-rooms" 
+                                style="padding: 8px; height: 38px; width: 100%;">
+                            <option value="1" selected>1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             
-            <!-- ΦΟΡΜΑ 2 ΣΤΗΛΩΝ -->
-            <div class="grid grid-2" style="gap: 12px; margin-bottom: 20px;">
-                <!-- ΓΡΑΜΜΗ 1 -->
-                <div class="form-group">
-                    <label class="form-label">Check-in</label>
-                    <input type="date" class="form-control" id="hotel-checkin" style="padding: 12px;">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Check-out</label>
-                    <input type="date" class="form-control" id="hotel-checkout" style="padding: 12px;">
-                </div>
-                
-                <!-- ΓΡΑΜΜΗ 2 -->
-                <div class="form-group">
-                    <label class="form-label">Ενήλικοι</label>
-                    <select class="form-control" id="hotel-adults" style="padding: 12px;">
-                        <option value="1">1</option>
-                        <option value="2" selected>2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Παιδιά</label>
-                    <select class="form-control" id="hotel-children" style="padding: 12px;">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                    </select>
-                </div>
-                
-                <!-- ΓΡΑΜΜΗ 3 -->
-                <div class="form-group">
-                    <label class="form-label">Δωμάτια</label>
-                    <select class="form-control" id="hotel-rooms" style="padding: 12px;">
-                        <option value="1" selected>1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                    </select>
-                </div>
-                
-                <!-- ΚΕΝΗ ΣΤΗΛΗ ΓΙΑ ΣΥΜΜΕΤΡΙΑ -->
-                <div></div>
+            <!-- ΜΙΚΡΗ ΕΝΔΕΙΞΗ -->
+            <div style="background: #fff3cd; padding: 8px 10px; border-radius: 6px; margin: 10px 0; font-size: 12px;">
+                <i class="fas fa-external-link-alt" style="color: #ff9800;"></i>
+                <span style="margin-left: 5px;">Ανακατεύθυνση σε Booking/Expedia</span>
             </div>
-            
-            <!-- ΕΝΔΕΙΞΗ -->
-            <div style="
-                background: #fff3cd; 
-                border-left: 4px solid #ffc107; 
-                padding: 12px; 
-                margin: 15px 0; 
-                border-radius: 8px; 
-                overflow-wrap: anywhere;
-                font-size: 14px;
-            ">
-                <i class="fas fa-external-link-alt" style="color: #ffc107; margin-right: 8px;"></i>
-                <strong>Σημείωση:</strong> Η αναζήτηση θα σας ανακατευθύνει στις αντίστοιχες πλατφόρμες 
-                 </div>
 
-            <!-- ΚΟΥΜΠΙΑ -->
-            <div style="text-align: center; margin: 20px 0;">
+            <!-- ΚΟΥΜΠΙΑ ΧΩΡΙΣ ΤΕΡΑΣΤΙΟ ΠΑΔΙΝΓΚ -->
+            <div style="text-align: center; margin: 15px 0;">
                 
                 <!-- BOOKING.COM -->
                 <button class="btn btn-primary" onclick="searchBookingHotels()" 
-                        style="width: 100%; max-width: 320px; padding: 14px; margin: 8px auto; font-size: 15px;">
-                    <i class="fas fa-search"></i> Αναζήτηση σε Booking.com
+                        style="width: 100%; padding: 10px 12px; margin: 6px 0; font-size: 14px;">
+                    <i class="fas fa-search"></i> Booking.com
                 </button>
                 
                 <!-- EXPEDIA -->
-                <div style="margin: 15px 0; max-width: 320px; margin-left: auto; margin-right: auto;">
-                    <button class="btn" onclick="searchExpediaHotels()" 
-                            style="width: 100%; padding: 14px; margin-bottom: 5px; 
-                                   background: linear-gradient(135deg, #ff9800, #ff5722); color: white; border: none;">
-                        <i class="fas fa-hotel"></i> Αναζήτηση σε Expedia
-                    </button>
-                    <div style="font-size: 12px; color: #555; background: #f9f9f9; padding: 8px; border-radius: 6px;">
-                        <i class="fas fa-info-circle" style="color: #ff9800; margin-right: 5px;"></i>
-                        Αν κλείσεις μέσω EXPEDIA, έχουμε μικρή προμήθεια χωρίς επιπλέον κόστος για εσένα.
-                    </div>
-                </div>
+                <button class="btn" onclick="searchExpediaHotels()" 
+                        style="width: 100%; padding: 10px 12px; margin: 6px 0; font-size: 14px; 
+                               background: linear-gradient(135deg, #ff9800, #ff5722); color: white; border: none;">
+                    <i class="fas fa-hotel"></i> Expedia
+                    <small style="font-size: 11px; margin-left: 5px;">(προμήθεια για εμάς)</small>
+                </button>
                 
                 <!-- TICKETSELLER -->
-                <div style="margin: 15px 0; max-width: 320px; margin-left: auto; margin-right: auto;">
-                    <button class="btn" onclick="window.open('https://ticketseller.gr/el/home-2/', '_blank')" 
-                            style="width: 100%; padding: 14px; margin-bottom: 5px; 
-                                   background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; border: none;">
-                        <i class="fas fa-ticket-alt"></i> TicketSeller.gr
-                    </button>
-                    <div style="font-size: 12px; color: #555; background: #f9f9f9; padding: 8px; border-radius: 6px;">
-                        <i class="fas fa-percentage" style="color: #4CAF50; margin-right: 5px;"></i>
-                        Έκπτωση μέσω TicketSeller! Στείλε email στο: <strong>takethekids2@gmail.com</strong>
-                    </div>
-                </div>
+                <button class="btn" onclick="window.open('https://ticketseller.gr/el/home-2/', '_blank')" 
+                        style="width: 100%; padding: 10px 12px; margin: 6px 0; font-size: 14px; 
+                               background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; border: none;">
+                    <i class="fas fa-ticket-alt"></i> TicketSeller
+                    <small style="font-size: 11px; margin-left: 5px;">(έκπτωση για εσένα)</small>
+                </button>
                 
             </div>
             
             <!-- ΣΥΝΕΧΕΙΑ -->
-            <div style="text-align: center; margin-top: 15px;">
+            <div style="text-align: center; margin-top: 10px;">
                 <button class="btn btn-primary" onclick="showStep('activities')" 
-                        style="padding: 12px 30px; font-size: 15px;">
-                    <i class="fas fa-arrow-right"></i> Συνέχεια στις Δραστηριότητες
+                        style="padding: 10px 20px; font-size: 14px;">
+                    <i class="fas fa-arrow-right"></i> Συνέχεια
                 </button>
             </div>
         </div>
