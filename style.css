@@ -1239,3 +1239,153 @@ body {
 .family-member .btn-outline:hover {
     background-color: #fee2e2;
 }
+/* ==================== FAMILY MEMBERS - BETA ==================== */
+.family-member-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.family-member {
+    padding: 15px;
+    background: white;
+    border-radius: var(--radius-md);
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.family-member:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-color: var(--primary);
+}
+
+/* Rows inside each member */
+.family-member-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.family-member-row:last-child {
+    margin-bottom: 0;
+}
+
+/* Icon */
+.family-member-icon {
+    font-size: 24px;
+    width: 40px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+/* Inputs */
+.family-input {
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    flex: 1;
+    min-width: 0;
+}
+
+.family-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* Age container */
+.family-age-container {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+}
+
+.age-label {
+    color: #64748b;
+    white-space: nowrap;
+    margin-left: 8px;
+    min-width: 40px;
+}
+
+/* Delete button */
+.family-delete-btn {
+    padding: 8px 12px;
+    border-color: #ef4444;
+    color: #ef4444;
+    flex-shrink: 0;
+}
+
+.family-delete-btn:hover {
+    background-color: #fee2e2;
+}
+
+/* Action buttons */
+.family-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.family-add-buttons {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.family-add-buttons button {
+    flex: 1;
+    white-space: nowrap;
+}
+
+.family-update-btn {
+    width: 100%;
+    padding: 12px;
+}
+
+/* ========== RESPONSIVE ========== */
+/* Desktop */
+@media (min-width: 768px) {
+    .family-member-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .family-input {
+        max-width: 200px;
+    }
+    
+    .family-actions {
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    .family-add-buttons {
+        flex: 1;
+    }
+    
+    .family-update-btn {
+        width: auto;
+        min-width: 180px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+    .family-member {
+        margin-bottom: 15px;
+    }
+    
+    .family-input {
+        width: 100%;
+        max-width: none;
+    }
+    
+    .family-member-row {
+        flex-wrap: wrap;
+    }
+}
