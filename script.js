@@ -5680,6 +5680,7 @@ window.getDayColor = getDayColor;
 window.createGeographicClusters = createGeographicClusters;
 window.calculateClusterCenter = calculateClusterCenter;
 window.distributeClustersToDays = distributeGroupsToDays;
+window.loadSavedTrip = loadSavedTrip;
 
 // ==================== CSS ANIMATIONS FOR PROGRAM ====================
 // Προσθήκη CSS animation για το spinner (για το βήμα 5)
