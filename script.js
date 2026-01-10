@@ -1133,24 +1133,24 @@ function generateProgramHTMLOld(daysProgram, activityGroups) {
             <h4 style="color: white; margin-bottom: 15px; text-align: center;">
                 <i class="fas fa-chart-bar"></i> ΣΥΝΟΛΙΚΟ ΣΤΑΤΙΣΤΙΚΟ
             </h4>
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; text-align: center;">
-                <div>
-                    <div style="font-size: 24px; font-weight: bold; color: #4F46E5;">${state.selectedDays}</div>
-                    <div style="font-size: 12px; opacity: 0.8;">Μέρες</div>
-                </div>
-                <div>
-                    <div style="font-size: 24px; font-weight: bold; color: #10B981;">${activityGroups.length}</div>
-                    <div style="font-size: 12px; opacity: 0.8;">Γεωγραφικές περιοχές</div>
-                </div>
-                <div>
-                    <div style="font-size: 24px; font-weight: bold; color: #F59E0B;">${totalActivities}</div>
-                    <div style="font-size: 12px; opacity: 0.8;">Δραστηριότητες</div>
-                </div>
-                <div>
-                    <div style="font-size: 24px; font-weight: bold; color: #EF4444;">${totalCost.toFixed(2)}€</div>
-                    <div style="font-size: 12px; opacity: 0.8;">Συνολικό κόστος</div>
-                </div>
-            </div>
+            <div class="stats-grid">
+    <div class="stat-item">
+        <div class="stat-number" style="color: #4F46E5;">${state.selectedDays}</div>
+        <div class="stat-label">Μέρες</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number" style="color: #10B981;">${activityGroups.length}</div>
+        <div class="stat-label">Περιοχές</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number" style="color: #F59E0B;">${totalActivities}</div>
+        <div class="stat-label">Δραστηριότητες</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number" style="color: #EF4444;">${totalCost.toFixed(2)}€</div>
+        <div class="stat-label">Συνολικό κόστος</div>
+    </div>
+</div>
             <p style="text-align: center; margin-top: 15px; font-size: 13px; opacity: 0.8;">
                 <i class="fas fa-lightbulb"></i> Οι δραστηριότητες ομαδοποιήθηκαν με βάση την απόσταση για ελάχιστες μετακινήσεις
             </p>
