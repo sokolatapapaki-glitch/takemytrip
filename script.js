@@ -32,22 +32,22 @@ window.selectedMarkers = []; // Για ενώσεις σημείων
 function initApp() {
     console.log('🚀 Εκκίνηση εφαρμογής...');
     
-    // 1. Φόρτωση αποθηκευμένων δεδομένων
-    loadSavedData();
-    
-    // 2. Ρύθμιση mobile navigation
+    // 1. Ρύθμιση mobile navigation
     setupMobileNavigation();
     
-    // 3. Ρύθμιση navigation για βήματα
+    // 2. Ρύθμιση navigation για βήματα
     setupStepNavigation();
     
-    // 4. Ρύθμιση event listeners
+    // 3. Ρύθμιση event listeners
     setupEventListeners();
     
-    // 5. Fix για κουμπιά προορισμού
+    // 4. Fix για κουμπιά προορισμού
     fixDestinationButtons();
     
-     // 6. Εμφάνιση του σωστού βήματος (τώρα το state.currentStep είναι σωστό)
+    // 5. Φόρτωση αποθηκευμένων δεδομένων (ΤΩΡΑ στο τέλος!)
+    loadSavedData();
+    
+    // 6. Εμφάνιση του σωστού βήματος
     setTimeout(() => {
         showStep(state.currentStep);
         console.log('✅ Εφαρμογή αρχικοποιήθηκε στο βήμα:', state.currentStep);
@@ -122,17 +122,19 @@ function loadSavedData() {
 function loadSavedDataNow(saved) {
     try {
         const data = JSON.parse(saved);
+        console.log('🎯 [DEBUG] loadSavedDataNow φορτώνει:', data);  // <-- ΝΕΟ
+        
         state.selectedDestination = data.selectedDestinationName || null;
         state.selectedDestinationId = data.selectedDestinationId || null;
         state.selectedDays = data.selectedDaysStay || 0;
         state.familyMembers = data.familyMembers || state.familyMembers;
         state.selectedActivities = data.selectedActivities || [];
-        // ========== ΠΡΟΣΘΗΚΗ ==========
+        
         if (data.currentStep) {
             state.currentStep = data.currentStep;
-            console.log('🎯 Φορτώθηκε currentStep από saved data:', data.currentStep);
+            console.log('🎯 [DEBUG] currentStep θέθηκε σε:', state.currentStep);  // <-- ΝΕΟ
         }
-        // =============================
+        
         if (state.selectedDestination) {
             document.getElementById('current-destination-display').textContent = state.selectedDestination;
         }
@@ -5805,7 +5807,7 @@ if (document.readyState === 'loading') {
     loadComboCalculator();
 }
 // ==================== ΒΕΛΤΙΣΤΟΠΟΙΗΜΕΝΗ INITIALIZATION ====================
-async function initApp() {
+async () {
     console.log('🚀 Αρχικοποίηση εφαρμογής (βελτιστοποιημένη)...');
     
     try {
