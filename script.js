@@ -409,8 +409,25 @@ function getDestinationStepHTML() {
                 </div>
             </div>
             
-            <!-- Οι γρήγορες επιλογές, το κουμπί αναζήτησης και τα αποτελέσματα παραμένουν ΑΜΕΤΑΒΛΗΤΑ -->
-            <div id="main-buttons-container" style="text-align: center; margin: 30px 0;">
+            <!-- ΚΕΝΤΡΙΚΑ ΚΟΥΜΠΙΑ -->
+<div id="main-buttons-container" style="text-align: center; margin: 30px 0;">
+    <!-- 1. ΚΟΥΜΠΙ ΑΠΟΘΗΚΕΥΜΕΝΟΥ ΤΑΞΙΔΙΟΥ (ΕΑΝ ΥΠΑΡΧΕΙ) -->
+    ${localStorage.getItem('travelPlannerData') ? `
+        <button class="btn btn-accent" 
+                onclick="loadSavedTrip()"
+                style="padding: 14px 25px; font-size: 16px; width: 90%; max-width: 300px; border-radius: 8px; margin-bottom: 15px; background: linear-gradient(135deg, #8B5CF6, #7C3AED);">
+            <i class="fas fa-history"></i> ΑΠΟΘΗΚΕΥΜΕΝΟ ΤΑΞΙΔΙ
+        </button>
+        
+        <div style="margin-bottom: 20px; padding: 10px; background: #f0f9ff; border-radius: 8px; border-left: 4px solid #8B5CF6;">
+            <i class="fas fa-info-circle" style="color: #8B5CF6;"></i>
+            <span style="font-size: 14px; color: var(--dark);">
+                Έχετε ένα αποθηκευμένο ταξίδι. Κάντε κλικ για συνέχιση.
+            </span>
+        </div>
+    ` : ''}
+    
+    <!-- 2. ΚΟΥΜΠΙ ΧΕΙΡΟΚΙΝΗΤΗΣ ΕΠΙΛΟΓΗΣ -->
     <button class="btn btn-primary main-already-btn" 
             style="padding: 14px 25px; font-size: 16px; width: 90%; max-width: 300px; border-radius: 8px;">
         <i class="fas fa-map-marker-alt"></i> ΕΧΩ ΗΔΗ ΒΡΕΙ ΠΡΟΟΡΙΣΜΟ
