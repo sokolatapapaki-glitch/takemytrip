@@ -1441,20 +1441,20 @@ function distributeGroupsToDays(groups, totalDays) {
         days[emptiestDayIndex].groups.push(group);
         days[emptiestDayIndex].totalActivities += group.count;
         
-        // Υπολόγισε κόστος και χρόνο
-        const groupCost = group.activities.reduce((sum, activity) => {
-            return sum + (parseFloat(activity.price) || 0);
-        }, 0);
-        
-        const groupTime = group.activities.reduce((sum, activity) => {
-            return sum + (parseFloat(activity.duration_hours) || 1.5);
-        }, 0);
-        
-        // Χρόνος μετακίνησης εντός συστάδας (για κοντινά σημεία)
-        const travelTime = (group.activities.length - 1) * 0.3; // 20 λεπτά μεταξύ κοντινών
-        
-        days[emptiestDayIndex].totalCost += groupCost;
-        days[emptiestDayIndex].estimatedTime += groupTime + travelTime;
+        // Υπολόγισε κόστος και χρόνο - ΑΠΛΗ ΕΚΔΟΧΗ
+let groupCost = 0;
+let groupTime = 0;
+
+group.activities.forEach(activity => {
+    groupCost += (parseFloat(activity.price) || 0);
+    groupTime += (parseFloat(activity.duration_hours) || 1.5);
+});
+
+// Χρόνος μετακίνησης εντός συστάδας
+const travelTime = (group.activities.length - 1) * 0.3;
+
+days[emptiestDayIndex].totalCost += groupCost;
+days[emptiestDayIndex].estimatedTime += groupTime + travelTime;
         
         console.log(`   📦 Σύσταδα ${index + 1} (${group.count} δραστ.) → Μέρα ${emptiestDayIndex + 1}`);
     });
