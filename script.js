@@ -104,28 +104,17 @@ function getStepName(stepId) {
     };
     return stepNames[stepId] || stepId;
 }
+
 // ==================== LOAD SAVED DATA ====================
 function loadSavedData() {
     const saved = localStorage.getItem('travelPlannerData');
     
     if (saved && !sessionStorage.getItem('userChoiceMade')) {
-    // Αντί για auto-confirm, απλά εμφανίζουμε μήνυμα
-    console.log('📂 Υπάρχει αποθηκευμένο ταξίδι. Ο χρήστης μπορεί να το φορτώσει με το κουμπί.');
-    sessionStorage.setItem('userChoiceMade', 'true'); // Για να μην ενοχλεί
-}
-            
-            sessionStorage.setItem('userChoiceMade', 'true');
-            
-            if (!userChoice) {
-                localStorage.removeItem('travelPlannerData');
-                localStorage.removeItem('travel_custom_points');
-                console.log('🆕 Ξεκινάει νέο ταξίδι');
-                return;
-            }
-            
-            loadSavedDataNow(saved);
-        }, 1000);
+        // Αντί για auto-confirm, απλά εμφανίζουμε μήνυμα
+        console.log('📂 Υπάρχει αποθηκευμένο ταξίδι. Ο χρήστης μπορεί να το φορτώσει με το κουμπί.');
+        sessionStorage.setItem('userChoiceMade', 'true'); // Για να μην ενοχλεί
     } else if (saved) {
+        // Αν ο χρήστης έχει κάνει ήδη choice (πχ. από προηγούμενη φόρτωση)
         loadSavedDataNow(saved);
     }
 }
