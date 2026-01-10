@@ -127,7 +127,12 @@ function loadSavedDataNow(saved) {
         state.selectedDays = data.selectedDaysStay || 0;
         state.familyMembers = data.familyMembers || state.familyMembers;
         state.selectedActivities = data.selectedActivities || [];
-        
+        // ========== ΠΡΟΣΘΗΚΗ ==========
+        if (data.currentStep) {
+            state.currentStep = data.currentStep;
+            console.log('🎯 Φορτώθηκε currentStep από saved data:', data.currentStep);
+        }
+        // =============================
         if (state.selectedDestination) {
             document.getElementById('current-destination-display').textContent = state.selectedDestination;
         }
