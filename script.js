@@ -142,6 +142,7 @@ function loadSavedTrip() {
     console.log('📂 Φόρτωση αποθηκευμένου ταξιδιού...');
     
     const saved = localStorage.getItem('travelPlannerData');
+    console.log('🔍 Αποθηκευμένα δεδομένα:', saved); // <-- ΠΡΟΣΘΗΚΗ
     
     if (!saved) {
         alert('⚠️ Δεν βρέθηκε αποθηκευμένο ταξίδι!');
@@ -150,6 +151,7 @@ function loadSavedTrip() {
     
     try {
         const data = JSON.parse(saved);
+        console.log('📊 Δεδομένα που βρέθηκαν:', data); // <-- ΠΡΟΣΘΗΚΗ
         
         // 1. Φόρτωση βασικών δεδομένων
         state.selectedDestination = data.selectedDestinationName || null;
@@ -157,6 +159,12 @@ function loadSavedTrip() {
         state.selectedDays = data.selectedDaysStay || 0;
         state.familyMembers = data.familyMembers || state.familyMembers;
         state.selectedActivities = data.selectedActivities || [];
+        
+        console.log('🔄 State μετά φόρτωσης:', { // <-- ΠΡΟΣΘΗΚΗ
+            destination: state.selectedDestination,
+            days: state.selectedDays,
+            activities: state.selectedActivities.length
+        });
         
         // 2. Ενημέρωση UI
         document.getElementById('current-destination-display').textContent = 
@@ -176,7 +184,7 @@ function loadSavedTrip() {
                     <i class="fas fa-check-circle"></i> Ταξίδι φορτώθηκε!
                 </h4>
                 <p style="margin: 0;">
-                    <strong>${state.selectedDestination}</strong><br>
+                    <strong>${state.selectedDestination || "Χωρίς προορισμό"}</strong><br>
                     <small>${state.selectedDays} μέρες • ${state.selectedActivities.length} δραστηριότητες</small>
                 </p>
             </div>
@@ -184,6 +192,7 @@ function loadSavedTrip() {
         
         // 6. Πήγαινε στο σωστό βήμα
         setTimeout(() => {
+            console.log('🎯 Πηγαίνω στο βήμα:', lastStep); // <-- ΠΡΟΣΘΗΚΗ
             showStep(lastStep);
             console.log('✅ Αποθηκευμένο ταξίδι φορτώθηκε:', data);
         }, 500);
