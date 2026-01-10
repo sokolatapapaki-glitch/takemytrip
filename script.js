@@ -12,7 +12,17 @@ const state = {
     customPoints: JSON.parse(localStorage.getItem('travel_custom_points')) || [],
     selectedActivities: []
 };
-
+// ==================== COLOR PALETTE ====================
+const COLOR_PALETTE = [
+    '#4F46E5', // Indigo
+    '#10B981', // Emerald
+    '#F59E0B', // Amber
+    '#EF4444', // Red
+    '#8B5CF6', // Violet
+    '#EC4899', // Pink
+    '#14B8A6', // Teal
+    '#F97316'  // Orange
+];
 // ==================== GLOBAL MAP VARIABLES (ΑΠΟ ΤΟ ΠΑΛΙΟ ΧΑΡΤΗ) ====================
 window.firstPoint = null;
 window.secondPoint = null;
@@ -2654,6 +2664,11 @@ if (state.selectedActivities.length > 0) {
 // ==================== ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ: CREATE SUGGESTED PROGRAM ====================
 function createSuggestedProgram() {
     // Αυτό δημιουργεί ένα απλό προτεινόμενο πρόγραμμα χωρίς να καλεί τη γενική συνάρτηση
+     // ΑΣΦΑΛΕΙΑ: Ορισμός COLOR_PALETTE εδώ για την περίπτωση που δεν έχει φορτωθεί
+    const COLOR_PALETTE = [
+        '#4F46E5', '#10B981', '#F59E0B', '#EF4444', 
+        '#8B5CF6', '#EC4899', '#14B8A6', '#F97316'
+    ];
     const programDiv = document.getElementById('geographic-program');
     if (!programDiv || state.selectedActivities.length === 0 || state.selectedDays === 0) {
         return;
@@ -5985,9 +6000,19 @@ function createGeographicClusters(activities, maxDistanceKm = 1.5, minPoints = 2
     );
     
     if (activitiesWithoutLocation.length > 0) {
-        console.log(`➕ Προσθήκη ${activitiesWithoutLocation.length} δραστηριοτήτων χωρίς location`);
+    console.log(`➕ Προσθήκη ${activitiesWithoutLocation.length} δραστηριοτήτων χωρίς location`);
+    
+    activitiesWithoutLocation.forEach((act, index) => {
+        // Βάλε μόνο αν αυτή η δραστηριότητα ΔΕΝ είναι ήδη σε κάποια σύσταδα
+        let alreadyInCluster = false;
+        for (const cluster of clusters) {
+            if (cluster.activities.some(a => a.id === act.id || a.name === act.name)) {
+                alreadyInCluster = true;
+                break;
+            }
+        }
         
-        activitiesWithoutLocation.forEach((act, index) => {
+        if (!alreadyInCluster) {
             if (clusters.length > 0) {
                 // Βάλε στην πιο μικρή σύσταδα για ισορροπία
                 const smallestCluster = clusters.reduce((min, cluster) => 
@@ -6004,8 +6029,9 @@ function createGeographicClusters(activities, maxDistanceKm = 1.5, minPoints = 2
                     radius: 0
                 });
             }
-        });
-    }
+        }
+    });
+}
     
     // 5. Ταξινόμηση συστάδων (μεγαλύτερες πρώτες)
     clusters.sort((a, b) => b.count - a.count);
