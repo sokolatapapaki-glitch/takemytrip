@@ -3763,7 +3763,7 @@ function saveState() {
         selectedActivities: state.selectedActivities,
         currentStep: state.currentStep // <-- ΠΡΟΣΘΗΚΗ ΑΥΤΗ
     };
-    
+    console.log('💾 Αποθήκευση state:', data); // <-- ΝΕΗ ΓΡΑΜΜΗ
     localStorage.setItem('travelPlannerData', JSON.stringify(data));
 }
 
