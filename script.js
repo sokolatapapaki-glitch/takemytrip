@@ -5912,14 +5912,12 @@ function createGeographicClusters(activities, maxDistanceKm = 1.5, minPoints = 2
                 }
             }
             
-            // Αν δεν ανήκει ήδη σε cluster, πρόσθεσε τον
-            const alreadyInCluster = clusters.some(c => 
-                c.activities.includes(points[neighborIndex])
-            );
-            
-            if (!alreadyInCluster) {
-                cluster.push(points[neighborIndex]);
-            }
+           // Αν δεν ανήκει ήδη σε ΑΥΤΗΝ ΤΗΝ cluster, πρόσθεσε τον
+const alreadyInThisCluster = cluster.includes(points[neighborIndex]);
+
+if (!alreadyInThisCluster) {
+    cluster.push(points[neighborIndex]);
+}
         }
     }
     
