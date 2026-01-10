@@ -552,38 +552,87 @@ function getHotelStepHTML() {
                 <span style="margin-left: 5px;">Ανακατεύθυνση σε Booking/Expedia/Ticketseller</span>
             </div>
 
-            <!-- ΚΟΥΜΠΙΑ ΧΩΡΙΣ ΤΕΡΑΣΤΙΟ ΠΑΔΙΝΓΚ -->
+            <!-- ΚΟΥΜΠΙΑ ΜΕ RESPONSIVE DESIGN -->
             <div style="text-align: center; margin: 15px 0;">
-                
-                <!-- BOOKING.COM -->
-                <button class="btn btn-primary" onclick="searchBookingHotels()" 
-                        style="width: 100%; padding: 11px 12px; margin: 6px 0; font-size: 15px; font-weight: 600;"
-                    <i class="fas fa-search"></i> Booking.com
-                </button>
-                
-                <!-- EXPEDIA -->
-                <button class="btn" onclick="searchExpediaHotels()" 
-                        style="width: 100%; padding: 11px 12px; margin: 6px 0; font-size: 15px; font-weight: 600;"
-                               background: linear-gradient(135deg, #ff9800, #ff5722); color: white; border: none;">
-                    <i class="fas fa-hotel"></i> Expedia
-                    <small style="font-size: 11px; margin-left: 5px;">(προμήθεια για εμάς)</small>
-                </button>
-                
-                <!-- TICKETSELLER -->
-                <button class="btn" onclick="window.open('https://ticketseller.gr/el/home-2/', '_blank')" 
-                        style="width: 100%; padding: 11px 12px; margin: 6px 0; font-size: 15px; font-weight: 600;" 
-                               background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; border: none;">
-                    <i class="fas fa-ticket-alt"></i> TicketSeller
-                    <small style="font-size: 11px; margin-left: 5px;">(για να λάβετε έκπτωση στείλτε mail στο: takethekids2@gmail.com)</small>
-                </button>
-                
+                <div class="hotel-buttons-container" style="
+                    display: flex; 
+                    flex-direction: column; 
+                    gap: 8px; 
+                    align-items: center;
+                ">
+                    <!-- BOOKING.COM -->
+                    <button class="btn btn-primary" onclick="searchBookingHotels()" 
+                            style="
+                                width: 100%; 
+                                max-width: 320px;
+                                padding: 12px 15px; 
+                                font-size: 15px; 
+                                font-weight: 600;
+                                border: none;
+                                border-radius: 8px;
+                            ">
+                        <i class="fas fa-search"></i> Αναζήτηση σε Booking.com
+                    </button>
+                    
+                    <!-- EXPEDIA -->
+                    <button class="btn" onclick="searchExpediaHotels()" 
+                            style="
+                                width: 100%; 
+                                max-width: 320px;
+                                padding: 12px 15px; 
+                                margin: 0; 
+                                font-size: 15px; 
+                                font-weight: 600;
+                                background: linear-gradient(135deg, #ff9800, #ff5722); 
+                                color: white; 
+                                border: none;
+                                border-radius: 8px;
+                            ">
+                        <i class="fas fa-hotel"></i> Αναζήτηση σε Expedia
+                    </button>
+                    
+                    <!-- TICKETSELLER -->
+                    <button class="btn" onclick="window.open('https://ticketseller.gr/el/home-2/', '_blank')" 
+                            style="
+                                width: 100%; 
+                                max-width: 320px;
+                                padding: 12px 15px; 
+                                margin: 0; 
+                                font-size: 15px; 
+                                font-weight: 600;
+                                background: linear-gradient(135deg, #4CAF50, #2E7D32); 
+                                color: white; 
+                                border: none;
+                                border-radius: 8px;
+                            ">
+                        <i class="fas fa-ticket-alt"></i> Αναζήτηση σε TicketSeller
+                    </button>
+                </div>
             </div>
             
+            <!-- MEDIA QUERY ΓΙΑ DESKTOP -->
+            <style>
+                @media (min-width: 768px) {
+                    .hotel-buttons-container {
+                        flex-direction: row !important;
+                        justify-content: center !important;
+                        flex-wrap: wrap !important;
+                    }
+                    
+                    .hotel-buttons-container button {
+                        width: auto !important;
+                        min-width: 200px !important;
+                        max-width: 250px !important;
+                        margin: 0 5px !important;
+                    }
+                }
+            </style>
+            
             <!-- ΣΥΝΕΧΕΙΑ -->
-            <div style="text-align: center; margin-top: 10px;">
+            <div style="text-align: center; margin-top: 15px;">
                 <button class="btn btn-primary" onclick="showStep('activities')" 
-                        style="padding: 10px 20px; font-size: 14px;">
-                    <i class="fas fa-arrow-right"></i> Συνέχεια
+                        style="padding: 10px 25px; font-size: 14px; border-radius: 8px;">
+                    <i class="fas fa-arrow-right"></i> Συνέχεια στις Δραστηριότητες
                 </button>
             </div>
         </div>
