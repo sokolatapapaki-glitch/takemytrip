@@ -47,10 +47,10 @@ function initApp() {
     // 5. Fix για κουμπιά προορισμού
     fixDestinationButtons();
     
-    // 6. Εμφάνιση του σωστού βήματος
+     // 6. Εμφάνιση του σωστού βήματος (τώρα το state.currentStep είναι σωστό)
     setTimeout(() => {
         showStep(state.currentStep);
-        console.log('✅ Εφαρμογή αρχικοποιήθηκε');
+        console.log('✅ Εφαρμογή αρχικοποιήθηκε στο βήμα:', state.currentStep);
     }, 100);
 }
 
