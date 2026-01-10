@@ -28,7 +28,31 @@ window.firstPoint = null;
 window.secondPoint = null;
 window.currentRoutePolyline = null;
 window.selectedMarkers = []; // Για ενώσεις σημείων
-
+// ==================== MAIN INITIALIZATION FUNCTION ====================
+function initApp() {
+    console.log('🚀 Εκκίνηση εφαρμογής...');
+    
+    // 1. Φόρτωση αποθηκευμένων δεδομένων
+    loadSavedData();
+    
+    // 2. Ρύθμιση mobile navigation
+    setupMobileNavigation();
+    
+    // 3. Ρύθμιση navigation για βήματα
+    setupStepNavigation();
+    
+    // 4. Ρύθμιση event listeners
+    setupEventListeners();
+    
+    // 5. Fix για κουμπιά προορισμού
+    fixDestinationButtons();
+    
+    // 6. Εμφάνιση του σωστού βήματος
+    setTimeout(() => {
+        showStep(state.currentStep);
+        console.log('✅ Εφαρμογή αρχικοποιήθηκε');
+    }, 100);
+}
 
 // ==================== INITIALIZATION ====================
 document.addEventListener('DOMContentLoaded', function() {
