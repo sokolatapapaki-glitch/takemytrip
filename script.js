@@ -196,7 +196,7 @@ function loadStepContent(stepName) {
             break;
         case 'hotel':
             stepContent.innerHTML = getHotelStepHTML();
-            setupHotelStep();
+            // setupHotelStep(); // ΑΠΕΝΕΡΓΟΠΟΙΗΜΕΝΗ - ΔΕΝ ΧΡΕΙΑΖΕΤΑΙ ΠΙΑ
             break;
        case 'activities':
     stepContent.innerHTML = getActivitiesStepHTML();
@@ -549,7 +549,7 @@ function getHotelStepHTML() {
             <!-- ΜΙΚΡΗ ΕΝΔΕΙΞΗ -->
             <div style="background: #fff3cd; padding: 8px 10px; border-radius: 6px; margin: 10px 0; font-size: 12px;">
                 <i class="fas fa-external-link-alt" style="color: #ff9800;"></i>
-                <span style="margin-left: 5px;">Ανακατεύθυνση σε Booking/Expedia</span>
+                <span style="margin-left: 5px;">Ανακατεύθυνση σε Booking/Expedia/Ticketseller</span>
             </div>
 
             <!-- ΚΟΥΜΠΙΑ ΧΩΡΙΣ ΤΕΡΑΣΤΙΟ ΠΑΔΙΝΓΚ -->
@@ -574,7 +574,7 @@ function getHotelStepHTML() {
                         style="width: 100%; padding: 10px 12px; margin: 6px 0; font-size: 14px; 
                                background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; border: none;">
                     <i class="fas fa-ticket-alt"></i> TicketSeller
-                    <small style="font-size: 11px; margin-left: 5px;">(έκπτωση για εσένα)</small>
+                    <small style="font-size: 11px; margin-left: 5px;">(για την έκπτωση mail στο: takethekids2@gmail.com)</small>
                 </button>
                 
             </div>
