@@ -1403,28 +1403,58 @@ displayGeographicProgram(daysProgram, activityGroups);
     console.log('🎯 ========== ΤΕΛΟΣ generateGeographicProgram ==========');
 }
 // 🔴 ΝΕΑ ΣΥΝΑΡΤΗΣΗ: Φόρτωση δραστηριοτήτων για το πρόγραμμα
+// AbortController for cancelling pending fetch requests
+let activitiesFetchController = null;
+
 function loadActivitiesForProgram() {
     console.log('🔄 Φόρτωση δραστηριοτήτων για το πρόγραμμα...');
-    
+
     if (!state.selectedDestinationId) {
         alert('❌ Δεν υπάρχει επιλεγμένος προορισμός');
         return;
     }
-    
-    fetch(`data/${state.selectedDestinationId}.json`)
-        .then(response => response.json())
+
+    // Cancel any pending fetch request to prevent race conditions
+    if (activitiesFetchController) {
+        activitiesFetchController.abort();
+    }
+    activitiesFetchController = new AbortController();
+
+    fetch(`data/${state.selectedDestinationId}.json`, {
+        signal: activitiesFetchController.signal
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(cityData => {
+            // Validate data structure
+            if (!cityData || !Array.isArray(cityData.activities)) {
+                throw new Error('Invalid data structure: missing activities array');
+            }
+
             state.currentCityActivities = cityData.activities;
             console.log('✅ Δραστηριότητες φορτώθηκαν:', state.currentCityActivities.length);
-            
+
+            // Clear the controller since fetch completed
+            activitiesFetchController = null;
+
             // Ξανακάλεσε τη generateGeographicProgram τώρα που έχουμε τα δεδομένα
             setTimeout(() => {
                 generateGeographicProgram();
             }, 500);
         })
         .catch(error => {
+            // Ignore abort errors (user triggered new fetch)
+            if (error.name === 'AbortError') {
+                console.log('⚠️ Fetch aborted (new request started)');
+                return;
+            }
             console.error('❌ Σφάλμα φόρτωσης:', error);
-            alert('⚠️ Δεν μπορούν να φορτωθούν οι δραστηριότητες. Παρακαλώ ανανεώστε τη σελίδα.');
+            alert(`⚠️ Δεν μπορούν να φορτωθούν οι δραστηριότητες: ${error.message}`);
+            activitiesFetchController = null;
         });
 }
 // ==================== FORCE REFRESH PROGRAM ====================
@@ -5025,63 +5055,73 @@ function createMarkerWithConnectFunction(coords, title, activityData) {
     
     // Συνάρτηση ανανέωσης εμφάνισης
     function updateMarkerAppearance() {
-        const isPointA = selectedPointA && selectedPointA.marker === marker;
-        const isPointB = selectedPointB && selectedPointB.marker === marker;
-        
-        const color = isPointA ? '#10B981' : isPointB ? '#EF4444' : '#4F46E5';
-        const letter = isPointA ? 'A' : isPointB ? 'B' : '📍';
-        const size = isPointA || isPointB ? '50px' : '42px';
-        const fontSize = isPointA || isPointB ? '20px' : '18px';
-        
-        marker.setIcon(L.divIcon({
-            html: `
-                <div style="
-                    background: ${color}; 
-                    color: white; 
-                    width: ${size}; 
-                    height: ${size}; 
-                    border-radius: 50%; 
-                    display: flex; 
-                    align-items: center; 
-                    justify-content: center;
-                    font-weight: bold;
-                    font-size: ${fontSize};
-                    border: 3px solid white;
-                    box-shadow: 0 3px 15px ${color}80;
-                    cursor: pointer;
-                    animation: ${isPointA || isPointB ? 'pulse 1.5s infinite' : 'none'};
-                ">
-                    ${letter}
-                </div>
-            `,
-            className: isPointA ? 'selected-marker-a' : isPointB ? 'selected-marker-b' : 'clickable-marker',
-            iconSize: [parseInt(size), parseInt(size)],
-            iconAnchor: [parseInt(size)/2, parseInt(size)]
-        }));
-        
-        // Ενημέρωση popup
-        const popupContent = isPointA ? 
-            `<div style="text-align: center; padding: 10px;">
-                <h4 style="margin: 0 0 10px 0; color: #10B981;">📍 ΑΠΟ</h4>
-                <p style="margin: 0; font-weight: bold;">${title}</p>
-                <p style="margin: 5px 0 0 0; color: #666; font-size: 12px;">
-                    ✅ Επιλέχθηκε ως σημείο εκκίνησης
-                </p>
-            </div>` :
-            isPointB ?
-            `<div style="text-align: center; padding: 10px;">
-                <h4 style="margin: 0 0 10px 0; color: #EF4444;">🎯 ΠΡΟΣ</h4>
-                <p style="margin: 0; font-weight: bold;">${title}</p>
-                <p style="margin: 5px 0 0 0; color: #666; font-size: 12px;">
-                    ✅ Επιλέχθηκε ως προορισμός
-                </p>
-            </div>` :
-            createEnhancedPopup(safeActivityData);
-        
-        marker.bindPopup(popupContent);
-        
-        if (isPointA || isPointB) {
-            marker.openPopup();
+        try {
+            const isPointA = selectedPointA && selectedPointA.marker === marker;
+            const isPointB = selectedPointB && selectedPointB.marker === marker;
+
+            const color = isPointA ? '#10B981' : isPointB ? '#EF4444' : '#4F46E5';
+            const letter = isPointA ? 'A' : isPointB ? 'B' : '📍';
+            const size = isPointA || isPointB ? '50px' : '42px';
+            const fontSize = isPointA || isPointB ? '20px' : '18px';
+
+            marker.setIcon(L.divIcon({
+                html: `
+                    <div style="
+                        background: ${color};
+                        color: white;
+                        width: ${size};
+                        height: ${size};
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-weight: bold;
+                        font-size: ${fontSize};
+                        border: 3px solid white;
+                        box-shadow: 0 3px 15px ${color}80;
+                        cursor: pointer;
+                        animation: ${isPointA || isPointB ? 'pulse 1.5s infinite' : 'none'};
+                    ">
+                        ${letter}
+                    </div>
+                `,
+                className: isPointA ? 'selected-marker-a' : isPointB ? 'selected-marker-b' : 'clickable-marker',
+                iconSize: [parseInt(size), parseInt(size)],
+                iconAnchor: [parseInt(size)/2, parseInt(size)]
+            }));
+
+            // Ενημέρωση popup - with fallback for errors
+            let popupContent;
+            try {
+                popupContent = isPointA ?
+                    `<div style="text-align: center; padding: 10px;">
+                        <h4 style="margin: 0 0 10px 0; color: #10B981;">📍 ΑΠΟ</h4>
+                        <p style="margin: 0; font-weight: bold;">${title}</p>
+                        <p style="margin: 5px 0 0 0; color: #666; font-size: 12px;">
+                            ✅ Επιλέχθηκε ως σημείο εκκίνησης
+                        </p>
+                    </div>` :
+                    isPointB ?
+                    `<div style="text-align: center; padding: 10px;">
+                        <h4 style="margin: 0 0 10px 0; color: #EF4444;">🎯 ΠΡΟΣ</h4>
+                        <p style="margin: 0; font-weight: bold;">${title}</p>
+                        <p style="margin: 5px 0 0 0; color: #666; font-size: 12px;">
+                            ✅ Επιλέχθηκε ως προορισμός
+                        </p>
+                    </div>` :
+                    createEnhancedPopup(safeActivityData);
+            } catch (popupError) {
+                console.warn('Error creating popup:', popupError);
+                popupContent = `<div><strong>${title || 'Activity'}</strong></div>`;
+            }
+
+            marker.bindPopup(popupContent);
+
+            if (isPointA || isPointB) {
+                marker.openPopup();
+            }
+        } catch (error) {
+            console.error('Error updating marker appearance:', error);
         }
     }
     
