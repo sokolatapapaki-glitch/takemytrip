@@ -538,10 +538,138 @@ function loadSavedDataNow(saved) {
             hasProgram: !!state.geographicProgram,
             lastSaved: data.lastSaved
         });
+
+        // Show enhanced notification about loaded trip with navigation help
+        showSavedTripNotification(data);
+
+        // Add visual indicators to sidebar steps
+        updateSidebarCompletionIndicators();
+
     } catch (error) {
         console.error('Σφάλμα φόρτωσης δεδομένων:', error);
         // Don't throw - fall back to default state
     }
+}
+
+// ==================== SAVED TRIP NOTIFICATION & NAVIGATION ====================
+function showSavedTripNotification(data) {
+    // Determine which steps are completed
+    const completedSteps = [];
+    if (state.selectedDestination) completedSteps.push('Προορισμός');
+    if (state.selectedActivities.length > 0) completedSteps.push('Δραστηριότητες');
+    if (state.geographicProgram) completedSteps.push('Πρόγραμμα');
+
+    const message = `
+        <div style="max-width: 450px; text-align: left; font-family: 'Roboto', sans-serif;">
+            <h3 style="margin: 0 0 15px 0; color: #4F46E5; font-size: 20px;">
+                <i class="fas fa-suitcase-rolling"></i> Καλώς ήρθατε πίσω!
+            </h3>
+
+            <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid #4F46E5;">
+                <div style="font-size: 15px; font-weight: bold; color: #1e293b; margin-bottom: 10px;">
+                    📍 ${state.selectedDestination || 'Προορισμός'}
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 13px; color: #475569;">
+                    <div>
+                        <i class="fas fa-calendar-alt" style="color: #10B981; margin-right: 5px;"></i>
+                        <strong>${state.selectedDays || 0}</strong> μέρες
+                    </div>
+                    <div>
+                        <i class="fas fa-users" style="color: #F59E0B; margin-right: 5px;"></i>
+                        <strong>${state.familyMembers.length}</strong> άτομα
+                    </div>
+                    <div>
+                        <i class="fas fa-map-marked-alt" style="color: #EF4444; margin-right: 5px;"></i>
+                        <strong>${state.selectedActivities.length}</strong> δραστηριότητες
+                    </div>
+                    <div>
+                        <i class="fas fa-route" style="color: #8B5CF6; margin-right: 5px;"></i>
+                        ${state.geographicProgram ? '<strong>✅ Πρόγραμμα</strong>' : '<span style="color: #94a3b8;">Χωρίς πρόγραμμα</span>'}
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: #FEF3C7; padding: 12px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #F59E0B;">
+                <div style="font-weight: bold; color: #92400e; margin-bottom: 8px; font-size: 14px;">
+                    <i class="fas fa-compass" style="margin-right: 5px;"></i>
+                    Πλοήγηση στα Βήματα:
+                </div>
+                <div style="font-size: 13px; color: #78350f; line-height: 1.6;">
+                    • Χρησιμοποιήστε την <strong>αριστερή πλευρική μπάρα</strong> για να μεταβείτε μεταξύ βημάτων<br>
+                    • Τα ολοκληρωμένα βήματα εμφανίζονται με <strong style="color: #10B981;">✓ πράσινο</strong> σημάδι<br>
+                    • Συνεχίστε από εκεί που σταματήσατε!
+                </div>
+            </div>
+
+            ${completedSteps.length > 0 ? `
+                <div style="background: #D1FAE5; padding: 10px; border-radius: 8px; border-left: 4px solid #10B981;">
+                    <div style="font-size: 13px; color: #065f46;">
+                        <i class="fas fa-check-circle" style="margin-right: 5px;"></i>
+                        <strong>Ολοκληρωμένα:</strong> ${completedSteps.join(', ')}
+                    </div>
+                </div>
+            ` : ''}
+
+            <div style="margin-top: 15px; text-align: center; font-size: 12px; color: #64748b;">
+                <i class="fas fa-info-circle"></i> Αποθηκεύεται αυτόματα σε κάθε αλλαγή
+            </div>
+        </div>
+    `;
+
+    showToast(message, 'info', 8000);
+}
+
+function updateSidebarCompletionIndicators() {
+    // Add completion indicators to sidebar steps
+    const steps = document.querySelectorAll('.step');
+
+    steps.forEach(step => {
+        const stepName = step.dataset.step;
+        let isCompleted = false;
+        let icon = step.querySelector('i');
+
+        // Determine if step is completed
+        switch(stepName) {
+            case 'destination':
+                isCompleted = state.selectedDestination && state.selectedDays > 0;
+                break;
+            case 'flight':
+            case 'hotel':
+                // These are optional external links, always show as available
+                isCompleted = false;
+                break;
+            case 'activities':
+                isCompleted = state.selectedActivities.length > 0;
+                break;
+            case 'summary':
+                isCompleted = state.geographicProgram !== null;
+                break;
+            case 'map':
+                isCompleted = state.selectedActivities.length > 0 || (state.customPoints && state.customPoints.length > 0);
+                break;
+        }
+
+        // Remove existing indicators
+        const existingIndicator = step.querySelector('.completion-indicator');
+        if (existingIndicator) {
+            existingIndicator.remove();
+        }
+
+        // Add completion indicator
+        if (isCompleted) {
+            step.style.position = 'relative';
+            const indicator = document.createElement('span');
+            indicator.className = 'completion-indicator';
+            indicator.innerHTML = '<i class="fas fa-check-circle"></i>';
+            indicator.style.cssText = 'position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #10B981; font-size: 14px;';
+            step.appendChild(indicator);
+
+            // Add subtle background to completed steps
+            if (!step.classList.contains('active')) {
+                step.style.background = 'linear-gradient(90deg, transparent 0%, #D1FAE510 100%)';
+            }
+        }
+    });
 }
 
 // ==================== STEP MANAGEMENT ====================
@@ -574,12 +702,16 @@ function setupStepNavigation() {
 
 function showStep(stepName) {
     console.log(`📱 Εμφάνιση βήματος: ${stepName}`);
-    
+
     state.currentStep = stepName;
     updateStepUI(stepName);
     loadStepContent(stepName);
     document.getElementById('mobile-step-selector').value = stepName;
     saveState();
+
+    // Update sidebar completion indicators
+    updateSidebarCompletionIndicators();
+
      // 🔵 ΑΠΕΝΕΡΓΟΠΟΙΗΣΗ ΑΥΤΟΜΑΤΟΥ SCROLL
     setTimeout(() => {
         window.scrollTo({
