@@ -1712,6 +1712,23 @@ function saveManualDestination() {
     state.selectedDestination = cityName;
     state.selectedDestinationId = cityId;
     state.selectedDays = 0; // <-- ΒΑΖΟΥΜΕ 0, Ο ΧΡΗΣΤΗΣ ΘΑ ΤΙΣ ΕΠΙΛΕΞΕΙ ΣΤΟ ΒΗΜΑ 5
+
+    // 🔴 ΚΑΘΑΡΙΣΜΟΣ ΔΕΔΟΜΕΝΩΝ ΠΡΟΗΓΟΥΜΕΝΗΣ ΠΟΛΗΣ
+    state.selectedActivities = [];
+    state.currentCityActivities = null;
+    state.geographicProgram = null;
+    window.selectedMarkers = [];
+
+    // Καθαρισμός χάρτη αν υπάρχει
+    if (window.travelMap) {
+        window.travelMap.eachLayer(function(layer) {
+            if (layer instanceof L.Marker && layer.options?.className !== 'city-marker') {
+                window.travelMap.removeLayer(layer);
+            }
+        });
+    }
+
+    console.log('🧹 Καθαρισμός δεδομένων προηγούμενης πόλης');
     
     document.getElementById('current-destination-display').textContent = cityName;
     updateActivitiesCost();
@@ -2052,10 +2069,27 @@ async function filterDestinations() {
 
 function selectDestination(destinationName, destinationId) {
     console.log(`📍 Επιλογή προορισμού: ${destinationName} (${destinationId})`);
-    
+
     state.selectedDestination = destinationName;
     state.selectedDestinationId = destinationId;
-    
+
+    // 🔴 ΚΑΘΑΡΙΣΜΟΣ ΔΕΔΟΜΕΝΩΝ ΠΡΟΗΓΟΥΜΕΝΗΣ ΠΟΛΗΣ
+    state.selectedActivities = [];
+    state.currentCityActivities = null;
+    state.geographicProgram = null;
+    window.selectedMarkers = [];
+
+    // Καθαρισμός χάρτη αν υπάρχει
+    if (window.travelMap) {
+        window.travelMap.eachLayer(function(layer) {
+            if (layer instanceof L.Marker && layer.options?.className !== 'city-marker') {
+                window.travelMap.removeLayer(layer);
+            }
+        });
+    }
+
+    console.log('🧹 Καθαρισμός δεδομένων προηγούμενης πόλης');
+
     document.getElementById('current-destination-display').textContent = destinationName;
     
     const resultsDiv = document.getElementById('destination-results');
@@ -6160,3 +6194,4 @@ function testNewClustering() {
     
     console.log('✅ === ΤΕΛΟΣ ΣΥΓΚΡΙΣΗΣ ===');
 }
+
