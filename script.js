@@ -1992,9 +1992,9 @@ function forceRefreshProgram() {
 // const sliceActivities = group.activities.slice(startIdx, endIdx);
 
 // ΑΛΛΑΞΕ ΤΟ ΣΕ ΑΥΤΟ:
-// ==================== IMPROVED BALANCED DISTRIBUTION ALGORITHM ====================
+// ==================== EFFORT-BASED DISTRIBUTION ALGORITHM ====================
 function distributeGroupsToDays(groups, totalDays) {
-    console.log(`📅 Βελτιωμένη κατανομή ${groups.length} ομάδων σε ${totalDays} μέρες`);
+    console.log(`📅 Κατανομή βασισμένη σε προσπάθεια: ${groups.length} ομάδων σε ${totalDays} μέρες`);
 
     if (groups.length === 0 || totalDays < 1) {
         console.error('❌ Μη έγκυρα δεδομένα για κατανομή');
@@ -2006,32 +2006,28 @@ function distributeGroupsToDays(groups, totalDays) {
         totalActivities: 0,
         totalCost: 0,
         estimatedTime: 0,
-        center: null // Geographic center of day's activities
+        totalEffort: 0,  // NEW: Total effort score for the day
+        center: null
     }));
 
-    // 1. Sort groups by size and geographic spread
+    // 1. Sort groups by effort and geographic spread
     const sortedGroups = [...groups].sort((a, b) => {
-        // Prioritize larger groups first for better balance
-        if (b.count !== a.count) return b.count - a.count;
+        const effortA = calculateGroupEffort(a);
+        const effortB = calculateGroupEffort(b);
+        // Prioritize higher effort groups first for better balance
+        if (effortB !== effortA) return effortB - effortA;
         // Then by radius (tighter clusters first)
         return (a.radius || 0) - (b.radius || 0);
     });
 
-    console.log('🎯 ΣΤΟΧΟΣ: Ισορροπημένη κατανομή με γεωγραφική συνοχή');
+    console.log('🎯 ΣΤΟΧΟΣ: Ισορροπία προσπάθειας με γεωγραφική συνοχή (όχι σκληρά όρια)');
 
-    // 2. Distribute groups using improved algorithm
+    // 2. Distribute groups using effort-based algorithm
     sortedGroups.forEach((group, index) => {
-        // Find best day for this group considering:
-        // - Activity balance
-        // - Time constraints
-        // - Geographic proximity to existing groups in the day
         const bestDayIndex = findBestDayForGroup(days, group, totalDays);
 
-        // Add group to best day
-        days[bestDayIndex].groups.push(group);
-        days[bestDayIndex].totalActivities += group.count;
-
-        // Calculate cost and time
+        // Calculate group metrics
+        const groupEffort = calculateGroupEffort(group);
         let groupCost = 0;
         let groupTime = 0;
 
@@ -2043,22 +2039,24 @@ function distributeGroupsToDays(groups, totalDays) {
         // Travel time within cluster
         const travelTime = (group.activities.length - 1) * 0.3;
 
+        // Add to selected day
+        days[bestDayIndex].groups.push(group);
+        days[bestDayIndex].totalActivities += group.count;
         days[bestDayIndex].totalCost += groupCost;
         days[bestDayIndex].estimatedTime += groupTime + travelTime;
-
-        // Update day's geographic center
+        days[bestDayIndex].totalEffort += groupEffort;
         days[bestDayIndex].center = calculateDayCenter(days[bestDayIndex].groups);
 
-        console.log(`   📦 Cluster ${index + 1} (${group.count} δρ., ${groupTime.toFixed(1)}h) → Μέρα ${bestDayIndex + 1} (σύνολο: ${days[bestDayIndex].totalActivities} δρ., ${days[bestDayIndex].estimatedTime.toFixed(1)}h)`);
+        console.log(`   📦 Cluster ${index + 1} (${group.count} δρ., effort: ${groupEffort.toFixed(1)}) → Μέρα ${bestDayIndex + 1} (σύνολο: ${days[bestDayIndex].totalActivities} δρ., effort: ${days[bestDayIndex].totalEffort.toFixed(1)})`);
     });
 
     // 3. Optimize distribution: rebalance if needed
     balanceDaysIfNeeded(days);
 
-    console.log(`✅ Βελτιωμένη κατανομή σε ${totalDays} μέρες:`);
+    console.log(`✅ Κατανομή βασισμένη σε προσπάθεια σε ${totalDays} μέρες:`);
     days.forEach((day, i) => {
         if (day.totalActivities > 0) {
-            console.log(`   Μ${i+1}: ${day.groups.length} clusters, ${day.totalActivities} δραστηριότητες, ~${day.estimatedTime.toFixed(1)}h`);
+            console.log(`   Μ${i+1}: ${day.totalActivities} δραστηριότητες, ~${day.estimatedTime.toFixed(1)}h, effort: ${day.totalEffort.toFixed(1)}`);
         } else {
             console.log(`   Μ${i+1}: (ελεύθερη μέρα)`);
         }
@@ -2067,46 +2065,118 @@ function distributeGroupsToDays(groups, totalDays) {
     return days;
 }
 
-// Find the best day for a group considering balance and geography
+// ==================== CALCULATE GROUP EFFORT ====================
+function calculateGroupEffort(group) {
+    if (!group || !group.activities || group.activities.length === 0) {
+        return 0;
+    }
+
+    let totalEffort = 0;
+
+    group.activities.forEach(activity => {
+        // Base effort from duration
+        const duration = parseFloat(activity.duration_hours) || 1.5;
+        let activityEffort = duration * 10; // Base: 1 hour = 10 effort points
+
+        // Physical intensity multiplier based on category
+        const intensityMultiplier = getIntensityMultiplier(activity.category);
+        activityEffort *= intensityMultiplier;
+
+        // Add effort for the activity
+        totalEffort += activityEffort;
+    });
+
+    // Inter-activity travel effort within cluster
+    if (group.activities.length > 1) {
+        // Effort based on cluster radius (spread of activities)
+        const clusterRadius = group.radius || 0;
+        const travelEffort = (group.activities.length - 1) * (5 + clusterRadius * 2);
+        totalEffort += travelEffort;
+    }
+
+    return totalEffort;
+}
+
+// Get intensity multiplier based on activity category
+function getIntensityMultiplier(category) {
+    const intensityMap = {
+        // High intensity (walking-heavy, outdoor)
+        'park': 1.3,
+        'outdoor': 1.3,
+        'nature': 1.3,
+        'walking_tour': 1.4,
+        'hiking': 1.5,
+
+        // Medium intensity (typical sightseeing)
+        'attraction': 1.0,
+        'museum': 1.0,
+        'gallery': 1.0,
+        'monument': 1.0,
+        'church': 1.0,
+        'castle': 1.1,
+
+        // Light intensity (seated, minimal walking)
+        'theater': 0.7,
+        'cinema': 0.6,
+        'restaurant': 0.5,
+        'cafe': 0.5,
+        'show': 0.7,
+        'cruise': 0.6,
+
+        // Default
+        'default': 1.0
+    };
+
+    return intensityMap[category?.toLowerCase()] || intensityMap['default'];
+}
+
+// Find the best day for a group using effort-based scoring (NO HARD CAPS)
 function findBestDayForGroup(days, group, totalDays) {
-    const MAX_ACTIVITIES_PER_DAY = 8;  // Reasonable daily limit
-    const MAX_HOURS_PER_DAY = 10;      // Reasonable time limit (excluding breaks)
+    // Soft guidelines (not enforced as hard limits)
+    const TARGET_EFFORT_PER_DAY = 100;  // Ideal daily effort
+    const MAX_REASONABLE_EFFORT = 200;  // Very full day, but not blocked
 
     let bestDayIndex = 0;
     let bestScore = -Infinity;
 
+    const groupEffort = calculateGroupEffort(group);
+
     for (let i = 0; i < totalDays; i++) {
         const day = days[i];
+        const projectedEffort = day.totalEffort + groupEffort;
 
-        // Skip if this would exceed reasonable limits
-        const projectedActivities = day.totalActivities + group.count;
-        const projectedTime = day.estimatedTime + (group.activities.length * 1.5);
-
-        if (projectedActivities > MAX_ACTIVITIES_PER_DAY || projectedTime > MAX_HOURS_PER_DAY) {
-            continue; // This day is too full
-        }
-
-        // Calculate score for this day
+        // Calculate score for this day (higher is better)
         let score = 0;
 
-        // 1. Balance factor: prefer emptier days (higher score for fewer activities)
-        const balanceFactor = (MAX_ACTIVITIES_PER_DAY - projectedActivities) * 10;
-        score += balanceFactor;
+        // 1. Effort balance factor: prefer days closer to target
+        // Use a curve that gradually penalizes deviation from target
+        const effortDeviation = Math.abs(projectedEffort - TARGET_EFFORT_PER_DAY);
+        const effortPenalty = effortDeviation * 0.5; // Gentle penalty
+        score -= effortPenalty;
 
-        // 2. Geographic proximity factor: prefer days with nearby groups
+        // Extra penalty if going way over reasonable effort (but not blocking)
+        if (projectedEffort > MAX_REASONABLE_EFFORT) {
+            const overagePenalty = (projectedEffort - MAX_REASONABLE_EFFORT) * 2;
+            score -= overagePenalty;
+        }
+
+        // 2. Geographic proximity factor: PRIORITY - prefer days with nearby groups
         if (day.groups.length > 0 && day.center && group.center) {
             const distanceToDay = calculateDistance(day.center, group.center);
-            // Closer groups get higher score (inverse distance)
-            const proximityFactor = Math.max(0, 100 - distanceToDay * 10);
+            // Strong bonus for geographic proximity (primary constraint)
+            const proximityFactor = Math.max(0, 150 - distanceToDay * 15);
             score += proximityFactor;
         } else {
             // If day is empty, give moderate score
-            score += 50;
+            score += 75;
         }
 
-        // 3. Time balance factor: prefer days with more time available
-        const timeFactor = (MAX_HOURS_PER_DAY - projectedTime) * 5;
-        score += timeFactor;
+        // 3. Activity spread factor: slight preference for variety
+        // Don't overfill one day when others are empty
+        const daysFilled = days.filter(d => d.totalActivities > 0).length;
+        if (day.totalActivities === 0 && daysFilled < totalDays * 0.7) {
+            score += 20; // Bonus for spreading across days
+        }
 
         if (score > bestScore) {
             bestScore = score;
@@ -2128,26 +2198,31 @@ function calculateDayCenter(groups) {
     return [totalLat / validGroups.length, totalLng / validGroups.length];
 }
 
-// Rebalance days if there's significant imbalance
+// Rebalance days if there's significant effort imbalance
 function balanceDaysIfNeeded(days) {
     const nonEmptyDays = days.filter(d => d.totalActivities > 0);
     if (nonEmptyDays.length === 0) return;
 
+    const avgEffort = nonEmptyDays.reduce((sum, d) => sum + d.totalEffort, 0) / nonEmptyDays.length;
     const avgActivities = nonEmptyDays.reduce((sum, d) => sum + d.totalActivities, 0) / nonEmptyDays.length;
-    const maxImbalance = avgActivities * 1.5; // Allow up to 50% more than average
 
-    // Check if any day is significantly overloaded
+    // Log warnings for extreme imbalance (2x average effort)
+    const extremeImbalanceThreshold = avgEffort * 2;
+
     nonEmptyDays.forEach(day => {
-        if (day.totalActivities > maxImbalance && day.groups.length > 1) {
-            console.log(`   ⚖️ Μέρα με ${day.totalActivities} δραστηριότητες είναι υπερφορτωμένη (μέσος: ${avgActivities.toFixed(1)})`);
-            // Could implement splitting logic here if needed, but current algorithm should prevent this
+        if (day.totalEffort > extremeImbalanceThreshold) {
+            console.log(`   ⚖️ ⚠️ Μέρα με effort ${day.totalEffort.toFixed(1)} είναι πολύ βαριά (μέσος: ${avgEffort.toFixed(1)})`);
         }
     });
 
     // Log balance statistics
-    const min = Math.min(...nonEmptyDays.map(d => d.totalActivities));
-    const max = Math.max(...nonEmptyDays.map(d => d.totalActivities));
-    console.log(`   📊 Ισορροπία: ${min}-${max} δραστ/μέρα (μέσος: ${avgActivities.toFixed(1)})`);
+    const minEffort = Math.min(...nonEmptyDays.map(d => d.totalEffort));
+    const maxEffort = Math.max(...nonEmptyDays.map(d => d.totalEffort));
+    const minActivities = Math.min(...nonEmptyDays.map(d => d.totalActivities));
+    const maxActivities = Math.max(...nonEmptyDays.map(d => d.totalActivities));
+
+    console.log(`   📊 Ισορροπία Προσπάθειας: ${minEffort.toFixed(1)}-${maxEffort.toFixed(1)} effort/μέρα (μέσος: ${avgEffort.toFixed(1)})`);
+    console.log(`   📊 Ισορροπία Δραστηριοτήτων: ${minActivities}-${maxActivities} δραστ/μέρα (μέσος: ${avgActivities.toFixed(1)}) - χωρίς σκληρά όρια`);
 }
 
 function getDayColor(dayNumber) {
