@@ -3463,28 +3463,49 @@ function clearMapPoints() {
         alert('Παρακαλώ πρώτα φορτώστε τον χάρτη');
         return;
     }
-    
+
     // Καθαρισμός όλων των markers (εκτός από τον city marker)
+    let hasCityMarker = false;
     window.travelMap.eachLayer(function(layer) {
         if (layer instanceof L.Marker) {
             // Μην διαγράψεις τον city marker
             if (layer.options && layer.options.className === 'city-marker') {
+                hasCityMarker = true;
                 return;
             }
             window.travelMap.removeLayer(layer);
         }
     });
-    
+
+    // Clear selectedMarkers array to prevent memory leaks
+    window.selectedMarkers = [];
+
+    // Re-add city marker if it was accidentally removed
+    if (!hasCityMarker && state.selectedDestinationId) {
+        const cityCoords = getCityCoordinates(state.selectedDestinationId);
+        if (cityCoords) {
+            L.marker(cityCoords, {
+                icon: L.divIcon({
+                    html: `<div style="background:#4F46E5;color:white;width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;border:3px solid white;box-shadow:0 4px 12px rgba(79,70,229,0.4);">🏙️</div>`,
+                    className: 'city-marker',
+                    iconSize: [50, 50],
+                    iconAnchor: [25, 50]
+                })
+            }).addTo(window.travelMap);
+            console.log('🏙️ City marker re-added');
+        }
+    }
+
     // Καθαρισμός διαδρομών
     if (currentRouteLine) {
         window.travelMap.removeLayer(currentRouteLine);
         currentRouteLine = null;
     }
-    
+
     // Επαναφορά επιλογών
     selectedPointA = null;
     selectedPointB = null;
-    
+
     // Ενημέρωση
     const statusEl = document.getElementById('map-status');
     if (statusEl) {
@@ -3493,7 +3514,7 @@ function clearMapPoints() {
             <strong>Καθαρισμός:</strong> Όλα τα σημεία διαγράφηκαν
         `;
     }
-    
+
     showToast('🧹 Όλα τα σημεία καθαρίστηκαν από τον χάρτη', 'info');
 }
 function reloadMap() {
@@ -5824,8 +5845,10 @@ window.updateActivitiesTotal = updateActivitiesTotal;
 window.saveState = saveState;
 window.initializeSimpleMap = initializeSimpleMap;
 window.loadActivitiesOnMap = loadActivitiesOnMap;
-window.clearMap = clearMap;        
+window.clearMap = clearMap;
 window.initializeMapInStep = initializeMapInStep;
+window.cleanupMapState = cleanupMapState;
+window.recalculateSelectedActivityPrices = recalculateSelectedActivityPrices;
 window.clearMapPoints = clearMapPoints;
 window.forceRefreshProgram = forceRefreshProgram;
 window.createSuggestedProgram = createSuggestedProgram;
