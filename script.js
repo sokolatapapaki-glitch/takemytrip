@@ -1302,34 +1302,42 @@ const activitiesWithLocation = activities.filter(act =>
 function generateGeographicProgram() {
     console.log('🎯 ========== ΑΡΧΗ generateGeographicProgram ==========');
     
-    // 🔴 ΒΕΛΤΙΩΜΕΝΗ: Αν δεν βρει dropdown, χρησιμοποίησε την τρέχουσα τιμή
-    const daysSelect = document.getElementById('program-days');
+    // 🔴 ΒΕΛΤΙΩΜΕΝΗ: ΠΡΟΣΟΧΗ για dropdown ή τρέχουσα τιμή
+    let selectedDaysValue = 0;
     
-    if (daysSelect) {
-        // Αν υπάρχει dropdown, διάβασέ το
-        if (!daysSelect.value || daysSelect.value === '0') {
-            alert('⚠️ Παρακαλώ επιλέξτε πρώτα πόσες μέρες θα διαρκέσει το ταξίδι');
-            return;
-        }
-        state.selectedDays = parseInt(daysSelect.value);
-    } else {
-        // Αν ΔΕΝ υπάρχει dropdown, χρησιμοποίησε την τρέχουσα τιμή
-        console.log('ℹ️ Δεν βρέθηκε dropdown, χρήση τρέχουσας τιμής:', state.selectedDays);
-        
-        if (!state.selectedDays || state.selectedDays < 1) {
-            alert('⚠️ Παρακαλώ ορίστε πρώτα μέρες στο βήμα "Πρόγραμμα"');
+    // 1. Προσπάθησε να διαβάσεις από το dropdown
+    const daysSelect = document.getElementById('program-days');
+    if (daysSelect && daysSelect.value && daysSelect.value !== '0') {
+        selectedDaysValue = parseInt(daysSelect.value);
+        console.log('📅 Μέρες από dropdown:', selectedDaysValue);
+    } 
+    // 2. Αν όχι, δες στο state
+    else if (state.selectedDays && state.selectedDays > 0) {
+        selectedDaysValue = state.selectedDays;
+        console.log('ℹ️ Χρήση μέρες από state:', selectedDaysValue);
+    }
+    // 3. Αν τίποτα, ζήτησε από χρήστη
+    else {
+        console.warn('⚠️ Δεν βρέθηκαν μέρες!');
+        const userInput = prompt('Πόσες μέρες θα διαρκέσει το ταξίδι σας; (2-14)', '5');
+        if (userInput) {
+            selectedDaysValue = parseInt(userInput);
+            if (selectedDaysValue < 1) selectedDaysValue = 5;
+        } else {
+            alert('❌ Ακύρωση: Δεν ορίστηκαν μέρες');
             return;
         }
     }
     
-    if (!daysSelect.value || daysSelect.value === '0') {
-        alert('⚠️ Παρακαλώ επιλέξτε πρώτα πόσες μέρες θα διαρκέσει το ταξίδι');
+    // ΕΓΚΥΡΟΤΗΤΑ
+    if (!selectedDaysValue || selectedDaysValue < 1) {
+        alert('⚠️ Παρακαλώ επιλέξτε πρώτα πόσες μέρες θα διαρκέσει το ταξίδι (τουλάχιστον 1)');
         return;
     }
     
-    // Ενημέρωση state με την τρέχουσα τιμή
-    state.selectedDays = parseInt(daysSelect.value);
-    console.log('📅 Επιλέχθηκαν:', state.selectedDays, 'μέρες');
+    // Αποθήκευση
+    state.selectedDays = selectedDaysValue;
+    console.log('📅 Τελικές μέρες:', state.selectedDays);
     
     console.log('📊 State:', {
         selectedDestinationId: state.selectedDestinationId,
