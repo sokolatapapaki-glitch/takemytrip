@@ -1376,7 +1376,12 @@ let activityGroups = [];
 if (fullActivities.length > 0) {
     // Χρησιμοποιούμε την ΝΕΑ σωστή ομαδοποίηση
     activityGroups = advancedGeographicClustering(fullActivities, 2.0);
-
+// ΚΑΙ ΑΜΕΣΩΣ ΜΕΤΑ, ΠΡΟΣΘΕΤΕΙΣ:
+    console.log('🧠 Χρήση advancedGeographicClustering:', {
+        totalActivities: fullActivities.length,
+        clustersCreated: activityGroups.length,
+        groups: activityGroups.map((g, i) => `Ομάδα ${i+1}: ${g.count} δραστηριότητες`)
+    });
     
     // ΛΟΓΗ ΕΝΤΕΛΩΣ ΝΕΑ: Αν έχουμε περισσότερες συστάδες από μέρες
     if (activityGroups.length > state.selectedDays) {
