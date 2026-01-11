@@ -1403,8 +1403,9 @@ if (fullActivities.length > 0) {
     
     // 🔴 ΚΡΙΤΙΚΗ ΑΛΛΑΓΗ 2: Ενώνουμε ΚΟΝΤΙΝΕΣ ομάδες για να δημιουργήσουμε μεγαλύτερες
     const MAX_GROUPS = Math.max(5, state.selectedDays * 2); // Π.χ. 10 ομάδες για 5 μέρες
-    const MERGE_DISTANCE_KM = 3.0; // Ενώνουμε ομάδες μέχρι 3km μακριά
-    
+    const MERGE_DISTANCE_KM = 2.0; // Ενώνουμε ΜΟΝΟ ομάδες μέχρι 2km μακριά
+    // 🔴 ΔΙΟΡΘΩΣΗ: Μόνο 2km για ένωση
+const MERGE_DISTANCE_KM = 2.0; // Από 3.0 σε 2.0
     activityGroups = mergeCloseClusters(smallClusters, MAX_GROUPS, MERGE_DISTANCE_KM);
     
     console.log(`✅ Μετά από ενώσεις: ${activityGroups.length} ομάδες`);
