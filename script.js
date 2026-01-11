@@ -1402,9 +1402,9 @@ if (fullActivities.length > 0) {
     console.log(`📍 Αρχικά ${smallClusters.length} μικρές ομάδες (1km ακτίνα)`);
     
     // 🔴 ΚΡΙΤΙΚΗ ΑΛΛΑΓΗ 2: Ενώνουμε ΚΟΝΤΙΝΕΣ ομάδες για να δημιουργήσουμε μεγαλύτερες
-    const MAX_GROUPS = Math.max(5, state.selectedDays * 2); // Π.χ. 10 ομάδες για 5 μέρες
-    const MERGE_DISTANCE_KM = 2.0; // Ενώνουμε ΜΟΝΟ ομάδες μέχρι 2km μακριά
-        activityGroups = mergeCloseClusters(smallClusters, MAX_GROUPS, MERGE_DISTANCE_KM);
+            const MAX_GROUPS = Math.max(5, state.selectedDays * 2);
+const MAX_MERGE_DISTANCE_KM = 1.2; // 1.2km max distance activity-to-activity
+activityGroups = smartMergeClusters(smallClusters, MAX_GROUPS, MAX_MERGE_DISTANCE_KM);
     
     console.log(`✅ Μετά από ενώσεις: ${activityGroups.length} ομάδες`);
     
@@ -5693,6 +5693,144 @@ function updateDayMarkerAppearance(marker, pointType) {
         iconAnchor: [25, 50]
     }));
 }
+// ==================== ΣΩΣΤΟ MERGE CLUSTERS (ACTIVITY-TO-ACTIVITY) ====================
+function clustersAreMergeable(clusterA, clusterB, maxKm) {
+    // Έλεγχος αν ΚΑΠΟΙΑ δραστηριότητα του Α είναι κοντά σε ΚΑΠΟΙΑ δραστηριότητα του Β
+    for (const actA of clusterA.activities) {
+        for (const actB of clusterB.activities) {
+            // Σιγουρέψου ότι υπάρχουν locations
+            if (!actA.location || !actB.location) continue;
+            
+            const d = calculateDistance(
+                [actA.location.lat, actA.location.lng],
+                [actB.location.lat, actB.location.lng]
+            );
+            if (d <= maxKm) {
+                return true; // Υπάρχει πραγματική εγγύτητα!
+            }
+        }
+    }
+    return false;
+}
+
+function smartMergeClusters(clusters, maxClusters, maxKm) {
+    console.log(`🧠 SMART MERGE: ${clusters.length} clusters, max ${maxKm}km activity-to-activity`);
+    
+    if (!clusters || clusters.length <= maxClusters) {
+        return clusters;
+    }
+    
+    // 1. Κάνε αντίγραφο
+    let mergedClusters = clusters.map(cluster => ({
+        ...cluster,
+        id: Math.random().toString(36).substring(2, 9)
+    }));
+    
+    // 2. Βρες όλα τα ζεύγη που μπορούν να ενωθούν
+    const mergeablePairs = [];
+    
+    for (let i = 0; i < mergedClusters.length; i++) {
+        for (let j = i + 1; j < mergedClusters.length; j++) {
+            if (clustersAreMergeable(mergedClusters[i], mergedClusters[j], maxKm)) {
+                // Υπολόγισε την ελάχιστη απόσταση μεταξύ τους
+                let minDistance = Infinity;
+                
+                for (const actA of mergedClusters[i].activities) {
+                    for (const actB of mergedClusters[j].activities) {
+                        if (!actA.location || !actB.location) continue;
+                        
+                        const d = calculateDistance(
+                            [actA.location.lat, actA.location.lng],
+                            [actB.location.lat, actB.location.lng]
+                        );
+                        if (d < minDistance) {
+                            minDistance = d;
+                        }
+                    }
+                }
+                
+                if (minDistance !== Infinity) {
+                    mergeablePairs.push({
+                        i, j, 
+                        distance: minDistance,
+                        totalActivities: mergedClusters[i].count + mergedClusters[j].count
+                    });
+                }
+            }
+        }
+    }
+    
+    // 3. Ταξινόμησε: πρώτα οι πιο κοντινοί, μετά οι μεγαλύτεροι
+    mergeablePairs.sort((a, b) => {
+        if (a.distance !== b.distance) return a.distance - b.distance;
+        return b.totalActivities - a.totalActivities; // Μεγαλύτερες ομάδες πρώτες
+    });
+    
+    // 4. Ενώνουμε μέχρι να φτάσουμε στο επιθυμητό αριθμό
+    while (mergedClusters.length > maxClusters && mergeablePairs.length > 0) {
+        const pair = mergeablePairs.shift();
+        const { i, j, distance } = pair;
+        
+        // Έλεγχος αν τα clusters υπάρχουν ακόμα
+        if (i >= mergedClusters.length || j >= mergedClusters.length || i === j) continue;
+        
+        const clusterA = mergedClusters[i];
+        const clusterB = mergedClusters[j];
+        
+        console.log(`   🔗 SMART MERGE: Ομάδα ${clusterA.id} + ${clusterB.id}`);
+        console.log(`      📏 Ελάχιστη απόσταση δραστηρ.: ${distance.toFixed(2)}km`);
+        console.log(`      📊 Δραστηριότητες: ${clusterA.count} + ${clusterB.count} = ${clusterA.count + clusterB.count}`);
+        
+        // Δημιούργησε νέα ενωμένη ομάδα
+        const mergedCluster = {
+            id: `${clusterA.id}+${clusterB.id}`,
+            activities: [...clusterA.activities, ...clusterB.activities],
+            count: clusterA.count + clusterB.count,
+            // Υπολογισμός νέου κέντρου (για χάρτη)
+            center: calculateSmartMergedCenter(clusterA, clusterB),
+            radius: Math.max(clusterA.radius || 0, clusterB.radius || 0, distance * 1.5)
+        };
+        
+        // Αφαίρεση παλιών και προσθήκη νέας
+        mergedClusters.splice(Math.max(i, j), 1);
+        mergedClusters.splice(Math.min(i, j), 1);
+        mergedClusters.push(mergedCluster);
+        
+        // Ενημέρωση indexes για τα υπόλοιπα pairs
+        mergeablePairs.forEach(p => {
+            if (p.i === i || p.i === j || p.j === i || p.j === j) {
+                p.i = -1; // Mark for removal
+            }
+        });
+    }
+    
+    // Φιλτράρισμα invalid pairs
+    const validPairs = mergeablePairs.filter(p => p.i !== -1);
+    
+    console.log(`✅ SMART MERGE ολοκληρώθηκε: ${mergedClusters.length} clusters`);
+    return mergedClusters;
+}
+
+function calculateSmartMergedCenter(clusterA, clusterB) {
+    // Συνδυασμός των δραστηριοτήτων με location
+    const allActivities = [...clusterA.activities, ...clusterB.activities]
+        .filter(act => act.location);
+    
+    if (allActivities.length === 0) return null;
+    
+    let totalLat = 0;
+    let totalLng = 0;
+    
+    allActivities.forEach(act => {
+        totalLat += act.location.lat;
+        totalLng += act.location.lng;
+    });
+    
+    return [
+        totalLat / allActivities.length,
+        totalLng / allActivities.length
+    ];
+}
 
 window.showStep = showStep;
 window.filterDestinations = filterDestinations;
@@ -5765,6 +5903,9 @@ window.createGeographicClusters = createGeographicClusters;
 window.calculateClusterCenter = calculateClusterCenter;
 window.distributeClustersToDays = distributeGroupsToDays;
 window.advancedGeographicClustering = advancedGeographicClustering;
+window.smartMergeClusters = smartMergeClusters;
+window.clustersAreMergeable = clustersAreMergeable;
+window.calculateSmartMergedCenter = calculateSmartMergedCenter;
 
 // ==================== CSS ANIMATIONS FOR PROGRAM ====================
 // Προσθήκη CSS animation για το spinner (για το βήμα 5)
