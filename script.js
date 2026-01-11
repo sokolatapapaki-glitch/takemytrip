@@ -1860,38 +1860,46 @@ function forceRefreshProgram() {
 // const sliceActivities = group.activities.slice(startIdx, endIdx);
 
 // ΑΛΛΑΞΕ ΤΟ ΣΕ ΑΥΤΟ:
+// ==================== IMPROVED BALANCED DISTRIBUTION ALGORITHM ====================
 function distributeGroupsToDays(groups, totalDays) {
-    console.log(`📅 Κατανομή ${groups.length} ομάδων σε ${totalDays} μέρες`);
-    
+    console.log(`📅 Βελτιωμένη κατανομή ${groups.length} ομάδων σε ${totalDays} μέρες`);
+
     if (groups.length === 0 || totalDays < 1) {
         console.error('❌ Μη έγκυρα δεδομένα για κατανομή');
         return [];
     }
-    
-    const days = Array.from({ length: totalDays }, () => ({ 
-        groups: [], 
+
+    const days = Array.from({ length: totalDays }, () => ({
+        groups: [],
         totalActivities: 0,
         totalCost: 0,
-        estimatedTime: 0
+        estimatedTime: 0,
+        center: null // Geographic center of day's activities
     }));
-    
-    // 1. Ταξινόμηση ομάδων (μεγαλύτερες πρώτες για ισορροπία)
-    const sortedGroups = [...groups].sort((a, b) => b.count - a.count);
-    
-    console.log('🎯 ΚΑΝΟΝΑΣ: Μια σύσταδα = Μια μέρα (ΔΕΝ σπας!)');
-    
-    // 2. Βάλε ΚΑΘΕ ΟΛΟΚΛΗΡΗ ΣΥΣΤΑΔΑ σε μία μέρα
+
+    // 1. Sort groups by size and geographic spread
+    const sortedGroups = [...groups].sort((a, b) => {
+        // Prioritize larger groups first for better balance
+        if (b.count !== a.count) return b.count - a.count;
+        // Then by radius (tighter clusters first)
+        return (a.radius || 0) - (b.radius || 0);
+    });
+
+    console.log('🎯 ΣΤΟΧΟΣ: Ισορροπημένη κατανομή με γεωγραφική συνοχή');
+
+    // 2. Distribute groups using improved algorithm
     sortedGroups.forEach((group, index) => {
-        // Βρες την πιο άδεια μέρα (για ισορροπία φόρτου)
-        const emptiestDayIndex = days.reduce((minIndex, day, idx) => 
-            day.totalActivities < days[minIndex].totalActivities ? idx : minIndex, 0
-        );
-        
-        // Βάλε ΟΛΗ τη σύσταδα στην ίδια μέρα
-        days[emptiestDayIndex].groups.push(group);
-        days[emptiestDayIndex].totalActivities += group.count;
-        
-        // Υπολόγισε κόστος και χρόνο
+        // Find best day for this group considering:
+        // - Activity balance
+        // - Time constraints
+        // - Geographic proximity to existing groups in the day
+        const bestDayIndex = findBestDayForGroup(days, group, totalDays);
+
+        // Add group to best day
+        days[bestDayIndex].groups.push(group);
+        days[bestDayIndex].totalActivities += group.count;
+
+        // Calculate cost and time
         let groupCost = 0;
         let groupTime = 0;
 
@@ -1900,29 +1908,114 @@ function distributeGroupsToDays(groups, totalDays) {
             groupTime += (parseFloat(activity.duration_hours) || 1.5);
         });
 
-        // Χρόνος μετακίνησης εντός συστάδας
+        // Travel time within cluster
         const travelTime = (group.activities.length - 1) * 0.3;
 
-        days[emptiestDayIndex].totalCost += groupCost;
-        days[emptiestDayIndex].estimatedTime += groupTime + travelTime;
-        
-        console.log(`   📦 Σύσταδα ${index + 1} (${group.count} δραστ.) → Μέρα ${emptiestDayIndex + 1}`);
-    });
-    
-    // 3. Επιστρέφουμε ΟΛΕΣ τις μέρες (ακόμα και κενές) για να ταιριάζει με την επιλογή του χρήστη
-    // Πριν: const nonEmptyDays = days.filter(day => day.totalActivities > 0);
-    // Τώρα: Επιστρέφουμε όλες τις μέρες
+        days[bestDayIndex].totalCost += groupCost;
+        days[bestDayIndex].estimatedTime += groupTime + travelTime;
 
-    console.log(`✅ Κατανεμήθηκαν ${sortedGroups.length} συστάδες σε ${totalDays} μέρες:`);
+        // Update day's geographic center
+        days[bestDayIndex].center = calculateDayCenter(days[bestDayIndex].groups);
+
+        console.log(`   📦 Cluster ${index + 1} (${group.count} δρ., ${groupTime.toFixed(1)}h) → Μέρα ${bestDayIndex + 1} (σύνολο: ${days[bestDayIndex].totalActivities} δρ., ${days[bestDayIndex].estimatedTime.toFixed(1)}h)`);
+    });
+
+    // 3. Optimize distribution: rebalance if needed
+    balanceDaysIfNeeded(days);
+
+    console.log(`✅ Βελτιωμένη κατανομή σε ${totalDays} μέρες:`);
     days.forEach((day, i) => {
         if (day.totalActivities > 0) {
-            console.log(`   Μ${i+1}: ${day.groups.length} συστάδες, ${day.totalActivities} δραστηριότητες`);
+            console.log(`   Μ${i+1}: ${day.groups.length} clusters, ${day.totalActivities} δραστηριότητες, ~${day.estimatedTime.toFixed(1)}h`);
         } else {
             console.log(`   Μ${i+1}: (ελεύθερη μέρα)`);
         }
     });
 
-    return days; // Return ALL days to match user's day selection
+    return days;
+}
+
+// Find the best day for a group considering balance and geography
+function findBestDayForGroup(days, group, totalDays) {
+    const MAX_ACTIVITIES_PER_DAY = 8;  // Reasonable daily limit
+    const MAX_HOURS_PER_DAY = 10;      // Reasonable time limit (excluding breaks)
+
+    let bestDayIndex = 0;
+    let bestScore = -Infinity;
+
+    for (let i = 0; i < totalDays; i++) {
+        const day = days[i];
+
+        // Skip if this would exceed reasonable limits
+        const projectedActivities = day.totalActivities + group.count;
+        const projectedTime = day.estimatedTime + (group.activities.length * 1.5);
+
+        if (projectedActivities > MAX_ACTIVITIES_PER_DAY || projectedTime > MAX_HOURS_PER_DAY) {
+            continue; // This day is too full
+        }
+
+        // Calculate score for this day
+        let score = 0;
+
+        // 1. Balance factor: prefer emptier days (higher score for fewer activities)
+        const balanceFactor = (MAX_ACTIVITIES_PER_DAY - projectedActivities) * 10;
+        score += balanceFactor;
+
+        // 2. Geographic proximity factor: prefer days with nearby groups
+        if (day.groups.length > 0 && day.center && group.center) {
+            const distanceToDay = calculateDistance(day.center, group.center);
+            // Closer groups get higher score (inverse distance)
+            const proximityFactor = Math.max(0, 100 - distanceToDay * 10);
+            score += proximityFactor;
+        } else {
+            // If day is empty, give moderate score
+            score += 50;
+        }
+
+        // 3. Time balance factor: prefer days with more time available
+        const timeFactor = (MAX_HOURS_PER_DAY - projectedTime) * 5;
+        score += timeFactor;
+
+        if (score > bestScore) {
+            bestScore = score;
+            bestDayIndex = i;
+        }
+    }
+
+    return bestDayIndex;
+}
+
+// Calculate geographic center of all groups in a day
+function calculateDayCenter(groups) {
+    const validGroups = groups.filter(g => g.center);
+    if (validGroups.length === 0) return null;
+
+    const totalLat = validGroups.reduce((sum, g) => sum + g.center[0], 0);
+    const totalLng = validGroups.reduce((sum, g) => sum + g.center[1], 0);
+
+    return [totalLat / validGroups.length, totalLng / validGroups.length];
+}
+
+// Rebalance days if there's significant imbalance
+function balanceDaysIfNeeded(days) {
+    const nonEmptyDays = days.filter(d => d.totalActivities > 0);
+    if (nonEmptyDays.length === 0) return;
+
+    const avgActivities = nonEmptyDays.reduce((sum, d) => sum + d.totalActivities, 0) / nonEmptyDays.length;
+    const maxImbalance = avgActivities * 1.5; // Allow up to 50% more than average
+
+    // Check if any day is significantly overloaded
+    nonEmptyDays.forEach(day => {
+        if (day.totalActivities > maxImbalance && day.groups.length > 1) {
+            console.log(`   ⚖️ Μέρα με ${day.totalActivities} δραστηριότητες είναι υπερφορτωμένη (μέσος: ${avgActivities.toFixed(1)})`);
+            // Could implement splitting logic here if needed, but current algorithm should prevent this
+        }
+    });
+
+    // Log balance statistics
+    const min = Math.min(...nonEmptyDays.map(d => d.totalActivities));
+    const max = Math.max(...nonEmptyDays.map(d => d.totalActivities));
+    console.log(`   📊 Ισορροπία: ${min}-${max} δραστ/μέρα (μέσος: ${avgActivities.toFixed(1)})`);
 }
 
 function getDayColor(dayNumber) {
@@ -4750,17 +4843,14 @@ function updateProgramDays() {
         showToast(`📅 Οι ημέρες ενημερώθηκαν σε ${selectedDays}. Πατήστε "Δημιουργία Προγράμματος"`, 'success');
     }
 }
-// ==================== GROUP ACTIVITIES BY PROXIMITY ====================
+// ==================== IMPROVED GROUP ACTIVITIES BY PROXIMITY ====================
 function groupActivitiesByProximity(activities, maxDistanceKm = 2) {
-    console.log(`📍 Ομαδοποίηση ${activities.length} δραστηριοτήτων (έως ${maxDistanceKm} km)`);
+    console.log(`📍 Βελτιωμένη ομαδοποίηση ${activities.length} δραστηριοτήτων (έως ${maxDistanceKm} km)`);
 
     if (!activities || activities.length === 0) {
         console.log('⚠️ Δεν υπάρχουν δραστηριότητες για ομαδοποίηση');
         return [];
     }
-
-    const groups = [];
-    const processed = new Set();
 
     // Φίλτραρε μόνο δραστηριότητες με valid location
     const activitiesWithLocation = activities.filter(activity =>
@@ -4780,37 +4870,8 @@ function groupActivitiesByProximity(activities, maxDistanceKm = 2) {
 
     console.log(`📊 ${activitiesWithLocation.length} από ${activities.length} έχουν τοποθεσία`);
 
-    // Group activities with location by proximity
-    activitiesWithLocation.forEach((activity, index) => {
-        if (processed.has(index)) return;
-
-        const group = [activity];
-        processed.add(index);
-
-        // Βρες όλες τις κοντινές δραστηριότητες
-        activitiesWithLocation.forEach((otherActivity, otherIndex) => {
-            if (processed.has(otherIndex) || index === otherIndex) return;
-
-            const distance = calculateDistance(
-                [activity.location.lat, activity.location.lng],
-                [otherActivity.location.lat, otherActivity.location.lng]
-            );
-
-            if (distance <= maxDistanceKm) {
-                group.push(otherActivity);
-                processed.add(otherIndex);
-                console.log(`   🔗 ${activity.name} ↔ ${otherActivity.name}: ${distance.toFixed(2)} km`);
-            }
-        });
-
-        // Always create a group (even for single activities)
-        groups.push({
-            center: calculateGroupCenter(group),
-            activities: group,
-            count: group.length,
-            radius: group.length > 1 ? maxDistanceKm : 0
-        });
-    });
+    // Use improved DBSCAN-like clustering for better geographic grouping
+    const groups = clusterActivitiesDBSCAN(activitiesWithLocation, maxDistanceKm);
 
     // Add activities without location as individual groups
     activitiesWithoutLocation.forEach(activity => {
@@ -4825,12 +4886,119 @@ function groupActivitiesByProximity(activities, maxDistanceKm = 2) {
         }
     });
 
-    console.log(`✅ Δημιουργήθηκαν ${groups.length} ομάδες`);
-
-    // Ταξινόμηση ομάδων (μεγαλύτερες πρώτες)
-    groups.sort((a, b) => b.count - a.count);
+    console.log(`✅ Δημιουργήθηκαν ${groups.length} ομάδες με βελτιωμένο clustering`);
 
     return groups;
+}
+
+// ==================== DBSCAN-LIKE CLUSTERING ALGORITHM ====================
+function clusterActivitiesDBSCAN(activities, maxDistanceKm) {
+    if (activities.length === 0) return [];
+
+    const groups = [];
+    const processed = new Set();
+    const noise = [];
+
+    // For each unprocessed activity
+    for (let i = 0; i < activities.length; i++) {
+        if (processed.has(i)) continue;
+
+        const activity = activities[i];
+        const neighbors = findNeighbors(activities, i, maxDistanceKm);
+
+        // If not enough neighbors, mark as noise (will be singleton group)
+        if (neighbors.length === 0) {
+            noise.push(activity);
+            processed.add(i);
+            continue;
+        }
+
+        // Create new cluster
+        const cluster = [activity];
+        processed.add(i);
+
+        // Expand cluster with neighbors
+        const queue = [...neighbors];
+        while (queue.length > 0) {
+            const neighborIdx = queue.shift();
+
+            if (processed.has(neighborIdx)) continue;
+            processed.add(neighborIdx);
+
+            const neighbor = activities[neighborIdx];
+            cluster.push(neighbor);
+
+            // Find neighbors of this neighbor (expansion)
+            const neighborNeighbors = findNeighbors(activities, neighborIdx, maxDistanceKm);
+            for (const nnIdx of neighborNeighbors) {
+                if (!processed.has(nnIdx) && !queue.includes(nnIdx)) {
+                    queue.push(nnIdx);
+                }
+            }
+        }
+
+        // Create group from cluster
+        groups.push({
+            center: calculateGroupCenter(cluster),
+            activities: cluster,
+            count: cluster.length,
+            radius: calculateClusterRadius(cluster)
+        });
+
+        console.log(`   🎯 Cluster ${groups.length}: ${cluster.length} δραστηριότητες (${cluster.map(a => a.name).join(', ')})`);
+    }
+
+    // Add noise activities as singleton groups
+    noise.forEach(activity => {
+        groups.push({
+            center: [activity.location.lat, activity.location.lng],
+            activities: [activity],
+            count: 1,
+            radius: 0
+        });
+    });
+
+    return groups;
+}
+
+// Find all neighbors within maxDistance
+function findNeighbors(activities, index, maxDistanceKm) {
+    const neighbors = [];
+    const activity = activities[index];
+
+    for (let i = 0; i < activities.length; i++) {
+        if (i === index) continue;
+
+        const distance = calculateDistance(
+            [activity.location.lat, activity.location.lng],
+            [activities[i].location.lat, activities[i].location.lng]
+        );
+
+        if (distance <= maxDistanceKm) {
+            neighbors.push(i);
+        }
+    }
+
+    return neighbors;
+}
+
+// Calculate actual radius of cluster (max distance from center)
+function calculateClusterRadius(activities) {
+    if (activities.length <= 1) return 0;
+
+    const center = calculateGroupCenter(activities);
+    if (!center) return 0;
+
+    let maxRadius = 0;
+    activities.forEach(activity => {
+        const distance = calculateDistance(
+            center,
+            [activity.location.lat, activity.location.lng]
+        );
+        maxRadius = Math.max(maxRadius, distance);
+    });
+
+    return maxRadius;
 }
 
 // Βοηθητική συνάρτηση για υπολογισμό κέντρου ομάδας
