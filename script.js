@@ -5495,22 +5495,7 @@ function applyDayFilter() {
     selectedDays.forEach(dayNumber => {
         const dayIndex = dayNumber - 1; // Μετατροπή σε index (0-based)
         // Βρες την ημέρα που έχει την ομάδα με τις δραστηριότητες
-const dayProgram = state.geographicProgram.days.find(day => 
-    day.groups.some(group => 
-        group.activities.some(activity => 
-            // Αν η δραστηριότητα είναι στις επιλεγμένες
-            state.selectedActivities.some(selected => 
-                selected.id === activity.id || 
-                selected.name === activity.name
-            )
-        )
-    )
-);
-
-if (!dayProgram) {
-    console.warn(`⚠️ Ημέρα ${dayNumber} δεν βρέθηκε στις ομάδες`);
-    return;
-}
+const dayProgram = state.geographicProgram.days[dayIndex];
         
         if (!dayProgram || !dayProgram.groups) {
             console.warn(`⚠️ Ημέρα ${dayNumber} δεν έχει δεδομένα`);
