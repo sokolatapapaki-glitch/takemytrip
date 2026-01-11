@@ -999,95 +999,36 @@ function getFullActivitiesWithLocation() {
         } : null;
     }).filter(a => a !== null && a.location);
 }
-console.log("🔍 DEBUG: ΕΛΕΓΧΟΣ HTML ΣΤΟΙΧΕΙΩΝ");
-console.log("geographic-program-section:", document.getElementById('geographic-program-section'));
-console.log("geographic-program:", document.getElementById('geographic-program'));
-console.log("currentStep:", state.currentStep);
 function displayGeographicProgram(daysProgram, activityGroups) {
-    console.log("🔍 displayGeographicProgram called with:", {
-        daysCount: daysProgram?.length,
-        groupsCount: activityGroups?.length
-    });
+    const programSection = document.getElementById('geographic-program-section');
+    const programDiv = document.getElementById('geographic-program');
     
-    // 1. ΒΡΕΣ ΤΑ ΣΤΟΙΧΕΙΑ ΜΕ ΑΣΦΑΛΕΙΑ
-    let programSection = document.getElementById('geographic-program-section');
-    let programDiv = document.getElementById('geographic-program');
-    
-    // 2. ΕΑΝ ΔΕΝ ΥΠΑΡΧΟΥΝ, ΔΗΜΙΟΥΡΓΗΣΕ ΤΑ
-    if (!programSection) {
-        console.warn("⚠️ programSection δεν βρέθηκε - δημιουργία...");
-        
-        // Ψάξε το summary container
-        const summaryContainer = document.querySelector('.card') || 
-                                document.getElementById('step-content');
-        
-        if (summaryContainer) {
-            const newSection = document.createElement('div');
-            newSection.id = 'geographic-program-section';
-            newSection.className = 'card';
-            newSection.style.marginTop = '30px';
-            newSection.style.display = 'block';
-            newSection.style.animation = 'slideDown 0.5s ease-out';
-            
-            newSection.innerHTML = `
-                <h3><i class="fas fa-route"></i> Γεωγραφικό Πρόγραμμα</h3>
-                <div id="geographic-program" 
-                     style="min-height: 150px; padding: 20px; border-radius: 15px; 
-                            background: #f0f7ff; border: 2px dashed var(--primary-light); 
-                            text-align: center;">
-                </div>
-            `;
-            
-            // Βάλτο μετά το summary container
-            summaryContainer.parentNode.insertBefore(newSection, summaryContainer.nextSibling);
-            
-            // Ενημέρωση των μεταβλητών
-            programSection = newSection;
-            programDiv = document.getElementById('geographic-program');
-            
-            console.log("✅ Δημιουργήθηκε νέο programSection");
-        }
-    }
-    
-    // 3. ΕΛΕΓΧΟΣ ΤΕΛΙΚΟΣ
     if (!programSection || !programDiv) {
-        console.error('❌ Αδυναμία εύρεσης ή δημιουργίας HTML στοιχείων');
-        
-        // Εμφάνιση error στο summary section
-        const summaryContent = document.querySelector('.card');
-        if (summaryContent) {
-            summaryContent.innerHTML += `
-                <div class="alert alert-danger" style="margin-top: 20px;">
-                    <h4><i class="fas fa-exclamation-triangle"></i> Σφάλμα Εμφάνισης Προγράμματος</h4>
-                    <p>Δεν μπορεί να εμφανιστεί το γεωγραφικό πρόγραμμα.</p>
-                    <button onclick="location.reload()" class="btn btn-primary">
-                        <i class="fas fa-redo"></i> Ανανέωση Σελίδας
-                    </button>
-                </div>
-            `;
-        }
+        console.error('❌ Δεν βρέθηκαν τα στοιχεία για εμφάνιση');
         return;
     }
     
-    // 4. ΕΜΦΑΝΙΣΗ ΠΕΡΙΕΧΟΜΕΝΟΥ
-    if (!activityGroups || activityGroups.length === 0) {
+    if (activityGroups.length === 0) {
         programDiv.innerHTML = `
             <div style="padding: 40px 20px; text-align: center;">
                 <div style="font-size: 48px; margin-bottom: 15px; color: #9CA3AF;">🧭</div>
                 <h4 style="color: var(--dark); margin-bottom: 10px;">Δεν βρέθηκαν πληροφορίες τοποθεσίας</h4>
                 <p style="color: var(--gray);">
-                    Οι επιλεγμένες δραστηριότητες δεν έχουν πληροφορίες τοποθεσίας.
+                    Οι επιλεγμένες δραστηριότητες δεν έχουν πληροφορίες τοποθεσίας.<br>
+                    Δοκιμάστε να τις δείτε στον χάρτη πρώτα.
                 </p>
+                <button onclick="showStep('map')" class="btn btn-primary" style="margin-top: 15px;">
+                    <i class="fas fa-map"></i> Προβολή στον Χάρτη
+                </button>
             </div>
         `;
     } else {
-        // Χρήση της ΥΠΑΡΧΟΥΣΑΣ generateProgramHTMLOld
         programDiv.innerHTML = generateProgramHTMLOld(daysProgram, activityGroups);
     }
     
-    // 5. ΕΜΦΑΝΙΣΗ ΚΑΙ ANIMATION
     programSection.style.display = 'block';
     
+    // ΑΥΤΟΜΑΤΟ SCROLL ΚΑΙ ANIMATION
     setTimeout(() => {
         if (programSection && programSection.scrollIntoView) {
             programSection.scrollIntoView({ 
@@ -1095,8 +1036,6 @@ function displayGeographicProgram(daysProgram, activityGroups) {
                 block: 'start'
             });
         }
-        
-        console.log("✅ Το πρόγραμμα εμφανίστηκε επιτυχώς");
     }, 300);
 }
 function generateProgramHTMLOld(daysProgram, activityGroups) {
@@ -1254,151 +1193,27 @@ function generateProgramHTMLOld(daysProgram, activityGroups) {
     
     return html;
 }
-// ==================== ΒΕΛΤΙΩΜΕΝΗ ΓΕΩΓΡΑΦΙΚΗ ΟΜΑΔΟΠΟΙΗΣΗ ====================
-function advancedGeographicClustering(activities, maxDistanceKm = 3.0) {
-    console.log('🧠 ΕΦΑΡΜΟΓΗ ΒΕΛΤΙΩΜΕΝΗΣ ΓΕΩΓΡΑΦΙΚΗΣ ΟΜΑΔΟΠΟΙΗΣΗΣ');
-    
-    if (!activities || activities.length === 0) {
-        console.log('⚠️ Δεν υπάρχουν δραστηριότητες για ομαδοποίηση');
-        return [];
-    }
-    
-    // ΒΕΛΤΙΩΜΕΝΗ - μεγαλύτερη ακτίνα για το Λονδίνο
-const activitiesWithLocation = activities.filter(act => 
-    act && act.location && 
-    typeof act.location.lat === 'number' && 
-    typeof act.location.lng === 'number'
-);
-    
-    
-    console.log(`📍 ${activitiesWithLocation.length}/${activities.length} δραστηριότητες έχουν τοποθεσία`);
-    
-    if (activitiesWithLocation.length === 0) {
-        // Αν καμία δεν έχει τοποθεσία, απλή κατανομή
-        return activities.map(act => ({
-            center: null,
-            activities: [act],
-            count: 1,
-            radius: 0
-        }));
-    }
-    
-    // 2. Δημιουργία ομάδων με απλό αλγόριθμο
-    const groups = [];
-    const processed = new Set();
-    
-    activitiesWithLocation.forEach((activity, index) => {
-        if (processed.has(index)) return;
-        
-        const group = [activity];
-        processed.add(index);
-        
-        // Βρες όλες τις κοντινές δραστηριότητες
-        activitiesWithLocation.forEach((otherActivity, otherIndex) => {
-            if (processed.has(otherIndex) || index === otherIndex) return;
-            
-            const distance = calculateDistance(
-                [activity.location.lat, activity.location.lng],
-                [otherActivity.location.lat, otherActivity.location.lng]
-            );
-            
-            if (distance <= maxDistanceKm) {
-                group.push(otherActivity);
-                processed.add(otherIndex);
-                console.log(`   🔗 ${activity.name} ↔ ${otherActivity.name}: ${distance.toFixed(2)} km`);
-            }
-        });
-        
-        if (group.length > 0) {
-            // Υπολογισμός κέντρου ομάδας
-            const centerLat = group.reduce((sum, act) => sum + act.location.lat, 0) / group.length;
-            const centerLng = group.reduce((sum, act) => sum + act.location.lng, 0) / group.length;
-            
-            groups.push({
-                center: [centerLat, centerLng],
-                activities: group,
-                count: group.length,
-                radius: 3.0 
-            });
-            
-            console.log(`   📍 Ομάδα ${groups.length}: ${group.length} δραστηριότητες`);
-        }
-    });
-    
-    // 3. Προσθήκη μονών δραστηριοτήτων
-    activitiesWithLocation.forEach((activity, index) => {
-        if (!processed.has(index)) {
-            groups.push({
-                center: [activity.location.lat, activity.location.lng],
-                activities: [activity],
-                count: 1,
-                radius: 0
-            });
-        }
-    });
-    
-    // 4. Προσθήκη δραστηριοτήτων χωρίς location
-    const activitiesWithoutLocation = activities.filter(act => 
-        !act.location || 
-        typeof act.location.lat !== 'number'
-    );
-    
-    activitiesWithoutLocation.forEach(activity => {
-        groups.push({
-            center: null,
-            activities: [activity],
-            count: 1,
-            radius: 0
-        });
-    });
-    
-    // 5. Ταξινόμηση από μεγαλύτερη σε μικρότερη ομάδα
-    groups.sort((a, b) => b.count - a.count);
-    
-    console.log(`✅ Δημιουργήθηκαν ${groups.length} γεωγραφικές ομάδες`);
-    
-    return groups;
-}
 // ==================== ΑΠΛΟΠΟΙΗΜΕΝΗ ΣΥΝΑΡΤΗΣΗ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ ====================
 function generateGeographicProgram() {
     console.log('🎯 ========== ΑΡΧΗ generateGeographicProgram ==========');
     
-    // 🔴 ΒΕΛΤΙΩΜΕΝΗ: ΠΡΟΣΟΧΗ για dropdown ή τρέχουσα τιμή
-    let selectedDaysValue = 0;
-    
-    // 1. Προσπάθησε να διαβάσεις από το dropdown
+    // 🔴 ΚΡΙΤΙΚΗ ΔΙΟΡΘΩΣΗ: ΔΙΑΒΑΣΕ ΤΙΣ ΗΜΕΡΕΣ ΑΠΟ ΤΟ DROPDOWN
     const daysSelect = document.getElementById('program-days');
-    if (daysSelect && daysSelect.value && daysSelect.value !== '0') {
-        selectedDaysValue = parseInt(daysSelect.value);
-        console.log('📅 Μέρες από dropdown:', selectedDaysValue);
-    } 
-    // 2. Αν όχι, δες στο state
-    else if (state.selectedDays && state.selectedDays > 0) {
-        selectedDaysValue = state.selectedDays;
-        console.log('ℹ️ Χρήση μέρες από state:', selectedDaysValue);
-    }
-    // 3. Αν τίποτα, ζήτησε από χρήστη
-    else {
-        console.warn('⚠️ Δεν βρέθηκαν μέρες!');
-        const userInput = prompt('Πόσες μέρες θα διαρκέσει το ταξίδι σας; (2-14)', '5');
-        if (userInput) {
-            selectedDaysValue = parseInt(userInput);
-            if (selectedDaysValue < 1) selectedDaysValue = 5;
-        } else {
-            alert('❌ Ακύρωση: Δεν ορίστηκαν μέρες');
-            return;
-        }
-    }
+    console.log('🔍 Dropdown value:', daysSelect ? daysSelect.value : 'NOT FOUND');
     
-    // ΕΓΚΥΡΟΤΗΤΑ
-    if (!selectedDaysValue || selectedDaysValue < 1) {
-        alert('⚠️ Παρακαλώ επιλέξτε πρώτα πόσες μέρες θα διαρκέσει το ταξίδι (τουλάχιστον 1)');
+    if (!daysSelect) {
+        alert('❌ Σφάλμα: Δεν βρέθηκε η επιλογή ημερών.');
         return;
     }
     
-    // Αποθήκευση
-    state.selectedDays = selectedDaysValue;
-    console.log('📅 Τελικές μέρες:', state.selectedDays);
+    if (!daysSelect.value || daysSelect.value === '0') {
+        alert('⚠️ Παρακαλώ επιλέξτε πρώτα πόσες μέρες θα διαρκέσει το ταξίδι');
+        return;
+    }
+    
+    // Ενημέρωση state με την τρέχουσα τιμή
+    state.selectedDays = parseInt(daysSelect.value);
+    console.log('📅 Επιλέχθηκαν:', state.selectedDays, 'μέρες');
     
     console.log('📊 State:', {
         selectedDestinationId: state.selectedDestinationId,
@@ -1451,29 +1266,12 @@ console.log(`📍 Δραστηριότητες με location: ${fullActivities.l
         return;
     }
     
-// 3. ΔΗΜΙΟΥΡΓΙΑ ΓΕΩΓΡΑΦΙΚΩΝ ΣΥΣΤΑΔΩΝ - ΕΝΩΣΗ ΚΟΝΤΙΝΩΝ ΟΜΑΔΩΝ
+// 3. ΔΗΜΙΟΥΡΓΙΑ ΓΕΩΓΡΑΦΙΚΩΝ ΣΥΣΤΑΔΩΝ (με νέα συνάρτηση)
 let activityGroups = [];
 
 if (fullActivities.length > 0) {
-    // 🔴 ΚΡΙΤΙΚΗ ΑΛΛΑΓΗ: Πρώτα δημιουργούμε ΠΟΛΛΕΣ μικρές ομάδες με βάση απόσταση
-    let smallClusters = window.clusterActivitiesForMap ? 
-    window.clusterActivitiesForMap(fullActivities, 20, 1.0) : 
-    advancedGeographicClustering(fullActivities, 2.0);
-    
-    console.log(`📍 Αρχικά ${smallClusters.length} μικρές ομάδες (1km ακτίνα)`);
-    
-    // 🔴 ΚΡΙΤΙΚΗ ΑΛΛΑΓΗ 2: Ενώνουμε ΚΟΝΤΙΝΕΣ ομάδες για να δημιουργήσουμε μεγαλύτερες
-            const MAX_GROUPS = Math.max(5, state.selectedDays * 2);
-const MAX_MERGE_DISTANCE_KM = 1.2; // 1.2km max distance activity-to-activity
-activityGroups = smartMergeClusters(smallClusters, MAX_GROUPS, MAX_MERGE_DISTANCE_KM);
-    
-    console.log(`✅ Μετά από ενώσεις: ${activityGroups.length} ομάδες`);
-    
-    console.log('🧠 Χρήση νέας ομαδοποίησης:', {
-        totalActivities: fullActivities.length,
-        clustersCreated: activityGroups.length,
-        groups: activityGroups.map((g, i) => `Ομάδα ${i+1}: ${g.count} δραστηριότητες`)
-    });
+    // Χρησιμοποιούμε την ΝΕΑ σωστή ομαδοποίηση
+    activityGroups = createGeographicClusters(fullActivities, 1.5, 2);
     
     // ΛΟΓΗ ΕΝΤΕΛΩΣ ΝΕΑ: Αν έχουμε περισσότερες συστάδες από μέρες
     if (activityGroups.length > state.selectedDays) {
@@ -1517,6 +1315,7 @@ activityGroups = smartMergeClusters(smallClusters, MAX_GROUPS, MAX_MERGE_DISTANC
         radius: 0
     }));
 }
+    
     console.log(`📍 Βρέθηκαν ${activityGroups.length} γεωγραφικές περιοχές/ομάδες`);
     
     // 4. Αν δεν έχουμε ομάδες, δημιούργησε μία ομάδα για κάθε δραστηριότητα
@@ -1648,12 +1447,11 @@ function forceRefreshProgram() {
 function distributeGroupsToDays(groups, totalDays) {
     console.log(`📅 Κατανομή ${groups.length} ομάδων σε ${totalDays} μέρες`);
     
-    if (!groups || groups.length === 0 || totalDays < 1) {
+    if (groups.length === 0 || totalDays < 1) {
         console.error('❌ Μη έγκυρα δεδομένα για κατανομή');
         return [];
     }
     
-    // 1. ΔΗΜΙΟΥΡΓΙΑ ΚΕΝΩΝ ΗΜΕΡΩΝ
     const days = Array.from({ length: totalDays }, () => ({ 
         groups: [], 
         totalActivities: 0,
@@ -1661,52 +1459,51 @@ function distributeGroupsToDays(groups, totalDays) {
         estimatedTime: 0
     }));
     
-    // 2. ΤΑΞΙΝΟΜΗΣΗ: Μεγαλύτερες ομάδες πρώτες
+    // 1. Ταξινόμηση ομάδων (μεγαλύτερες πρώτες για ισορροπία)
     const sortedGroups = [...groups].sort((a, b) => b.count - a.count);
     
-    console.log('🎯 ΚΑΝΟΝΑΣ: Μια ομάδα = Μια μέρα (ΔΕΝ σπας!)');
+    console.log('🎯 ΚΑΝΟΝΑΣ: Μια σύσταδα = Μια μέρα (ΔΕΝ σπας!)');
     
-    // 3. ΚΑΤΑΝΟΜΗ: Μια ομάδα ανά μέρα
-    let currentDayIndex = 0;
-    
+    // 2. Βάλε ΚΑΘΕ ΟΛΟΚΛΗΡΗ ΣΥΣΤΑΔΑ σε μία μέρα
     sortedGroups.forEach((group, index) => {
-        // 3α. Βρες την πιο άδεια μέρα
+        // Βρες την πιο άδεια μέρα (για ισορροπία φόρτου)
         const emptiestDayIndex = days.reduce((minIndex, day, idx) => 
             day.totalActivities < days[minIndex].totalActivities ? idx : minIndex, 0
         );
         
-        // 3β. Βάλε ΟΛΗ την ομάδα στην ίδια μέρα
+        // Βάλε ΟΛΗ τη σύσταδα στην ίδια μέρα
         days[emptiestDayIndex].groups.push(group);
         days[emptiestDayIndex].totalActivities += group.count;
         
-        // 3γ. Υπολόγισε κόστος και χρόνο για την ομάδα
+        // Υπολόγισε κόστος και χρόνο
         let groupCost = 0;
         let groupTime = 0;
-        
+
         group.activities.forEach(activity => {
             groupCost += (parseFloat(activity.price) || 0);
             groupTime += (parseFloat(activity.duration_hours) || 1.5);
         });
-        
-        // Χρόνος μετακίνησης εντός ομάδας (15 λεπτά ανά μετάβαση)
-        const travelTime = (group.activities.length - 1) * 0.25;
-        
+
+        // Χρόνος μετακίνησης εντός συστάδας
+        const travelTime = (group.activities.length - 1) * 0.3;
+
         days[emptiestDayIndex].totalCost += groupCost;
         days[emptiestDayIndex].estimatedTime += groupTime + travelTime;
         
-        console.log(`   📦 Ομάδα ${index + 1} (${group.count} δραστ.) → Μέρα ${emptiestDayIndex + 1}`);
+        console.log(`   📦 Σύσταδα ${index + 1} (${group.count} δραστ.) → Μέρα ${emptiestDayIndex + 1}`);
     });
     
-    // 4. ΑΦΑΙΡΕΣΗ ΚΕΝΩΝ ΗΜΕΡΩΝ (αν υπάρχουν)
+    // 3. Αφαίρεση κενών ημερών
     const nonEmptyDays = days.filter(day => day.totalActivities > 0);
     
-    console.log(`✅ Κατανεμήθηκαν ${sortedGroups.length} ομάδες:`);
+    console.log(`✅ Κατανεμήθηκαν ${sortedGroups.length} συστάδες:`);
     nonEmptyDays.forEach((day, i) => {
-        console.log(`   Μ${i+1}: ${day.groups.length} ομάδες, ${day.totalActivities} δραστηριότητες`);
+        console.log(`   Μ${i+1}: ${day.groups.length} συστάδες, ${day.totalActivities} δραστηριότητες`);
     });
     
     return nonEmptyDays;
 }
+
 function getDayColor(dayNumber) {
     return COLOR_PALETTE[(dayNumber - 1) % COLOR_PALETTE.length];
 }
@@ -5574,8 +5371,7 @@ function applyDayFilter() {
     
     selectedDays.forEach(dayNumber => {
         const dayIndex = dayNumber - 1; // Μετατροπή σε index (0-based)
-        // Βρες την ημέρα που έχει την ομάδα με τις δραστηριότητες
-const dayProgram = state.geographicProgram.days[dayIndex];
+        const dayProgram = state.geographicProgram.days[dayIndex];
         
         if (!dayProgram || !dayProgram.groups) {
             console.warn(`⚠️ Ημέρα ${dayNumber} δεν έχει δεδομένα`);
@@ -5754,144 +5550,6 @@ function updateDayMarkerAppearance(marker, pointType) {
         iconAnchor: [25, 50]
     }));
 }
-// ==================== ΣΩΣΤΟ MERGE CLUSTERS (ACTIVITY-TO-ACTIVITY) ====================
-function clustersAreMergeable(clusterA, clusterB, maxKm) {
-    // Έλεγχος αν ΚΑΠΟΙΑ δραστηριότητα του Α είναι κοντά σε ΚΑΠΟΙΑ δραστηριότητα του Β
-    for (const actA of clusterA.activities) {
-        for (const actB of clusterB.activities) {
-            // Σιγουρέψου ότι υπάρχουν locations
-            if (!actA.location || !actB.location) continue;
-            
-            const d = calculateDistance(
-                [actA.location.lat, actA.location.lng],
-                [actB.location.lat, actB.location.lng]
-            );
-            if (d <= maxKm) {
-                return true; // Υπάρχει πραγματική εγγύτητα!
-            }
-        }
-    }
-    return false;
-}
-
-function smartMergeClusters(clusters, maxClusters, maxKm) {
-    console.log(`🧠 SMART MERGE: ${clusters.length} clusters, max ${maxKm}km activity-to-activity`);
-    
-    if (!clusters || clusters.length <= maxClusters) {
-        return clusters;
-    }
-    
-    // 1. Κάνε αντίγραφο
-    let mergedClusters = clusters.map(cluster => ({
-        ...cluster,
-        id: Math.random().toString(36).substring(2, 9)
-    }));
-    
-    // 2. Βρες όλα τα ζεύγη που μπορούν να ενωθούν
-    const mergeablePairs = [];
-    
-    for (let i = 0; i < mergedClusters.length; i++) {
-        for (let j = i + 1; j < mergedClusters.length; j++) {
-            if (clustersAreMergeable(mergedClusters[i], mergedClusters[j], maxKm)) {
-                // Υπολόγισε την ελάχιστη απόσταση μεταξύ τους
-                let minDistance = Infinity;
-                
-                for (const actA of mergedClusters[i].activities) {
-                    for (const actB of mergedClusters[j].activities) {
-                        if (!actA.location || !actB.location) continue;
-                        
-                        const d = calculateDistance(
-                            [actA.location.lat, actA.location.lng],
-                            [actB.location.lat, actB.location.lng]
-                        );
-                        if (d < minDistance) {
-                            minDistance = d;
-                        }
-                    }
-                }
-                
-                if (minDistance !== Infinity) {
-                    mergeablePairs.push({
-                        i, j, 
-                        distance: minDistance,
-                        totalActivities: mergedClusters[i].count + mergedClusters[j].count
-                    });
-                }
-            }
-        }
-    }
-    
-    // 3. Ταξινόμησε: πρώτα οι πιο κοντινοί, μετά οι μεγαλύτεροι
-    mergeablePairs.sort((a, b) => {
-        if (a.distance !== b.distance) return a.distance - b.distance;
-        return b.totalActivities - a.totalActivities; // Μεγαλύτερες ομάδες πρώτες
-    });
-    
-    // 4. Ενώνουμε μέχρι να φτάσουμε στο επιθυμητό αριθμό
-    while (mergedClusters.length > maxClusters && mergeablePairs.length > 0) {
-        const pair = mergeablePairs.shift();
-        const { i, j, distance } = pair;
-        
-        // Έλεγχος αν τα clusters υπάρχουν ακόμα
-        if (i >= mergedClusters.length || j >= mergedClusters.length || i === j) continue;
-        
-        const clusterA = mergedClusters[i];
-        const clusterB = mergedClusters[j];
-        
-        console.log(`   🔗 SMART MERGE: Ομάδα ${clusterA.id} + ${clusterB.id}`);
-        console.log(`      📏 Ελάχιστη απόσταση δραστηρ.: ${distance.toFixed(2)}km`);
-        console.log(`      📊 Δραστηριότητες: ${clusterA.count} + ${clusterB.count} = ${clusterA.count + clusterB.count}`);
-        
-        // Δημιούργησε νέα ενωμένη ομάδα
-        const mergedCluster = {
-            id: `${clusterA.id}+${clusterB.id}`,
-            activities: [...clusterA.activities, ...clusterB.activities],
-            count: clusterA.count + clusterB.count,
-            // Υπολογισμός νέου κέντρου (για χάρτη)
-            center: calculateSmartMergedCenter(clusterA, clusterB),
-            radius: Math.max(clusterA.radius || 0, clusterB.radius || 0, distance * 1.5)
-        };
-        
-        // Αφαίρεση παλιών και προσθήκη νέας
-        mergedClusters.splice(Math.max(i, j), 1);
-        mergedClusters.splice(Math.min(i, j), 1);
-        mergedClusters.push(mergedCluster);
-        
-        // Ενημέρωση indexes για τα υπόλοιπα pairs
-        mergeablePairs.forEach(p => {
-            if (p.i === i || p.i === j || p.j === i || p.j === j) {
-                p.i = -1; // Mark for removal
-            }
-        });
-    }
-    
-    // Φιλτράρισμα invalid pairs
-    const validPairs = mergeablePairs.filter(p => p.i !== -1);
-    
-    console.log(`✅ SMART MERGE ολοκληρώθηκε: ${mergedClusters.length} clusters`);
-    return mergedClusters;
-}
-
-function calculateSmartMergedCenter(clusterA, clusterB) {
-    // Συνδυασμός των δραστηριοτήτων με location
-    const allActivities = [...clusterA.activities, ...clusterB.activities]
-        .filter(act => act.location);
-    
-    if (allActivities.length === 0) return null;
-    
-    let totalLat = 0;
-    let totalLng = 0;
-    
-    allActivities.forEach(act => {
-        totalLat += act.location.lat;
-        totalLng += act.location.lng;
-    });
-    
-    return [
-        totalLat / allActivities.length,
-        totalLng / allActivities.length
-    ];
-}
 
 window.showStep = showStep;
 window.filterDestinations = filterDestinations;
@@ -5963,10 +5621,6 @@ window.getDayColor = getDayColor;
 window.createGeographicClusters = createGeographicClusters;
 window.calculateClusterCenter = calculateClusterCenter;
 window.distributeClustersToDays = distributeGroupsToDays;
-window.advancedGeographicClustering = advancedGeographicClustering;
-window.smartMergeClusters = smartMergeClusters;
-window.clustersAreMergeable = clustersAreMergeable;
-window.calculateSmartMergedCenter = calculateSmartMergedCenter;
 
 // ==================== CSS ANIMATIONS FOR PROGRAM ====================
 // Προσθήκη CSS animation για το spinner (για το βήμα 5)
@@ -6505,313 +6159,4 @@ function testNewClustering() {
           `📖 Άνοιξε την Console (F12) για λεπτομέρειες.`);
     
     console.log('✅ === ΤΕΛΟΣ ΣΥΓΚΡΙΣΗΣ ===');
-    // ==================== ΒΕΛΤΙΩΜΕΝΗ ΟΜΑΔΟΠΟΙΗΣΗ ΧΑΡΤΗ ====================
-function clusterActivitiesForMap(activities, maxClusters = 8, maxDistanceKm = 1.5) {
-    console.log('🗺️ ΒΕΛΤΙΩΜΕΝΗ ομαδοποίηση για χάρτη...');
-    
-    if (!activities || activities.length === 0) {
-        console.log('⚠️ Δεν υπάρχουν δραστηριότητες');
-        return [];
-    }
-    
-    // 1. ΧΩΡΙΣΜΟΣ: Δραστηριότητες ΜΕ και ΧΩΡΙΣ location
-    const activitiesWithLocation = activities.filter(act => 
-        act && act.location && 
-        typeof act.location.lat === 'number' && 
-        typeof act.location.lng === 'number'
-    );
-    
-    const activitiesWithoutLocation = activities.filter(act => 
-        !act.location || 
-        typeof act.location.lat !== 'number'
-    );
-    
-    console.log(`📍 ${activitiesWithLocation.length} με location, ${activitiesWithoutLocation.length} χωρίς`);
-    
-    // 2. Αν έχουμε λίγες δραστηριότητες, κάθε μια είναι μία ομάδα
-    if (activitiesWithLocation.length <= 3) {
-        console.log('📌 Λίγες δραστηριότητες - κάθε μία ξεχωριστή ομάδα');
-        
-        const singleClusters = activitiesWithLocation.map(activity => ({
-            center: [activity.location.lat, activity.location.lng],
-            activities: [activity],
-            count: 1,
-            radius: 0
-        }));
-        
-        // Προσθήκη δραστηριοτήτων χωρίς location
-        activitiesWithoutLocation.forEach(activity => {
-            singleClusters.push({
-                center: null,
-                activities: [activity],
-                count: 1,
-                radius: 0
-            });
-        });
-        
-        return singleClusters;
-    }
-    
-    // 3. DBSCAN-like clustering για πολλές δραστηριότητες
-    const clusters = [];
-    const visited = new Set();
-    
-    activitiesWithLocation.forEach((activity, index) => {
-        if (visited.has(index)) return;
-        
-        visited.add(index);
-        
-        // Βρες όλες τις κοντινές δραστηριότητες
-        const neighbors = [activity];
-        
-        activitiesWithLocation.forEach((otherActivity, otherIndex) => {
-            if (visited.has(otherIndex) || index === otherIndex) return;
-            
-            const distance = calculateDistance(
-                [activity.location.lat, activity.location.lng],
-                [otherActivity.location.lat, otherActivity.location.lng]
-            );
-            
-            if (distance <= maxDistanceKm) {
-                neighbors.push(otherActivity);
-                visited.add(otherIndex);
-                console.log(`   🔗 ${activity.name.substring(0,20)} ↔ ${otherActivity.name.substring(0,20)}: ${distance.toFixed(2)}km`);
-            }
-        });
-        
-        if (neighbors.length > 0) {
-            // Υπολόγισε κέντρο ομάδας
-            const centerLat = neighbors.reduce((sum, act) => sum + act.location.lat, 0) / neighbors.length;
-            const centerLng = neighbors.reduce((sum, act) => sum + act.location.lng, 0) / neighbors.length;
-            
-            clusters.push({
-                center: [centerLat, centerLng],
-                activities: neighbors,
-                count: neighbors.length,
-                radius: maxDistanceKm
-            });
-            
-            console.log(`   📍 Ομάδα ${clusters.length}: ${neighbors.length} δραστηριότητες`);
-        }
-    });
-    
-    // 4. Προσθήκη μονών δραστηριοτήτων (που δεν μπήκαν σε ομάδα)
-    activitiesWithLocation.forEach((activity, index) => {
-        if (!visited.has(index)) {
-            clusters.push({
-                center: [activity.location.lat, activity.location.lng],
-                activities: [activity],
-                count: 1,
-                radius: 0
-            });
-        }
-    });
-    
-    // 5. Προσθήκη δραστηριοτήτων χωρίς location ως ξεχωριστές ομάδες
-    activitiesWithoutLocation.forEach(activity => {
-        clusters.push({
-            center: null,
-            activities: [activity],
-            count: 1,
-            radius: 0
-        });
-    });
-    
-    // 6. ΤΑΞΙΝΟΜΗΣΗ: Ομάδες με τις πιο πολλές δραστηριότητες πρώτα
-    clusters.sort((a, b) => b.count - a.count);
-    
-    // 7. ΠΕΡΙΟΡΙΣΜΟΣ: Αν έχουμε πάρα πολλές ομάδες, ενώνουμε τις μικρότερες
-    if (clusters.length > maxClusters) {
-        console.log(`⚠️ Εχουμε ${clusters.length} ομάδες (>${maxClusters}). Ενώνουμε μικρές...`);
-        
-        const sortedClusters = [...clusters].sort((a, b) => a.count - b.count);
-        
-        while (sortedClusters.length > maxClusters) {
-            const smallest = sortedClusters.shift(); // Η μικρότερη
-            const nextSmallest = sortedClusters[0];  // Η επόμενη μικρότερη
-            
-            if (smallest && nextSmallest) {
-                // ΣΥΝΕΝΩΣΗ: Βάλε τις δραστηριότητες της μικρής στη μεγαλύτερη
-                nextSmallest.activities.push(...smallest.activities);
-                nextSmallest.count += smallest.count;
-                
-                console.log(`   🔗 Ενώνω: ${smallest.count} + ${nextSmallest.count-smallest.count} = ${nextSmallest.count} δραστηριότητες`);
-            }
-        }
-        
-        return sortedClusters;
-    }
-    
-    console.log(`✅ Δημιουργήθηκαν ${clusters.length} ομάδες για το χάρτη`);
-    return clusters;
 }
-}
-// ==================== ΕΝΩΣΗ ΚΟΝΤΙΝΩΝ ΟΜΑΔΩΝ ΓΙΑ ΓΕΩΓΡΑΦΙΚΟ ΠΡΟΓΡΑΜΜΑ ====================
-function mergeCloseClusters(clusters, maxClusters, mergeDistanceKm) {
-    console.log(`🔗 Ενώνω ${clusters.length} ομάδες (έως ${maxClusters}), απόσταση: ${mergeDistanceKm}km`);
-    
-    if (!clusters || clusters.length <= maxClusters) {
-        return clusters;
-    }
-    
-    // 1. Κάνε αντίγραφο για να μην αλλάξουμε το original
-    let mergedClusters = clusters.map(cluster => ({
-        ...cluster,
-        // Προσθήκη ID για εύκολη αναφορά
-        id: Math.random().toString(36).substring(2, 9)
-    }));
-    
-    // 2. Ενώνουμε μέχρι να φτάσουμε στο επιθυμητό αριθμό
-    while (mergedClusters.length > maxClusters) {
-        let closestPair = null;
-        let minDistance = Infinity;
-        
-        // Βρες τις 2 πιο κοντινές ομάδες
-        for (let i = 0; i < mergedClusters.length; i++) {
-            for (let j = i + 1; j < mergedClusters.length; j++) {
-                const clusterA = mergedClusters[i];
-                const clusterB = mergedClusters[j];
-                
-                // Παράβλεψη ομάδων χωρίς κέντρο
-                if (!clusterA.center || !clusterB.center) continue;
-                
-                const distance = calculateDistance(clusterA.center, clusterB.center);
-                
-                if (distance < minDistance && distance <= mergeDistanceKm) {
-                    minDistance = distance;
-                    closestPair = { i, j, distance };
-                }
-            }
-        }
-        
-        // Αν δεν βρέθηκαν κοντινές ομάδες, σταμάτα
-        if (!closestPair) {
-            console.log(`⚠️ Δεν βρέθηκαν άλλες κοντινές ομάδες για ένωση`);
-            break;
-        }
-        
-        // 3. ΕΝΩΣΗ των 2 πιο κοντινών ομάδων
-        const { i, j, distance } = closestPair;
-        const clusterA = mergedClusters[i];
-        const clusterB = mergedClusters[j];
-        
-        console.log(`   🔗 Ενώνω ομάδες ${clusterA.id} + ${clusterB.id}: ${distance.toFixed(2)}km μακριά`);
-        
-        // Δημιούργησε νέα ομάδα με όλες τις δραστηριότητες
-        const mergedCluster = {
-            id: `${clusterA.id}+${clusterB.id}`,
-            activities: [...clusterA.activities, ...clusterB.activities],
-            count: clusterA.count + clusterB.count,
-            // Υπολογισμός νέου κέντρου
-            center: calculateMergedCenter(clusterA, clusterB),
-            radius: Math.max(clusterA.radius || 0, clusterB.radius || 0, distance)
-        };
-        
-        // Αφαίρεσε τις παλιές ομάδες και πρόσθεσε τη νέα
-        mergedClusters.splice(Math.max(i, j), 1); // Αφαίρεσε πρώτα το μεγαλύτερο index
-        mergedClusters.splice(Math.min(i, j), 1); // Μετά το μικρότερο
-        mergedClusters.push(mergedCluster);
-        
-        console.log(`   📍 Νέα ομάδα: ${mergedCluster.count} δραστηριότητες`);
-    }
-    
-    console.log(`✅ Μετά από ενώσεις: ${mergedClusters.length} ομάδες`);
-    return mergedClusters;
-}
-
-// Βοηθητική για υπολογισμό κέντρου
-function calculateMergedCenter(clusterA, clusterB) {
-    // Αν κάποιο cluster δεν έχει κέντρο, επέστρεψε το άλλο
-    if (!clusterA.center) return clusterB.center;
-    if (!clusterB.center) return clusterA.center;
-    
-    // Υπολογισμός βαρυκέντρου (weighted by number of activities)
-    const totalActivities = clusterA.count + clusterB.count;
-    const weightA = clusterA.count / totalActivities;
-    const weightB = clusterB.count / totalActivities;
-    
-    return [
-        clusterA.center[0] * weightA + clusterB.center[0] * weightB,
-        clusterA.center[1] * weightA + clusterB.center[1] * weightB
-    ];
-}
-// ==================== ΕΓΚΥΡΟΤΗΤΑ ΣΥΝΑΡΤΗΣΕΩΝ ΧΑΡΤΗ ====================
-console.log('🗺️ Συμβατότητα χάρτη:');
-console.log('✅ clusterActivitiesForMap:', typeof clusterActivitiesForMap === 'function');
-console.log('✅ mergeCloseClusters:', typeof mergeCloseClusters === 'function');
-console.log('✅ calculateMergedCenter:', typeof calculateMergedCenter === 'function');
-console.log('✅ calculateDistance:', typeof calculateDistance === 'function');
-
-// Σιγουρέψου ότι υπάρχουν στο window object για global πρόσβαση
-if (typeof clusterActivitiesForMap === 'function') {
-    window.clusterActivitiesForMap = clusterActivitiesForMap;
-    console.log('✅ clusterActivitiesForMap added to window');
-}
-
-if (typeof mergeCloseClusters === 'function') {
-    window.mergeCloseClusters = mergeCloseClusters;
-    console.log('✅ mergeCloseClusters added to window');
-}
-// ==================== ΔΟΚΙΜΗ ΤΗΣ ΟΜΑΔΟΠΟΙΗΣΗΣ ====================
-function testMapClustering() {
-    console.log('🧪 === ΔΟΚΙΜΗ ΟΜΑΔΟΠΟΙΗΣΗΣ ΧΑΡΤΗ ===');
-    
-    if (!state.selectedActivities || state.selectedActivities.length === 0) {
-        alert('⚠️ Δεν έχετε επιλέξει δραστηριότητες!\nΠαρακαλώ πηγαίνετε στο βήμα 4.');
-        return;
-    }
-    
-    // 1. Πάρε τις δραστηριότητες με πλήρεις πληροφορίες
-    const fullActivities = getFullActivitiesWithLocation();
-    
-    if (fullActivities.length === 0) {
-        alert('⚠️ Δεν βρέθηκαν δραστηριότητες με τοποθεσία!');
-        return;
-    }
-    
-    console.log(`📊 Σύνολο: ${fullActivities.length} δραστηριότητες`);
-    
-    // 2. ΔΟΚΙΜΗ ΤΗΣ ΝΕΑΣ ΟΜΑΔΟΠΟΙΗΣΗΣ
-    console.log('\n🔍 ΤΕΣΤ 1: clusterActivitiesForMap (1.0km ακτίνα)');
-    const smallClusters = clusterActivitiesForMap(fullActivities, 20, 1.0);
-    
-    console.log(`📍 Πρώτη φάση: ${smallClusters.length} μικρές ομάδες`);
-    smallClusters.forEach((cluster, i) => {
-        console.log(`   Ομάδα ${i+1}: ${cluster.count} δραστηριότητες`);
-        if (cluster.center) {
-            console.log(`      Κέντρο: ${cluster.center[0].toFixed(4)}, ${cluster.center[1].toFixed(4)}`);
-        }
-    });
-    
-    // 3. ΔΟΚΙΜΗ ΕΝΩΣΗΣ
-    console.log('\n🔗 ΤΕΣΤ 2: mergeCloseClusters (έως 3km)');
-    const mergedClusters = mergeCloseClusters(smallClusters, 8, 3.0);
-    
-    console.log(`✅ Μετά από ενώσεις: ${mergedClusters.length} ομάδες`);
-    mergedClusters.forEach((cluster, i) => {
-        console.log(`   Ομάδα ${i+1}: ${cluster.count} δραστηριότητες`);
-        if (cluster.center) {
-            console.log(`      Κέντρο: ${cluster.center[0].toFixed(4)}, ${cluster.center[1].toFixed(4)}`);
-        }
-        // Ονόματα των 2-3 πρώτων δραστηριοτήτων
-        cluster.activities.slice(0, 3).forEach((act, j) => {
-            console.log(`      ${j+1}. ${act.name.substring(0, 40)}...`);
-        });
-        if (cluster.activities.length > 3) {
-            console.log(`      ... και ${cluster.activities.length - 3} ακόμη`);
-        }
-    });
-    
-    // 4. ΕΜΦΑΝΙΣΗ ΑΠΟΤΕΛΕΣΜΑΤΩΝ ΣΕ ΑΛΕΡΤ
-    const resultMessage = `🧪 ΔΟΚΙΜΗ ΟΛΟΚΛΗΡΩΘΗΚΕ!\n\n` +
-                         `📊 Δραστηριότητες: ${fullActivities.length}\n` +
-                         `📍 Μικρές ομάδες: ${smallClusters.length}\n` +
-                         `🔗 Μεγάλες ομάδες: ${mergedClusters.length}\n\n` +
-                         `📖 Άνοιξε την Console (F12) για λεπτομέρειες.`;
-    
-    alert(resultMessage);
-    console.log('✅ === ΤΕΛΟΣ ΔΟΚΙΜΗΣ ===');
-}
-
-// Προσθήκη στο window για δοκιμή
-window.testMapClustering = testMapClustering;
