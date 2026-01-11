@@ -2071,7 +2071,58 @@ function getMapStepHTML() {
                         <strong>Ετοιμότητα:</strong> Πατήστε "Προβολή Σημείων" για τις δραστηριότητες σας
                     </div>
                 </div>
-                
+
+                <!-- CUSTOM MAP POINTS SECTION -->
+                <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);">
+                    <h4 style="margin: 0 0 15px 0; color: var(--dark);">
+                        <i class="fas fa-map-marker-alt"></i> Προσθήκη Προσωπικών Σημείων
+                    </h4>
+                    <p style="color: var(--gray); margin-bottom: 15px; font-size: 14px;">
+                        Προσθέστε ξενοδοχείο, εστιατόρια ή άλλα σημεία ενδιαφέροντος στον χάρτη
+                    </p>
+
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+                        <input type="text"
+                               id="custom-point-name"
+                               placeholder="π.χ. Hotel Grande, Eiffel Tower"
+                               style="flex: 1; min-width: 250px; padding: 10px 15px; border: 2px solid var(--primary-light); border-radius: 8px; font-size: 14px;"
+                               onkeypress="if(event.key === 'Enter') addCustomMapPoint()">
+                        <button onclick="addCustomMapPoint()" class="btn btn-primary">
+                            <i class="fas fa-plus-circle"></i> Προσθήκη
+                        </button>
+                    </div>
+
+                    <div id="custom-points-status" style="display: none; padding: 8px; background: #fff; border-radius: 6px; font-size: 13px; margin-bottom: 10px;">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <span id="custom-points-status-text">Αναζήτηση τοποθεσίας...</span>
+                    </div>
+
+                    <!-- List of custom points -->
+                    <div id="custom-points-list" style="max-height: 200px; overflow-y: auto;">
+                        ${(state.customPoints || []).length > 0 ? state.customPoints.map((point, index) => `
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: white; border-radius: 6px; margin-bottom: 8px; border-left: 4px solid var(--accent);">
+                                <div>
+                                    <i class="fas fa-map-marker-alt" style="color: var(--accent); margin-right: 8px;"></i>
+                                    <strong>${point.name}</strong>
+                                    <span style="color: var(--gray); font-size: 12px; margin-left: 10px;">
+                                        (${point.location.lat.toFixed(4)}, ${point.location.lng.toFixed(4)})
+                                    </span>
+                                </div>
+                                <button onclick="removeCustomPoint(${index})"
+                                        class="btn btn-outline"
+                                        style="padding: 4px 8px; font-size: 12px;">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        `).join('') : `
+                            <div style="padding: 15px; text-align: center; color: var(--gray); font-size: 13px; background: white; border-radius: 6px; border: 2px dashed #ddd;">
+                                <i class="fas fa-map-marked-alt" style="font-size: 24px; opacity: 0.5; margin-bottom: 8px; display: block;"></i>
+                                Δεν έχετε προσθέσει προσωπικά σημεία ακόμα
+                            </div>
+                        `}
+                    </div>
+                </div>
+
                 <!-- 🔴 ΒΗΜΑ 2: ΦΙΛΤΡΟ ΗΜΕΡΩΝ (ΕΜΦΑΝΙΖΕΤΑΙ ΜΟΝΟ ΑΝ ΥΠΑΡΧΕΙ ΠΡΟΓΡΑΜΜΑ) -->
                 ${state.geographicProgram ? `
                 <div id="day-filter-container" class="card" style="margin-bottom: 20px; background: #f8f9fa;">
@@ -3905,20 +3956,215 @@ function reloadMap() {
     initializeMap();
 }
 
-function addCustomPoint() {
-    if (!window.travelMap) {
-        alert('Παρακαλώ πρώτα φορτώστε τον χάρτη');
+// ==================== CUSTOM MAP POINTS WITH GEOCODING ====================
+
+async function addCustomMapPoint() {
+    const input = document.getElementById('custom-point-name');
+    const pointName = input ? input.value.trim() : '';
+
+    if (!pointName) {
+        showToast('⚠️ Παρακαλώ εισάγετε όνομα σημείου', 'warning');
         return;
     }
-    
-    const pointName = prompt('Όνομα σημείου:');
-    if (pointName) {
-        const center = window.travelMap.getCenter();        
-        L.marker(center)
-            .addTo(window.travelMap)
-            .bindPopup(`<b>${pointName}</b>`)
-            .openPopup();
+
+    // Show loading status
+    showCustomPointStatus('Αναζήτηση τοποθεσίας...', true);
+
+    try {
+        // Geocode the point name using Nominatim API
+        const location = await geocodeLocation(pointName);
+
+        if (!location) {
+            showCustomPointStatus('❌ Δεν βρέθηκε η τοποθεσία. Δοκιμάστε πιο συγκεκριμένο όνομα.', false);
+            setTimeout(() => hideCustomPointStatus(), 3000);
+            return;
+        }
+
+        // Add to state
+        if (!state.customPoints) {
+            state.customPoints = [];
+        }
+
+        const customPoint = {
+            id: `custom-${Date.now()}`,
+            name: pointName,
+            location: location,
+            type: 'custom'
+        };
+
+        state.customPoints.push(customPoint);
+
+        // Save to localStorage
+        saveCustomPoints();
+
+        // Clear input
+        if (input) input.value = '';
+
+        // Show success and hide after delay
+        showCustomPointStatus(`✅ Προστέθηκε: ${pointName}`, false);
+        setTimeout(() => hideCustomPointStatus(), 2000);
+
+        // Refresh the map step to update the list
+        renderCurrentStep();
+
+        // If map is loaded, add marker immediately
+        if (window.travelMap) {
+            addCustomPointToMap(customPoint);
+        }
+
+        console.log(`✅ Custom point added: ${pointName} at (${location.lat}, ${location.lng})`);
+
+    } catch (error) {
+        console.error('❌ Error adding custom point:', error);
+        showCustomPointStatus('❌ Σφάλμα κατά την προσθήκη. Δοκιμάστε ξανά.', false);
+        setTimeout(() => hideCustomPointStatus(), 3000);
     }
+}
+
+async function geocodeLocation(query) {
+    try {
+        // Use Nominatim API (OpenStreetMap geocoding - free, no API key needed)
+        // Include destination city in query for better results
+        const searchQuery = state.selectedDestination ?
+            `${query}, ${state.selectedDestination}` :
+            query;
+
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}&limit=1`;
+
+        const response = await fetch(url, {
+            headers: {
+                'User-Agent': 'TakeMyTrip Travel Planner'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Geocoding failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data && data.length > 0) {
+            return {
+                lat: parseFloat(data[0].lat),
+                lng: parseFloat(data[0].lon),
+                displayName: data[0].display_name
+            };
+        }
+
+        return null;
+
+    } catch (error) {
+        console.error('Geocoding error:', error);
+        return null;
+    }
+}
+
+function removeCustomPoint(index) {
+    if (!state.customPoints || index < 0 || index >= state.customPoints.length) {
+        return;
+    }
+
+    const removed = state.customPoints.splice(index, 1)[0];
+    console.log(`🗑️ Removed custom point: ${removed.name}`);
+
+    // Save to localStorage
+    saveCustomPoints();
+
+    // Refresh the map step to update the list
+    renderCurrentStep();
+
+    showToast(`🗑️ Αφαιρέθηκε: ${removed.name}`, 'success');
+}
+
+function saveCustomPoints() {
+    try {
+        localStorage.setItem('travel_custom_points', JSON.stringify(state.customPoints || []));
+        console.log('💾 Custom points saved to localStorage');
+    } catch (error) {
+        console.error('❌ Error saving custom points:', error);
+    }
+}
+
+function loadCustomPoints() {
+    try {
+        const saved = localStorage.getItem('travel_custom_points');
+        if (saved) {
+            state.customPoints = JSON.parse(saved);
+            console.log(`📍 Loaded ${state.customPoints.length} custom points from localStorage`);
+        }
+    } catch (error) {
+        console.error('❌ Error loading custom points:', error);
+        state.customPoints = [];
+    }
+}
+
+function showCustomPointStatus(message, isLoading) {
+    const statusDiv = document.getElementById('custom-points-status');
+    const statusText = document.getElementById('custom-points-status-text');
+
+    if (statusDiv && statusText) {
+        statusDiv.style.display = 'block';
+        statusText.textContent = message;
+
+        if (isLoading) {
+            statusDiv.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span>${message}</span>`;
+        } else {
+            statusDiv.innerHTML = `<span>${message}</span>`;
+        }
+    }
+}
+
+function hideCustomPointStatus() {
+    const statusDiv = document.getElementById('custom-points-status');
+    if (statusDiv) {
+        statusDiv.style.display = 'none';
+    }
+}
+
+function addCustomPointToMap(point) {
+    if (!window.travelMap || !point.location) return;
+
+    // Create marker with custom icon
+    const customIcon = L.divIcon({
+        className: 'custom-marker',
+        html: '<div style="background: #F59E0B; color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3); font-size: 16px;"><i class="fas fa-star"></i></div>',
+        iconSize: [30, 30],
+        iconAnchor: [15, 15]
+    });
+
+    const marker = L.marker([point.location.lat, point.location.lng], {
+        icon: customIcon
+    }).addTo(window.travelMap);
+
+    // Create popup
+    const popupContent = `
+        <div style="max-width: 250px; font-family: 'Roboto', sans-serif; padding: 8px;">
+            <h4 style="margin: 0 0 8px 0; color: #F59E0B; font-size: 16px; font-weight: 700;">
+                <i class="fas fa-star" style="margin-right: 8px;"></i>
+                ${point.name}
+            </h4>
+            <div style="font-size: 12px; color: #6B7280; background: #FEF3C7; padding: 6px; border-radius: 4px; margin: 8px 0;">
+                <i class="fas fa-info-circle" style="margin-right: 4px;"></i>
+                Προσωπικό σημείο
+            </div>
+            ${point.location.displayName ? `
+                <div style="font-size: 11px; color: #9CA3AF; margin-top: 6px;">
+                    ${point.location.displayName}
+                </div>
+            ` : ''}
+            <a href="https://www.google.com/maps/search/?api=1&query=${point.location.lat},${point.location.lng}"
+               target="_blank"
+               rel="noopener"
+               style="display: inline-flex; align-items: center; padding: 6px 10px; background: #F59E0B; color: white; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: 600; margin-top: 10px;">
+                <i class="fas fa-external-link-alt" style="margin-right: 6px;"></i>
+                Google Maps
+            </a>
+        </div>
+    `;
+
+    marker.bindPopup(popupContent);
+
+    console.log(`📍 Added custom point to map: ${point.name}`);
 }
 
 // ==================== ENHANCED MAP FUNCTIONS (FROM OLD MAP) ====================
@@ -4117,8 +4363,16 @@ if (window.selectedMarkers.length > 0 && cityCoords) {
         window.travelMap.setView(cityCoords, 13);
     }
 }
-    
-    // 7. Ενημέρωση χρήστη με τα νέα οδηγία
+
+    // 7. Display custom points on map
+    if (state.customPoints && state.customPoints.length > 0) {
+        state.customPoints.forEach(point => {
+            addCustomPointToMap(point);
+        });
+        console.log(`⭐ Added ${state.customPoints.length} custom points to map`);
+    }
+
+    // 8. Ενημέρωση χρήστη με τα νέα οδηγία
     showToast(`
         <div style="text-align: left; max-width: 350px;">
             <strong style="font-size: 16px; color: #4F46E5;">🗺️ Οδηγίες Χρήσης Χάρτη</strong><br><br>
