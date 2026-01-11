@@ -217,6 +217,156 @@ const MarkerCache = {
     }
 };
 
+// ==================== STATE VALIDATOR ====================
+const StateValidator = {
+    validateFamilyMember(member) {
+        if (!member || typeof member !== 'object') {
+            return false;
+        }
+
+        // Name must be a string
+        if (typeof member.name !== 'string' || member.name.trim() === '') {
+            return false;
+        }
+
+        // Age can be empty string or valid number
+        if (member.age === '' || member.age === null || member.age === undefined) {
+            return true; // Empty age is valid (user hasn't set it yet)
+        }
+
+        const age = typeof member.age === 'number' ? member.age : parseInt(member.age);
+        return !isNaN(age) && age >= 0 && age <= 120;
+    },
+
+    validateActivity(activity) {
+        if (!activity || typeof activity !== 'object') {
+            return false;
+        }
+
+        // Must have valid ID
+        if (activity.id === undefined || activity.id === null) {
+            return false;
+        }
+
+        // Must have name
+        if (typeof activity.name !== 'string' || activity.name.trim() === '') {
+            return false;
+        }
+
+        // Price can be 0 but must be a valid number if present
+        if (activity.price !== undefined && activity.price !== null) {
+            const price = parseFloat(activity.price);
+            if (isNaN(price) || price < 0) {
+                return false;
+            }
+        }
+
+        return true;
+    },
+
+    validateDays(days) {
+        const parsed = parseInt(days);
+        return !isNaN(parsed) && parsed >= 0 && parsed <= 30;
+    },
+
+    validateDestination(destination) {
+        if (!destination) return true; // null/undefined is valid (not selected yet)
+        return typeof destination === 'string' && destination.trim() !== '';
+    },
+
+    sanitizeData(data) {
+        const errors = [];
+        const cleaned = { ...data };
+
+        // Validate destination
+        if (cleaned.selectedDestinationName && !this.validateDestination(cleaned.selectedDestinationName)) {
+            errors.push('Invalid destination name');
+            cleaned.selectedDestinationName = null;
+        }
+
+        if (cleaned.selectedDestinationId && !this.validateDestination(cleaned.selectedDestinationId)) {
+            errors.push('Invalid destination ID');
+            cleaned.selectedDestinationId = null;
+        }
+
+        // Validate days
+        if (cleaned.selectedDaysStay !== undefined && !this.validateDays(cleaned.selectedDaysStay)) {
+            errors.push(`Invalid days: ${cleaned.selectedDaysStay}`);
+            cleaned.selectedDaysStay = 0;
+        }
+
+        // Validate and filter family members
+        if (cleaned.familyMembers && Array.isArray(cleaned.familyMembers)) {
+            const originalLength = cleaned.familyMembers.length;
+            cleaned.familyMembers = cleaned.familyMembers.filter(member => {
+                const valid = this.validateFamilyMember(member);
+                if (!valid) {
+                    errors.push(`Invalid family member: ${JSON.stringify(member)}`);
+                }
+                return valid;
+            });
+
+            if (cleaned.familyMembers.length !== originalLength) {
+                console.warn(`⚠️ StateValidator: Removed ${originalLength - cleaned.familyMembers.length} invalid family members`);
+            }
+
+            // Ensure at least default members
+            if (cleaned.familyMembers.length === 0) {
+                cleaned.familyMembers = [
+                    { name: "Ενήλικας 1", age: "" },
+                    { name: "Ενήλικας 2", age: "" }
+                ];
+                console.log('✅ StateValidator: Reset to default family members');
+            }
+        } else {
+            cleaned.familyMembers = [
+                { name: "Ενήλικας 1", age: "" },
+                { name: "Ενήλικας 2", age: "" }
+            ];
+        }
+
+        // Validate and filter selected activities
+        if (cleaned.selectedActivities && Array.isArray(cleaned.selectedActivities)) {
+            const originalLength = cleaned.selectedActivities.length;
+            cleaned.selectedActivities = cleaned.selectedActivities.filter(activity => {
+                const valid = this.validateActivity(activity);
+                if (!valid) {
+                    errors.push(`Invalid activity: ${JSON.stringify(activity)}`);
+                }
+                return valid;
+            });
+
+            if (cleaned.selectedActivities.length !== originalLength) {
+                console.warn(`⚠️ StateValidator: Removed ${originalLength - cleaned.selectedActivities.length} invalid activities`);
+            }
+        } else {
+            cleaned.selectedActivities = [];
+        }
+
+        // Validate geographic program (light validation)
+        if (cleaned.geographicProgram !== null &&
+            cleaned.geographicProgram !== undefined &&
+            typeof cleaned.geographicProgram !== 'object') {
+            errors.push('Invalid geographic program');
+            cleaned.geographicProgram = null;
+        }
+
+        // Validate current city activities
+        if (cleaned.currentCityActivities && !Array.isArray(cleaned.currentCityActivities)) {
+            errors.push('Invalid city activities');
+            cleaned.currentCityActivities = [];
+        }
+
+        if (errors.length > 0) {
+            console.warn('⚠️ StateValidator: Data validation errors:', errors);
+        } else {
+            console.log('✅ StateValidator: Data validation passed');
+        }
+
+        return cleaned;
+    }
+};
+
 // ==================== GLOBAL MAP VARIABLES (ΑΠΟ ΤΟ ΠΑΛΙΟ ΧΑΡΤΗ) ====================
 window.firstPoint = null;
 window.secondPoint = null;
@@ -357,7 +507,11 @@ function loadSavedData() {
 
 function loadSavedDataNow(saved) {
     try {
-        const data = JSON.parse(saved);
+        let data = JSON.parse(saved);
+
+        // Validate and sanitize data before loading
+        data = StateValidator.sanitizeData(data);
+
         state.selectedDestination = data.selectedDestinationName || null;
         state.selectedDestinationId = data.selectedDestinationId || null;
         state.selectedDays = data.selectedDaysStay || 0;
@@ -380,11 +534,13 @@ function loadSavedDataNow(saved) {
             destination: state.selectedDestination,
             days: state.selectedDays,
             activities: state.selectedActivities.length,
+            familyMembers: state.familyMembers.length,
             hasProgram: !!state.geographicProgram,
             lastSaved: data.lastSaved
         });
     } catch (error) {
         console.error('Σφάλμα φόρτωσης δεδομένων:', error);
+        // Don't throw - fall back to default state
     }
 }
 
@@ -3981,7 +4137,7 @@ function calculateTotalSpent() {
 }
 
 function saveState() {
-    const data = {
+    let data = {
         selectedDestinationName: state.selectedDestination,
         selectedDestinationId: state.selectedDestinationId,
         selectedDaysStay: state.selectedDays,
@@ -3992,6 +4148,9 @@ function saveState() {
         currentCityActivities: state.currentCityActivities || [],
         lastSaved: new Date().toISOString()
     };
+
+    // Validate data before saving (defensive programming)
+    data = StateValidator.sanitizeData(data);
 
     try {
         localStorage.setItem('travelPlannerData', JSON.stringify(data));
