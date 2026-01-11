@@ -1203,7 +1203,6 @@ function advancedGeographicClustering(activities, maxDistanceKm = 3.0) {
     }
     
     // ΒΕΛΤΙΩΜΕΝΗ - μεγαλύτερη ακτίνα για το Λονδίνο
-const maxDistanceKm = 3.0; // Από 2.0 σε 3.0 km
 const activitiesWithLocation = activities.filter(act => 
     act && act.location && 
     typeof act.location.lat === 'number' && 
