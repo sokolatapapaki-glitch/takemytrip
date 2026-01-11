@@ -999,36 +999,95 @@ function getFullActivitiesWithLocation() {
         } : null;
     }).filter(a => a !== null && a.location);
 }
+console.log("🔍 DEBUG: ΕΛΕΓΧΟΣ HTML ΣΤΟΙΧΕΙΩΝ");
+console.log("geographic-program-section:", document.getElementById('geographic-program-section'));
+console.log("geographic-program:", document.getElementById('geographic-program'));
+console.log("currentStep:", state.currentStep);
 function displayGeographicProgram(daysProgram, activityGroups) {
-    const programSection = document.getElementById('geographic-program-section');
-    const programDiv = document.getElementById('geographic-program');
+    console.log("🔍 displayGeographicProgram called with:", {
+        daysCount: daysProgram?.length,
+        groupsCount: activityGroups?.length
+    });
     
+    // 1. ΒΡΕΣ ΤΑ ΣΤΟΙΧΕΙΑ ΜΕ ΑΣΦΑΛΕΙΑ
+    let programSection = document.getElementById('geographic-program-section');
+    let programDiv = document.getElementById('geographic-program');
+    
+    // 2. ΕΑΝ ΔΕΝ ΥΠΑΡΧΟΥΝ, ΔΗΜΙΟΥΡΓΗΣΕ ΤΑ
+    if (!programSection) {
+        console.warn("⚠️ programSection δεν βρέθηκε - δημιουργία...");
+        
+        // Ψάξε το summary container
+        const summaryContainer = document.querySelector('.card') || 
+                                document.getElementById('step-content');
+        
+        if (summaryContainer) {
+            const newSection = document.createElement('div');
+            newSection.id = 'geographic-program-section';
+            newSection.className = 'card';
+            newSection.style.marginTop = '30px';
+            newSection.style.display = 'block';
+            newSection.style.animation = 'slideDown 0.5s ease-out';
+            
+            newSection.innerHTML = `
+                <h3><i class="fas fa-route"></i> Γεωγραφικό Πρόγραμμα</h3>
+                <div id="geographic-program" 
+                     style="min-height: 150px; padding: 20px; border-radius: 15px; 
+                            background: #f0f7ff; border: 2px dashed var(--primary-light); 
+                            text-align: center;">
+                </div>
+            `;
+            
+            // Βάλτο μετά το summary container
+            summaryContainer.parentNode.insertBefore(newSection, summaryContainer.nextSibling);
+            
+            // Ενημέρωση των μεταβλητών
+            programSection = newSection;
+            programDiv = document.getElementById('geographic-program');
+            
+            console.log("✅ Δημιουργήθηκε νέο programSection");
+        }
+    }
+    
+    // 3. ΕΛΕΓΧΟΣ ΤΕΛΙΚΟΣ
     if (!programSection || !programDiv) {
-        console.error('❌ Δεν βρέθηκαν τα στοιχεία για εμφάνιση');
+        console.error('❌ Αδυναμία εύρεσης ή δημιουργίας HTML στοιχείων');
+        
+        // Εμφάνιση error στο summary section
+        const summaryContent = document.querySelector('.card');
+        if (summaryContent) {
+            summaryContent.innerHTML += `
+                <div class="alert alert-danger" style="margin-top: 20px;">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Σφάλμα Εμφάνισης Προγράμματος</h4>
+                    <p>Δεν μπορεί να εμφανιστεί το γεωγραφικό πρόγραμμα.</p>
+                    <button onclick="location.reload()" class="btn btn-primary">
+                        <i class="fas fa-redo"></i> Ανανέωση Σελίδας
+                    </button>
+                </div>
+            `;
+        }
         return;
     }
     
-    if (activityGroups.length === 0) {
+    // 4. ΕΜΦΑΝΙΣΗ ΠΕΡΙΕΧΟΜΕΝΟΥ
+    if (!activityGroups || activityGroups.length === 0) {
         programDiv.innerHTML = `
             <div style="padding: 40px 20px; text-align: center;">
                 <div style="font-size: 48px; margin-bottom: 15px; color: #9CA3AF;">🧭</div>
                 <h4 style="color: var(--dark); margin-bottom: 10px;">Δεν βρέθηκαν πληροφορίες τοποθεσίας</h4>
                 <p style="color: var(--gray);">
-                    Οι επιλεγμένες δραστηριότητες δεν έχουν πληροφορίες τοποθεσίας.<br>
-                    Δοκιμάστε να τις δείτε στον χάρτη πρώτα.
+                    Οι επιλεγμένες δραστηριότητες δεν έχουν πληροφορίες τοποθεσίας.
                 </p>
-                <button onclick="showStep('map')" class="btn btn-primary" style="margin-top: 15px;">
-                    <i class="fas fa-map"></i> Προβολή στον Χάρτη
-                </button>
             </div>
         `;
     } else {
+        // Χρήση της ΥΠΑΡΧΟΥΣΑΣ generateProgramHTMLOld
         programDiv.innerHTML = generateProgramHTMLOld(daysProgram, activityGroups);
     }
     
+    // 5. ΕΜΦΑΝΙΣΗ ΚΑΙ ANIMATION
     programSection.style.display = 'block';
     
-    // ΑΥΤΟΜΑΤΟ SCROLL ΚΑΙ ANIMATION
     setTimeout(() => {
         if (programSection && programSection.scrollIntoView) {
             programSection.scrollIntoView({ 
@@ -1036,6 +1095,8 @@ function displayGeographicProgram(daysProgram, activityGroups) {
                 block: 'start'
             });
         }
+        
+        console.log("✅ Το πρόγραμμα εμφανίστηκε επιτυχώς");
     }, 300);
 }
 function generateProgramHTMLOld(daysProgram, activityGroups) {
