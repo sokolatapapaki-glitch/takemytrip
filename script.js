@@ -1771,8 +1771,12 @@ function saveManualDestination() {
     }
 
     console.log('🧹 Καθαρισμός δεδομένων προηγούμενης πόλης');
-    
-    document.getElementById('current-destination-display').textContent = cityName;
+
+    // Update display with null check
+    const destDisplay = document.getElementById('current-destination-display');
+    if (destDisplay) {
+        destDisplay.textContent = cityName;
+    }
     updateActivitiesCost();
     
     closeManualDestinationModal();
@@ -2132,9 +2136,14 @@ function selectDestination(destinationName, destinationId) {
 
     console.log('🧹 Καθαρισμός δεδομένων προηγούμενης πόλης');
 
-    document.getElementById('current-destination-display').textContent = destinationName;
-    
+    // Update display with null check
+    const destDisplay = document.getElementById('current-destination-display');
+    if (destDisplay) {
+        destDisplay.textContent = destinationName;
+    }
+
     const resultsDiv = document.getElementById('destination-results');
+    if (!resultsDiv) return;
     resultsDiv.innerHTML = `
         <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
             <div style="font-size: 48px; margin-bottom: 20px;">✅</div>
@@ -4478,20 +4487,7 @@ function calculateGroupCenter(activities) {
 
     return [totalLat / validActivities.length, totalLng / validActivities.length];
 }
-// Βοηθητική για χρώματα ομάδων
-function getGroupColor(index) {
-    const colors = [
-        '#4F46E5', // Indigo
-        '#10B981', // Emerald
-        '#F59E0B', // Amber
-        '#EF4444', // Red
-        '#8B5CF6', // Violet
-        '#EC4899', // Pink
-        '#14B8A6', // Teal
-        '#F97316'  // Orange
-    ];
-    return colors[index % colors.length];
-}
+// NOTE: getGroupColor is defined earlier in the file (uses COLOR_PALETTE)
 // Συνάρτηση για εμφάνιση ομαδοποιημένων δραστηριοτήτων στο χάρτη
 function showGroupedActivitiesOnMap() {
     if (!window.travelMap) {
@@ -5242,21 +5238,27 @@ currentRouteLine.bindPopup(routePopup);
     showToast(`✅ Διαδρομή δημιουργήθηκε!<br><strong>${selectedPointA.title}</strong> → <strong>${selectedPointB.title}</strong><br>Απόσταση: ${distance} km`, 'success');
     
     // Αυτόματη απελευθέρωση μετά από 30 δευτερόλεπτα
-    setTimeout(() => {
+    // Clear any existing timer first to prevent stacking
+    if (window.routeResetTimer) {
+        clearTimeout(window.routeResetTimer);
+    }
+
+    window.routeResetTimer = setTimeout(() => {
         if (selectedPointA && selectedPointB) {
             resetMarkerAppearance(selectedPointA.marker);
             resetMarkerAppearance(selectedPointB.marker);
-            
+
             if (currentRouteLine) {
                 window.travelMap.removeLayer(currentRouteLine);
                 currentRouteLine = null;
             }
-            
+
             selectedPointA = null;
             selectedPointB = null;
-            
+
             showToast('🔄 Επαναφορά επιλογών διαδρομής', 'info');
         }
+        window.routeResetTimer = null;
     }, 30000);
 }
 
