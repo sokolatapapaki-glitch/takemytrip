@@ -616,7 +616,94 @@ function showSavedTripNotification(data) {
         </div>
     `;
 
-    showToast(message, 'info', 8000);
+    // Use modal instead of toast - requires user action to close
+    showSavedTripModal(message);
+}
+
+// ==================== SAVED TRIP MODAL (USER-CONTROLLED) ====================
+function showSavedTripModal(message) {
+    // Remove any existing modal
+    const existingModal = document.getElementById('saved-trip-modal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+
+    // Create modal overlay
+    const modal = document.createElement('div');
+    modal.id = 'saved-trip-modal';
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        animation: fadeIn 0.3s ease;
+        padding: 20px;
+    `;
+
+    // Create modal content
+    const modalContent = document.createElement('div');
+    modalContent.style.cssText = `
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 550px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        animation: slideInDown 0.3s ease;
+        position: relative;
+    `;
+
+    modalContent.innerHTML = `
+        <div style="padding: 30px;">
+            ${message}
+            <div style="margin-top: 25px; text-align: center;">
+                <button onclick="closeSavedTripModal()"
+                        class="btn btn-primary"
+                        style="padding: 12px 40px; font-size: 16px; min-width: 150px;">
+                    <i class="fas fa-check"></i> Εντάξει
+                </button>
+            </div>
+        </div>
+    `;
+
+    modal.appendChild(modalContent);
+    document.body.appendChild(modal);
+
+    // Close on overlay click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeSavedTripModal();
+        }
+    });
+
+    // Close on Escape key
+    const escHandler = (e) => {
+        if (e.key === 'Escape') {
+            closeSavedTripModal();
+            document.removeEventListener('keydown', escHandler);
+        }
+    };
+    document.addEventListener('keydown', escHandler);
+
+    console.log('📋 Saved trip modal opened - user must close explicitly');
+}
+
+function closeSavedTripModal() {
+    const modal = document.getElementById('saved-trip-modal');
+    if (modal) {
+        modal.style.animation = 'fadeOut 0.2s ease';
+        setTimeout(() => {
+            modal.remove();
+            console.log('✅ Saved trip modal closed');
+        }, 200);
+    }
 }
 
 function updateSidebarCompletionIndicators() {
@@ -6726,6 +6813,7 @@ window.reloadMap = reloadMap;
 window.addCustomMapPoint = addCustomMapPoint;
 window.removeCustomPoint = removeCustomPoint;
 window.closeMapInstructions = closeMapInstructions;
+window.closeSavedTripModal = closeSavedTripModal;
 window.showActivityMap = showActivityMap;
 window.showRouteBetweenPoints = showRouteBetweenPoints;
 window.updateFamilyMemberName = updateFamilyMemberName;
