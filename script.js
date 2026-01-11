@@ -145,6 +145,78 @@ const MapManager = {
     }
 };
 
+// ==================== MARKER CACHE ====================
+const MarkerCache = {
+    cache: new Map(), // Map<activityId, marker>
+
+    addOrUpdate(activityId, marker) {
+        // If marker already exists for this ID, remove old one first
+        if (this.cache.has(activityId)) {
+            const oldMarker = this.cache.get(activityId);
+            if (window.travelMap && oldMarker) {
+                window.travelMap.removeLayer(oldMarker);
+            }
+        }
+
+        // Add new marker to cache
+        this.cache.set(activityId, marker);
+        console.log(`📍 MarkerCache: Cached marker for activity ${activityId}`);
+    },
+
+    remove(activityId) {
+        const marker = this.cache.get(activityId);
+        if (marker && window.travelMap) {
+            window.travelMap.removeLayer(marker);
+            this.cache.delete(activityId);
+            console.log(`🗑️ MarkerCache: Removed marker for activity ${activityId}`);
+        }
+    },
+
+    clear() {
+        // Remove all cached markers from map
+        if (window.travelMap) {
+            this.cache.forEach(marker => {
+                window.travelMap.removeLayer(marker);
+            });
+        }
+        this.cache.clear();
+        console.log('🧹 MarkerCache: Cleared all cached markers');
+    },
+
+    sync(currentActivityIds) {
+        // Remove markers for activities no longer in the list
+        const idsToRemove = [];
+
+        this.cache.forEach((marker, activityId) => {
+            if (!currentActivityIds.has(activityId)) {
+                idsToRemove.push(activityId);
+            }
+        });
+
+        idsToRemove.forEach(id => this.remove(id));
+
+        if (idsToRemove.length > 0) {
+            console.log(`🔄 MarkerCache: Synced - removed ${idsToRemove.length} old markers`);
+        }
+    },
+
+    has(activityId) {
+        return this.cache.has(activityId);
+    },
+
+    get(activityId) {
+        return this.cache.get(activityId);
+    },
+
+    size() {
+        return this.cache.size;
+    },
+
+    getAllMarkers() {
+        return Array.from(this.cache.values());
+    }
+};
+
 // ==================== GLOBAL MAP VARIABLES (ΑΠΟ ΤΟ ΠΑΛΙΟ ΧΑΡΤΗ) ====================
 window.firstPoint = null;
 window.secondPoint = null;
@@ -170,6 +242,11 @@ function cleanupMapState() {
     if (typeof selectedPointA !== 'undefined') selectedPointA = null;
     if (typeof selectedPointB !== 'undefined') selectedPointB = null;
     if (typeof currentRouteLine !== 'undefined') currentRouteLine = null;
+
+    // Clear marker cache
+    if (typeof MarkerCache !== 'undefined') {
+        MarkerCache.clear();
+    }
 
     console.log('🧹 Map state cleaned up');
 }
@@ -3540,37 +3617,13 @@ function clearMapPoints() {
         return;
     }
 
-    // Καθαρισμός όλων των markers (εκτός από τον city marker)
-    let hasCityMarker = false;
-    window.travelMap.eachLayer(function(layer) {
-        if (layer instanceof L.Marker) {
-            // Μην διαγράψεις τον city marker
-            if (layer.options && layer.options.className === 'city-marker') {
-                hasCityMarker = true;
-                return;
-            }
-            window.travelMap.removeLayer(layer);
-        }
-    });
+    // Clear all activity markers using MarkerCache
+    MarkerCache.clear();
 
-    // Clear selectedMarkers array to prevent memory leaks
+    // Clear selectedMarkers array for backward compatibility
     window.selectedMarkers = [];
 
-    // Re-add city marker if it was accidentally removed
-    if (!hasCityMarker && state.selectedDestinationId) {
-        const cityCoords = getCityCoordinates(state.selectedDestinationId);
-        if (cityCoords) {
-            L.marker(cityCoords, {
-                icon: L.divIcon({
-                    html: `<div style="background:#4F46E5;color:white;width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;border:3px solid white;box-shadow:0 4px 12px rgba(79,70,229,0.4);">🏙️</div>`,
-                    className: 'city-marker',
-                    iconSize: [50, 50],
-                    iconAnchor: [25, 50]
-                })
-            }).addTo(window.travelMap);
-            console.log('🏙️ City marker re-added');
-        }
-    }
+    // Note: City marker is managed by MapManager and not affected by MarkerCache
 
     // Καθαρισμός διαδρομών
     if (currentRouteLine) {
@@ -3688,13 +3741,10 @@ function showActivityMap() {
     }
     
     console.log('📍 Προσθήκη πινέζων για τις επιλεγμένες δραστηριότητες');
-    
-    // 1. Καθαρισμός όλων των πινέζων
-    window.travelMap.eachLayer(function(layer) {
-        if (layer instanceof L.Marker) {
-            window.travelMap.removeLayer(layer);
-        }
-    });
+
+    // 1. Sync marker cache (remove only markers no longer needed)
+    const currentActivityIds = new Set(state.selectedActivities.map(a => a.id));
+    MarkerCache.sync(currentActivityIds);
     
     // 2. Αφαίρεση τυχόν διαδρομών
     if (currentRouteLine) {
@@ -3773,10 +3823,17 @@ function showActivityMap() {
             };
         }
         
-        // 🔴 ΚΡΙΤΙΚΗ ΚΛΗΣΗ: Χρησιμοποίησε τη νέα συνάρτηση!
-        const marker = createMarkerWithConnectFunction(coords, markerTitle, activityData);
-        if (marker) {
-            window.selectedMarkers.push(marker);  // <-- 🔵 ΑΥΤΗ ΕΙΝΑΙ Η ΔΙΟΡΘΩΣΗ
+        // Create or reuse marker from cache
+        if (!MarkerCache.has(activity.id)) {
+            // Marker doesn't exist in cache, create new one
+            const marker = createMarkerWithConnectFunction(coords, markerTitle, activityData);
+            if (marker) {
+                MarkerCache.addOrUpdate(activity.id, marker);
+                window.selectedMarkers.push(marker);  // Backward compatibility
+                activityCount++;
+            }
+        } else {
+            // Marker already exists in cache, just count it
             activityCount++;
         }
     });
