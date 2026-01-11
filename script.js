@@ -1194,7 +1194,7 @@ function generateProgramHTMLOld(daysProgram, activityGroups) {
     return html;
 }
 // ==================== ΒΕΛΤΙΩΜΕΝΗ ΓΕΩΓΡΑΦΙΚΗ ΟΜΑΔΟΠΟΙΗΣΗ ====================
-function advancedGeographicClustering(activities, maxDistanceKm = 2.0) {
+function advancedGeographicClustering(activities, maxDistanceKm = 3.0) {
     console.log('🧠 ΕΦΑΡΜΟΓΗ ΒΕΛΤΙΩΜΕΝΗΣ ΓΕΩΓΡΑΦΙΚΗΣ ΟΜΑΔΟΠΟΙΗΣΗΣ');
     
     if (!activities || activities.length === 0) {
@@ -1202,12 +1202,14 @@ function advancedGeographicClustering(activities, maxDistanceKm = 2.0) {
         return [];
     }
     
-    // 1. Φίλτρο μόνο δραστηριοτήτων με τοποθεσία
-    const activitiesWithLocation = activities.filter(act => 
-        act && act.location && 
-        typeof act.location.lat === 'number' && 
-        typeof act.location.lng === 'number'
-    );
+    // ΒΕΛΤΙΩΜΕΝΗ - μεγαλύτερη ακτίνα για το Λονδίνο
+const maxDistanceKm = 3.0; // Από 2.0 σε 3.0 km
+const activitiesWithLocation = activities.filter(act => 
+    act && act.location && 
+    typeof act.location.lat === 'number' && 
+    typeof act.location.lng === 'number'
+);
+    
     
     console.log(`📍 ${activitiesWithLocation.length}/${activities.length} δραστηριότητες έχουν τοποθεσία`);
     
@@ -1256,7 +1258,7 @@ function advancedGeographicClustering(activities, maxDistanceKm = 2.0) {
                 center: [centerLat, centerLng],
                 activities: group,
                 count: group.length,
-                radius: maxDistanceKm
+                radius: 3.0 
             });
             
             console.log(`   📍 Ομάδα ${groups.length}: ${group.length} δραστηριότητες`);
