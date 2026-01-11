@@ -1375,7 +1375,9 @@ let activityGroups = [];
 
 if (fullActivities.length > 0) {
     // 🔴 ΚΡΙΤΙΚΗ ΑΛΛΑΓΗ: Πρώτα δημιουργούμε ΠΟΛΛΕΣ μικρές ομάδες με βάση απόσταση
-    let smallClusters = clusterActivitiesForMap(fullActivities, 20, 1.0); // 1.0km ακτίνα
+    let smallClusters = window.clusterActivitiesForMap ? 
+    window.clusterActivitiesForMap(fullActivities, 20, 1.0) : 
+    advancedGeographicClustering(fullActivities, 2.0);
     
     console.log(`📍 Αρχικά ${smallClusters.length} μικρές ομάδες (1km ακτίνα)`);
     
