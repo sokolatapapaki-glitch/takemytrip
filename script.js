@@ -2632,13 +2632,39 @@ function toggleActivitySelection(activityId) {
 
 function updateActivitiesTotal() {
     let total = 0;
-    
+
     state.selectedActivities.forEach(activity => {
-        total += activity.price || 0;
+        const price = parseFloat(activity.price);
+        total += isNaN(price) ? 0 : price;
     });
-    
-    document.getElementById('activities-total').textContent = total + '€';
+
+    // Add null check for DOM element
+    const totalElement = document.getElementById('activities-total');
+    if (totalElement) {
+        totalElement.textContent = total.toFixed(2) + '€';
+    }
     updateActivitiesCost();
+}
+
+// Recalculate prices for selected activities when family ages change
+function recalculateSelectedActivityPrices() {
+    if (!state.currentCityActivities || state.currentCityActivities.length === 0) {
+        console.log('⚠️ No city activities loaded, cannot recalculate prices');
+        return;
+    }
+
+    state.selectedActivities.forEach(selected => {
+        const original = state.currentCityActivities.find(a => a.id === selected.id);
+        if (original && original.prices) {
+            const newPrice = calculateFamilyCost(original.prices);
+            if (selected.price !== newPrice) {
+                console.log(`💰 Price updated for ${selected.name}: ${selected.price}€ → ${newPrice}€`);
+                selected.price = newPrice;
+            }
+        }
+    });
+
+    updateActivitiesTotal();
 }
 
 
@@ -3841,7 +3867,8 @@ function updateFamilyMemberAge(index, age) {
     } else {
         state.familyMembers[index].age = parseInt(age);
     }
-    updateActivitiesTotal();
+    // Recalculate prices when ages change (fixes stale prices issue)
+    recalculateSelectedActivityPrices();
 }
 
 function addFamilyMember(type) {
@@ -3850,12 +3877,14 @@ function addFamilyMember(type) {
         age: type === 'adult' ? 30 : 10
     };
     state.familyMembers.push(newMember);
+    recalculateSelectedActivityPrices(); // Recalculate with new member
     showStep('activities');
 }
 
 function removeFamilyMember(index) {
     if (state.familyMembers.length > 0) {
         state.familyMembers.splice(index, 1);
+        recalculateSelectedActivityPrices(); // Recalculate with removed member
         showStep('activities');
         console.log(`➖ Αφαιρέθηκε μέλος. Μένησαν: ${state.familyMembers.length} άτομα`);
     } else {
