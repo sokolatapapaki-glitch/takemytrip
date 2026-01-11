@@ -1271,7 +1271,7 @@ let activityGroups = [];
 
 if (fullActivities.length > 0) {
     // Χρησιμοποιούμε την ΝΕΑ σωστή ομαδοποίηση
-    activityGroups = createGeographicClusters(fullActivities, 1.5, 2);
+    activityGroups = groupActivitiesByProximity(fullActivities, 1.5);
     
     // ΛΟΓΗ ΕΝΤΕΛΩΣ ΝΕΑ: Αν έχουμε περισσότερες συστάδες από μέρες
     if (activityGroups.length > state.selectedDays) {
