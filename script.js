@@ -1193,6 +1193,110 @@ function generateProgramHTMLOld(daysProgram, activityGroups) {
     
     return html;
 }
+// ==================== ΒΕΛΤΙΩΜΕΝΗ ΓΕΩΓΡΑΦΙΚΗ ΟΜΑΔΟΠΟΙΗΣΗ ====================
+function advancedGeographicClustering(activities, maxDistanceKm = 2.0) {
+    console.log('🧠 ΕΦΑΡΜΟΓΗ ΒΕΛΤΙΩΜΕΝΗΣ ΓΕΩΓΡΑΦΙΚΗΣ ΟΜΑΔΟΠΟΙΗΣΗΣ');
+    
+    if (!activities || activities.length === 0) {
+        console.log('⚠️ Δεν υπάρχουν δραστηριότητες για ομαδοποίηση');
+        return [];
+    }
+    
+    // 1. Φίλτρο μόνο δραστηριοτήτων με τοποθεσία
+    const activitiesWithLocation = activities.filter(act => 
+        act && act.location && 
+        typeof act.location.lat === 'number' && 
+        typeof act.location.lng === 'number'
+    );
+    
+    console.log(`📍 ${activitiesWithLocation.length}/${activities.length} δραστηριότητες έχουν τοποθεσία`);
+    
+    if (activitiesWithLocation.length === 0) {
+        // Αν καμία δεν έχει τοποθεσία, απλή κατανομή
+        return activities.map(act => ({
+            center: null,
+            activities: [act],
+            count: 1,
+            radius: 0
+        }));
+    }
+    
+    // 2. Δημιουργία ομάδων με απλό αλγόριθμο
+    const groups = [];
+    const processed = new Set();
+    
+    activitiesWithLocation.forEach((activity, index) => {
+        if (processed.has(index)) return;
+        
+        const group = [activity];
+        processed.add(index);
+        
+        // Βρες όλες τις κοντινές δραστηριότητες
+        activitiesWithLocation.forEach((otherActivity, otherIndex) => {
+            if (processed.has(otherIndex) || index === otherIndex) return;
+            
+            const distance = calculateDistance(
+                [activity.location.lat, activity.location.lng],
+                [otherActivity.location.lat, otherActivity.location.lng]
+            );
+            
+            if (distance <= maxDistanceKm) {
+                group.push(otherActivity);
+                processed.add(otherIndex);
+                console.log(`   🔗 ${activity.name} ↔ ${otherActivity.name}: ${distance.toFixed(2)} km`);
+            }
+        });
+        
+        if (group.length > 0) {
+            // Υπολογισμός κέντρου ομάδας
+            const centerLat = group.reduce((sum, act) => sum + act.location.lat, 0) / group.length;
+            const centerLng = group.reduce((sum, act) => sum + act.location.lng, 0) / group.length;
+            
+            groups.push({
+                center: [centerLat, centerLng],
+                activities: group,
+                count: group.length,
+                radius: maxDistanceKm
+            });
+            
+            console.log(`   📍 Ομάδα ${groups.length}: ${group.length} δραστηριότητες`);
+        }
+    });
+    
+    // 3. Προσθήκη μονών δραστηριοτήτων
+    activitiesWithLocation.forEach((activity, index) => {
+        if (!processed.has(index)) {
+            groups.push({
+                center: [activity.location.lat, activity.location.lng],
+                activities: [activity],
+                count: 1,
+                radius: 0
+            });
+        }
+    });
+    
+    // 4. Προσθήκη δραστηριοτήτων χωρίς location
+    const activitiesWithoutLocation = activities.filter(act => 
+        !act.location || 
+        typeof act.location.lat !== 'number'
+    );
+    
+    activitiesWithoutLocation.forEach(activity => {
+        groups.push({
+            center: null,
+            activities: [activity],
+            count: 1,
+            radius: 0
+        });
+    });
+    
+    // 5. Ταξινόμηση από μεγαλύτερη σε μικρότερη ομάδα
+    groups.sort((a, b) => b.count - a.count);
+    
+    console.log(`✅ Δημιουργήθηκαν ${groups.length} γεωγραφικές ομάδες`);
+    
+    return groups;
+}
 // ==================== ΑΠΛΟΠΟΙΗΜΕΝΗ ΣΥΝΑΡΤΗΣΗ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ ====================
 function generateGeographicProgram() {
     console.log('🎯 ========== ΑΡΧΗ generateGeographicProgram ==========');
@@ -1271,7 +1375,8 @@ let activityGroups = [];
 
 if (fullActivities.length > 0) {
     // Χρησιμοποιούμε την ΝΕΑ σωστή ομαδοποίηση
-    activityGroups = groupActivitiesByProximity(fullActivities, 1.5);
+    activityGroups = advancedGeographicClustering(fullActivities, 2.0);
+
     
     // ΛΟΓΗ ΕΝΤΕΛΩΣ ΝΕΑ: Αν έχουμε περισσότερες συστάδες από μέρες
     if (activityGroups.length > state.selectedDays) {
@@ -5621,6 +5726,7 @@ window.getDayColor = getDayColor;
 window.createGeographicClusters = createGeographicClusters;
 window.calculateClusterCenter = calculateClusterCenter;
 window.distributeClustersToDays = distributeGroupsToDays;
+window.advancedGeographicClustering = advancedGeographicClustering;
 
 // ==================== CSS ANIMATIONS FOR PROGRAM ====================
 // Προσθήκη CSS animation για το spinner (για το βήμα 5)
