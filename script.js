@@ -28,6 +28,29 @@ window.firstPoint = null;
 window.secondPoint = null;
 window.currentRoutePolyline = null;
 window.selectedMarkers = []; // Για ενώσεις σημείων
+window.routeResetTimer = null; // Timer για reset διαδρομής
+
+// Centralized cleanup function για αποφυγή memory leaks
+function cleanupMapState() {
+    // Cleanup timers
+    if (window.routeResetTimer) {
+        clearTimeout(window.routeResetTimer);
+        window.routeResetTimer = null;
+    }
+
+    // Cleanup global map variables
+    window.firstPoint = null;
+    window.secondPoint = null;
+    window.currentRoutePolyline = null;
+    window.selectedMarkers = [];
+
+    // Cleanup module-level variables (if defined)
+    if (typeof selectedPointA !== 'undefined') selectedPointA = null;
+    if (typeof selectedPointB !== 'undefined') selectedPointB = null;
+    if (typeof currentRouteLine !== 'undefined') currentRouteLine = null;
+
+    console.log('🧹 Map state cleaned up');
+}
 // ==================== MAIN INITIALIZATION FUNCTION ====================
 function initApp() {
     console.log('🚀 Εκκίνηση εφαρμογής...');
@@ -141,12 +164,26 @@ function loadSavedDataNow(saved) {
         state.selectedDays = data.selectedDaysStay || 0;
         state.familyMembers = data.familyMembers || state.familyMembers;
         state.selectedActivities = data.selectedActivities || [];
-        
+
+        // Restore persisted program data
+        state.geographicProgram = data.geographicProgram || null;
+        state.currentCityActivities = data.currentCityActivities || [];
+
+        // Update display with null check for DOM element
         if (state.selectedDestination) {
-            document.getElementById('current-destination-display').textContent = state.selectedDestination;
+            const el = document.getElementById('current-destination-display');
+            if (el) {
+                el.textContent = state.selectedDestination;
+            }
         }
-        
-        console.log('📂 Φορτώθηκαν αποθηκευμένα δεδομένα:', data);
+
+        console.log('📂 Φορτώθηκαν αποθηκευμένα δεδομένα:', {
+            destination: state.selectedDestination,
+            days: state.selectedDays,
+            activities: state.selectedActivities.length,
+            hasProgram: !!state.geographicProgram,
+            lastSaved: data.lastSaved
+        });
     } catch (error) {
         console.error('Σφάλμα φόρτωσης δεδομένων:', error);
     }
@@ -1493,15 +1530,20 @@ function distributeGroupsToDays(groups, totalDays) {
         console.log(`   📦 Σύσταδα ${index + 1} (${group.count} δραστ.) → Μέρα ${emptiestDayIndex + 1}`);
     });
     
-    // 3. Αφαίρεση κενών ημερών
-    const nonEmptyDays = days.filter(day => day.totalActivities > 0);
-    
-    console.log(`✅ Κατανεμήθηκαν ${sortedGroups.length} συστάδες:`);
-    nonEmptyDays.forEach((day, i) => {
-        console.log(`   Μ${i+1}: ${day.groups.length} συστάδες, ${day.totalActivities} δραστηριότητες`);
+    // 3. Επιστρέφουμε ΟΛΕΣ τις μέρες (ακόμα και κενές) για να ταιριάζει με την επιλογή του χρήστη
+    // Πριν: const nonEmptyDays = days.filter(day => day.totalActivities > 0);
+    // Τώρα: Επιστρέφουμε όλες τις μέρες
+
+    console.log(`✅ Κατανεμήθηκαν ${sortedGroups.length} συστάδες σε ${totalDays} μέρες:`);
+    days.forEach((day, i) => {
+        if (day.totalActivities > 0) {
+            console.log(`   Μ${i+1}: ${day.groups.length} συστάδες, ${day.totalActivities} δραστηριότητες`);
+        } else {
+            console.log(`   Μ${i+1}: (ελεύθερη μέρα)`);
+        }
     });
-    
-    return nonEmptyDays;
+
+    return days; // Return ALL days to match user's day selection
 }
 
 function getDayColor(dayNumber) {
@@ -3224,21 +3266,19 @@ function initializeMapInStep() {
         return;
     }
     
-    // Καθαρισμός προηγούμενου
+    // Καθαρισμός προηγούμενου χάρτη με ασφαλή τρόπο
     if (window.travelMap) {
-        window.travelMap.remove();
+        try {
+            window.travelMap.remove();
+        } catch (e) {
+            console.warn('⚠️ Error removing previous map:', e);
+        }
         window.travelMap = null;
     }
-    
-    // Επαναφορά επιλογών
-    window.firstPoint = null;
-    window.secondPoint = null;
-    window.currentRoutePolyline = null;
-    window.selectedMarkers = [];
-    selectedPointA = null;
-    selectedPointB = null;
-    currentRouteLine = null;
-    
+
+    // Χρήση centralized cleanup για αποφυγή memory leaks
+    cleanupMapState();
+
     try {
         // Έλεγχος αν φορτώθηκε το Leaflet
         if (typeof L === 'undefined') {
@@ -3727,10 +3767,30 @@ function saveState() {
         selectedDestinationId: state.selectedDestinationId,
         selectedDaysStay: state.selectedDays,
         familyMembers: state.familyMembers,
-        selectedActivities: state.selectedActivities
+        selectedActivities: state.selectedActivities,
+        // Persist program data to avoid regenerating after page refresh
+        geographicProgram: state.geographicProgram || null,
+        currentCityActivities: state.currentCityActivities || [],
+        lastSaved: new Date().toISOString()
     };
-    
-    localStorage.setItem('travelPlannerData', JSON.stringify(data));
+
+    try {
+        localStorage.setItem('travelPlannerData', JSON.stringify(data));
+    } catch (error) {
+        console.error('❌ Failed to save state:', error);
+        // Handle quota exceeded
+        if (error.name === 'QuotaExceededError') {
+            console.warn('⚠️ localStorage quota exceeded, clearing old data');
+            // Clear program data to save space
+            data.geographicProgram = null;
+            data.currentCityActivities = [];
+            try {
+                localStorage.setItem('travelPlannerData', JSON.stringify(data));
+            } catch (e) {
+                console.error('❌ Still cannot save state:', e);
+            }
+        }
+    }
 }
 
 function getActivityEmoji(category) {
@@ -4306,92 +4366,117 @@ function updateProgramDays() {
 // ==================== GROUP ACTIVITIES BY PROXIMITY ====================
 function groupActivitiesByProximity(activities, maxDistanceKm = 2) {
     console.log(`📍 Ομαδοποίηση ${activities.length} δραστηριοτήτων (έως ${maxDistanceKm} km)`);
-    
+
     if (!activities || activities.length === 0) {
         console.log('⚠️ Δεν υπάρχουν δραστηριότητες για ομαδοποίηση');
         return [];
     }
-    
+
     const groups = [];
     const processed = new Set();
-    
-    // Φίλτραρε μόνο δραστηριότητες με location
-    const activitiesWithLocation = activities.filter(activity => 
-        activity && activity.location && 
-        activity.location.lat && activity.location.lng
+
+    // Φίλτραρε μόνο δραστηριότητες με valid location
+    const activitiesWithLocation = activities.filter(activity =>
+        activity && activity.location &&
+        typeof activity.location.lat === 'number' &&
+        typeof activity.location.lng === 'number' &&
+        !isNaN(activity.location.lat) &&
+        !isNaN(activity.location.lng)
     );
-    
+
+    // Activities without location - create individual groups for them
+    const activitiesWithoutLocation = activities.filter(activity =>
+        !activity || !activity.location ||
+        typeof activity.location.lat !== 'number' ||
+        typeof activity.location.lng !== 'number'
+    );
+
     console.log(`📊 ${activitiesWithLocation.length} από ${activities.length} έχουν τοποθεσία`);
-    
+
+    // Group activities with location by proximity
     activitiesWithLocation.forEach((activity, index) => {
         if (processed.has(index)) return;
-        
+
         const group = [activity];
         processed.add(index);
-        
+
         // Βρες όλες τις κοντινές δραστηριότητες
         activitiesWithLocation.forEach((otherActivity, otherIndex) => {
             if (processed.has(otherIndex) || index === otherIndex) return;
-            
+
             const distance = calculateDistance(
                 [activity.location.lat, activity.location.lng],
                 [otherActivity.location.lat, otherActivity.location.lng]
             );
-            
+
             if (distance <= maxDistanceKm) {
                 group.push(otherActivity);
                 processed.add(otherIndex);
                 console.log(`   🔗 ${activity.name} ↔ ${otherActivity.name}: ${distance.toFixed(2)} km`);
             }
         });
-        
-        if (group.length > 0) {
-            groups.push({
-                center: calculateGroupCenter(group),
-                activities: group,
-                count: group.length,
-                radius: maxDistanceKm
-            });
-        }
+
+        // Always create a group (even for single activities)
+        groups.push({
+            center: calculateGroupCenter(group),
+            activities: group,
+            count: group.length,
+            radius: group.length > 1 ? maxDistanceKm : 0
+        });
     });
-    
-    // Προσθήκη μονών δραστηριοτήτων (χωρίς γειτονιές)
-    activitiesWithLocation.forEach((activity, index) => {
-        if (!processed.has(index)) {
+
+    // Add activities without location as individual groups
+    activitiesWithoutLocation.forEach(activity => {
+        if (activity) {
+            console.log(`⚠️ Activity without location: ${activity.name}`);
             groups.push({
-                center: [activity.location.lat, activity.location.lng],
+                center: null,
                 activities: [activity],
                 count: 1,
                 radius: 0
             });
         }
     });
-    
+
     console.log(`✅ Δημιουργήθηκαν ${groups.length} ομάδες`);
-    
+
     // Ταξινόμηση ομάδων (μεγαλύτερες πρώτες)
     groups.sort((a, b) => b.count - a.count);
-    
+
     return groups;
 }
 
 // Βοηθητική συνάρτηση για υπολογισμό κέντρου ομάδας
 function calculateGroupCenter(activities) {
     if (!activities || activities.length === 0) return null;
-    
-    if (activities.length === 1) {
-        return [activities[0].location.lat, activities[0].location.lng];
+
+    // Filter only activities with valid location data
+    const validActivities = activities.filter(a =>
+        a && a.location &&
+        typeof a.location.lat === 'number' &&
+        typeof a.location.lng === 'number' &&
+        !isNaN(a.location.lat) &&
+        !isNaN(a.location.lng)
+    );
+
+    if (validActivities.length === 0) {
+        console.warn('⚠️ No valid locations found in group');
+        return null;
     }
-    
+
+    if (validActivities.length === 1) {
+        return [validActivities[0].location.lat, validActivities[0].location.lng];
+    }
+
     let totalLat = 0;
     let totalLng = 0;
-    
-    activities.forEach(activity => {
+
+    validActivities.forEach(activity => {
         totalLat += activity.location.lat;
         totalLng += activity.location.lng;
     });
-    
-    return [totalLat / activities.length, totalLng / activities.length];
+
+    return [totalLat / validActivities.length, totalLng / validActivities.length];
 }
 // Βοηθητική για χρώματα ομάδων
 function getGroupColor(index) {
@@ -4432,15 +4517,22 @@ function showGroupedActivitiesOnMap() {
         return;
     }
     
-    // Καθαρισμός χάρτη
+    // Καθαρισμός χάρτη και selectedMarkers array
     window.travelMap.eachLayer(layer => {
         if (layer instanceof L.Marker) window.travelMap.removeLayer(layer);
     });
-    
+    window.selectedMarkers = []; // Clear array to prevent memory leak
+
     // Προσθήκη κάθε ομάδας στον χάρτη
     groups.forEach((group, index) => {
+        // Skip groups without valid center
+        if (!group.center || !Array.isArray(group.center) || group.center.length !== 2) {
+            console.warn(`⚠️ Skipping group ${index + 1} - invalid center:`, group.center);
+            return;
+        }
+
         const color = getGroupColor(index);
-        
+
         // Προσθήκη marker για το κέντρο της ομάδας
         const groupMarker = L.marker(group.center, {
             icon: L.divIcon({
@@ -4520,6 +4612,14 @@ function showGroupedActivitiesOnMap() {
         
         // Προσθήκη markers για κάθε δραστηριότητα της ομάδας
         group.activities.forEach(activity => {
+            // Skip activities without valid location
+            if (!activity || !activity.location ||
+                typeof activity.location.lat !== 'number' ||
+                typeof activity.location.lng !== 'number') {
+                console.warn('⚠️ Skipping activity without valid location:', activity?.name);
+                return;
+            }
+
             createMarkerWithConnectFunction(
                 [activity.location.lat, activity.location.lng],
                 activity.name,
@@ -4713,6 +4813,14 @@ function showToast(message, type = 'info') {
 }
 
 function createMarkerWithConnectFunction(coords, title, activityData) {
+    // Validate coords before proceeding
+    if (!coords || !Array.isArray(coords) || coords.length !== 2 ||
+        typeof coords[0] !== 'number' || typeof coords[1] !== 'number' ||
+        isNaN(coords[0]) || isNaN(coords[1])) {
+        console.warn('⚠️ Invalid coordinates for marker:', coords, 'title:', title);
+        return null;
+    }
+
     console.log('🔍 [DEBUG] Δεδομένα για popup:', {
         name: title,
         hasRestaurant: !!activityData?.restaurant,
