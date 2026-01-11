@@ -1351,13 +1351,10 @@ function getSummaryStepHTML() {
                                 <div style="font-size: 48px; margin-bottom: 15px; color: var(--primary);">📍</div>
                                 <h4 style="color: var(--dark); margin-bottom: 10px;">Έτοιμο για Προγραμματισμό!</h4>
                                 <p style="color: var(--gray); margin-bottom: 20px;">
-                                    Πατήστε "ΔΗΜΙΟΥΡΓΙΑ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ"<br>
+                                    Πατήστε "ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΓΡΑΜΜΑΤΟΣ" παραπάνω<br>
                                     για να ομαδοποιήσουμε τις ${state.selectedActivities.length} δραστηριότητες<br>
                                     σε ${state.selectedDays} μέρες με βάση την τοποθεσία τους
                                 </p>
-                                <button onclick="generateGeographicProgram()" class="btn btn-primary" style="padding: 15px 40px; font-size: 18px;">
-                                    <i class="fas fa-map-marked-alt"></i> ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΓΡΑΜΜΑΤΟΣ
-                                </button>
                             </div>
                         `}
                     </div>
@@ -2042,30 +2039,39 @@ function getMapStepHTML() {
                 `}
                 
 <!-- ΟΔΗΓΙΕΣ ΧΡΗΣΗΣ ΧΑΡΤΗ -->
-<div class="map-instructions-card">
+<div class="map-instructions-card" id="map-instructions-card">
     <div class="map-instructions-header">
-        <i class="fas fa-graduation-cap"></i>
-        <h4>Οδηγίες Χρήσης Χάρτη</h4>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <i class="fas fa-graduation-cap"></i>
+            <h4 style="margin: 0;">Οδηγίες Χρήσης Χάρτη</h4>
+        </div>
+        <button onclick="closeMapInstructions()"
+                style="background: none; border: none; color: #666; cursor: pointer; font-size: 20px; padding: 0; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; transition: color 0.2s;"
+                onmouseover="this.style.color='#EF4444'"
+                onmouseout="this.style.color='#666'"
+                title="Κλείσιμο οδηγιών">
+            <i class="fas fa-times"></i>
+        </button>
     </div>
-    
+
     <div class="map-instructions-content">
-        <p><i class="fas fa-map-pin" style="color: #4F46E5;"></i> 
+        <p><i class="fas fa-map-pin" style="color: #4F46E5;"></i>
            <strong>1. Πατήστε "Προβολή Σημείων"</strong> για να φορτώσετε τις δραστηριότητες σας</p>
-        
-        <p><i class="fas fa-mouse-pointer" style="color: #10B981;"></i> 
-           <strong>2. Κάντε κλικ σε 2 πινέζες</strong> για επιλογή 
+
+        <p><i class="fas fa-mouse-pointer" style="color: #10B981;"></i>
+           <strong>2. Κάντε κλικ σε 2 πινέζες</strong> για επιλογή
            <span class="step-from">ΑΠΟ</span> και <span class="step-to">ΠΡΟΣ</span></p>
-        
-        <p><i class="fas fa-route" style="color: #F59E0B;"></i> 
+
+        <p><i class="fas fa-route" style="color: #F59E0B;"></i>
            <strong>3. Η διαδρομή θα σχεδιαστεί αυτόματα</strong> με απόσταση και χρόνους</p>
-        
-        <p><i class="fas fa-directions" style="color: #EF4444;"></i> 
+
+        <p><i class="fas fa-directions" style="color: #EF4444;"></i>
            <strong>4. Πατήστε στο κουμπί:</strong> Διαδρομή για Google Maps οδηγίες</p>
     </div>
-    
+
     <div class="map-instructions-tip">
         <i class="fas fa-lightbulb"></i>
-        <span>Οι πινέζες γίνονται <span class="step-from">πράσινες</span> για ΑΠΟ και 
+        <span>Οι πινέζες γίνονται <span class="step-from">πράσινες</span> για ΑΠΟ και
               <span class="step-to">κόκκινες</span> για ΠΡΟΣ!</span>
     </div>
 </div>
@@ -2812,26 +2818,26 @@ async function setupActivitiesStep() {
                             ${state.familyMembers.map(member => {
                                 const age = member.age;
                                 let price = '?';
-                                
+
                                 // Βρες τιμή για την συγκεκριμένη ηλικία
                                 if (activity.prices[age] !== undefined) {
-                                    price = activity.prices[age] === 0 ? 'ΔΩΡΕΑΝ' : activity.prices[age] + '€';
+                                    price = activity.prices[age] === 0 ? 'ΔΩΡΕΑΝ' : Number(activity.prices[age]).toFixed(2) + '€';
                                 }
                                 // Για ενήλικες, χρησιμοποίησε 'adult' αν υπάρχει
                                 else if (age >= 16 && activity.prices.adult !== undefined) {
-                                    price = activity.prices.adult + '€';
+                                    price = Number(activity.prices.adult).toFixed(2) + '€';
                                 }
                                 // Για παιδιά 5-15, ψάξε για κοινές ηλικίες
                                 else if (age >= 5 && age <= 15) {
                                     if (activity.prices['10'] !== undefined) {
-                                        price = activity.prices['10'] + '€';
+                                        price = Number(activity.prices['10']).toFixed(2) + '€';
                                     } else if (activity.prices['5'] !== undefined) {
-                                        price = activity.prices['5'] + '€';
+                                        price = Number(activity.prices['5']).toFixed(2) + '€';
                                     }
                                 }
                                 // Για βρέφη 0-4, χρησιμοποίησε '0'
                                 else if (age <= 4 && activity.prices['0'] !== undefined) {
-                                    price = activity.prices['0'] === 0 ? 'ΔΩΡΕΑΝ' : activity.prices['0'] + '€';
+                                    price = activity.prices['0'] === 0 ? 'ΔΩΡΕΑΝ' : Number(activity.prices['0']).toFixed(2) + '€';
                                 }
                                 
                                 return `
@@ -2852,7 +2858,7 @@ async function setupActivitiesStep() {
                         
                         <!-- ΣΥΝΟΛΙΚΟ ΚΟΣΤΟΣ ΓΙΑ ΟΙΚΟΓΕΝΕΙΑ -->
                         <div class="activity-total" style="background: var(--primary); color: white; padding: 12px; border-radius: 8px; text-align: center; font-weight: bold; margin-top: 10px;">
-                            <i class="fas fa-users"></i> ${familyCost}€ για ${state.familyMembers.length} άτομα
+                            <i class="fas fa-users"></i> ${Number(familyCost).toFixed(2)}€ για ${state.familyMembers.length} άτομα
                         </div>
                     </div>
                 `;
@@ -3138,7 +3144,7 @@ function setupSummaryStep() {
 if (state.selectedActivities.length > 0) { 
     console.log(`📊 Έτοιμος για δημιουργία προγράμματος: ${state.selectedActivities.length} δραστηριότητες, ${state.selectedDays} μέρες`);
     
-    // Εμφάνιση ΜΟΝΟ του κουμπιού, ΟΧΙ loading
+    // Εμφάνιση μηνύματος ετοιμότητας, ΟΧΙ loading ή duplicate button
     const programDiv = document.getElementById('geographic-program');
     if (programDiv) {
         programDiv.innerHTML = `
@@ -3146,13 +3152,10 @@ if (state.selectedActivities.length > 0) {
                 <div style="font-size: 48px; margin-bottom: 15px; color: var(--primary);">📍</div>
                 <h4 style="color: var(--dark); margin-bottom: 10px;">Έτοιμο για Προγραμματισμό!</h4>
                 <p style="color: var(--gray); margin-bottom: 20px;">
-                    Πατήστε "ΔΗΜΙΟΥΡΓΙΑ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ"<br>
+                    Πατήστε "ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΓΡΑΜΜΑΤΟΣ" παραπάνω<br>
                     για να ομαδοποιήσουμε τις ${state.selectedActivities.length} δραστηριότητες<br>
                     σε ${state.selectedDays} μέρες με βάση την τοποθεσία τους
                 </p>
-                <button onclick="generateGeographicProgram()" class="btn btn-primary" style="padding: 15px 40px; font-size: 18px;">
-                    <i class="fas fa-map-marked-alt"></i> ΠΡΟΓΡΑΜΜΑ
-                </button>
             </div>
         `;
     }
@@ -3233,27 +3236,27 @@ function createSuggestedProgram() {
                 <div style="margin-top: 10px;">
                     ${dayActivities.map(activity => `
                         <div style="
-                            display: flex; 
-                            justify-content: space-between; 
-                            padding: 8px 0; 
+                            display: flex;
+                            justify-content: space-between;
+                            padding: 8px 0;
                             border-bottom: 1px solid #f0f0f0;
                         ">
                             <span style="color: var(--dark);">${activity.name}</span>
-                            <span style="color: var(--primary); font-weight: bold;">${activity.price || 0}€</span>
+                            <span style="color: var(--primary); font-weight: bold;">${Number(activity.price || 0).toFixed(2)}€</span>
                         </div>
                     `).join('')}
                 </div>
-                
+
                 <div style="
-                    margin-top: 10px; 
-                    padding-top: 10px; 
+                    margin-top: 10px;
+                    padding-top: 10px;
                     border-top: 1px dashed #ddd;
-                    display: flex; 
+                    display: flex;
                     justify-content: space-between;
                     font-weight: bold;
                 ">
                     <span>ΣΥΝΟΛΟ ΜΕΡΑΣ:</span>
-                    <span style="color: ${getDayColor(day)};">${dayCost}€</span>
+                    <span style="color: ${getDayColor(day)};">${dayCost.toFixed(2)}€</span>
                 </div>
             </div>
         `;
@@ -3278,18 +3281,13 @@ function createSuggestedProgram() {
                         <div style="font-size: 14px; opacity: 0.9;">${activitiesCount} δραστηριότητες</div>
                         <div style="font-size: 14px; opacity: 0.9;">${daysCount} μέρες</div>
                     </div>
-                    <div style="font-size: 36px; font-weight: bold;">${totalCost}€</div>
+                    <div style="font-size: 36px; font-weight: bold;">${totalCost.toFixed(2)}€</div>
                 </div>
             </div>
-            
+
             <div style="text-align: center; margin-top: 20px;">
-                <button onclick="generateGeographicProgram()" 
-                        class="btn btn-primary"
-                        style="padding: 12px 30px; font-size: 16px;">
-                    <i class="fas fa-sync-alt"></i> ΔΗΜΙΟΥΡΓΙΑ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ
-                </button>
                 <p style="color: var(--gray); font-size: 13px; margin-top: 10px;">
-                    Δημιουργήστε βελτιστοποιημένο πρόγραμμα με βάση τις τοποθεσίες των δραστηριοτήτων
+                    💡 Πατήστε "ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΓΡΑΜΜΑΤΟΣ" παραπάνω για βελτιστοποιημένο πρόγραμμα με βάση τις τοποθεσίες
                 </p>
             </div>
         </div>
@@ -3332,12 +3330,20 @@ function suggestDaysFromGroups() {
 // ==================== MAP FUNCTIONS ====================
 function setupMapStep() {
     console.log('🗺️ Ρύθμιση χάρτη για:', state.selectedDestination);
-    
+
     if (!state.selectedDestination) return;
-    
+
     setTimeout(() => {
         initializeMap();
     }, 300);
+}
+
+function closeMapInstructions() {
+    const instructionsCard = document.getElementById('map-instructions-card');
+    if (instructionsCard) {
+        instructionsCard.style.display = 'none';
+        console.log('✅ Οδηγίες χάρτη έκλεισαν');
+    }
 }
 
 function initializeMap() {
@@ -3849,7 +3855,7 @@ function createEnhancedPopup(activity) {
             ${activity.price || activity.prices ? `
             <div style="background: rgba(46, 204, 113, 0.1); padding: 8px; border-radius: 6px; margin: 8px 0; font-size: 13px;">
                 <i class="fas fa-tag" style="color: #10B981; margin-right: 6px;"></i>
-                <strong>Κόστος:</strong> ${activity.price ? activity.price + '€' : 'Δείτε τις τιμές'}
+                <strong>Κόστος:</strong> ${activity.price ? Number(activity.price).toFixed(2) + '€' : 'Δείτε τις τιμές'}
             </div>` : ''}
             
             <!-- ΚΑΙΝΟΥΡΓΙΟ: ΠΡΟΤΕΙΝΟΜΕΝΟ ΕΣΤΙΑΤΟΡΙΟ -->
@@ -5042,43 +5048,43 @@ function getPriceInfo(prices) {
     
     const min = Math.min(...allPrices);
     const max = Math.max(...allPrices);
-    
+
     if (min === max) {
-        return `${min}€ για όλους`;
+        return `${min.toFixed(2)}€ για όλους`;
     } else if (min === 0) {
-        return `${max}€ (βρέφη δωρεάν)`;
+        return `${max.toFixed(2)}€ (βρέφη δωρεάν)`;
     } else {
-        return `${min}-${max}€`;
+        return `${min.toFixed(2)}-${max.toFixed(2)}€`;
     }
 }
 
 function getPriceForAge(prices, age) {
     if (!prices) return '?';
-    
+
     if (prices[age] !== undefined && prices[age] !== null) {
-        return prices[age] + '€';
+        return Number(prices[age]).toFixed(2) + '€';
     }
-    
+
     if (age >= 18 && prices.adult !== undefined) {
-        return prices.adult + '€';
+        return Number(prices.adult).toFixed(2) + '€';
     }
-    
+
     if (age >= 5 && age <= 17) {
-        if (prices.child !== undefined) return prices.child + '€';
-        if (prices['10'] !== undefined) return prices['10'] + '€';
-        if (prices['5'] !== undefined) return prices['5'] + '€';
+        if (prices.child !== undefined) return Number(prices.child).toFixed(2) + '€';
+        if (prices['10'] !== undefined) return Number(prices['10']).toFixed(2) + '€';
+        if (prices['5'] !== undefined) return Number(prices['5']).toFixed(2) + '€';
     }
-    
+
     if (age <= 4 && prices['0'] !== undefined) {
-        return prices['0'] === 0 ? 'ΔΩΡΕΑΝ' : prices['0'] + '€';
+        return prices['0'] === 0 ? 'ΔΩΡΕΑΝ' : Number(prices['0']).toFixed(2) + '€';
     }
-    
+
     for (let i = age; i >= 0; i--) {
         if (prices[i] !== undefined) {
-            return prices[i] + '€';
+            return Number(prices[i]).toFixed(2) + '€';
         }
     }
-    
+
     return '?';
 }
 // ==================== SIMPLIFIED CLICK-TO-CONNECT SYSTEM ====================
