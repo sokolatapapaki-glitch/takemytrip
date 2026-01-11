@@ -1938,24 +1938,25 @@ function loadActivitiesForProgram() {
             activitiesFetchController = null;
         });
 }
+
 // ==================== FORCE REFRESH PROGRAM ====================
 function forceRefreshProgram() {
     console.log('🔄 Αναγκαστική ανανέωση προγράμματος');
-    
+
     // Επαναφόρτωση των ημερών από το dropdown
     const daysSelect = document.getElementById('program-days');
     if (daysSelect && daysSelect.value) {
         state.selectedDays = parseInt(daysSelect.value);
         saveState();
     }
-    
+
     // Ενημέρωση UI
     const daysDisplay = document.getElementById('days-display');
     if (daysDisplay) {
         daysDisplay.textContent = '✅ ' + state.selectedDays + ' μέρες επιλέχθηκαν';
         daysDisplay.style.color = 'var(--success)';
     }
-    
+
     // Γέμισμα με loading indicator
     const programDiv = document.getElementById('geographic-program');
     if (programDiv) {
@@ -1975,23 +1976,14 @@ function forceRefreshProgram() {
             </div>
         `;
     }
-    
+
     // Καλέσε το πρόγραμμα με καθυστέρηση
     setTimeout(() => {
         generateGeographicProgram();
         showToast(`✅ Το πρόγραμμα ανανεώθηκε για ${state.selectedDays} μέρες`, 'success');
     }, 800);
 }
-// ==================== ΣΥΝΑΡΤΗΣΕΙΣ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΙΣΜΟΥ ====================
 
-// ΑΝΤΙ για αυτό που έχεις τώρα (γραμμές 2500-2570):
-// if (activitiesCount >= 8) neededDays = 3;
-// else if (activitiesCount >= 5) neededDays = 2;
-
-// ΚΑΙ το slicing:
-// const sliceActivities = group.activities.slice(startIdx, endIdx);
-
-// ΑΛΛΑΞΕ ΤΟ ΣΕ ΑΥΤΟ:
 // ==================== EFFORT-BASED DISTRIBUTION ALGORITHM ====================
 function distributeGroupsToDays(groups, totalDays) {
     console.log(`📅 Κατανομή βασισμένη σε προσπάθεια: ${groups.length} ομάδων σε ${totalDays} μέρες`);
@@ -2006,7 +1998,7 @@ function distributeGroupsToDays(groups, totalDays) {
         totalActivities: 0,
         totalCost: 0,
         estimatedTime: 0,
-        totalEffort: 0,  // NEW: Total effort score for the day
+        totalEffort: 0,
         center: null
     }));
 
