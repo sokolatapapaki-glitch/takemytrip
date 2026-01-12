@@ -636,7 +636,7 @@ body {
 /* ==================== DESTINATION CARDS ==================== */
 .destinations-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 25px;
     margin: 25px 0;
     padding: 10px;
@@ -907,43 +907,98 @@ body {
     }
 }
 
+/* Tablet landscape and small desktop (769px to 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* Activities grid - 2 columns */
+    .grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Destinations grid - 2-3 columns */
+    .destinations-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+
+    /* Budget tracker - adjust width */
+    .budget-tracker {
+        width: 280px;
+    }
+}
+
 @media (max-width: 768px) {
     .mobile-nav {
         display: block;
     }
-    
+
     .sidebar {
         display: none;
     }
-    
+
     .main-content {
         padding: 70px 15px 25px;
     }
-    
+
     .grid-2, .grid-3, .grid-4 {
         grid-template-columns: 1fr;
     }
-    
+
     .card {
         padding: 20px 15px;
     }
-    
+
     .btn {
         padding: 12px 24px;
         font-size: 14px;
         width: 100%;
     }
-    
+
     .steps-container {
         grid-template-columns: repeat(2, 1fr);
     }
-    
+
     .card-title {
         font-size: 20px;
     }
-    
+
     .budget-tracker {
         padding: 15px;
+    }
+
+    /* Destination cards - 2 columns on tablet */
+    .destinations-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    /* Activity cards - ensure proper spacing */
+    .activity-card {
+        margin-bottom: 15px;
+    }
+
+    /* Map height adjustment for tablet */
+    #map-container {
+        height: 450px;
+    }
+
+    #map {
+        min-height: 450px;
+    }
+
+    /* Activity link text wrapping */
+    .activity-link {
+        word-break: break-word;
+    }
+
+    /* Day filter checkboxes - better touch targets */
+    .day-checkbox {
+        min-width: 20px;
+        min-height: 20px;
+        margin-right: 8px;
+    }
+
+    /* Filter labels - better spacing */
+    label {
+        padding: 8px 0;
     }
 }
 
@@ -1696,20 +1751,319 @@ body {
     .map-instructions-card {
         padding: 15px;
     }
-    
+
     .map-instructions-content p {
         flex-direction: column;
         gap: 6px;
         padding: 12px;
     }
-    
+
     .map-instructions-content p i {
         align-self: flex-start;
     }
-    
+
     .map-instructions-header {
         flex-direction: column;
         text-align: center;
         gap: 8px;
+    }
+}
+
+/* ==================== COMPREHENSIVE MOBILE FIXES ==================== */
+/* Small mobile screens (480px and below) */
+@media (max-width: 480px) {
+    /* Override inline min-widths for mobile */
+    #program-days,
+    button[onclick*="generateGeographicProgram"] {
+        min-width: 100% !important;
+        flex: 1 1 100% !important;
+    }
+
+    /* Flight search buttons - stack vertically */
+    a.btn[href*="flights"],
+    a.btn[href*="skyscanner"],
+    a.btn[href*="kayak"] {
+        min-width: 100% !important;
+        width: 100% !important;
+    }
+
+    /* Destination cards - prevent horizontal scroll */
+    .destinations-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 5px;
+        margin: 15px 0;
+    }
+
+    .destination-card {
+        padding: 15px;
+    }
+
+    .destination-emoji {
+        font-size: 40px;
+        height: 50px;
+    }
+
+    .destination-name {
+        font-size: 18px;
+    }
+
+    .destination-info-grid {
+        gap: 10px;
+        padding: 12px;
+    }
+
+    /* Activity cards - better spacing */
+    .activity-card {
+        padding: 15px;
+    }
+
+    .activity-card .activity-title {
+        font-size: 16px;
+    }
+
+    .activity-card .activity-emoji {
+        font-size: 28px;
+    }
+
+    /* Free badge - prevent overflow */
+    .free-activity-badge {
+        top: 12px;
+        right: -30px;
+        padding: 5px 35px;
+        font-size: 10px;
+    }
+
+    .free-activity-badge-conditional {
+        font-size: 8px;
+        padding: 5px 30px;
+    }
+
+    /* Activity section headers */
+    .activity-section-header h2 {
+        font-size: 16px;
+    }
+
+    .activity-section-note {
+        font-size: 11px;
+        padding: 6px 10px;
+    }
+
+    /* Map container - reduce height on mobile */
+    #map-container {
+        height: 400px;
+    }
+
+    #map {
+        min-height: 400px;
+    }
+
+    /* Card titles and text */
+    .card-title {
+        font-size: 18px;
+        gap: 8px;
+    }
+
+    .card-subtitle {
+        font-size: 14px;
+    }
+
+    /* Buttons - full width on small screens */
+    .btn {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+
+    /* Restaurant recommendation - better mobile layout */
+    .restaurant-recommendation {
+        padding: 10px;
+    }
+
+    .restaurant-title {
+        font-size: 11px;
+    }
+
+    .restaurant-content p {
+        font-size: 13px;
+    }
+
+    .restaurant-tip {
+        font-size: 11px;
+    }
+
+    /* Top badge - smaller on mobile */
+    .top-badge {
+        font-size: 9px;
+        padding: 3px 8px;
+        margin-left: 6px;
+    }
+
+    .top-emoji {
+        font-size: 12px;
+    }
+
+    /* City pass badge */
+    .city-pass-badge {
+        font-size: 10px;
+        padding: 3px 8px;
+        margin-left: 6px;
+    }
+
+    /* Playground label */
+    .playground-label {
+        font-size: 11px;
+        padding: 5px 10px;
+    }
+
+    /* Tap targets - ensure minimum 44px height */
+    .btn,
+    .form-control,
+    select,
+    input[type="text"],
+    input[type="date"],
+    input[type="number"] {
+        min-height: 44px;
+    }
+
+    /* Activity card tap target */
+    .activity-card {
+        min-height: 44px;
+    }
+
+    /* Step navigation tap targets */
+    .step {
+        min-height: 60px;
+    }
+
+    /* Text readability - increase line height */
+    body {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    p {
+        line-height: 1.6;
+    }
+
+    /* Ensure no horizontal overflow */
+    body,
+    html {
+        overflow-x: hidden;
+    }
+
+    .app-container {
+        overflow-x: hidden;
+    }
+
+    /* Fix potential overflow from activity cards */
+    .activity-card {
+        overflow-x: hidden;
+    }
+
+    /* Restaurant links - ensure they wrap */
+    .restaurant-content a {
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    /* Activity description - better readability */
+    .activity-description {
+        line-height: 1.5;
+    }
+
+    /* Form labels - better spacing */
+    .form-label {
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+
+    /* City pass info - better mobile layout */
+    .city-pass-info {
+        padding: 15px !important;
+    }
+
+    .city-pass-info h3 {
+        font-size: 16px !important;
+    }
+
+    .city-pass-info p {
+        font-size: 12px !important;
+    }
+
+    .city-pass-info .fa-ticket-alt {
+        font-size: 36px !important;
+    }
+}
+
+/* Very small screens (360px and below) */
+@media (max-width: 360px) {
+    /* Further reduce padding and sizes */
+    .main-content {
+        padding: 70px 10px 20px;
+    }
+
+    .card {
+        padding: 15px 12px;
+    }
+
+    .destination-card {
+        padding: 12px;
+    }
+
+    .activity-card {
+        padding: 12px;
+    }
+
+    .activity-card .activity-title {
+        font-size: 15px;
+    }
+
+    /* Free badge - more compact */
+    .free-activity-badge {
+        font-size: 9px;
+        padding: 4px 30px;
+        right: -25px;
+    }
+
+    .free-activity-badge-conditional {
+        font-size: 7px;
+        padding: 4px 25px;
+    }
+
+    /* Section headers */
+    .activity-section-header h2 {
+        font-size: 15px;
+    }
+
+    /* Map */
+    #map-container {
+        height: 350px;
+    }
+
+    #map {
+        min-height: 350px;
+    }
+
+    /* Buttons */
+    .btn {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+
+    /* Badges */
+    .top-badge {
+        font-size: 8px;
+        padding: 2px 6px;
+    }
+
+    .city-pass-badge {
+        font-size: 9px;
+        padding: 2px 6px;
+    }
+
+    .playground-label {
+        font-size: 10px;
+        padding: 4px 8px;
     }
 }
