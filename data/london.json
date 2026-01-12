@@ -21,6 +21,8 @@
         "lng": -0.1195
       },
       "restaurant": "<a href='https://maps.google.com/?q=London+Eye+Restaurant' target='_blank'>London Eye Restaurant</a>",
+      "restaurantType": "restaurant",
+      "restaurantDistance": 0,
       "website": "https://www.londoneye.com/",
       "notes": ["Κράτηση online συχνά φθηνότερη."],
       "tags": ["wheel", "view", "landmark"],
@@ -43,6 +45,8 @@
         "lng": -0.0759
       },
       "restaurant": "<a href='https://maps.google.com/?q=New+Armouries+Cafe+London' target='_blank'>New Armouries Cafe</a>",
+      "restaurantType": "cafe",
+      "restaurantDistance": 0,
       "website": "https://www.hrp.org.uk/tower-of-london/",
       "notes": ["Δωρεάν για κάτω των 5.", "Κράτηση απαιτείται."],
       "tags": ["castle", "history", "crown jewels"],
@@ -66,6 +70,8 @@
         "lng": -0.1764
       },
       "restaurant": "<a href='https://maps.google.com/?q=Tangerine+Cafe+Natural+History+Museum' target='_blank'>Tangerine Cafe</a>",
+      "restaurantType": "cafe",
+      "restaurantDistance": 0,
       "website": "https://www.nhm.ac.uk/",
       "notes": ["ΔΩΡΕΑΝ είσοδος. Συνεισφορά προαιρετική."],
       "tags": ["museum", "free", "dinosaurs"],
@@ -110,6 +116,8 @@
         "lng": -0.1534
       },
       "restaurant": "<a href='https://maps.google.com/?q=London+Zoo+Restaurants' target='_blank'>Βασικό Εστιατόριο</a>",
+      "restaurantType": "restaurant",
+      "restaurantDistance": 0,
       "website": "https://www.zsl.org/zsl-london-zoo",
       "notes": ["Τιμές Off-Peak. Peak: Παιδιά 30€, Ενήλικες 37€.", "Κράτηση συνιστάται."],
       "tags": ["zoo", "animals", "family"],
@@ -220,6 +228,8 @@
         "lng": -0.1269
       },
       "restaurant": "<a href='https://maps.google.com/?q=British+Museum+Great+Court+Restaurant' target='_blank'>Great Court Restaurant</a>",
+      "restaurantType": "restaurant",
+      "restaurantDistance": 0,
       "website": "https://www.britishmuseum.org/",
       "notes": ["ΔΩΡΕΑΝ είσοδος. Συνεισφορά προαιρετική."],
       "tags": ["museum", "free", "history", "art"],
@@ -692,5 +702,11 @@
       "duration_hours": 1.5,
       "best_time": "any"
     }
-  ]
+  ],
+  "cityPass": {
+    "name": "Merlin Annual Pass",
+    "description": "Συνδυάστε δραστηριότητες Merlin (London Eye, SEA LIFE, Madame Tussauds, Shrek's Adventure) για σημαντική έκπτωση. Το Annual Pass αποσβένεται από την 2η επίσκεψη.",
+    "discountPercent": 30,
+    "applicableActivities": [1, 29, 30, 31]
+  }
 }
