@@ -81,6 +81,30 @@ import {
     showFamilyDestinations
 } from './destinations.js';
 
+// Core navigation and initialization
+import {
+    initApp,
+    setupMobileNavigation,
+    loadSavedData,
+    loadSavedDataNow,
+    showSavedTripNotification,
+    updateSidebarCompletionIndicators,
+    setupStepNavigation,
+    showStep,
+    updateStepUI,
+    loadStepContent,
+    setupEventListeners,
+    fixDestinationButtons,
+    setupDestinationStep,
+    showSelectedDestination,
+    setupActivitiesStep,
+    setupSummaryStep,
+    setupMapStep,
+    showManualDestinationModal,
+    closeManualDestinationModal,
+    saveManualDestination
+} from './core.js';
+
 // ==================== GLOBAL STATE ====================
 
 window.state = {
@@ -181,14 +205,41 @@ window.showPopularDestinations = showPopularDestinations;
 window.showBudgetDestinations = showBudgetDestinations;
 window.showFamilyDestinations = showFamilyDestinations;
 
+// Core functions - Navigation
+window.showStep = showStep;
+window.updateStepUI = updateStepUI;
+window.loadStepContent = loadStepContent;
+
+// Core functions - Initialization
+window.initApp = initApp;
+window.setupMobileNavigation = setupMobileNavigation;
+window.loadSavedData = loadSavedData;
+window.loadSavedDataNow = loadSavedDataNow;
+window.showSavedTripNotification = showSavedTripNotification;
+window.updateSidebarCompletionIndicators = updateSidebarCompletionIndicators;
+window.setupStepNavigation = setupStepNavigation;
+window.setupEventListeners = setupEventListeners;
+window.fixDestinationButtons = fixDestinationButtons;
+
+// Core functions - Step Setup
+window.setupDestinationStep = setupDestinationStep;
+window.showSelectedDestination = showSelectedDestination;
+window.setupActivitiesStep = setupActivitiesStep;
+window.setupSummaryStep = setupSummaryStep;
+window.setupMapStep = setupMapStep;
+
+// Core functions - Manual Destination Modal
+window.showManualDestinationModal = showManualDestinationModal;
+window.closeManualDestinationModal = closeManualDestinationModal;
+window.saveManualDestination = saveManualDestination;
+
 // ==================== APPLICATION INITIALIZATION ====================
 
 console.log('✅ ES Modules loaded successfully');
 console.log(`📦 Loaded ${Object.keys(window).filter(k => k.startsWith('calculate') || k.startsWith('show') || k.startsWith('update')).length} functions to window`);
 
-// Note: Additional window exports for remaining functions (maps, destinations, HTML templates)
-// should be added here as those functions are extracted into modules.
-
-// Note: initApp(), setupEventListeners(), and other initialization functions
-// from the original script.js should be extracted and called here.
-// For now, this provides the module wiring for the extracted functions.
+// Initialize the application
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 Εφαρμογή φορτώνεται...');
+    initApp();
+});

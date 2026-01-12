@@ -1,11 +1,11 @@
 # ES Module Map - Travel Planner Application
 
 ## Overview
-This document maps all ES modules extracted from `script.js` as part of the Phase 1 and Phase 2 modularization effort.
+This document maps all ES modules extracted from `script.js` as part of the Phase 1, Phase 2, and Phase 3 modularization effort.
 
-**Total Modules Created:** 6
-**Lines Extracted:** ~2,700 (36% of original script.js)
-**Functions Modularized:** 50+
+**Total Modules Created:** 7
+**Lines Extracted:** 3,593 (49% of original script.js)
+**Functions Modularized:** 77
 
 ---
 
@@ -247,27 +247,65 @@ This document maps all ES modules extracted from `script.js` as part of the Phas
 
 ---
 
-### 9. core.js (TBD)
+### 9. core.js (925 lines, 22 exports) ✅
 **Purpose:** Navigation, initialization, and step management
 
-**Status:** ⏳ Planned extraction
+**Status:** ✅ Extracted, committed (Phase 3)
 
-**Expected Functions:**
-- `initApp()` - Application initialization
+**Dependencies:**
+- Imports: `saveState`, `showToast`, `showSavedTripModal`, `closeSavedTripModal` from `ui.js`
+- Imports: All functions from `ui-templates.js`
+- Imports: All functions from `destinations.js`
+- Imports: `getCityCoordinates` from `data.js`
+- Global: `window.state`, `window.MapManager`, `window.travelMap`
+
+**Exports:**
+
+**Initialization Functions (6):**
+- `initApp()` - Main application initialization
+- `setupMobileNavigation()` - Configure mobile dropdown
+- `loadSavedData()` - Load saved trip from localStorage
+- `loadSavedDataNow(saved)` - Load and validate saved data
+- `showSavedTripNotification(data)` - Show welcome back modal
 - `setupEventListeners()` - Global event listeners
-- `showStep(stepId)` - Navigate between steps
+
+**Navigation Functions (5):**
+- `setupStepNavigation()` - Setup step click handlers
+- `showStep(stepName)` - Navigate to specific step
+- `updateStepUI(activeStep)` - Update sidebar UI
+- `loadStepContent(stepName)` - Load step HTML and setup
+- `updateSidebarCompletionIndicators()` - Show completion checkmarks
+
+**Step Setup Functions (6):**
 - `setupDestinationStep()` - Initialize destination step
-- `setupActivitiesStep()` - Initialize activities step
-- `setupMapStep()` - Initialize map step
-- `loadActivities(cityId)` - Load city activity data
-- `renderCurrentStep()` - Re-render current step
-- Navigation helpers
+- `showSelectedDestination()` - Show selected destination info
+- `setupActivitiesStep()` - Initialize activities step (wrapper)
+- `setupSummaryStep()` - Initialize summary step (wrapper)
+- `setupMapStep()` - Initialize map step (wrapper)
+- `fixDestinationButtons()` - Global click handler for destination buttons
 
-**Dependencies:** All modules
+**Manual Destination Modal (3):**
+- `showManualDestinationModal()` - Show city selection dropdown
+- `closeManualDestinationModal()` - Hide dropdown
+- `saveManualDestination()` - Save selected city
 
-**Estimated Size:** ~400-600 lines
+**Internal:**
+- `StateValidator` object - Data validation utilities
+- `cleanupMapState()` - Cleanup map resources
+- `createDestinationDropdown()` - Build modal HTML
+- `showDropdownNearButton()` - Display dropdown
+- `addDropdownOverlay()` - Add dark overlay
+- `removeDropdownOverlay()` - Remove overlay
 
-**Location:** `src/core.js` (pending)
+**Key Features:**
+- Complete StateValidator for data sanitization
+- Automatic saved trip recovery with user choice
+- Step completion indicators
+- Mobile navigation support
+- Manual destination selection modal
+- Map state cleanup
+
+**Location:** `src/core.js`
 
 ---
 
@@ -283,19 +321,29 @@ This document maps all ES modules extracted from `script.js` as part of the Phas
 | main.js | 102 | 0 | N/A | ✅ |
 | **Total** | **1,360** | **41** | **41** | **100%** |
 
-### Phase 2 (In Progress)
+### Phase 2 (Completed)
 | Module | Lines | Functions | Exports | Status |
 |--------|-------|-----------|---------|--------|
 | ui-templates.js | 863 | 7 | 7 | ✅ |
 | destinations.js | 445 | 7 | 7 | ✅ |
+| **Total** | **1,308** | **14** | **14** | **100%** |
+
+### Phase 3 (Completed)
+| Module | Lines | Functions | Exports | Status |
+|--------|-------|-----------|---------|--------|
+| core.js | 925 | 22 | 22 | ✅ |
+| **Total** | **925** | **22** | **22** | **100%** |
+
+### Phase 4 (Pending)
+| Module | Lines | Functions | Exports | Status |
+|--------|-------|-----------|---------|--------|
 | ui-map.js | ~2,500 | ~40 | ~40 | 📋 |
-| core.js | ~500 | ~15 | ~15 | ⏳ |
-| **Total** | **~4,308** | **~69** | **~69** | **46%** |
+| **Total** | **~2,500** | **~40** | **~40** | **0%** |
 
 ### Overall Progress
 - **Original script.js:** 7,407 lines, 126 functions
-- **Extracted so far:** 2,668 lines (36%)
-- **Remaining:** 4,739 lines (64%)
+- **Extracted so far:** 3,593 lines (49%)
+- **Remaining:** 3,814 lines (51%)
 
 ---
 
@@ -354,7 +402,22 @@ All functions are exported to `window` object for HTML onclick compatibility:
 - `filterDestinations`, `selectDestination`, `showQuickRecommendations`
 - `resetFilters`, `showPopularDestinations`, `showBudgetDestinations`, `showFamilyDestinations`
 
-**Total Window Exports:** 55+ functions
+### Core Navigation (5)
+- `showStep`, `updateStepUI`, `loadStepContent`
+- `setupStepNavigation`, `updateSidebarCompletionIndicators`
+
+### Core Initialization (6)
+- `initApp`, `setupMobileNavigation`, `loadSavedData`
+- `loadSavedDataNow`, `showSavedTripNotification`, `setupEventListeners`
+
+### Core Step Setup (6)
+- `setupDestinationStep`, `showSelectedDestination`, `fixDestinationButtons`
+- `setupActivitiesStep`, `setupSummaryStep`, `setupMapStep`
+
+### Core Modal (3)
+- `showManualDestinationModal`, `closeManualDestinationModal`, `saveManualDestination`
+
+**Total Window Exports:** 77 functions
 
 ---
 
