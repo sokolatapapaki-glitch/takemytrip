@@ -59,6 +59,17 @@ import {
     saveState
 } from './ui.js';
 
+// UI Templates (HTML generation functions)
+import {
+    getStepName,
+    getDestinationStepHTML,
+    getFlightStepHTML,
+    getHotelStepHTML,
+    getActivitiesStepHTML,
+    getSummaryStepHTML,
+    getMapStepHTML
+} from './ui-templates.js';
+
 // ==================== GLOBAL STATE ====================
 
 window.state = {
@@ -140,6 +151,15 @@ window.getPriceForAge = getPriceForAge;
 
 // UI functions - State Management
 window.saveState = saveState;
+
+// UI Template functions (HTML generation)
+window.getStepName = getStepName;
+window.getDestinationStepHTML = getDestinationStepHTML;
+window.getFlightStepHTML = getFlightStepHTML;
+window.getHotelStepHTML = getHotelStepHTML;
+window.getActivitiesStepHTML = getActivitiesStepHTML;
+window.getSummaryStepHTML = getSummaryStepHTML;
+window.getMapStepHTML = getMapStepHTML;
 
 // ==================== APPLICATION INITIALIZATION ====================
 
