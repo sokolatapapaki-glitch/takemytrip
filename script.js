@@ -3199,7 +3199,7 @@ async function setupActivitiesStep() {
         if (freeAges.length === 0) return null;
 
         const maxFreeAge = Math.max(...freeAges);
-        return `ΓΙΑ ΚΑΤΩ ΤΩΝ ${maxFreeAge} ΕΤΩΝ`;
+        return `ΓΙΑ ΚΑΤΩ ΤΩΝ ${maxFreeAge + 1} ΕΤΩΝ`;
     }
 
     // Helper: Categorize activity for sorting (returns priority number)
