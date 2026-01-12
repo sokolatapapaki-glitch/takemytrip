@@ -3205,15 +3205,31 @@ async function setupActivitiesStep() {
     // Helper: Categorize activity for sorting (returns priority number)
     function categorizeActivity(activity) {
         const isPlayground = activity.tags?.includes('playground') || activity.activityType === 'playground';
-        const isFree = isActivityFreeForAll(activity.prices);
         const isMuseum = activity.category === 'museum';
 
         if (activity.top) return 1;      // Top activities first
         if (isMuseum) return 2;          // Museums second
         if (isPlayground) return 5;      // Playgrounds fourth
-        if (isFree) return 6;            // Free activities last
         return 3;                        // Other activities third
     }
+
+    // ==================== REQUIRED USER NOTICE ====================
+    html += `
+        <div class="required-notice" style="grid-column: 1/-1; background: linear-gradient(135deg, #FFF3CD 0%, #FFF8E1 100%); border: 2px solid #F59E0B; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);">
+            <div style="display: flex; align-items: flex-start; gap: 15px;">
+                <div style="font-size: 32px; flex-shrink: 0;">⚠️</div>
+                <div style="flex: 1;">
+                    <h3 style="margin: 0 0 10px 0; color: #92400E; font-size: 18px;">
+                        <i class="fas fa-exclamation-circle"></i> Απαιτούμενες Ενέργειες
+                    </h3>
+                    <p style="margin: 0; color: #78350F; font-size: 15px; line-height: 1.6;">
+                        Για να υπολογιστεί σωστά το κόστος, πρέπει να δηλωθεί υποχρεωτικά η σύνθεση των ταξιδιωτών (ηλικίες).
+                        Για να μπορέσει να δημιουργηθεί το πρόγραμμα στο επόμενο βήμα, πρέπει να επιλεγούν όλες οι δραστηριότητες, συμπεριλαμβανομένων και των δωρεάν.
+                    </p>
+                </div>
+            </div>
+        </div>
+    `;
 
     // ==================== CITY PASS INFO (if available) ====================
     if (cityData.cityPass) {
@@ -3221,12 +3237,18 @@ async function setupActivitiesStep() {
             <div class="city-pass-info card" style="grid-column: 1/-1; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; margin-bottom: 20px;">
                 <div style="display: flex; align-items: center; gap: 15px;">
                     <i class="fas fa-ticket-alt fa-3x"></i>
-                    <div>
+                    <div style="flex: 1;">
                         <h3 style="margin: 0 0 5px 0; font-size: 20px;">${cityData.cityPass.name}</h3>
                         <p style="margin: 0; opacity: 0.95; font-size: 14px;">${cityData.cityPass.description}</p>
                         <p style="margin: 5px 0 0 0; font-weight: bold; font-size: 16px;">
                             💰 Έως ${cityData.cityPass.discountPercent}% έκπτωση
                         </p>
+                        ${cityData.cityPass.url ? `
+                            <a href="${cityData.cityPass.url}" target="_blank" rel="noopener"
+                               style="display: inline-block; margin-top: 10px; padding: 8px 16px; background: white; color: #667eea; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px;">
+                                <i class="fas fa-external-link-alt"></i> Περισσότερες Πληροφορίες
+                            </a>
+                        ` : ''}
                     </div>
                 </div>
             </div>
@@ -3257,9 +3279,8 @@ async function setupActivitiesStep() {
             const headers = {
                 1: { title: '⭐ TOP ΔΡΑΣΤΗΡΙΟΤΗΤΕΣ', note: null },
                 2: { title: '🏛️ ΜΟΥΣΕΙΑ', note: null },
-                3: { title: '🎯 ΑΛΛΕΣ ΔΡΑΣΤΗΡΙΟΤΗΤΕΣ', note: 'ΕΠΙΛΕΞΤΕ ΠΡΟΚΕΙΜΕΝΟΥ ΝΑ ΥΠΟΛΟΓΙΣΤΕΙ ΤΟ ΗΜΕΡΗΣΙΟ ΠΡΟΓΡΑΜΜΑ' },
-                5: { title: '🎠 ΠΑΙΔΙΚΕΣ ΧΑΡΕΣ', note: null },
-                6: { title: '🆓 ΔΩΡΕΑΝ ΔΡΑΣΤΗΡΙΟΤΗΤΕΣ', note: null }
+                3: { title: '🎯 ΑΛΛΕΣ ΔΡΑΣΤΗΡΙΟΤΗΤΕΣ', note: null },
+                5: { title: '🎠 ΠΑΙΔΙΚΕΣ ΧΑΡΕΣ', note: null }
             };
 
             const header = headers[category];
@@ -3304,7 +3325,9 @@ async function setupActivitiesStep() {
                         : activity.name
                     }
                     ${activity.top ? '<span class="top-badge"><span class="top-emoji">🔝</span><span class="top-emoji">💯</span></span>' : ''}
-                    ${cityPassEligible ? '<span class="city-pass-badge">🎫 Pass</span>' : ''}
+                    ${cityPassEligible && cityData.cityPass ? (cityData.cityPass.url ?
+                        `<a href="${cityData.cityPass.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="city-pass-badge" style="text-decoration: none;">🎫 Pass</a>` :
+                        '<span class="city-pass-badge">🎫 Pass</span>') : ''}
                 </div>
                 <div class="activity-star">${isSelected ? '⭐' : '☆'}</div>
             </div>
@@ -3346,6 +3369,7 @@ async function setupActivitiesStep() {
             ` : ''}
 
             <!-- ΤΙΜΕΣ -->
+            ${state.familyMembers.length > 0 && state.familyMembers.every(m => m.age !== undefined && m.age !== null && m.age !== '') ? `
             <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin: 10px 0;">
                 <div style="font-size: 12px; color: var(--gray); margin-bottom: 8px;">
                     <i class="fas fa-money-bill-wave"></i>
@@ -3398,6 +3422,7 @@ async function setupActivitiesStep() {
             <div class="activity-total" style="background: var(--primary); color: white; padding: 12px; border-radius: 8px; text-align: center; font-weight: bold; margin-top: 10px;">
                 <i class="fas fa-users"></i> ${Number(familyCost).toFixed(2)}€ για ${state.familyMembers.length} άτομα
             </div>
+            ` : ''}
         </div>
         `;
     });

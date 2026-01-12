@@ -707,6 +707,7 @@
     "name": "Merlin Annual Pass",
     "description": "Συνδυάστε δραστηριότητες Merlin (London Eye, SEA LIFE, Madame Tussauds, Shrek's Adventure) για σημαντική έκπτωση. Το Annual Pass αποσβένεται από την 2η επίσκεψη.",
     "discountPercent": 30,
-    "applicableActivities": [1, 29, 30, 31]
+    "applicableActivities": [1, 29, 30, 31],
+    "url": "https://www.merlinannualpass.co.uk/"
   }
 }
