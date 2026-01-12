@@ -70,6 +70,17 @@ import {
     getMapStepHTML
 } from './ui-templates.js';
 
+// Destination filtering and selection
+import {
+    filterDestinations,
+    selectDestination,
+    showQuickRecommendations,
+    resetFilters,
+    showPopularDestinations,
+    showBudgetDestinations,
+    showFamilyDestinations
+} from './destinations.js';
+
 // ==================== GLOBAL STATE ====================
 
 window.state = {
@@ -160,6 +171,15 @@ window.getHotelStepHTML = getHotelStepHTML;
 window.getActivitiesStepHTML = getActivitiesStepHTML;
 window.getSummaryStepHTML = getSummaryStepHTML;
 window.getMapStepHTML = getMapStepHTML;
+
+// Destination functions
+window.filterDestinations = filterDestinations;
+window.selectDestination = selectDestination;
+window.showQuickRecommendations = showQuickRecommendations;
+window.resetFilters = resetFilters;
+window.showPopularDestinations = showPopularDestinations;
+window.showBudgetDestinations = showBudgetDestinations;
+window.showFamilyDestinations = showFamilyDestinations;
 
 // ==================== APPLICATION INITIALIZATION ====================
 
