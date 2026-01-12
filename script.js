@@ -3263,16 +3263,16 @@ async function setupActivitiesStep() {
             };
 
             const header = headers[category];
-            html += \`
+            html += `
                 <div class="activity-section-header">
-                    <h2>\${header.title}</h2>
-                    \${header.note ? \`
+                    <h2>${header.title}</h2>
+                    ${header.note ? `
                         <div class="activity-section-note">
-                            <i class="fas fa-info-circle"></i> \${header.note}
+                            <i class="fas fa-info-circle"></i> ${header.note}
                         </div>
-                    \` : ''}
+                    ` : ''}
                 </div>
-            \`;
+            `;
             currentCategory = category;
         }
 
@@ -3281,79 +3281,79 @@ async function setupActivitiesStep() {
         const familyCost = calculateFamilyCost(activity.prices);
         const isSelected = state.selectedActivities.some(a => a.id === activity.id);
 
-        html += \`
-            <div class="activity-card \${isSelected ? 'selected' : ''} \${activity.top ? 'top-activity' : ''}"
-                 onclick="toggleActivitySelection(\${activity.id})"
-                 data-activity-id="\${activity.id}">
+        html += `
+            <div class="activity-card ${isSelected ? 'selected' : ''} ${activity.top ? 'top-activity' : ''}"
+                 onclick="toggleActivitySelection(${activity.id})"
+                 data-activity-id="${activity.id}">
 
             <!-- FREE BADGE (Slanted) -->
-            \${!isPlayground && (isFreeForAll || freeAgeRange) ? \`
-                <div class="free-activity-badge \${freeAgeRange ? 'free-activity-badge-conditional' : ''}">
-                    \${isFreeForAll ? 'ΔΩΡΕΑΝ' : \`ΔΩΡΕΑΝ \${freeAgeRange}\`}
+            ${!isPlayground && (isFreeForAll || freeAgeRange) ? `
+                <div class="free-activity-badge ${freeAgeRange ? 'free-activity-badge-conditional' : ''}">
+                    ${isFreeForAll ? 'ΔΩΡΕΑΝ' : `ΔΩΡΕΑΝ ${freeAgeRange}`}
                 </div>
-            \` : ''}
+            ` : ''}
 
             <div class="activity-header">
-                <div class="activity-emoji">\${getActivityEmoji(activity.category)}</div>
+                <div class="activity-emoji">${getActivityEmoji(activity.category)}</div>
                 <div class="activity-title">
-                    \${activity.website ?
-                        \`<a href="\${activity.website}" target="_blank" rel="noopener" class="activity-link" onclick="event.stopPropagation()">
-                            \${activity.name}
+                    ${activity.website ?
+                        `<a href="${activity.website}" target="_blank" rel="noopener" class="activity-link" onclick="event.stopPropagation()">
+                            ${activity.name}
                             <i class="fas fa-external-link-alt"></i>
-                         </a>\`
+                         </a>`
                         : activity.name
                     }
-                    \${activity.top ? '<span class="top-badge"><span class="top-emoji">🔝</span><span class="top-emoji">💯</span></span>' : ''}
-                    \${cityPassEligible ? '<span class="city-pass-badge">🎫 Pass</span>' : ''}
+                    ${activity.top ? '<span class="top-badge"><span class="top-emoji">🔝</span><span class="top-emoji">💯</span></span>' : ''}
+                    ${cityPassEligible ? '<span class="city-pass-badge">🎫 Pass</span>' : ''}
                 </div>
-                <div class="activity-star">\${isSelected ? '⭐' : '☆'}</div>
+                <div class="activity-star">${isSelected ? '⭐' : '☆'}</div>
             </div>
 
             <!-- PLAYGROUND LABEL -->
-            \${isPlayground ? \`
+            ${isPlayground ? `
                 <div class="playground-label">
                     <i class="fas fa-child"></i> ΠΑΙΔΙΚΗ ΧΑΡΑ
                 </div>
-            \` : ''}
-                        
+            ` : ''}
+
             <div class="activity-description">
-                \${activity.description || 'Δραστηριότητα για οικογένειες'}
+                ${activity.description || 'Δραστηριότητα για οικογένειες'}
             </div>
 
             <div style="font-size: 12px; color: var(--gray); margin: 10px 0;">
-                <i class="fas fa-clock"></i> \${activity.duration_hours || '?'} ώρες
+                <i class="fas fa-clock"></i> ${activity.duration_hours || '?'} ώρες
                 <span style="margin-left: 15px;">
-                    <i class="fas fa-tag"></i> \${activity.category || 'Γενική'}
+                    <i class="fas fa-tag"></i> ${activity.category || 'Γενική'}
                 </span>
             </div>
 
             <!-- RESTAURANT/CAFE RECOMMENDATION -->
-            \${activity.restaurant ? \`
+            ${activity.restaurant ? `
                 <div class="restaurant-recommendation">
                     <div class="restaurant-header">
                         <i class="fas fa-utensils"></i>
-                        <span class="restaurant-title">ΣΥΝΙΣΤΩΜΕΝΟ \${activity.restaurantType === 'cafe' ? 'ΚΑΦΕ' : 'ΕΣΤΙΑΤΟΡΙΟ'}</span>
+                        <span class="restaurant-title">ΣΥΝΙΣΤΩΜΕΝΟ ${activity.restaurantType === 'cafe' ? 'ΚΑΦΕ' : 'ΕΣΤΙΑΤΟΡΙΟ'}</span>
                     </div>
                     <div class="restaurant-content">
-                        <p>\${activity.restaurant.replace(/<a /g, '<a target="_blank" rel="noopener" ')}</p>
+                        <p>${activity.restaurant.replace(/<a /g, '<a target="_blank" rel="noopener" ')}</p>
                         <small class="restaurant-tip">
                             <i class="fas fa-walking"></i>
-                            \${activity.restaurantType === 'cafe' ? 'καφέ' : 'εστιατόριο'} /
-                            \${activity.restaurantDistance === 0 ? 'εντός του ίδιου χώρου' : \`\${activity.restaurantDistance} λεπτά με τα πόδια\`}
+                            ${activity.restaurantType === 'cafe' ? 'καφέ' : 'εστιατόριο'} /
+                            ${activity.restaurantDistance === 0 ? 'εντός του ίδιου χώρου' : `${activity.restaurantDistance} λεπτά με τα πόδια`}
                         </small>
                     </div>
                 </div>
-            \` : ''}
-                        
+            ` : ''}
+
             <!-- ΤΙΜΕΣ -->
             <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin: 10px 0;">
                 <div style="font-size: 12px; color: var(--gray); margin-bottom: 8px;">
                     <i class="fas fa-money-bill-wave"></i>
-                    \${getPriceInfo(activity.prices)}
+                    ${getPriceInfo(activity.prices)}
                 </div>
 
                 <!-- ΤΙΜΕΣ ΓΙΑ ΚΑΘΕ ΜΕΛΟΣ ΤΗΣ ΟΙΚΟΓΕΝΕΙΑΣ -->
-                \${state.familyMembers.map(member => {
+                ${state.familyMembers.map(member => {
                     const age = member.age;
                     let price = '?';
 
@@ -3378,28 +3378,28 @@ async function setupActivitiesStep() {
                         price = activity.prices['0'] === 0 ? 'ΔΩΡΕΑΝ' : Number(activity.prices['0']).toFixed(2) + '€';
                     }
 
-                    return \`
+                    return `
                     <div style="display: flex; justify-content: space-between; font-size: 13px; margin-top: 4px; padding: 2px 0;">
-                        <span>\${member.name} (\${age}):</span>
-                        <span><strong>\${price}</strong></span>
-                    </div>\`;
+                        <span>${member.name} (${age}):</span>
+                        <span><strong>${price}</strong></span>
+                    </div>`;
                 }).join('')}
 
                 <!-- ΠΛΗΡΟΦΟΡΙΕΣ ΑΠΟ ΤΟ JSON -->
-                \${activity.notes && activity.notes.length > 0 ? \`
+                ${activity.notes && activity.notes.length > 0 ? `
                     <div style="font-size: 11px; color: #666; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #ddd;">
                         <i class="fas fa-info-circle"></i>
-                        \${activity.notes.join(' • ')}
+                        ${activity.notes.join(' • ')}
                     </div>
-                \` : ''}
+                ` : ''}
             </div>
 
             <!-- ΣΥΝΟΛΙΚΟ ΚΟΣΤΟΣ ΓΙΑ ΟΙΚΟΓΕΝΕΙΑ -->
             <div class="activity-total" style="background: var(--primary); color: white; padding: 12px; border-radius: 8px; text-align: center; font-weight: bold; margin-top: 10px;">
-                <i class="fas fa-users"></i> \${Number(familyCost).toFixed(2)}€ για \${state.familyMembers.length} άτομα
+                <i class="fas fa-users"></i> ${Number(familyCost).toFixed(2)}€ για ${state.familyMembers.length} άτομα
             </div>
         </div>
-        \`;
+        `;
     });
         }
         
