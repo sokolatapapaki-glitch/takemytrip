@@ -3199,7 +3199,7 @@ async function setupActivitiesStep() {
         if (freeAges.length === 0) return null;
 
         const maxFreeAge = Math.max(...freeAges);
-        return `ΓΙΑ ΚΑΤΩ ΤΩΝ ${maxFreeAge + 1} ΕΤΩΝ`;
+        return `ΔΩΡΕΑΝ ΓΙΑ ΚΑΤΩ ΤΩΝ ${maxFreeAge + 1} ΕΤΩΝ`;
     }
 
     // Helper: Categorize activity for sorting (returns priority number)
@@ -3307,13 +3307,6 @@ async function setupActivitiesStep() {
                  onclick="toggleActivitySelection(${activity.id})"
                  data-activity-id="${activity.id}">
 
-            <!-- FREE BADGE (Slanted) -->
-            ${!isPlayground && (isFreeForAll || freeAgeRange) ? `
-                <div class="free-activity-badge ${freeAgeRange ? 'free-activity-badge-conditional' : ''}">
-                    ${isFreeForAll ? 'ΔΩΡΕΑΝ' : `ΔΩΡΕΑΝ ${freeAgeRange}`}
-                </div>
-            ` : ''}
-
             <div class="activity-header">
                 <div class="activity-emoji">${getActivityEmoji(activity.category)}</div>
                 <div class="activity-title">
@@ -3331,6 +3324,13 @@ async function setupActivitiesStep() {
                 </div>
                 <div class="activity-star">${isSelected ? '⭐' : '☆'}</div>
             </div>
+
+            <!-- FREE PRICE LABEL (Horizontal) -->
+            ${!isPlayground && (isFreeForAll || freeAgeRange) ? `
+                <div class="free-price-label ${freeAgeRange ? 'free-price-label-conditional' : ''}">
+                    ${isFreeForAll ? 'ΔΩΡΕΑΝ' : freeAgeRange}
+                </div>
+            ` : ''}
 
             <!-- PLAYGROUND LABEL -->
             ${isPlayground ? `
@@ -3420,7 +3420,7 @@ async function setupActivitiesStep() {
 
             <!-- ΣΥΝΟΛΙΚΟ ΚΟΣΤΟΣ ΓΙΑ ΟΙΚΟΓΕΝΕΙΑ -->
             <div class="activity-total" style="background: var(--primary); color: white; padding: 12px; border-radius: 8px; text-align: center; font-weight: bold; margin-top: 10px;">
-                <i class="fas fa-users"></i> ${Number(familyCost).toFixed(2)}€ για ${state.familyMembers.length} άτομα
+                <i class="fas fa-users"></i> ${Number(familyCost).toFixed(2)}€ για ${state.familyMembers.length} ${state.familyMembers.length === 1 ? 'άτομο' : 'άτομα'}
             </div>
             ` : ''}
         </div>

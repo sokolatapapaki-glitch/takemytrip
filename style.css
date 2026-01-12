@@ -788,7 +788,6 @@ body {
     background: white;
     border-radius: var(--radius-lg);
     padding: 20px;
-    padding-top: 30px;
     cursor: pointer;
     transition: var(--transition);
     border: 2px solid var(--border);
@@ -1198,32 +1197,27 @@ body {
     }
 }
 
-/* ==================== FREE ACTIVITY SLANTED BADGE ==================== */
-.free-activity-badge {
-    position: absolute;
-    top: 20px;
-    right: -40px;
+/* ==================== FREE PRICE LABEL (Horizontal) ==================== */
+.free-price-label {
+    display: inline-block;
     background: linear-gradient(135deg, #10B981 0%, #059669 100%);
     color: white;
-    padding: 8px 50px;
-    transform: rotate(45deg);
+    padding: 8px 16px;
+    border-radius: 6px;
     font-weight: 900;
-    font-size: 11px;
-    letter-spacing: 1.5px;
-    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.5);
-    z-index: 10;
+    font-size: 13px;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
     font-family: 'Arial Black', 'Arial Bold', sans-serif;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-    white-space: nowrap;
+    margin: 8px 0;
 }
 
-/* Conditional Free (Age-Limited) */
-.free-activity-badge-conditional {
+/* Conditional Free (Age-Limited) - Orange */
+.free-price-label-conditional {
     background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
-    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.5);
-    font-size: 10px;
-    padding: 8px 50px;
-    right: -50px;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+    font-size: 12px;
 }
 
 /* ==================== PLAYGROUND LABEL ==================== */
@@ -1829,17 +1823,16 @@ body {
         font-size: 28px;
     }
 
-    /* Free badge - prevent overflow */
-    .free-activity-badge {
-        top: 12px;
-        right: -30px;
-        padding: 5px 35px;
-        font-size: 10px;
+    /* Free price label - mobile adjustments */
+    .free-price-label {
+        font-size: 11px;
+        padding: 6px 12px;
+        margin: 6px 0;
     }
 
-    .free-activity-badge-conditional {
-        font-size: 8px;
-        padding: 5px 30px;
+    .free-price-label-conditional {
+        font-size: 10px;
+        padding: 6px 12px;
     }
 
     /* Activity section headers */
@@ -2022,16 +2015,16 @@ body {
         font-size: 15px;
     }
 
-    /* Free badge - more compact */
-    .free-activity-badge {
-        font-size: 9px;
-        padding: 4px 30px;
-        right: -25px;
+    /* Free price label - very small screens */
+    .free-price-label {
+        font-size: 10px;
+        padding: 5px 10px;
+        margin: 5px 0;
     }
 
-    .free-activity-badge-conditional {
-        font-size: 7px;
-        padding: 4px 25px;
+    .free-price-label-conditional {
+        font-size: 9px;
+        padding: 5px 10px;
     }
 
     /* Section headers */
