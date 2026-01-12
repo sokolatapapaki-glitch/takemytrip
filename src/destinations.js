@@ -184,7 +184,7 @@ export async function filterDestinations() {
         {
             id: 'krakow', name: 'Κρακοβία', emoji: '🐉',
             hasJSON: false, distance: 2.0, cost: 'Οικονομικό',
-            country: 'Πολωνία', vacationType: 'Πολιτισμός',
+            country: 'Πολωνία', vacationType: ['Πολιτισμός', 'Βουνό'],
             themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
             strollerFriendly: false
         },
@@ -209,9 +209,14 @@ export async function filterDestinations() {
             return false;
         }
 
-        // 4. Φίλτρο τύπου διακοπών
-        if (vacationType && city.vacationType !== vacationType) {
-            return false;
+        // 4. Φίλτρο τύπου διακοπών (supports both string and array)
+        if (vacationType) {
+            const cityVacationTypes = Array.isArray(city.vacationType)
+                ? city.vacationType
+                : [city.vacationType];
+            if (!cityVacationTypes.includes(vacationType)) {
+                return false;
+            }
         }
 
         // 🆕 5. ΝΕΟ ΦΙΛΤΡΟ: "Φιλική για καρότσι"

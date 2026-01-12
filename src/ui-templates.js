@@ -655,6 +655,62 @@ export function getMapStepHTML() {
                     </button>
                 </div>
             ` : `
+                <!-- DAY FILTERS - MOVED TO TOP -->
+                ${state.geographicProgram ? `
+                <div id="day-filter-container" class="card" style="margin-bottom: 20px; background: #f8f9fa;">
+                    <h4 style="margin: 0 0 15px 0; color: var(--dark);">
+                        <i class="fas fa-calendar-alt"></i> Φιλτράρισμα ανά Ημέρα
+                    </h4>
+                    <p style="color: var(--gray); margin-bottom: 12px; font-size: 14px;">
+                        Επιλέξτε ποιες μέρες του προγράμματός σας να εμφανιστούν στον χάρτη:
+                    </p>
+
+                    <div id="day-checkboxes" style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px;">
+                        <label style="display: flex; align-items: center; cursor: pointer; padding: 8px 12px; background: white; border-radius: 6px; border: 1px solid #ddd;">
+                            <input type="checkbox" class="day-checkbox" value="all" checked
+                                   onchange="applyDayFilter()"
+                                   style="margin-right: 8px;">
+                            <span style="font-weight: bold; color: var(--primary);">Όλες οι μέρες</span>
+                        </label>
+
+                        ${Array.from({ length: state.geographicProgram.totalDays }, (_, i) => i + 1).map(day => `
+                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px 12px; background: white; border-radius: 6px; border: 1px solid ${getDayColor(day)};">
+                                <input type="checkbox" class="day-checkbox" value="day${day}"
+                                       onchange="applyDayFilter()"
+                                       style="margin-right: 8px;">
+                                <span style="font-weight: bold; color: ${getDayColor(day)};">
+                                    Μέρα ${day}
+                                </span>
+                                <span style="margin-left: 8px; font-size: 12px; color: var(--gray);">
+                                    (${state.geographicProgram.days[day-1]?.totalActivities || 0} δραστηριότητες)
+                                </span>
+                            </label>
+                        `).join('')}
+                    </div>
+
+                    <div style="display: flex; gap: 10px;">
+                        <button onclick="selectAllDays()" class="btn btn-outline" style="padding: 6px 12px; font-size: 13px;">
+                            <i class="fas fa-check-square"></i> Επιλογή όλων
+                        </button>
+                        <button onclick="deselectAllDays()" class="btn btn-outline" style="padding: 6px 12px; font-size: 13px;">
+                            <i class="fas fa-square"></i> Αποεπιλογή όλων
+                        </button>
+                    </div>
+
+                    <div id="day-filter-status" style="margin-top: 10px; padding: 8px; background: #e0f2fe; border-radius: 6px; font-size: 12px; display: none;">
+                        <i class="fas fa-sync-alt fa-spin"></i>
+                        <span>Ενημέρωση χάρτη...</span>
+                    </div>
+                </div>
+                ` : `
+                <!-- Αν δεν υπάρχει πρόγραμμα, εμφάνισε απλή πληροφορία -->
+                <div class="alert alert-info" style="margin-bottom: 20px;">
+                    <i class="fas fa-info-circle"></i>
+                    <strong>Πληροφορία:</strong> Δεν έχετε δημιουργήσει πρόγραμμα στο βήμα 5.
+                    Θα δείτε όλες τις δραστηριότητες μαζί στον χάρτη.
+                </div>
+                `}
+
                 <!-- ΧΑΡΤΗΣ -->
                 <div id="map-container" style="height: 600px; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 20px; border: 2px solid var(--border);">
                     <div id="travel-map" style="height: 100%; width: 100%;"></div>
@@ -664,10 +720,6 @@ export function getMapStepHTML() {
                 <div style="display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap;">
                     <button class="btn btn-primary" onclick="showActivityMap()">
                         <i class="fas fa-map-pin"></i> Προβολή Σημείων
-                    </button>
-
-                    <button class="btn btn-accent" onclick="showGroupedActivitiesOnMap()">
-                        <i class="fas fa-layer-group"></i> Ομαδοποίηση
                     </button>
 
                     <button class="btn btn-secondary" onclick="clearMapPoints()">
@@ -734,65 +786,6 @@ export function getMapStepHTML() {
                         `}
                     </div>
                 </div>
-
-                <!-- 🔴 ΒΗΜΑ 2: ΦΙΛΤΡΟ ΗΜΕΡΩΝ (ΕΜΦΑΝΙΖΕΤΑΙ ΜΟΝΟ ΑΝ ΥΠΑΡΧΕΙ ΠΡΟΓΡΑΜΜΑ) -->
-                ${state.geographicProgram ? `
-                <div id="day-filter-container" class="card" style="margin-bottom: 20px; background: #f8f9fa;">
-                    <h4 style="margin: 0 0 15px 0; color: var(--dark);">
-                        <i class="fas fa-calendar-alt"></i> Εμφάνιση ανά Ημέρα
-                    </h4>
-                    <p style="color: var(--gray); margin-bottom: 12px; font-size: 14px;">
-                        Επιλέξτε ποιες μέρες του προγράμματός σας να εμφανιστούν στον χάρτη:
-                    </p>
-
-                    <div id="day-checkboxes" style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px;">
-                        <label style="display: flex; align-items: center; cursor: pointer; padding: 8px 12px; background: white; border-radius: 6px; border: 1px solid #ddd;">
-                            <input type="checkbox" class="day-checkbox" value="all" checked
-                                   onchange="updateMapDayFilter(this)"
-                                   style="margin-right: 8px;">
-                            <span style="font-weight: bold; color: var(--primary);">Όλες οι μέρες</span>
-                        </label>
-
-                        ${Array.from({ length: state.geographicProgram.totalDays }, (_, i) => i + 1).map(day => `
-                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px 12px; background: white; border-radius: 6px; border: 1px solid ${getDayColor(day)};">
-                                <input type="checkbox" class="day-checkbox" value="day${day}"
-                                       onchange="updateMapDayFilter(this)"
-                                       style="margin-right: 8px;">
-                                <span style="font-weight: bold; color: ${getDayColor(day)};">
-                                    Μέρα ${day}
-                                </span>
-                                <span style="margin-left: 8px; font-size: 12px; color: var(--gray);">
-                                    (${state.geographicProgram.days[day-1]?.totalActivities || 0} δραστηριότητες)
-                                </span>
-                            </label>
-                        `).join('')}
-                    </div>
-
-                    <div style="display: flex; gap: 10px;">
-                        <button onclick="selectAllDays()" class="btn btn-outline" style="padding: 6px 12px; font-size: 13px;">
-                            <i class="fas fa-check-square"></i> Επιλογή όλων
-                        </button>
-                        <button onclick="deselectAllDays()" class="btn btn-outline" style="padding: 6px 12px; font-size: 13px;">
-                            <i class="fas fa-square"></i> Αποεπιλογή όλων
-                        </button>
-                        <button onclick="applyDayFilter()" class="btn btn-primary" style="padding: 6px 12px; font-size: 13px;">
-                            <i class="fas fa-filter"></i> Εφαρμογή φίλτρου
-                        </button>
-                    </div>
-
-                    <div id="day-filter-status" style="margin-top: 10px; padding: 8px; background: #e0f2fe; border-radius: 6px; font-size: 12px; display: none;">
-                        <i class="fas fa-sync-alt fa-spin"></i>
-                        <span>Ενημέρωση χάρτη...</span>
-                    </div>
-                </div>
-                ` : `
-                <!-- Αν δεν υπάρχει πρόγραμμα, εμφάνισε απλή πληροφορία -->
-                <div class="alert alert-info" style="margin-bottom: 20px;">
-                    <i class="fas fa-info-circle"></i>
-                    <strong>Πληροφορία:</strong> Δεν έχετε δημιουργήσει πρόγραμμα στο βήμα 5.
-                    Θα δείτε όλες τις δραστηριότητες μαζί στον χάρτη.
-                </div>
-                `}
 
 <!-- ΟΔΗΓΙΕΣ ΧΡΗΣΗΣ ΧΑΡΤΗ -->
 <div class="map-instructions-card" id="map-instructions-card">
