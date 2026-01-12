@@ -3216,22 +3216,22 @@ async function setupActivitiesStep() {
     }
 
     // ==================== CITY PASS INFO (if available) ====================
-    ${cityData.cityPass ? `
-    html += \`
-        <div class="city-pass-info card" style="grid-column: 1/-1; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; margin-bottom: 20px;">
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <i class="fas fa-ticket-alt fa-3x"></i>
-                <div>
-                    <h3 style="margin: 0 0 5px 0; font-size: 20px;">\${cityData.cityPass.name}</h3>
-                    <p style="margin: 0; opacity: 0.95; font-size: 14px;">\${cityData.cityPass.description}</p>
-                    <p style="margin: 5px 0 0 0; font-weight: bold; font-size: 16px;">
-                        💰 Έως \${cityData.cityPass.discountPercent}% έκπτωση
-                    </p>
+    if (cityData.cityPass) {
+        html += `
+            <div class="city-pass-info card" style="grid-column: 1/-1; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; margin-bottom: 20px;">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <i class="fas fa-ticket-alt fa-3x"></i>
+                    <div>
+                        <h3 style="margin: 0 0 5px 0; font-size: 20px;">${cityData.cityPass.name}</h3>
+                        <p style="margin: 0; opacity: 0.95; font-size: 14px;">${cityData.cityPass.description}</p>
+                        <p style="margin: 5px 0 0 0; font-weight: bold; font-size: 16px;">
+                            💰 Έως ${cityData.cityPass.discountPercent}% έκπτωση
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-    \`;
-    ` : ''}
+        `;
+    }
 
     // ==================== SORT ACTIVITIES BY CATEGORY ====================
     const sortedActivities = [...state.currentCityActivities].sort((a, b) => {
