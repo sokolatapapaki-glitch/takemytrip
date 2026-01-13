@@ -1191,7 +1191,7 @@ function getHotelStepHTML() {
             <!-- ΜΙΚΡΗ ΕΝΔΕΙΞΗ -->
             <div style="background: #fff3cd; padding: 8px 10px; border-radius: 6px; margin: 10px 0; font-size: 12px;">
                 <i class="fas fa-external-link-alt" style="color: #ff9800;"></i>
-                <span style="margin-left: 5px;">Ανακατεύθυνση σε Booking/Expedia</span>
+                <span style="margin-left: 5px;">Ανακατεύθυνση σε Booking / Expedia / TicketSeller</span>
             </div>
 
             <!-- ΚΟΥΜΠΙΑ ΜΕ RESPONSIVE DESIGN ΚΑΙ ΚΕΙΜΕΝΑ -->
@@ -1263,16 +1263,18 @@ function getHotelStepHTML() {
                             <i class="fas fa-ticket-alt"></i> Αναζήτηση σε TicketSeller
                         </button>
                         <div style="
-                            font-size: 11px; 
-                            color: #555; 
-                            background: #f9f9f9; 
-                            padding: 6px 8px; 
-                            border-radius: 4px; 
+                            font-size: 11px;
+                            color: #555;
+                            background: #f9f9f9;
+                            padding: 6px 8px;
+                            border-radius: 4px;
                             margin-top: 5px;
                             border-left: 3px solid #4CAF50;
                         ">
                             <i class="fas fa-percentage" style="color: #4CAF50; margin-right: 4px;"></i>
                             Αν κλείσεις μέσω <strong>TicketSeller</strong>, έχεις έκπτωση!
+                            <br>
+                            <small><i class="fas fa-info-circle"></i> <strong>Σημείωση:</strong> Θα χρειαστεί να εισάγετε τις ημερομηνίες χειροκίνητα στο site.</small>
                             <br>
                             <small>Στείλε email στο: <strong>takethekids2@gmail.com</strong></small>
                         </div>
@@ -1682,7 +1684,7 @@ function generateProgramHTMLOld(daysProgram, activityGroups) {
                     <div style="display: flex; justify-content: center; gap: 20px; margin-top: 10px; font-size: 14px;">
                         <span><i class="fas fa-clock"></i> ~${Math.round(dayTime)} ώρες</span>
                         <span><i class="fas fa-euro-sign"></i> ${dayCost.toFixed(2)}€</span>
-                        <span><i class="fas fa-map-marker-alt"></i> ${groupCount} περιοχή${groupCount !== 1 ? 'ές' : ''}</span>
+                        <span><i class="fas fa-map-marker-alt"></i> ${groupCount} ${groupCount === 1 ? 'περιοχή' : 'περιοχές'}</span>
                     </div>
                 </div>
                 
@@ -3357,8 +3359,7 @@ async function setupActivitiesStep() {
                         <p>${activity.restaurant.replace(/<a /g, '<a target="_blank" rel="noopener" ')}</p>
                         <small class="restaurant-tip">
                             <i class="fas fa-walking"></i>
-                            ${activity.restaurantType === 'cafe' ? 'καφέ' : 'εστιατόριο'} /
-                            ${activity.restaurantDistance === 0 ? 'εντός του ίδιου χώρου' : `${activity.restaurantDistance} λεπτά με τα πόδια`}
+                            ${activity.restaurantType === 'cafe' ? 'καφέ' : 'εστιατόριο'}${activity.restaurantDistance !== undefined && activity.restaurantDistance !== null ? ` / ${activity.restaurantDistance === 0 ? 'εντός του ίδιου χώρου' : `${activity.restaurantDistance} λεπτά με τα πόδια`}` : ''}
                         </small>
                     </div>
                 </div>
@@ -3760,106 +3761,24 @@ function displayProgramFromState() {
     if (!programDiv) return;
 
     const daysProgram = state.geographicProgram.days;
-    const totalDays = state.geographicProgram.totalDays || state.selectedDays;
+    const activityGroups = state.geographicProgram.groups || [];
 
-    let html = `
-        <div style="padding: 20px;">
-            <div style="text-align: center; margin-bottom: 25px;">
-                <h3 style="color: var(--primary); margin-bottom: 10px;">📅 Πρόγραμμα Ταξιδιού</h3>
-                <p style="color: var(--gray);">
-                    Γεωγραφικά βελτιστοποιημένο πρόγραμμα για ${totalDays} ${totalDays === 1 ? 'μέρα' : 'μέρες'}
-                </p>
-            </div>
-    `;
-
-    // Render each day from state
-    daysProgram.forEach((day, index) => {
-        const dayNumber = index + 1;
-        const dayActivities = day.activities || [];
-        const dayCost = dayActivities.reduce((sum, act) => sum + (act.price || 0), 0);
-
-        html += `
-            <div style="
-                margin-bottom: 20px;
-                padding: 15px;
-                background: white;
-                border-radius: 10px;
-                border-left: 4px solid ${getDayColor(dayNumber)};
-                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            ">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <h4 style="color: ${getDayColor(dayNumber)}; margin: 0;">
-                        ΜΕΡΑ ${dayNumber}
-                    </h4>
-                    <span style="background: ${getDayColor(dayNumber)}20; color: ${getDayColor(dayNumber)}; padding: 4px 10px; border-radius: 20px; font-size: 12px;">
-                        ${dayActivities.length} ${dayActivities.length === 1 ? 'δραστηριότητα' : 'δραστηριότητες'}
-                    </span>
-                </div>
-
-                <div style="margin-top: 10px;">
-                    ${dayActivities.map(activity => `
-                        <div style="
-                            display: flex;
-                            justify-content: space-between;
-                            padding: 8px 0;
-                            border-bottom: 1px solid #f0f0f0;
-                        ">
-                            <span style="color: var(--dark);">${activity.name}</span>
-                            <span style="color: var(--primary); font-weight: bold;">${Number(activity.price || 0).toFixed(2)}€</span>
-                        </div>
-                    `).join('')}
-                </div>
-
-                <div style="
-                    margin-top: 10px;
-                    padding-top: 10px;
-                    border-top: 1px dashed #ddd;
-                    display: flex;
-                    justify-content: space-between;
-                    font-weight: bold;
-                ">
-                    <span>ΣΥΝΟΛΟ ΜΕΡΑΣ:</span>
-                    <span style="color: ${getDayColor(dayNumber)};">${dayCost.toFixed(2)}€</span>
-                </div>
-            </div>
-        `;
+    console.log('📋 Displaying program from state:', {
+        days: daysProgram.length,
+        totalActivities: daysProgram.reduce((sum, d) => sum + (d.totalActivities || 0), 0)
     });
 
-    // Total cost
-    const allActivities = daysProgram.flatMap(day => day.activities || []);
-    const totalCost = allActivities.reduce((sum, act) => sum + (act.price || 0), 0);
-    const totalActivitiesCount = allActivities.length;
+    // Use the existing generateProgramHTMLOld function - it already knows the structure
+    programDiv.innerHTML = generateProgramHTMLOld(daysProgram, activityGroups);
 
-    html += `
-            <div style="
-                margin-top: 25px;
-                padding: 15px;
-                background: linear-gradient(135deg, var(--primary), #4F46E5);
-                color: white;
-                border-radius: 10px;
-                text-align: center;
-            ">
-                <h4 style="color: white; margin-bottom: 10px;">
-                    <i class="fas fa-calculator"></i> ΣΥΝΟΛΙΚΟ ΚΟΣΤΟΣ
-                </h4>
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div style="text-align: left;">
-                        <div style="font-size: 14px; opacity: 0.9;">${totalActivitiesCount} ${totalActivitiesCount === 1 ? 'δραστηριότητα' : 'δραστηριότητες'}</div>
-                        <div style="font-size: 14px; opacity: 0.9;">${totalDays} ${totalDays === 1 ? 'μέρα' : 'μέρες'}</div>
-                    </div>
-                    <div style="font-size: 36px; font-weight: bold;">${totalCost.toFixed(2)}€</div>
-                </div>
-            </div>
-
-            <div style="text-align: center; margin-top: 20px;">
-                <p style="color: #10B981; font-size: 14px; font-weight: 500;">
-                    ✅ Το πρόγραμμα έχει δημιουργηθεί - ίδιο με αυτό που εμφανίζεται στον χάρτη
-                </p>
-            </div>
-        </div>
+    // Add confirmation message
+    const confirmationDiv = document.createElement('div');
+    confirmationDiv.style.cssText = 'text-align: center; margin-top: 20px; padding: 15px; background: #D1FAE5; border-radius: 8px; color: #065F46;';
+    confirmationDiv.innerHTML = `
+        <strong>✅ Το πρόγραμμα έχει δημιουργηθεί</strong><br>
+        <span style="font-size: 13px;">Αυτό είναι το ίδιο πρόγραμμα που εμφανίζεται στον χάρτη</span>
     `;
-
-    programDiv.innerHTML = html;
+    programDiv.appendChild(confirmationDiv);
 }
 
 // ==================== ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ: CREATE SUGGESTED PROGRAM ====================
