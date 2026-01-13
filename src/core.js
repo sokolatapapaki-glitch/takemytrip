@@ -427,6 +427,12 @@ export function showSavedTripNotification(data) {
 }
 
 export function updateSidebarCompletionIndicators() {
+    // Safety check: ensure state exists
+    if (!window.state) {
+        console.warn('⚠️ State not initialized in updateSidebarCompletionIndicators');
+        return;
+    }
+
     // Add completion indicators to sidebar steps
     const steps = document.querySelectorAll('.step');
 
@@ -438,7 +444,7 @@ export function updateSidebarCompletionIndicators() {
         // Determine if step is completed
         switch(stepName) {
             case 'destination':
-                isCompleted = state.selectedDestination && state.selectedDays > 0;
+                isCompleted = window.state.selectedDestination && window.state.selectedDays > 0;
                 break;
             case 'flight':
             case 'hotel':
@@ -446,13 +452,13 @@ export function updateSidebarCompletionIndicators() {
                 isCompleted = false;
                 break;
             case 'activities':
-                isCompleted = state.selectedActivities.length > 0;
+                isCompleted = window.state.selectedActivities.length > 0;
                 break;
             case 'summary':
-                isCompleted = state.geographicProgram !== null;
+                isCompleted = window.state.geographicProgram !== null;
                 break;
             case 'map':
-                isCompleted = state.selectedActivities.length > 0 || (state.customPoints && state.customPoints.length > 0);
+                isCompleted = window.state.selectedActivities.length > 0 || (window.state.customPoints && window.state.customPoints.length > 0);
                 break;
         }
 
@@ -702,7 +708,13 @@ export function setupDestinationStep() {
 }
 
 export function showSelectedDestination() {
-    console.log('📍 Επιλεγμένος προορισμός:', state.selectedDestination);
+    // Safety check: ensure state exists
+    if (!window.state) {
+        console.warn('⚠️ State not initialized in showSelectedDestination');
+        return;
+    }
+
+    console.log('📍 Επιλεγμένος προορισμός:', window.state.selectedDestination);
 }
 
 // These functions are called from loadStepContent and need to be imported from script.js
@@ -1062,20 +1074,314 @@ export async function setupActivitiesStep() {
     }
 }
 
+// ==================== STEP 5: SETUP SUMMARY ====================
 export function setupSummaryStep() {
-    // This function will remain in script.js for now due to its complexity
-    // It will be called via window.setupSummaryStep
-    if (window.setupSummaryStep) {
-        window.setupSummaryStep();
+    console.log('📋 Ρύθμιση summary βήματος');
+
+    // Safety check: ensure state exists
+    if (!window.state) {
+        console.error('❌ State not initialized in setupSummaryStep!');
+        return;
     }
+
+    if (!window.state.selectedDestination) {
+        console.log('⚠️ Δεν υπάρχει επιλεγμένος προορισμός');
+        return;
+    }
+
+
+    // 🔴 ΠΡΟΣΘΗΚΗ: ΑΥΤΟΜΑΤΗ ΠΡΟΤΑΣΗ ΗΜΕΡΩΝ ΑΠΟ ΟΜΑΔΟΠΟΙΗΣΗ
+    if (window.state.selectedActivities.length > 0) {
+        const suggestedDays = suggestDaysFromGroups();
+        if (suggestedDays > 0 && window.state.selectedDays !== suggestedDays) {
+            console.log(`📅 Πρόταση από ομαδοποίηση: ${suggestedDays} μέρες`);
+
+            // Μόνο προτροπή, όχι αυτόματη αλλαγή
+            const daysSelect = document.getElementById('program-days');
+            if (daysSelect && daysSelect.querySelector(`option[value="${suggestedDays}"]`)) {
+                // Μην αλλάξεις αυτόματα, απλά ενημέρωσε
+                console.log(`💡 Πρόταση: ${suggestedDays} μέρες`);
+            }
+        }
+    }
+
+    setTimeout(() => {
+        // 1. Ρύθμιση dropdown ημερών
+        const daysSelect = document.getElementById('program-days');
+        if (daysSelect) {
+            // Βεβαιώσου ότι η τιμή είναι έγκυρη
+            daysSelect.value = window.state.selectedDays;
+
+            console.log(`📅 Ρύθμιση dropdown στην τιμή: ${window.state.selectedDays}`);
+
+            // Αφαίρεση παλιών event listeners
+            const newDaysSelect = daysSelect.cloneNode(true);
+            daysSelect.parentNode.replaceChild(newDaysSelect, daysSelect);
+
+            // Προσθήκη νέου event listener
+            newDaysSelect.addEventListener('change', function() {
+                const selectedDays = parseInt(this.value);
+                console.log(`📅 Dropdown changed to: ${selectedDays}`);
+
+                if (selectedDays > 0) {
+                    window.state.selectedDays = selectedDays;
+
+                    const daysDisplay = document.getElementById('days-display');
+                    if (daysDisplay) {
+                        daysDisplay.textContent = '✅ ' + selectedDays + ' μέρες επιλέχθηκαν';
+                        daysDisplay.style.color = 'var(--success)';
+                    }
+
+                    window.saveState();
+
+                    console.log(`📅 Αλλαγή μέσω dropdown σε ${selectedDays} μέρες`);
+
+                    // Ενημέρωση status
+                    const statusDiv = document.getElementById('program-status');
+                    if (statusDiv) {
+                        statusDiv.innerHTML = `<i class="fas fa-clock"></i> Ενημερώνεται για ${selectedDays} μέρες`;
+                        statusDiv.style.background = '#FEF3C7';
+                        statusDiv.style.color = '#92400E';
+                    }
+
+                    // 🔴 ΚΡΙΤΙΚΟ: ΜΗΝ καλείς generateGeographicProgram() εδώ!
+                    // Απλά ενημέρωσε το UI και περίμενε το κλικ του χρήστη
+
+                    // Εμφάνιση μηνύματος
+                    window.showToast(`📅 Οι ημέρες ενημερώθηκαν σε ${selectedDays}. Πατήστε "Δημιουργία Προγράμματος"`, 'success');
+                   // 🔵 🔵 🔵 ΠΡΟΣΘΗΚΗ: Αυτόματη ανανέωση προγράμματος
+                }
+            });
+        }
+
+        // 2. Ενημέρωση εμφάνισης ημερών
+        const daysDisplay = document.getElementById('days-display');
+        if (daysDisplay) {
+            daysDisplay.textContent = window.state.selectedDays > 0
+                ? '✅ ' + window.state.selectedDays + ' μέρες επιλέχθηκαν'
+                : '⚠️ Δεν έχετε επιλέξει ακόμα';
+            daysDisplay.style.color = window.state.selectedDays > 0 ? 'var(--success)' : 'var(--warning)';
+        }
+
+        // 3. Δημιουργία προγράμματος ΜΟΝΟ αν υπάρχουν δραστηριότητες ΚΑΙ μέρες
+       // 3. Δημιουργία προγράμματος ΜΟΝΟ αν υπάρχουν δραστηριότητες
+if (window.state.selectedActivities.length > 0) {
+    console.log(`📊 Έτοιμος για δημιουργία προγράμματος: ${window.state.selectedActivities.length} δραστηριότητες, ${window.state.selectedDays} μέρες`);
+
+    // Εμφάνιση μηνύματος ετοιμότητας, ΟΧΙ loading ή duplicate button
+    const programDiv = document.getElementById('geographic-program');
+    if (programDiv) {
+        programDiv.innerHTML = `
+            <div style="padding: 30px 20px; text-align: center;">
+                <div style="font-size: 48px; margin-bottom: 15px; color: var(--primary);">📍</div>
+                <h4 style="color: var(--dark); margin-bottom: 10px;">Έτοιμο για Προγραμματισμό!</h4>
+                <p style="color: var(--gray); margin-bottom: 20px;">
+                    Πατήστε "ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΓΡΑΜΜΑΤΟΣ" παραπάνω<br>
+                    για να ομαδοποιήσουμε τις ${window.state.selectedActivities.length} δραστηριότητες<br>
+                    σε ${window.state.selectedDays} μέρες με βάση την τοποθεσία τους
+                </p>
+            </div>
+        `;
+    }
+
+    // Ενημέρωση status
+    const statusDiv = document.getElementById('program-status');
+    if (statusDiv) {
+        statusDiv.innerHTML = `<i class="fas fa-check-circle"></i> Έτοιμο για δημιουργία προγράμματος`;
+        statusDiv.style.background = '#D1FAE5';
+        statusDiv.style.color = '#065F46';
+    }
+} else {
+    console.log('⚠️ Δεν υπάρχουν αρκετά δεδομένα για πρόγραμμα');
 }
 
-export function setupMapStep() {
-    // This function will remain in script.js for now due to its complexity
-    // It will be called via window.setupMapStep
-    if (window.setupMapStep) {
-        window.setupMapStep();
+        // 4. Ενημέρωση συνολικού κόστους
+        window.updateActivitiesCost();
+
+        // 5. 🔴 ΚΡΙΤΙΚΟ: Δημιουργία προτεινόμενου προγράμματος
+        createSuggestedProgram();
+
+
+    }, 100);
+}
+
+// ==================== ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ: CREATE SUGGESTED PROGRAM ====================
+function createSuggestedProgram() {
+    // Αυτό δημιουργεί ένα απλό προτεινόμενο πρόγραμμα χωρίς να καλεί τη γενική συνάρτηση
+     // ΑΣΦΑΛΕΙΑ: Ορισμός COLOR_PALETTE εδώ για την περίπτωση που δεν έχει φορτωθεί
+    const COLOR_PALETTE = [
+        '#4F46E5', '#10B981', '#F59E0B', '#EF4444',
+        '#8B5CF6', '#EC4899', '#14B8A6', '#F97316'
+    ];
+    const programDiv = document.getElementById('geographic-program');
+    if (!programDiv || !window.state || window.state.selectedActivities.length === 0 || window.state.selectedDays === 0) {
+        return;
     }
+
+    const activitiesCount = window.state.selectedActivities.length;
+    const daysCount = window.state.selectedDays;
+    const activitiesPerDay = Math.ceil(activitiesCount / daysCount);
+
+    let html = `
+        <div style="padding: 20px;">
+            <div style="text-align: center; margin-bottom: 25px;">
+                <h3 style="color: var(--primary); margin-bottom: 10px;">📅 Πρόγραμμα Ταξιδιού</h3>
+                <p style="color: var(--gray);">
+                    ${activitiesCount} δραστηριότητες διανεμήθηκαν σε ${daysCount} μέρες
+                </p>
+            </div>
+    `;
+
+    // Δημιούργησε μια απλή κατανομή
+    for (let day = 1; day <= daysCount; day++) {
+        const startIndex = (day - 1) * activitiesPerDay;
+        const endIndex = Math.min(startIndex + activitiesPerDay, activitiesCount);
+        const dayActivities = window.state.selectedActivities.slice(startIndex, endIndex);
+        const dayCost = dayActivities.reduce((sum, act) => sum + (act.price || 0), 0);
+
+        html += `
+            <div style="
+                margin-bottom: 20px;
+                padding: 15px;
+                background: white;
+                border-radius: 10px;
+                border-left: 4px solid ${window.getDayColor ? window.getDayColor(day) : COLOR_PALETTE[day % COLOR_PALETTE.length]};
+                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            ">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h4 style="color: ${window.getDayColor ? window.getDayColor(day) : COLOR_PALETTE[day % COLOR_PALETTE.length]}; margin: 0;">
+                        ΜΕΡΑ ${day}
+                    </h4>
+                    <span style="background: ${(window.getDayColor ? window.getDayColor(day) : COLOR_PALETTE[day % COLOR_PALETTE.length])}20; color: ${window.getDayColor ? window.getDayColor(day) : COLOR_PALETTE[day % COLOR_PALETTE.length]}; padding: 4px 10px; border-radius: 20px; font-size: 12px;">
+                        ${dayActivities.length} δραστηριότητες
+                    </span>
+                </div>
+
+                <div style="margin-top: 10px;">
+                    ${dayActivities.map(activity => `
+                        <div style="
+                            display: flex;
+                            justify-content: space-between;
+                            padding: 8px 0;
+                            border-bottom: 1px solid #f0f0f0;
+                        ">
+                            <span style="color: var(--dark);">${activity.name}</span>
+                            <span style="color: var(--primary); font-weight: bold;">${Number(activity.price || 0).toFixed(2)}€</span>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div style="
+                    margin-top: 10px;
+                    padding-top: 10px;
+                    border-top: 1px dashed #ddd;
+                    display: flex;
+                    justify-content: space-between;
+                    font-weight: bold;
+                ">
+                    <span>ΣΥΝΟΛΟ ΜΕΡΑΣ:</span>
+                    <span style="color: ${window.getDayColor ? window.getDayColor(day) : COLOR_PALETTE[day % COLOR_PALETTE.length]};">${dayCost.toFixed(2)}€</span>
+                </div>
+            </div>
+        `;
+    }
+
+    const totalCost = window.state.selectedActivities.reduce((sum, act) => sum + (act.price || 0), 0);
+
+    html += `
+            <div style="
+                margin-top: 25px;
+                padding: 15px;
+                background: linear-gradient(135deg, var(--primary), #4F46E5);
+                color: white;
+                border-radius: 10px;
+                text-align: center;
+            ">
+                <h4 style="color: white; margin-bottom: 10px;">
+                    <i class="fas fa-calculator"></i> ΣΥΝΟΛΙΚΟ ΚΟΣΤΟΣ
+                </h4>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="text-align: left;">
+                        <div style="font-size: 14px; opacity: 0.9;">${activitiesCount} δραστηριότητες</div>
+                        <div style="font-size: 14px; opacity: 0.9;">${daysCount} μέρες</div>
+                    </div>
+                    <div style="font-size: 36px; font-weight: bold;">${totalCost.toFixed(2)}€</div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <p style="color: var(--gray); font-size: 13px; margin-top: 10px;">
+                    💡 Πατήστε "ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΓΡΑΜΜΑΤΟΣ" παραπάνω για βελτιστοποιημένο πρόγραμμα με βάση τις τοποθεσίες
+                </p>
+            </div>
+        </div>
+    `;
+
+    programDiv.innerHTML = html;
+}
+
+// ==================== ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ: SUGGEST DAYS FROM GROUPS ====================
+function suggestDaysFromGroups() {
+    if (!window.state || window.state.selectedActivities.length === 0) return 0;
+
+    // Πάρε τις πλήρεις πληροφορίες για τις επιλεγμένες δραστηριότητες
+    const selectedFullActivities = window.state.selectedActivities.map(selected =>
+        window.state.currentCityActivities ? window.state.currentCityActivities.find(a => a.id === selected.id) : null
+    ).filter(a => a !== undefined && a !== null);
+
+    const groups = window.groupActivitiesByProximity ? window.groupActivitiesByProximity(selectedFullActivities, 2.0) : [];
+
+    if (groups.length === 0) return 0;
+
+    // Υπολόγισε προτεινόμενες μέρες
+    let suggestedDays = groups.length;
+
+    // Αν υπάρχουν πολλές δραστηριότητες σε μία ομάδα, πρόσθεσε μέρες
+    groups.forEach(group => {
+        if (group.count >= 3) suggestedDays += 1;
+        if (group.count >= 5) suggestedDays += 1;
+    });
+
+    // Μίνιμουμ 2 μέρες, μέγιστο 7
+    suggestedDays = Math.max(2, Math.min(suggestedDays, 7));
+
+    console.log(`📅 Προτεινόμενες μέρες από ομαδοποίηση: ${suggestedDays}`);
+
+    return suggestedDays;
+}
+
+// ==================== MAP FUNCTIONS ====================
+export function setupMapStep() {
+    console.log('🗺️ Ρύθμιση χάρτη για:', window.state?.selectedDestination);
+
+    // Safety check: ensure state exists
+    if (!window.state) {
+        console.error('❌ State not initialized in setupMapStep!');
+        return;
+    }
+
+    if (!window.state.selectedDestination) return;
+
+    setTimeout(() => {
+        window.initializeMap();
+
+        // If a geographic program exists, automatically display it on the map
+        if (window.state.geographicProgram && window.state.geographicProgram.days) {
+            setTimeout(() => {
+                // Check all day checkboxes
+                const allCheckbox = document.querySelector('.day-checkbox[value="all"]');
+                if (allCheckbox) {
+                    allCheckbox.checked = true;
+                }
+
+                // Automatically apply the day filter to show all activities from the program
+                if (window.applyDayFilter) {
+                    window.applyDayFilter();
+                }
+                console.log('✅ Αυτόματη εμφάνιση προγράμματος στον χάρτη');
+            }, 800);
+        }
+    }, 300);
 }
 
 // ==================== MANUAL DESTINATION MODAL ====================
@@ -1107,6 +1413,12 @@ export function closeManualDestinationModal() {
 }
 
 export function saveManualDestination() {
+    // Safety check: ensure state exists
+    if (!window.state) {
+        console.error('❌ State not initialized in saveManualDestination!');
+        return;
+    }
+
     const citySelect = document.getElementById('manual-city-select');
 
     if (!citySelect.value) {
@@ -1135,14 +1447,14 @@ export function saveManualDestination() {
 
     // 🔴 ΑΛΛΑΓΗ: ΔΕΝ ΠΑΙΡΝΟΥΜΕ ΗΜΕΡΕΣ ΑΠΟ INPUT
     // Απλά θέτουμε 0 ώστε να επιλέξει ο χρήστης στο βήμα 5
-    state.selectedDestination = cityName;
-    state.selectedDestinationId = cityId;
-    state.selectedDays = 0; // <-- ΒΑΖΟΥΜΕ 0, Ο ΧΡΗΣΤΗΣ ΘΑ ΤΙΣ ΕΠΙΛΕΞΕΙ ΣΤΟ ΒΗΜΑ 5
+    window.state.selectedDestination = cityName;
+    window.state.selectedDestinationId = cityId;
+    window.state.selectedDays = 0; // <-- ΒΑΖΟΥΜΕ 0, Ο ΧΡΗΣΤΗΣ ΘΑ ΤΙΣ ΕΠΙΛΕΞΕΙ ΣΤΟ ΒΗΜΑ 5
 
     // 🔴 ΚΑΘΑΡΙΣΜΟΣ ΔΕΔΟΜΕΝΩΝ ΠΡΟΗΓΟΥΜΕΝΗΣ ΠΟΛΗΣ
-    state.selectedActivities = [];
-    state.currentCityActivities = null;
-    state.geographicProgram = null;
+    window.state.selectedActivities = [];
+    window.state.currentCityActivities = null;
+    window.state.geographicProgram = null;
     window.selectedMarkers = [];
 
     // Καθαρισμός χάρτη αν υπάρχει

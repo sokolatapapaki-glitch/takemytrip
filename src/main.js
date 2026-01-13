@@ -15,7 +15,15 @@ window.state = {
     ],
     currentStep: 'destination',
     currentCityActivities: [],
-    customPoints: JSON.parse(localStorage.getItem('travel_custom_points')) || [],
+    customPoints: (() => {
+        try {
+            const stored = localStorage.getItem('travel_custom_points');
+            return stored ? JSON.parse(stored) : [];
+        } catch (e) {
+            console.error('Failed to parse customPoints from localStorage:', e);
+            return [];
+        }
+    })(),
     selectedActivities: [],
     geographicProgram: null
 };
