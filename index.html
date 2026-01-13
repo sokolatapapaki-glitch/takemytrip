@@ -122,20 +122,10 @@
         </div>
     </div>
 
-    <!-- ΕΞΩΤΕΡΙΚΟ JavaScript -->
+    <!-- ΕΞΩΤΕΡΙΚΟ JavaScript - ΔΙΟΡΘΩΜΕΝΟ -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-    <!-- CORE FUNCTIONALITY - Legacy script.js loaded first for missing functions -->
-    <!-- This provides: initializeMap, generateGeographicProgram, map functions, etc. -->
-    <!-- ES modules will override specific functions that have been migrated -->
     <script src="script.js"></script>
-
-    <!-- ES MODULES - Modular Architecture -->
-    <!-- These override script.js for functions that have been migrated -->
-    <script type="module" src="src/main.js"></script>
-
-    <!-- Combo Calculator (standalone utility) -->
-    <script src="combo-calculator.js"></script>
+     <script src="combo-calculator.js"></script> <!-- ΑΥΤΗ Η ΝΕΑ ΓΡΑΜΜΗ -->       
 
     <script>
     // ONE-TIME SIDEBAR FIX - ΒΗΜΑ 9
