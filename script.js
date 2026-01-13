@@ -2339,11 +2339,7 @@ function getMapStepHTML() {
                     <button class="btn btn-primary" onclick="showActivityMap()">
                         <i class="fas fa-map-pin"></i> Προβολή Σημείων
                     </button>
-                    
-                    <button class="btn btn-accent" onclick="showGroupedActivitiesOnMap()">
-                        <i class="fas fa-layer-group"></i> Ομαδοποίηση
-                    </button>
-                    
+
                     <button class="btn btn-secondary" onclick="clearMapPoints()">
                         <i class="fas fa-trash"></i> Καθαρισμός
                     </button>
@@ -3898,6 +3894,21 @@ function setupMapStep() {
 
     setTimeout(() => {
         initializeMap();
+
+        // If a geographic program exists, automatically display it on the map
+        if (state.geographicProgram && state.geographicProgram.days) {
+            setTimeout(() => {
+                // Check all day checkboxes
+                const allCheckbox = document.querySelector('.day-checkbox[value="all"]');
+                if (allCheckbox) {
+                    allCheckbox.checked = true;
+                }
+
+                // Automatically apply the day filter to show all activities from the program
+                applyDayFilter();
+                console.log('✅ Αυτόματη εμφάνιση προγράμματος στον χάρτη');
+            }, 800);
+        }
     }, 300);
 }
 
