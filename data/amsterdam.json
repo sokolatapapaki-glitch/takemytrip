@@ -4,6 +4,16 @@
   "currency": "EUR",
   "emoji": "🌷",
   "pricing_model": "per_age",
+  "cityPass": {
+    "name": "Amsterdam City Pass",
+    "description": "Επιλογή 2, 3 ή 5 αξιοθέατων από κορυφαίες δραστηριότητες της πόλης σε πολύ χαμηλή τιμή. Ισχύει έως 7 ημέρες μετά το πρώτο check-in.",
+    "prices": {
+      "2_attractions": 49,
+      "3_attractions": 59,
+      "5_attractions": 69
+    },
+    "notes": "Ιδανικό για τουρίστες λίγων ημερών. Τα εισιτήρια ισχύουν για 7 ημέρες μετά το πρώτο check-in. Προτείνεται κράτηση online για κάποια δημοφιλή αξιοθέατα (π.χ. Van Gogh, Rijksmuseum, NEMO)."
+  },
   "activities": [
     {
       "id": 1,
@@ -21,10 +31,10 @@
         "lat": 52.3744,
         "lng": 4.9122
       },
-      "restaurant": "<a href='https://maps.google.com/?q=NEMO+Museum+Restaurant+Amsterdam' target='_blank'>NEMO Restaurant</a>",
+      "restaurant": "https://maps.google.com/?q=NEMO+Museum+Restaurant+Amsterdam",
       "website": "https://www.nemosciencemuseum.nl/",
       "notes": ["0-3 ετών: δωρεάν", "4 ετών και άνω: 21.5€"],
-      "tags": ["science", "interactive", "rooftop"],
+      "tags": ["science", "interactive", "rooftop", "top"],
       "duration_hours": 3,
       "best_time": "any"
     },
@@ -42,10 +52,10 @@
         "lat": 52.3598,
         "lng": 4.8852
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Rijksmuseum+Cafe+Amsterdam' target='_blank'>Rijksmuseum Cafe</a>",
+      "restaurant": "https://maps.google.com/?q=Rijksmuseum+Cafe+Amsterdam",
       "website": "https://www.rijksmuseum.nl/",
       "notes": ["0-18 ετών: δωρεάν", "19 ετών και άνω: 25€"],
-      "tags": ["art", "museum", "history"],
+      "tags": ["art", "museum", "history", "top"],
       "duration_hours": 2.5,
       "best_time": "morning"
     },
@@ -63,10 +73,10 @@
         "lat": 52.3584,
         "lng": 4.8811
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Van+Gogh+Museum+Cafe+Amsterdam' target='_blank'>Van Gogh Museum Cafe</a>",
+      "restaurant": "https://maps.google.com/?q=Van+Gogh+Museum+Cafe+Amsterdam",
       "website": "https://www.vangoghmuseum.nl/",
       "notes": ["0-17 ετών: δωρεάν", "18 ετών και άνω: 24€"],
-      "tags": ["art", "vangogh", "museum"],
+      "tags": ["art", "vangogh", "museum", "top"],
       "duration_hours": 2,
       "best_time": "afternoon"
     },
@@ -86,7 +96,7 @@
         "lat": 52.3731,
         "lng": 4.8925
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Madame+Tussauds+Cafe+Amsterdam' target='_blank'>Madame Tussauds Cafe</a>",
+      "restaurant": "https://maps.google.com/?q=Madame+Tussauds+Cafe+Amsterdam",
       "website": "https://www.madametussauds.com/amsterdam/",
       "notes": [
         "0-1 ετών: δωρεάν",
@@ -95,7 +105,7 @@
         "COMBO: Madame Tussauds + This is Holland - 0-1 ετών: δωρεάν, 2-14 ετών: 32€, 15+ ετών: 37€",
         "COMBO: Madame Tussauds + Canal cruise - 0-1 ετών: δωρεάν, 2-14 ετών: 29.5€, 15+ ετών: 37€"
       ],
-      "tags": ["wax", "celebrities", "interactive"],
+      "tags": ["wax", "celebrities", "interactive", "top"],
       "duration_hours": 1.5,
       "best_time": "any"
     },
@@ -114,10 +124,10 @@
         "lat": 52.3886,
         "lng": 4.8689
       },
-      "restaurant": "<a href='https://maps.google.com/?q=WONDR+Cafe+Amsterdam' target='_blank'>WONDR Cafe</a>",
+      "restaurant": "https://maps.google.com/?q=WONDR+Cafe+Amsterdam",
       "website": "https://www.wondrexperience.com/",
       "notes": ["0-2 ετών: δωρεάν", "3-10 ετών: 19€", "11 ετών και άνω: 27€"],
-      "tags": ["instagram", "interactive", "play"],
+      "tags": ["instagram", "interactive", "play", "top"],
       "duration_hours": 1.5,
       "best_time": "any"
     },
@@ -127,11 +137,11 @@
       "description": "Μια 5D πτήση πάνω από τα αξιοθέατα της Ολλανδίας που συναρπάζει τα παιδιά.",
       "category": "experience",
       "prices": {
-        "0": "ΔΕΝ ΕΠΙΤΡΕΠΕΤΑΙ", 
-        "1": "ΔΕΝ ΕΠΙΤΡΕΠΕΤΑΙ", 
-        "2": "ΔΕΝ ΕΠΙΤΡΕΠΕΤΑΙ", 
+        "0": "ΔΕΝ ΕΠΙΤΡΕΠΕΤΑΙ",
+        "1": "ΔΕΝ ΕΠΙΤΡΕΠΕΤΑΙ",
+        "2": "ΔΕΝ ΕΠΙΤΡΕΠΕΤΑΙ",
         "3": "ΔΕΝ ΕΠΙΤΡΕΠΕΤΑΙ",
-        "4": 19, "5": 19, "6": 19, "7": 19, "8": 19, "9": 19, 
+        "4": 19, "5": 19, "6": 19, "7": 19, "8": 19, "9": 19,
         "10": 19, "11": 19, "12": 19,
         "13": 24, "14": 24, "15": 24, "16": 24, "17": 24,
         "adult": 24
@@ -140,7 +150,7 @@
         "lat": 52.3758,
         "lng": 4.8979
       },
-      "restaurant": "<a href='https://maps.google.com/?q=This+is+Holland+Cafe+Amsterdam' target='_blank'>This is Holland Cafe</a>",
+      "restaurant": "https://maps.google.com/?q=This+is+Holland+Cafe+Amsterdam",
       "website": "https://www.thisisholland.com/",
       "notes": [
         "ΠΡΟΣΟΧΗ: Δεν επιτρέπονται κάτω των 4 ετών και κάτω του 100cm",
@@ -150,9 +160,9 @@
         "Family tickets: 2 ενήλικες + 1 παιδί (4-12): 52.25€",
         "Family tickets: 2 ενήλικες + 2 παιδιά (4-12): 69€",
         "Family tickets: 2 ενήλικες + 3 παιδιά (4-12): 84.75€",
-        "Τα παιδιά αποκλειστικά 4-12 ετών. Ενήλικες 18 ετών και άνω"
+        "Τα παιδιά αποκλειστικά 4-12 ετών. Ενήλικες 18+"
       ],
-      "tags": ["5d", "flight", "simulator"],
+      "tags": ["5d", "flight", "simulator", "top"],
       "duration_hours": 1,
       "best_time": "any"
     },
@@ -172,10 +182,10 @@
         "lat": 52.3661,
         "lng": 4.9145
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Artis+Zoo+Restaurant+Amsterdam' target='_blank'>Artis Restaurant</a>",
+      "restaurant": "https://maps.google.com/?q=Artis+Zoo+Restaurant+Amsterdam",
       "website": "https://www.artis.nl/",
       "notes": ["0-2 ετών: δωρεάν", "3-12 ετών: 25.5€", "13 ετών και άνω: 29.5€"],
-      "tags": ["zoo", "animals", "planetarium"],
+      "tags": ["zoo", "animals", "planetarium", "top"],
       "duration_hours": 4,
       "best_time": "morning"
     },
@@ -193,7 +203,7 @@
         "lat": 52.3586,
         "lng": 4.8681
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Grote+Melkhuis+Vondelpark' target='_blank'>Grote Melkhuis</a>",
+      "restaurant": "https://maps.google.com/?q=Grote+Melkhuis+Vondelpark",
       "website": "https://www.hetgrotemelkhuis.nl/",
       "notes": ["Δωρεάν είσοδος"],
       "tags": ["park", "playground", "free"],
@@ -214,7 +224,7 @@
         "lat": 52.3161,
         "lng": 4.8319
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Boerderij+Megan+Amsterdamse+Bos' target='_blank'>Boerderij Megan</a>",
+      "restaurant": "https://maps.google.com/?q=Boerderij+Megan+Amsterdamse+Bos",
       "website": "https://www.amsterdamsebos.nl/",
       "notes": ["Δωρεάν είσοδος"],
       "tags": ["forest", "nature", "free"],
@@ -235,7 +245,7 @@
         "lat": 52.3325,
         "lng": 4.8883
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Amstelpark+Pavilion' target='_blank'>Amstelpark Pavilion</a>",
+      "restaurant": "https://maps.google.com/?q=Amstelpark+Pavilion",
       "website": "https://www.amstelpark.nl/",
       "notes": ["Είσοδος δωρεάν", "Χρέωση ανάλογα με επιλογές δραστηριοτήτων εντός του πάρκου"],
       "tags": ["park", "train", "minigolf"],
@@ -258,14 +268,9 @@
         "lat": 52.3676,
         "lng": 4.9041
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Canal+Cruise+Snacks+Amsterdam' target='_blank'>Canal Cruise Snack Bar</a>",
+      "restaurant": "https://maps.google.com/?q=Canal+Cruise+Snacks+Amsterdam",
       "website": "https://www.canal.nl/",
-      "notes": [
-        "0-3 ετών: δωρεάν",
-        "4-12 ετών: 9.90€",
-        "13 ετών και άνω: 15.5€",
-        "Κατά μέσο όρο - οι τιμές διαφέρουν ανά εταιρεία"
-      ],
+      "notes": ["0-3 ετών: δωρεάν", "4-12 ετών: 9.90€", "13 ετών και άνω: 15.5€", "Κατά μέσο όρο - οι τιμές διαφέρουν ανά εταιρεία"],
       "tags": ["boat", "canal", "sightseeing"],
       "duration_hours": 1,
       "best_time": "any"
@@ -285,14 +290,9 @@
         "lat": 52.3756,
         "lng": 4.9039
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Pancake+Boat+Restaurant' target='_blank'>Pancake Boat Restaurant</a>",
+      "restaurant": "https://maps.google.com/?q=Pancake+Boat+Restaurant",
       "website": "https://www.pannenkoekenboot.nl/",
-      "notes": [
-        "0-2 ετών: δωρεάν",
-        "3-11 ετών: 21€",
-        "12 ετών και άνω: 26€",
-        "Προσοχή: οι τιμές αλλάζουν σε σαββατοκύριακα και αργίες"
-      ],
+      "notes": ["0-2 ετών: δωρεάν", "3-11 ετών: 21€", "12 ετών και άνω: 26€", "Προσοχή: οι τιμές αλλάζουν σε σαββατοκύριακα και αργίες"],
       "tags": ["boat", "pancakes", "food"],
       "duration_hours": 1.5,
       "best_time": "any"
