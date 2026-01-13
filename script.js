@@ -3732,12 +3732,134 @@ if (state.selectedActivities.length > 0) {
         
         // 4. Ενημέρωση συνολικού κόστους
         updateActivitiesCost();
-        
-        // 5. 🔴 ΚΡΙΤΙΚΟ: Δημιουργία προτεινόμενου προγράμματος
-        createSuggestedProgram();
+
+        // 5. 🔴 FIX: Display program from state if it exists, otherwise show preview
+        if (state.geographicProgram && state.geographicProgram.days) {
+            // Program already generated - display from state (same data map uses)
+            console.log('📋 Εμφάνιση προγράμματος από state (ίδιο με τον χάρτη)');
+            displayProgramFromState();
+        } else {
+            // No program yet - show simple preview
+            console.log('📋 Εμφάνιση απλής πρότασης (πριν τη δημιουργία)');
+            createSuggestedProgram();
+        }
        
             
     }, 100);
+}
+
+// ==================== DISPLAY PROGRAM FROM STATE ====================
+function displayProgramFromState() {
+    // Render the program from state.geographicProgram (same data the map uses)
+    if (!state.geographicProgram || !state.geographicProgram.days) {
+        console.error('❌ No program in state to display');
+        return;
+    }
+
+    const programDiv = document.getElementById('geographic-program');
+    if (!programDiv) return;
+
+    const daysProgram = state.geographicProgram.days;
+    const totalDays = state.geographicProgram.totalDays || state.selectedDays;
+
+    let html = `
+        <div style="padding: 20px;">
+            <div style="text-align: center; margin-bottom: 25px;">
+                <h3 style="color: var(--primary); margin-bottom: 10px;">📅 Πρόγραμμα Ταξιδιού</h3>
+                <p style="color: var(--gray);">
+                    Γεωγραφικά βελτιστοποιημένο πρόγραμμα για ${totalDays} ${totalDays === 1 ? 'μέρα' : 'μέρες'}
+                </p>
+            </div>
+    `;
+
+    // Render each day from state
+    daysProgram.forEach((day, index) => {
+        const dayNumber = index + 1;
+        const dayActivities = day.activities || [];
+        const dayCost = dayActivities.reduce((sum, act) => sum + (act.price || 0), 0);
+
+        html += `
+            <div style="
+                margin-bottom: 20px;
+                padding: 15px;
+                background: white;
+                border-radius: 10px;
+                border-left: 4px solid ${getDayColor(dayNumber)};
+                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            ">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h4 style="color: ${getDayColor(dayNumber)}; margin: 0;">
+                        ΜΕΡΑ ${dayNumber}
+                    </h4>
+                    <span style="background: ${getDayColor(dayNumber)}20; color: ${getDayColor(dayNumber)}; padding: 4px 10px; border-radius: 20px; font-size: 12px;">
+                        ${dayActivities.length} ${dayActivities.length === 1 ? 'δραστηριότητα' : 'δραστηριότητες'}
+                    </span>
+                </div>
+
+                <div style="margin-top: 10px;">
+                    ${dayActivities.map(activity => `
+                        <div style="
+                            display: flex;
+                            justify-content: space-between;
+                            padding: 8px 0;
+                            border-bottom: 1px solid #f0f0f0;
+                        ">
+                            <span style="color: var(--dark);">${activity.name}</span>
+                            <span style="color: var(--primary); font-weight: bold;">${Number(activity.price || 0).toFixed(2)}€</span>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div style="
+                    margin-top: 10px;
+                    padding-top: 10px;
+                    border-top: 1px dashed #ddd;
+                    display: flex;
+                    justify-content: space-between;
+                    font-weight: bold;
+                ">
+                    <span>ΣΥΝΟΛΟ ΜΕΡΑΣ:</span>
+                    <span style="color: ${getDayColor(dayNumber)};">${dayCost.toFixed(2)}€</span>
+                </div>
+            </div>
+        `;
+    });
+
+    // Total cost
+    const allActivities = daysProgram.flatMap(day => day.activities || []);
+    const totalCost = allActivities.reduce((sum, act) => sum + (act.price || 0), 0);
+    const totalActivitiesCount = allActivities.length;
+
+    html += `
+            <div style="
+                margin-top: 25px;
+                padding: 15px;
+                background: linear-gradient(135deg, var(--primary), #4F46E5);
+                color: white;
+                border-radius: 10px;
+                text-align: center;
+            ">
+                <h4 style="color: white; margin-bottom: 10px;">
+                    <i class="fas fa-calculator"></i> ΣΥΝΟΛΙΚΟ ΚΟΣΤΟΣ
+                </h4>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div style="text-align: left;">
+                        <div style="font-size: 14px; opacity: 0.9;">${totalActivitiesCount} ${totalActivitiesCount === 1 ? 'δραστηριότητα' : 'δραστηριότητες'}</div>
+                        <div style="font-size: 14px; opacity: 0.9;">${totalDays} ${totalDays === 1 ? 'μέρα' : 'μέρες'}</div>
+                    </div>
+                    <div style="font-size: 36px; font-weight: bold;">${totalCost.toFixed(2)}€</div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <p style="color: #10B981; font-size: 14px; font-weight: 500;">
+                    ✅ Το πρόγραμμα έχει δημιουργηθεί - ίδιο με αυτό που εμφανίζεται στον χάρτη
+                </p>
+            </div>
+        </div>
+    `;
+
+    programDiv.innerHTML = html;
 }
 
 // ==================== ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ: CREATE SUGGESTED PROGRAM ====================
