@@ -427,15 +427,19 @@ function initApp() {
 }
 
 // ==================== INITIALIZATION ====================
+// ⚠️ DISABLED: ES modules now handle initialization via main.js
+// This prevents double initialization (script.js + ES modules both calling initApp)
+/*
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 Εφαρμογή φορτώνεται...');
-    
+
     // Άμεση εκκίνηση (χωρίς καθυστέρηση)
     initApp();
-    
+
     // Αφαίρεση του παλιού timeout για διπλά κουμπιά
     // (τώρα γίνεται μέσα στην initApp)
 });
+*/
 
 
 // ==================== MOBILE NAVIGATION ====================
