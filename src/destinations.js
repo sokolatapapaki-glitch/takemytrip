@@ -2,9 +2,6 @@
 // Destination filtering, selection, and recommendation functions
 // Dependencies: window.state, saveState, showStep
 
-// Access global state
-const state = window.state;
-
 // ==================== DESTINATION FILTERING ====================
 export async function filterDestinations() {
     console.log('🔍 Εκκίνηση αναζήτησης προορισμών με φίλτρα...');
@@ -337,13 +334,19 @@ export async function filterDestinations() {
 export function selectDestination(destinationName, destinationId) {
     console.log(`📍 Επιλογή προορισμού: ${destinationName} (${destinationId})`);
 
-    state.selectedDestination = destinationName;
-    state.selectedDestinationId = destinationId;
+    // Safety check: ensure state exists
+    if (!window.state) {
+        console.error('❌ State not initialized in selectDestination!');
+        return;
+    }
+
+    window.state.selectedDestination = destinationName;
+    window.state.selectedDestinationId = destinationId;
 
     // 🔴 ΚΑΘΑΡΙΣΜΟΣ ΔΕΔΟΜΕΝΩΝ ΠΡΟΗΓΟΥΜΕΝΗΣ ΠΟΛΗΣ
-    state.selectedActivities = [];
-    state.currentCityActivities = null;
-    state.geographicProgram = null;
+    window.state.selectedActivities = [];
+    window.state.currentCityActivities = null;
+    window.state.geographicProgram = null;
     window.selectedMarkers = [];
 
     // Καθαρισμός χάρτη αν υπάρχει

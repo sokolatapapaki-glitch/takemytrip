@@ -20,9 +20,6 @@ import {
 } from './destinations.js';
 import { getCityCoordinates } from './data.js';
 
-// Access global state
-const state = window.state;
-
 // ==================== STATE VALIDATOR ====================
 const StateValidator = {
     validateFamilyMember(member) {
@@ -356,11 +353,17 @@ export function loadSavedDataNow(saved) {
 }
 
 export function showSavedTripNotification(data) {
+    // Safety check: ensure state exists
+    if (!window.state) {
+        console.warn('⚠️ State not initialized in showSavedTripNotification');
+        return;
+    }
+
     // Determine which steps are completed
     const completedSteps = [];
-    if (state.selectedDestination) completedSteps.push('Προορισμός');
-    if (state.selectedActivities.length > 0) completedSteps.push('Δραστηριότητες');
-    if (state.geographicProgram) completedSteps.push('Πρόγραμμα');
+    if (window.state.selectedDestination) completedSteps.push('Προορισμός');
+    if (window.state.selectedActivities && window.state.selectedActivities.length > 0) completedSteps.push('Δραστηριότητες');
+    if (window.state.geographicProgram) completedSteps.push('Πρόγραμμα');
 
     const message = `
         <div style="max-width: 450px; text-align: left; font-family: 'Roboto', sans-serif;">
@@ -370,24 +373,24 @@ export function showSavedTripNotification(data) {
 
             <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid #4F46E5;">
                 <div style="font-size: 15px; font-weight: bold; color: #1e293b; margin-bottom: 10px;">
-                    📍 ${state.selectedDestination || 'Προορισμός'}
+                    📍 ${window.state.selectedDestination || 'Προορισμός'}
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 13px; color: #475569;">
                     <div>
                         <i class="fas fa-calendar-alt" style="color: #10B981; margin-right: 5px;"></i>
-                        <strong>${state.selectedDays || 0}</strong> μέρες
+                        <strong>${window.state.selectedDays || 0}</strong> μέρες
                     </div>
                     <div>
                         <i class="fas fa-users" style="color: #F59E0B; margin-right: 5px;"></i>
-                        <strong>${state.familyMembers.length}</strong> άτομα
+                        <strong>${window.state.familyMembers ? window.state.familyMembers.length : 0}</strong> άτομα
                     </div>
                     <div>
                         <i class="fas fa-map-marked-alt" style="color: #EF4444; margin-right: 5px;"></i>
-                        <strong>${state.selectedActivities.length}</strong> δραστηριότητες
+                        <strong>${window.state.selectedActivities ? window.state.selectedActivities.length : 0}</strong> δραστηριότητες
                     </div>
                     <div>
                         <i class="fas fa-route" style="color: #8B5CF6; margin-right: 5px;"></i>
-                        ${state.geographicProgram ? '<strong>✅ Πρόγραμμα</strong>' : '<span style="color: #94a3b8;">Χωρίς πρόγραμμα</span>'}
+                        ${window.state.geographicProgram ? '<strong>✅ Πρόγραμμα</strong>' : '<span style="color: #94a3b8;">Χωρίς πρόγραμμα</span>'}
                     </div>
                 </div>
             </div>
@@ -665,7 +668,8 @@ export function fixDestinationButtons() {
 export function setupDestinationStep() {
     console.log('📍 Ρύθμιση βήματος προορισμού');
 
-    if (state.selectedDestination) {
+    // Safety check: ensure state exists
+    if (window.state && window.state.selectedDestination) {
         showSelectedDestination();
     }
 

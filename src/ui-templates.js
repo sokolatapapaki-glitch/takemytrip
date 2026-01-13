@@ -5,9 +5,6 @@
 import { getDayColor } from './scheduler.js';
 import { COLOR_PALETTE } from './data.js';
 
-// Access global state
-const state = window.state;
-
 // ==================== STEP NAME HELPER ====================
 export function getStepName(stepId) {
     const stepNames = {
@@ -134,7 +131,7 @@ export function getFlightStepHTML() {
                 <div class="form-group">
                     <label class="form-label">Προς</label>
                     <input type="text" class="form-control" id="flight-destination"
-                           value="${state.selectedDestination || ''}" ${state.selectedDestination ? 'readonly' : ''}>
+                           value="${window.state?.selectedDestination || ''}" ${window.state?.selectedDestination ? 'readonly' : ''}>
                 </div>
             </div>
 
@@ -177,7 +174,7 @@ export function getHotelStepHTML() {
                 <div class="form-group" style="margin-bottom: 12px;">
                     <label class="form-label" style="font-size: 13px;">📍 Προορισμός</label>
                     <input type="text" class="form-control" id="hotel-destination"
-                           value="${state.selectedDestination || ''}"
+                           value="${window.state?.selectedDestination || ''}"
                            style="padding: 10px; height: 42px;">
                 </div>
 
@@ -361,9 +358,9 @@ export function getActivitiesStepHTML() {
     return `
         <div class="card">
             <h1 class="card-title"><i class="fas fa-ticket-alt"></i> Οικογενειακές Δραστηριότητες</h1>
-            <p class="card-subtitle">${state.selectedDestination ? 'Επιλέξτε δραστηριότητες για: ' + state.selectedDestination : 'Πρώτα επιλέξτε προορισμό'}</p>
+            <p class="card-subtitle">${window.state?.selectedDestination ? 'Επιλέξτε δραστηριότητες για: ' + window.state?.selectedDestination : 'Πρώτα επιλέξτε προορισμό'}</p>
 
-            ${!state.selectedDestination ? `
+            ${!window.state?.selectedDestination ? `
                 <div class="alert alert-warning">
                     <i class="fas fa-exclamation-triangle"></i>
                     Δεν έχετε επιλέξει προορισμό. Παρακαλώ επιστρέψτε στο βήμα 1.
@@ -377,7 +374,7 @@ export function getActivitiesStepHTML() {
     <h3><i class="fas fa-users"></i> Τα Μέλη Της Οικογένειας</h3>
 
     <div id="family-members-container" class="family-member-container">
-        ${state.familyMembers.map((member, index) => `
+        ${(window.state?.familyMembers || []).map((member, index) => `
             <div class="family-member">
                 <!-- Πρώτη γραμμή: Όνομα και Εικονίδιο -->
                 <div class="family-member-row">
@@ -528,7 +525,7 @@ export function getActivitiesStepHTML() {
                 <div class="card" style="background: linear-gradient(135deg, #8B5CF6, #7C3AED); color: white; text-align: center; border: none;">
                     <h3 style="color: white; margin-bottom: 10px;">Συνολικό Κόστος</h3>
                     <h1 id="activities-total" style="font-size: 48px; margin: 0;">0€</h1>
-                    <p style="opacity: 0.9;">Για ${state.familyMembers.length} άτομα</p>
+                    <p style="opacity: 0.9;">Για ${window.state?.familyMembers.length} άτομα</p>
                 </div>
 
                 <!-- Next Button -->
@@ -547,9 +544,9 @@ export function getSummaryStepHTML() {
     return `
         <div class="card">
             <h1 class="card-title"><i class="fas fa-route"></i> Γεωγραφικός Προγραμματισμός</h1>
-            <p class="card-subtitle">${state.selectedDestination ? 'Ομαδοποίηση δραστηριοτήτων με βάση την τοποθεσία' : 'Δεν έχετε επιλέξει προορισμό'}</p>
+            <p class="card-subtitle">${window.state?.selectedDestination ? 'Ομαδοποίηση δραστηριοτήτων με βάση την τοποθεσία' : 'Δεν έχετε επιλέξει προορισμό'}</p>
 
-            ${!state.selectedDestination ? `
+            ${!window.state?.selectedDestination ? `
                 <div class="alert alert-warning">
                     <i class="fas fa-exclamation-triangle"></i>
                     Δεν έχετε επιλέξει προορισμό. Παρακαλώ επιστρέψτε στο βήμα 1.
@@ -565,14 +562,14 @@ export function getSummaryStepHTML() {
                     <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
                         <!-- Dropdown Ημερών -->
                         <select class="form-control" id="program-days" style="flex: 1; min-width: 200px; font-size: 16px; padding: 12px;">
-                            <option value="0" ${state.selectedDays === 0 ? 'selected disabled' : 'disabled'}>-- Επιλέξτε μέρες --</option>
-                            <option value="2" ${state.selectedDays === 2 ? 'selected' : ''}>2 μέρες</option>
-                            <option value="3" ${state.selectedDays === 3 ? 'selected' : ''}>3 μέρες</option>
-                            <option value="4" ${state.selectedDays === 4 ? 'selected' : ''}>4 μέρες</option>
-                            <option value="5" ${state.selectedDays === 5 ? 'selected' : ''}>5 μέρες</option>
-                            <option value="7" ${state.selectedDays === 7 ? 'selected' : ''}>7 μέρες</option>
-                            <option value="10" ${state.selectedDays === 10 ? 'selected' : ''}>10 μέρες</option>
-                            <option value="14" ${state.selectedDays === 14 ? 'selected' : ''}>14 μέρες</option>
+                            <option value="0" ${window.state?.selectedDays === 0 ? 'selected disabled' : 'disabled'}>-- Επιλέξτε μέρες --</option>
+                            <option value="2" ${window.state?.selectedDays === 2 ? 'selected' : ''}>2 μέρες</option>
+                            <option value="3" ${window.state?.selectedDays === 3 ? 'selected' : ''}>3 μέρες</option>
+                            <option value="4" ${window.state?.selectedDays === 4 ? 'selected' : ''}>4 μέρες</option>
+                            <option value="5" ${window.state?.selectedDays === 5 ? 'selected' : ''}>5 μέρες</option>
+                            <option value="7" ${window.state?.selectedDays === 7 ? 'selected' : ''}>7 μέρες</option>
+                            <option value="10" ${window.state?.selectedDays === 10 ? 'selected' : ''}>10 μέρες</option>
+                            <option value="14" ${window.state?.selectedDays === 14 ? 'selected' : ''}>14 μέρες</option>
                         </select>
 
                         <!-- ΚΟΥΜΠΙ ΔΗΜΙΟΥΡΓΙΑΣ -->
@@ -583,7 +580,7 @@ export function getSummaryStepHTML() {
 
                     <!-- ΜΟΝΟ ΜΙΚΡΟ STATUS -->
                     <div id="days-display" style="margin-top: 10px; font-size: 14px; color: var(--success); font-weight: bold;">
-                        ${state.selectedDays > 0 ? '✅ ' + state.selectedDays + ' μέρες επιλέχθηκαν' : '⚠️ Επιλέξτε πρώτα μέρες'}
+                        ${window.state?.selectedDays > 0 ? '✅ ' + window.state?.selectedDays + ' μέρες επιλέχθηκαν' : '⚠️ Επιλέξτε πρώτα μέρες'}
                     </div>
                 </div>
 
@@ -595,7 +592,7 @@ export function getSummaryStepHTML() {
                     <div id="geographic-program"
                          style="min-height: 150px; padding: 20px; border-radius: 15px; background: #f0f7ff; border: 2px dashed var(--primary-light); text-align: center;">
 
-                        ${state.selectedActivities.length === 0 ? `
+                        ${window.state?.selectedActivities.length === 0 ? `
                             <div style="padding: 40px 20px;">
                                 <div style="font-size: 64px; margin-bottom: 20px; color: var(--primary-light);">🗺️</div>
                                 <h4 style="color: var(--dark); margin-bottom: 10px;">Δεν υπάρχουν δραστηριότητες</h4>
@@ -603,7 +600,7 @@ export function getSummaryStepHTML() {
                                     Επιλέξτε δραστηριότητες για να δημιουργηθεί το γεωγραφικό πρόγραμμα
                                 </p>
                             </div>
-                        ` : state.selectedDays === 0 ? `
+                        ` : window.state?.selectedDays === 0 ? `
                             <div style="padding: 40px 20px;">
                                 <div style="font-size: 64px; margin-bottom: 20px; color: #F59E0B;">📅</div>
                                 <h4 style="color: var(--dark); margin-bottom: 10px;">Παρακαλώ επιλέξτε ημέρες</h4>
@@ -617,8 +614,8 @@ export function getSummaryStepHTML() {
                                 <h4 style="color: var(--dark); margin-bottom: 10px;">Έτοιμο για Προγραμματισμό!</h4>
                                 <p style="color: var(--gray); margin-bottom: 20px;">
                                     Πατήστε "ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΓΡΑΜΜΑΤΟΣ" παραπάνω<br>
-                                    για να ομαδοποιήσουμε τις ${state.selectedActivities.length} δραστηριότητες<br>
-                                    σε ${state.selectedDays} μέρες με βάση την τοποθεσία τους
+                                    για να ομαδοποιήσουμε τις ${window.state?.selectedActivities.length} δραστηριότητες<br>
+                                    σε ${window.state?.selectedDays} μέρες με βάση την τοποθεσία τους
                                 </p>
                             </div>
                         `}
@@ -644,9 +641,9 @@ export function getMapStepHTML() {
     return `
         <div class="card">
             <h1 class="card-title"><i class="fas fa-map"></i> Διαδραστικός Χάρτης</h1>
-            <p class="card-subtitle">${state.selectedDestination ? 'Χάρτης για: ' + state.selectedDestination : 'Δεν έχετε επιλέξει προορισμό'}</p>
+            <p class="card-subtitle">${window.state?.selectedDestination ? 'Χάρτης για: ' + window.state?.selectedDestination : 'Δεν έχετε επιλέξει προορισμό'}</p>
 
-            ${!state.selectedDestination ? `
+            ${!window.state?.selectedDestination ? `
                 <div class="alert alert-warning">
                     <i class="fas fa-exclamation-triangle"></i>
                     Δεν έχετε επιλέξει προορισμό. Παρακαλώ επιστρέψτε στο βήμα 1.
@@ -656,7 +653,7 @@ export function getMapStepHTML() {
                 </div>
             ` : `
                 <!-- DAY FILTERS - MOVED TO TOP -->
-                ${state.geographicProgram ? `
+                ${window.state?.geographicProgram ? `
                 <div id="day-filter-container" class="card" style="margin-bottom: 20px; background: #f8f9fa;">
                     <h4 style="margin: 0 0 15px 0; color: var(--dark);">
                         <i class="fas fa-calendar-alt"></i> Φιλτράρισμα ανά Ημέρα
@@ -673,7 +670,7 @@ export function getMapStepHTML() {
                             <span style="font-weight: bold; color: var(--primary);">Όλες οι μέρες</span>
                         </label>
 
-                        ${Array.from({ length: state.geographicProgram.totalDays }, (_, i) => i + 1).map(day => `
+                        ${Array.from({ length: window.state?.geographicProgram?.totalDays || 0 }, (_, i) => i + 1).map(day => `
                             <label style="display: flex; align-items: center; cursor: pointer; padding: 8px 12px; background: white; border-radius: 6px; border: 1px solid ${getDayColor(day)};">
                                 <input type="checkbox" class="day-checkbox" value="day${day}"
                                        onchange="applyDayFilter()"
@@ -682,7 +679,7 @@ export function getMapStepHTML() {
                                     Μέρα ${day}
                                 </span>
                                 <span style="margin-left: 8px; font-size: 12px; color: var(--gray);">
-                                    (${state.geographicProgram.days[day-1]?.totalActivities || 0} δραστηριότητες)
+                                    (${window.state?.geographicProgram.days[day-1]?.totalActivities || 0} δραστηριότητες)
                                 </span>
                             </label>
                         `).join('')}
@@ -763,7 +760,7 @@ export function getMapStepHTML() {
 
                     <!-- List of custom points -->
                     <div id="custom-points-list" style="max-height: 200px; overflow-y: auto;">
-                        ${(state.customPoints || []).length > 0 ? state.customPoints.map((point, index) => `
+                        ${(window.state?.customPoints || []).length > 0 ? (window.state?.customPoints || []).map((point, index) => `
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: white; border-radius: 6px; margin-bottom: 8px; border-left: 4px solid var(--accent);">
                                 <div>
                                     <i class="fas fa-map-marker-alt" style="color: var(--accent); margin-right: 8px;"></i>
