@@ -240,6 +240,20 @@ export function initApp() {
         showStep(window.state.currentStep || 'destination');
         console.log('✅ Εφαρμογή αρχικοποιήθηκε');
     }, 100);
+
+    // 7. Απόκρυψη loading overlay (airplane animation)
+    setTimeout(() => {
+        const loadingOverlay = document.getElementById('loading-overlay');
+        if (loadingOverlay) {
+            loadingOverlay.style.opacity = '0';
+            loadingOverlay.style.transition = 'opacity 0.5s ease';
+
+            setTimeout(() => {
+                loadingOverlay.style.display = 'none';
+                console.log('✅ Loading overlay hidden');
+            }, 500);
+        }
+    }, 1000);
 }
 
 // ==================== MOBILE NAVIGATION ====================

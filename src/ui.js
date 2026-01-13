@@ -533,6 +533,102 @@ export function saveState() {
     }
 }
 
+// ==================== HOTEL SEARCH FUNCTIONS ====================
+
+export function searchBookingHotels() {
+    const destination = document.getElementById('hotel-destination').value;
+    const checkin = document.getElementById('hotel-checkin').value;
+    const checkout = document.getElementById('hotel-checkout').value;
+    const adults = document.getElementById('hotel-adults').value;
+    const children = document.getElementById('hotel-children').value;
+    const rooms = document.getElementById('hotel-rooms').value;
+
+    if (!destination) {
+        alert('⚠️ Παρακαλώ επιλέξτε προορισμό πρώτα');
+        return;
+    }
+
+    // Δημιουργία URL για Booking.com
+    const bookingUrl = `https://www.booking.com/searchresults.el.html?ss=${encodeURIComponent(destination)}&checkin=${checkin}&checkout=${checkout}&group_adults=${adults}&group_children=${children}&no_rooms=${rooms}`;
+
+    // Επιβεβαίωση πριν την ανακατεύθυνση
+    const userConfirmed = confirm(
+        '🔍 Αναζήτηση Ξενοδοχείων\n\n' +
+        `Θα ανοίξει νέα καρτέλα με ταξίδι σε: ${destination}\n` +
+        `Check-in: ${checkin} | Check-out: ${checkout}\n` +
+        `Άτομα: ${adults} ενήλικοι, ${children} παιδιά | Δωμάτια: ${rooms}\n\n` +
+        'Θέλετε να συνεχίσετε στην ιστοσελίδα Booking.com;'
+    );
+
+    if (userConfirmed) {
+        window.open(bookingUrl, '_blank');
+    }
+}
+
+export function searchExpediaHotels() {
+    const destination = document.getElementById('hotel-destination').value;
+    const checkin = document.getElementById('hotel-checkin').value;
+    const checkout = document.getElementById('hotel-checkout').value;
+    const adults = document.getElementById('hotel-adults').value;
+    const children = document.getElementById('hotel-children').value;
+    const rooms = document.getElementById('hotel-rooms').value;
+
+    if (!destination) {
+        alert('⚠️ Παρακαλώ επιλέξτε προορισμό πρώτα');
+        return;
+    }
+
+    // Σημαντικό: Χρησιμοποιώ το affiliate link
+    let expediaBaseUrl = `https://www.anrdoezrs.net/click-101567630-14574920?url=https%3A%2F%2Fwww.expedia.co.uk%2FHotel-Search%3F`;
+
+    expediaBaseUrl += `locale=el_GR&currency=EUR`;
+    expediaBaseUrl += `&destination=${encodeURIComponent(destination)}`;
+    expediaBaseUrl += `&startDate=${checkin}`;
+    expediaBaseUrl += `&endDate=${checkout}`;
+    expediaBaseUrl += `&adults=${adults}`;
+
+    if (children > 0) {
+        expediaBaseUrl += `&children=${children}`;
+    }
+    expediaBaseUrl += `&rooms=${rooms}`;
+
+    // Επιβεβαίωση πριν την ανακατεύθυνση
+    const userConfirmed = confirm(
+        '🏨 Αναζήτηση Ξενοδοχείων - Expedia\n\n' +
+        `Προορισμός: ${destination}\n` +
+        `Check-in: ${checkin} | Check-out: ${checkout}\n` +
+        `Άτομα: ${adults} ενήλικοι, ${children} παιδιά | Δωμάτια: ${rooms}\n\n` +
+        'Θα ανοίξει νέα καρτέλα στην ιστοσελίδα Expedia.'
+    );
+
+    if (userConfirmed) {
+        window.open(expediaBaseUrl, '_blank');
+    }
+}
+
+export function searchTicketsellerHotels() {
+    // Ticketseller.gr does not support direct URL parameters for hotel search
+    // Opens homepage where user can search manually
+    const destination = document.getElementById('hotel-destination').value;
+
+    if (!destination) {
+        alert('⚠️ Παρακαλώ επιλέξτε προορισμό πρώτα');
+        return;
+    }
+
+    const userConfirmed = confirm(
+        '🎫 Αναζήτηση Ξενοδοχείων - TicketSeller\n\n' +
+        `Προορισμός: ${destination}\n\n` +
+        'ΣημείωSH: Το TicketSeller.gr δεν υποστηρίζει αυτόματη αναζήτηση με URL.\n' +
+        'Θα ανοίξει η αρχική σελίδα όπου μπορείτε να αναζητήσετε χειροκίνητα.\n\n' +
+        'Στείλτε email στο takethekids2@gmail.com για έκπτωση!'
+    );
+
+    if (userConfirmed) {
+        window.open('https://ticketseller.gr/el/home-2/', '_blank');
+    }
+}
+
 // ==================== HELPER PLACEHOLDER ====================
 // Note: Additional UI functions (HTML templates, map functions, destination functions)
 // should be extracted from script.js and added here as needed.

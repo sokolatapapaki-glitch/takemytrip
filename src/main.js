@@ -84,7 +84,10 @@ import {
     suggestDaysFromGroups,
     getPriceInfo,
     getPriceForAge,
-    saveState
+    saveState,
+    searchBookingHotels,
+    searchExpediaHotels,
+    searchTicketsellerHotels
 } from './ui.js';
 
 // UI Templates (HTML generation functions)
@@ -194,6 +197,11 @@ window.getPriceForAge = getPriceForAge;
 
 // UI functions - State Management
 window.saveState = saveState;
+
+// UI functions - Hotel Search
+window.searchBookingHotels = searchBookingHotels;
+window.searchExpediaHotels = searchExpediaHotels;
+window.searchTicketsellerHotels = searchTicketsellerHotels;
 
 // UI Template functions (HTML generation)
 window.getStepName = getStepName;

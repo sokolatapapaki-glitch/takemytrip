@@ -234,7 +234,7 @@ export function getHotelStepHTML() {
             <!-- ΜΙΚΡΗ ΕΝΔΕΙΞΗ -->
             <div style="background: #fff3cd; padding: 8px 10px; border-radius: 6px; margin: 10px 0; font-size: 12px;">
                 <i class="fas fa-external-link-alt" style="color: #ff9800;"></i>
-                <span style="margin-left: 5px;">Ανακατεύθυνση σε Booking/Expedia</span>
+                <span style="margin-left: 5px;">Ανακατεύθυνση σε Booking / Expedia / TicketSeller</span>
             </div>
 
             <!-- ΚΟΥΜΠΙΑ ΜΕ RESPONSIVE DESIGN ΚΑΙ ΚΕΙΜΕΝΑ -->
@@ -292,7 +292,7 @@ export function getHotelStepHTML() {
 
                     <!-- TICKETSELLER -->
                     <div style="width: 100%; max-width: 320px;">
-                        <button class="btn" onclick="window.open('https://ticketseller.gr/el/home-2/', '_blank')"
+                        <button class="btn" onclick="searchTicketsellerHotels()"
                                 style="
                                     width: 100%;
                                     padding: 12px 15px;
