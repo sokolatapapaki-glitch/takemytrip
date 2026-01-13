@@ -708,10 +708,357 @@ export function showSelectedDestination() {
 // These functions are called from loadStepContent and need to be imported from script.js
 // For now, we'll export placeholder functions and import the real ones later
 export async function setupActivitiesStep() {
-    // This function will remain in script.js for now due to its complexity
-    // It will be called via window.setupActivitiesStep
-    if (window.setupActivitiesStep) {
-        await window.setupActivitiesStep();
+    console.log('🎯 Ρύθμιση βήματος δραστηριοτήτων για:', window.state?.selectedDestinationId);
+
+    // SAFETY CHECK: Ensure state exists
+    if (!window.state) {
+        console.error('❌ State not initialized in setupActivitiesStep!');
+        return;
+    }
+
+    if (!window.state.selectedDestinationId) {
+        console.log('⚠️ Δεν υπάρχει επιλεγμένος προορισμός');
+        return;
+    }
+
+    const activitiesList = document.getElementById('activities-list');
+    if (!activitiesList) {
+        console.error('❌ Δεν βρέθηκε activities-list');
+        return;
+    }
+
+    // LOADING INDICATOR
+    activitiesList.innerHTML = `
+        <div style="grid-column: 1/-1; text-align: center; padding: 60px;">
+            <div class="loading">
+                <i class="fas fa-ticket-alt fa-spin fa-3x" style="color: var(--primary); margin-bottom: 20px;"></i>
+                <h3 style="color: var(--dark); margin-bottom: 10px;">Φόρτωση Δραστηριοτήτων</h3>
+                <p style="color: var(--gray);">Φόρτωση δραστηριοτήτων για ${window.state.selectedDestination}...</p>
+                <p style="font-size: 14px; color: #666; margin-top: 10px;">
+                    Αναζήτηση: <code>data/${window.state.selectedDestinationId}.json</code>
+                </p>
+            </div>
+        </div>
+    `;
+
+    try {
+        // ΒΗΜΑ: Φόρτωσε το JSON
+        console.log(`📂 Προσπαθώ να φορτώσω: data/${window.state.selectedDestinationId}.json`);
+
+        const response = await fetch(`data/${window.state.selectedDestinationId}.json`);
+
+        if (!response.ok) {
+            throw new Error(`Δεν βρέθηκε το αρχείο (${response.status})`);
+        }
+
+        const cityData = await response.json();
+        console.log('✅ JSON φορτώθηκε:', cityData.city);
+
+        if (!cityData.activities || !Array.isArray(cityData.activities)) {
+            throw new Error('Το JSON δεν έχει πίνακα activities');
+        }
+
+        // Αποθήκευσε τις δραστηριότητες στο state
+        window.state.currentCityActivities = cityData.activities;
+        console.log(`📊 Βρέθηκαν ${cityData.activities.length} δραστηριότητες`);
+
+        // ΒΗΜΑ: Δημιούργησε τις κάρτες δραστηριοτήτων
+        let html = '';
+        if (window.state.currentCityActivities.length === 0) {
+            html = `
+                <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <p>Δεν βρέθηκαν διαθέσιμες δραστηριότητες για την πόλη ${cityData.city}.</p>
+                    </div>
+                </div>
+            `;
+       } else {
+    // ==================== HELPER FUNCTIONS ====================
+
+    // Helper: Check if activity is free for all ages
+    function isActivityFreeForAll(prices) {
+        return Object.values(prices).every(p => p === 0);
+    }
+
+    // Helper: Get free age range text
+    function getFreeAgeRange(prices) {
+        const freeAges = Object.entries(prices)
+            .filter(([age, price]) => price === 0 && age !== 'adult')
+            .map(([age]) => parseInt(age))
+            .filter(age => !isNaN(age));
+
+        if (freeAges.length === 0) return null;
+
+        const maxFreeAge = Math.max(...freeAges);
+        return `ΔΩΡΕΑΝ ΓΙΑ ΚΑΤΩ ΤΩΝ ${maxFreeAge + 1} ΕΤΩΝ`;
+    }
+
+    // Helper: Categorize activity for sorting (returns priority number)
+    function categorizeActivity(activity) {
+        const isPlayground = activity.tags?.includes('playground') || activity.activityType === 'playground';
+        const isMuseum = activity.category === 'museum';
+
+        if (activity.top) return 1;      // Top activities first
+        if (isMuseum) return 2;          // Museums second
+        if (isPlayground) return 5;      // Playgrounds fourth
+        return 3;                        // Other activities third
+    }
+
+    // ==================== REQUIRED USER NOTICE ====================
+    html += `
+        <div class="required-notice" style="grid-column: 1/-1; background: linear-gradient(135deg, #FFF3CD 0%, #FFF8E1 100%); border: 2px solid #F59E0B; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);">
+            <div style="display: flex; align-items: flex-start; gap: 15px;">
+                <div style="font-size: 32px; flex-shrink: 0;">⚠️</div>
+                <div style="flex: 1;">
+                    <h3 style="margin: 0 0 10px 0; color: #92400E; font-size: 18px;">
+                        <i class="fas fa-exclamation-circle"></i> Απαιτούμενες Ενέργειες
+                    </h3>
+                    <p style="margin: 0; color: #78350F; font-size: 15px; line-height: 1.6;">
+                        Για να υπολογιστεί σωστά το κόστος, πρέπει να δηλωθεί υποχρεωτικά η σύνθεση των ταξιδιωτών (ηλικίες).
+                        Για να μπορέσει να δημιουργηθεί το πρόγραμμα στο επόμενο βήμα, πρέπει να επιλεγούν όλες οι δραστηριότητες, συμπεριλαμβανομένων και των δωρεάν.
+                    </p>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // ==================== CITY PASS INFO (if available) ====================
+    if (cityData.cityPass) {
+        html += `
+            <div class="city-pass-info card" style="grid-column: 1/-1; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; margin-bottom: 20px;">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <i class="fas fa-ticket-alt fa-3x"></i>
+                    <div style="flex: 1;">
+                        <h3 style="margin: 0 0 5px 0; font-size: 20px;">${cityData.cityPass.name}</h3>
+                        <p style="margin: 0; opacity: 0.95; font-size: 14px;">${cityData.cityPass.description}</p>
+                        <p style="margin: 5px 0 0 0; font-weight: bold; font-size: 16px;">
+                            💰 Έως ${cityData.cityPass.discountPercent}% έκπτωση
+                        </p>
+                        ${cityData.cityPass.url ? `
+                            <a href="${cityData.cityPass.url}" target="_blank" rel="noopener"
+                               style="display: inline-block; margin-top: 10px; padding: 8px 16px; background: white; color: #667eea; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px;">
+                                <i class="fas fa-external-link-alt"></i> Περισσότερες Πληροφορίες
+                            </a>
+                        ` : ''}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // ==================== SORT ACTIVITIES BY CATEGORY ====================
+    const sortedActivities = [...window.state.currentCityActivities].sort((a, b) => {
+        const catA = categorizeActivity(a);
+        const catB = categorizeActivity(b);
+
+        if (catA !== catB) return catA - catB;
+        return a.name.localeCompare(b.name);
+    });
+
+    // ==================== RENDER WITH SECTION HEADERS ====================
+    let currentCategory = null;
+
+    sortedActivities.forEach((activity) => {
+        const category = categorizeActivity(activity);
+        const isPlayground = activity.tags?.includes('playground') || activity.activityType === 'playground';
+        const isFreeForAll = isActivityFreeForAll(activity.prices);
+        const freeAgeRange = getFreeAgeRange(activity.prices);
+        const cityPassEligible = cityData.cityPass?.applicableActivities?.includes(activity.id);
+
+        // Add section header when category changes
+        if (category !== currentCategory) {
+            const headers = {
+                1: { title: '⭐ TOP ΔΡΑΣΤΗΡΙΟΤΗΤΕΣ', note: null },
+                2: { title: '🏛️ ΜΟΥΣΕΙΑ', note: null },
+                3: { title: '🎯 ΑΛΛΕΣ ΔΡΑΣΤΗΡΙΟΤΗΤΕΣ', note: null },
+                5: { title: '🎠 ΠΑΙΔΙΚΕΣ ΧΑΡΕΣ', note: null }
+            };
+
+            const header = headers[category];
+            html += `
+                <div class="activity-section-header">
+                    <h2>${header.title}</h2>
+                    ${header.note ? `
+                        <div class="activity-section-note">
+                            <i class="fas fa-info-circle"></i> ${header.note}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            currentCategory = category;
+        }
+
+        // ==================== RENDER ACTIVITY CARD ====================
+        // Υπολόγισε το κόστος για την οικογένεια (using window.calculateFamilyCost)
+        const familyCost = window.calculateFamilyCost ? window.calculateFamilyCost(activity.prices) : 0;
+        const isSelected = window.state.selectedActivities?.some(a => a.id === activity.id) || false;
+
+        html += `
+            <div class="activity-card ${isSelected ? 'selected' : ''} ${activity.top ? 'top-activity' : ''}"
+                 onclick="toggleActivitySelection(${activity.id})"
+                 data-activity-id="${activity.id}">
+
+            <div class="activity-header">
+                <div class="activity-emoji">${window.getActivityEmoji ? window.getActivityEmoji(activity.category) : '🎯'}</div>
+                <div class="activity-title">
+                    ${activity.website ?
+                        `<a href="${activity.website}" target="_blank" rel="noopener" class="activity-link" onclick="event.stopPropagation()">
+                            ${activity.name}
+                            <i class="fas fa-external-link-alt"></i>
+                         </a>`
+                        : activity.name
+                    }
+                    ${activity.top ? '<span class="top-badge"><span class="top-emoji">🔝</span><span class="top-emoji">💯</span></span>' : ''}
+                    ${cityPassEligible && cityData.cityPass ? (cityData.cityPass.url ?
+                        `<a href="${cityData.cityPass.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="city-pass-badge" style="text-decoration: none;">🎫 Pass</a>` :
+                        '<span class="city-pass-badge">🎫 Pass</span>') : ''}
+                </div>
+                <div class="activity-star">${isSelected ? '⭐' : '☆'}</div>
+            </div>
+
+            <!-- FREE PRICE LABEL (Horizontal) -->
+            ${!isPlayground && (isFreeForAll || freeAgeRange) ? `
+                <div class="free-price-label ${freeAgeRange ? 'free-price-label-conditional' : ''}">
+                    ${isFreeForAll ? 'ΔΩΡΕΑΝ' : freeAgeRange}
+                </div>
+            ` : ''}
+
+            <!-- PLAYGROUND LABEL -->
+            ${isPlayground ? `
+                <div class="playground-label">
+                    <i class="fas fa-child"></i> ΠΑΙΔΙΚΗ ΧΑΡΑ
+                </div>
+            ` : ''}
+
+            <div class="activity-description">
+                ${activity.description || 'Δραστηριότητα για οικογένειες'}
+            </div>
+
+            <div style="font-size: 12px; color: var(--gray); margin: 10px 0;">
+                <i class="fas fa-clock"></i> ${activity.duration_hours || '?'} ώρες
+                <span style="margin-left: 15px;">
+                    <i class="fas fa-tag"></i> ${activity.category || 'Γενική'}
+                </span>
+            </div>
+
+            <!-- RESTAURANT/CAFE RECOMMENDATION -->
+            ${activity.restaurant ? `
+                <div class="restaurant-recommendation">
+                    <div class="restaurant-header">
+                        <i class="fas fa-utensils"></i>
+                        <span class="restaurant-title">ΣΥΝΙΣΤΩΜΕΝΟ ${activity.restaurantType === 'cafe' ? 'ΚΑΦΕ' : 'ΕΣΤΙΑΤΟΡΙΟ'}</span>
+                    </div>
+                    <div class="restaurant-content">
+                        <p>${activity.restaurant.replace(/<a /g, '<a target="_blank" rel="noopener" ')}</p>
+                        <small class="restaurant-tip">
+                            <i class="fas fa-walking"></i>
+                            ${activity.restaurantType === 'cafe' ? 'καφέ' : 'εστιατόριο'} /
+                            ${activity.restaurantDistance === 0 ? 'εντός του ίδιου χώρου' : `${activity.restaurantDistance} λεπτά με τα πόδια`}
+                        </small>
+                    </div>
+                </div>
+            ` : ''}
+
+            <!-- ΤΙΜΕΣ -->
+            ${window.state.familyMembers && window.state.familyMembers.length > 0 && window.state.familyMembers.every(m => m.age !== undefined && m.age !== null && m.age !== '') ? `
+            <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin: 10px 0;">
+                <div style="font-size: 12px; color: var(--gray); margin-bottom: 8px;">
+                    <i class="fas fa-money-bill-wave"></i>
+                    ${window.getPriceInfo ? window.getPriceInfo(activity.prices) : ''}
+                </div>
+
+                <!-- ΤΙΜΕΣ ΓΙΑ ΚΑΘΕ ΜΕΛΟΣ ΤΗΣ ΟΙΚΟΓΕΝΕΙΑΣ -->
+                ${(window.state.familyMembers || []).map(member => {
+                    const age = member.age;
+                    let price = '?';
+
+                    // Βρες τιμή για την συγκεκριμένη ηλικία
+                    if (activity.prices[age] !== undefined) {
+                        price = activity.prices[age] === 0 ? 'ΔΩΡΕΑΝ' : Number(activity.prices[age]).toFixed(2) + '€';
+                    }
+                    // Για ενήλικες, χρησιμοποίησε 'adult' αν υπάρχει
+                    else if (age >= 16 && activity.prices.adult !== undefined) {
+                        price = Number(activity.prices.adult).toFixed(2) + '€';
+                    }
+                    // Για παιδιά 5-15, ψάξε για κοινές ηλικίες
+                    else if (age >= 5 && age <= 15) {
+                        if (activity.prices['10'] !== undefined) {
+                            price = Number(activity.prices['10']).toFixed(2) + '€';
+                        } else if (activity.prices['5'] !== undefined) {
+                            price = Number(activity.prices['5']).toFixed(2) + '€';
+                        }
+                    }
+                    // Για βρέφη 0-4, χρησιμοποίησε '0'
+                    else if (age <= 4 && activity.prices['0'] !== undefined) {
+                        price = activity.prices['0'] === 0 ? 'ΔΩΡΕΑΝ' : Number(activity.prices['0']).toFixed(2) + '€';
+                    }
+
+                    return `
+                    <div style="display: flex; justify-content: space-between; font-size: 13px; margin-top: 4px; padding: 2px 0;">
+                        <span>${member.name} (${age}):</span>
+                        <span><strong>${price}</strong></span>
+                    </div>`;
+                }).join('')}
+
+                <!-- ΠΛΗΡΟΦΟΡΙΕΣ ΑΠΟ ΤΟ JSON -->
+                ${activity.notes && activity.notes.length > 0 ? `
+                    <div style="font-size: 11px; color: #666; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #ddd;">
+                        <i class="fas fa-info-circle"></i>
+                        ${activity.notes.join(' • ')}
+                    </div>
+                ` : ''}
+            </div>
+
+            <!-- ΣΥΝΟΛΙΚΟ ΚΟΣΤΟΣ ΓΙΑ ΟΙΚΟΓΕΝΕΙΑ -->
+            <div class="activity-total" style="background: var(--primary); color: white; padding: 12px; border-radius: 8px; text-align: center; font-weight: bold; margin-top: 10px;">
+                <i class="fas fa-users"></i> ${Number(familyCost).toFixed(2)}€ για ${window.state.familyMembers.length} ${window.state.familyMembers.length === 1 ? 'άτομο' : 'άτομα'}
+            </div>
+            ` : ''}
+        </div>
+        `;
+    });
+        }
+
+        activitiesList.innerHTML = html;
+
+        // Ενημέρωση συνολικού κόστους
+        if (window.updateActivitiesTotal) {
+            window.updateActivitiesTotal();
+        }
+
+        console.log('✅ Δραστηριότητες εμφανίστηκαν επιτυχώς');
+
+        // 🔴 ΝΕΟ: ΑΠΟΘΗΚΕΥΣΗ ΤΩΝ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ ΓΙΑ ΤΟ ΒΗΜΑ 5
+        console.log('💾 Αποθηκεύτηκαν', window.state.currentCityActivities.length, 'δραστηριότητες για το πρόγραμμα');
+
+        if (window.saveState) {
+            window.saveState();
+        }
+    } catch (error) {
+        console.error('❌ Σφάλμα φόρτωσης:', error);
+
+        activitiesList.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h4>Σφάλμα φόρτωσης δραστηριοτήτων</h4>
+                    <p>${error.message}</p>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left;">
+                        <strong>Πληροφορίες σφάλματος:</strong><br>
+                        • Αρχείο: <code>data/${window.state?.selectedDestinationId || 'unknown'}.json</code><br>
+                        • Προορισμός: ${window.state?.selectedDestination || 'Άγνωστο'}<br>
+                        • ID: ${window.state?.selectedDestinationId || 'unknown'}
+                    </div>
+                    <button onclick="setupActivitiesStep()" class="btn btn-primary" style="margin-top: 15px;">
+                        <i class="fas fa-sync-alt"></i> Δοκιμή ξανά
+                    </button>
+                    <button onclick="showStep('destination')" class="btn btn-outline" style="margin-top: 15px; margin-left: 10px;">
+                        <i class="fas fa-arrow-left"></i> Επιστροφή σε Προορισμό
+                    </button>
+                </div>
+            </div>
+        `;
     }
 }
 
