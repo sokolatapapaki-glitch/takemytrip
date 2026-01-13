@@ -2,6 +2,26 @@
 // Application entry point: imports, state, window exports
 // Pure refactor - NO logic changes, 100% identical behavior
 
+// ==================== GLOBAL STATE INITIALIZATION ====================
+// CRITICAL: Initialize state BEFORE imports so other modules can access it
+
+window.state = {
+    selectedDestination: null,
+    selectedDestinationId: null,
+    selectedDays: 0,
+    familyMembers: [
+        { name: "Ενήλικας 1", age: "" },
+        { name: "Ενήλικας 2", age: "" }
+    ],
+    currentStep: 'destination',
+    currentCityActivities: [],
+    customPoints: JSON.parse(localStorage.getItem('travel_custom_points')) || [],
+    selectedActivities: [],
+    geographicProgram: null
+};
+
+console.log('✅ Global state initialized before module imports');
+
 // ==================== IMPORTS ====================
 
 // Data utilities and constants
@@ -104,26 +124,6 @@ import {
     closeManualDestinationModal,
     saveManualDestination
 } from './core.js';
-
-// ==================== GLOBAL STATE ====================
-
-window.state = {
-    selectedDestination: null,
-    selectedDestinationId: null,
-    selectedDays: 0,
-    familyMembers: [
-        { name: "Ενήλικας 1", age: "" },
-        { name: "Ενήλικας 2", age: "" }
-    ],
-    currentStep: 'destination',
-    currentCityActivities: [],
-    customPoints: JSON.parse(localStorage.getItem('travel_custom_points')) || [],
-    selectedActivities: [],
-    geographicProgram: null
-};
-
-// Make state globally accessible (for modules that access it)
-const state = window.state;
 
 // ==================== WINDOW EXPORTS FOR HTML ONCLICK HANDLERS ====================
 // All functions must be exported to window for HTML onclick compatibility

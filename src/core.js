@@ -204,6 +204,25 @@ function cleanupMapState() {
 export function initApp() {
     console.log('🚀 Εκκίνηση εφαρμογής...');
 
+    // Safety check: ensure state exists
+    if (!window.state) {
+        console.error('❌ CRITICAL: State not initialized! Creating default state...');
+        window.state = {
+            selectedDestination: null,
+            selectedDestinationId: null,
+            selectedDays: 0,
+            familyMembers: [
+                { name: "Ενήλικας 1", age: "" },
+                { name: "Ενήλικας 2", age: "" }
+            ],
+            currentStep: 'destination',
+            currentCityActivities: [],
+            customPoints: [],
+            selectedActivities: [],
+            geographicProgram: null
+        };
+    }
+
     // 1. Φόρτωση αποθηκευμένων δεδομένων
     loadSavedData();
 
@@ -221,7 +240,7 @@ export function initApp() {
 
     // 6. Εμφάνιση του σωστού βήματος
     setTimeout(() => {
-        showStep(state.currentStep);
+        showStep(window.state.currentStep || 'destination');
         console.log('✅ Εφαρμογή αρχικοποιήθηκε');
     }, 100);
 }
@@ -285,35 +304,42 @@ export function loadSavedData() {
 
 export function loadSavedDataNow(saved) {
     try {
+        // Safety check: ensure state exists
+        if (!window.state) {
+            console.error('❌ State not initialized! Cannot load saved data.');
+            return;
+        }
+
         let data = JSON.parse(saved);
 
         // Validate and sanitize data before loading
         data = StateValidator.sanitizeData(data);
 
-        state.selectedDestination = data.selectedDestinationName || null;
-        state.selectedDestinationId = data.selectedDestinationId || null;
-        state.selectedDays = data.selectedDaysStay || 0;
-        state.familyMembers = data.familyMembers || state.familyMembers;
-        state.selectedActivities = data.selectedActivities || [];
+        // Safe property assignments with explicit state reference
+        window.state.selectedDestination = data.selectedDestinationName || null;
+        window.state.selectedDestinationId = data.selectedDestinationId || null;
+        window.state.selectedDays = data.selectedDaysStay || 0;
+        window.state.familyMembers = data.familyMembers || window.state.familyMembers;
+        window.state.selectedActivities = data.selectedActivities || [];
 
         // Restore persisted program data
-        state.geographicProgram = data.geographicProgram || null;
-        state.currentCityActivities = data.currentCityActivities || [];
+        window.state.geographicProgram = data.geographicProgram || null;
+        window.state.currentCityActivities = data.currentCityActivities || [];
 
         // Update display with null check for DOM element
-        if (state.selectedDestination) {
+        if (window.state.selectedDestination) {
             const el = document.getElementById('current-destination-display');
             if (el) {
-                el.textContent = state.selectedDestination;
+                el.textContent = window.state.selectedDestination;
             }
         }
 
         console.log('📂 Φορτώθηκαν αποθηκευμένα δεδομένα:', {
-            destination: state.selectedDestination,
-            days: state.selectedDays,
-            activities: state.selectedActivities.length,
-            familyMembers: state.familyMembers.length,
-            hasProgram: !!state.geographicProgram,
+            destination: window.state.selectedDestination,
+            days: window.state.selectedDays,
+            activities: window.state.selectedActivities.length,
+            familyMembers: window.state.familyMembers.length,
+            hasProgram: !!window.state.geographicProgram,
             lastSaved: data.lastSaved
         });
 
@@ -481,10 +507,19 @@ export function setupStepNavigation() {
 export function showStep(stepName) {
     console.log(`📱 Εμφάνιση βήματος: ${stepName}`);
 
-    state.currentStep = stepName;
+    // Safety check: ensure state exists
+    if (!window.state) {
+        console.error('❌ State not initialized in showStep!');
+        return;
+    }
+
+    window.state.currentStep = stepName;
     updateStepUI(stepName);
     loadStepContent(stepName);
-    document.getElementById('mobile-step-selector').value = stepName;
+    const mobileSelector = document.getElementById('mobile-step-selector');
+    if (mobileSelector) {
+        mobileSelector.value = stepName;
+    }
     saveState();
 
     // Update sidebar completion indicators
