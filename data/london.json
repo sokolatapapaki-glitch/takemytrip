@@ -343,7 +343,7 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Borough+Market+Food+Stalls' target='_blank'>Πολλά street food stalls</a>",
       "website": "https://boroughmarket.org.uk/",
-      "notes": ["ΔΩΡΕΑΝ είσοδος.", "Κλειστό Κυριακές."],
+      "notes": ["ΔΩΡΕΑΝ είσοδος.],
       "tags": ["market", "free", "food"],
       "duration_hours": 1.5,
       "best_time": "morning"
