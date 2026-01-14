@@ -7336,6 +7336,8 @@ window.findBestDayForGroup = findBestDayForGroup;
 window.distributeGroupsToDays = distributeGroupsToDays;
 window.balanceDaysIfNeeded = balanceDaysIfNeeded;
 window.calculateDayCenter = calculateDayCenter;
+window.testNewClustering = testNewClustering;
+window.createSmartClusters = createSmartClusters;
 
 // ==================== CSS ANIMATIONS FOR PROGRAM ====================
 // Προσθήκη CSS animation για το spinner (για το βήμα 5)
@@ -7801,7 +7803,28 @@ function calculateClusterCenter(cluster) {
         totalLng / activitiesWithLocation.length
     ];
 }
-
+function createSmartClusters(activities, maxDistanceKm = 2.0, minPoints = 2) {
+    console.log('🔧 createSmartClusters: Using geographic clusters fallback');
+    
+    // 1. Πρώτη επιλογή: createGeographicClusters αν υπάρχει
+    if (typeof createGeographicClusters === 'function') {
+        return createGeographicClusters(activities, maxDistanceKm, minPoints);
+    }
+    
+    // 2. Δεύτερη επιλογή: groupActivitiesByProximity αν υπάρχει  
+    if (typeof groupActivitiesByProximity === 'function') {
+        return groupActivitiesByProximity(activities, maxDistanceKm);
+    }
+    
+    // 3. Extreme fallback: Απλή ομαδοποίηση
+    console.warn('⚠️ No clustering functions available, returning simple groups');
+    return activities.map(activity => ({
+        center: activity.location ? [activity.location.lat, activity.location.lng] : null,
+        activities: [activity],
+        count: 1,
+        radius: 0
+    }));
+}
 // ==================== ΤΕΛΟΣ ΝΕΑΣ ΣΥΝΑΡΤΗΣΗΣ ====================
 function testNewClustering() {
     console.log('🧪 === ΣΥΓΚΡΙΣΗ ΠΑΛΙΑΣ vs ΝΕΑΣ ΜΕΘΟΔΟΥ ===');
