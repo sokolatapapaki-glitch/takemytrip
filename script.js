@@ -2149,6 +2149,13 @@ function distributeGroupsToDays(groups, totalDays) {
         console.error('❌ Μη έγκυρα δεδομένα');
         return [];
     }
+     // 🔵 ΠΡΟΣΘΗΚΗ: ΚΑΛΕΣΜΕ ΤΟ DEBUGGING
+    debugDistribution(groups, totalDays, 'BEFORE DISTRIBUTION');
+    
+    // ΝΕΑ: ΣΚΛΗΡΑ ΟΡΙΑ!
+    const MAX_ACTIVITIES_PER_DAY = 4;
+    const MAX_EFFORT_PER_DAY = 60;
+    const TARGET_EFFORT_PER_DAY = 40;
 
     // ΝΕΑ: ΣΚΛΗΡΑ ΟΡΙΑ!
     const MAX_ACTIVITIES_PER_DAY = 4;
@@ -2208,6 +2215,16 @@ function distributeGroupsToDays(groups, totalDays) {
     days.forEach((day, i) => {
         if (day.totalActivities > 0) {
             console.log(`   Μ${i+1}: ${day.totalActivities} δραστηριότητες, ~${day.estimatedTime.toFixed(1)}h, effort: ${day.totalEffort}`);
+        } else {
+            console.log(`   Μ${i+1}: (ελεύθερη μέρα για ξεκούραση)`);
+        }
+    });
+
+       // 3. ΕΛΕΓΧΟΣ ΙΣΟΡΡΟΠΙΑΣ
+    console.log(`✅ Βελτιωμένη κατανομή σε ${totalDays} μέρες:`);
+    days.forEach((day, i) => {
+        if (day.totalActivities > 0) {
+            console.log(`   Μ${i+1}: ${day.totalActivities} δραστηριότητες, ~${day.estimatedTime.toFixed(1)}h, effort: ${day.totalEffort}, ${day.groups.length} ομάδες`);
         } else {
             console.log(`   Μ${i+1}: (ελεύθερη μέρα για ξεκούραση)`);
         }
@@ -2384,7 +2401,19 @@ function calculateDayCenter(groups) {
 
     return [lat, lng];
 }
-
+// ==================== ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ: LOGGING ΓΙΑ ΔΙΑΓΝΩΣΗ ====================
+function debugDistribution(activityGroups, totalDays, method = 'current') {
+    console.log(`🔍 [DEBUG ${method}] Διαγνωστικά δεδομένα:`);
+    console.log(`   📊 Ομάδες: ${activityGroups.length}`);
+    console.log(`   📅 Ημέρες: ${totalDays}`);
+    
+    activityGroups.forEach((group, i) => {
+        console.log(`   👥 Ομάδα ${i+1}: ${group.count} δραστηριότητες, effort: ${calculateGroupEffort(group)}`);
+        if (group.center) {
+            console.log(`      📍 Κέντρο: [${group.center[0].toFixed(4)}, ${group.center[1].toFixed(4)}]`);
+        }
+    });
+}
 
 // Rebalance days if there's significant effort imbalance
 function balanceDaysIfNeeded(days) {
