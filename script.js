@@ -7189,6 +7189,17 @@ window.getDayColor = getDayColor;
 window.createGeographicClusters = createGeographicClusters;
 window.calculateClusterCenter = calculateClusterCenter;
 window.distributeClustersToDays = distributeGroupsToDays;
+window.calculateGroupInternalDistance = calculateGroupInternalDistance;
+window.calculateDayGeographicSpread = calculateDayGeographicSpread;
+window.splitGroupByProximity = splitGroupByProximity;
+
+// ΠΡΟΣΘΗΚΗ ΚΑΙ ΤΩΝ ΑΛΛΩΝ ΓΙΑ ΝΑ ΕΙΝΑΙ ΑΣΦΑΛΕΣ:
+window.getIntensityMultiplier = getIntensityMultiplier;
+window.calculateGroupEffort = calculateGroupEffort;
+window.findBestDayForGroup = findBestDayForGroup;
+window.distributeGroupsToDays = distributeGroupsToDays;
+window.balanceDaysIfNeeded = balanceDaysIfNeeded;
+window.calculateDayCenter = calculateDayCenter;
 
 // ==================== CSS ANIMATIONS FOR PROGRAM ====================
 // Προσθήκη CSS animation για το spinner (για το βήμα 5)
