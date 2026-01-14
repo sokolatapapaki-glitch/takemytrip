@@ -2108,10 +2108,9 @@ function distributeGroupsToDays(groups, totalDays) {
 
     // 2. ΒΕΛΤΙΩΜΕΝΗ Κατανομή με ΣΚΛΗΡΑ ΟΡΙΑ
     sortedGroups.forEach((group, index) => {
-        const bestDayIndex = findBestDayForGroupImproved(days, group, totalDays, 
-                                                        MAX_ACTIVITIES_PER_DAY, 
-                                                        MAX_EFFORT_PER_DAY);
-
+        const bestDayIndex = findBestDayForGroup(days, group, totalDays, 
+                                        MAX_ACTIVITIES_PER_DAY, 
+                                        MAX_EFFORT_PER_DAY);
         // Υπολογισμός μετρικών
         const groupEffort = calculateGroupEffort(group);
         let groupCost = 0;
@@ -2214,7 +2213,7 @@ function getIntensityMultiplier(category) {
 }
 
 // Find the best day for a group using effort-based scoring (NO HARD CAPS)
-function findBestDayForGroup(days, group, totalDays, maxActivities, maxEffort) {
+function findBestDayForGroup(days, group, totalDays, maxActivities = 4, maxEffort = 60) {
     const groupEffort = calculateGroupEffort(group);
     const groupSize = group.count || group.activities.length;
     
