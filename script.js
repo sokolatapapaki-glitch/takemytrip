@@ -2069,19 +2069,31 @@ function loadActivitiesForProgram(retryCount = 0) {
 
             // Ξανακάλεσε τη generateGeographicProgram τώρα που έχουμε τα δεδομένα
             setTimeout(() => {
-                generateGeographicProgram();
-            }, 500);
+    generateGeographicProgram(retryCount + 1); // ΑΥΤΗ Η ΑΛΛΑΓΗ
+}, 500);
         })
         .catch(error => {
-            // Ignore abort errors (user triggered new fetch)
-            if (error.name === 'AbortError') {
-                console.log('⚠️ Fetch aborted (new request started)');
-                return;
-            }
-            console.error('❌ Σφάλμα φόρτωσης:', error);
-            alert(`⚠️ Δεν μπορούν να φορτωθούν οι δραστηριότητες: ${error.message}`);
-            activitiesFetchController = null;
-        });
+    // Ignore abort errors (user triggered new fetch)
+    if (error.name === 'AbortError') {
+        console.log('⚠️ Fetch aborted (new request started)');
+        return;
+    }
+    
+    console.error(`❌ Σφάλμα φόρτωσης (retry ${retryCount}):`, error);
+    
+    // 🔵 ΑΝ ΕΙΝΑΙ ΤΕΛΕΥΤΑΙΑ ΠΡΟΣΠΑΘΕΙΑ, ΕΜΦΑΝΙΣΕ ΣΦΑΛΜΑ
+    if (retryCount >= 2) { // 0, 1, 2 = 3 προσπάθειες συνολικά
+        alert(`⚠️ Δεν μπορούν να φορτωθούν οι δραστηριότητες μετά από 3 προσπάθειες:\n${error.message}\n\nΠαρακαλώ ελέγξτε τη σύνδεσή σας.`);
+        activitiesFetchController = null;
+        return;
+    }
+    
+    // 🔵 ΑΛΛΙΩΣ, ΞΑΝΑΠΡΟΣΠΑΘΗΣΕ ΜΕΤΑ ΑΠΟ ΠΑΥΣΗ
+    console.log(`🔄 Δοκιμή ξανά σε 2 δευτερόλεπτα (retry ${retryCount + 1}/3)...`);
+    setTimeout(() => {
+        loadActivitiesForProgram(retryCount + 1);
+    }, 2000);
+});
 }
 
 // ==================== FORCE REFRESH PROGRAM ====================
@@ -2124,9 +2136,9 @@ function forceRefreshProgram() {
 
     // Καλέσε το πρόγραμμα με καθυστέρηση
     setTimeout(() => {
-        generateGeographicProgram();
-        showToast(`✅ Το πρόγραμμα ανανεώθηκε για ${state.selectedDays} μέρες`, 'success');
-    }, 800);
+    generateGeographicProgram(0); // ΞΕΚΙΝΑ ΜΕ 0 retries
+    showToast(`✅ Το πρόγραμμα ανανεώθηκε για ${state.selectedDays} μέρες`, 'success');
+}, 800);
 }
 
 // ==================== EFFORT-BASED DISTRIBUTION ALGORITHM ====================
