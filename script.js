@@ -1827,10 +1827,19 @@ function generateProgramHTMLOld(daysProgram, activityGroups) {
     return html;
 }
 // ==================== ΑΠΛΟΠΟΙΗΜΕΝΗ ΣΥΝΑΡΤΗΣΗ ΓΕΩΓΡΑΦΙΚΟΥ ΠΡΟΓΡΑΜΜΑΤΟΣ ====================
-function generateGeographicProgram() {
+function generateGeographicProgram(retryCount = 0) {
     console.log('🎯 ========== ΑΡΧΗ generateGeographicProgram ==========');
     
-    // 🔴 ΚΡΙΤΙΚΗ ΔΙΟΡΘΩΣΗ: ΔΙΑΒΑΣΕ ΤΙΣ ΗΜΕΡΕΣ ΑΠΟ ΤΟ DROPDOWN
+    // 🔵 ΚΡΙΤΙΚΗ ΠΡΟΣΤΑΣΙΑ: MAX 3 RETRIES
+    if (retryCount > 3) {
+        console.error('❌ MAX RETRIES REACHED: Cannot load activities after 3 attempts');
+        showToast('❌ Δεν μπορεί να φορτωθεί το πρόγραμμα. Παρακαλώ ανανεώστε τη σελίδα.', 'error');
+        return;
+    }
+    
+    console.log('📊 Retry count:', retryCount);
+    
+    // ΚΡΙΤΙΚΗ ΔΙΟΡΘΩΣΗ: ΔΙΑΒΑΣΕ ΤΙΣ ΗΜΕΡΕΣ ΑΠΟ ΤΟ DROPDOWN
     const daysSelect = document.getElementById('program-days');
     console.log('🔍 Dropdown value:', daysSelect ? daysSelect.value : 'NOT FOUND');
     
@@ -1881,11 +1890,11 @@ function generateGeographicProgram() {
     console.log(`   📅 Μέρες: ${state.selectedDays}`);
     console.log(`   📊 Δραστηριότητες: ${state.selectedActivities.length}`);
     
-    // 1. ΔΙΑΒΑΣΕ ΤΙΣ ΔΡΑΣΤΗΡΙΟΤΗΤΕΣ ΑΠΟ ΤΟ JSON ΑΝ ΔΕΝ ΥΠΑΡΧΟΥΝ
+        // 1. ΔΙΑΒΑΣΕ ΤΙΣ ΔΡΑΣΤΗΡΙΟΤΗΤΕΣ ΑΠΟ ΤΟ JSON ΑΝ ΔΕΝ ΥΠΑΡΧΟΥΝ
     if (!state.currentCityActivities || state.currentCityActivities.length === 0) {
-        console.log('⚠️ currentCityActivities είναι άδειο, προσπαθώ να φορτώσω ξανά...');
-        loadActivitiesForProgram();
-        return; // Η loadActivitiesForProgram() θα ξανακαλέσει αυτή τη συνάρτηση
+        console.log(`⚠️ Προσπάθεια ${retryCount + 1}/3: currentCityActivities είναι άδειο, φόρτωση...`);
+        loadActivitiesForProgram(retryCount);
+        return; // Η loadActivitiesForProgram() θα ξανακάλεσει αυτή τη συνάρτηση
     }
     
    // 2. Βρες τις πλήρεις πληροφορίες για τις επιλεγμένες δραστηριότητες
@@ -2024,9 +2033,8 @@ displayGeographicProgram(daysProgram, activityGroups);
 // AbortController for cancelling pending fetch requests
 let activitiesFetchController = null;
 
-function loadActivitiesForProgram() {
-    console.log('🔄 Φόρτωση δραστηριοτήτων για το πρόγραμμα...');
-
+function loadActivitiesForProgram(retryCount = 0) {
+    console.log(`🔄 Φόρτωση δραστηριοτήτων (προσπάθεια ${retryCount + 1}/3)...`);
     if (!state.selectedDestinationId) {
         alert('❌ Δεν υπάρχει επιλεγμένος προορισμός');
         return;
@@ -2043,8 +2051,8 @@ function loadActivitiesForProgram() {
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error(`HTTP error: ${response.status}`);
-            }
+    throw new Error(`HTTP error: ${response.status} (retry: ${retryCount})`);
+}
             return response.json();
         })
         .then(cityData => {
@@ -2054,7 +2062,7 @@ function loadActivitiesForProgram() {
             }
 
             state.currentCityActivities = cityData.activities;
-            console.log('✅ Δραστηριότητες φορτώθηκαν:', state.currentCityActivities.length);
+            console.log('✅ Δραστηριότητες φορτώθηκαν:', state.currentCityActivities.length, '(retry:', retryCount, ')');
 
             // Clear the controller since fetch completed
             activitiesFetchController = null;
