@@ -7145,6 +7145,65 @@ function splitGroupByProximity(group, maxInternalDistance = 2) {
     
     return subGroups;
 }
+// ==================== ΑΠΛΟΠΟΙΗΜΕΝΕΣ ΒΟΗΘΗΤΙΚΕΣ ΣΥΝΑΡΤΗΣΕΙΣ ====================
+
+function cleanupDuplicateButtons() {
+    // Απλή έκδοση - μόνο για logging
+    console.log('ℹ️ Cleanup: Checking for duplicate buttons...');
+    
+    // Προαιρετικό: Ελέγχει αν υπάρχει πραγματικά διπλό κουμπί
+    const searchButtons = document.querySelectorAll('button, .btn');
+    const buttonTexts = new Set();
+    let duplicatesFound = 0;
+    
+    searchButtons.forEach(btn => {
+        const text = btn.textContent?.trim();
+        if (text && buttonTexts.has(text)) {
+            console.warn(`⚠️ Διπλό κουμπί: "${text.substring(0, 30)}..."`);
+            duplicatesFound++;
+        } else if (text) {
+            buttonTexts.add(text);
+        }
+    });
+    
+    if (duplicatesFound > 0) {
+        console.log(`ℹ️ Βρέθηκαν ${duplicatesFound} πιθανά διπλά κουμπιά`);
+    } else {
+        console.log('✅ Δεν βρέθηκαν διπλά κουμπιά');
+    }
+}
+
+function showEmergencyError(title, message, technicalDetails = '') {
+    // Απλή έκδοση με alert και console error
+    console.error('🚨 EMERGENCY ERROR:', { title, message, technicalDetails });
+    
+    // Ασφαλής alert (ελέγχει αν είναι σε iframe ή popup block)
+    try {
+        if (window.top === window.self) { // Έλεγχος αν δεν είναι σε iframe
+            const fullMessage = `⚠️ ${title}\n\n${message}\n\n` + 
+                               (technicalDetails ? `Λεπτομέρειες: ${technicalDetails}\n\n` : '') +
+                               `• Ανανέωση: F5 ή Ctrl+R\n` +
+                               `• Επικοινωνία: takethekids2@gmail.com`;
+            
+            alert(fullMessage);
+        }
+    } catch (e) {
+        console.error('Δεν μπόρεσε να εμφανιστεί alert:', e);
+    }
+    
+    // Προσπάθεια να δείξει κάτι στο DOM ως εφεδρικό
+    try {
+        const errorDiv = document.createElement('div');
+        errorDiv.style.cssText = 'position:fixed; top:10px; left:10px; right:10px; background:#EF4444; color:white; padding:15px; z-index:99999; border-radius:5px;';
+        errorDiv.innerHTML = `<strong>${title}</strong><br>${message}<br><small>${technicalDetails || ''}</small>`;
+        document.body.prepend(errorDiv);
+        
+        // Αυτόματη αφαίρεση μετά από 10 δευτερόλεπτα
+        setTimeout(() => errorDiv.remove(), 10000);
+    } catch (domError) {
+        console.error('Απέτυχε και το DOM fallback:', domError);
+    }
+}
 window.showStep = showStep;
 window.filterDestinations = filterDestinations;
 window.resetFilters = resetFilters;
