@@ -7276,7 +7276,7 @@ window.forceRefreshProgram = forceRefreshProgram;
 window.createSuggestedProgram = createSuggestedProgram;
 window.getDayColor = getDayColor;
 // 🔵 ΠΡΟΣΘΗΚΗ ΕΔΩ:
-window.createGeographicClusters = createGeographicClusters;
+window.c = createGeographicClusters;
 window.calculateClusterCenter = calculateClusterCenter;
 window.distributeClustersToDays = distributeGroupsToDays;
 window.calculateGroupInternalDistance = calculateGroupInternalDistance;
