@@ -790,6 +790,11 @@ function setupStepNavigation() {
 function showStep(stepName) {
     console.log(`📱 Εμφάνιση βήματος: ${stepName}`);
 
+    // 🔵 ΚΑΘΑΡΙΣΜΟΣ: Όταν φεύγουμε από το destination step
+    if (state.currentStep === 'destination' && stepName !== 'destination') {
+        cleanupDestinationStep();
+    }
+    
     state.currentStep = stepName;
     updateStepUI(stepName);
     loadStepContent(stepName);
@@ -1035,7 +1040,6 @@ function getDestinationStepHTML() {
         </div>
     `;
 }
-
 function setupDestinationStep() {
     console.log('📍 Ρύθμιση βήματος προορισμού');
     
@@ -1049,28 +1053,50 @@ function setupDestinationStep() {
         const mainSearchBtn = document.querySelector('.main-search-btn');
         const mainAlreadyBtn = document.querySelector('.main-already-btn');
         
-        if (mainSearchBtn) {
+        // 🔵 ΒΕΒΑΙΩΣΗ: ΜΟΝΟ ΑΝ ΔΕΝ ΕΧΕΙ ΗΔΗ LISTENER
+        if (mainSearchBtn && !mainSearchBtn.dataset.hasClickListener) {
             mainSearchBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                console.log('🔍 Κεντρικό κουμπί ΑΝΑΖΗΤΗΣΗΣ πατήθηκε');
+                console.log('🔍 [Verified] Κεντρικό κουμπί ΑΝΑΖΗΤΗΣΗΣ πατήθηκε');
                 filterDestinations();
             });
+            mainSearchBtn.dataset.hasClickListener = 'true';
+            console.log('✅ Listener added to main-search-btn');
         }
         
-        if (mainAlreadyBtn) {
+        if (mainAlreadyBtn && !mainAlreadyBtn.dataset.hasClickListener) {
             mainAlreadyBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                console.log('🚀 Κεντρικό κουμπί ΕΧΩ ΗΔΗ ΒΡΕΙ πατήθηκε');
+                console.log('🚀 [Verified] Κεντρικό κουμπί ΕΧΩ ΗΔΗ ΒΡΕΙ πατήθηκε');
                 showManualDestinationModal();
             });
+            mainAlreadyBtn.dataset.hasClickListener = 'true';
+            console.log('✅ Listener added to main-already-btn');
         }
         
-        console.log('✅ Κουμπιά εγκαταστάθηκαν');
+        console.log('✅ Κουμπιά εγκαταστάθηκαν με ασφάλεια');
     }, 100);
 }
 
+// ==================== CLEANUP DESTINATION STEP ====================
+function cleanupDestinationStep() {
+    console.log('🧹 Καθαρισμός destination step listeners...');
+    
+    const mainSearchBtn = document.querySelector('.main-search-btn');
+    const mainAlreadyBtn = document.querySelector('.main-already-btn');
+    
+    if (mainSearchBtn && mainSearchBtn.dataset.hasClickListener) {
+        delete mainSearchBtn.dataset.hasClickListener;
+        console.log('🧹 Cleared listener flag from main-search-btn');
+    }
+    
+    if (mainAlreadyBtn && mainAlreadyBtn.dataset.hasClickListener) {
+        delete mainAlreadyBtn.dataset.hasClickListener;
+        console.log('🧹 Cleared listener flag from main-already-btn');
+    }
+}
 // ==================== STEP 2: FLIGHT ====================
 function getFlightStepHTML() {
     return `
