@@ -1888,28 +1888,50 @@ if (fullActivities.length > 0) {
         // Ταξινόμηση από μικρότερη προς μεγαλύτερη
         const sortedClusters = [...activityGroups].sort((a, b) => a.count - b.count);
         
-        // Συνένωση των μικρότερων συστάδων
-        while (sortedClusters.length > state.selectedDays) {
-            const smallest = sortedClusters.shift(); // Η μικρότερη
-            const secondSmallest = sortedClusters[0]; // Η επόμενη μικρότερη
-            
-            if (smallest && secondSmallest) {
-                // Συνένωσέ τες
-                secondSmallest.activities.push(...smallest.activities);
-                secondSmallest.count += smallest.count;
-                
-                // Επανυπολογισμός κέντρου αν έχουν location
-                const activitiesWithLoc = secondSmallest.activities.filter(a => a.location);
-                if (activitiesWithLoc.length > 0) {
-                    secondSmallest.center = [
-                        activitiesWithLoc.reduce((sum, a) => sum + a.location.lat, 0) / activitiesWithLoc.length,
-                        activitiesWithLoc.reduce((sum, a) => sum + a.location.lng, 0) / activitiesWithLoc.length
-                    ];
+           // Συνένωση των μικρότερων συστάδων ΜΕ ΓΕΩΓΡΑΦΙΚΟ ΕΛΕΓΧΟ
+    while (sortedClusters.length > state.selectedDays) {
+        const smallest = sortedClusters.shift();
+        
+        if (!smallest) break;
+        
+        // Βρες την ΠΙΟ ΚΟΝΤΙΝΗ ομάδα (όχι απλά τη μικρότερη)
+        let bestMatchIndex = -1;
+        let minDistance = Infinity;
+        
+        sortedClusters.forEach((cluster, index) => {
+            if (smallest.center && cluster.center) {
+                const distance = calculateDistance(smallest.center, cluster.center);
+                if (distance < minDistance && distance < 3) { // Μόνο αν είναι <3km
+                    minDistance = distance;
+                    bestMatchIndex = index;
                 }
-                
-                console.log(`   🔗 Συνένωση: ${smallest.count} + ${secondSmallest.count - smallest.count} = ${secondSmallest.count} δραστηριότητες`);
             }
+        });
+        
+        if (bestMatchIndex >= 0) {
+            // Συνένωση με την ΓΕΩΓΡΑΦΙΚΑ πιο κοντινή
+            const targetCluster = sortedClusters[bestMatchIndex];
+            targetCluster.activities.push(...smallest.activities);
+            targetCluster.count += smallest.count;
+            
+            // Επανυπολογισμός κέντρου
+            const activitiesWithLoc = targetCluster.activities.filter(a => a.location);
+            if (activitiesWithLoc.length > 0) {
+                targetCluster.center = [
+                    activitiesWithLoc.reduce((sum, a) => sum + a.location.lat, 0) / activitiesWithLoc.length,
+                    activitiesWithLoc.reduce((sum, a) => sum + a.location.lng, 0) / activitiesWithLoc.length
+                ];
+            }
+            
+            console.log(`   🔗 Συνένωση: ${smallest.count} δρ. + ${targetCluster.count - smallest.count} δρ. = ${targetCluster.count} δρ. (απόσταση: ${minDistance.toFixed(1)}km)`);
+        } else {
+            // Αν δεν υπάρχει κοντινή ομάδα (<3km), μην την συνενώσεις
+            // Προσθέτην πίσω και σταμάτα
+            sortedClusters.push(smallest);
+            console.log(`   ⚠️ Δεν βρέθηκε κοντινή ομάδα (<3km) για ${smallest.count} δρ. - σταματάμε`);
+            break; // ΣΤΑΜΑΤΑ! Μην δημιουργήσεις διάσπαρτες ομάδες
         }
+    }
         
         activityGroups = sortedClusters;
     }
