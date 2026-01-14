@@ -2245,24 +2245,24 @@ function findBestDayForGroup(days, group, totalDays, maxActivities = 4, maxEffor
             
             // 🔥 ΝΕΟ: ΠΟΛΥ ΜΕΓΑΛΟ BONUS για γειτονικές ομάδες
             if (distance < 2) { // Πολύ κοντά (<2km)
-                score += 200; // Από 100 σε 200!
+                score += 80; // Από 100 σε 200!
             } else if (distance < 5) { // Κοντά (<5km)
-                score += 100; // Από 50 σε 100!
+                score += 40; // Από 50 σε 100!
             } else if (distance < 10) { // Μέτρια απόσταση
-                score += 50;
+                score += 15;
             }
             // 🔥 ΝΕΟ: Μεγάλο penalty για πολύ μακρινές
             if (distance > 15) {
-                score -= 100; // Πολύ μακριά = άσχημη επιλογή
+                score -= 60; // Πολύ μακριά = άσχημη επιλογή
             }
         } else {
             // Κενή μέρα - καλό για εξάπλωση
-            score += 50;
+            score += 100;
         }
 
         // 🔥 ΝΕΟ: Προτεραιότητα για ομάδες με μικρή εσωτερική απόσταση
         if (!isGroupGeographicallyScattered) {
-            score += 40; // Bonus για συμπαγείς ομάδες
+            score += 80; // Bonus για συμπαγείς ομάδες
         }
 
         // ΠΡΙΟΡΙΤΕΤΑ #2: Ισορροπία effort
@@ -2300,14 +2300,23 @@ function findBestDayForGroup(days, group, totalDays, maxActivities = 4, maxEffor
 
 // Calculate geographic center of all groups in a day
 function calculateDayCenter(groups) {
-    const validGroups = groups.filter(g => g.center);
+    const validGroups = groups.filter(g => g.center && g.count);
+
     if (validGroups.length === 0) return null;
 
-    const totalLat = validGroups.reduce((sum, g) => sum + g.center[0], 0);
-    const totalLng = validGroups.reduce((sum, g) => sum + g.center[1], 0);
+    const totalWeight = validGroups.reduce((s, g) => s + g.count, 0);
 
-    return [totalLat / validGroups.length, totalLng / validGroups.length];
+    const lat = validGroups.reduce(
+        (s, g) => s + g.center[0] * g.count, 0
+    ) / totalWeight;
+
+    const lng = validGroups.reduce(
+        (s, g) => s + g.center[1] * g.count, 0
+    ) / totalWeight;
+
+    return [lat, lng];
 }
+
 
 // Rebalance days if there's significant effort imbalance
 function balanceDaysIfNeeded(days) {
