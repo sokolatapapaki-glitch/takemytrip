@@ -2157,12 +2157,7 @@ function distributeGroupsToDays(groups, totalDays) {
     const MAX_EFFORT_PER_DAY = 60;
     const TARGET_EFFORT_PER_DAY = 40;
 
-    // ΝΕΑ: ΣΚΛΗΡΑ ΟΡΙΑ!
-    const MAX_ACTIVITIES_PER_DAY = 4;
-    const MAX_EFFORT_PER_DAY = 60;
-    const TARGET_EFFORT_PER_DAY = 40;
-
-    const days = Array.from({ length: totalDays }, () => ({
+      const days = Array.from({ length: totalDays }, () => ({
         groups: [],
         totalActivities: 0,
         totalCost: 0,
