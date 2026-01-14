@@ -7687,38 +7687,52 @@ console.log('✅ Script.js loaded successfully!');
 // ==================== ΝΕΑ ΣΥΝΑΡΤΗΣΗ SMART CLUSTERING ====================
 // ΑΝΤΙ για αυτή τη μεγάλη createSmartClusters() (γραμμές 2330-2480)
 // Δημιούργησε μια ΝΕΑ συνάρτηση:
-function createGeographicClusters(activities, maxDistanceKm = 1.5, minPoints = 2) {
-    console.log('📍 Δημιουργία γεωγραφικών συστάδων (DBSCAN-like)...');
+function createGeographicClusters(activities, maxDistanceKm = 2.0, maxGroupSize = 4) {
+    console.log('🎯 [FIX] Δημιουργία ομάδων (max 4/ομάδα)');
     
     if (!activities || activities.length === 0) {
-        console.log('⚠️ Δεν υπάρχουν δραστηριότητες');
         return [];
     }
     
-    // 1. Φίλτραρε μόνο δραστηριότητες με location
-    const activitiesWithLocation = activities.filter(act => 
-        act.location && 
-        typeof act.location.lat === 'number' && 
-        typeof act.location.lng === 'number'
-    );
+    // 1. Μόνο δραστηριότητες με location
+    const withLocation = activities.filter(a => a && a.location);
     
-    console.log(`📊 ${activitiesWithLocation.length} από ${activities.length} έχουν τοποθεσία`);
-    
-    if (activitiesWithLocation.length === 0) {
-        // Επιστροφή μονών δραστηριοτήτων
-        return activities.map(act => ({
-            center: null,
-            activities: [act],
-            count: 1,
-            radius: 0
-        }));
+    // 2. Χωρίς location → απλό split
+    if (withLocation.length === 0) {
+        const groups = [];
+        for (let i = 0; i < activities.length; i += maxGroupSize) {
+            groups.push({
+                center: null,
+                activities: activities.slice(i, i + maxGroupSize),
+                count: Math.min(maxGroupSize, activities.length - i),
+                radius: 0
+            });
+        }
+        return groups;
     }
     
-    // 2. DBSCAN Algorithm
-    const clusters = [];
-    const visited = new Set();
-    const noise = new Set();
+    // 3. ΣΠΛΙΤ σε groups του maxGroupSize (προσωρινή λύση)
+    const groups = [];
+    for (let i = 0; i < withLocation.length; i += maxGroupSize) {
+        const chunk = withLocation.slice(i, i + maxGroupSize);
+        const validLocs = chunk.filter(a => a.location);
+        
+        const center = validLocs.length > 0 ? [
+            validLocs.reduce((s, a) => s + a.location.lat, 0) / validLocs.length,
+            validLocs.reduce((s, a) => s + a.location.lng, 0) / validLocs.length
+        ] : null;
+        
+        groups.push({
+            center: center,
+            activities: chunk,
+            count: chunk.length,
+            radius: 0
+        });
+    }
     
+    console.log(`✅ [FIX] Δημιουργήθηκαν ${groups.length} ομάδες`);
+    return groups;
+}
     // Βοηθητική: Βρες γείτονες
     function findNeighbors(pointIndex, points) {
         const neighbors = [];
