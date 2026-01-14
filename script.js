@@ -2225,6 +2225,16 @@ function distributeGroupsToDays(groups, totalDays) {
         }
     });
 
+        // 3. ΕΛΕΓΧΟΣ ΙΣΟΡΡΟΠΙΑΣ
+    console.log(`✅ Βελτιωμένη κατανομή σε ${totalDays} μέρες:`);
+    days.forEach((day, i) => {
+        if (day.totalActivities > 0) {
+            console.log(`   Μ${i+1}: ${day.totalActivities} δραστηριότητες, ~${day.estimatedTime.toFixed(1)}h, effort: ${day.totalEffort}, ${day.groups.length} ομάδες`);
+        } else {
+            console.log(`   Μ${i+1}: (ελεύθερη μέρα για ξεκούραση)`);
+        }
+    });
+
     return days;
 }
 
@@ -2409,7 +2419,11 @@ function debugDistribution(activityGroups, totalDays, method = 'current') {
         }
     });
 }
-
+function debugGroupEffort(group) {
+    const effort = calculateGroupEffort(group);
+    console.log(`   🔧 Ομάδα με ${group.count} δραστηριότητες: effort = ${effort}`);
+    return effort;
+}
 // Rebalance days if there's significant effort imbalance
 function balanceDaysIfNeeded(days) {
     const nonEmptyDays = days.filter(d => d.totalActivities > 0);
