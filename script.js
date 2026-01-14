@@ -2321,13 +2321,11 @@ function findBestDayForGroup(days, group, totalDays, maxActivities = 4, maxEffor
         
         // 1. ΣΚΛΗΡΑ ΟΡΙΑ
         if (day.totalActivities >= maxActivities) continue;
-        const projectedEffort = day.totalEffort + groupEffort;
-        if (projectedActivities > maxActivities) continue;  // <-- ΑΥΤΗ ΠΡΟΣΘΕΣΕ
-        const projectedEffort = day.totalEffort + groupEffort;
-        if (projectedEffort > maxEffort) continue;
-        const projectedActivities = day.totalActivities + groupSize;
-        if (projectedActivities > maxActivities) continue;
-
+const projectedActivities = day.totalActivities + groupSize;
+if (projectedActivities > maxActivities) continue;
+const projectedEffort = day.totalEffort + groupEffort;
+if (projectedEffort > maxEffort) continue;
+    
         // ΥΠΟΛΟΓΙΣΜΟΣ SCORE
         let score = 100;
 
