@@ -5171,14 +5171,14 @@ function createMarkerWithConnectFunction(coords, title, activityData) {
                 <div style="
                     background: ${getMarkerColor()}; 
                     color: white; 
-                    width: 42px; 
-                    height: 42px; 
+                    width: 30px; 
+                    height: 30px; 
                     border-radius: 50%; 
                     display: flex; 
                     align-items: center; 
                     justify-content: center;
                     font-weight: bold;
-                    font-size: 18px;
+                    font-size: 14px;
                     border: 3px solid white;
                     box-shadow: 0 3px 10px rgba(0,0,0,0.2);
                     cursor: pointer;
@@ -5188,8 +5188,8 @@ function createMarkerWithConnectFunction(coords, title, activityData) {
                 </div>
             `,
             className: 'clickable-marker',
-            iconSize: [42, 42],
-            iconAnchor: [21, 42]
+            iconSize: [30, 30],
+            iconAnchor: [15, 30]
         })
     }).addTo(window.travelMap);
     
