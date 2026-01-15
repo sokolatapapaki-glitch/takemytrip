@@ -7196,10 +7196,50 @@ function calculateDayGeographicSpread(day) {
     return maxDistance;
 }
 // Μετά τις 2 παραπάνω, πρόσθεσε:
-
-function splitGroupByProximity(group, maxInternalDistance = 2) {
+function splitGroupByProximity(group, maxInternalDistance = 1.0) {
     if (!group.activities || group.activities.length <= 1) return [group];
     
+    // 🔴 ΝΕΟ: ΑΝ Η ΟΜΑΔΑ ΕΙΝΑΙ ΠΟΛΥ ΜΕΓΑΛΗ, ΧΩΡΙΣΤΗΝ ΓΕΩΓΡΑΦΙΚΑ
+    if (group.count > 4) {
+        console.log(`   ✂️  ΓΕΩΓΡΑΦΙΚΟΣ ΧΩΡΙΣΜΟΣ: Ομάδα με ${group.count} δρ. (>4)`);
+        
+        // 1. ΤΑΞΙΝΟΜΗΣΗ ΒΑΣΕΙ ΣΥΝΤΕΤΑΓΜΕΝΩΝ
+        const sortedActivities = [...group.activities].sort((a, b) => {
+            if (!a.location || !b.location) return 0;
+            // Ταξινόμηση βάσει lat (πρώτα) και lng (μετά)
+            if (a.location.lat !== b.location.lat) {
+                return a.location.lat - b.location.lat;
+            }
+            return a.location.lng - b.location.lng;
+        });
+        
+        // 2. ΧΩΡΙΣΜΟΣ ΣΕ ΟΜΑΔΕΣ ΤΩΝ 2-3
+        const subGroups = [];
+        let currentGroup = [];
+        
+        sortedActivities.forEach((activity, index) => {
+            currentGroup.push(activity);
+            
+            // Αν έχουμε 3 δραστηριότητες Η αν τελειώνουμε
+            if (currentGroup.length >= 3 || index === sortedActivities.length - 1) {
+                // Υπολογισμός κέντρου για αυτή την υπο-ομάδα
+                const center = calculateGroupCenter(currentGroup);
+                
+                subGroups.push({
+                    center: center,
+                    activities: [...currentGroup],
+                    count: currentGroup.length,
+                    radius: maxInternalDistance / 2 // Μικρότερη ακτίνα
+                });
+                currentGroup = [];
+            }
+        });
+        
+        console.log(`   📊 Δημιουργήθηκαν ${subGroups.length} υπο-ομάδες`);
+        return subGroups;
+    }
+    
+    // 3. ΥΠΟΛΟΙΠΗ ΛΟΓΙΚΗ (ΓΙΑ ΟΜΑΔΕΣ ≤4)
     const subGroups = [];
     const processed = new Set();
     
@@ -7238,6 +7278,7 @@ function splitGroupByProximity(group, maxInternalDistance = 2) {
     
     return subGroups;
 }
+
 // ==================== ΑΠΛΟΠΟΙΗΜΕΝΕΣ ΒΟΗΘΗΤΙΚΕΣ ΣΥΝΑΡΤΗΣΕΙΣ ====================
 
 function cleanupDuplicateButtons() {
