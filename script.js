@@ -3387,15 +3387,23 @@ function clearMapPoints() {
         return;
     }
 
-    // Clear all activity markers using MarkerCache
+       // Clear all activity markers using MarkerCache
     MarkerCache.clear();
 
     // Clear selectedMarkers array for backward compatibility
     window.selectedMarkers = [];
 
+    // ==== ΝΕΟ: ΔΙΑΓΡΑΦΗ ΟΛΩΝ ΤΩΝ LABELS ====
+    window.travelMap.eachLayer(layer => {
+        if (layer.options && 
+            layer.options.className === 'marker-label') {
+            window.travelMap.removeLayer(layer);
+        }
+    });
+
     // Note: City marker is managed by MapManager and not affected by MarkerCache
 
-    // Καθαρισμός διαδρομών
+      // Καθαρισμός διαδρομών
     if (currentRouteLine) {
         window.travelMap.removeLayer(currentRouteLine);
         currentRouteLine = null;
@@ -5197,7 +5205,40 @@ function createMarkerWithConnectFunction(coords, title, activityData) {
     marker.options.activityData = safeActivityData;
     marker.options.originalTitle = title;
     marker.options.coords = coords;
-    
+    // ==== ΠΡΟΣΘΕΣΕ ΑΥΤΟ ΕΔΩ (ΜΕΤΑ ΑΠΟ 2 ΚΕΝΕΣ ΓΡΑΜΜΕΣ) ====
+// ΠΡΟΣΘΗΚΗ LABEL ΜΕ ΤΟ ΟΝΟΜΑ
+const label = L.marker(coords, {
+    icon: L.divIcon({
+        html: `
+            <div style="
+                background: rgba(255, 255, 255, 0.95);
+                color: #1A202C;
+                padding: 3px 10px;
+                border-radius: 12px;
+                font-size: 11px;
+                font-weight: 600;
+                border: 1px solid #E2E8F0;
+                white-space: nowrap;
+                max-width: 120px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+                font-family: 'Roboto', sans-serif;
+            ">
+                ${title.length > 20 ? title.substring(0, 20) + '...' : title}
+            </div>
+        `,
+        className: 'marker-label',
+        iconSize: [100, 24],
+        iconAnchor: [50, -15]
+    })
+}).addTo(window.travelMap);
+
+// Συνδέσε το label με το marker (για cleanup)
+marker.options.label = label;
+
+// ===============================================
+
     // Συνάρτηση που καλείται όταν κάνουμε κλικ
     const handleMarkerClick = function(e) {
         console.log(`📍 Κλικ στο: ${title}`, e.latlng);
