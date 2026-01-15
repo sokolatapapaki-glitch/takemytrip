@@ -7390,94 +7390,66 @@ function showEmergencyError(title, message, technicalDetails = '') {
         console.error('Απέτυχε και το DOM fallback:', domError);
     }
 }
+// ==================== ΕΞΑΓΩΓΗ ΜΟΝΟ ΑΠΑΡΑΙΤΗΤΩΝ ΣΥΝΑΡΤΗΣΕΩΝ ====================
+// ΜΟΝΟ οι συναρτήσεις που καλούνται ΑΠΕΥΘΕΙΑΣ από HTML ή εξωτερικά scripts
+
+// ========== ΒΑΣΙΚΗ ΠΛΟΗΓΗΣΗ ΚΑΙ ΒΗΜΑΤΑ ==========
 window.showStep = showStep;
-window.filterDestinations = filterDestinations;
-window.resetFilters = resetFilters;
-window.selectDestination = selectDestination;
 window.showManualDestinationModal = showManualDestinationModal;
 window.closeManualDestinationModal = closeManualDestinationModal;
 window.saveManualDestination = saveManualDestination;
+
+// ========== ΠΡΟΟΡΙΣΜΟΙ ΚΑΙ ΑΝΑΖΗΤΗΣΗ ==========
+window.filterDestinations = filterDestinations;
+window.selectDestination = selectDestination;
+window.resetFilters = resetFilters;
 window.showQuickRecommendations = showQuickRecommendations;
-window.showPopularDestinations = showPopularDestinations;
-window.showBudgetDestinations = showBudgetDestinations;
-window.showFamilyDestinations = showFamilyDestinations;
+
+// ========== ΞΕΝΟΔΟΧΕΙΑ ==========
 window.searchBookingHotels = searchBookingHotels;
 window.searchExpediaHotels = searchExpediaHotels;
-window.setupActivitiesStep = setupActivitiesStep;
+
+// ========== ΔΡΑΣΤΗΡΙΟΤΗΤΕΣ ΚΑΙ ΟΙΚΟΓΕΝΕΙΑ ==========
 window.toggleActivitySelection = toggleActivitySelection;
-window.setupSummaryStep = setupSummaryStep;
-window.setupMapStep = setupMapStep;
-window.initializeMap = initializeMap;
-window.reloadMap = reloadMap;
-window.addCustomMapPoint = addCustomMapPoint;
-window.removeCustomPoint = removeCustomPoint;
-window.closeMapInstructions = closeMapInstructions;
-window.closeSavedTripModal = closeSavedTripModal;
-window.showActivityMap = showActivityMap;
-window.showRouteBetweenPoints = showRouteBetweenPoints;
-window.updateFamilyMemberName = updateFamilyMemberName;
-window.updateFamilyMemberAge = updateFamilyMemberAge;
 window.addFamilyMember = addFamilyMember;
 window.removeFamilyMember = removeFamilyMember;
 window.updateFamilyMembers = updateFamilyMembers;
 window.calculateSmartCombos = calculateSmartCombos;
 window.clearSelectedActivities = clearSelectedActivities;
-window.updateProgramDays = updateProgramDays;
-window.groupActivitiesByProximity = groupActivitiesByProximity; 
-window.showGroupedActivitiesOnMap = showGroupedActivitiesOnMap;
-window.suggestDaysFromGroups = suggestDaysFromGroups;
-window.calculateDistance = calculateDistance;
-window.translateCategory = translateCategory;
-window.createEnhancedPopup = createEnhancedPopup;
-window.getPriceForAge = getPriceForAge;
 
-// ========== ΝΕΕΣ ΣΥΝΑΡΤΗΣΕΙΣ ΧΑΡΤΗ ==========
-window.createMarkerWithConnectFunction = createMarkerWithConnectFunction;
-window.drawRouteBetweenPoints = drawRouteBetweenPoints;
-window.showToast = showToast;
-window.resetMarkerAppearance = resetMarkerAppearance;
-window.resetSelection = resetSelection;
+// ========== ΠΡΟΓΡΑΜΜΑ ==========
+window.generateGeographicProgram = generateGeographicProgram;
+window.forceRefreshProgram = forceRefreshProgram;
+window.updateProgramDays = updateProgramDays;
+
+// ========== ΧΑΡΤΗΣ ==========
+window.initializeMapInStep = initializeMapInStep;
+window.showActivityMap = showActivityMap;
+window.clearMapPoints = clearMapPoints;
+window.showRouteBetweenPoints = showRouteBetweenPoints;
+window.addCustomMapPoint = addCustomMapPoint;
+window.removeCustomPoint = removeCustomPoint;
+window.closeMapInstructions = closeMapInstructions;
+
+// ========== ΧΑΡΤΗΣ ΗΜΕΡΩΝ (ΑΝ ΥΠΑΡΧΕΙ ΠΡΟΓΡΑΜΜΑ) ==========
 window.updateMapDayFilter = updateMapDayFilter;
 window.selectAllDays = selectAllDays;
 window.deselectAllDays = deselectAllDays;
 window.applyDayFilter = applyDayFilter;
 
-window.showStep = showStep;
-window.filterDestinations = filterDestinations;
+// ========== ΒΟΗΘΗΤΙΚΕΣ ΚΑΙ ΕΠΙΚΟΙΝΩΝΙΑ ==========
+window.closeSavedTripModal = closeSavedTripModal;
 
-// ========== ΕΠΙΠΛΕΟΝ ΠΟΥ ΜΠΟΡΕΙ ΝΑ ΧΡΕΙΑΖΟΝΤΑΙ ==========
-window.getCityCoordinates = getCityCoordinates;
-window.getActivityEmoji = getActivityEmoji;
-window.calculateFamilyCost = calculateFamilyCost;
-window.updateActivitiesTotal = updateActivitiesTotal;
-window.saveState = saveState;
-window.initializeSimpleMap = initializeSimpleMap;
-window.loadActivitiesOnMap = loadActivitiesOnMap;
-window.clearMap = clearMap;
-window.initializeMapInStep = initializeMapInStep;
-window.cleanupMapState = cleanupMapState;
-window.recalculateSelectedActivityPrices = recalculateSelectedActivityPrices;
-window.clearMapPoints = clearMapPoints;
-window.forceRefreshProgram = forceRefreshProgram;
-window.createSuggestedProgram = createSuggestedProgram;
-window.getDayColor = getDayColor;
-// 🔵 ΠΡΟΣΘΗΚΗ ΕΔΩ:
-window.c = createGeographicClusters;
-window.calculateClusterCenter = calculateClusterCenter;
-window.distributeClustersToDays = distributeGroupsToDays;
-window.calculateGroupInternalDistance = calculateGroupInternalDistance;
-window.calculateDayGeographicSpread = calculateDayGeographicSpread;
-window.splitGroupByProximity = splitGroupByProximity;
+// ========== RESET ==========
+// Η resetAll αναφέρεται σε event listener, αλλά το κρατάμε για πληρότητα
+window.resetAll = function() {
+    if (confirm('⚠️ Θέλετε να διαγράψετε όλα τα δεδομένα;')) {
+        localStorage.clear();
+        location.reload();
+    }
+};
 
-// ΠΡΟΣΘΗΚΗ ΚΑΙ ΤΩΝ ΑΛΛΩΝ ΓΙΑ ΝΑ ΕΙΝΑΙ ΑΣΦΑΛΕΣ:
-window.getIntensityMultiplier = getIntensityMultiplier;
-window.calculateGroupEffort = calculateGroupEffort;
-window.findBestDayForGroup = findBestDayForGroup;
-window.distributeGroupsToDays = distributeGroupsToDays;
-window.balanceDaysIfNeeded = balanceDaysIfNeeded;
-window.calculateDayCenter = calculateDayCenter;
-window.testNewClustering = testNewClustering;
-window.createSmartClusters = createSmartClusters;
+console.log('✅ Μόνο οι απαραίτητες συναρτήσεις εξήχθησαν στο window');
 
 // ==================== CSS ANIMATIONS FOR PROGRAM ====================
 // Προσθήκη CSS animation για το spinner (για το βήμα 5)
