@@ -2345,6 +2345,24 @@ if (projectedEffort > maxEffort) continue;
             score += 100;
         }
 
+        // 🔥 🔥 🔥 ΚΡΙΤΙΚΗ ΠΡΟΣΘΗΚΗ: ΜΗΝ ΣΠΑΣ ΚΟΛΛΗΤΑ ΣΗΜΕΙΑ ΣΕ ΑΛΛΗ ΜΕΡΑ 🔥 🔥 🔥
+        if (group.center && day.groups.length > 0) {
+            for (const existingGroup of day.groups) {
+                if (!existingGroup.center) continue;
+
+                const d = calculateDistance(existingGroup.center, group.center);
+
+                if (d < 0.3) { // ΣΧΕΔΟΝ ΙΔΙΟ ΣΗΜΕΙΟ (300 μέτρα)
+                    score += 300; // ΤΕΡΑΣΤΙΟ bonus
+                    console.log(`   🎯 SUPER BONUS: Ομάδες <300m (${d.toFixed(2)}km) -> +300`);
+                } else if (d < 0.6) { // ΠΟΛΥ ΚΟΝΤΑ (600 μέτρα)
+                    score += 180; // Μεγάλο bonus
+                    console.log(`   🎯 MEGA BONUS: Ομάδες <600m (${d.toFixed(2)}km) -> +180`);
+                }
+            }
+        }
+        // 🔥 🔥 🔥 ΤΕΛΟΣ ΚΡΙΤΙΚΗΣ ΠΡΟΣΘΗΚΗΣ 🔥 🔥 🔥
+
         // 🔥 ΝΕΟ: Προτεραιότητα για ομάδες με μικρή εσωτερική απόσταση
         if (!isGroupGeographicallyScattered) {
             score += 80; // Bonus για συμπαγείς ομάδες
@@ -2354,7 +2372,7 @@ if (projectedEffort > maxEffort) continue;
         const effortDeviation = Math.abs(projectedEffort - 40);
         score -= effortDeviation * 0.3; // Μειωμένο βάρος (από 0.5 σε 0.3)
 
-        // ΠΡΙΟΡΙΤΕΤΑ #3: Ισορροπία δραστηριοτήτων
+        // ΠΡΙΟΡΙΤΕΤΑ #3: Ισορροπία δραστηριότητας
         const activityBalanceBonus = (maxActivities - day.totalActivities) * 8; // Μειωμένο (από 10)
         score += activityBalanceBonus;
 
@@ -2379,7 +2397,8 @@ if (projectedEffort > maxEffort) continue;
         }
         return 0;
     }
-console.log(`   ✅ findBestDayForGroup: Επέλεξε Μέρα ${bestDayIndex + 1} με score: ${bestScore}`);
+    
+    console.log(`   ✅ findBestDayForGroup: Επέλεξε Μέρα ${bestDayIndex + 1} με score: ${bestScore}`);
     return bestDayIndex;
 }
 
