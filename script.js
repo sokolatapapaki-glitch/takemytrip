@@ -1899,6 +1899,19 @@ function generateGeographicProgram(retryCount = 0) {
     
    // 2. Βρες τις πλήρεις πληροφορίες για τις επιλεγμένες δραστηριότητες
 const fullActivities = getFullActivitiesWithLocation();
+    // 🔍 === ΑΝΑΛΥΣΗ CLUSTERING ===
+console.log('🔍 === ΑΝΑΛΥΣΗ CLUSTERING ===');
+console.log(`   📍 Πόλη: ${state.selectedDestination}`);
+console.log(`   📊 Σύνολο: ${fullActivities.length} δραστηριότητες`);
+console.log(`   🗺️  Με location: ${fullActivities.filter(a => a.location).length}`);
+
+// Αν θέλεις να δείς ΚΑΙ τα ονόματα (προαιρετικό):
+if (fullActivities.length <= 15) {
+    console.log('   📋 Λίστα δραστηριοτήτων:');
+    fullActivities.forEach((act, i) => {
+        console.log(`      ${i+1}. ${act.name} ${act.location ? '📍' : '❌'}`);
+    });
+}
 console.log(`📍 Δραστηριότητες με location: ${fullActivities.length}/${state.selectedActivities.length}`);
     
     console.log(`📍 Δραστηριότητες με location: ${fullActivities.length}/${state.selectedActivities.length}`);
@@ -1913,7 +1926,28 @@ let activityGroups = [];
 
 if (fullActivities.length > 0) {
     // Χρησιμοποιούμε την ΝΕΑ σωστή ομαδοποίηση
-     activityGroups = groupActivitiesByProximity(fullActivities, 1.0); // <-- ΑΛΛΑΓΗ: 1.0km
+     activityGroups = groupActivitiesByProximity(fullActivities); // ΧΩΡΙΣ παράμετρο!
+    // ✅ === ΑΠΟΤΕΛΕΣΜΑΤΑ CLUSTERING ===
+console.log('✅ === ΑΠΟΤΕΛΕΣΜΑΤΑ CLUSTERING ===');
+if (activityGroups.length === 0) {
+    console.log('   ⚠️ Δεν δημιουργήθηκαν clusters!');
+} else {
+    activityGroups.forEach((cluster, i) => {
+        const activityNames = cluster.activities
+            .map(a => a.name.substring(0, 25))
+            .join(', ');
+        console.log(`   Cluster ${i+1}: ${cluster.count} δρ. - ${activityNames}`);
+        
+        // Προαιρετικό: Δείξε και τις αποστάσεις
+        if (cluster.center) {
+            console.log(`      📍 Κέντρο: [${cluster.center[0].toFixed(4)}, ${cluster.center[1].toFixed(4)}]`);
+        }
+    });
+    
+    console.log(`   📈 Σύνολο: ${activityGroups.length} clusters, ${activityGroups.reduce((sum, c) => sum + c.count, 0)} δρ.`);
+}
+
+
     
     // ΛΟΓΗ ΕΝΤΕΛΩΣ ΝΕΑ: Αν έχουμε περισσότερες συστάδες από μέρες
     if (activityGroups.length > state.selectedDays) {
@@ -5728,7 +5762,12 @@ function updateProgramDays() {
     }
 }
 // ==================== IMPROVED GROUP ACTIVITIES BY PROXIMITY ====================
-function groupActivitiesByProximity(activities, maxDistanceKm = 2) {
+function groupActivitiesByProximity(activities, maxDistanceKm = null) {
+    // 🔴 ΚΡΙΤΙΚΗ ΑΛΛΑΓΗ: ΔΥΝΑΜΙΚΗ ΑΚΤΙΝΑ
+    if (maxDistanceKm === null || maxDistanceKm === undefined) {
+        maxDistanceKm = calculateOptimalClusterDistance(activities);
+    }
+    
     console.log(`📍 Βελτιωμένη ομαδοποίηση ${activities.length} δραστηριοτήτων (έως ${maxDistanceKm} km)`);
 
     if (!activities || activities.length === 0) {
@@ -7202,6 +7241,7 @@ function calculateDayGeographicSpread(day) {
 }
 // Μετά τις 2 παραπάνω, πρόσθεσε:
 function splitGroupByProximity(group, maxInternalDistance = 1.0) {
+     console.log(`   🔍 splitGroupByProximity: Ομάδα με ${group.count} δρ., απόσταση: ${calculateGroupInternalDistance(group).toFixed(2)}km`);
     if (!group.activities || group.activities.length <= 1) return [group];
     // 🔴 ΚΡΙΤΙΚΗ ΔΙΟΡΘΩΣΗ: ΜΗΝ ΧΩΡΙΖΕΙΣ ΟΜΑΔΕΣ ΜΕ ΚΟΛΛΗΤΑ ΣΗΜΕΙΑ
     // Αν η ομάδα έχει μικρή εσωτερική απόσταση (<1km), ΚΡΑΤΗΣΕ ΤΗΝ ΜΑΖΙ
@@ -7663,7 +7703,78 @@ function setupEventListeners() {
 }
 // ==================== ΕΝΗΜΕΡΩΣΗ ΣΥΜΒΑΤΟΤΗΤΑΣ ====================
 console.log('🔄 Συμβατότητα: createSmartClusters → createGeographicClusters');
+// ==================== OPTIMAL CLUSTER DISTANCE CALCULATOR ====================
+function calculateOptimalClusterDistance(activities, minDistanceKm = 0.8, maxDistanceKm = 2.5) {
+    console.log(`🧮 Υπολογισμός βέλτιστης ακτίνας clustering για ${activities.length} δραστηριότητες`);
+    
+    if (!activities || activities.length < 3) {
+        console.log(`   📏 Ελάχιστη ακτίνα (${minDistanceKm} km) - λίγες δραστηριότητες`);
+        return minDistanceKm;
+    }
 
+    // Υπολόγισε όλες τις αποστάσεις μεταξύ των δραστηριοτήτων
+    const distances = [];
+    let validPairs = 0;
+    
+    for (let i = 0; i < activities.length; i++) {
+        for (let j = i + 1; j < activities.length; j++) {
+            const locA = activities[i].location;
+            const locB = activities[j].location;
+            
+            if (locA && locB && 
+                typeof locA.lat === 'number' && typeof locA.lng === 'number' &&
+                typeof locB.lat === 'number' && typeof locB.lng === 'number') {
+                
+                const d = calculateDistance([locA.lat, locA.lng], [locB.lat, locB.lng]);
+                if (d > 0 && d < 50) { // Φίλτρο για έγκυρες αποστάσεις
+                    distances.push(d);
+                    validPairs++;
+                }
+            }
+        }
+    }
+
+    if (distances.length === 0) {
+        console.log(`   📏 Ελάχιστη ακτίνα (${minDistanceKm} km) - κανένα valid pair`);
+        return minDistanceKm;
+    }
+
+    // Ταξινόμησε και βρες τα στατιστικά
+    distances.sort((a, b) => a - b);
+    
+    const minDist = distances[0];
+    const maxDist = distances[distances.length - 1];
+    const medianDist = distances[Math.floor(distances.length * 0.5)];
+    const percentile80 = distances[Math.floor(distances.length * 0.8)];
+    
+    console.log(`   📊 Αποστάσεις: min=${minDist.toFixed(2)}km, max=${maxDist.toFixed(2)}km, median=${medianDist.toFixed(2)}km, 80%=${percentile80.toFixed(2)}km`);
+    
+    // Υπολογισμός προτεινόμενης ακτίνας
+    let suggestedDistance;
+    
+    if (activities.length >= 8) {
+        // Μεγάλο city center (όπως Πράγα) → πιο χαλαρό clustering
+        suggestedDistance = Math.min(percentile80 * 1.5, maxDistanceKm);
+        console.log(`   🏙️  Μεγάλο city center (${activities.length} δρ.) → χαλαρό clustering`);
+    } else if (maxDist > 10) {
+        // Διασκορπισμένες δραστηριότητες → πιο αυστηρό clustering
+        suggestedDistance = Math.min(medianDist * 1.2, maxDistanceKm);
+        console.log(`   🌳 Διασκορπισμένες (μέγιστη ${maxDist.toFixed(1)}km) → αυστηρό clustering`);
+    } else {
+        // Κανονική περίπτωση
+        suggestedDistance = Math.min(percentile80 * 1.3, maxDistanceKm);
+        console.log(`   📍 Κανονική πόλη → ισορροπημένο clustering`);
+    }
+    
+    // Περιορισμός στα όρια
+    suggestedDistance = Math.max(minDistanceKm, Math.min(suggestedDistance, maxDistanceKm));
+    
+    // Στρογγυλοποίηση
+    suggestedDistance = Math.round(suggestedDistance * 10) / 10;
+    
+    console.log(`   ✅ Προτεινόμενη ακτίνα: ${suggestedDistance.toFixed(1)} km`);
+    return suggestedDistance;
+}
 // Έλεγχος ότι οι νέες συναρτήσεις είναι διαθέσιμες
 if (typeof createGeographicClusters === 'function') {
     console.log('✅ createGeographicClusters είναι διαθέσιμη');
