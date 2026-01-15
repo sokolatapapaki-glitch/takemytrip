@@ -447,7 +447,7 @@ function setupMobileNavigation() {
     
     // Βεβαιώσου ότι το dropdown έχει όλες τις επιλογές
     if (mobileSelector.options.length === 0) {
-        const steps = ['destination', 'flight', 'hotel', 'activities', 'summary', 'map'];
+        const steps = ['destination', 'flight', 'hotel', 'activities', 'map'];
         steps.forEach(step => {
             const option = document.createElement('option');
             option.value = step;
@@ -471,7 +471,6 @@ function getStepName(stepId) {
         'flight': '✈️ Πτήσεις', 
         'hotel': '🏨 Ξενοδοχεία',
         'activities': '🎫 Δραστηριότητες',
-        'summary': '📅 Πρόγραμμα',
         'map': '🗺️ Χάρτης'
     };
     return stepNames[stepId] || stepId;
@@ -849,14 +848,7 @@ function loadStepContent(stepName) {
     stepContent.innerHTML = getActivitiesStepHTML();
     setupActivitiesStep();
     break;
-        case 'summary':
-    stepContent.innerHTML = getSummaryStepHTML();
-    // ΧΡΗΣΙΜΟΠΟΙΗΣΕ ΣΥΓΚΕΚΡΙΜΕΝΗ ΣΥΝΑΡΤΗΣΗ, ΟΧΙ setupSummaryStep()
-    setTimeout(() => {
-        setupSummaryStep();
-    }, 50);
-    break;
-        case 'map':
+         case 'map':
     stepContent.innerHTML = getMapStepHTML();
     setTimeout(() => {
         if (typeof L !== 'undefined') {
