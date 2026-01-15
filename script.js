@@ -2106,7 +2106,7 @@ async function filterDestinations() {
                 <p style="color: var(--gray); max-width: 600px; margin: 0 auto 30px;">
                     Κανένας προορισμός δεν ταιριάζει με τα επιλεγμένα φίλτρα.
                     <br>
-                    <strong>Συμβουλή:</strong> Χαλαρώστε κάποιο κριτήριο ή δοκιμάστε "Γρήγορες Προτάσεις".
+                    <strong>Συμβουλή:</strong> Χαλαρώστε κάποιο κριτήριο ".
                 </p>
                 <button class="btn btn-primary" onclick="resetFilters()">
                     <i class="fas fa-redo"></i> Επαναφορά Φίλτρων
