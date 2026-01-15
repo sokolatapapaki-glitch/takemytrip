@@ -2149,7 +2149,8 @@ function distributeGroupsToDays(groups, totalDays) {
         console.error('❌ Μη έγκυρα δεδομένα');
         return [];
     }
-     // 🔵 ΠΡΟΣΘΗΚΗ: ΚΑΛΕΣΜΕ ΤΟ DEBUGGING
+    
+    // 🔵 ΠΡΟΣΘΗΚΗ: ΚΑΛΕΣΜΕ ΤΟ DEBUGGING
     debugDistribution(groups, totalDays, 'BEFORE DISTRIBUTION');
     
     // ΝΕΑ: ΣΚΛΗΡΑ ΟΡΙΑ!
@@ -2157,7 +2158,7 @@ function distributeGroupsToDays(groups, totalDays) {
     const MAX_EFFORT_PER_DAY = 60;
     const TARGET_EFFORT_PER_DAY = 40;
 
-      const days = Array.from({ length: totalDays }, () => ({
+    const days = Array.from({ length: totalDays }, () => ({
         groups: [],
         totalActivities: 0,
         totalCost: 0,
@@ -2166,15 +2167,21 @@ function distributeGroupsToDays(groups, totalDays) {
         center: null
     }));
 
-    // 1. Ταξινόμηση: Μικρότερες ομάδες ΠΡΩΤΕΣ (για καλύτερη ισορροπία)
+    // 🔴🔴🔴 ΚΡΙΤΙΚΗ ΔΙΟΡΘΩΣΗ: ΜΕΓΑΛΕΣ ΟΜΑΔΕΣ ΠΡΩΤΕΣ 🔴🔴🔴
     const sortedGroups = [...groups].sort((a, b) => {
-        // Πρώτα κατά αριθμό δραστηριοτήτων (μικρότερες πρώτες)
-        if (a.count !== b.count) return a.count - b.count;
-        // Μετά κατά effort (μικρότερες πρώτες)
-        return calculateGroupEffort(a) - calculateGroupEffort(b);
+        // 1️⃣ ΜΕΓΑΛΕΣ ΟΜΑΔΕΣ ΠΡΩΤΕΣ (για να κλειδώσουν τις μέρες τους)
+        if (a.count !== b.count) return b.count - a.count; // ΑΝΤΙΓΡΑΦΕ ΑΥΤΟ ΑΚΡΙΒΩΣ
+        
+        // 2️⃣ Αν ίδιο μέγεθος, μεγαλύτερο effort πρώτα
+        return calculateGroupEffort(b) - calculateGroupEffort(a);
     });
 
     console.log(`🎯 ΣΤΟΧΟΣ: Μέγιστο ${MAX_ACTIVITIES_PER_DAY} δραστηριότητες/μέρα, ${MAX_EFFORT_PER_DAY} effort/μέρα`);
+    
+    console.log(`📊 Ταξινόμηση ομάδων (μεγαλύτερες πρώτες):`);
+    sortedGroups.forEach((group, i) => {
+        console.log(`   ${i+1}. Ομάδα με ${group.count} δραστηριότητες, effort: ${calculateGroupEffort(group)}`);
+    });
 
     // 2. ΒΕΛΤΙΩΜΕΝΗ Κατανομή με ΣΚΛΗΡΑ ΟΡΙΑ
     sortedGroups.forEach((group, index) => {
@@ -2209,26 +2216,6 @@ function distributeGroupsToDays(groups, totalDays) {
     console.log(`✅ Βελτιωμένη κατανομή σε ${totalDays} μέρες:`);
     days.forEach((day, i) => {
         if (day.totalActivities > 0) {
-            console.log(`   Μ${i+1}: ${day.totalActivities} δραστηριότητες, ~${day.estimatedTime.toFixed(1)}h, effort: ${day.totalEffort}`);
-        } else {
-            console.log(`   Μ${i+1}: (ελεύθερη μέρα για ξεκούραση)`);
-        }
-    });
-
-       // 3. ΕΛΕΓΧΟΣ ΙΣΟΡΡΟΠΙΑΣ
-    console.log(`✅ Βελτιωμένη κατανομή σε ${totalDays} μέρες:`);
-    days.forEach((day, i) => {
-        if (day.totalActivities > 0) {
-            console.log(`   Μ${i+1}: ${day.totalActivities} δραστηριότητες, ~${day.estimatedTime.toFixed(1)}h, effort: ${day.totalEffort}, ${day.groups.length} ομάδες`);
-        } else {
-            console.log(`   Μ${i+1}: (ελεύθερη μέρα για ξεκούραση)`);
-        }
-    });
-
-        // 3. ΕΛΕΓΧΟΣ ΙΣΟΡΡΟΠΙΑΣ
-    console.log(`✅ Βελτιωμένη κατανομή σε ${totalDays} μέρες:`);
-    days.forEach((day, i) => {
-        if (day.totalActivities > 0) {
             console.log(`   Μ${i+1}: ${day.totalActivities} δραστηριότητες, ~${day.estimatedTime.toFixed(1)}h, effort: ${day.totalEffort}, ${day.groups.length} ομάδες`);
         } else {
             console.log(`   Μ${i+1}: (ελεύθερη μέρα για ξεκούραση)`);
@@ -2237,7 +2224,6 @@ function distributeGroupsToDays(groups, totalDays) {
 
     return days;
 }
-
 // ==================== CALCULATE GROUP EFFORT ====================
 function calculateGroupEffort(group) {
     if (!group || !group.activities || group.activities.length === 0) {
