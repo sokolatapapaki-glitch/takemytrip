@@ -6211,7 +6211,6 @@ window.clearSelectedActivities = clearSelectedActivities;
 window.updateProgramDays = updateProgramDays;
 window.groupActivitiesByProximity = groupActivitiesByProximity; 
 window.showGroupedActivitiesOnMap = showGroupedActivitiesOnMap;
-window.suggestDaysFromGroups = suggestDaysFromGroups;
 window.calculateDistance = calculateDistance;
 window.translateCategory = translateCategory;
 window.createEnhancedPopup = createEnhancedPopup;
@@ -6244,7 +6243,6 @@ window.initializeMapInStep = initializeMapInStep;
 window.cleanupMapState = cleanupMapState;
 window.recalculateSelectedActivityPrices = recalculateSelectedActivityPrices;
 window.clearMapPoints = clearMapPoints;
-window.forceRefreshProgram = forceRefreshProgram;
 window.getDayColor = getDayColor;
 // 🔵 ΠΡΟΣΘΗΚΗ ΕΔΩ:
 window.c = createGeographicClusters;
