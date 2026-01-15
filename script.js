@@ -6192,7 +6192,6 @@ window.searchBookingHotels = searchBookingHotels;
 window.searchExpediaHotels = searchExpediaHotels;
 window.setupActivitiesStep = setupActivitiesStep;
 window.toggleActivitySelection = toggleActivitySelection;
-window.setupSummaryStep = setupSummaryStep;
 window.setupMapStep = setupMapStep;
 window.initializeMap = initializeMap;
 window.reloadMap = reloadMap;
@@ -6246,7 +6245,6 @@ window.cleanupMapState = cleanupMapState;
 window.recalculateSelectedActivityPrices = recalculateSelectedActivityPrices;
 window.clearMapPoints = clearMapPoints;
 window.forceRefreshProgram = forceRefreshProgram;
-window.createSuggestedProgram = createSuggestedProgram;
 window.getDayColor = getDayColor;
 // 🔵 ΠΡΟΣΘΗΚΗ ΕΔΩ:
 window.c = createGeographicClusters;
