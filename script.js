@@ -862,7 +862,7 @@ function loadStepContent(stepName) {
                         <i class="fas fa-exclamation-triangle fa-3x"></i>
                         <h3>Σφάλμα φόρτωσης χάρτη</h3>
                         <p>${error.message}</p>
-                        <button onclick="showStep('summary')" class="btn btn-primary">
+                        <button onclick="showStep('activities')" class="btn btn-primary">
                             <i class="fas fa-arrow-left"></i> Επιστροφή
                         </button>
                     </div>
@@ -1506,8 +1506,8 @@ function getActivitiesStepHTML() {
                 
                 <!-- Next Button -->
                 <div style="text-align: center; margin-top: 40px;">
-                    <button class="btn btn-primary" onclick="showStep('summary')" style="padding: 18px 50px; font-size: 18px;">
-                        <i class="fas fa-arrow-right"></i> Συνέχεια στο Πρόγραμμα
+                    <button class="btn btn-primary" onclick="showStep('map')" style="padding: 18px 50px; font-size: 18px;">
+                        <i class="fas fa-arrow-right"></i> Συνέχεια στον Χάρτη
                     </button>
                 </div>
             `}
@@ -1765,8 +1765,8 @@ function getMapStepHTML() {
                 
                 <!-- ΕΠΙΣΤΡΟΦΗ -->
                 <div style="text-align: center; margin-top: 30px;">
-                    <button class="btn btn-outline" onclick="showStep('summary')">
-                        <i class="fas fa-arrow-left"></i> Επιστροφή στο Πρόγραμμα
+                  <button class="btn btn-outline" onclick="showStep('activities')">
+    <i class="fas fa-arrow-left"></i> Επιστροφή στις Δραστηριότητες    
                     </button>
                 </div>
             `}
@@ -3248,8 +3248,8 @@ function initializeMap() {
                     <button onclick="initializeMap()" class="btn btn-primary" style="padding: 10px 20px;">
                         <i class="fas fa-sync-alt"></i> Δοκιμή ξανά
                     </button>
-                    <button onclick="showStep('summary')" class="btn btn-outline" style="padding: 10px 20px;">
-                        <i class="fas fa-arrow-left"></i> Επιστροφή
+                    <button onclick="showStep('activities')" class="btn btn-outline" style="padding: 10px 20px;">
+                        <i class="fas fa-arrow-left"></i> Επιστροφή στις δραστηριότητες
                     </button>
                 </div>
                 <div style="margin-top: 30px; padding: 15px; background: white; border-radius: 8px; border-left: 4px solid #6f42c1; text-align: left; max-width: 500px;">
@@ -3361,8 +3361,8 @@ function initializeMapInStep() {
                     <button onclick="initializeMapInStep()" class="btn btn-primary" style="padding: 10px 20px;">
                         <i class="fas fa-sync-alt"></i> Δοκιμή ξανά
                     </button>
-                    <button onclick="showStep('summary')" class="btn btn-outline" style="padding: 10px 20px;">
-                        <i class="fas fa-arrow-left"></i> Επιστροφή
+                    <button onclick="showStep('activities')" class="btn btn-outline" style="padding: 10px 20px;">
+                        <i class="fas fa-arrow-left"></i> Επιστροφή στις δραστηριότητες
                     </button>
                 </div>
             </div>
