@@ -2106,7 +2106,7 @@ async function filterDestinations() {
                 <p style="color: var(--gray); max-width: 600px; margin: 0 auto 30px;">
                     Κανένας προορισμός δεν ταιριάζει με τα επιλεγμένα φίλτρα.
                     <br>
-                    <strong>Συμβουλή:</strong> Χαλαρώστε κάποιο κριτήριο ".
+                    <strong>Συμβουλή:</strong> Χαλαρώστε κάποιο κριτήριο ή δοκιμάστε τις γρήγορες προτάσεις μας".
                 </p>
                 <button class="btn btn-primary" onclick="resetFilters()">
                     <i class="fas fa-redo"></i> Επαναφορά Φίλτρων
@@ -2240,8 +2240,8 @@ function showQuickRecommendations() {
     const recommendations = [
         { name: 'Παρίσι', emoji: '🗼', reason: 'Disneyland & πολιτισμός' },
         { name: 'Λονδίνο', emoji: '🇬🇧', reason: 'Ιδανικό για οικογένειες' },
-        { name: 'Πράγα', emoji: '🏰', reason: 'Οικονομικό & όμορφο' },
-        { name: 'Άμστερνταμ', emoji: '🌷', reason: 'Καναλόπολη για όλες τις ηλικίες' }
+        { name: 'Πράγα', emoji: '🏰', reason: 'Οικονομική & όμορφη' },
+        { name: 'Άμστερνταμ', emoji: '🌷', reason: 'Η πόλη των καναλιών, ιδανική για όλες τις ηλικίες' }
     ];
     
     const resultsDiv = document.getElementById('destination-results');
