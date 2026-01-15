@@ -5656,11 +5656,7 @@ function calculateOptimalDays() {
     alert('ℹ️ Η λειτουργία αυτόματου υπολογισμού απενεργοποιήθηκε.\n\nΕπιλέξτε μόνοι σας τις μέρες από το dropdown.');
     return 0;
 }
-// ==================== SIMPLIFIED MAP FUNCTIONS ====================
 
-function clearMap() {
-    alert('🗺️ Η λειτουργία καθαρισμού θα προστεθεί στο επόμενο βήμα');
-}
 
  // ==================== SIMPLE MAP INITIALIZATION ====================
 function initializeSimpleMap() {
@@ -5726,26 +5722,8 @@ function initializeSimpleMap() {
         `;
     }
 } 
-// ==================== SIMPLIFIED MAP FUNCTIONS ====================
 
-function loadActivitiesOnMap() {
-    alert('📌 Θα φορτώσουμε τις δραστηριότητες στο επόμενο βήμα!\n\nΓια τώρα, ο χάρτης είναι σε λειτουργία.');
-    
-    // Προς το παρών, απλά ενημέρωση
-    const statusEl = document.getElementById('map-status');
-    if (statusEl) {
-        statusEl.innerHTML = `
-            <i class="fas fa-check-circle" style="color: #10B981;"></i>
-            <strong>Έτοιμο:</strong> Ο χάρτης είναι έτοιμος για χρήση
-        `;
-    }
-}
 
-// ==================== SIMPLIFIED MAP FUNCTIONS ====================
-
-function clearMap() {
-    alert('🗺️ Η λειτουργία καθαρισμού θα προστεθεί στο επόμενο βήμα');
-}
 // ==================== ΗΜΕΡΕΣ ΧΑΡΤΗ ====================
 
 function updateMapDayFilter(checkbox) {
@@ -6192,8 +6170,8 @@ window.searchBookingHotels = searchBookingHotels;
 window.searchExpediaHotels = searchExpediaHotels;
 window.setupActivitiesStep = setupActivitiesStep;
 window.toggleActivitySelection = toggleActivitySelection;
-window.setupMapStep = setupMapStep;
-window.initializeMap = initializeMap;
+
+
 window.reloadMap = reloadMap;
 window.addCustomMapPoint = addCustomMapPoint;
 window.removeCustomPoint = removeCustomPoint;
@@ -6208,9 +6186,6 @@ window.removeFamilyMember = removeFamilyMember;
 window.updateFamilyMembers = updateFamilyMembers;
 window.calculateSmartCombos = calculateSmartCombos;
 window.clearSelectedActivities = clearSelectedActivities;
-window.updateProgramDays = updateProgramDays;
-window.groupActivitiesByProximity = groupActivitiesByProximity; 
-window.showGroupedActivitiesOnMap = showGroupedActivitiesOnMap;
 window.calculateDistance = calculateDistance;
 window.translateCategory = translateCategory;
 window.createEnhancedPopup = createEnhancedPopup;
@@ -6237,30 +6212,12 @@ window.calculateFamilyCost = calculateFamilyCost;
 window.updateActivitiesTotal = updateActivitiesTotal;
 window.saveState = saveState;
 window.initializeSimpleMap = initializeSimpleMap;
-window.loadActivitiesOnMap = loadActivitiesOnMap;
-window.clearMap = clearMap;
 window.initializeMapInStep = initializeMapInStep;
 window.cleanupMapState = cleanupMapState;
 window.recalculateSelectedActivityPrices = recalculateSelectedActivityPrices;
 window.clearMapPoints = clearMapPoints;
 window.getDayColor = getDayColor;
-// 🔵 ΠΡΟΣΘΗΚΗ ΕΔΩ:
-window.c = createGeographicClusters;
-window.calculateClusterCenter = calculateClusterCenter;
-window.distributeClustersToDays = distributeGroupsToDays;
-window.calculateGroupInternalDistance = calculateGroupInternalDistance;
-window.calculateDayGeographicSpread = calculateDayGeographicSpread;
-window.splitGroupByProximity = splitGroupByProximity;
 
-// ΠΡΟΣΘΗΚΗ ΚΑΙ ΤΩΝ ΑΛΛΩΝ ΓΙΑ ΝΑ ΕΙΝΑΙ ΑΣΦΑΛΕΣ:
-window.getIntensityMultiplier = getIntensityMultiplier;
-window.calculateGroupEffort = calculateGroupEffort;
-window.findBestDayForGroup = findBestDayForGroup;
-window.distributeGroupsToDays = distributeGroupsToDays;
-window.balanceDaysIfNeeded = balanceDaysIfNeeded;
-window.calculateDayCenter = calculateDayCenter;
-window.testNewClustering = testNewClustering;
-window.createSmartClusters = createSmartClusters;
 
 // ==================== CSS ANIMATIONS FOR PROGRAM ====================
 // Προσθήκη CSS animation για το spinner (για το βήμα 5)
@@ -6344,9 +6301,6 @@ if (!document.querySelector('#program-animations')) {
 // ==================== EXPORT FUNCTIONS TO WINDOW ====================
 // (ΟΠΟΥ ΕΧΕΙΣ ΟΛΑ ΤΑ window.* = ... ΤΩΡΑ)
 
-window.showStep = showStep;
-window.filterDestinations = filterDestinations;
-// ... όλα τα υπόλοιπα window.* ...
 
 
 // ==================== DYNAMIC LOADING OF COMBO CALCULATOR ====================
