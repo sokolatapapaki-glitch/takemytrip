@@ -1899,19 +1899,6 @@ function generateGeographicProgram(retryCount = 0) {
     
    // 2. Βρες τις πλήρεις πληροφορίες για τις επιλεγμένες δραστηριότητες
 const fullActivities = getFullActivitiesWithLocation();
-    // 🔍 === ΑΝΑΛΥΣΗ CLUSTERING ===
-console.log('🔍 === ΑΝΑΛΥΣΗ CLUSTERING ===');
-console.log(`   📍 Πόλη: ${state.selectedDestination}`);
-console.log(`   📊 Σύνολο: ${fullActivities.length} δραστηριότητες`);
-console.log(`   🗺️  Με location: ${fullActivities.filter(a => a.location).length}`);
-
-// Αν θέλεις να δείς ΚΑΙ τα ονόματα (προαιρετικό):
-if (fullActivities.length <= 15) {
-    console.log('   📋 Λίστα δραστηριοτήτων:');
-    fullActivities.forEach((act, i) => {
-        console.log(`      ${i+1}. ${act.name} ${act.location ? '📍' : '❌'}`);
-    });
-}
 console.log(`📍 Δραστηριότητες με location: ${fullActivities.length}/${state.selectedActivities.length}`);
     
     console.log(`📍 Δραστηριότητες με location: ${fullActivities.length}/${state.selectedActivities.length}`);
@@ -1926,28 +1913,7 @@ let activityGroups = [];
 
 if (fullActivities.length > 0) {
     // Χρησιμοποιούμε την ΝΕΑ σωστή ομαδοποίηση
-     activityGroups = groupActivitiesByProximity(fullActivities); // ΧΩΡΙΣ παράμετρο!
-    // ✅ === ΑΠΟΤΕΛΕΣΜΑΤΑ CLUSTERING ===
-console.log('✅ === ΑΠΟΤΕΛΕΣΜΑΤΑ CLUSTERING ===');
-if (activityGroups.length === 0) {
-    console.log('   ⚠️ Δεν δημιουργήθηκαν clusters!');
-} else {
-    activityGroups.forEach((cluster, i) => {
-        const activityNames = cluster.activities
-            .map(a => a.name.substring(0, 25))
-            .join(', ');
-        console.log(`   Cluster ${i+1}: ${cluster.count} δρ. - ${activityNames}`);
-        
-        // Προαιρετικό: Δείξε και τις αποστάσεις
-        if (cluster.center) {
-            console.log(`      📍 Κέντρο: [${cluster.center[0].toFixed(4)}, ${cluster.center[1].toFixed(4)}]`);
-        }
-    });
-    
-    console.log(`   📈 Σύνολο: ${activityGroups.length} clusters, ${activityGroups.reduce((sum, c) => sum + c.count, 0)} δρ.`);
-}
-
-
+    activityGroups = groupActivitiesByProximity(fullActivities, 1.5);
     
     // ΛΟΓΗ ΕΝΤΕΛΩΣ ΝΕΑ: Αν έχουμε περισσότερες συστάδες από μέρες
     if (activityGroups.length > state.selectedDays) {
@@ -2183,10 +2149,7 @@ function distributeGroupsToDays(groups, totalDays) {
         console.error('❌ Μη έγκυρα δεδομένα');
         return [];
     }
-    
-    // 🔵 ΠΡΟΣΘΗΚΗ: ΚΑΛΕΣΜΕ ΤΟ DEBUGGING
-    debugDistribution(groups, totalDays, 'BEFORE DISTRIBUTION');
-    
+
     // ΝΕΑ: ΣΚΛΗΡΑ ΟΡΙΑ!
     const MAX_ACTIVITIES_PER_DAY = 4;
     const MAX_EFFORT_PER_DAY = 60;
@@ -2201,62 +2164,50 @@ function distributeGroupsToDays(groups, totalDays) {
         center: null
     }));
 
-    // 🔴🔴🔴 ΚΡΙΤΙΚΗ ΔΙΟΡΘΩΣΗ: ΜΕΓΑΛΕΣ ΟΜΑΔΕΣ ΠΡΩΤΕΣ 🔴🔴🔴
+    // 1. Ταξινόμηση: Μικρότερες ομάδες ΠΡΩΤΕΣ (για καλύτερη ισορροπία)
     const sortedGroups = [...groups].sort((a, b) => {
-        // 1️⃣ ΜΕΓΑΛΕΣ ΟΜΑΔΕΣ ΠΡΩΤΕΣ (για να κλειδώσουν τις μέρες τους)
-        if (a.count !== b.count) return b.count - a.count; // ΑΝΤΙΓΡΑΦΕ ΑΥΤΟ ΑΚΡΙΒΩΣ
-        
-        // 2️⃣ Αν ίδιο μέγεθος, μεγαλύτερο effort πρώτα
-        return calculateGroupEffort(b) - calculateGroupEffort(a);
+        // Πρώτα κατά αριθμό δραστηριοτήτων (μικρότερες πρώτες)
+        if (a.count !== b.count) return a.count - b.count;
+        // Μετά κατά effort (μικρότερες πρώτες)
+        return calculateGroupEffort(a) - calculateGroupEffort(b);
     });
 
     console.log(`🎯 ΣΤΟΧΟΣ: Μέγιστο ${MAX_ACTIVITIES_PER_DAY} δραστηριότητες/μέρα, ${MAX_EFFORT_PER_DAY} effort/μέρα`);
-    
-    console.log(`📊 Ταξινόμηση ομάδων (μεγαλύτερες πρώτες):`);
-    sortedGroups.forEach((group, i) => {
-        console.log(`   ${i+1}. Ομάδα με ${group.count} δραστηριότητες, effort: ${calculateGroupEffort(group)}`);
+
+    // 2. ΒΕΛΤΙΩΜΕΝΗ Κατανομή με ΣΚΛΗΡΑ ΟΡΙΑ
+    sortedGroups.forEach((group, index) => {
+        const bestDayIndex = findBestDayForGroup(days, group, totalDays, 
+                                        MAX_ACTIVITIES_PER_DAY, 
+                                        MAX_EFFORT_PER_DAY);
+        // Υπολογισμός μετρικών
+        const groupEffort = calculateGroupEffort(group);
+        let groupCost = 0;
+        let groupTime = 0;
+
+        group.activities.forEach(activity => {
+            groupCost += (parseFloat(activity.price) || 0);
+            groupTime += (parseFloat(activity.duration_hours) || 1.5);
+        });
+
+        // Ταξίδι μέσα στην ομάδα
+        const travelTime = (group.activities.length - 1) * 0.3;
+
+        // Προσθήκη στην επιλεγμένη μέρα
+        days[bestDayIndex].groups.push(group);
+        days[bestDayIndex].totalActivities += group.count;
+        days[bestDayIndex].totalCost += groupCost;
+        days[bestDayIndex].estimatedTime += groupTime + travelTime;
+        days[bestDayIndex].totalEffort += groupEffort;
+        days[bestDayIndex].center = calculateDayCenter(days[bestDayIndex].groups);
+
+        console.log(`   📦 Ομάδα ${index + 1} (${group.count} δρ., effort: ${groupEffort}) → Μέρα ${bestDayIndex + 1}`);
     });
-
-// 2. ΒΕΛΤΙΩΜΕΝΗ Κατανομή με ΣΚΛΗΡΑ ΟΡΙΑ
-sortedGroups.forEach((group, index) => {
-    const bestDayIndex = findBestDayForGroup(days, group, totalDays, 
-                                    MAX_ACTIVITIES_PER_DAY, 
-                                    MAX_EFFORT_PER_DAY);
-    // Υπολογισμός μετρικών
-    const groupEffort = calculateGroupEffort(group);
-    let groupCost = 0;
-    let groupTime = 0;
-
-    group.activities.forEach(activity => {
-        groupCost += (parseFloat(activity.price) || 0);
-        groupTime += (parseFloat(activity.duration_hours) || 1.5);
-    });
-
-    // Ταξίδι μέσα στην ομάδα
-    const travelTime = (group.activities.length - 1) * 0.3;
-
-    // Προσθήκη στην επιλεγμένη μέρα
-    days[bestDayIndex].groups.push(group);
-    days[bestDayIndex].totalActivities += group.count;
-    days[bestDayIndex].totalCost += groupCost;
-    days[bestDayIndex].estimatedTime += groupTime + travelTime;
-    days[bestDayIndex].totalEffort += groupEffort;
-    days[bestDayIndex].center = calculateDayCenter(days[bestDayIndex].groups);
-
-    // 🔵 ΚΡΙΤΙΚΗ ΠΡΟΣΘΗΚΗ: ΚΑΤΑΓΡΑΦΗ ΗΜΕΡΑΣ ΣΕ ΚΑΘΕ ΔΡΑΣΤΗΡΙΟΤΗΤΑ
-    group.activities.forEach(activity => {
-        activity.assignedDay = bestDayIndex + 1; // +1 για 1-based indexing (μέρα 1,2,3...)
-        console.log(`   📍 "${activity.name}" → Μέρα ${activity.assignedDay}`);
-    });
-
-    console.log(`   📦 Ομάδα ${index + 1} (${group.count} δρ., effort: ${groupEffort}) → Μέρα ${bestDayIndex + 1}`);
-});
 
     // 3. ΕΛΕΓΧΟΣ ΙΣΟΡΡΟΠΙΑΣ
     console.log(`✅ Βελτιωμένη κατανομή σε ${totalDays} μέρες:`);
     days.forEach((day, i) => {
         if (day.totalActivities > 0) {
-            console.log(`   Μ${i+1}: ${day.totalActivities} δραστηριότητες, ~${day.estimatedTime.toFixed(1)}h, effort: ${day.totalEffort}, ${day.groups.length} ομάδες`);
+            console.log(`   Μ${i+1}: ${day.totalActivities} δραστηριότητες, ~${day.estimatedTime.toFixed(1)}h, effort: ${day.totalEffort}`);
         } else {
             console.log(`   Μ${i+1}: (ελεύθερη μέρα για ξεκούραση)`);
         }
@@ -2264,55 +2215,37 @@ sortedGroups.forEach((group, index) => {
 
     return days;
 }
+
 // ==================== CALCULATE GROUP EFFORT ====================
 function calculateGroupEffort(group) {
     if (!group || !group.activities || group.activities.length === 0) {
-        return 8; // Μειωμένο βασικό effort
+        return 10; // Βασικό effort για κενή ομάδα
     }
 
     let totalEffort = 0;
 
     group.activities.forEach(activity => {
-        // 🔵 ΜΕΙΩΜΕΝΟ Base effort: 1 ώρα = 6 effort points (από 10)
+        // Base effort from duration (ΠΟΛΥ ΜΙΚΡΟΤΕΡΟ!)
         const duration = parseFloat(activity.duration_hours) || 1.5;
-        let activityEffort = duration * 6; // ΜΕΙΩΣΗ 40%
-        
-        // Physical intensity multiplier (και αυτό μειωμένο)
+        let activityEffort = duration * 4; // ΜΕΙΩΣΗ: 1 hour = 4 effort points (από 10!)
+
+        // Physical intensity multiplier
         const intensityMultiplier = getIntensityMultiplier(activity.category);
-        activityEffort *= Math.min(intensityMultiplier, 1.3); // Μέγιστο 1.3x
-        
-        // 🔵 ΠΡΟΣΘΗΚΗ: Μειωμένο effort για playgrounds, μουσεία
-        if (activity.category === 'playground' || activity.tags?.includes('playground')) {
-            activityEffort *= 0.7; // 30% λιγότερο effort
-        }
-        if (activity.category === 'museum') {
-            activityEffort *= 0.8; // 20% λιγότερο effort
-        }
-        
+        activityEffort *= intensityMultiplier;
+
         totalEffort += activityEffort;
     });
 
-    // 🔵 ΜΕΙΩΜΕΝΟ Travel effort
+    // Travel effort (ΜΕΙΩΣΗ!)
     if (group.activities.length > 1) {
         const clusterRadius = group.radius || 0;
-        // Μειωμένο: (group.activities.length - 1) * (3 + clusterRadius) (από 5 + clusterRadius*2)
-        const travelEffort = (group.activities.length - 1) * (3 + clusterRadius);
+        // ΜΕΙΩΣΗ: (group.activities.length - 1) * (2 + clusterRadius) (από 5 + clusterRadius*2!)
+        const travelEffort = (group.activities.length - 1) * (2 + clusterRadius);
         totalEffort += travelEffort;
-        
-        console.log(`   🚶 Travel effort: ${travelEffort.toFixed(1)} για ${group.activities.length} δρ.`);
-    }
-        // 🔵 ΜΕΤΡΗΣΗ ΓΕΩΓΡΑΦΙΚΗΣ ΣΥΝΟΧΗΣ: Μικρή απόσταση = λιγότερο effort
-    if (group.activities.length > 1 && group.center) {
-        const internalDistance = calculateGroupInternalDistance(group);
-        if (internalDistance < 1.0) {
-            console.log(`   🎯 Συμπαγής ομάδα (${internalDistance.toFixed(2)}km): -20% effort`);
-            totalEffort *= 0.8; // 20% μείωση για συμπαγείς ομάδες
-        }
     }
 
-    console.log(`   🧮 Effort για ${group.activities.length} δρ.: ${totalEffort.toFixed(1)}`);
-    return totalEffort;
-   
+    // ΠΡΟΣΘΗΚΗ: Μέγιστο όριο!
+    return Math.min(totalEffort, 40); // ΜΕΓΙΣΤΟ 40 EFFORT!
 }
 // Get intensity multiplier based on activity category
 function getIntensityMultiplier(category) {
@@ -2352,43 +2285,6 @@ function findBestDayForGroup(days, group, totalDays, maxActivities = 4, maxEffor
     const groupEffort = calculateGroupEffort(group);
     const groupSize = group.count || group.activities.length;
     
-    // 🔵 ΠΡΟΣΘΗΚΗ DEBUGGING
-    console.log(`   🔍 findBestDayForGroup: Ομάδα με ${groupSize} δρ., effort: ${groupEffort}`);
-    // 🔵 ΚΡΙΤΙΚΗ ΔΙΟΡΘΩΣΗ: Έλεγχος αν ΚΑΠΟΙΑ δραστηριότητα είναι ήδη σε μέρα
-    const alreadyAssignedActivities = group.activities.filter(activity => 
-        activity.assignedDay !== undefined && activity.assignedDay !== null
-    );
-    
-    if (alreadyAssignedActivities.length > 0) {
-        console.log(`   ⚠️  ΕΛΕΓΧΟΣ: Η ομάδα έχει ${alreadyAssignedActivities.length} δραστηριότητες που έχουν ΗΔΗ κατανεμηθεί!`);
-        
-        // Λίστα με τις μέρες που έχουν ήδη καταχωρηθεί
-        const existingDays = [...new Set(alreadyAssignedActivities.map(act => act.assignedDay))];
-        console.log(`   📍 Υπάρχουσες καταχωρήσεις: ${existingDays.join(', ')}`);
-        
-        // Αν ΟΛΕΣ οι δραστηριότητες είναι στην ΙΔΙΑ μέρα, επέστρεψε αυτή τη μέρα
-        if (existingDays.length === 1) {
-            console.log(`   🎯 ΣΥΝΕΝΩΣΗ: Όλες οι δραστηριότητες είναι ήδη στη Μέρα ${existingDays[0]}`);
-            return existingDays[0] - 1; // -1 για 0-based index
-        }
-        
-        // Αν υπάρχουν σε ΔΙΑΦΟΡΕΤΙΚΕΣ μέρες, πρόβλημα - άφησε τον αλγόριθμο να αποφασίσει
-        console.log(`   ⚠️  ΠΡΟΣΟΧΗ: Οι δραστηριότητες είναι σε διαφορετικές μέρες (${existingDays.join(', ')})`);
-    }
-    
-    // 🔴🔴🔴 ΚΡΙΤΙΚΗ ΔΙΟΡΘΩΣΗ: ΜΕΓΑΛΕΣ ΟΜΑΔΕΣ ΠΡΩΤΕΣ
-    if (groupSize > maxActivities) {
-        console.warn(`   ⚠️  Ομάδα με ${groupSize} δρ. > ${maxActivities} (max/μέρα) - ΘΑ ΧΩΡΙΣΤΕΙ`);
-        return 0; // Προσωρινό
-    }
-    
-    // 🔴 🔴 🔴 ΝΕΟ: ΕΛΕΓΧΟΣ ΓΙΑ ΠΟΛΥ ΜΕΓΑΛΕΣ ΟΜΑΔΕΣ
-    if (groupSize > maxActivities) {
-        console.warn(`   ⚠️  Ομάδα με ${groupSize} δρ. > ${maxActivities} (max/μέρα) - ΘΑ ΧΩΡΙΣΤΕΙ`);
-        // Επιστροφή dummy value - η ομάδα θα χωριστεί από την groupActivitiesByProximity
-        return 0; // Προσωρινό
-    }
-    
     // ΝΕΟ: Υπολογισμός της ΕΣΩΤΕΡΙΚΗΣ απόστασης της ομάδας
     const groupInternalDistance = calculateGroupInternalDistance(group);
     
@@ -2403,54 +2299,34 @@ function findBestDayForGroup(days, group, totalDays, maxActivities = 4, maxEffor
         
         // 1. ΣΚΛΗΡΑ ΟΡΙΑ
         if (day.totalActivities >= maxActivities) continue;
-const projectedActivities = day.totalActivities + groupSize;
-if (projectedActivities > maxActivities) continue;
-const projectedEffort = day.totalEffort + groupEffort;
-if (projectedEffort > maxEffort) continue;
-    
+        const projectedEffort = day.totalEffort + groupEffort;
+        if (projectedEffort > maxEffort) continue;
+        const projectedActivities = day.totalActivities + groupSize;
+        if (projectedActivities > maxActivities) continue;
+
         // ΥΠΟΛΟΓΙΣΜΟΣ SCORE
         let score = 100;
 
-               // 🔥🔴 ΚΡΙΤΙΚΗ ΔΙΟΡΘΩΣΗ: ΤΕΡΑΣΤΙΟ BONUS για ΓΕΩΓΡΑΦΙΚΗ ΕΓΓΥΤΗΤΑ
+        // 🔥 ΠΡΙΟΡΙΤΕΤΑ #1: ΓΕΩΓΡΑΦΙΚΗ ΕΓΓΥΤΗΤΑ (ΑΥΞΗΜΕΝΟ ΒΑΡΟΣ!)
         if (day.groups.length > 0 && day.center && group.center) {
             const distance = calculateDistance(day.center, group.center);
             
-            // 🔴🔴 ΚΟΛΛΗΤΑ ΣΗΜΕΙΑ: ΤΕΡΑΣΤΙΟ BONUS για ίδια περιοχή
-            if (distance < 0.3) { // ΠΟΛΥ ΚΟΝΤΑ (<300 μέτρα)
-                score += 200; // ΤΕΡΑΣΤΙΟ bonus
-                console.log(`   🎯 SUPER BONUS: Ομάδες <300m (${distance.toFixed(2)}km) → +200`);
-            } 
-            else if (distance < 0.8) { // ΚΟΝΤΑ (<800 μέτρα)
-                score += 120;
-                console.log(`   🎯 MEGA BONUS: Ομάδες <800m (${distance.toFixed(2)}km) → +120`);
+            // 🔥 ΝΕΟ: ΠΟΛΥ ΜΕΓΑΛΟ BONUS για γειτονικές ομάδες
+            if (distance < 2) { // Πολύ κοντά (<2km)
+                score += 80; // Από 100 σε 200!
+            } else if (distance < 5) { // Κοντά (<5km)
+                score += 40; // Από 50 σε 100!
+            } else if (distance < 10) { // Μέτρια απόσταση
+                score += 15;
             }
-            else if (distance < 2) { // Κοντά (<2km)
-                score += 60;
-            } else if (distance < 5) { // Μετρίως κοντά (<5km)
-                score += 20;
-            } else if (distance > 10) { // Πολύ μακριά (>10km)
-                score -= 80; // Μεγάλο penalty
-                console.log(`   ⚠️  PENALTY: Ομάδες >10km (${distance.toFixed(2)}km) → -80`);
+            // 🔥 ΝΕΟ: Μεγάλο penalty για πολύ μακρινές
+            if (distance > 15) {
+                score -= 60; // Πολύ μακριά = άσχημη επιλογή
             }
-        } // 🔴 ΑΦΑΙΡΕΣΑ: Κανένα bonus για κενή μέρα
-
-        // 🔥 🔥 🔥 ΚΡΙΤΙΚΗ ΠΡΟΣΘΗΚΗ: ΜΗΝ ΣΠΑΣ ΚΟΛΛΗΤΑ ΣΗΜΕΙΑ ΣΕ ΑΛΛΗ ΜΕΡΑ 🔥 🔥 🔥
-        if (group.center && day.groups.length > 0) {
-            for (const existingGroup of day.groups) {
-                if (!existingGroup.center) continue;
-
-                const d = calculateDistance(existingGroup.center, group.center);
-
-                if (d < 0.3) { // ΣΧΕΔΟΝ ΙΔΙΟ ΣΗΜΕΙΟ (300 μέτρα)
-                    score += 300; // ΤΕΡΑΣΤΙΟ bonus
-                    console.log(`   🎯 SUPER BONUS: Ομάδες <300m (${d.toFixed(2)}km) -> +300`);
-                } else if (d < 0.6) { // ΠΟΛΥ ΚΟΝΤΑ (600 μέτρα)
-                    score += 180; // Μεγάλο bonus
-                    console.log(`   🎯 MEGA BONUS: Ομάδες <600m (${d.toFixed(2)}km) -> +180`);
-                }
-            }
+        } else {
+            // Κενή μέρα - καλό για εξάπλωση
+            score += 100;
         }
-        // 🔥 🔥 🔥 ΤΕΛΟΣ ΚΡΙΤΙΚΗΣ ΠΡΟΣΘΗΚΗΣ 🔥 🔥 🔥
 
         // 🔥 ΝΕΟ: Προτεραιότητα για ομάδες με μικρή εσωτερική απόσταση
         if (!isGroupGeographicallyScattered) {
@@ -2458,10 +2334,10 @@ if (projectedEffort > maxEffort) continue;
         }
 
         // ΠΡΙΟΡΙΤΕΤΑ #2: Ισορροπία effort
-        const effortDeviation = Math.abs(projectedEffort - 32);
+        const effortDeviation = Math.abs(projectedEffort - 40);
         score -= effortDeviation * 0.3; // Μειωμένο βάρος (από 0.5 σε 0.3)
 
-        // ΠΡΙΟΡΙΤΕΤΑ #3: Ισορροπία δραστηριότητας
+        // ΠΡΙΟΡΙΤΕΤΑ #3: Ισορροπία δραστηριοτήτων
         const activityBalanceBonus = (maxActivities - day.totalActivities) * 8; // Μειωμένο (από 10)
         score += activityBalanceBonus;
 
@@ -2486,8 +2362,7 @@ if (projectedEffort > maxEffort) continue;
         }
         return 0;
     }
-    
-    console.log(`   ✅ findBestDayForGroup: Επέλεξε Μέρα ${bestDayIndex + 1} με score: ${bestScore}`);
+
     return bestDayIndex;
 }
 
@@ -2509,24 +2384,8 @@ function calculateDayCenter(groups) {
 
     return [lat, lng];
 }
-// ==================== ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ: LOGGING ΓΙΑ ΔΙΑΓΝΩΣΗ ====================
-function debugDistribution(activityGroups, totalDays, method = 'current') {
-    console.log(`🔍 [DEBUG ${method}] Διαγνωστικά δεδομένα:`);
-    console.log(`   📊 Ομάδες: ${activityGroups.length}`);
-    console.log(`   📅 Ημέρες: ${totalDays}`);
-    
-    activityGroups.forEach((group, i) => {
-        console.log(`   👥 Ομάδα ${i+1}: ${group.count} δραστηριότητες, effort: ${calculateGroupEffort(group)}`);
-        if (group.center) {
-            console.log(`      📍 Κέντρο: [${group.center[0].toFixed(4)}, ${group.center[1].toFixed(4)}]`);
-        }
-    });
-}
-function debugGroupEffort(group) {
-    const effort = calculateGroupEffort(group);
-    console.log(`   🔧 Ομάδα με ${group.count} δραστηριότητες: effort = ${effort}`);
-    return effort;
-}
+
+
 // Rebalance days if there's significant effort imbalance
 function balanceDaysIfNeeded(days) {
     const nonEmptyDays = days.filter(d => d.totalActivities > 0);
@@ -5817,12 +5676,7 @@ function updateProgramDays() {
     }
 }
 // ==================== IMPROVED GROUP ACTIVITIES BY PROXIMITY ====================
-function groupActivitiesByProximity(activities, maxDistanceKm = null) {
-    // 🔴 ΚΡΙΤΙΚΗ ΑΛΛΑΓΗ: ΔΥΝΑΜΙΚΗ ΑΚΤΙΝΑ
-    if (maxDistanceKm === null || maxDistanceKm === undefined) {
-        maxDistanceKm = calculateOptimalClusterDistance(activities);
-    }
-    
+function groupActivitiesByProximity(activities, maxDistanceKm = 2) {
     console.log(`📍 Βελτιωμένη ομαδοποίηση ${activities.length} δραστηριοτήτων (έως ${maxDistanceKm} km)`);
 
     if (!activities || activities.length === 0) {
@@ -7295,58 +7149,10 @@ function calculateDayGeographicSpread(day) {
     return maxDistance;
 }
 // Μετά τις 2 παραπάνω, πρόσθεσε:
-function splitGroupByProximity(group, maxInternalDistance = 1.0) {
-     console.log(`   🔍 splitGroupByProximity: Ομάδα με ${group.count} δρ., απόσταση: ${calculateGroupInternalDistance(group).toFixed(2)}km`);
+
+function splitGroupByProximity(group, maxInternalDistance = 2) {
     if (!group.activities || group.activities.length <= 1) return [group];
-    // 🔴 ΚΡΙΤΙΚΗ ΔΙΟΡΘΩΣΗ: ΜΗΝ ΧΩΡΙΖΕΙΣ ΟΜΑΔΕΣ ΜΕ ΚΟΛΛΗΤΑ ΣΗΜΕΙΑ
-    // Αν η ομάδα έχει μικρή εσωτερική απόσταση (<1km), ΚΡΑΤΗΣΕ ΤΗΝ ΜΑΖΙ
-    const internalDist = calculateGroupInternalDistance(group);
-    if (internalDist < 1.0 && group.count <= 6) {
-        console.log(`   🎯 ΚΡΑΤΑΩ ΜΑΖΙ: ${group.count} δρ. σε ${internalDist.toFixed(2)}km (<1km)`);
-        return [group]; // Μην τη χωρίσεις!
-    }
     
-    // 🔴 ΝΕΟ: ΑΝ Η ΟΜΑΔΑ ΕΙΝΑΙ ΠΟΛΥ ΜΕΓΑΛΗ, ΧΩΡΙΣΤΗΝ ΓΕΩΓΡΑΦΙΚΑ
-    if (group.count > 4) {
-        console.log(`   ✂️  ΓΕΩΓΡΑΦΙΚΟΣ ΧΩΡΙΣΜΟΣ: Ομάδα με ${group.count} δρ. (>4)`);
-        
-        // 1. ΤΑΞΙΝΟΜΗΣΗ ΒΑΣΕΙ ΣΥΝΤΕΤΑΓΜΕΝΩΝ
-        const sortedActivities = [...group.activities].sort((a, b) => {
-            if (!a.location || !b.location) return 0;
-            // Ταξινόμηση βάσει lat (πρώτα) και lng (μετά)
-            if (a.location.lat !== b.location.lat) {
-                return a.location.lat - b.location.lat;
-            }
-            return a.location.lng - b.location.lng;
-        });
-        
-        // 2. ΧΩΡΙΣΜΟΣ ΣΕ ΟΜΑΔΕΣ ΤΩΝ 2-3
-        const subGroups = [];
-        let currentGroup = [];
-        
-        sortedActivities.forEach((activity, index) => {
-            currentGroup.push(activity);
-            
-            // Αν έχουμε 3 δραστηριότητες Η αν τελειώνουμε
-            if (currentGroup.length >= 3 || index === sortedActivities.length - 1) {
-                // Υπολογισμός κέντρου για αυτή την υπο-ομάδα
-                const center = calculateGroupCenter(currentGroup);
-                
-                subGroups.push({
-                    center: center,
-                    activities: [...currentGroup],
-                    count: currentGroup.length,
-                    radius: maxInternalDistance / 2 // Μικρότερη ακτίνα
-                });
-                currentGroup = [];
-            }
-        });
-        
-        console.log(`   📊 Δημιουργήθηκαν ${subGroups.length} υπο-ομάδες`);
-        return subGroups;
-    }
-    
-    // 3. ΥΠΟΛΟΙΠΗ ΛΟΓΙΚΗ (ΓΙΑ ΟΜΑΔΕΣ ≤4)
     const subGroups = [];
     const processed = new Set();
     
@@ -7385,7 +7191,6 @@ function splitGroupByProximity(group, maxInternalDistance = 1.0) {
     
     return subGroups;
 }
-
 // ==================== ΑΠΛΟΠΟΙΗΜΕΝΕΣ ΒΟΗΘΗΤΙΚΕΣ ΣΥΝΑΡΤΗΣΕΙΣ ====================
 
 function cleanupDuplicateButtons() {
@@ -7445,66 +7250,94 @@ function showEmergencyError(title, message, technicalDetails = '') {
         console.error('Απέτυχε και το DOM fallback:', domError);
     }
 }
-// ==================== ΕΞΑΓΩΓΗ ΜΟΝΟ ΑΠΑΡΑΙΤΗΤΩΝ ΣΥΝΑΡΤΗΣΕΩΝ ====================
-// ΜΟΝΟ οι συναρτήσεις που καλούνται ΑΠΕΥΘΕΙΑΣ από HTML ή εξωτερικά scripts
-
-// ========== ΒΑΣΙΚΗ ΠΛΟΗΓΗΣΗ ΚΑΙ ΒΗΜΑΤΑ ==========
 window.showStep = showStep;
+window.filterDestinations = filterDestinations;
+window.resetFilters = resetFilters;
+window.selectDestination = selectDestination;
 window.showManualDestinationModal = showManualDestinationModal;
 window.closeManualDestinationModal = closeManualDestinationModal;
 window.saveManualDestination = saveManualDestination;
-
-// ========== ΠΡΟΟΡΙΣΜΟΙ ΚΑΙ ΑΝΑΖΗΤΗΣΗ ==========
-window.filterDestinations = filterDestinations;
-window.selectDestination = selectDestination;
-window.resetFilters = resetFilters;
 window.showQuickRecommendations = showQuickRecommendations;
-
-// ========== ΞΕΝΟΔΟΧΕΙΑ ==========
+window.showPopularDestinations = showPopularDestinations;
+window.showBudgetDestinations = showBudgetDestinations;
+window.showFamilyDestinations = showFamilyDestinations;
 window.searchBookingHotels = searchBookingHotels;
 window.searchExpediaHotels = searchExpediaHotels;
-
-// ========== ΔΡΑΣΤΗΡΙΟΤΗΤΕΣ ΚΑΙ ΟΙΚΟΓΕΝΕΙΑ ==========
+window.setupActivitiesStep = setupActivitiesStep;
 window.toggleActivitySelection = toggleActivitySelection;
+window.setupSummaryStep = setupSummaryStep;
+window.setupMapStep = setupMapStep;
+window.initializeMap = initializeMap;
+window.reloadMap = reloadMap;
+window.addCustomMapPoint = addCustomMapPoint;
+window.removeCustomPoint = removeCustomPoint;
+window.closeMapInstructions = closeMapInstructions;
+window.closeSavedTripModal = closeSavedTripModal;
+window.showActivityMap = showActivityMap;
+window.showRouteBetweenPoints = showRouteBetweenPoints;
+window.updateFamilyMemberName = updateFamilyMemberName;
+window.updateFamilyMemberAge = updateFamilyMemberAge;
 window.addFamilyMember = addFamilyMember;
 window.removeFamilyMember = removeFamilyMember;
 window.updateFamilyMembers = updateFamilyMembers;
 window.calculateSmartCombos = calculateSmartCombos;
 window.clearSelectedActivities = clearSelectedActivities;
-
-// ========== ΠΡΟΓΡΑΜΜΑ ==========
-window.generateGeographicProgram = generateGeographicProgram;
-window.forceRefreshProgram = forceRefreshProgram;
 window.updateProgramDays = updateProgramDays;
+window.groupActivitiesByProximity = groupActivitiesByProximity; 
+window.showGroupedActivitiesOnMap = showGroupedActivitiesOnMap;
+window.suggestDaysFromGroups = suggestDaysFromGroups;
+window.calculateDistance = calculateDistance;
+window.translateCategory = translateCategory;
+window.createEnhancedPopup = createEnhancedPopup;
+window.getPriceForAge = getPriceForAge;
 
-// ========== ΧΑΡΤΗΣ ==========
-window.initializeMapInStep = initializeMapInStep;
-window.showActivityMap = showActivityMap;
-window.clearMapPoints = clearMapPoints;
-window.showRouteBetweenPoints = showRouteBetweenPoints;
-window.addCustomMapPoint = addCustomMapPoint;
-window.removeCustomPoint = removeCustomPoint;
-window.closeMapInstructions = closeMapInstructions;
-
-// ========== ΧΑΡΤΗΣ ΗΜΕΡΩΝ (ΑΝ ΥΠΑΡΧΕΙ ΠΡΟΓΡΑΜΜΑ) ==========
+// ========== ΝΕΕΣ ΣΥΝΑΡΤΗΣΕΙΣ ΧΑΡΤΗ ==========
+window.createMarkerWithConnectFunction = createMarkerWithConnectFunction;
+window.drawRouteBetweenPoints = drawRouteBetweenPoints;
+window.showToast = showToast;
+window.resetMarkerAppearance = resetMarkerAppearance;
+window.resetSelection = resetSelection;
 window.updateMapDayFilter = updateMapDayFilter;
 window.selectAllDays = selectAllDays;
 window.deselectAllDays = deselectAllDays;
 window.applyDayFilter = applyDayFilter;
 
-// ========== ΒΟΗΘΗΤΙΚΕΣ ΚΑΙ ΕΠΙΚΟΙΝΩΝΙΑ ==========
-window.closeSavedTripModal = closeSavedTripModal;
+window.showStep = showStep;
+window.filterDestinations = filterDestinations;
 
-// ========== RESET ==========
-// Η resetAll αναφέρεται σε event listener, αλλά το κρατάμε για πληρότητα
-window.resetAll = function() {
-    if (confirm('⚠️ Θέλετε να διαγράψετε όλα τα δεδομένα;')) {
-        localStorage.clear();
-        location.reload();
-    }
-};
+// ========== ΕΠΙΠΛΕΟΝ ΠΟΥ ΜΠΟΡΕΙ ΝΑ ΧΡΕΙΑΖΟΝΤΑΙ ==========
+window.getCityCoordinates = getCityCoordinates;
+window.getActivityEmoji = getActivityEmoji;
+window.calculateFamilyCost = calculateFamilyCost;
+window.updateActivitiesTotal = updateActivitiesTotal;
+window.saveState = saveState;
+window.initializeSimpleMap = initializeSimpleMap;
+window.loadActivitiesOnMap = loadActivitiesOnMap;
+window.clearMap = clearMap;
+window.initializeMapInStep = initializeMapInStep;
+window.cleanupMapState = cleanupMapState;
+window.recalculateSelectedActivityPrices = recalculateSelectedActivityPrices;
+window.clearMapPoints = clearMapPoints;
+window.forceRefreshProgram = forceRefreshProgram;
+window.createSuggestedProgram = createSuggestedProgram;
+window.getDayColor = getDayColor;
+// 🔵 ΠΡΟΣΘΗΚΗ ΕΔΩ:
+window.c = createGeographicClusters;
+window.calculateClusterCenter = calculateClusterCenter;
+window.distributeClustersToDays = distributeGroupsToDays;
+window.calculateGroupInternalDistance = calculateGroupInternalDistance;
+window.calculateDayGeographicSpread = calculateDayGeographicSpread;
+window.splitGroupByProximity = splitGroupByProximity;
 
-console.log('✅ Μόνο οι απαραίτητες συναρτήσεις εξήχθησαν στο window');
+// ΠΡΟΣΘΗΚΗ ΚΑΙ ΤΩΝ ΑΛΛΩΝ ΓΙΑ ΝΑ ΕΙΝΑΙ ΑΣΦΑΛΕΣ:
+window.getIntensityMultiplier = getIntensityMultiplier;
+window.calculateGroupEffort = calculateGroupEffort;
+window.findBestDayForGroup = findBestDayForGroup;
+window.distributeGroupsToDays = distributeGroupsToDays;
+window.balanceDaysIfNeeded = balanceDaysIfNeeded;
+window.calculateDayCenter = calculateDayCenter;
+window.testNewClustering = testNewClustering;
+window.createSmartClusters = createSmartClusters;
 
 // ==================== CSS ANIMATIONS FOR PROGRAM ====================
 // Προσθήκη CSS animation για το spinner (για το βήμα 5)
@@ -7730,78 +7563,7 @@ function setupEventListeners() {
 }
 // ==================== ΕΝΗΜΕΡΩΣΗ ΣΥΜΒΑΤΟΤΗΤΑΣ ====================
 console.log('🔄 Συμβατότητα: createSmartClusters → createGeographicClusters');
-// ==================== OPTIMAL CLUSTER DISTANCE CALCULATOR ====================
-function calculateOptimalClusterDistance(activities, minDistanceKm = 0.8, maxDistanceKm = 2.5) {
-    console.log(`🧮 Υπολογισμός βέλτιστης ακτίνας clustering για ${activities.length} δραστηριότητες`);
-    
-    if (!activities || activities.length < 3) {
-        console.log(`   📏 Ελάχιστη ακτίνα (${minDistanceKm} km) - λίγες δραστηριότητες`);
-        return minDistanceKm;
-    }
 
-    // Υπολόγισε όλες τις αποστάσεις μεταξύ των δραστηριοτήτων
-    const distances = [];
-    let validPairs = 0;
-    
-    for (let i = 0; i < activities.length; i++) {
-        for (let j = i + 1; j < activities.length; j++) {
-            const locA = activities[i].location;
-            const locB = activities[j].location;
-            
-            if (locA && locB && 
-                typeof locA.lat === 'number' && typeof locA.lng === 'number' &&
-                typeof locB.lat === 'number' && typeof locB.lng === 'number') {
-                
-                const d = calculateDistance([locA.lat, locA.lng], [locB.lat, locB.lng]);
-                if (d > 0 && d < 50) { // Φίλτρο για έγκυρες αποστάσεις
-                    distances.push(d);
-                    validPairs++;
-                }
-            }
-        }
-    }
-
-    if (distances.length === 0) {
-        console.log(`   📏 Ελάχιστη ακτίνα (${minDistanceKm} km) - κανένα valid pair`);
-        return minDistanceKm;
-    }
-
-    // Ταξινόμησε και βρες τα στατιστικά
-    distances.sort((a, b) => a - b);
-    
-    const minDist = distances[0];
-    const maxDist = distances[distances.length - 1];
-    const medianDist = distances[Math.floor(distances.length * 0.5)];
-    const percentile80 = distances[Math.floor(distances.length * 0.8)];
-    
-    console.log(`   📊 Αποστάσεις: min=${minDist.toFixed(2)}km, max=${maxDist.toFixed(2)}km, median=${medianDist.toFixed(2)}km, 80%=${percentile80.toFixed(2)}km`);
-    
-    // Υπολογισμός προτεινόμενης ακτίνας
-    let suggestedDistance;
-    
-    if (activities.length >= 8) {
-        // Μεγάλο city center (όπως Πράγα) → πιο χαλαρό clustering
-        suggestedDistance = Math.min(percentile80 * 1.5, maxDistanceKm);
-        console.log(`   🏙️  Μεγάλο city center (${activities.length} δρ.) → χαλαρό clustering`);
-    } else if (maxDist > 10) {
-        // Διασκορπισμένες δραστηριότητες → πιο αυστηρό clustering
-        suggestedDistance = Math.min(medianDist * 1.2, maxDistanceKm);
-        console.log(`   🌳 Διασκορπισμένες (μέγιστη ${maxDist.toFixed(1)}km) → αυστηρό clustering`);
-    } else {
-        // Κανονική περίπτωση
-        suggestedDistance = Math.min(percentile80 * 1.3, maxDistanceKm);
-        console.log(`   📍 Κανονική πόλη → ισορροπημένο clustering`);
-    }
-    
-    // Περιορισμός στα όρια
-    suggestedDistance = Math.max(minDistanceKm, Math.min(suggestedDistance, maxDistanceKm));
-    
-    // Στρογγυλοποίηση
-    suggestedDistance = Math.round(suggestedDistance * 10) / 10;
-    
-    console.log(`   ✅ Προτεινόμενη ακτίνα: ${suggestedDistance.toFixed(1)} km`);
-    return suggestedDistance;
-}
 // Έλεγχος ότι οι νέες συναρτήσεις είναι διαθέσιμες
 if (typeof createGeographicClusters === 'function') {
     console.log('✅ createGeographicClusters είναι διαθέσιμη');
