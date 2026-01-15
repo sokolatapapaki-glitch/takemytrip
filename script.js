@@ -2301,14 +2301,18 @@ function calculateGroupEffort(group) {
         
         console.log(`   🚶 Travel effort: ${travelEffort.toFixed(1)} για ${group.activities.length} δρ.`);
     }
-    
-    // 🔵 ΠΕΡΙΟΡΙΣΜΟΣ: Μέγιστο effort για μικρές ομάδες
-    if (group.activities.length <= 3) {
-        totalEffort = Math.min(totalEffort, 25); // Μέγιστο 25 για μικρές ομάδες
+        // 🔵 ΜΕΤΡΗΣΗ ΓΕΩΓΡΑΦΙΚΗΣ ΣΥΝΟΧΗΣ: Μικρή απόσταση = λιγότερο effort
+    if (group.activities.length > 1 && group.center) {
+        const internalDistance = calculateGroupInternalDistance(group);
+        if (internalDistance < 1.0) {
+            console.log(`   🎯 Συμπαγής ομάδα (${internalDistance.toFixed(2)}km): -20% effort`);
+            totalEffort *= 0.8; // 20% μείωση για συμπαγείς ομάδες
+        }
     }
 
     console.log(`   🧮 Effort για ${group.activities.length} δρ.: ${totalEffort.toFixed(1)}`);
     return totalEffort;
+   
 }
 // Get intensity multiplier based on activity category
 function getIntensityMultiplier(category) {
@@ -2407,26 +2411,28 @@ if (projectedEffort > maxEffort) continue;
         // ΥΠΟΛΟΓΙΣΜΟΣ SCORE
         let score = 100;
 
-        // 🔥 ΠΡΙΟΡΙΤΕΤΑ #1: ΓΕΩΓΡΑΦΙΚΗ ΕΓΓΥΤΗΤΑ (ΑΥΞΗΜΕΝΟ ΒΑΡΟΣ!)
+               // 🔥🔴 ΚΡΙΤΙΚΗ ΔΙΟΡΘΩΣΗ: ΤΕΡΑΣΤΙΟ BONUS για ΓΕΩΓΡΑΦΙΚΗ ΕΓΓΥΤΗΤΑ
         if (day.groups.length > 0 && day.center && group.center) {
             const distance = calculateDistance(day.center, group.center);
             
-            // 🔥 ΝΕΟ: ΠΟΛΥ ΜΕΓΑΛΟ BONUS για γειτονικές ομάδες
-            if (distance < 2) { // Πολύ κοντά (<2km)
-                score += 80; // Από 100 σε 200!
-            } else if (distance < 5) { // Κοντά (<5km)
-                score += 40; // Από 50 σε 100!
-            } else if (distance < 10) { // Μέτρια απόσταση
-                score += 15;
+            // 🔴🔴 ΚΟΛΛΗΤΑ ΣΗΜΕΙΑ: ΤΕΡΑΣΤΙΟ BONUS για ίδια περιοχή
+            if (distance < 0.3) { // ΠΟΛΥ ΚΟΝΤΑ (<300 μέτρα)
+                score += 200; // ΤΕΡΑΣΤΙΟ bonus
+                console.log(`   🎯 SUPER BONUS: Ομάδες <300m (${distance.toFixed(2)}km) → +200`);
+            } 
+            else if (distance < 0.8) { // ΚΟΝΤΑ (<800 μέτρα)
+                score += 120;
+                console.log(`   🎯 MEGA BONUS: Ομάδες <800m (${distance.toFixed(2)}km) → +120`);
             }
-            // 🔥 ΝΕΟ: Μεγάλο penalty για πολύ μακρινές
-            if (distance > 15) {
-                score -= 60; // Πολύ μακριά = άσχημη επιλογή
+            else if (distance < 2) { // Κοντά (<2km)
+                score += 60;
+            } else if (distance < 5) { // Μετρίως κοντά (<5km)
+                score += 20;
+            } else if (distance > 10) { // Πολύ μακριά (>10km)
+                score -= 80; // Μεγάλο penalty
+                console.log(`   ⚠️  PENALTY: Ομάδες >10km (${distance.toFixed(2)}km) → -80`);
             }
-        } else {
-            // Κενή μέρα - καλό για εξάπλωση
-            score += 100;
-        }
+        } // 🔴 ΑΦΑΙΡΕΣΑ: Κανένα bonus για κενή μέρα
 
         // 🔥 🔥 🔥 ΚΡΙΤΙΚΗ ΠΡΟΣΘΗΚΗ: ΜΗΝ ΣΠΑΣ ΚΟΛΛΗΤΑ ΣΗΜΕΙΑ ΣΕ ΑΛΛΗ ΜΕΡΑ 🔥 🔥 🔥
         if (group.center && day.groups.length > 0) {
@@ -2452,7 +2458,7 @@ if (projectedEffort > maxEffort) continue;
         }
 
         // ΠΡΙΟΡΙΤΕΤΑ #2: Ισορροπία effort
-        const effortDeviation = Math.abs(projectedEffort - 40);
+        const effortDeviation = Math.abs(projectedEffort - 32);
         score -= effortDeviation * 0.3; // Μειωμένο βάρος (από 0.5 σε 0.3)
 
         // ΠΡΙΟΡΙΤΕΤΑ #3: Ισορροπία δραστηριότητας
