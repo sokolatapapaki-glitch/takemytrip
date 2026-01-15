@@ -7203,6 +7203,13 @@ function calculateDayGeographicSpread(day) {
 // Μετά τις 2 παραπάνω, πρόσθεσε:
 function splitGroupByProximity(group, maxInternalDistance = 1.0) {
     if (!group.activities || group.activities.length <= 1) return [group];
+    // 🔴 ΚΡΙΤΙΚΗ ΔΙΟΡΘΩΣΗ: ΜΗΝ ΧΩΡΙΖΕΙΣ ΟΜΑΔΕΣ ΜΕ ΚΟΛΛΗΤΑ ΣΗΜΕΙΑ
+    // Αν η ομάδα έχει μικρή εσωτερική απόσταση (<1km), ΚΡΑΤΗΣΕ ΤΗΝ ΜΑΖΙ
+    const internalDist = calculateGroupInternalDistance(group);
+    if (internalDist < 1.0 && group.count <= 6) {
+        console.log(`   🎯 ΚΡΑΤΑΩ ΜΑΖΙ: ${group.count} δρ. σε ${internalDist.toFixed(2)}km (<1km)`);
+        return [group]; // Μην τη χωρίσεις!
+    }
     
     // 🔴 ΝΕΟ: ΑΝ Η ΟΜΑΔΑ ΕΙΝΑΙ ΠΟΛΥ ΜΕΓΑΛΗ, ΧΩΡΙΣΤΗΝ ΓΕΩΓΡΑΦΙΚΑ
     if (group.count > 4) {
