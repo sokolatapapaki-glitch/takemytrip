@@ -1913,7 +1913,7 @@ let activityGroups = [];
 
 if (fullActivities.length > 0) {
     // Χρησιμοποιούμε την ΝΕΑ σωστή ομαδοποίηση
-    activityGroups = groupActivitiesByProximity(fullActivities, 1.5);
+     activityGroups = groupActivitiesByProximity(fullActivities, 1.0); // <-- ΑΛΛΑΓΗ: 1.0km
     
     // ΛΟΓΗ ΕΝΤΕΛΩΣ ΝΕΑ: Αν έχουμε περισσότερες συστάδες από μέρες
     if (activityGroups.length > state.selectedDays) {
@@ -2306,8 +2306,15 @@ function getIntensityMultiplier(category) {
 function findBestDayForGroup(days, group, totalDays, maxActivities = 4, maxEffort = 60) {
     const groupEffort = calculateGroupEffort(group);
     const groupSize = group.count || group.activities.length;
+    
     // 🔵 ΠΡΟΣΘΗΚΗ DEBUGGING
     console.log(`   🔍 findBestDayForGroup: Ομάδα με ${groupSize} δρ., effort: ${groupEffort}`);
+    // 🔴 🔴 🔴 ΝΕΟ: ΕΛΕΓΧΟΣ ΓΙΑ ΠΟΛΥ ΜΕΓΑΛΕΣ ΟΜΑΔΕΣ
+    if (groupSize > maxActivities) {
+        console.warn(`   ⚠️  Ομάδα με ${groupSize} δρ. > ${maxActivities} (max/μέρα) - ΘΑ ΧΩΡΙΣΤΕΙ`);
+        // Επιστροφή dummy value - η ομάδα θα χωριστεί από την groupActivitiesByProximity
+        return 0; // Προσωρινό
+    }
     
     // ΝΕΟ: Υπολογισμός της ΕΣΩΤΕΡΙΚΗΣ απόστασης της ομάδας
     const groupInternalDistance = calculateGroupInternalDistance(group);
