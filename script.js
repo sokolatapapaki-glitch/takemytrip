@@ -2217,34 +2217,40 @@ function distributeGroupsToDays(groups, totalDays) {
         console.log(`   ${i+1}. Ομάδα με ${group.count} δραστηριότητες, effort: ${calculateGroupEffort(group)}`);
     });
 
-    // 2. ΒΕΛΤΙΩΜΕΝΗ Κατανομή με ΣΚΛΗΡΑ ΟΡΙΑ
-    sortedGroups.forEach((group, index) => {
-        const bestDayIndex = findBestDayForGroup(days, group, totalDays, 
-                                        MAX_ACTIVITIES_PER_DAY, 
-                                        MAX_EFFORT_PER_DAY);
-        // Υπολογισμός μετρικών
-        const groupEffort = calculateGroupEffort(group);
-        let groupCost = 0;
-        let groupTime = 0;
+// 2. ΒΕΛΤΙΩΜΕΝΗ Κατανομή με ΣΚΛΗΡΑ ΟΡΙΑ
+sortedGroups.forEach((group, index) => {
+    const bestDayIndex = findBestDayForGroup(days, group, totalDays, 
+                                    MAX_ACTIVITIES_PER_DAY, 
+                                    MAX_EFFORT_PER_DAY);
+    // Υπολογισμός μετρικών
+    const groupEffort = calculateGroupEffort(group);
+    let groupCost = 0;
+    let groupTime = 0;
 
-        group.activities.forEach(activity => {
-            groupCost += (parseFloat(activity.price) || 0);
-            groupTime += (parseFloat(activity.duration_hours) || 1.5);
-        });
-
-        // Ταξίδι μέσα στην ομάδα
-        const travelTime = (group.activities.length - 1) * 0.3;
-
-        // Προσθήκη στην επιλεγμένη μέρα
-        days[bestDayIndex].groups.push(group);
-        days[bestDayIndex].totalActivities += group.count;
-        days[bestDayIndex].totalCost += groupCost;
-        days[bestDayIndex].estimatedTime += groupTime + travelTime;
-        days[bestDayIndex].totalEffort += groupEffort;
-        days[bestDayIndex].center = calculateDayCenter(days[bestDayIndex].groups);
-
-        console.log(`   📦 Ομάδα ${index + 1} (${group.count} δρ., effort: ${groupEffort}) → Μέρα ${bestDayIndex + 1}`);
+    group.activities.forEach(activity => {
+        groupCost += (parseFloat(activity.price) || 0);
+        groupTime += (parseFloat(activity.duration_hours) || 1.5);
     });
+
+    // Ταξίδι μέσα στην ομάδα
+    const travelTime = (group.activities.length - 1) * 0.3;
+
+    // Προσθήκη στην επιλεγμένη μέρα
+    days[bestDayIndex].groups.push(group);
+    days[bestDayIndex].totalActivities += group.count;
+    days[bestDayIndex].totalCost += groupCost;
+    days[bestDayIndex].estimatedTime += groupTime + travelTime;
+    days[bestDayIndex].totalEffort += groupEffort;
+    days[bestDayIndex].center = calculateDayCenter(days[bestDayIndex].groups);
+
+    // 🔵 ΚΡΙΤΙΚΗ ΠΡΟΣΘΗΚΗ: ΚΑΤΑΓΡΑΦΗ ΗΜΕΡΑΣ ΣΕ ΚΑΘΕ ΔΡΑΣΤΗΡΙΟΤΗΤΑ
+    group.activities.forEach(activity => {
+        activity.assignedDay = bestDayIndex + 1; // +1 για 1-based indexing (μέρα 1,2,3...)
+        console.log(`   📍 "${activity.name}" → Μέρα ${activity.assignedDay}`);
+    });
+
+    console.log(`   📦 Ομάδα ${index + 1} (${group.count} δρ., effort: ${groupEffort}) → Μέρα ${bestDayIndex + 1}`);
+});
 
     // 3. ΕΛΕΓΧΟΣ ΙΣΟΡΡΟΠΙΑΣ
     console.log(`✅ Βελτιωμένη κατανομή σε ${totalDays} μέρες:`);
