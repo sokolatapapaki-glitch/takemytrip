@@ -2267,33 +2267,48 @@ sortedGroups.forEach((group, index) => {
 // ==================== CALCULATE GROUP EFFORT ====================
 function calculateGroupEffort(group) {
     if (!group || !group.activities || group.activities.length === 0) {
-        return 10; // Βασικό effort για κενή ομάδα
+        return 8; // Μειωμένο βασικό effort
     }
 
     let totalEffort = 0;
 
     group.activities.forEach(activity => {
-        // Base effort from duration (ΠΟΛΥ ΜΙΚΡΟΤΕΡΟ!)
+        // 🔵 ΜΕΙΩΜΕΝΟ Base effort: 1 ώρα = 6 effort points (από 10)
         const duration = parseFloat(activity.duration_hours) || 1.5;
-        let activityEffort = duration * 4; // ΜΕΙΩΣΗ: 1 hour = 4 effort points (από 10!)
-
-        // Physical intensity multiplier
+        let activityEffort = duration * 6; // ΜΕΙΩΣΗ 40%
+        
+        // Physical intensity multiplier (και αυτό μειωμένο)
         const intensityMultiplier = getIntensityMultiplier(activity.category);
-        activityEffort *= intensityMultiplier;
-
+        activityEffort *= Math.min(intensityMultiplier, 1.3); // Μέγιστο 1.3x
+        
+        // 🔵 ΠΡΟΣΘΗΚΗ: Μειωμένο effort για playgrounds, μουσεία
+        if (activity.category === 'playground' || activity.tags?.includes('playground')) {
+            activityEffort *= 0.7; // 30% λιγότερο effort
+        }
+        if (activity.category === 'museum') {
+            activityEffort *= 0.8; // 20% λιγότερο effort
+        }
+        
         totalEffort += activityEffort;
     });
 
-    // Travel effort (ΜΕΙΩΣΗ!)
+    // 🔵 ΜΕΙΩΜΕΝΟ Travel effort
     if (group.activities.length > 1) {
         const clusterRadius = group.radius || 0;
-        // ΜΕΙΩΣΗ: (group.activities.length - 1) * (2 + clusterRadius) (από 5 + clusterRadius*2!)
-        const travelEffort = (group.activities.length - 1) * (2 + clusterRadius);
+        // Μειωμένο: (group.activities.length - 1) * (3 + clusterRadius) (από 5 + clusterRadius*2)
+        const travelEffort = (group.activities.length - 1) * (3 + clusterRadius);
         totalEffort += travelEffort;
+        
+        console.log(`   🚶 Travel effort: ${travelEffort.toFixed(1)} για ${group.activities.length} δρ.`);
+    }
+    
+    // 🔵 ΠΕΡΙΟΡΙΣΜΟΣ: Μέγιστο effort για μικρές ομάδες
+    if (group.activities.length <= 3) {
+        totalEffort = Math.min(totalEffort, 25); // Μέγιστο 25 για μικρές ομάδες
     }
 
-    // ΠΡΟΣΘΗΚΗ: Μέγιστο όριο!
-    return Math.min(totalEffort, 40); // ΜΕΓΙΣΤΟ 40 EFFORT!
+    console.log(`   🧮 Effort για ${group.activities.length} δρ.: ${totalEffort.toFixed(1)}`);
+    return totalEffort;
 }
 // Get intensity multiplier based on activity category
 function getIntensityMultiplier(category) {
@@ -2335,6 +2350,34 @@ function findBestDayForGroup(days, group, totalDays, maxActivities = 4, maxEffor
     
     // 🔵 ΠΡΟΣΘΗΚΗ DEBUGGING
     console.log(`   🔍 findBestDayForGroup: Ομάδα με ${groupSize} δρ., effort: ${groupEffort}`);
+    // 🔵 ΚΡΙΤΙΚΗ ΔΙΟΡΘΩΣΗ: Έλεγχος αν ΚΑΠΟΙΑ δραστηριότητα είναι ήδη σε μέρα
+    const alreadyAssignedActivities = group.activities.filter(activity => 
+        activity.assignedDay !== undefined && activity.assignedDay !== null
+    );
+    
+    if (alreadyAssignedActivities.length > 0) {
+        console.log(`   ⚠️  ΕΛΕΓΧΟΣ: Η ομάδα έχει ${alreadyAssignedActivities.length} δραστηριότητες που έχουν ΗΔΗ κατανεμηθεί!`);
+        
+        // Λίστα με τις μέρες που έχουν ήδη καταχωρηθεί
+        const existingDays = [...new Set(alreadyAssignedActivities.map(act => act.assignedDay))];
+        console.log(`   📍 Υπάρχουσες καταχωρήσεις: ${existingDays.join(', ')}`);
+        
+        // Αν ΟΛΕΣ οι δραστηριότητες είναι στην ΙΔΙΑ μέρα, επέστρεψε αυτή τη μέρα
+        if (existingDays.length === 1) {
+            console.log(`   🎯 ΣΥΝΕΝΩΣΗ: Όλες οι δραστηριότητες είναι ήδη στη Μέρα ${existingDays[0]}`);
+            return existingDays[0] - 1; // -1 για 0-based index
+        }
+        
+        // Αν υπάρχουν σε ΔΙΑΦΟΡΕΤΙΚΕΣ μέρες, πρόβλημα - άφησε τον αλγόριθμο να αποφασίσει
+        console.log(`   ⚠️  ΠΡΟΣΟΧΗ: Οι δραστηριότητες είναι σε διαφορετικές μέρες (${existingDays.join(', ')})`);
+    }
+    
+    // 🔴🔴🔴 ΚΡΙΤΙΚΗ ΔΙΟΡΘΩΣΗ: ΜΕΓΑΛΕΣ ΟΜΑΔΕΣ ΠΡΩΤΕΣ
+    if (groupSize > maxActivities) {
+        console.warn(`   ⚠️  Ομάδα με ${groupSize} δρ. > ${maxActivities} (max/μέρα) - ΘΑ ΧΩΡΙΣΤΕΙ`);
+        return 0; // Προσωρινό
+    }
+    
     // 🔴 🔴 🔴 ΝΕΟ: ΕΛΕΓΧΟΣ ΓΙΑ ΠΟΛΥ ΜΕΓΑΛΕΣ ΟΜΑΔΕΣ
     if (groupSize > maxActivities) {
         console.warn(`   ⚠️  Ομάδα με ${groupSize} δρ. > ${maxActivities} (max/μέρα) - ΘΑ ΧΩΡΙΣΤΕΙ`);
