@@ -2306,6 +2306,8 @@ function getIntensityMultiplier(category) {
 function findBestDayForGroup(days, group, totalDays, maxActivities = 4, maxEffort = 60) {
     const groupEffort = calculateGroupEffort(group);
     const groupSize = group.count || group.activities.length;
+    // 🔵 ΠΡΟΣΘΗΚΗ DEBUGGING
+    console.log(`   🔍 findBestDayForGroup: Ομάδα με ${groupSize} δρ., effort: ${groupEffort}`);
     
     // ΝΕΟ: Υπολογισμός της ΕΣΩΤΕΡΙΚΗΣ απόστασης της ομάδας
     const groupInternalDistance = calculateGroupInternalDistance(group);
@@ -2384,7 +2386,7 @@ if (projectedEffort > maxEffort) continue;
         }
         return 0;
     }
-
+console.log(`   ✅ findBestDayForGroup: Επέλεξε Μέρα ${bestDayIndex + 1} με score: ${bestScore}`);
     return bestDayIndex;
 }
 
