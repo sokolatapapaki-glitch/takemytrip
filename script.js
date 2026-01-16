@@ -1382,9 +1382,9 @@ function getHotelStepHTML() {
                             <i class="fas fa-percentage" style="color: #4CAF50; margin-right: 4px;"></i>
                             Αν κλείσεις μέσω <strong>TicketSeller</strong>, έχεις έκπτωση!
                             <br>
-                            <small><i class="fas fa-info-circle"></i> <strong>Σημείωση:</strong> Θα χρειαστεί να εισάγετε τις ημερομηνίες χειροκίνητα στο site.</small>
+                            <small><i class="fas fa-info-circle"></i> <strong>Σημείωση:</strong> Στείλε email στο takethekids2@gmail.com</small>
                             <br>
-                            <small>Στείλε email στο: <strong>takethekids2@gmail.com</strong></small>
+                            <small>Από 5% έως και 20% ανάλογα διαθεσιμότητας</strong></small>
                         </div>
                     </div>
                 </div>
