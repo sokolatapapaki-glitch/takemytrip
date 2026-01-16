@@ -23,7 +23,29 @@ const COLOR_PALETTE = [
     '#14B8A6', // Teal
     '#F97316'  // Orange
 ];
-
+// ==================== RESTORE USER PROGRAM ON LOAD ====================
+function restoreUserProgramFromState() {
+    if (state.userProgram) {
+        console.log('🔄 Επαναφορά userProgram από state...');
+        userProgram = JSON.parse(JSON.stringify(state.userProgram));
+    } else if (state.geographicProgram) {
+        console.log('🔄 Μετατροπή geographicProgram σε userProgram...');
+        // Μετατροπή από το παλιό format στο νέο
+        userProgram = {
+            days: state.geographicProgram.days.map(day => 
+                day.groups.flatMap(group => 
+                    group.activities.map(activity => ({
+                        id: activity.id,
+                        name: activity.name,
+                        activityId: activity.id
+                    }))
+                )
+            ),
+            totalDays: state.geographicProgram.totalDays,
+            selectedDay: 1
+        };
+    }
+}
 // ==================== MAP MANAGER ====================
 const MapManager = {
     instance: null,
@@ -520,6 +542,9 @@ function loadSavedDataNow(saved) {
         // Restore persisted program data
         state.geographicProgram = data.geographicProgram || null;
         state.currentCityActivities = data.currentCityActivities || [];
+        
+        // 🔴 ΚΡΙΤΙΚΟ: Αποθήκευσε ΚΑΙ το userProgram αν υπάρχει
+        state.userProgram = data.userProgram || null;
 
         // Update display with null check for DOM element
         if (state.selectedDestination) {
@@ -535,6 +560,7 @@ function loadSavedDataNow(saved) {
             activities: state.selectedActivities.length,
             familyMembers: state.familyMembers.length,
             hasProgram: !!state.geographicProgram,
+            hasUserProgram: !!state.userProgram,
             lastSaved: data.lastSaved
         });
 
@@ -543,6 +569,12 @@ function loadSavedDataNow(saved) {
 
         // Add visual indicators to sidebar steps
         updateSidebarCompletionIndicators();
+        
+        // 🔴 ΚΡΙΤΙΚΟ: Επαναφορά του userProgram για το drag & drop interface
+        setTimeout(() => {
+            restoreUserProgramFromState();
+            console.log('✅ Επαναφέρθηκε userProgram:', userProgram);
+        }, 100);
 
     } catch (error) {
         console.error('Σφάλμα φόρτωσης δεδομένων:', error);
@@ -6701,7 +6733,8 @@ function saveUserProgram() {
             }, 0)
         });
     });
-    
+     // 🔴 ΚΡΙΤΙΚΗ ΔΙΟΡΘΩΣΗ: Αποθήκευσε ΚΑΙ το userProgram για το drag & drop!
+    state.userProgram = JSON.parse(JSON.stringify(userProgram)); // Deep copy
     // Αποθήκευση
     state.geographicProgram = program;
     saveState();
