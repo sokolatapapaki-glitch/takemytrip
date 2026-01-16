@@ -25,45 +25,58 @@ const COLOR_PALETTE = [
 ];
 
 // ==================== RESTORE USER PROGRAM ON LOAD ====================
+// ==================== RESTORE USER PROGRAM ON LOAD ====================
 function restoreUserProgramFromState() {
-    console.log('🔄 [DEBUG] restoreUserProgramFromState καλείται');
-    console.log('📊 state.userProgram:', state.userProgram);
-    console.log('📊 userProgram πριν:', userProgram);
+    console.log('🔄 [DEBUG restoreUserProgramFromState] Αρχή επαναφοράς...');
+    console.log('📊 State πριν:', state);
     
+    // 🔴 ΚΡΙΤΙΚΟ: Ελέγχουμε ΠΡΩΤΑ το userProgram
     if (state.userProgram && state.userProgram.days) {
-        console.log('✅ Επαναφορά userProgram από state...');
-        // 🔴 ΚΡΙΤΙΚΟ: Deep copy με σωστή δομή
+        console.log('✅ Βρέθηκε userProgram στο state:', state.userProgram);
+        
+        // Απευθείας αντιγραφή - χωρίς μετατροπές
         userProgram = {
-            days: JSON.parse(JSON.stringify(state.userProgram.days)),
+            days: [...state.userProgram.days],  // Shallow copy για arrays
             totalDays: state.userProgram.totalDays || 3,
             selectedDay: state.userProgram.selectedDay || 1
         };
-        console.log('✅ userProgram μετά:', userProgram);
-    } else if (state.geographicProgram) {
-        console.log('🔄 Μετατροπή geographicProgram σε userProgram...');
-        // Μετατροπή από το παλιό format στο νέο
+        
+        console.log('✅ Επαναφέρθηκε userProgram:', userProgram);
+    } 
+    // 🔴 Αν δεν υπάρχει userProgram, ελέγχουμε για παλιά geographicProgram
+    else if (state.geographicProgram) {
+        console.log('ℹ️ Μετατροπή παλιού geographicProgram σε userProgram...');
+        
+        // Μετατροπή από παλιό format
         userProgram = {
-            days: state.geographicProgram.days.map(day => 
-                day.groups.flatMap(group => 
+            days: state.geographicProgram.days.map(day => {
+                // Εξαγωγή δραστηριοτήτων από όλες τις ομάδες της μέρας
+                return day.groups.flatMap(group => 
                     group.activities.map(activity => ({
                         id: activity.id,
                         name: activity.name,
-                        activityId: activity.id
+                        activityId: activity.id  // Αποθηκεύουμε και το id
                     }))
-                )
-            ),
-            totalDays: state.geographicProgram.totalDays,
+                );
+            }),
+            totalDays: state.geographicProgram.totalDays || 3,
             selectedDay: 1
         };
+        
+        // Αποθήκευση πίσω στο state για μελλοντική χρήση
+        state.userProgram = JSON.parse(JSON.stringify(userProgram));
+        
+        console.log('✅ Μετατράπηκε σε userProgram:', userProgram);
     } else {
         console.log('ℹ️ Δεν υπάρχει αποθηκευμένο πρόγραμμα');
-        // Αρχικοποίηση με κενό πρόγραμμα
         userProgram = {
             days: [],
             totalDays: 3,
             selectedDay: 1
         };
     }
+    
+    console.log('📊 State μετά:', state);
 }
 // ==================== MAP MANAGER ====================
 const MapManager = {
@@ -899,56 +912,63 @@ function loadStepContent(stepName) {
     stepContent.innerHTML = getActivitiesStepHTML();
     setupActivitiesStep();
     break;
-       case 'map':
+      case 'map':
     stepContent.innerHTML = getMapStepHTML();
     
-    // 🔴 ΚΡΙΤΙΚΟ: ΧΡΗΣΗ setTimeout ΜΕ 100ms (όχι 500ms)
+    // 🔴 ΜΕΙΩΣΕ ΤΟ TIMEOUT ΣΕ 50ms (όχι 100ms)
     setTimeout(() => {
-        console.log('🗺️ [DEBUG] Φόρτωση χάρτη και προγράμματος...');
+        console.log('🗺️ [DEBUG loadStepContent] Φόρτωση βήματος map...');
         
-        // 1. Αρχικοποίηση χάρτη
-        if (typeof L !== 'undefined') {
-            try {
-                initializeMapInStep();
-            } catch (error) {
-                console.error('❌ Σφάλμα χάρτη:', error);
+        // 1. Αρχικοποίηση χάρτη (αφού φορτώσει το DOM)
+        setTimeout(() => {
+            if (typeof L !== 'undefined') {
+                try {
+                    initializeMapInStep();
+                } catch (error) {
+                    console.error('❌ Σφάλμα χάρτη:', error);
+                }
             }
-        }
+        }, 100);
         
-        // 2. Επαναφορά προγράμματος στις κάλπες (ΚΡΙΤΙΚΟ)
-        if (state.userProgram) {
-            console.log('📅 [DEBUG] Φόρτωση userProgram στις κάλπες:', state.userProgram);
+        // 2. ΚΡΙΤΙΚΟ: Επαναφορά προγράμματος (ΜΕΤΑ από το DOM render)
+        setTimeout(() => {
+            console.log('📅 [DEBUG] Επαναφορά προγράμματος για κάλπες...');
             
-            // Αντικατάσταση του userProgram με το αποθηκευμένο
-            userProgram = JSON.parse(JSON.stringify(state.userProgram));
+            // ΕΠΙΛΕΞΕ ΜΟΝΟ ΕΝΑ ΑΠΟ ΤΑ ΔΥΟ ΠΑΡΑΚΑΤΩ:
             
-            // 🔴 ΔΙΟΡΘΩΣΗ: Ρύθμισε τις κάλπες ΜΕΤΑ από το setTimeout
+            // 🔴 ΕΠΙΛΟΓΗ Α: Αν θέλεις να φορτώσεις από state.userProgram
+            if (state.userProgram) {
+                console.log('✅ Φόρτωση από state.userProgram:', state.userProgram);
+                userProgram = JSON.parse(JSON.stringify(state.userProgram));
+            }
+            // 🔴 ΕΠΙΛΟΓΗ Β: Αν θέλεις να φορτώσεις από το global userProgram (που έχει ήδη)
+            else if (window.userProgram && window.userProgram.days) {
+                console.log('✅ Φόρτωση από global userProgram:', window.userProgram);
+                // Κάνε κάτι αν χρειάζεται
+            }
+            
+            // 3. Ρύθμιση κάλπων ΜΕΤΑ από φόρτωση δεδομένων
             setTimeout(() => {
-                // Α) Δημιούργησε τις κάλπες
+                console.log('🏗️ [DEBUG] Δημιουργία κάλπων...');
+                
+                // Α) Δημιουργήσε τις κάλπες
                 setupProgramDays();
                 
-                // Β) Ενημέρωσε dropdown
+                // Β) Ενημέρωσε dropdown αν υπάρχει
                 const daysSelect = document.getElementById('program-days-select');
-                if (daysSelect && state.userProgram.totalDays) {
-                    daysSelect.value = state.userProgram.totalDays;
+                if (daysSelect) {
+                    daysSelect.value = userProgram.totalDays || 3;
                 }
                 
                 // Γ) Εμφάνισε τις δραστηριότητες στις κάλπες
                 renderProgramDays();
                 renderAvailableActivities();
                 
-                console.log('✅ [DEBUG] Το πρόγραμμα φορτώθηκε στις κάλπες');
+                console.log('✅ [DEBUG] Κάλπες δημιουργήθηκαν:', userProgram);
                 
-                // Δ) Ενημέρωσε χάρτη αν είναι ήδη φορτωμένος
-                if (window.travelMap) {
-                    setTimeout(() => {
-                        synchronizeMapMarkersWithProgram();
-                    }, 300);
-                }
-                
-            }, 300); // Μικρή καθυστέρηση για DOM
-        }
-    }, 100); // Μικρή καθυστέρηση
+            }, 200); // Μικρό timeout για DOM
+        }, 150);
+    }, 50); // ΠΟΛΥ ΜΙΚΡΟ timeout
     break;
     } // Τέλος του switch
     
@@ -1656,6 +1676,19 @@ function getMapStepHTML() {
     return `
         <div class="card">
             <h1 class="card-title"><i class="fas fa-map"></i> Διαδραστικός Χάρτης</h1>
+            <!-- DEBUG BUTTONS (Προσωρινά) -->
+            <div style="margin-bottom: 15px; padding: 10px; background: #f0f0f0; border-radius: 8px;">
+                <button onclick="debugCheckProgram()" style="margin-right: 10px; padding: 5px 10px;">
+                    🔍 Check Program
+                </button>
+                <button onclick="debugForceRestore()" style="margin-right: 10px; padding: 5px 10px;">
+                    🔄 Force Restore
+                </button>
+                <button onclick="console.log('userProgram:', userProgram, 'state.userProgram:', state.userProgram)" 
+                        style="padding: 5px 10px;">
+                    📊 Log State
+                </button>
+            </div>
             <p class="card-subtitle">${state.selectedDestination ? 'Χάρτης για: ' + state.selectedDestination : 'Δεν έχετε επιλέξει προορισμό'}</p>
             
             ${!state.selectedDestination ? `
@@ -4119,40 +4152,33 @@ function calculateTotalSpent() {
 }
 
 function saveState() {
+    console.log('💾 [DEBUG saveState] Αποθήκευση state...');
+    
     let data = {
         selectedDestinationName: state.selectedDestination,
         selectedDestinationId: state.selectedDestinationId,
         selectedDaysStay: state.selectedDays,
         familyMembers: state.familyMembers,
         selectedActivities: state.selectedActivities,
-        // Persist program data to avoid regenerating after page refresh
+        
+        // 🔴 ΚΡΙΤΙΚΟ: Αποθήκευσε ΚΑΙ ΤΑ ΔΥΟ!
+        userProgram: state.userProgram || null,
         geographicProgram: state.geographicProgram || null,
+        
         currentCityActivities: state.currentCityActivities || [],
         lastSaved: new Date().toISOString()
     };
 
-    // Validate data before saving (defensive programming)
+    // Validate data before saving
     data = StateValidator.sanitizeData(data);
 
     try {
         localStorage.setItem('travelPlannerData', JSON.stringify(data));
+        console.log('✅ Αποθηκεύτηκε στο localStorage');
     } catch (error) {
         console.error('❌ Failed to save state:', error);
-        // Handle quota exceeded
-        if (error.name === 'QuotaExceededError') {
-            console.warn('⚠️ localStorage quota exceeded, clearing old data');
-            // Clear program data to save space
-            data.geographicProgram = null;
-            data.currentCityActivities = [];
-            try {
-                localStorage.setItem('travelPlannerData', JSON.stringify(data));
-            } catch (e) {
-                console.error('❌ Still cannot save state:', e);
-            }
-        }
     }
 }
-
 function getActivityEmoji(category) {
     const emojiMap = {
         'attraction': '🎡',
@@ -6370,6 +6396,12 @@ let userProgram = {
 
 // 1. Ρύθμιση ημερών
 function setupProgramDays() {
+    console.log('🔍 [DEBUG setupProgramDays] Τι έχουμε:', {
+        state_userProgram: state.userProgram,
+        global_userProgram: userProgram,
+        state_geoProgram: state.geographicProgram,
+        currentStep: state.currentStep
+    });
     const daysSelect = document.getElementById('program-days-select');
     if (!daysSelect) return;
     
@@ -6778,60 +6810,74 @@ function addActivityToQuickDay(activityId) {
 }
 
 // 8. Αποθήκευση προγράμματος
+// 8. Αποθήκευση προγράμματος
 function saveUserProgram() {
-    // Δημιουργία προγράμματος παρόμοιας δομής
-    const program = {
+    console.log('💾 [DEBUG saveUserProgram] Αρχή αποθήκευσης...');
+    
+    // 1. Δημιουργία DEEP COPY του userProgram
+    const userProgramCopy = JSON.parse(JSON.stringify(userProgram));
+    
+    // 2. Αποθήκευση στο STATE
+    state.userProgram = userProgramCopy;
+    console.log('✅ Αποθηκεύτηκε στο state.userProgram:', state.userProgram);
+    
+    // 3. Δημιουργία συμβατού geographicProgram για τους χάρτες
+    const geoProgram = {
         totalDays: userProgram.totalDays,
         days: [],
         groups: [],
-        isUserCreated: true
+        isUserCreated: true,
+        timestamp: new Date().toISOString()
     };
     
     userProgram.days.forEach((dayActivities, index) => {
         const dayNumber = index + 1;
         
-        // Ομαδοποίηση (απλή - μία ομάδα ανά μέρα)
-        const groups = [];
-        if (dayActivities.length > 0) {
-            groups.push({
-                center: null,
-                activities: dayActivities.map(activity => ({
-                    id: activity.id,
-                    name: activity.name,
-                    duration: state.currentCityActivities?.find(a => a.id === activity.id)?.duration_hours || 2
-                })),
-                count: dayActivities.length
-            });
-        }
+        // Βρες τις πλήρεις πληροφορίες για κάθε δραστηριότητα
+        const activitiesWithDetails = dayActivities.map(activity => {
+            const fullActivity = state.currentCityActivities?.find(a => a.id === activity.id) || activity;
+            return {
+                id: activity.id,
+                name: activity.name,
+                duration_hours: fullActivity.duration_hours || 2,
+                location: fullActivity.location || null
+            };
+        });
         
-        program.days.push({
+        // Ομαδοποίηση (μία ομάδα ανά μέρα για απλότητα)
+        const groups = activitiesWithDetails.length > 0 ? [{
+            center: null,
+            activities: activitiesWithDetails,
+            count: activitiesWithDetails.length
+        }] : [];
+        
+        geoProgram.days.push({
             dayNumber: dayNumber,
-            totalActivities: dayActivities.length,
+            totalActivities: activitiesWithDetails.length,
             groups: groups,
-            totalHours: dayActivities.reduce((sum, activity) => {
-                const fullActivity = state.currentCityActivities?.find(a => a.id === activity.id);
-                return sum + (fullActivity?.duration_hours || 2);
-            }, 0)
+            totalHours: activitiesWithDetails.reduce((sum, act) => sum + (act.duration_hours || 2), 0)
         });
     });
-     // 🔴 ΚΡΙΤΙΚΗ ΔΙΟΡΘΩΣΗ: Αποθήκευσε ΚΑΙ το userProgram για το drag & drop!
-    state.userProgram = JSON.parse(JSON.stringify(userProgram)); // Deep copy
-    // Αποθήκευση
-    state.geographicProgram = program;
-    saveState();
-    // 🔴 ΝΕΟ: ΣΥΓΧΡΟΝΙΣΜΟΣ MARKERS ΜΕ ΧΡΩΜΑΤΑ ΗΜΕΡΩΝ
-    setTimeout(() => {
-        synchronizeMapMarkersWithProgram();
-    }, 500);
-    showToast(`✅ Το πρόγραμμα αποθηκεύτηκε! ${program.totalDays} μέρες, ${program.days.reduce((sum, day) => sum + day.totalActivities, 0)} δραστηριότητες`, 'success');
     
-    // Ενημέρωση του "Φίλτρο Ημερών" (αν υπάρχει)
-    if (state.geographicProgram) {
-        setTimeout(() => {
-            // Εδώ θα προσθέσουμε κώδικα για να ανανεώσει το φίλτρο ημερών
-            showToast('🔄 Το φίλτρο ημερών ενημερώθηκε', 'info');
-        }, 500);
-    }
+    // 4. Αποθήκευση και στο geographicProgram
+    state.geographicProgram = geoProgram;
+    
+    // 5. ΑΠΟΘΗΚΕΥΣΗ ΣΤΟ LOCALSTORAGE
+    saveState();
+    
+    console.log('📊 [DEBUG] Τελικά state:', {
+        userProgram: state.userProgram,
+        geoProgram: state.geographicProgram,
+        totalDays: state.userProgram?.totalDays,
+        totalActivities: state.userProgram?.days?.reduce((sum, day) => sum + day.length, 0)
+    });
+    
+    // 6. Ενημέρωση χρήστη
+    showToast(`✅ Το πρόγραμμα αποθηκεύτηκε! ${geoProgram.totalDays} μέρες, ${geoProgram.days.reduce((sum, day) => sum + day.totalActivities, 0)} δραστηριότητες`, 'success');
+    
+    // 7. Ανανέωση εμφάνισης
+    renderProgramDays();
+    renderAvailableActivities();
 }
 
 // ==================== SYNCHRONIZE MAP WITH PROGRAM ====================
