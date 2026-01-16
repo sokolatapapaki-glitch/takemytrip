@@ -1725,7 +1725,7 @@ function getMapStepHTML() {
                 </div>
                 `}
 
-   <!-- 🔴 ΝΕΟ: ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΓΡΑΜΜΑΤΟΣ ΚΑΤΩ ΑΠΟ ΤΟΝ ΧΑΡΤΗ -->
+                <!-- 🔴 ΝΕΟ: ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΓΡΑΜΜΑΤΟΣ ΚΑΤΩ ΑΠΟ ΤΟΝ ΧΑΡΤΗ -->
                 <div id="program-creation-section" class="card" style="margin-top: 40px; background: linear-gradient(135deg, #f8faff 0%, #f0f4ff 100%);">
                     <h3 style="color: var(--primary); margin-bottom: 20px;">
                         <i class="fas fa-calendar-plus"></i> Δημιουργία Προγράμματος
@@ -1800,63 +1800,48 @@ function getMapStepHTML() {
                     `}
                 </div>
                 
-                <!-- ΟΔΗΓΙΕΣ ΧΡΗΣΗΣ -->
+                <!-- ΟΔΗΓΙΕΣ ΧΡΗΣΗΣ ΧΑΡΤΗ -->
                 <div class="map-instructions-card" id="map-instructions-card">
-                    <!-- ... υπάρχουσες οδηγίες ... -->
+                    <div class="map-instructions-header">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-graduation-cap"></i>
+                            <h4 style="margin: 0;">Οδηγίες Χρήσης Χάρτη</h4>
+                        </div>
+                        <button onclick="closeMapInstructions()"
+                                style="background: none; border: none; color: #666; cursor: pointer; font-size: 20px; padding: 0; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; transition: color 0.2s;"
+                                onmouseover="this.style.color='#EF4444'"
+                                onmouseout="this.style.color='#666'"
+                                title="Κλείσιμο οδηγιών">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+
+                    <div class="map-instructions-content">
+                        <p><i class="fas fa-map-pin" style="color: #4F46E5;"></i>
+                           <strong>1. Πατήστε "Προβολή Σημείων"</strong> για να φορτώσετε τις δραστηριότητες σας</p>
+
+                        <p><i class="fas fa-mouse-pointer" style="color: #10B981;"></i>
+                           <strong>2. Κάντε κλικ σε 2 πινέζες</strong> για επιλογή
+                           <span class="step-from">ΑΠΟ</span> και <span class="step-to">ΠΡΟΣ</span></p>
+
+                        <p><i class="fas fa-route" style="color: #F59E0B;"></i>
+                           <strong>3. Η διαδρομή θα σχεδιαστεί αυτόματα</strong> με απόσταση και χρόνους</p>
+
+                        <p><i class="fas fa-directions" style="color: #EF4444;"></i>
+                           <strong>4. Πατήστε στο κουμπί:</strong> Διαδρομή για Google Maps οδηγίες</p>
+                    </div>
+
+                    <div class="map-instructions-tip">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Οι πινέζες γίνονται <span class="step-from">πράσινες</span> για ΑΠΟ και
+                              <span class="step-to">κόκκινες</span> για ΠΡΟΣ!</span>
+                    </div>
                 </div>
                 
                 <!-- ΕΠΙΣΤΡΟΦΗ -->
                 <div style="text-align: center; margin-top: 30px;">
                     <button class="btn btn-outline" onclick="showStep('activities')">
                         <i class="fas fa-arrow-left"></i> Επιστροφή στις Δραστηριότητες
-                    </button>
-                </div>
-            `}
-        </div>
-    `;
-}              
-<!-- ΟΔΗΓΙΕΣ ΧΡΗΣΗΣ ΧΑΡΤΗ -->
-<div class="map-instructions-card" id="map-instructions-card">
-    <div class="map-instructions-header">
-        <div style="display: flex; align-items: center; gap: 10px;">
-            <i class="fas fa-graduation-cap"></i>
-            <h4 style="margin: 0;">Οδηγίες Χρήσης Χάρτη</h4>
-        </div>
-        <button onclick="closeMapInstructions()"
-                style="background: none; border: none; color: #666; cursor: pointer; font-size: 20px; padding: 0; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; transition: color 0.2s;"
-                onmouseover="this.style.color='#EF4444'"
-                onmouseout="this.style.color='#666'"
-                title="Κλείσιμο οδηγιών">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-
-    <div class="map-instructions-content">
-        <p><i class="fas fa-map-pin" style="color: #4F46E5;"></i>
-           <strong>1. Πατήστε "Προβολή Σημείων"</strong> για να φορτώσετε τις δραστηριότητες σας</p>
-
-        <p><i class="fas fa-mouse-pointer" style="color: #10B981;"></i>
-           <strong>2. Κάντε κλικ σε 2 πινέζες</strong> για επιλογή
-           <span class="step-from">ΑΠΟ</span> και <span class="step-to">ΠΡΟΣ</span></p>
-
-        <p><i class="fas fa-route" style="color: #F59E0B;"></i>
-           <strong>3. Η διαδρομή θα σχεδιαστεί αυτόματα</strong> με απόσταση και χρόνους</p>
-
-        <p><i class="fas fa-directions" style="color: #EF4444;"></i>
-           <strong>4. Πατήστε στο κουμπί:</strong> Διαδρομή για Google Maps οδηγίες</p>
-    </div>
-
-    <div class="map-instructions-tip">
-        <i class="fas fa-lightbulb"></i>
-        <span>Οι πινέζες γίνονται <span class="step-from">πράσινες</span> για ΑΠΟ και
-              <span class="step-to">κόκκινες</span> για ΠΡΟΣ!</span>
-    </div>
-</div>
-                
-                <!-- ΕΠΙΣΤΡΟΦΗ -->
-                <div style="text-align: center; margin-top: 30px;">
-                  <button class="btn btn-outline" onclick="showStep('activities')">
-    <i class="fas fa-arrow-left"></i> Επιστροφή στις Δραστηριότητες    
                     </button>
                 </div>
             `}
