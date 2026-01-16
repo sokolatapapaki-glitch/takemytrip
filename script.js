@@ -7079,7 +7079,11 @@ window.handleProgramDragOver = handleProgramDragOver;
 window.handleProgramDragLeave = handleProgramDragLeave;
 window.handleProgramDrop = handleProgramDrop;
 window.addActivityToQuickDay = addActivityToQuickDay;
+// ==================== ΕΞΑΓΩΓΗ ΝΕΩΝ ΣΥΝΑΡΤΗΣΕΩΝ ΣΤΟ GLOBAL SCOPE ====================
+window.refreshMapWithProgram = refreshMapWithProgram;
+window.updateDayFilterUI = updateDayFilterUI;
 
+console.log('✅ Οι αλλαγές για χρωματικό κώδικα ανά ημέρα ολοκληρώθηκαν!');
 
 // ==================== CSS ANIMATIONS FOR PROGRAM ====================
 // Προσθήκη CSS animation για το spinner (για το βήμα 5)
