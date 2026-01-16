@@ -25,58 +25,42 @@ const COLOR_PALETTE = [
 ];
 
 // ==================== RESTORE USER PROGRAM ON LOAD ====================
-// ==================== RESTORE USER PROGRAM ON LOAD ====================
 function restoreUserProgramFromState() {
-    console.log('🔄 [DEBUG restoreUserProgramFromState] Αρχή επαναφοράς...');
-    console.log('📊 State πριν:', state);
+    console.log('🔄 [DEBUG] restoreUserProgramFromState καλείται');
     
-    // 🔴 ΚΡΙΤΙΚΟ: Ελέγχουμε ΠΡΩΤΑ το userProgram
+    // 🔴 ΚΡΙΤΙΚΗ ΑΛΛΑΓΗ: ΜΗΝ ορίζουμε default 3
     if (state.userProgram && state.userProgram.days) {
-        console.log('✅ Βρέθηκε userProgram στο state:', state.userProgram);
-        
-        // Απευθείας αντιγραφή - χωρίς μετατροπές
+        console.log('✅ Επαναφορά userProgram από state...');
         userProgram = {
-            days: [...state.userProgram.days],  // Shallow copy για arrays
-            totalDays: state.userProgram.totalDays || 3,
+            days: JSON.parse(JSON.stringify(state.userProgram.days)),
+            totalDays: state.userProgram.totalDays || 0,  // 0 αν δεν υπάρχει
             selectedDay: state.userProgram.selectedDay || 1
         };
-        
-        console.log('✅ Επαναφέρθηκε userProgram:', userProgram);
-    } 
-    // 🔴 Αν δεν υπάρχει userProgram, ελέγχουμε για παλιά geographicProgram
-    else if (state.geographicProgram) {
-        console.log('ℹ️ Μετατροπή παλιού geographicProgram σε userProgram...');
-        
-        // Μετατροπή από παλιό format
+        console.log('✅ userProgram μετά:', userProgram);
+    } else if (state.geographicProgram) {
+        console.log('🔄 Μετατροπή geographicProgram σε userProgram...');
         userProgram = {
-            days: state.geographicProgram.days.map(day => {
-                // Εξαγωγή δραστηριοτήτων από όλες τις ομάδες της μέρας
-                return day.groups.flatMap(group => 
+            days: state.geographicProgram.days.map(day => 
+                day.groups.flatMap(group => 
                     group.activities.map(activity => ({
                         id: activity.id,
                         name: activity.name,
-                        activityId: activity.id  // Αποθηκεύουμε και το id
+                        activityId: activity.id
                     }))
-                );
-            }),
-            totalDays: state.geographicProgram.totalDays || 3,
+                )
+            ),
+            totalDays: state.geographicProgram.totalDays || 0,  // 0 αν δεν υπάρχει
             selectedDay: 1
         };
-        
-        // Αποθήκευση πίσω στο state για μελλοντική χρήση
-        state.userProgram = JSON.parse(JSON.stringify(userProgram));
-        
-        console.log('✅ Μετατράπηκε σε userProgram:', userProgram);
     } else {
         console.log('ℹ️ Δεν υπάρχει αποθηκευμένο πρόγραμμα');
+        // 🔴 ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΚΛΕΙΔΙ: ΚΕΝΟ ΠΡΟΓΡΑΜΜΑ
         userProgram = {
             days: [],
-            totalDays: 3,
+            totalDays: 0,  // ΚΕΝΟ - ο χρήστης θα το ορίσει
             selectedDay: 1
         };
     }
-    
-    console.log('📊 State μετά:', state);
 }
 // ==================== MAP MANAGER ====================
 const MapManager = {
@@ -915,60 +899,69 @@ function loadStepContent(stepName) {
       case 'map':
     stepContent.innerHTML = getMapStepHTML();
     
-    // 🔴 ΜΕΙΩΣΕ ΤΟ TIMEOUT ΣΕ 50ms (όχι 100ms)
+    // ΧΡΗΣΗ 100ms για να φορτωθεί το DOM πρώτα
     setTimeout(() => {
-        console.log('🗺️ [DEBUG loadStepContent] Φόρτωση βήματος map...');
+        console.log('🗺️ [DEBUG] Φόρτωση βήματος map...');
         
-        // 1. Αρχικοποίηση χάρτη (αφού φορτώσει το DOM)
-        setTimeout(() => {
-            if (typeof L !== 'undefined') {
-                try {
-                    initializeMapInStep();
-                } catch (error) {
-                    console.error('❌ Σφάλμα χάρτη:', error);
-                }
+        // 1. Αρχικοποίηση χάρτη
+        if (typeof L !== 'undefined') {
+            try {
+                initializeMapInStep();
+            } catch (error) {
+                console.error('❌ Σφάλμα χάρτη:', error);
             }
-        }, 100);
+        }
         
-        // 2. ΚΡΙΤΙΚΟ: Επαναφορά προγράμματος (ΜΕΤΑ από το DOM render)
-        setTimeout(() => {
-            console.log('📅 [DEBUG] Επαναφορά προγράμματος για κάλπες...');
+        // 2. Επαναφορά προγράμματος στις κάλπες
+        if (state.userProgram) {
+            console.log('📅 [DEBUG] Βρέθηκε userProgram:', state.userProgram);
             
-            // ΕΠΙΛΕΞΕ ΜΟΝΟ ΕΝΑ ΑΠΟ ΤΑ ΔΥΟ ΠΑΡΑΚΑΤΩ:
+            // Αντικατάσταση του global userProgram με το αποθηκευμένο
+            userProgram = JSON.parse(JSON.stringify(state.userProgram));
             
-            // 🔴 ΕΠΙΛΟΓΗ Α: Αν θέλεις να φορτώσεις από state.userProgram
-            if (state.userProgram) {
-                console.log('✅ Φόρτωση από state.userProgram:', state.userProgram);
-                userProgram = JSON.parse(JSON.stringify(state.userProgram));
-            }
-            // 🔴 ΕΠΙΛΟΓΗ Β: Αν θέλεις να φορτώσεις από το global userProgram (που έχει ήδη)
-            else if (window.userProgram && window.userProgram.days) {
-                console.log('✅ Φόρτωση από global userProgram:', window.userProgram);
-                // Κάνε κάτι αν χρειάζεται
-            }
-            
-            // 3. Ρύθμιση κάλπων ΜΕΤΑ από φόρτωση δεδομένων
+            // Μικρή καθυστέρηση για να φορτώσει το DOM
             setTimeout(() => {
                 console.log('🏗️ [DEBUG] Δημιουργία κάλπων...');
                 
-                // Α) Δημιουργήσε τις κάλπες
-                setupProgramDays();
+                // 🔴 ΚΑΙΝΟΥΡΓΙΑ 1: Ενημέρωση dropdown πρώτα
+                updateDaysDropdownFromProgram();
                 
-                // Β) Ενημέρωσε dropdown αν υπάρχει
-                const daysSelect = document.getElementById('program-days-select');
-                if (daysSelect) {
-                    daysSelect.value = userProgram.totalDays || 3;
-                }
-                
-                // Γ) Εμφάνισε τις δραστηριότητες στις κάλπες
+                // 🔴 ΚΑΙΝΟΥΡΓΙΑ 2: Δημιούργησε τις κάλπες
                 renderProgramDays();
                 renderAvailableActivities();
                 
                 console.log('✅ [DEBUG] Κάλπες δημιουργήθηκαν:', userProgram);
                 
-            }, 200); // Μικρό timeout για DOM
-        }, 150);
-    }, 50); // ΠΟΛΥ ΜΙΚΡΟ timeout
+                // 🔴 ΚΑΙΝΟΥΡΓΙΑ 3: Ενημέρωσε χάρτη αν είναι φορτωμένος
+                if (window.travelMap) {
+                    setTimeout(() => {
+                        synchronizeMapMarkersWithProgram();
+                    }, 500);
+                }
+                
+            }, 300);
+            
+        } else {
+            // Αν ΔΕΝ υπάρχει αποθηκευμένο πρόγραμμα
+            console.log('ℹ️ Δεν βρέθηκε userProgram, αρχικοποίηση...');
+            
+            setTimeout(() => {
+                // 🔴 ΚΑΙΝΟΥΡΓΙΑ: Απλώς ενημέρωσε το dropdown (θα δείξει μήνυμα)
+                updateDaysDropdownFromProgram();
+                
+                // Δημιούργησε κενές κάλπες (αν χρειάζεται)
+                renderProgramDays();
+                
+                console.log('✅ [DEBUG] Αρχικοποιήθηκε κενό πρόγραμμα');
+            }, 300);
+        }
+        
+        // 🔴 ΚΑΙΝΟΥΡΓΙΑ: Προσθήκη debug tools
+        setTimeout(() => {
+            initDebugTools();
+        }, 1500);
+        
+    }, 100);
     break;
     } // Τέλος του switch
     
@@ -1862,15 +1855,19 @@ function getMapStepHTML() {
                             </h4>
                             <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
                                 <select id="program-days-select" class="form-control" style="width: 200px;"
-                                        onchange="setupProgramDays()">
-                                    <option value="1">1 μέρα</option>
-                                    <option value="2">2 μέρες</option>
-                                    <option value="3" selected>3 μέρες</option>
-                                    <option value="4">4 μέρες</option>
-                                    <option value="5">5 μέρες</option>
-                                    <option value="6">6 μέρες</option>
-                                    <option value="7">7 μέρες</option>
-                                </select>
+        onchange="setupProgramDays()">
+    <option value="" selected disabled>-- Επιλέξτε ημέρες --</option> <!-- ΝΕΟ -->
+    <option value="1">1 μέρα</option>
+    <option value="2">2 μέρες</option>
+    <option value="3">3 μέρες</option>  <!-- ΧΩΡΙΣ selected -->
+    <option value="4">4 μέρες</option>
+    <option value="5">5 μέρες</option>
+    <option value="6">6 μέρες</option>
+    <option value="7">7 μέρες</option>
+    <option value="8">8 μέρες</option>
+    <option value="9">9 μέρες</option>
+    <option value="10">10 μέρες</option>
+</select>
                                 
                                 <div style="font-size: 14px; color: var(--success);">
                                     <i class="fas fa-check-circle"></i>
@@ -6390,57 +6387,75 @@ function showEmergencyError(title, message, technicalDetails = '') {
 
 let userProgram = {
     days: [],        // Πίνακας με arrays για κάθε μέρα
-    totalDays: 3,    // Προεπιλεγμένες 3 μέρες
-    selectedDay: 1   // 🔴 ΝΕΟ: Προεπιλεγμένη ημέρα (αρχίζουμε από μέρα 1)
+    totalDays: 0,    // ΚΕΝΟ - ο χρήστης θα το ορίσει
+    selectedDay: 1   // Προεπιλεγμένη ημέρα
 };
 
 // 1. Ρύθμιση ημερών
 function setupProgramDays() {
-    console.log('🔍 [DEBUG setupProgramDays] Τι έχουμε:', {
-        state_userProgram: state.userProgram,
-        global_userProgram: userProgram,
-        state_geoProgram: state.geographicProgram,
-        currentStep: state.currentStep
-    });
     const daysSelect = document.getElementById('program-days-select');
     if (!daysSelect) return;
     
-    const days = parseInt(daysSelect.value) || 3;
+    // ΕΛΕΓΧΟΣ: Αν ο χρήστης ΔΕΝ έχει επιλέξει μέρες, ζήτα του να επιλέξει
+    const selectedValue = daysSelect.value;
     
-    // 🔴 ΚΡΙΤΙΚΟ: ΜΗΝ διαγράψεις υπάρχοντα δεδομένα!
-    // Αν έχουμε ήδη δεδομένα, κράτα τα και επέκτεινε/σύμπτυξε
-    if (userProgram.days && userProgram.days.length > 0) {
-        console.log('📅 Υπάρχει ήδη πρόγραμμα, ρύθμιση ημερών...');
+    if (!selectedValue || selectedValue === '0' || selectedValue === '') {
+        alert('📅 Παρακαλώ επιλέξτε πρώτα αριθμό ημερών από το dropdown!\n\n' +
+              'Παράδειγμα: Επιλέξτε "3 μέρες" αν το ταξίδι σας είναι 3 ημερών.');
         
-        if (days > userProgram.days.length) {
-            // Προσθήκη νέων κενών ημερών
-            const daysToAdd = days - userProgram.days.length;
-            for (let i = 0; i < daysToAdd; i++) {
-                userProgram.days.push([]);
-            }
-        } else if (days < userProgram.days.length) {
-            // Αφαίρεση ημερών (με προειδοποίηση αν έχουν δεδομένα)
-            const daysToRemove = userProgram.days.length - days;
-            let hasDataInRemovedDays = false;
-            
-            for (let i = userProgram.days.length - 1; i >= days; i--) {
-                if (userProgram.days[i].length > 0) {
-                    hasDataInRemovedDays = true;
-                }
-            }
-            
-            if (hasDataInRemovedDays) {
-                if (!confirm(`⚠️ Θέλετε να μειώσετε τις μέρες από ${userProgram.days.length} σε ${days};\n\nΟι δραστηριότητες στις τελευταίες μέρες θα διαγραφούν!`)) {
-                    daysSelect.value = userProgram.days.length;
-                    return;
-                }
-            }
-            
-            userProgram.days = userProgram.days.slice(0, days);
+        // Εστίαση στο dropdown για να δει ο χρήστης
+        daysSelect.focus();
+        return;
+    }
+    
+    const days = parseInt(selectedValue);
+    
+    if (days <= 0 || days > 10) {
+        alert('⚠️ Παρακαλώ επιλέξτε έγκυρο αριθμό ημερών (1-10)');
+        return;
+    }
+    
+    // Αν έχουμε ήδη πρόγραμμα με διαφορετικό αριθμό ημερών, ρώτα τον χρήστη
+    if (userProgram.days.length > 0 && userProgram.days.length !== days) {
+        const userConfirmed = confirm(
+            `⚠️ Θέλετε να αλλάξετε τις μέρες από ${userProgram.days.length} σε ${days};\n\n` +
+            `Αν είχατε τοποθετήσει δραστηριότητες στις επιπλέον μέρες, θα διαγραφούν.`
+        );
+        
+        if (!userConfirmed) {
+            daysSelect.value = userProgram.days.length;
+            return;
         }
-    } else {
-        // Δεν υπάρχει πρόγραμμα, δημιούργησε νέο
-        userProgram.days = Array(days).fill().map(() => []);
+    }
+    
+    // 🔴 ΚΡΙΤΙΚΗ ΑΛΛΑΓΗ: Αν days > current days, προσθήκη κενών ημερών
+    if (days > userProgram.days.length) {
+        const daysToAdd = days - userProgram.days.length;
+        for (let i = 0; i < daysToAdd; i++) {
+            userProgram.days.push([]);
+        }
+    } 
+    // 🔴 Αν days < current days, αφαίρεση (με προειδοποίηση)
+    else if (days < userProgram.days.length) {
+        const daysToRemove = userProgram.days.length - days;
+        let hasDataInRemovedDays = false;
+        
+        // Έλεγχος αν οι μέρες που θα αφαιρεθούν έχουν δεδομένα
+        for (let i = userProgram.days.length - 1; i >= days; i--) {
+            if (userProgram.days[i].length > 0) {
+                hasDataInRemovedDays = true;
+                break;
+            }
+        }
+        
+        if (hasDataInRemovedDays) {
+            if (!confirm(`⚠️ Θα αφαιρεθούν ${daysToRemove} μέρες!\n\nΟι δραστηριότητες στις τελευταίες μέρες θα διαγραφούν.`)) {
+                daysSelect.value = userProgram.days.length;
+                return;
+            }
+        }
+        
+        userProgram.days = userProgram.days.slice(0, days);
     }
     
     userProgram.totalDays = days;
@@ -6449,11 +6464,14 @@ function setupProgramDays() {
     const statusEl = document.getElementById('program-days-status');
     if (statusEl) {
         statusEl.textContent = `${days} ${days === 1 ? 'μέρα επιλέχθηκε' : 'μέρες επιλέχθηκαν'}`;
+        statusEl.style.color = '#10B981';
     }
     
     // Δημιουργία κάλπων
     renderProgramDays();
     renderAvailableActivities();
+    
+    console.log(`📅 Ορίστηκαν ${days} μέρες για το πρόγραμμα`);
 }
 // 🔴 ΝΕΗ ΣΥΝΑΡΤΗΣΗ: Επιλογή μέρας
 function selectProgramDay(day) {
@@ -6503,6 +6521,23 @@ function highlightSelectedDay(selectedDay) {
 function renderProgramDays() {
     const container = document.getElementById('program-days-container');
     if (!container) return;
+     // 🔴 ΚΡΙΤΙΚΟ: Αν ο χρήστης ΔΕΝ έχει επιλέξει μέρες, δείξε μήνυμα
+    if (!userProgram.totalDays || userProgram.totalDays === 0) {
+        container.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 40px; background: #f8f9fa; border-radius: 10px;">
+                <div style="font-size: 48px; margin-bottom: 15px;">📅</div>
+                <h3 style="color: var(--dark); margin-bottom: 10px;">Δεν έχετε επιλέξει μέρες</h3>
+                <p style="color: var(--gray); margin-bottom: 20px;">
+                    Παρακαλώ επιλέξτε πρώτα αριθμό ημερών από το dropdown παραπάνω
+                </p>
+                <button onclick="document.getElementById('program-days-select').focus()" 
+                        style="padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer;">
+                    <i class="fas fa-calendar-alt"></i> Επιλογή Ημερών
+                </button>
+            </div>
+        `;
+        return;
+    }
     
     container.innerHTML = '';
     
@@ -6809,7 +6844,31 @@ function addActivityToQuickDay(activityId) {
     addActivityToProgramDay(activityId, 1);
 }
 
-// 8. Αποθήκευση προγράμματος
+function updateDaysDropdownFromProgram() {
+    const daysSelect = document.getElementById('program-days-select');
+    if (!daysSelect) return;
+    
+    // Αν έχουμε ήδη επιλεγμένες μέρες στο πρόγραμμα, ενημέρωσε το dropdown
+    if (userProgram.totalDays > 0) {
+        daysSelect.value = userProgram.totalDays;
+        
+        // Ενημέρωση status
+        const statusEl = document.getElementById('program-days-status');
+        if (statusEl) {
+            statusEl.textContent = `${userProgram.totalDays} ${userProgram.totalDays === 1 ? 'μέρα επιλέχθηκε' : 'μέρες επιλέχθηκαν'}`;
+            statusEl.style.color = '#10B981';
+        }
+    } else {
+        // Διαφορετικά, κενή επιλογή
+        daysSelect.value = '';
+        
+        const statusEl = document.getElementById('program-days-status');
+        if (statusEl) {
+            statusEl.textContent = 'Επιλέξτε αριθμό ημερών';
+            statusEl.style.color = '#6B7280';
+        }
+    }
+}
 // 8. Αποθήκευση προγράμματος
 function saveUserProgram() {
     console.log('💾 [DEBUG saveUserProgram] Αρχή αποθήκευσης...');
