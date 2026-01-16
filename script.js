@@ -6281,8 +6281,9 @@ function showEmergencyError(title, message, technicalDetails = '') {
 // ==================== ΧΕΙΡΟΚΙΝΗΤΟ ΠΡΟΓΡΑΜΜΑ ====================
 
 let userProgram = {
-    days: [],  // Πίνακας με arrays για κάθε μέρα
-    totalDays: 3  // Προεπιλεγμένες 3 μέρες
+    days: [],        // Πίνακας με arrays για κάθε μέρα
+    totalDays: 3,    // Προεπιλεγμένες 3 μέρες
+    selectedDay: 1   // 🔴 ΝΕΟ: Προεπιλεγμένη ημέρα (αρχίζουμε από μέρα 1)
 };
 
 // 1. Ρύθμιση ημερών
@@ -6304,7 +6305,41 @@ function setupProgramDays() {
     renderProgramDays();
     renderAvailableActivities();
 }
+// 🔴 ΝΕΗ ΣΥΝΑΡΤΗΣΗ: Επιλογή μέρας
+function selectProgramDay(day) {
+    userProgram.selectedDay = day;
+    
+    // Ενημέρωση οπτικής (θα φτιάξουμε μετά)
+    highlightSelectedDay(day);
+    
+    // Ενημέρωση χρήστη
+    showToast(`📅 Επιλέχθηκε η <strong>Μέρα ${day}</strong> για προσθήκη δραστηριοτήτων`, 'info');
+    
+    // Προσαρμογή scroll αν χρειάζεται
+    const dayElement = document.querySelector(`.program-day-column[data-day="${day}"]`);
+    if (dayElement) {
+        dayElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+}
 
+// Βοηθητική: Επισήμανση επιλεγμένης μέρας
+function highlightSelectedDay(selectedDay) {
+    // Αφαίρεση επιλογής από όλες
+    document.querySelectorAll('.program-day-column').forEach(column => {
+        column.classList.remove('selected-day');
+        column.style.borderColor = '#e2e8f0';
+        column.style.borderWidth = '2px';
+    });
+    
+    // Προσθήκη επιλογής στην επιλεγμένη
+    const selectedColumn = document.querySelector(`.program-day-column[data-day="${selectedDay}"]`);
+    if (selectedColumn) {
+        selectedColumn.classList.add('selected-day');
+        selectedColumn.style.borderColor = '#4F46E5';
+        selectedColumn.style.borderWidth = '3px';
+        selectedColumn.style.boxShadow = '0 6px 20px rgba(79, 70, 229, 0.15)';
+    }
+}
 // 2. Εμφάνιση κάλπων ημερών
 function renderProgramDays() {
     const container = document.getElementById('program-days-container');
