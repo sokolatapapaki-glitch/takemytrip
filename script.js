@@ -3557,7 +3557,7 @@ async function addCustomMapPoint() {
         setTimeout(() => hideCustomPointStatus(), 2000);
 
         // Refresh the map step to update the list
-        renderCurrentStep();
+        showStep('map');
 
         // If map is loaded, add marker immediately
         if (window.travelMap) {
