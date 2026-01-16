@@ -1719,12 +1719,12 @@ function getMapStepHTML() {
                     </button>
                     
                     <button class="btn btn-outline" onclick="showRouteBetweenPoints()">
-                        <i class="fas fa-route"></i> Διαδρομή
+                        <i class="fas fa-route"></i> Δείξε μου την διαδρομή
                     </button>
                      
     <button class="btn btn-accent" onclick="synchronizeMapMarkersWithProgram()" 
             id="sync-map-btn">
-        <i class="fas fa-sync-alt"></i> Ενημέρωση Χάρτη
+        <i class="fas fa-sync-alt"></i> Δείξε μου τις ημέρες στον χάρτη
     </button>
 
                     <div id="map-status" style="flex: 1; padding: 10px; background: #f0f7ff; border-radius: 6px; font-size: 13px;">
