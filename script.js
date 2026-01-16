@@ -6321,6 +6321,15 @@ function selectProgramDay(day) {
         dayElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 }
+// 🔴 ΝΕΗ ΣΥΝΑΡΤΗΣΗ: Γρήγορη προσθήκη στην επιλεγμένη μέρα
+function quickAddToSelectedDay(activityId) {
+    if (!userProgram.selectedDay) {
+        showToast('⚠️ Παρακαλώ επιλέξτε πρώτα μια μέρα (κάντε κλικ σε μια κάλπα)', 'warning');
+        return;
+    }
+    
+    addActivityToProgramDay(activityId, userProgram.selectedDay);
+}
 
 // Βοηθητική: Επισήμανση επιλεγμένης μέρας
 function highlightSelectedDay(selectedDay) {
@@ -6496,7 +6505,7 @@ function renderAvailableActivities() {
                  draggable="${!isPlaced}"
                  data-activity-id="${activity.id}"
                  ondragstart="handleProgramDragStart(event, ${activity.id})"
-                 ondblclick="${!isPlaced ? `addActivityToQuickDay(${activity.id})` : ''}"
+                 ondblclick="${!isPlaced ? `quickAddToSelectedDay(${activity.id})` : ''}"
                  style="opacity: ${isPlaced ? '0.5' : '1'}; cursor: ${isPlaced ? 'not-allowed' : 'grab'};">
                 
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
