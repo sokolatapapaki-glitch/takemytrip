@@ -1608,7 +1608,12 @@ function getMapStepHTML() {
                     <button class="btn btn-outline" onclick="showRouteBetweenPoints()">
                         <i class="fas fa-route"></i> Διαδρομή
                     </button>
-                    
+                     // 🔴 ΠΡΟΣΘΗΚΗ ΝΕΟΥ ΚΟΥΜΠΙΟΥ ΕΔΩ:
+    <button class="btn btn-accent" onclick="synchronizeMapMarkersWithProgram()" 
+            id="sync-map-btn">
+        <i class="fas fa-sync-alt"></i> Ενημέρωση Χάρτη
+    </button>
+</div>
                     <div id="map-status" style="flex: 1; padding: 10px; background: #f0f7ff; border-radius: 6px; font-size: 13px;">
                         <i class="fas fa-info-circle"></i>
                         <strong>Ετοιμότητα:</strong> Πατήστε "Προβολή Σημείων" για τις δραστηριότητες σας
