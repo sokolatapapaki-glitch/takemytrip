@@ -6293,6 +6293,405 @@ function showEmergencyError(title, message, technicalDetails = '') {
         console.error('Απέτυχε και το DOM fallback:', domError);
     }
 }
+// ==================== ΧΕΙΡΟΚΙΝΗΤΟ ΠΡΟΓΡΑΜΜΑ ====================
+
+let userProgram = {
+    days: [],  // Πίνακας με arrays για κάθε μέρα
+    totalDays: 3  // Προεπιλεγμένες 3 μέρες
+};
+
+// 1. Ρύθμιση ημερών
+function setupProgramDays() {
+    const daysSelect = document.getElementById('program-days-select');
+    if (!daysSelect) return;
+    
+    const days = parseInt(daysSelect.value) || 3;
+    userProgram.totalDays = days;
+    userProgram.days = Array(days).fill().map(() => []);
+    
+    // Ενημέρωση status
+    const statusEl = document.getElementById('program-days-status');
+    if (statusEl) {
+        statusEl.textContent = `${days} ${days === 1 ? 'μέρα επιλέχθηκε' : 'μέρες επιλέχθηκαν'}`;
+    }
+    
+    // Δημιουργία κάλπων
+    renderProgramDays();
+    renderAvailableActivities();
+}
+
+// 2. Εμφάνιση κάλπων ημερών
+function renderProgramDays() {
+    const container = document.getElementById('program-days-container');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    for (let i = 1; i <= userProgram.totalDays; i++) {
+        const dayColor = getDayColor(i);
+        const dayActivities = userProgram.days[i-1] || [];
+        
+        const dayHTML = `
+            <div class="program-day-column">
+                <div class="program-day-header">
+                    <div class="program-day-title">
+                        <div style="
+                            width: 22px;
+                            height: 22px;
+                            background: ${dayColor};
+                            border-radius: 50%;
+                        "></div>
+                        Μέρα ${i}
+                    </div>
+                    <div class="program-day-count" id="day-${i}-count">
+                        ${dayActivities.length}
+                    </div>
+                </div>
+                
+                <div class="program-day-dropzone" 
+                     data-day="${i}"
+                     ondragover="handleProgramDragOver(event)"
+                     ondragleave="handleProgramDragLeave(event)"
+                     ondrop="handleProgramDrop(event)">
+                    
+                    <div id="day-${i}-activities" class="program-day-activities">
+                        ${dayActivities.length === 0 ? `
+                            <div class="program-activity-empty">
+                                <i class="fas fa-plus-circle"></i>
+                                Σύρετε δραστηριότητες εδώ
+                            </div>
+                        ` : renderDayActivities(dayActivities, i)}
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        container.innerHTML += dayHTML;
+    }
+}
+
+// 3. Εμφάνιση δραστηριοτήτων μιας μέρας
+function renderDayActivities(activities, day) {
+    let html = '';
+    activities.forEach(activity => {
+        const fullActivity = state.currentCityActivities?.find(a => a.id === activity.id) || activity;
+        
+        html += `
+            <div class="program-activity-item" 
+                 draggable="true"
+                 data-activity-id="${activity.id}"
+                 ondragstart="handleProgramDragStart(event, ${activity.id})"
+                 style="position: relative;">
+                
+                <button class="program-activity-remove"
+                        onclick="removeActivityFromProgramDay(${day}, ${activity.id})"
+                        title="Αφαίρεση">
+                    ×
+                </button>
+                
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                    <div style="
+                        width: 32px;
+                        height: 32px;
+                        background: ${getDayColor(day)};
+                        color: white;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 14px;
+                    ">
+                        ${getActivityEmoji(fullActivity.category || 'attraction')}
+                    </div>
+                    <div style="font-weight: bold; font-size: 14px;">${activity.name}</div>
+                </div>
+                
+                <div style="font-size: 12px; color: #64748b;">
+                    <i class="fas fa-clock"></i> ${fullActivity.duration_hours || '?'} ώρες
+                    <span style="margin-left: 10px;">
+                        <i class="fas fa-tag"></i> ${activity.price ? Number(activity.price).toFixed(2) + '€' : 'Δωρεάν'}
+                    </span>
+                </div>
+            </div>
+        `;
+    });
+    return html;
+}
+
+// 4. Εμφάνιση διαθέσιμων δραστηριοτήτων
+function renderAvailableActivities() {
+    const container = document.getElementById('program-activities-list');
+    if (!container || !state.selectedActivities) return;
+    
+    // Βρες όλες τις δραστηριότητες που έχουν ήδη τοποθετηθεί
+    const placedActivities = new Set();
+    userProgram.days.forEach(dayActivities => {
+        dayActivities.forEach(activity => {
+            placedActivities.add(activity.id);
+        });
+    });
+    
+    let html = '';
+    state.selectedActivities.forEach(activity => {
+        const fullActivity = state.currentCityActivities?.find(a => a.id === activity.id) || activity;
+        const isPlaced = placedActivities.has(activity.id);
+        
+        html += `
+            <div class="program-activity-item ${isPlaced ? 'placed' : ''}"
+                 draggable="${!isPlaced}"
+                 data-activity-id="${activity.id}"
+                 ondragstart="handleProgramDragStart(event, ${activity.id})"
+                 ondblclick="${!isPlaced ? `addActivityToQuickDay(${activity.id})` : ''}"
+                 style="opacity: ${isPlaced ? '0.5' : '1'}; cursor: ${isPlaced ? 'not-allowed' : 'grab'};">
+                
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                    <div style="
+                        width: 32px;
+                        height: 32px;
+                        background: #4F46E5;
+                        color: white;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 14px;
+                    ">
+                        ${getActivityEmoji(fullActivity.category || 'attraction')}
+                    </div>
+                    <div style="font-weight: bold; font-size: 14px;">${activity.name}</div>
+                </div>
+                
+                <div style="font-size: 12px; color: #64748b;">
+                    <i class="fas fa-clock"></i> ${fullActivity.duration_hours || '?'} ώρες
+                    <span style="margin-left: 10px;">
+                        <i class="fas fa-tag"></i> ${activity.price ? Number(activity.price).toFixed(2) + '€' : 'Δωρεάν'}
+                    </span>
+                </div>
+                
+                ${isPlaced ? `
+                    <div style="font-size: 11px; color: #10B981; margin-top: 5px;">
+                        <i class="fas fa-check-circle"></i> Έχει τοποθετηθεί
+                    </div>
+                ` : `
+                    <div style="font-size: 11px; color: #64748b; margin-top: 5px;">
+                        <i class="fas fa-mouse-pointer"></i> Διπλό κλικ για γρήγορη προσθήκη
+                    </div>
+                `}
+            </div>
+        `;
+    });
+    
+    container.innerHTML = html;
+}
+
+// 5. Drag & Drop handlers
+function handleProgramDragStart(event, activityId) {
+    event.dataTransfer.setData('activityId', activityId);
+    event.currentTarget.classList.add('dragging');
+}
+
+function handleProgramDragOver(event) {
+    event.preventDefault();
+    event.currentTarget.classList.add('drag-over');
+}
+
+function handleProgramDragLeave(event) {
+    event.currentTarget.classList.remove('drag-over');
+}
+
+function handleProgramDrop(event) {
+    event.preventDefault();
+    event.currentTarget.classList.remove('drag-over');
+    
+    const activityId = parseInt(event.dataTransfer.getData('activityId'));
+    const dayElement = event.currentTarget.closest('[data-day]');
+    
+    if (!activityId || !dayElement) return;
+    
+    const day = parseInt(dayElement.dataset.day);
+    addActivityToProgramDay(activityId, day);
+}
+
+// 6. Προσθήκη/Αφαίρεση δραστηριοτήτων
+function addActivityToProgramDay(activityId, day) {
+    const activity = state.selectedActivities.find(a => a.id === activityId);
+    if (!activity) return;
+    
+    // Αφαίρεση από άλλες μέρες (αν υπάρχει)
+    removeActivityFromAllProgramDays(activityId);
+    
+    // Προσθήκη στη νέα μέρα
+    userProgram.days[day-1].push(activity);
+    
+    // Ενημέρωση εμφάνισης
+    updateProgramDayDisplay(day);
+    renderAvailableActivities();
+    
+    showToast(`✅ Προστέθηκε <strong>${activity.name}</strong> στην Μέρα ${day}`, 'success');
+}
+
+function removeActivityFromProgramDay(day, activityId) {
+    const dayIndex = day - 1;
+    const activityIndex = userProgram.days[dayIndex].findIndex(a => a.id === activityId);
+    
+    if (activityIndex > -1) {
+        const activity = userProgram.days[dayIndex][activityIndex];
+        userProgram.days[dayIndex].splice(activityIndex, 1);
+        
+        updateProgramDayDisplay(day);
+        renderAvailableActivities();
+        
+        showToast(`🗑️ Αφαιρέθηκε <strong>${activity.name}</strong> από Μέρα ${day}`, 'info');
+    }
+}
+
+function removeActivityFromAllProgramDays(activityId) {
+    userProgram.days.forEach((dayActivities, index) => {
+        const activityIndex = dayActivities.findIndex(a => a.id === activityId);
+        if (activityIndex > -1) {
+            dayActivities.splice(activityIndex, 1);
+            updateProgramDayDisplay(index + 1);
+        }
+    });
+}
+
+function updateProgramDayDisplay(day) {
+    const dayIndex = day - 1;
+    const activities = userProgram.days[dayIndex] || [];
+    const container = document.getElementById(`day-${day}-activities`);
+    const countElement = document.getElementById(`day-${day}-count`);
+    
+    if (countElement) {
+        countElement.textContent = activities.length;
+    }
+    
+    if (container) {
+        container.innerHTML = activities.length === 0 ? 
+            `<div class="program-activity-empty">
+                <i class="fas fa-plus-circle"></i>
+                Σύρετε δραστηριότητες εδώ
+            </div>` :
+            renderDayActivities(activities, day);
+    }
+}
+
+// 7. Γρήγορη προσθήκη (διπλό κλικ)
+function addActivityToQuickDay(activityId) {
+    // Βρες την πρώτη μέρα με λιγότερες από 4 δραστηριότητες
+    for (let i = 0; i < userProgram.totalDays; i++) {
+        if (userProgram.days[i].length < 4) {
+            addActivityToProgramDay(activityId, i + 1);
+            return;
+        }
+    }
+    
+    // Αν όλες οι μέρες έχουν 4+, βάλε στην πρώτη
+    addActivityToProgramDay(activityId, 1);
+}
+
+// 8. Αποθήκευση προγράμματος
+function saveUserProgram() {
+    // Δημιουργία προγράμματος παρόμοιας δομής
+    const program = {
+        totalDays: userProgram.totalDays,
+        days: [],
+        groups: [],
+        isUserCreated: true
+    };
+    
+    userProgram.days.forEach((dayActivities, index) => {
+        const dayNumber = index + 1;
+        
+        // Ομαδοποίηση (απλή - μία ομάδα ανά μέρα)
+        const groups = [];
+        if (dayActivities.length > 0) {
+            groups.push({
+                center: null,
+                activities: dayActivities.map(activity => ({
+                    id: activity.id,
+                    name: activity.name,
+                    duration: state.currentCityActivities?.find(a => a.id === activity.id)?.duration_hours || 2
+                })),
+                count: dayActivities.length
+            });
+        }
+        
+        program.days.push({
+            dayNumber: dayNumber,
+            totalActivities: dayActivities.length,
+            groups: groups,
+            totalHours: dayActivities.reduce((sum, activity) => {
+                const fullActivity = state.currentCityActivities?.find(a => a.id === activity.id);
+                return sum + (fullActivity?.duration_hours || 2);
+            }, 0)
+        });
+    });
+    
+    // Αποθήκευση
+    state.geographicProgram = program;
+    saveState();
+    
+    showToast(`✅ Το πρόγραμμα αποθηκεύτηκε! ${program.totalDays} μέρες, ${program.days.reduce((sum, day) => sum + day.totalActivities, 0)} δραστηριότητες`, 'success');
+    
+    // Ενημέρωση του "Φίλτρο Ημερών" (αν υπάρχει)
+    if (state.geographicProgram) {
+        setTimeout(() => {
+            // Εδώ θα προσθέσουμε κώδικα για να ανανεώσει το φίλτρο ημερών
+            showToast('🔄 Το φίλτρο ημερών ενημερώθηκε', 'info');
+        }, 500);
+    }
+}
+
+// 9. Προβολή στον χάρτη
+function showProgramOnMap() {
+    if (!window.travelMap) {
+        showToast('⚠️ Παρακαλώ πρώτα φορτώστε τον χάρτη', 'warning');
+        return;
+    }
+    
+    // Χρησιμοποιούμε την ίδια συνάρτηση applyDayFilter()
+    // αλλά πρώτα δημιουργούμε ένα προσωρινό πρόγραμμα
+    const tempProgram = {
+        totalDays: userProgram.totalDays,
+        days: userProgram.days.map((dayActivities, index) => ({
+            dayNumber: index + 1,
+            totalActivities: dayActivities.length,
+            groups: [{
+                activities: dayActivities.map(activity => ({
+                    id: activity.id,
+                    name: activity.name
+                }))
+            }]
+        }))
+    };
+    
+    // Προσωρινή αποθήκευση
+    const originalProgram = state.geographicProgram;
+    state.geographicProgram = tempProgram;
+    
+    // Εμφάνιση όλων των ημερών
+    const allCheckbox = document.querySelector('.day-checkbox[value="all"]');
+    if (allCheckbox) {
+        allCheckbox.checked = true;
+        applyDayFilter();
+    }
+    
+    // Επαναφορά
+    state.geographicProgram = originalProgram;
+    
+    showToast('📍 Οι δραστηριότητες του προγράμματος εμφανίζονται στον χάρτη', 'info');
+}
+
+// 10. Επαναφορά
+function resetUserProgram() {
+    if (confirm('⚠️ Θέλετε να επαναφέρετε το πρόγραμμα; Όλες οι τοποθετήσεις θα διαγραφούν.')) {
+        userProgram.days = userProgram.days.map(() => []);
+        renderProgramDays();
+        renderAvailableActivities();
+        showToast('🔄 Το πρόγραμμα επαναφέρθηκε', 'info');
+    }
+}
+
 window.showStep = showStep;
 window.filterDestinations = filterDestinations;
 window.resetFilters = resetFilters;
