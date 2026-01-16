@@ -3498,7 +3498,7 @@ function initializeMapInStep() {
         return;
     }
     
-    // Καθαρισμός προηγούμενου χάρτη με ασφαλή τρόπο
+    // Καθαρισμός προηγούμενου χάρτη
     if (window.travelMap) {
         try {
             window.travelMap.remove();
@@ -3508,79 +3508,51 @@ function initializeMapInStep() {
         window.travelMap = null;
     }
 
-    // Χρήση centralized cleanup για αποφυγή memory leaks
     cleanupMapState();
 
     try {
-        // Έλεγχος αν φορτώθηκε το Leaflet
         if (typeof L === 'undefined') {
-            throw new Error('Η βιβλιοθήκη Leaflet δεν φορτώθηκε. Παρακαλώ ανανεώστε τη σελίδα.');
+            throw new Error('Η βιβλιοθήκη Leaflet δεν φορτώθηκε');
         }
         
         const cityCoords = getCityCoordinates(state.selectedDestinationId);
         
         if (!cityCoords) {
-            throw new Error(`Δεν βρέθηκαν συντεταγμένες για την πόλη: ${state.selectedDestination}`);
+            throw new Error(`Δεν βρέθηκαν συντεταγμένες: ${state.selectedDestination}`);
         }
         
-        console.log(`📍 Συντεταγμένες πόλης: ${cityCoords[0]}, ${cityCoords[1]}`);
+        console.log(`📍 Συντεταγμένες: ${cityCoords[0]}, ${cityCoords[1]}`);
         
-        // 🔴 ΚΑΙΝΟΥΡΓΙΑ: Δημιουργία χάρτη ΧΩΡΙΣ scroll wheel zoom
-        const map = MapManager.initialize('travel-map', cityCoords, 13, {
-            scrollWheelZoom: false,    // 🔴 ΑΠΕΝΕΡΓΟΠΟΙΗΜΕΝΟ - ΟΧΙ zoom με scroll
-            doubleClickZoom: false     // 🔴 ΑΠΕΝΕΡΓΟΠΟΙΗΜΕΝΟ - ΟΧΙ zoom με διπλό κλικ
-        });
+        // 🔴 ΑΠΛΗ ΕΚΔΟΣΗ: Χωρίς options - το MapManager έχει ήδη τα defaults
+        const map = MapManager.initialize('travel-map', cityCoords, 13);
 
-        // Set global reference for backward compatibility
         window.travelMap = map;
 
-        console.log('✅ Χάρτης δημιουργήθηκε ΧΩΡΙΣ scroll wheel zoom');
+        console.log('✅ Χάρτης δημιουργήθηκε ΧΩΡΙΣ scroll zoom');
 
-        // 🔴 ΚΑΙΝΟΥΡΓΙΑ: Προσθήκη marker για την πόλη με ανανεωμένο μήνυμα για zoom
+        // 🔴 ΑΠΛΟΠΟΙΗΜΕΝΟ: City marker χωρίς zoom instructions
         MapManager.setCityMarker(cityCoords, `
             <div style="text-align: center; padding: 10px; min-width: 200px;">
                 <h3 style="margin: 0 0 5px 0; color: #4F46E5;">${state.selectedDestination}</h3>
                 <p style="margin: 0; color: #666;">
                     <i class="fas fa-map-marker-alt"></i> Κέντρο πόλης
                 </p>
-                <hr style="margin: 10px 0;">
-                <div style="background: #f0f9ff; padding: 8px; border-radius: 6px; margin: 10px 0;">
-                    <strong>🎯 Zoom Instructions:</strong><br>
-                    <small style="color: #666;">
-                        Χρησιμοποιήστε τα κουμπιά <span style="color: #4F46E5; font-weight: bold;">+</span> και <span style="color: #4F46E5; font-weight: bold;">-</span><br>
-                        για zoom in/out
-                    </small>
-                </div>
-                <p style="margin: 0; font-size: 12px; color: #888;">
-                    👆 Πατήστε "Προβολή Σημείων" για τις δραστηριότητες
-                </p>
             </div>
         `);
         
-        // 🔴 ΚΑΙΝΟΥΡΓΙΑ: Προσθήκη zoom instruction control
-        setTimeout(() => {
-            addZoomInstructionsToMap();
-        }, 1000);
-        
-        // Ενημέρωση status
+        // Ενημέρωση status (μόνο για map readiness)
         const statusEl = document.getElementById('map-status');
         if (statusEl) {
             statusEl.innerHTML = `
                 <i class="fas fa-check-circle" style="color: #10B981;"></i>
-                <strong>Έτοιμο:</strong> Χάρτης φορτώθηκε. Χρησιμοποιήστε +/- για zoom
+                <strong>Έτοιμο:</strong> Χάρτης φορτώθηκε
             `;
         }
         
-        // 🔴 ΚΑΙΝΟΥΡΓΙΑ: Προσθήκη custom zoom controls styling
-        addCustomZoomStyles();
-        
-        console.log('✅ Χάρτης φορτώθηκε επιτυχώς ΧΩΡΙΣ scroll zoom');
-        
-        // 🔴 ΚΑΙΝΟΥΡΓΙΑ: Αποθήκευση zoom state για μελλοντική χρήση
-        sessionStorage.setItem('mapZoomPreference', 'buttons-only');
+        console.log('✅ Χάρτης φορτώθηκε επιτυχώς');
         
     } catch (error) {
-        console.error('❌ Σφάλμα αρχικοποίησης χάρτη:', error);
+        console.error('❌ Σφάλμα αρχικοποίησης:', error);
         
         mapElement.innerHTML = `
             <div style="height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#f8f9fa; color:#666; text-align:center; padding: 40px;">
@@ -3594,7 +3566,7 @@ function initializeMapInStep() {
                         <i class="fas fa-sync-alt"></i> Δοκιμή ξανά
                     </button>
                     <button onclick="showStep('activities')" class="btn btn-outline" style="padding: 10px 20px;">
-                        <i class="fas fa-arrow-left"></i> Επιστροφή στις δραστηριότητες
+                        <i class="fas fa-arrow-left"></i> Επιστροφή
                     </button>
                 </div>
             </div>
@@ -3602,6 +3574,8 @@ function initializeMapInStep() {
     }
 }
 
+// 🔴 ΔΙΑΓΡΑΦΗ: Σβήνουμε ΟΛΕΣ τις βοηθητικές συναρτήσεις για zoom messages
+// (Δεν χρειαζόμαστε πλέον: addZoomInstructionsToMap, addCustomZoomStyles κλπ)
 // 🔴 ΚΑΙΝΟΥΡΓΙΑ: Βοηθητική συνάρτηση για zoom instructions
 function addZoomInstructionsToMap() {
     if (!window.travelMap) return;
