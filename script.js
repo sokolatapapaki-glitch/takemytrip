@@ -1834,7 +1834,7 @@ function getMapStepHTML() {
                         <span>Ενημέρωση χάρτη...</span>
                     </div>
                 </div>
-               ` : `
+                : ''}
                 
                 <!-- 🔴 ΝΕΟ: ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΓΡΑΜΜΑΤΟΣ ΚΑΤΩ ΑΠΟ ΤΟΝ ΧΑΡΤΗ -->
                 <div id="program-creation-section" class="card" style="margin-top: 40px; background: linear-gradient(135deg, #f8faff 0%, #f0f4ff 100%);">
