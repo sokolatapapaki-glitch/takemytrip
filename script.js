@@ -97,7 +97,133 @@ const MapManager = {
     isInitialized() {
         return this.instance !== null;
     },
+const MapManager = {
+    instance: null,
+    cityMarker: null,
 
+    initialize(containerId, center, zoom = 13) {
+        console.log('🗺️ MapManager: Initializing map');
+
+        // Cleanup any existing instance first
+        this.cleanup();
+
+        try {
+            // Create new map instance with same options as before
+            this.instance = L.map(containerId, {
+                zoomControl: true,
+                scrollWheelZoom: true,
+                doubleClickZoom: true,
+                boxZoom: true,
+                keyboard: true,
+                dragging: true,
+                attributionControl: true
+            }).setView(center, zoom);
+
+            // Add tile layer (same as before)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                maxZoom: 19,
+                minZoom: 3
+            }).addTo(this.instance);
+
+            // Add scale control (same as before)
+            L.control.scale({ imperial: false, metric: true }).addTo(this.instance);
+
+            console.log('✅ MapManager: Map initialized');
+            return this.instance;
+
+        } catch (error) {
+            console.error('❌ MapManager: Initialization failed:', error);
+            throw error;
+        }
+    },
+
+    cleanup() {
+        console.log('🧹 MapManager: Cleaning up');
+
+        // Clear city marker reference
+        this.cityMarker = null;
+
+        // Remove map instance
+        if (this.instance) {
+            try {
+                this.instance.remove();
+            } catch (e) {
+                console.log('ℹ️ MapManager: No active map to remove');
+            } finally {
+                this.instance = null;
+            }
+        }
+
+        // Call existing cleanupMapState() to preserve current behavior
+        if (typeof cleanupMapState === 'function') {
+            cleanupMapState();
+        }
+    },
+
+    get() {
+        return this.instance;
+    },
+
+    isInitialized() {
+        return this.instance !== null;
+    },
+    
+    // 🔴 ΠΡΟΣΘΗΚΗ ΝΕΩΝ ΜΕΘΟΔΩΝ - ΒΗΜΑ 4
+    getMap() {
+        return this.instance || window.travelMap;
+    },
+    
+    isReady() {
+        return this.instance !== null && typeof L !== 'undefined';
+    },
+
+    setCityMarker(coords, popupContent) {
+        if (!this.instance) {
+            console.warn('MapManager: Cannot add city marker - map not initialized');
+            return null;
+        }
+
+        // Remove old city marker if exists
+        if (this.cityMarker && this.instance) {
+            this.instance.removeLayer(this.cityMarker);
+        }
+
+        // Create city marker (exact same code as before)
+        this.cityMarker = L.marker(coords, {
+            icon: L.divIcon({
+                html: `
+                    <div style="
+                        background: #4F46E5;
+                        color: white;
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-weight: bold;
+                        font-size: 24px;
+                        border: 3px solid white;
+                        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+                        cursor: pointer;
+                    ">
+                        🏙️
+                    </div>
+                `,
+                className: 'city-marker',
+                iconSize: [50, 50],
+                iconAnchor: [25, 50]
+            })
+        }).addTo(this.instance);
+
+        if (popupContent) {
+            this.cityMarker.bindPopup(popupContent).openPopup();
+        }
+
+        return this.cityMarker;
+    }
+};
     setCityMarker(coords, popupContent) {
         if (!this.instance) {
             console.warn('MapManager: Cannot add city marker - map not initialized');
@@ -375,31 +501,209 @@ window.selectedMarkers = []; // Για ενώσεις σημείων
 window.routeResetTimer = null; // Timer για reset διαδρομής
 
 // Centralized cleanup function για αποφυγή memory leaks
+// ==================== CENTRALIZED MAP CLEANUP FUNCTION ====================
 function cleanupMapState() {
-    // Cleanup timers
+    console.log('🧹 cleanupMapState: Starting comprehensive cleanup...');
+    
+    // 1. Cleanup timers
     if (window.routeResetTimer) {
         clearTimeout(window.routeResetTimer);
         window.routeResetTimer = null;
+        console.log('✅ Cleared route reset timer');
     }
-
-    // Cleanup global map variables
+    
+    // 2. Cleanup global map variables
     window.firstPoint = null;
     window.secondPoint = null;
     window.currentRoutePolyline = null;
     window.selectedMarkers = [];
-
-    // Cleanup module-level variables (if defined)
+    
+    // 3. Cleanup module-level variables (if defined)
     if (typeof selectedPointA !== 'undefined') selectedPointA = null;
     if (typeof selectedPointB !== 'undefined') selectedPointB = null;
     if (typeof currentRouteLine !== 'undefined') currentRouteLine = null;
-
-    // Clear marker cache
-    if (typeof MarkerCache !== 'undefined') {
-        MarkerCache.clear();
+    
+    // 4. CRITICAL: Cleanup via MapManager (this also calls the old cleanupMapState)
+    if (typeof MapManager !== 'undefined') {
+        try {
+            MapManager.cleanup();
+            console.log('✅ MapManager cleanup completed');
+        } catch (error) {
+            console.error('❌ Error in MapManager.cleanup():', error);
+        }
     }
-
-    console.log('🧹 Map state cleaned up');
+    
+    // 5. Clear marker cache
+    if (typeof MarkerCache !== 'undefined') {
+        try {
+            MarkerCache.clear();
+            console.log('✅ MarkerCache cleared');
+        } catch (error) {
+            console.error('❌ Error clearing MarkerCache:', error);
+        }
+    }
+    
+    // 6. Additional cleanup for Leaflet layers (if travelMap exists but MapManager doesn't)
+    if (window.travelMap && typeof L !== 'undefined') {
+        try {
+            // Remove all layers except tile layers
+            window.travelMap.eachLayer(function(layer) {
+                if (layer instanceof L.Marker || 
+                    layer instanceof L.Polyline || 
+                    layer instanceof L.Polygon || 
+                    layer instanceof L.Circle) {
+                    window.travelMap.removeLayer(layer);
+                }
+            });
+            console.log('✅ Additional Leaflet layers removed');
+        } catch (error) {
+            console.warn('⚠️ Could not remove all Leaflet layers:', error);
+        }
+    }
+    
+    // 7. Clear global references
+    window.travelMap = null;
+    
+    // 8. Force garbage collection hint (if supported)
+    if (window.gc) {
+        try {
+            window.gc();
+            console.log('✅ Garbage collection triggered');
+        } catch (e) {
+            // Ignore - not supported in all browsers
+        }
+    }
+    
+    console.log('🧹 cleanupMapState: Comprehensive cleanup completed');
 }
+
+// ==================== IMPROVED MAP MANAGER CLEANUP ====================
+const MapManager = {
+    instance: null,
+    cityMarker: null,
+
+    initialize(containerId, center, zoom = 13) {
+        console.log('🗺️ MapManager: Initializing map');
+        
+        // Cleanup any existing instance first
+        this.cleanup();
+        
+        try {
+            // Create new map instance
+            this.instance = L.map(containerId, {
+                zoomControl: true,
+                scrollWheelZoom: true,
+                doubleClickZoom: true,
+                touchZoom: true,
+                boxZoom: true,
+                keyboard: true,
+                dragging: true,
+                attributionControl: true
+            }).setView(center, zoom);
+            
+            // Add tile layer
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                maxZoom: 19,
+                minZoom: 3
+            }).addTo(this.instance);
+            
+            // Add scale control
+            L.control.scale({ imperial: false, metric: true }).addTo(this.instance);
+            
+            console.log('✅ MapManager: Map initialized successfully');
+            return this.instance;
+            
+        } catch (error) {
+            console.error('❌ MapManager: Initialization failed:', error);
+            throw error;
+        }
+    },
+    
+    cleanup() {
+        console.log('🧹 MapManager: Cleaning up map instance');
+        
+        // Clear city marker reference
+        this.cityMarker = null;
+        
+        // Remove map instance if exists
+        if (this.instance) {
+            try {
+                this.instance.remove();
+                console.log('✅ MapManager: Map instance removed');
+            } catch (e) {
+                console.log('ℹ️ MapManager: No active map to remove or already removed');
+            } finally {
+                this.instance = null;
+            }
+        }
+        
+        // Call the global cleanupMapState function for consistency
+        if (typeof window.cleanupMapState === 'function') {
+            try {
+                window.cleanupMapState();
+                console.log('✅ MapManager: Global cleanupMapState called');
+            } catch (e) {
+                console.error('❌ MapManager: Error calling global cleanup:', e);
+            }
+        }
+    },
+    
+    get() {
+        return this.instance;
+    },
+    
+    isInitialized() {
+        return this.instance !== null;
+    },
+    
+    setCityMarker(coords, popupContent) {
+        if (!this.instance) {
+            console.warn('MapManager: Cannot add city marker - map not initialized');
+            return null;
+        }
+        
+        // Remove old city marker if exists
+        if (this.cityMarker && this.instance) {
+            this.instance.removeLayer(this.cityMarker);
+            this.cityMarker = null;
+        }
+        
+        // Create new city marker
+        this.cityMarker = L.marker(coords, {
+            icon: L.divIcon({
+                html: `
+                    <div style="
+                        background: #4F46E5;
+                        color: white;
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-weight: bold;
+                        font-size: 24px;
+                        border: 3px solid white;
+                        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+                        cursor: pointer;
+                    ">
+                        🏙️
+                    </div>
+                `,
+                className: 'city-marker',
+                iconSize: [50, 50],
+                iconAnchor: [25, 50]
+            })
+        }).addTo(this.instance);
+        
+        if (popupContent) {
+            this.cityMarker.bindPopup(popupContent).openPopup();
+        }
+        
+        return this.cityMarker;
+    }
+};
 // ==================== MAIN INITIALIZATION FUNCTION ====================
 function initApp() {
     console.log('🚀 Εκκίνηση εφαρμογής...');
@@ -3373,18 +3677,8 @@ function initializeMapInStep() {
     }
     
     // Καθαρισμός προηγούμενου χάρτη με ασφαλή τρόπο
-    if (window.travelMap) {
-        try {
-            window.travelMap.remove();
-        } catch (e) {
-            console.warn('⚠️ Error removing previous map:', e);
-        }
-        window.travelMap = null;
-    }
-
-    // Χρήση centralized cleanup για αποφυγή memory leaks
-    cleanupMapState();
-
+    MapManager.cleanup();
+    
     try {
         // Έλεγχος αν φορτώθηκε το Leaflet
         if (typeof L === 'undefined') {
@@ -3402,7 +3696,7 @@ function initializeMapInStep() {
         // Δημιουργία χάρτη using MapManager
         const map = MapManager.initialize('travel-map', cityCoords, 13);
 
-        // Set global reference for backward compatibility
+        // ΚΡΙΤΙΚΟ: Ορισμός του window.travelMap για συμβατότητα
         window.travelMap = map;
 
         console.log('✅ Χάρτης δημιουργήθηκε');
@@ -3431,6 +3725,12 @@ function initializeMapInStep() {
         }
         
         console.log('✅ Χάρτης φορτώθηκε επιτυχώς');
+        
+        // ΠΡΟΣΘΗΚΗ: Σύνδεση του MapManager με το window.travelMap για συμβατότητα
+        // Αυτό είναι το ΚΛΕΙΔΙ για να λειτουργεί το κουμπί "Προβολή Σημείων"
+        if (typeof MapManager !== 'undefined' && MapManager.get()) {
+            console.log('🔗 MapManager συνδέθηκε με window.travelMap για συμβατότητα');
+        }
         
     } catch (error) {
         console.error('❌ Σφάλμα αρχικοποίησης χάρτη:', error);
@@ -3783,8 +4083,11 @@ function createEnhancedPopup(activity) {
 // 4. ΒΕΛΤΙΩΜΕΝΗ showActivityMap() (ΜΕ ΤΑ ΝΕΑ POPUPS ΚΑΙ ΕΝΩΣΕΙΣ)
 // ==================== ΒΕΛΤΙΩΜΕΝΗ showActivityMap() ====================
 function showActivityMap() {
-    if (!window.travelMap) {
-        alert('Παρακαλώ πρώτα φορτώστε τον χάρτη');
+    // 🔴 ΚΡΙΤΙΚΟ: Χρησιμοποίησε τον MapManager αν υπάρχει, αλλιώς το window.travelMap
+    const map = MapManager.get() || window.travelMap;
+    
+    if (!map) {
+        alert('Παρακαλώ πρώτα φορτώστε τον χάρτη πατώντας "OK" ή περιμένετε να φορτώσει');
         return;
     }
     
@@ -3796,7 +4099,7 @@ function showActivityMap() {
     
     // 2. Αφαίρεση τυχόν διαδρομών
     if (currentRouteLine) {
-        window.travelMap.removeLayer(currentRouteLine);
+        map.removeLayer(currentRouteLine);
         currentRouteLine = null;
     }
     
@@ -3804,16 +4107,26 @@ function showActivityMap() {
     selectedPointA = null;
     selectedPointB = null;
     
-    // 4. Προσθήκη πινέζας για την πόλη
+    // 4. Προσθήκη πινέζας για την πόλη (αν χρειάζεται)
     const cityCoords = getCityCoordinates(state.selectedDestinationId);
     if (cityCoords) {
-        L.marker(cityCoords)
-            .addTo(window.travelMap)
-            .bindPopup(`<b>${state.selectedDestination}</b><br>Κύκλος πόλης`)
-            .openPopup();
-            
+        // Μην ξαναπροσθέσεις αν υπάρχει ήδη
+        let cityMarkerExists = false;
+        map.eachLayer(function(layer) {
+            if (layer.options && layer.options.className === 'city-marker') {
+                cityMarkerExists = true;
+            }
+        });
+        
+        if (!cityMarkerExists) {
+            L.marker(cityCoords)
+                .addTo(map)
+                .bindPopup(`<b>${state.selectedDestination}</b><br>Κύκλος πόλης`)
+                .openPopup();
+        }
+        
         // Ζουμάρισμα στο κέντρο της πόλης
-        window.travelMap.setView(cityCoords, 13);
+        map.setView(cityCoords, 13);
     }
     
     if (state.selectedActivities.length === 0) {
@@ -3822,8 +4135,6 @@ function showActivityMap() {
     }
     
     let activityCount = 0;
-    // markers array already exists globally as window.selectedMarkers
-
     
     // 5. Προσθήκη πινέζας για ΚΑΘΕ επιλεγμένη δραστηριότητα
     state.selectedActivities.forEach(activity => {
@@ -3874,7 +4185,7 @@ function showActivityMap() {
         // Create or reuse marker from cache
         if (!MarkerCache.has(activity.id)) {
             // Marker doesn't exist in cache, create new one
-            const marker = (coords, markerTitle, activityData);
+            const marker = createMarkerWithConnectFunction(coords, markerTitle, activityData);
             if (marker) {
                 MarkerCache.addOrUpdate(activity.id, marker);
                 window.selectedMarkers.push(marker);  // Backward compatibility
@@ -3887,29 +4198,29 @@ function showActivityMap() {
     });
     
     // 6. Αν έχουμε markers, προσπάθησε να ζουμάρεις να τα δείξεις όλα
-if (window.selectedMarkers.length > 0 && cityCoords) {
-    try {
-        // Φίλτραρε μόνο τα έγκυρα markers
-        const validMarkers = window.selectedMarkers.filter(marker => 
-            marker && typeof marker.getLatLng === 'function'
-        );
-        
-        if (validMarkers.length > 0) {
-            // Δημιούργησε bounds που περιλαμβάνουν όλα τα markers
-            const bounds = L.latLngBounds([]);
-            validMarkers.forEach(marker => {
-                bounds.extend(marker.getLatLng());
-            });
+    if (window.selectedMarkers && window.selectedMarkers.length > 0 && cityCoords) {
+        try {
+            // Φίλτραρε μόνο τα έγκυρα markers
+            const validMarkers = window.selectedMarkers.filter(marker => 
+                marker && typeof marker.getLatLng === 'function'
+            );
             
-            window.travelMap.fitBounds(bounds.pad(0.1));
-            console.log(`✅ Ζουμάρισμα σε ${validMarkers.length} markers`);
+            if (validMarkers.length > 0) {
+                // Δημιούργησε bounds που περιλαμβάνουν όλα τα markers
+                const bounds = L.latLngBounds([]);
+                validMarkers.forEach(marker => {
+                    bounds.extend(marker.getLatLng());
+                });
+                
+                map.fitBounds(bounds.pad(0.1));
+                console.log(`✅ Ζουμάρισμα σε ${validMarkers.length} markers`);
+            }
+        } catch (error) {
+            console.error('❌ Σφάλμα ζουμαρίσματος:', error);
+            // Απλό ζουμάρισμα στο κέντρο αν αποτύχει
+            map.setView(cityCoords, 13);
         }
-    } catch (error) {
-        console.error('❌ Σφάλμα ζουμαρίσματος:', error);
-        // Απλό ζουμάρισμα στο κέντρο αν αποτύχει
-        window.travelMap.setView(cityCoords, 13);
     }
-}
 
     // 7. Display custom points on map
     if (state.customPoints && state.customPoints.length > 0) {
@@ -5214,8 +5525,14 @@ function showToast(message, type = 'info') {
         }
     }, 4000);
 }
-
 function createMarkerWithConnectFunction(coords, title, activityData) {
+    // Χρησιμοποίησε τον MapManager
+    const map = MapManager.getMap();
+    if (!map) {
+        console.error('❌ Χάρτης δεν είναι διαθέσιμος');
+        return null;
+    }
+
     // Validate coords before proceeding
     if (!coords || !Array.isArray(coords) || coords.length !== 2 ||
         typeof coords[0] !== 'number' || typeof coords[1] !== 'number' ||
@@ -5270,11 +5587,6 @@ function createMarkerWithConnectFunction(coords, title, activityData) {
     
     console.log('📍 Δημιουργία marker για:', title, 'με restaurant:', !!safeActivityData.restaurant);
     
-    if (!window.travelMap) {
-        console.error('❌ Χάρτης δεν είναι διαθέσιμος');
-        return null;
-    }
-    
     // Χρώμα πινέζας ανάλογα με την κατάσταση
     const getMarkerColor = () => {
         if (selectedPointA && selectedPointA.title === title) return '#10B981'; // Πράσινο για Α
@@ -5314,134 +5626,142 @@ function createMarkerWithConnectFunction(coords, title, activityData) {
             iconSize: [30, 30],
             iconAnchor: [15, 30]
         })
-    }).addTo(window.travelMap);
+    }).addTo(map); // 🔴 ΑΛΛΑΓΗ: map αντί για window.travelMap
     
     // Αποθήκευση δεδομένων
     marker.options.activityData = safeActivityData;
     marker.options.originalTitle = title;
     marker.options.coords = coords;
-    // ==== ΠΡΟΣΘΕΣΕ ΑΥΤΟ ΕΔΩ (ΜΕΤΑ ΑΠΟ 2 ΚΕΝΕΣ ΓΡΑΜΜΕΣ) ====
-// ΠΡΟΣΘΗΚΗ LABEL ΜΕ ΤΟ ΟΝΟΜΑ
-const label = L.marker(coords, {
-    icon: L.divIcon({
-        html: `
-            <div style="
-                background: rgba(255, 255, 255, 0.95);
-                color: #1A202C;
-                padding: 3px 10px;
-                border-radius: 12px;
-                font-size: 11px;
-                font-weight: 600;
-                border: 1px solid #E2E8F0;
-                white-space: nowrap;
-                max-width: 120px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-                font-family: 'Roboto', sans-serif;
-            ">
-                ${title.length > 20 ? title.substring(0, 20) + '...' : title}
-            </div>
-        `,
-        className: 'marker-label',
-        iconSize: [100, 24],
-        iconAnchor: [50, -15]
-    })
-}).addTo(window.travelMap);
-
-// Συνδέσε το label με το marker (για cleanup)
-marker.options.label = label;
-
-// ===============================================
-
-    // Συνάρτηση που καλείται όταν κάνουμε κλικ
-   const handleMarkerClick = function(e) {
-    console.log(`📍 Κλικ στο: ${title}`, e.latlng);
     
-    // Αν δεν έχουμε επιλέξει πρώτο σημείο
-    if (!selectedPointA) {
-        selectedPointA = {
-            marker: marker,
-            coords: coords,
-            title: title,
-            data: safeActivityData,
-            latlng: e.latlng
-        };
+    // ΠΡΟΣΘΗΚΗ LABEL ΜΕ ΤΟ ΟΝΟΜΑ
+    const label = L.marker(coords, {
+        icon: L.divIcon({
+            html: `
+                <div style="
+                    background: rgba(255, 255, 255, 0.95);
+                    color: #1A202C;
+                    padding: 3px 10px;
+                    border-radius: 12px;
+                    font-size: 11px;
+                    font-weight: 600;
+                    border: 1px solid #E2E8F0;
+                    white-space: nowrap;
+                    max-width: 120px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+                    font-family: 'Roboto', sans-serif;
+                ">
+                    ${title.length > 20 ? title.substring(0, 20) + '...' : title}
+                </div>
+            `,
+            className: 'marker-label',
+            iconSize: [100, 24],
+            iconAnchor: [50, -15]
+        })
+    }).addTo(map); // 🔴 ΑΛΛΑΓΗ: map αντί για window.travelMap
+
+    // Συνδέσε το label με το marker (για cleanup)
+    marker.options.label = label;
+    
+    // Συνάρτηση που καλείται όταν κάνουμε κλικ
+    const handleMarkerClick = function(e) {
+        console.log(`📍 Κλικ στο: ${title}`, e.latlng);
         
-        // Ανανέωση εμφάνισης
-        updateMarkerAppearance();
-        
-        showToast(`
-            <div style="text-align: left;">
-                <strong style="font-size: 15px;">📍 Επιλέχθηκε σημείο <span style="color: #10B981;">ΑΠΟ</span></strong><br>
-                <span style="font-weight: 600;">${title}</span><br>
-                <small style="opacity: 0.9;">Κάντε κλικ σε άλλη πινέζα για προορισμό</small>
-            </div>
-        `, 'info');
-        
-    } 
-    // Αν έχουμε ήδη πρώτο σημείο και κάνουμε κλικ σε διαφορετικό
-    else if (!selectedPointB && selectedPointA.marker !== marker) {
-        selectedPointB = {
-            marker: marker,
-            coords: coords,
-            title: title,
-            data: safeActivityData,
-            latlng: e.latlng
-        };
-        
-        // Ανανέωση εμφάνισης
-        updateMarkerAppearance();
-        
-        // 🔴 ΠΡΟΣΘΗΚΗ: ΜΗΝΥΜΑ ΓΙΑ ΤΟ ΔΕΥΤΕΡΟ ΣΗΜΕΙΟ
-        showToast(`
-            <div style="text-align: left;">
-                <strong style="font-size: 15px;">🎯 Επιλέχθηκε σημείο <span style="color: #EF4444;">ΠΡΟΣ</span></strong><br>
-                <span style="font-weight: 600;">${title}</span><br>
-                <small style="opacity: 0.9;">Η διαδρομή θα σχεδιαστεί αυτόματα...</small>
-            </div>
-        `, 'info');
-        
-        // Σχεδίαση διαδρομής
-        setTimeout(() => {
-            drawRouteBetweenPoints();
-        }, 300);
-        
-    } 
-    // Αν κάνουμε κλικ στο ίδιο σημείο ξανά
-    else if (selectedPointA && selectedPointA.marker === marker) {
-        showToast(`ℹ️ Έχετε ήδη επιλέξει το <strong>${title}</strong> ως σημείο ΑΠΟ`, 'warning');
-    }
-    // Αν κάνουμε κλικ στο δεύτερο σημείο ξανά
-    else if (selectedPointB && selectedPointB.marker === marker) {
-        showToast(`ℹ️ Έχετε ήδη επιλέξει το <strong>${title}</strong> ως σημείο ΠΡΟΣ`, 'warning');
-    }
-    // Αν έχουμε ήδη δύο σημεία και κάνουμε κλικ σε τρίτο
-    else if (selectedPointA && selectedPointB) {
-        // Επαναφορά
-        resetSelection();
-        
-        // Ξεκινάμε από το αρχικό
-        selectedPointA = {
-            marker: marker,
-            coords: coords,
-            title: title,
-            data: safeActivityData,
-            latlng: e.latlng
-        };
-        
-        // Ανανέωση εμφάνισης
-        updateMarkerAppearance();
-        
-        showToast(`
-            <div style="text-align: left;">
-                <strong style="font-size: 15px;">🔄 Νέο σημείο <span style="color: #10B981;">ΑΠΟ</span></strong><br>
-                <span style="font-weight: 600;">${title}</span><br>
-                <small style="opacity: 0.9;">Η προηγούμενη διαδρομή ακυρώθηκε</small>
-            </div>
-        `, 'info');
-    }
-};
+        // Αν δεν έχουμε επιλέξει πρώτο σημείο
+        if (!selectedPointA) {
+            selectedPointA = {
+                marker: marker,
+                coords: coords,
+                title: title,
+                data: safeActivityData,
+                latlng: e.latlng
+            };
+            
+            // Ανανέωση εμφάνισης
+            updateMarkerAppearance();
+            
+            showToast(`
+                <div style="text-align: left;">
+                    <strong style="font-size: 15px;">📍 Επιλέχθηκε σημείο <span style="color: #10B981;">ΑΠΟ</span></strong><br>
+                    <span style="font-weight: 600;">${title}</span><br>
+                    <small style="opacity: 0.9;">Κάντε κλικ σε άλλη πινέζα για προορισμό</small>
+                </div>
+            `, 'info');
+            
+        } 
+        // Αν έχουμε ήδη πρώτο σημείο και κάνουμε κλικ σε διαφορετικό
+        else if (!selectedPointB && selectedPointA.marker !== marker) {
+            selectedPointB = {
+                marker: marker,
+                coords: coords,
+                title: title,
+                data: safeActivityData,
+                latlng: e.latlng
+            };
+            
+            // Ανανέωση εμφάνισης
+            updateMarkerAppearance();
+            
+            // 🔴 ΠΡΟΣΘΗΚΗ: ΜΗΝΥΜΑ ΓΙΑ ΤΟ ΔΕΥΤΕΡΟ ΣΗΜΕΙΟ
+            showToast(`
+                <div style="text-align: left;">
+                    <strong style="font-size: 15px;">🎯 Επιλέχθηκε σημείο <span style="color: #EF4444;">ΠΡΟΣ</span></strong><br>
+                    <span style="font-weight: 600;">${title}</span><br>
+                    <small style="opacity: 0.9;">Η διαδρομή θα σχεδιαστεί αυτόματα...</small>
+                </div>
+            `, 'info');
+            
+            // Σχεδίαση διαδρομής
+            setTimeout(() => {
+                drawRouteBetweenPoints();
+            }, 300);
+            
+        } 
+        // Αν κάνουμε κλικ στο ίδιο σημείο ξανά
+        else if (selectedPointA && selectedPointA.marker === marker) {
+            showToast(`ℹ️ Έχετε ήδη επιλέξει το <strong>${title}</strong> ως σημείο ΑΠΟ`, 'warning');
+        }
+        // Αν κάνουμε κλικ στο δεύτερο σημείο ξανά
+        else if (selectedPointB && selectedPointB.marker === marker) {
+            showToast(`ℹ️ Έχετε ήδη επιλέξει το <strong>${title}</strong> ως σημείο ΠΡΟΣ`, 'warning');
+        }
+        // Αν έχουμε ήδη δύο σημεία και κάνουμε κλικ σε τρίτο
+        else if (selectedPointA && selectedPointB) {
+            // Επαναφορά
+            resetSelection();
+            
+            // Ξεκινάμε από το αρχικό
+            selectedPointA = {
+                marker: marker,
+                coords: coords,
+                title: title,
+                data: safeActivityData,
+                latlng: e.latlng
+            };
+            
+            // Ανανέωση εμφάνισης
+            updateMarkerAppearance();
+            
+            showToast(`
+                <div style="text-align: left;">
+                    <strong style="font-size: 15px;">🔄 Νέο σημείο <span style="color: #10B981;">ΑΠΟ</span></strong><br>
+                    <span style="font-weight: 600;">${title}</span><br>
+                    <small style="opacity: 0.9;">Η προηγούμενη διαδρομή ακυρώθηκε</small>
+                </div>
+            `, 'info');
+        }
+    };
+    
+    // Επισύναψη event listener
+    marker.on('click', handleMarkerClick);
+    
+    // Αρχικό popup
+    marker.bindPopup(createEnhancedPopup(safeActivityData));
+    
+    return marker;
+}
+
 // ==================== ΧΡΩΜΑΤΙΣΤΕΣ ΠΙΝΕΖΕΣ ΑΝΑ ΗΜΕΡΑ ====================
 
 // Συνάρτηση για να δημιουργήσει πινέζα με χρώμα ημέρας
