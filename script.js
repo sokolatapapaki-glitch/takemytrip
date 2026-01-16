@@ -970,11 +970,7 @@ function loadStepContent(stepName) {
             }, 300);
         }
         
-        // 🔴 ΚΑΙΝΟΥΡΓΙΑ: Προσθήκη debug tools
-        setTimeout(() => {
-            initDebugTools();
-        }, 1500);
-        
+               
     }, 100);
     break;
     } // Τέλος του switch
