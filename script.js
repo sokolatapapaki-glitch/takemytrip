@@ -6694,7 +6694,10 @@ function saveUserProgram() {
     // Αποθήκευση
     state.geographicProgram = program;
     saveState();
-    
+    // 🔴 ΝΕΟ: ΣΥΓΧΡΟΝΙΣΜΟΣ MARKERS ΜΕ ΧΡΩΜΑΤΑ ΗΜΕΡΩΝ
+    setTimeout(() => {
+        synchronizeMapMarkersWithProgram();
+    }, 500);
     showToast(`✅ Το πρόγραμμα αποθηκεύτηκε! ${program.totalDays} μέρες, ${program.days.reduce((sum, day) => sum + day.totalActivities, 0)} δραστηριότητες`, 'success');
     
     // Ενημέρωση του "Φίλτρο Ημερών" (αν υπάρχει)
@@ -6705,13 +6708,102 @@ function saveUserProgram() {
         }, 500);
     }
 }
-
+// ==================== SYNCHRONIZE MAP WITH PROGRAM ====================
+function synchronizeMapMarkersWithProgram() {
+    console.log('🔄 Συγχρονισμός markers με πρόγραμμα...');
+    
+    if (!userProgram || !userProgram.days || !window.travelMap) {
+        console.log('⚠️ Δεν υπάρχει πρόγραμμα ή χάρτης');
+        return;
+    }
+    
+    let updatedMarkers = 0;
+    
+    // 1. Αρχικά επαναφορά όλων των markers στο default (αν υπάρχουν ήδη)
+    //    (Αυτό είναι για την περίπτωση που μια δραστηριότητα αφαιρεθεί από μέρα)
+    MarkerCache.getAllMarkers().forEach(marker => {
+        // Επαναφορά στο default στυλ
+        if (marker && marker.setIcon) {
+            marker.setIcon(L.divIcon({
+                html: `
+                    <div style="
+                        background: #4F46E5; 
+                        color: white; 
+                        width: 42px; 
+                        height: 42px; 
+                        border-radius: 50%; 
+                        display: flex; 
+                        align-items: center; 
+                        justify-content: center;
+                        font-weight: bold;
+                        font-size: 16px;
+                        border: 3px solid white;
+                        box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+                        cursor: pointer;
+                    ">
+                        📍
+                    </div>
+                `,
+                className: 'clickable-marker',
+                iconSize: [42, 42],
+                iconAnchor: [21, 42]
+            }));
+        }
+    });
+    
+    // 2. Εφαρμογή νέων στυλ για κάθε δραστηριότητα στο πρόγραμμα
+    userProgram.days.forEach((dayActivities, dayIndex) => {
+        const dayNumber = dayIndex + 1;
+        const dayColor = getDayColor(dayNumber);
+        
+        dayActivities.forEach(activity => {
+            const activityId = activity.id;
+            const marker = MarkerCache.get(activityId);
+            
+            if (marker && marker.setIcon) {
+                // Ενημέρωση marker με χρώμα ημέρας και αριθμό
+                marker.setIcon(L.divIcon({
+                    html: `
+                        <div style="
+                            background: ${dayColor}; 
+                            color: white; 
+                            width: 50px; 
+                            height: 50px; 
+                            border-radius: 50%; 
+                            display: flex; 
+                            align-items: center; 
+                            justify-content: center;
+                            font-weight: bold;
+                            font-size: 18px;
+                            border: 3px solid white;
+                            box-shadow: 0 4px 15px ${dayColor}80;
+                            cursor: pointer;
+                        ">
+                            ${dayNumber}
+                        </div>
+                    `,
+                    className: 'program-marker',
+                    iconSize: [50, 50],
+                    iconAnchor: [25, 50]
+                }));
+                
+                updatedMarkers++;
+                console.log(`✅ Marker για ${activity.name} -> Μέρα ${dayNumber} (${dayColor})`);
+            }
+        });
+    });
+    
+    console.log(`✅ Ενημερώθηκαν ${updatedMarkers} markers`);
+    showToast(`🎨 Ενημερώθηκαν ${updatedMarkers} πινέζες με χρώματα ημερών`, 'success');
+}
 // 9. Προβολή στον χάρτη
 function showProgramOnMap() {
     if (!window.travelMap) {
         showToast('⚠️ Παρακαλώ πρώτα φορτώστε τον χάρτη', 'warning');
         return;
     }
+    // 🔴 ΝΕΟ: ΠΡΩΤΑ ΣΥΓΧΡΟΝΙΖΟΥΜΕ ΤΑ MARKERS
+    synchronizeMapMarkersWithProgram();
     
     // Χρησιμοποιούμε την ίδια συνάρτηση applyDayFilter()
     // αλλά πρώτα δημιουργούμε ένα προσωρινό πρόγραμμα
