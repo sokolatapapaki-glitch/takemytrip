@@ -6754,6 +6754,16 @@ window.cleanupMapState = cleanupMapState;
 window.recalculateSelectedActivityPrices = recalculateSelectedActivityPrices;
 window.clearMapPoints = clearMapPoints;
 window.getDayColor = getDayColor;
+// ==================== EXPORT NEW FUNCTIONS ====================
+window.setupProgramDays = setupProgramDays;
+window.saveUserProgram = saveUserProgram;
+window.showProgramOnMap = showProgramOnMap;
+window.resetUserProgram = resetUserProgram;
+window.handleProgramDragStart = handleProgramDragStart;
+window.handleProgramDragOver = handleProgramDragOver;
+window.handleProgramDragLeave = handleProgramDragLeave;
+window.handleProgramDrop = handleProgramDrop;
+window.addActivityToQuickDay = addActivityToQuickDay;
 
 
 // ==================== CSS ANIMATIONS FOR PROGRAM ====================
