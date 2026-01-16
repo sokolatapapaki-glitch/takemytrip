@@ -3952,7 +3952,36 @@ function addCustomPointToMap(point) {
     `;
 
     marker.bindPopup(popupContent);
-
+    // 🔴 ΑΛΛΑΓΗ 7: ΠΡΟΣΘΗΚΗ ΤΑΜΠΕΛΑΚΙΟΥ ΓΙΑ ΠΡΟΣΩΠΙΚΑ ΣΗΜΕΙΑ
+    const label = L.marker([point.location.lat, point.location.lng], {
+        icon: L.divIcon({
+            html: `
+                <div style="
+                    background: #F59E0B;
+                    color: white;
+                    padding: 4px 12px;
+                    border-radius: 12px;
+                    font-size: 11px;
+                    font-weight: 600;
+                    border: 1px solid white;
+                    white-space: nowrap;
+                    max-width: 150px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                    font-family: 'Roboto', sans-serif;
+                ">
+                    ${point.name.length > 25 ? point.name.substring(0, 25) + '...' : point.name}
+                </div>
+            `,
+            className: 'custom-point-label',
+            iconSize: [120, 28],
+            iconAnchor: [60, -18]
+        })
+    }).addTo(window.travelMap);
+    
+    // Σύνδεση label με το marker για cleanup
+    marker.options.label = label;
     console.log(`📍 Added custom point to map: ${point.name}`);
 }
 
