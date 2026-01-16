@@ -63,28 +63,35 @@ function restoreUserProgramFromState() {
     }
 }
 // ==================== MAP MANAGER ====================
+// ==================== MAP MANAGER ====================
 const MapManager = {
     instance: null,
     cityMarker: null,
 
-    initialize(containerId, center, zoom = 13) {
+    initialize(containerId, center, zoom = 13, options = {}) {
         console.log('🗺️ MapManager: Initializing map');
 
         // Cleanup any existing instance first
         this.cleanup();
 
         try {
-            // Create new map instance with same options as before
-            this.instance = L.map(containerId, {
-                zoomControl: true,
-                scrollWheelZoom: true,
-                doubleClickZoom: true,
-                touchZoom: true,
-                boxZoom: true,
-                keyboard: true,
-                dragging: true,
+            // 🔴 ΚΑΙΝΟΥΡΓΙΑ: Default options ΧΩΡΙΣ scroll wheel zoom
+            const defaultOptions = {
+                zoomControl: true,        // ✅ + και - buttons
+                scrollWheelZoom: false,   // 🔴 ΑΠΕΝΕΡΓΟΠΟΙΗΜΕΝΟ
+                doubleClickZoom: false,   // 🔴 ΚΑΙ ΑΥΤΟ ΑΠΕΝΕΡΓΟΠΟΙΗΜΕΝΟ
+                touchZoom: true,          // ✅ Για κινητά
+                boxZoom: true,            // ✅ Με drag rectangle
+                keyboard: true,           // ✅ + και - από πληκτρολόγιο
+                dragging: true,           // ✅ Σέρνιμο χάρτη
                 attributionControl: true
-            }).setView(center, zoom);
+            };
+
+            // 🔴 ΚΑΙΝΟΥΡΓΙΑ: Συγχώνευση default + custom options
+            const mergedOptions = { ...defaultOptions, ...options };
+
+            // Create new map instance with merged options
+            this.instance = L.map(containerId, mergedOptions).setView(center, zoom);
 
             // Add tile layer (same as before)
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -96,13 +103,21 @@ const MapManager = {
             // Add scale control (same as before)
             L.control.scale({ imperial: false, metric: true }).addTo(this.instance);
 
-            console.log('✅ MapManager: Map initialized');
+            console.log('✅ MapManager: Map initialized with options:', mergedOptions);
             return this.instance;
 
         } catch (error) {
             console.error('❌ MapManager: Initialization failed:', error);
             throw error;
         }
+    },
+
+    // 🔴 ΚΑΙΝΟΥΡΓΙΑ: Helper για να καλείται με τα νέα options
+    initializeWithOptions(containerId, center, zoom = 13) {
+        return this.initialize(containerId, center, zoom, {
+            scrollWheelZoom: false,    // Σίγουρα false
+            doubleClickZoom: false     // Σίγουρα false
+        });
     },
 
     cleanup() {
@@ -182,7 +197,6 @@ const MapManager = {
         return this.cityMarker;
     }
 };
-
 // ==================== MARKER CACHE ====================
 const MarkerCache = {
     cache: new Map(), // Map<activityId, marker>
@@ -3194,7 +3208,7 @@ function initializeMap() {
         // Δημιουργία χάρτη
         window.travelMap = L.map('map', {
             zoomControl: true,
-            scrollWheelZoom: true,
+            scrollWheelZoom: false,
             doubleClickZoom: true,
             touchZoom: true,
             boxZoom: true,
@@ -3511,15 +3525,18 @@ function initializeMapInStep() {
         
         console.log(`📍 Συντεταγμένες πόλης: ${cityCoords[0]}, ${cityCoords[1]}`);
         
-        // Δημιουργία χάρτη using MapManager
-        const map = MapManager.initialize('travel-map', cityCoords, 13);
+        // 🔴 ΚΑΙΝΟΥΡΓΙΑ: Δημιουργία χάρτη ΧΩΡΙΣ scroll wheel zoom
+        const map = MapManager.initialize('travel-map', cityCoords, 13, {
+            scrollWheelZoom: false,    // 🔴 ΑΠΕΝΕΡΓΟΠΟΙΗΜΕΝΟ - ΟΧΙ zoom με scroll
+            doubleClickZoom: false     // 🔴 ΑΠΕΝΕΡΓΟΠΟΙΗΜΕΝΟ - ΟΧΙ zoom με διπλό κλικ
+        });
 
         // Set global reference for backward compatibility
         window.travelMap = map;
 
-        console.log('✅ Χάρτης δημιουργήθηκε');
+        console.log('✅ Χάρτης δημιουργήθηκε ΧΩΡΙΣ scroll wheel zoom');
 
-        // Προσθήκη marker για την πόλη using MapManager
+        // 🔴 ΚΑΙΝΟΥΡΓΙΑ: Προσθήκη marker για την πόλη με ανανεωμένο μήνυμα για zoom
         MapManager.setCityMarker(cityCoords, `
             <div style="text-align: center; padding: 10px; min-width: 200px;">
                 <h3 style="margin: 0 0 5px 0; color: #4F46E5;">${state.selectedDestination}</h3>
@@ -3527,22 +3544,40 @@ function initializeMapInStep() {
                     <i class="fas fa-map-marker-alt"></i> Κέντρο πόλης
                 </p>
                 <hr style="margin: 10px 0;">
+                <div style="background: #f0f9ff; padding: 8px; border-radius: 6px; margin: 10px 0;">
+                    <strong>🎯 Zoom Instructions:</strong><br>
+                    <small style="color: #666;">
+                        Χρησιμοποιήστε τα κουμπιά <span style="color: #4F46E5; font-weight: bold;">+</span> και <span style="color: #4F46E5; font-weight: bold;">-</span><br>
+                        για zoom in/out
+                    </small>
+                </div>
                 <p style="margin: 0; font-size: 12px; color: #888;">
-                    👆 Κάντε κλικ στο κουμπί <strong>"Προβολή Σημείων"</strong> για τις δραστηριότητες
+                    👆 Πατήστε "Προβολή Σημείων" για τις δραστηριότητες
                 </p>
             </div>
         `);
+        
+        // 🔴 ΚΑΙΝΟΥΡΓΙΑ: Προσθήκη zoom instruction control
+        setTimeout(() => {
+            addZoomInstructionsToMap();
+        }, 1000);
         
         // Ενημέρωση status
         const statusEl = document.getElementById('map-status');
         if (statusEl) {
             statusEl.innerHTML = `
                 <i class="fas fa-check-circle" style="color: #10B981;"></i>
-                <strong>Έτοιμο:</strong> Χάρτης φορτώθηκε. Πατήστε "Προβολή Σημείων"
+                <strong>Έτοιμο:</strong> Χάρτης φορτώθηκε. Χρησιμοποιήστε +/- για zoom
             `;
         }
         
-        console.log('✅ Χάρτης φορτώθηκε επιτυχώς');
+        // 🔴 ΚΑΙΝΟΥΡΓΙΑ: Προσθήκη custom zoom controls styling
+        addCustomZoomStyles();
+        
+        console.log('✅ Χάρτης φορτώθηκε επιτυχώς ΧΩΡΙΣ scroll zoom');
+        
+        // 🔴 ΚΑΙΝΟΥΡΓΙΑ: Αποθήκευση zoom state για μελλοντική χρήση
+        sessionStorage.setItem('mapZoomPreference', 'buttons-only');
         
     } catch (error) {
         console.error('❌ Σφάλμα αρχικοποίησης χάρτη:', error);
@@ -3564,6 +3599,147 @@ function initializeMapInStep() {
                 </div>
             </div>
         `;
+    }
+}
+
+// 🔴 ΚΑΙΝΟΥΡΓΙΑ: Βοηθητική συνάρτηση για zoom instructions
+function addZoomInstructionsToMap() {
+    if (!window.travelMap) return;
+    
+    // Δημιουργία custom control για οδηγίες zoom
+    const ZoomInstructionControl = L.Control.extend({
+        options: { position: 'topleft' },
+        
+        onAdd: function(map) {
+            const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control zoom-instruction-control');
+            container.style.cssText = `
+                background: white;
+                border-radius: 6px;
+                padding: 8px 12px;
+                font-size: 12px;
+                color: #4B5563;
+                border: 1px solid #E5E7EB;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                max-width: 180px;
+                font-family: 'Roboto', sans-serif;
+                margin-left: 50px;
+                margin-top: 10px;
+            `;
+            
+            container.innerHTML = `
+                <div style="display: flex; align-items: center; margin-bottom: 5px;">
+                    <div style="background: #4F46E5; color: white; width: 24px; height: 24px; border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-right: 8px; font-weight: bold; font-size: 16px;">
+                        +
+                    </div>
+                    <div>
+                        <strong>Zoom:</strong> Χρησιμοποιήστε<br>τα κουμπιά
+                    </div>
+                </div>
+                <div style="font-size: 11px; color: #6B7280; border-top: 1px solid #f0f0f0; padding-top: 5px;">
+                    <i class="fas fa-info-circle"></i> Scroll wheel: απενεργοποιημένο
+                </div>
+            `;
+            
+            L.DomEvent.disableClickPropagation(container);
+            L.DomEvent.disableScrollPropagation(container);
+            return container;
+        }
+    });
+    
+    window.travelMap.addControl(new ZoomInstructionControl());
+    
+    // Show toast instruction only first time
+    if (!sessionStorage.getItem('zoomInstructionShown')) {
+        setTimeout(() => {
+            showToast(`
+                <div style="max-width: 300px; text-align: left;">
+                    <strong>🎯 Οδηγίες Χάρτη</strong><br><br>
+                    Χρησιμοποιήστε τα κουμπιά <span style="color: #4F46E5; font-weight: bold;">+</span> και <span style="color: #4F46E5; font-weight: bold;">-</span><br>
+                    για zoom in και out.<br><br>
+                    <small style="color: #666;">
+                        Το scroll wheel είναι απενεργοποιημένο για να αποφύγετε accidental zoom.
+                    </small>
+                </div>
+            `, 'info', 4000);
+            
+            sessionStorage.setItem('zoomInstructionShown', 'true');
+        }, 1500);
+    }
+}
+
+// 🔴 ΚΑΙΝΟΥΡΓΙΑ: Βοηθητική συνάρτηση για custom zoom styles
+function addCustomZoomStyles() {
+    // Προσθήκη CSS αν δεν υπάρχει
+    if (!document.querySelector('#custom-zoom-styles')) {
+        const style = document.createElement('style');
+        style.id = 'custom-zoom-styles';
+        style.textContent = `
+            /* Βελτιωμένα zoom controls */
+            .leaflet-control-zoom {
+                border: 2px solid rgba(79, 70, 229, 0.3) !important;
+                border-radius: 10px !important;
+                overflow: hidden !important;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.15) !important;
+                background: white !important;
+            }
+            
+            .leaflet-control-zoom a {
+                background-color: white !important;
+                color: #4F46E5 !important;
+                font-weight: bold !important;
+                font-size: 20px !important;
+                width: 42px !important;
+                height: 42px !important;
+                line-height: 42px !important;
+                border-bottom: 1px solid #e5e7eb !important;
+                transition: all 0.2s ease !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+            
+            .leaflet-control-zoom a:hover {
+                background-color: #4F46E5 !important;
+                color: white !important;
+                transform: scale(1.05);
+            }
+            
+            .leaflet-control-zoom a:first-child {
+                border-radius: 10px 10px 0 0 !important;
+            }
+            
+            .leaflet-control-zoom a:last-child {
+                border-bottom: none !important;
+                border-radius: 0 0 10px 10px !important;
+            }
+            
+            .leaflet-control-zoom a.leaflet-disabled {
+                color: #9ca3af !important;
+                background-color: #f9fafb !important;
+                cursor: not-allowed !important;
+            }
+            
+            /* Μεγαλύτερα για κινητά */
+            @media (max-width: 768px) {
+                .leaflet-control-zoom a {
+                    width: 50px !important;
+                    height: 50px !important;
+                    line-height: 50px !important;
+                    font-size: 24px !important;
+                }
+            }
+            
+            /* Zoom instruction control */
+            .zoom-instruction-control {
+                animation: fadeIn 0.5s ease-in;
+            }
+            
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(-10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
     }
 }
 
