@@ -6350,9 +6350,38 @@ function renderProgramDays() {
     for (let i = 1; i <= userProgram.totalDays; i++) {
         const dayColor = getDayColor(i);
         const dayActivities = userProgram.days[i-1] || [];
+        const isSelected = (i === userProgram.selectedDay);
         
         const dayHTML = `
-            <div class="program-day-column">
+            <div class="program-day-column" 
+                 data-day="${i}"
+                 onclick="selectProgramDay(${i})"
+                 style="
+                    border: ${isSelected ? '3px solid #4F46E5' : '2px solid #e2e8f0'};
+                    ${isSelected ? 'box-shadow: 0 6px 20px rgba(79, 70, 229, 0.15);' : ''}
+                    cursor: pointer;
+                    position: relative;
+                 ">
+                
+                ${isSelected ? `
+                    <div style="
+                        position: absolute;
+                        top: -12px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        background: #4F46E5;
+                        color: white;
+                        padding: 4px 12px;
+                        border-radius: 20px;
+                        font-size: 11px;
+                        font-weight: bold;
+                        white-space: nowrap;
+                        z-index: 10;
+                    ">
+                        <i class="fas fa-check"></i> Επιλεγμένη
+                    </div>
+                ` : ''}
+                
                 <div class="program-day-header">
                     <div class="program-day-title">
                         <div style="
@@ -6362,6 +6391,7 @@ function renderProgramDays() {
                             border-radius: 50%;
                         "></div>
                         Μέρα ${i}
+                        ${isSelected ? ' <i class="fas fa-hand-point-left" style="color: #4F46E5; margin-left: 5px;"></i>' : ''}
                     </div>
                     <div class="program-day-count" id="day-${i}-count">
                         ${dayActivities.length}
@@ -6378,10 +6408,15 @@ function renderProgramDays() {
                         ${dayActivities.length === 0 ? `
                             <div class="program-activity-empty">
                                 <i class="fas fa-plus-circle"></i>
-                                Σύρετε δραστηριότητες εδώ
+                                Κάντε κλικ για επιλογή<br>
+                                Σύρετε για προσθήκη
                             </div>
                         ` : renderDayActivities(dayActivities, i)}
                     </div>
+                </div>
+                
+                <div style="font-size: 11px; color: #94a3b8; margin-top: 10px; text-align: center;">
+                    <i class="fas fa-mouse-pointer"></i> Κλικ για επιλογή
                 </div>
             </div>
         `;
