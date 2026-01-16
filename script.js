@@ -1608,12 +1608,12 @@ function getMapStepHTML() {
                     <button class="btn btn-outline" onclick="showRouteBetweenPoints()">
                         <i class="fas fa-route"></i> Διαδρομή
                     </button>
-                     // 🔴 ΠΡΟΣΘΗΚΗ ΝΕΟΥ ΚΟΥΜΠΙΟΥ ΕΔΩ:
+                     
     <button class="btn btn-accent" onclick="synchronizeMapMarkersWithProgram()" 
             id="sync-map-btn">
         <i class="fas fa-sync-alt"></i> Ενημέρωση Χάρτη
     </button>
-</div>
+
                     <div id="map-status" style="flex: 1; padding: 10px; background: #f0f7ff; border-radius: 6px; font-size: 13px;">
                         <i class="fas fa-info-circle"></i>
                         <strong>Ετοιμότητα:</strong> Πατήστε "Προβολή Σημείων" για τις δραστηριότητες σας
@@ -6589,8 +6589,14 @@ function addActivityToProgramDay(activityId, day) {
     // Αφαίρεση από άλλες μέρες (αν υπάρχει)
     removeActivityFromAllProgramDays(activityId);
     
+    // 🔴 ΚΡΙΤΙΚΗ ΔΙΟΡΘΩΣΗ: Πρόσθεσε το activityId στο αντικείμενο
+    const activityWithId = {
+        ...activity,
+        activityId: activityId  // <-- ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΚΛΕΙΔΙ!
+    };
+    
     // Προσθήκη στη νέα μέρα
-    userProgram.days[day-1].push(activity);
+    userProgram.days[day-1].push(activityWithId);  // <-- ΣΩΣΤΟ!
     
     // Ενημέρωση εμφάνισης
     updateProgramDayDisplay(day);
@@ -6714,59 +6720,65 @@ function saveUserProgram() {
     }
 }
 // ==================== SYNCHRONIZE MAP WITH PROGRAM ====================
+// ==================== SYNCHRONIZE MAP WITH PROGRAM ====================
 function synchronizeMapMarkersWithProgram() {
-    console.log('🔄 Συγχρονισμός markers με πρόγραμμα...');
+    console.log('🔄 [DEBUG] Καλείται synchronizeMapMarkersWithProgram');
+    console.log('📊 [DEBUG] userProgram:', userProgram);
+    console.log('📊 [DEBUG] userProgram.days:', userProgram?.days);
+    console.log('🗺️ [DEBUG] window.travelMap:', !!window.travelMap);
+    console.log('📍 [DEBUG] MarkerCache size:', MarkerCache?.size());
     
-    if (!userProgram || !userProgram.days || !window.travelMap) {
-        console.log('⚠️ Δεν υπάρχει πρόγραμμα ή χάρτης');
+    if (!userProgram || !userProgram.days) {
+        console.error('❌ [DEBUG] Δεν υπάρχει userProgram ή userProgram.days');
+        showToast('⚠️ Δεν υπάρχει αποθηκευμένο πρόγραμμα', 'warning');
+        return;
+    }
+    
+    if (!window.travelMap) {
+        console.error('❌ [DEBUG] Δεν υπάρχει χάρτης');
+        showToast('⚠️ Παρακαλώ πρώτα φορτώστε τον χάρτη', 'warning');
+        return;
+    }
+    
+    // Μέτρηση συνολικών δραστηριοτήτων στο πρόγραμμα
+    const totalActivitiesInProgram = userProgram.days.reduce((sum, day) => sum + day.length, 0);
+    console.log(`📊 [DEBUG] Σύνολο δραστηριοτήτων στο πρόγραμμα: ${totalActivitiesInProgram}`);
+    
+    if (totalActivitiesInProgram === 0) {
+        console.error('❌ [DEBUG] Το πρόγραμμα είναι άδειο');
+        showToast('⚠️ Το πρόγραμμα είναι άδειο', 'warning');
         return;
     }
     
     let updatedMarkers = 0;
     
-    // 1. Αρχικά επαναφορά όλων των markers στο default (αν υπάρχουν ήδη)
-    //    (Αυτό είναι για την περίπτωση που μια δραστηριότητα αφαιρεθεί από μέρα)
-    MarkerCache.getAllMarkers().forEach(marker => {
-        // Επαναφορά στο default στυλ
+    // 1. Επαναφορά όλων των markers στο default
+    const allMarkers = MarkerCache.getAllMarkers();
+    console.log(`📍 [DEBUG] Σύνολο markers στον cache: ${allMarkers.length}`);
+    
+    allMarkers.forEach((marker, index) => {
         if (marker && marker.setIcon) {
-            marker.setIcon(L.divIcon({
-                html: `
-                    <div style="
-                        background: #4F46E5; 
-                        color: white; 
-                        width: 42px; 
-                        height: 42px; 
-                        border-radius: 50%; 
-                        display: flex; 
-                        align-items: center; 
-                        justify-content: center;
-                        font-weight: bold;
-                        font-size: 16px;
-                        border: 3px solid white;
-                        box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-                        cursor: pointer;
-                    ">
-                        📍
-                    </div>
-                `,
-                className: 'clickable-marker',
-                iconSize: [42, 42],
-                iconAnchor: [21, 42]
-            }));
+            console.log(`📍 [DEBUG] Marker ${index}:`, marker.options?.activityData?.name);
         }
     });
     
-    // 2. Εφαρμογή νέων στυλ για κάθε δραστηριότητα στο πρόγραμμα
+    // 2. Ενημέρωση markers ανά μέρα
     userProgram.days.forEach((dayActivities, dayIndex) => {
         const dayNumber = dayIndex + 1;
         const dayColor = getDayColor(dayNumber);
         
+        console.log(`📅 [DEBUG] Μέρα ${dayNumber}: ${dayActivities.length} δραστηριότητες`);
+        
         dayActivities.forEach(activity => {
             const activityId = activity.id;
+            console.log(`   🔍 [DEBUG] Ψάχνω για activityId: ${activityId} - "${activity.name}"`);
+            
             const marker = MarkerCache.get(activityId);
             
             if (marker && marker.setIcon) {
-                // Ενημέρωση marker με χρώμα ημέρας και αριθμό
+                console.log(`   ✅ [DEBUG] Βρήκα marker για ${activity.name}`);
+                
+                // Ενημέρωση marker
                 marker.setIcon(L.divIcon({
                     html: `
                         <div style="
@@ -6779,7 +6791,7 @@ function synchronizeMapMarkersWithProgram() {
                             align-items: center; 
                             justify-content: center;
                             font-weight: bold;
-                            font-size: 18px;
+                            font-size: 20px;
                             border: 3px solid white;
                             box-shadow: 0 4px 15px ${dayColor}80;
                             cursor: pointer;
@@ -6793,13 +6805,20 @@ function synchronizeMapMarkersWithProgram() {
                 }));
                 
                 updatedMarkers++;
-                console.log(`✅ Marker για ${activity.name} -> Μέρα ${dayNumber} (${dayColor})`);
+                console.log(`   🎨 [DEBUG] Ενημέρωση: ${activity.name} -> Μέρα ${dayNumber} (${dayColor})`);
+            } else {
+                console.log(`   ❌ [DEBUG] Δεν βρέθηκε marker για ${activity.name} (id: ${activityId})`);
             }
         });
     });
     
-    console.log(`✅ Ενημερώθηκαν ${updatedMarkers} markers`);
-    showToast(`🎨 Ενημερώθηκαν ${updatedMarkers} πινέζες με χρώματα ημερών`, 'success');
+    console.log(`✅ [DEBUG] Ενημερώθηκαν ${updatedMarkers} markers`);
+    
+    if (updatedMarkers > 0) {
+        showToast(`🎨 Ενημερώθηκαν ${updatedMarkers} πινέζες με χρώματα ημερών`, 'success');
+    } else {
+        showToast('⚠️ Δεν βρέθηκαν πινέζες για ενημέρωση', 'warning');
+    }
 }
 // 9. Προβολή στον χάρτη
 function showProgramOnMap() {
