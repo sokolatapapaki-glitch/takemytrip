@@ -2823,7 +2823,7 @@ async function setupActivitiesStep() {
                 <div class="restaurant-recommendation">
                     <div class="restaurant-header">
                         <i class="fas fa-utensils"></i>
-                        <span class="restaurant-title">ΣΥΝΙΣΤΩΜΕΝΟ ${activity.restaurantType === 'cafe' ? 'ΚΑΦΕ' : 'ΕΣΤΙΑΤΟΡΙΟ'}</span>
+                        <span class="restaurant-title">ΚΟΝΤΙΝΟ ${activity.restaurantType === 'cafe' ? 'ΚΑΦΕ' : 'ΕΣΤΙΑΤΟΡΙΟ'}</span>
                     </div>
                     <div class="restaurant-content">
                         <p>${activity.restaurant.replace(/<a /g, '<a target="_blank" rel="noopener" ')}</p>
