@@ -2240,3 +2240,22 @@ function addProgramCreationStyles() {
     transform: translateY(-2px);
     box-shadow: 0 6px 18px rgba(0,0,0,0.1);
 }
+/* Στο υπάρχον style ή δημιουργήστε νέο */
+select:invalid {
+    color: #9CA3AF;  /* Γκρι χρώμα για μη επιλεγμένο */
+    border-color: #E5E7EB;
+}
+
+select:valid {
+    color: #1F2937;  /* Σκούρο για επιλεγμένο */
+    border-color: #4F46E5;
+}
+
+.program-days-prompt {
+    animation: pulse-gentle 2s infinite;
+}
+
+@keyframes pulse-gentle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
