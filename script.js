@@ -5280,85 +5280,93 @@ marker.options.label = label;
 // ===============================================
 
     // Συνάρτηση που καλείται όταν κάνουμε κλικ
-    const handleMarkerClick = function(e) {
-        console.log(`📍 Κλικ στο: ${title}`, e.latlng);
-        
-        // Αν δεν έχουμε επιλέξει πρώτο σημείο
-        if (!selectedPointA) {
-            selectedPointA = {
-                marker: marker,
-                coords: coords,
-                title: title,
-                data: safeActivityData,
-                latlng: e.latlng
-            };
-            
-            // Ανανέωση εμφάνισης
-            updateMarkerAppearance();
-            
-            showToast(`
-                <div style="background: #D1FAE5; padding: 12px; border-radius: 8px; border-left: 4px solid #10B981;">
-                    <strong style="color: #065F46;">✅ Επιλέχθηκε ως σημείο ΑΠΟ:</strong><br>
-                    <span style="font-weight: bold;">${title}</span><br>
-                    <small style="color: #047857;">Κάντε κλικ σε άλλη πινέζα για επιλογή προορισμού</small>
-                </div>
-            `, 'info');
-            
-        } 
-        // Αν έχουμε ήδη πρώτο σημείο και κάνουμε κλικ σε διαφορετικό
-        else if (!selectedPointB && selectedPointA.marker !== marker) {
-            selectedPointB = {
-                marker: marker,
-                coords: coords,
-                title: title,
-                data: safeActivityData,
-                latlng: e.latlng
-            };
-            
-            // Ανανέωση εμφάνισης
-            updateMarkerAppearance();
-            
-            // Σχεδίαση διαδρομής
-            setTimeout(() => {
-                drawRouteBetweenPoints();
-            }, 300);
-            
-        } 
-        // Αν κάνουμε κλικ στο ίδιο σημείο ξανά
-        else if (selectedPointA && selectedPointA.marker === marker) {
-            showToast(`ℹ️ Έχετε ήδη επιλέξει το <strong>${title}</strong> ως σημείο ΑΠΟ`, 'warning');
-        }
-        // Αν κάνουμε κλικ στο δεύτερο σημείο ξανά
-        else if (selectedPointB && selectedPointB.marker === marker) {
-            showToast(`ℹ️ Έχετε ήδη επιλέξει το <strong>${title}</strong> ως σημείο ΠΡΟΣ`, 'warning');
-        }
-        // Αν έχουμε ήδη δύο σημεία και κάνουμε κλικ σε τρίτο
-        else if (selectedPointA && selectedPointB) {
-            // Επαναφορά
-            resetSelection();
-            
-            // Ξεκινάμε από το αρχικό
-            selectedPointA = {
-                marker: marker,
-                coords: coords,
-                title: title,
-                data: safeActivityData,
-                latlng: e.latlng
-            };
-            
-            // Ανανέωση εμφάνισης
-            updateMarkerAppearance();
-            
-            showToast(`
-                <div style="background: #FEF3C7; padding: 12px; border-radius: 8px; border-left: 4px solid #F59E0B;">
-                    <strong style="color: #92400E;">🔄 Νέα επιλογή:</strong><br>
-                    <span style="font-weight: bold;">${title}</span> ως νέο σημείο ΑΠΟ<br>
-                    <small style="color: #B45309;">Κάντε κλικ σε άλλη πινέζα για προορισμό</small>
-                </div>
-            `, 'info');
-        }
-    };
+   const handleMarkerClick = function(e) {
+    console.log(`📍 Κλικ στο: ${title}`, e.latlng);
     
+    // Αν δεν έχουμε επιλέξει πρώτο σημείο
+    if (!selectedPointA) {
+        selectedPointA = {
+            marker: marker,
+            coords: coords,
+            title: title,
+            data: safeActivityData,
+            latlng: e.latlng
+        };
+        
+        // Ανανέωση εμφάνισης
+        updateMarkerAppearance();
+        
+        showToast(`
+            <div style="text-align: left;">
+                <strong style="font-size: 15px;">📍 Επιλέχθηκε σημείο <span style="color: #10B981;">ΑΠΟ</span></strong><br>
+                <span style="font-weight: 600;">${title}</span><br>
+                <small style="opacity: 0.9;">Κάντε κλικ σε άλλη πινέζα για προορισμό</small>
+            </div>
+        `, 'info');
+        
+    } 
+    // Αν έχουμε ήδη πρώτο σημείο και κάνουμε κλικ σε διαφορετικό
+    else if (!selectedPointB && selectedPointA.marker !== marker) {
+        selectedPointB = {
+            marker: marker,
+            coords: coords,
+            title: title,
+            data: safeActivityData,
+            latlng: e.latlng
+        };
+        
+        // Ανανέωση εμφάνισης
+        updateMarkerAppearance();
+        
+        // 🔴 ΠΡΟΣΘΗΚΗ: ΜΗΝΥΜΑ ΓΙΑ ΤΟ ΔΕΥΤΕΡΟ ΣΗΜΕΙΟ
+        showToast(`
+            <div style="text-align: left;">
+                <strong style="font-size: 15px;">🎯 Επιλέχθηκε σημείο <span style="color: #EF4444;">ΠΡΟΣ</span></strong><br>
+                <span style="font-weight: 600;">${title}</span><br>
+                <small style="opacity: 0.9;">Η διαδρομή θα σχεδιαστεί αυτόματα...</small>
+            </div>
+        `, 'info');
+        
+        // Σχεδίαση διαδρομής
+        setTimeout(() => {
+            drawRouteBetweenPoints();
+        }, 300);
+        
+    } 
+    // Αν κάνουμε κλικ στο ίδιο σημείο ξανά
+    else if (selectedPointA && selectedPointA.marker === marker) {
+        showToast(`ℹ️ Έχετε ήδη επιλέξει το <strong>${title}</strong> ως σημείο ΑΠΟ`, 'warning');
+    }
+    // Αν κάνουμε κλικ στο δεύτερο σημείο ξανά
+    else if (selectedPointB && selectedPointB.marker === marker) {
+        showToast(`ℹ️ Έχετε ήδη επιλέξει το <strong>${title}</strong> ως σημείο ΠΡΟΣ`, 'warning');
+    }
+    // Αν έχουμε ήδη δύο σημεία και κάνουμε κλικ σε τρίτο
+    else if (selectedPointA && selectedPointB) {
+        // Επαναφορά
+        resetSelection();
+        
+        // Ξεκινάμε από το αρχικό
+        selectedPointA = {
+            marker: marker,
+            coords: coords,
+            title: title,
+            data: safeActivityData,
+            latlng: e.latlng
+        };
+        
+        // Ανανέωση εμφάνισης
+        updateMarkerAppearance();
+        
+        showToast(`
+            <div style="text-align: left;">
+                <strong style="font-size: 15px;">🔄 Νέο σημείο <span style="color: #10B981;">ΑΠΟ</span></strong><br>
+                <span style="font-weight: 600;">${title}</span><br>
+                <small style="opacity: 0.9;">Η προηγούμενη διαδρομή ακυρώθηκε</small>
+            </div>
+        `, 'info');
+    }
+};
     // Συνάρτηση ανανέωσης εμφάνισης
     function updateMarkerAppearance() {
         try {
