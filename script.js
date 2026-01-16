@@ -23,11 +23,22 @@ const COLOR_PALETTE = [
     '#14B8A6', // Teal
     '#F97316'  // Orange
 ];
+
 // ==================== RESTORE USER PROGRAM ON LOAD ====================
 function restoreUserProgramFromState() {
-    if (state.userProgram) {
-        console.log('🔄 Επαναφορά userProgram από state...');
-        userProgram = JSON.parse(JSON.stringify(state.userProgram));
+    console.log('🔄 [DEBUG] restoreUserProgramFromState καλείται');
+    console.log('📊 state.userProgram:', state.userProgram);
+    console.log('📊 userProgram πριν:', userProgram);
+    
+    if (state.userProgram && state.userProgram.days) {
+        console.log('✅ Επαναφορά userProgram από state...');
+        // 🔴 ΚΡΙΤΙΚΟ: Deep copy με σωστή δομή
+        userProgram = {
+            days: JSON.parse(JSON.stringify(state.userProgram.days)),
+            totalDays: state.userProgram.totalDays || 3,
+            selectedDay: state.userProgram.selectedDay || 1
+        };
+        console.log('✅ userProgram μετά:', userProgram);
     } else if (state.geographicProgram) {
         console.log('🔄 Μετατροπή geographicProgram σε userProgram...');
         // Μετατροπή από το παλιό format στο νέο
@@ -42,6 +53,14 @@ function restoreUserProgramFromState() {
                 )
             ),
             totalDays: state.geographicProgram.totalDays,
+            selectedDay: 1
+        };
+    } else {
+        console.log('ℹ️ Δεν υπάρχει αποθηκευμένο πρόγραμμα');
+        // Αρχικοποίηση με κενό πρόγραμμα
+        userProgram = {
+            days: [],
+            totalDays: 3,
             selectedDay: 1
         };
     }
