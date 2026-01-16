@@ -972,6 +972,19 @@ function loadStepContent(stepName) {
         
                
     }, 100);
+     // 🔴 ΑΛΛΑΓΗ 4: ΑΥΤΟΜΑΤΗ ΦΟΡΤΩΣΗ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ ΣΤΟΝ ΧΑΡΤΗ (ΜΟΝΟ ΓΙΑ ΑΡΧΙΚΗ ΕΜΦΑΝΙΣΗ)
+setTimeout(() => {
+    if (state.selectedActivities && state.selectedActivities.length > 0) {
+        console.log('📍 Αυτόματη φόρτωση δραστηριοτήτων στον χάρτη...');
+        
+        // ΜΟΝΟ αν ΔΕΝ υπάρχει αποθηκευμένο πρόγραμμα
+        if (!state.userProgram || state.userProgram.days.length === 0) {
+            showActivityMap();
+        } else {
+            console.log('⚠️ Έχει ήδη πρόγραμμα, παραλείπεται αυτόματη φόρτωση');
+        }
+    }
+}, 1500);       
     break;
     } // Τέλος του switch
     
@@ -1698,7 +1711,7 @@ function getMapStepHTML() {
                 <!-- ΚΟΥΜΠΙΑ ΕΛΕΓΧΟΥ -->
                 <div style="display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap;">
                     <button class="btn btn-primary" onclick="showActivityMap()">
-                        <i class="fas fa-map-pin"></i> Προβολή Σημείων
+                        <i class="fas fa-map-pin"></i> Ανανέωση Χάρτη
                     </button>
 
                     <button class="btn btn-secondary" onclick="clearMapPoints()">
@@ -1821,15 +1834,8 @@ function getMapStepHTML() {
                         <span>Ενημέρωση χάρτη...</span>
                     </div>
                 </div>
-                ` : `
-                <!-- Αν δεν υπάρχει πρόγραμμα, εμφάνισε απλή πληροφορία -->
-                <div class="alert alert-info" style="margin-bottom: 20px;">
-                    <i class="fas fa-info-circle"></i>
-                    <strong>Πληροφορία:</strong> Δεν έχετε δημιουργήσει πρόγραμμα στο βήμα 5. 
-                    Θα δείτε όλες τις δραστηριότητες μαζί στον χάρτη.
-                </div>
-                `}
-
+               ` : `
+                
                 <!-- 🔴 ΝΕΟ: ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΓΡΑΜΜΑΤΟΣ ΚΑΤΩ ΑΠΟ ΤΟΝ ΧΑΡΤΗ -->
                 <div id="program-creation-section" class="card" style="margin-top: 40px; background: linear-gradient(135deg, #f8faff 0%, #f0f4ff 100%);">
                     <h3 style="color: var(--primary); margin-bottom: 20px;">
@@ -6645,24 +6651,7 @@ function highlightSelectedDay(selectedDay) {
 function renderProgramDays() {
     const container = document.getElementById('program-days-container');
     if (!container) return;
-     // 🔴 ΚΡΙΤΙΚΟ: Αν ο χρήστης ΔΕΝ έχει επιλέξει μέρες, δείξε μήνυμα
-    if (!userProgram.totalDays || userProgram.totalDays === 0) {
-        container.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 40px; background: #f8f9fa; border-radius: 10px;">
-                <div style="font-size: 48px; margin-bottom: 15px;">📅</div>
-                <h3 style="color: var(--dark); margin-bottom: 10px;">Δεν έχετε επιλέξει μέρες</h3>
-                <p style="color: var(--gray); margin-bottom: 20px;">
-                    Παρακαλώ επιλέξτε πρώτα αριθμό ημερών από το dropdown παραπάνω
-                </p>
-                <button onclick="document.getElementById('program-days-select').focus()" 
-                        style="padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer;">
-                    <i class="fas fa-calendar-alt"></i> Επιλογή Ημερών
-                </button>
-            </div>
-        `;
-        return;
-    }
-    
+        
     container.innerHTML = '';
     
     for (let i = 1; i <= userProgram.totalDays; i++) {
