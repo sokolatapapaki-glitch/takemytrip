@@ -424,7 +424,7 @@ window.firstPoint = null;
 window.secondPoint = null;
 window.currentRoutePolyline = null;
 window.selectedMarkers = []; // Για ενώσεις σημείων
-window.routeResetTimer = null; // Timer για reset διαδρομής
+window.routeResetTimer = null; // Timer για reset ς
 
 // Centralized cleanup function για αποφυγή memory leaks
 function cleanupMapState() {
@@ -1719,7 +1719,7 @@ function getMapStepHTML() {
                     </button>
                     
                     <button class="btn btn-outline" onclick="showRouteBetweenPoints()">
-                        <i class="fas fa-route"></i> Δείξε μου την διαδρομή
+                        <i class="fas fa-route"></i> Δείξε μου την διαδρομή (επιλέξτε αφετηρία και προορισμό με κλικ στον χαρτη)
                     </button>
                      
     <button class="btn btn-accent" onclick="synchronizeMapMarkersWithProgram()" 
