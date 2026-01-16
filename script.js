@@ -1706,7 +1706,7 @@ function getMapStepHTML() {
                         <button onclick="deselectAllDays()" class="btn btn-outline" style="padding: 6px 12px; font-size: 13px;">
                             <i class="fas fa-square"></i> Αποεπιλογή όλων
                         </button>
-                        <button onclick="applyDayFilter()" class="btn btn-primary" style="padding: 6px 12px; font-size: 13px;">
+                        <button onclick="()" class="btn btn-primary" style="padding: 6px 12px; font-size: 13px;">
                             <i class="fas fa-filter"></i> Εφαρμογή φίλτρου
                         </button>
                     </div>
@@ -3431,7 +3431,41 @@ function initializeMapInStep() {
         }
         
         console.log('✅ Χάρτης φορτώθηκε επιτυχώς');
-        
+      // 🔴 ΝΕΟ: ΑΥΤΟΜΑΤΗ ΕΜΦΑΝΙΣΗ ΠΡΟΓΡΑΜΜΑΤΟΣ ΑΝ ΥΠΑΡΧΕΙ
+        setTimeout(() => {
+            if (state.geographicProgram && state.geographicProgram.days) {
+                console.log('🔄 Αυτόματη εμφάνιση προγράμματος στον χάρτη...');
+                
+                // Επιλογή όλων των ημερών
+                const allCheckbox = document.querySelector('.day-checkbox[value="all"]');
+                if (allCheckbox) {
+                    allCheckbox.checked = true;
+                    
+                    // Αποεπιλογή άλλων checkboxes
+                    const otherCheckboxes = document.querySelectorAll('.day-checkbox:not([value="all"])');
+                    otherCheckboxes.forEach(cb => {
+                        cb.checked = false;
+                    });
+                    
+                    // Εφαρμογή φίλτρου με μικρή καθυστέρηση για ομαλή εμφάνιση
+                    setTimeout(() => {
+                        applyDayFilter();
+                        
+                        // Ενημέρωση status
+                        if (statusEl) {
+                            statusEl.innerHTML = `
+                                <i class="fas fa-map-marked-alt" style="color: #4F46E5;"></i>
+                                <strong>Πρόγραμμα φορτώθηκε:</strong> ${state.geographicProgram.totalDays} μέρες
+                            `;
+                        }
+                        
+                        showToast(`📍 Το πρόγραμμα εμφανίστηκε στον χάρτη με χρωματικό κώδικα ανά ημέρα`, 'success');
+                    }, 800);
+                }
+            } else {
+                console.log('ℹ️ Δεν υπάρχει αποθηκευμένο πρόγραμμα για αυτόματη εμφάνιση');
+            }
+        }, 1000);  
     } catch (error) {
         console.error('❌ Σφάλμα αρχικοποίησης χάρτη:', error);
         
@@ -5878,6 +5912,7 @@ function deselectAllDays() {
     });
     showToast('🧹 Αποεπιλέχθηκαν όλες οι μέρες', 'info');
 }
+// ==================== ΕΝΗΜΕΡΩΜΕΝΗ ΣΥΝΑΡΤΗΣΗ applyDayFilter() ====================
 function applyDayFilter() {
     console.log('🎯 applyDayFilter - Αρχή φιλτραρίσματος χάρτη');
     
@@ -5928,10 +5963,20 @@ function applyDayFilter() {
         statusDiv.innerHTML = `<i class="fas fa-sync-alt fa-spin"></i> Εμφάνιση ${selectedDays.length} ημερών...`;
     }
     
-    // 5. ΚΑΘΑΡΙΣΜΟΣ ΧΑΡΤΗ
-    // Αφαίρεση όλων των markers (εκτός city marker)
+    // 5. ΚΑΘΑΡΙΣΜΟΣ ΧΑΡΤΗ - ΑΠΟΚΛΕΙΣΤΙΚΑ markers ημερών και labels
     window.travelMap.eachLayer(function(layer) {
-        if (layer instanceof L.Marker && !layer.options.className?.includes('city-marker')) {
+        // Αφαίρεση μόνο των markers που σχετίζονται με το πρόγραμμα (ή day-marker ή έχουν day property)
+        if (layer instanceof L.Marker) {
+            if (layer.options && (
+                layer.options.className === 'day-marker' || 
+                layer.options.className?.includes('day-marker') ||
+                layer.options.day
+            )) {
+                window.travelMap.removeLayer(layer);
+            }
+        }
+        // Αφαίρεση labels
+        if (layer.options && layer.options.className === 'marker-label') {
             window.travelMap.removeLayer(layer);
         }
     });
@@ -5946,11 +5991,15 @@ function applyDayFilter() {
     selectedPointA = null;
     selectedPointB = null;
     
-    // 6. ΠΡΟΣΘΗΚΗ ΜΟΝΟ ΤΩΝ ΕΠΙΛΕΓΜΕΝΩΝ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ
-    let totalActivitiesAdded = 0;
-    
+    // 6. ΔΗΜΙΟΥΡΓΙΑ ΑΝΤΙΚΕΙΜΕΝΟΥ ΓΙΑ ΓΡΗΓΟΡΗ ΕΥΡΕΣΗ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ ΑΝΑ ΗΜΕΡΑ
+    const activitiesByDay = {};
     selectedDays.forEach(dayNumber => {
-        const dayIndex = dayNumber - 1; // Μετατροπή σε index (0-based)
+        activitiesByDay[dayNumber] = [];
+    });
+    
+    // 7. ΣΥΓΚΕΝΤΡΩΣΗ ΟΛΩΝ ΤΩΝ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ ΑΠΟ ΤΙΣ ΕΠΙΛΕΓΜΕΝΕΣ ΗΜΕΡΕΣ
+    selectedDays.forEach(dayNumber => {
+        const dayIndex = dayNumber - 1;
         const dayProgram = state.geographicProgram.days[dayIndex];
         
         if (!dayProgram || !dayProgram.groups) {
@@ -5960,104 +6009,243 @@ function applyDayFilter() {
         
         console.log(`📌 Προσθήκη Ημέρας ${dayNumber}: ${dayProgram.totalActivities} δραστηριότητες`);
         
-        // Χρώμα για αυτή τη μέρα
-        const dayColor = getDayColor(dayNumber);
-        
         // Πέρασμα από όλες τις ομάδες της ημέρας
         dayProgram.groups.forEach(group => {
             group.activities.forEach(activity => {
-                // Βρες τις πλήρεις πληροφορίες της δραστηριότητας
-                const fullActivity = state.currentCityActivities?.find(a => 
-                    a.id === activity.id || a.name === activity.name
-                ) || activity;
-                
-                let coords;
-                
-                if (fullActivity.location) {
-                    coords = [fullActivity.location.lat, fullActivity.location.lng];
-                } else {
-                    // Χωρίς location - τυχαία συντεταγμένες κοντά στο κέντρο
-                    const cityCoords = getCityCoordinates(state.selectedDestinationId);
-                    if (cityCoords) {
-                        coords = [
-                            cityCoords[0] + (Math.random() - 0.5) * 0.03,
-                            cityCoords[1] + (Math.random() - 0.5) * 0.03
-                        ];
-                    } else {
-                        coords = [51.5074, -0.1278]; // Default Λονδίνο
-                    }
-                }
-                
-                // Δημιουργία marker με ειδικό χρώμα για τη μέρα
-                const marker = L.marker(coords, {
-                    icon: L.divIcon({
-                        html: `
-                            <div style="
-                                background: ${dayColor}; 
-                                color: white; 
-                                width: 42px; 
-                                height: 42px; 
-                                border-radius: 50%; 
-                                display: flex; 
-                                align-items: center; 
-                                justify-content: center;
-                                font-weight: bold;
-                                font-size: 16px;
-                                border: 3px solid white;
-                                box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-                                cursor: pointer;
-                            ">
-                                ${dayNumber}
-                            </div>
-                        `,
-                        className: 'day-marker',
-                        iconSize: [42, 42],
-                        iconAnchor: [21, 42]
-                    })
-                }).addTo(window.travelMap);
-                
-                // Αποθήκευση πληροφοριών
-                marker.options.day = dayNumber;
-                marker.options.activityData = fullActivity;
-                marker.options.originalTitle = fullActivity.name;
-                
-                // Enhanced popup με πληροφορίες ημέρας
-                const popupContent = `
-                    <div style="max-width: 300px; font-family: 'Roboto', sans-serif; padding: 8px;">
-                        <div style="background: ${dayColor}; color: white; padding: 8px; border-radius: 6px; margin-bottom: 10px; text-align: center;">
-                            <strong><i class="fas fa-calendar-day"></i> ΜΕΡΑ ${dayNumber}</strong>
-                        </div>
-                        ${createEnhancedPopup(fullActivity)}
-                    </div>
-                `;
-                
-                marker.bindPopup(popupContent);
-                
-                // Συνάρτηση κλικ (για διαδρομές)
-                marker.on('click', function(e) {
-                    handleMarkerClickForDay(e, marker, dayNumber, fullActivity);
-                });
-                
-                totalActivitiesAdded++;
+                activitiesByDay[dayNumber].push(activity);
             });
         });
     });
     
-    // 7. ΕΝΗΜΕΡΩΣΗ ΧΡΗΣΤΗ
+    // 8. ΠΡΟΣΘΗΚΗ ΜΑΡΚΕΡΣ ΜΕ ΤΟ ΝΕΟ ΣΥΣΤΗΜΑ ΧΡΩΜΑΤΩΝ
+    let totalActivitiesAdded = 0;
+    
+    Object.keys(activitiesByDay).forEach(dayKey => {
+        const dayNumber = parseInt(dayKey);
+        const dayActivities = activitiesByDay[dayNumber];
+        
+        if (dayActivities.length === 0) return;
+        
+        // Χρώμα για αυτή τη μέρα (παίρνει από το palette με βάση τη μέρα)
+        const dayColor = getDayColor(dayNumber);
+        
+        dayActivities.forEach(activity => {
+            // Βρες τις πλήρεις πληροφορίες της δραστηριότητας
+            const fullActivity = state.currentCityActivities?.find(a => 
+                a.id === activity.id || a.name === activity.name
+            ) || activity;
+            
+            let coords;
+            
+            if (fullActivity.location) {
+                coords = [fullActivity.location.lat, fullActivity.location.lng];
+            } else {
+                // Χωρίς location - τυχαία συντεταγμένες κοντά στο κέντρο
+                const cityCoords = getCityCoordinates(state.selectedDestinationId);
+                if (cityCoords) {
+                    coords = [
+                        cityCoords[0] + (Math.random() - 0.5) * 0.03,
+                        cityCoords[1] + (Math.random() - 0.5) * 0.03
+                    ];
+                } else {
+                    coords = [51.5074, -0.1278]; // Default Λονδίνο
+                }
+            }
+            
+            // Δημιουργία marker με ειδικό χρώμα για τη μέρα
+            const marker = L.marker(coords, {
+                icon: L.divIcon({
+                    html: `
+                        <div style="
+                            background: ${dayColor}; 
+                            color: white; 
+                            width: 42px; 
+                            height: 42px; 
+                            border-radius: 50%; 
+                            display: flex; 
+                            align-items: center; 
+                            justify-content: center;
+                            font-weight: bold;
+                            font-size: 18px;
+                            border: 3px solid white;
+                            box-shadow: 0 3px 12px ${dayColor}80;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                        ">
+                            ${getActivityEmoji(fullActivity.category || 'attraction')}
+                        </div>
+                    `,
+                    className: 'day-marker',
+                    iconSize: [42, 42],
+                    iconAnchor: [21, 42]
+                }),
+                day: dayNumber // Αποθήκευση της ημέρας στις επιλογές του marker
+            }).addTo(window.travelMap);
+            
+            // Αποθήκευση πληροφοριών
+            marker.options.day = dayNumber;
+            marker.options.activityData = fullActivity;
+            marker.options.originalTitle = fullActivity.name;
+            marker.options.dayColor = dayColor; // Αποθήκευση και του χρώματος
+            
+            // Enhanced popup με πληροφορίες ημέρας
+            const popupContent = `
+                <div style="max-width: 320px; font-family: 'Roboto', sans-serif; padding: 8px;">
+                    <div style="background: ${dayColor}; color: white; padding: 10px; border-radius: 8px; margin-bottom: 12px; text-align: center;">
+                        <strong><i class="fas fa-calendar-day"></i> ΜΕΡΑ ${dayNumber}</strong>
+                        <div style="font-size: 12px; opacity: 0.9; margin-top: 3px;">
+                            <i class="fas fa-tag" style="margin-right: 5px;"></i>
+                            Χρώμα: ${dayColor}
+                        </div>
+                    </div>
+                    ${createEnhancedPopup(fullActivity)}
+                </div>
+            `;
+            
+            marker.bindPopup(popupContent);
+            
+            // Συνάρτηση κλικ (για διαδρομές) - χρησιμοποιεί την υπάρχουσα
+            marker.on('click', function(e) {
+                handleMarkerClickForDay(e, marker, dayNumber, fullActivity);
+            });
+            
+            // ΠΡΟΣΘΗΚΗ LABEL ΜΕ ΤΟ ΟΝΟΜΑ ΚΑΙ ΗΜΕΡΑ
+            const label = L.marker(coords, {
+                icon: L.divIcon({
+                    html: `
+                        <div style="
+                            background: ${dayColor};
+                            color: white;
+                            padding: 4px 12px;
+                            border-radius: 16px;
+                            font-size: 11px;
+                            font-weight: 600;
+                            border: 2px solid white;
+                            white-space: nowrap;
+                            max-width: 150px;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                            font-family: 'Roboto', sans-serif;
+                        ">
+                            <span style="font-size: 10px; margin-right: 4px; opacity: 0.9;">${dayNumber}</span>
+                            ${fullActivity.name.length > 20 ? fullActivity.name.substring(0, 20) + '...' : fullActivity.name}
+                        </div>
+                    `,
+                    className: 'marker-label',
+                    iconSize: [150, 28],
+                    iconAnchor: [75, -10]
+                })
+            }).addTo(window.travelMap);
+            
+            // Συνδέσε το label με το marker (για cleanup)
+            marker.options.label = label;
+            
+            totalActivitiesAdded++;
+        });
+    });
+    
+    // 9. ΕΝΗΜΕΡΩΣΗ ΧΡΗΣΤΗ ΜΕ ΧΡΩΜΑΤΙΚΟ ΚΩΔΙΚΑ
     setTimeout(() => {
         if (statusDiv) {
-            statusDiv.innerHTML = `<i class="fas fa-check-circle" style="color: #10B981;"></i> Εμφανίστηκαν ${totalActivitiesAdded} δραστηριότητες από ${selectedDays.length} μέρες`;
+            const colorLegend = selectedDays.map(day => {
+                const color = getDayColor(day);
+                return `<span style="display: inline-block; width: 12px; height: 12px; background: ${color}; border-radius: 50%; margin: 0 2px;" title="Μέρα ${day}"></span>`;
+            }).join('');
+            
+            statusDiv.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-check-circle" style="color: #10B981;"></i>
+                    <div>
+                        <strong>Εμφανίστηκαν ${totalActivitiesAdded} δραστηριότητες</strong><br>
+                        <small>Από ${selectedDays.length} μέρες: ${colorLegend}</small>
+                    </div>
+                </div>
+            `;
+            
             setTimeout(() => {
                 statusDiv.style.display = 'none';
-            }, 3000);
+            }, 5000);
         }
         
-        showToast(`✅ Εμφανίστηκαν ${totalActivitiesAdded} δραστηριότητες από ${selectedDays.length} μέρες`, 'success');
+        // Ενημέρωση με χρωματικό κώδικα
+        const colorInfo = selectedDays.map(day => {
+            const color = getDayColor(day);
+            return `Μέρα ${day}: <span style="color: ${color}; font-weight: bold;">${color}</span>`;
+        }).join(', ');
         
-        console.log(`✅ Φιλτράρισμα ολοκληρώθηκε: ${totalActivitiesAdded} δραστηριότητες`);
+        showToast(`
+            <div style="text-align: left;">
+                <strong>✅ Φιλτράρισμα ολοκληρώθηκε</strong><br>
+                <small>${totalActivitiesAdded} δραστηριότητες από ${selectedDays.length} μέρες</small>
+                <div style="margin-top: 8px; font-size: 12px;">
+                    <strong>Χρωματικός κώδικας:</strong><br>
+                    ${colorInfo}
+                </div>
+            </div>
+        `, 'success');
+        
+        console.log(`✅ Φιλτράρισμα ολοκληρώθηκε: ${totalActivitiesAdded} δραστηριότητες από ${selectedDays.length} μέρες`);
+        
+        // 10. ΑΝ Ο ΧΑΡΤΗΣ ΕΙΝΑΙ ΚΕΝΟΣ, ΖΟΥΜΑΡΕ ΣΤΑ ΣΗΜΕΙΑ
+        if (totalActivitiesAdded > 0) {
+            setTimeout(() => {
+                try {
+                    const bounds = L.latLngBounds([]);
+                    window.travelMap.eachLayer(layer => {
+                        if (layer instanceof L.Marker && layer.getLatLng && 
+                            (layer.options.className === 'day-marker' || layer.options.day)) {
+                            bounds.extend(layer.getLatLng());
+                        }
+                    });
+                    
+                    if (!bounds.isValid() || bounds.getNorthEast().equals(bounds.getSouthWest())) {
+                        // Αν δεν έχουμε έγκυρα bounds, ζουμάρε στο κέντρο της πόλης
+                        const cityCoords = getCityCoordinates(state.selectedDestinationId);
+                        if (cityCoords) {
+                            window.travelMap.setView(cityCoords, 13);
+                        }
+                    } else {
+                        window.travelMap.fitBounds(bounds.pad(0.1));
+                    }
+                } catch (error) {
+                    console.warn('⚠️ Σφάλμα ζουμαρίσματος:', error);
+                }
+            }, 300);
+        }
     }, 500);
 }
-
+// ==================== ΝΕΑ ΣΥΝΑΡΤΗΣΗ: refreshMapWithProgram() ====================
+function refreshMapWithProgram() {
+    console.log('🔄 Ανανέωση χάρτη με το τρέχον πρόγραμμα...');
+    
+    if (!window.travelMap) {
+        console.log('⚠️ Χάρτης δεν είναι διαθέσιμος');
+        return;
+    }
+    
+    // Ελέγχουμε αν υπάρχει πρόγραμμα
+    if (!state.geographicProgram || !state.geographicProgram.days) {
+        console.log('⚠️ Δεν υπάρχει πρόγραμμα για ανανέωση');
+        return;
+    }
+    
+    // Επιλογή όλων των ημερών
+    const allCheckbox = document.querySelector('.day-checkbox[value="all"]');
+    if (allCheckbox) {
+        allCheckbox.checked = true;
+        
+        // Αποεπιλογή άλλων checkboxes
+        document.querySelectorAll('.day-checkbox:not([value="all"])').forEach(cb => {
+            cb.checked = false;
+        });
+        
+        // Εφαρμογή φίλτρου
+        applyDayFilter();
+    }
+    
+    console.log('✅ Χάρτης ανανεώθηκε με το πρόγραμμα');
+}
 // Βοηθητική συνάρτηση για το κλικ σε markers ημερών
 function handleMarkerClickForDay(event, marker, dayNumber, activityData) {
     console.log(`📍 Κλικ στη Μέρα ${dayNumber}: ${activityData.name}`);
@@ -6692,20 +6880,63 @@ function saveUserProgram() {
     });
     
     // Αποθήκευση
-    state.geographicProgram = program;
-    saveState();
-    
-    showToast(`✅ Το πρόγραμμα αποθηκεύτηκε! ${program.totalDays} μέρες, ${program.days.reduce((sum, day) => sum + day.totalActivities, 0)} δραστηριότητες`, 'success');
-    
-    // Ενημέρωση του "Φίλτρο Ημερών" (αν υπάρχει)
-    if (state.geographicProgram) {
-        setTimeout(() => {
-            // Εδώ θα προσθέσουμε κώδικα για να ανανεώσει το φίλτρο ημερών
-            showToast('🔄 Το φίλτρο ημερών ενημερώθηκε', 'info');
-        }, 500);
-    }
+state.geographicProgram = program;
+saveState();
+
+// Ενημέρωση φίλτρου ημερών στον χάρτη
+updateDayFilterUI();
+
+showToast(`✅ Το πρόγραμμα αποθηκεύτηκε! ${program.totalDays} μέρες, ${program.days.reduce((sum, day) => sum + day.totalActivities, 0)} δραστηριότητες`, 'success');
+
+// Αυτόματη ανανέωση του χάρτη με το νέο πρόγραμμα
+setTimeout(() => {
+    refreshMapWithProgram();
+}, 1000);
 }
 
+// ==================== ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ: updateDayFilterUI() ====================
+function updateDayFilterUI() {
+    // Ενημέρωση του UI του φίλτρου ημερών με βάση το νέο πρόγραμμα
+    const dayFilterContainer = document.getElementById('day-filter-container');
+    
+    if (dayFilterContainer && state.geographicProgram) {
+        const checkboxesContainer = document.getElementById('day-checkboxes');
+        if (checkboxesContainer) {
+            // Διαγράφουμε τα παλιά checkboxes (εκτός του "all")
+            document.querySelectorAll('.day-checkbox:not([value="all"])').forEach(cb => {
+                cb.parentElement.remove();
+            });
+            
+            // Προσθέτουμε νέα checkboxes για κάθε μέρα του προγράμματος
+            const daysHtml = Array.from({ length: state.geographicProgram.totalDays }, (_, i) => {
+                const day = i + 1;
+                const color = getDayColor(day);
+                return `
+                    <label style="display: flex; align-items: center; cursor: pointer; padding: 8px 12px; background: white; border-radius: 6px; border: 2px solid ${color};">
+                        <input type="checkbox" class="day-checkbox" value="day${day}" 
+                               onchange="updateMapDayFilter(this)"
+                               style="margin-right: 8px;">
+                        <span style="font-weight: bold; color: ${color};">
+                            Μέρα ${day}
+                        </span>
+                        <span style="margin-left: 8px; font-size: 12px; color: var(--gray);">
+                            (${state.geographicProgram.days[day-1]?.totalActivities || 0} δραστηριότητες)
+                        </span>
+                        <div style="width: 12px; height: 12px; background: ${color}; border-radius: 50%; margin-left: 8px;"></div>
+                    </label>
+                `;
+            }).join('');
+            
+            // Προσθέτουμε μετά το "all" checkbox
+            const allCheckbox = document.querySelector('.day-checkbox[value="all"]');
+            if (allCheckbox) {
+                checkboxesContainer.innerHTML = allCheckbox.parentElement.outerHTML + daysHtml;
+            } else {
+                checkboxesContainer.innerHTML = daysHtml;
+            }
+        }
+    }
+}
 // 9. Προβολή στον χάρτη
 function showProgramOnMap() {
     if (!window.travelMap) {
@@ -6713,49 +6944,69 @@ function showProgramOnMap() {
         return;
     }
     
-    // Χρησιμοποιούμε την ίδια συνάρτηση applyDayFilter()
-    // αλλά πρώτα δημιουργούμε ένα προσωρινό πρόγραμμα
-    const tempProgram = {
-        totalDays: userProgram.totalDays,
-        days: userProgram.days.map((dayActivities, index) => ({
-            dayNumber: index + 1,
-            totalActivities: dayActivities.length,
-            groups: [{
-                activities: dayActivities.map(activity => ({
-                    id: activity.id,
-                    name: activity.name
+    // Ελέγχουμε αν υπάρχει πρόγραμμα
+    if (!state.geographicProgram || !state.geographicProgram.days) {
+        // Αν δεν υπάρχει πρόγραμμα, δοκιμάζουμε το userProgram
+        if (userProgram && userProgram.days && userProgram.days.some(day => day.length > 0)) {
+            // Δημιουργούμε προσωρινό πρόγραμμα από το userProgram
+            const tempProgram = {
+                totalDays: userProgram.totalDays,
+                days: userProgram.days.map((dayActivities, index) => ({
+                    dayNumber: index + 1,
+                    totalActivities: dayActivities.length,
+                    groups: [{
+                        activities: dayActivities.map(activity => ({
+                            id: activity.id,
+                            name: activity.name
+                        }))
+                    }]
                 }))
-            }]
-        }))
-    };
-    
-    // Προσωρινή αποθήκευση
-    const originalProgram = state.geographicProgram;
-    state.geographicProgram = tempProgram;
-    
-    // Εμφάνιση όλων των ημερών
-    const allCheckbox = document.querySelector('.day-checkbox[value="all"]');
-    if (allCheckbox) {
-        allCheckbox.checked = true;
-        applyDayFilter();
+            };
+            
+            // Προσωρινή αποθήκευση
+            const originalProgram = state.geographicProgram;
+            state.geographicProgram = tempProgram;
+            
+            // Επιλογή όλων των ημερών
+            const allCheckbox = document.querySelector('.day-checkbox[value="all"]');
+            if (allCheckbox) {
+                allCheckbox.checked = true;
+                
+                // Αποεπιλογή άλλων checkboxes
+                document.querySelectorAll('.day-checkbox:not([value="all"])').forEach(cb => {
+                    cb.checked = false;
+                });
+                
+                // Εφαρμογή φίλτρου
+                applyDayFilter();
+            }
+            
+            // Επαναφορά
+            state.geographicProgram = originalProgram;
+            
+            showToast('📍 Οι δραστηριότητες του προγράμματος εμφανίζονται στον χάρτη με χρωματικό κώδικα ανά ημέρα', 'info');
+        } else {
+            showToast('⚠️ Δεν υπάρχει δημιουργημένο πρόγραμμα. Παρακαλώ δημιουργήστε πρώτα πρόγραμμα.', 'warning');
+        }
+    } else {
+        // Αν υπάρχει πρόγραμμα, εμφανίζουμε όλες τις μέρες
+        const allCheckbox = document.querySelector('.day-checkbox[value="all"]');
+        if (allCheckbox) {
+            allCheckbox.checked = true;
+            
+            // Αποεπιλογή άλλων checkboxes
+            document.querySelectorAll('.day-checkbox:not([value="all"])').forEach(cb => {
+                cb.checked = false;
+            });
+            
+            // Εφαρμογή φίλτρου
+            
+            applyDayFilter();
+            
+            showToast('📍 Το πρόγραμμα εμφανίζεται στον χάρτη με χρωματικό κώδικα ανά ημέρα', 'info');
+        }
     }
-    
-    // Επαναφορά
-    state.geographicProgram = originalProgram;
-    
-    showToast('📍 Οι δραστηριότητες του προγράμματος εμφανίζονται στον χάρτη', 'info');
 }
-
-// 10. Επαναφορά
-function resetUserProgram() {
-    if (confirm('⚠️ Θέλετε να επαναφέρετε το πρόγραμμα; Όλες οι τοποθετήσεις θα διαγραφούν.')) {
-        userProgram.days = userProgram.days.map(() => []);
-        renderProgramDays();
-        renderAvailableActivities();
-        showToast('🔄 Το πρόγραμμα επαναφέρθηκε', 'info');
-    }
-}
-
 window.showStep = showStep;
 window.filterDestinations = filterDestinations;
 window.resetFilters = resetFilters;
