@@ -1398,7 +1398,7 @@ function getHotelStepHTML() {
                             <br>
                             <small><i class="fas fa-info-circle"></i> <strong>Σημείωση:</strong> Στείλε email στο takethekids2@gmail.com</small>
                             <br>
-                            <small>Από 5% έως και 20% ανάλογα διαθεσιμότητας</strong></small>
+                            <small>Έκπτωση από 5% έως και 20% ανάλογα διαθεσιμότητας</strong></small>
                         </div>
                     </div>
                 </div>
