@@ -7131,12 +7131,18 @@ function synchronizeMapMarkersWithProgram() {
         }
     });
     
-    // 2. Ενημέρωση markers ανά μέρα
+    // 2. Ενημέρωση markers ανά μέρα - ΒΕΛΤΙΩΜΕΝΗ ΕΚΔΟΣΗ ΜΕ ΔΥΝΑΜΙΚΟ ΜΕΓΕΘΟΣ
     userProgram.days.forEach((dayActivities, dayIndex) => {
         const dayNumber = dayIndex + 1;
         const dayColor = getDayColor(dayNumber);
         
-        console.log(`📅 [DEBUG] Μέρα ${dayNumber}: ${dayActivities.length} δραστηριότητες`);
+        // 🔴 ΚΑΙΝΟΥΡΓΙΑ: Δυναμικό μέγεθος βάσει αριθμού
+        const isTwoDigit = dayNumber > 9;
+        const size = isTwoDigit ? 32 : 36;          // Πιο μικρό για 10+
+        const fontSize = isTwoDigit ? 12 : 14;      // Πιο μικρή γραμματοσειρά
+        const borderWidth = 2;
+        
+        console.log(`📅 [DEBUG] Μέρα ${dayNumber}: ${dayActivities.length} δραστηριότητες (μέγεθος: ${size}px)`);
         
         dayActivities.forEach(activity => {
             const activityId = activity.id;
@@ -7147,40 +7153,41 @@ function synchronizeMapMarkersWithProgram() {
             if (marker && marker.setIcon) {
                 console.log(`   ✅ [DEBUG] Βρήκα marker για ${activity.name}`);
                 
-                // Ενημέρωση marker
+                // Ενημέρωση marker με δυναμικό μέγεθος
                 marker.setIcon(L.divIcon({
                     html: `
                         <div style="
                             background: ${dayColor}; 
                             color: white; 
-                            width: 50px; 
-                            height: 50px; 
+                            width: ${size}px;
+                            height: ${size}px;
                             border-radius: 50%; 
                             display: flex; 
                             align-items: center; 
                             justify-content: center;
                             font-weight: bold;
-                            font-size: 20px;
-                            border: 3px solid white;
-                            box-shadow: 0 4px 15px ${dayColor}80;
+                            font-size: ${fontSize}px;
+                            border: ${borderWidth}px solid white;
+                            box-shadow: 0 2px 6px ${dayColor}80;
                             cursor: pointer;
                         ">
                             ${dayNumber}
                         </div>
                     `,
                     className: 'program-marker',
-                    iconSize: [50, 50],
-                    iconAnchor: [25, 50]
+                    iconSize: [size, size],
+                    iconAnchor: [size/2, size]
                 }));
                 
                 updatedMarkers++;
-                console.log(`   🎨 [DEBUG] Ενημέρωση: ${activity.name} -> Μέρα ${dayNumber} (${dayColor})`);
+                console.log(`   🎨 [DEBUG] Ενημέρωση: ${activity.name} -> Μέρα ${dayNumber} (${dayColor}, μέγεθος: ${size}px)`);
             } else {
                 console.log(`   ❌ [DEBUG] Δεν βρέθηκε marker για ${activity.name} (id: ${activityId})`);
             }
         });
     });
-        // 3. Ενημέρωση των labels (τα μικρά κουτάκια με τα ονόματα)
+    
+    // 3. Ενημέρωση των labels (τα μικρά κουτάκια με τα ονόματα)
     console.log('🏷️ [DEBUG] Ενημέρωση labels...');
     
     userProgram.days.forEach((dayActivities, dayIndex) => {
