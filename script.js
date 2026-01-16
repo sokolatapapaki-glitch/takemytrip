@@ -1679,19 +1679,6 @@ function getMapStepHTML() {
     return `
         <div class="card">
             <h1 class="card-title"><i class="fas fa-map"></i> Διαδραστικός Χάρτης</h1>
-            <!-- DEBUG BUTTONS (Προσωρινά) -->
-            <div style="margin-bottom: 15px; padding: 10px; background: #f0f0f0; border-radius: 8px;">
-                <button onclick="debugCheckProgram()" style="margin-right: 10px; padding: 5px 10px;">
-                    🔍 Check Program
-                </button>
-                <button onclick="debugForceRestore()" style="margin-right: 10px; padding: 5px 10px;">
-                    🔄 Force Restore
-                </button>
-                <button onclick="console.log('userProgram:', userProgram, 'state.userProgram:', state.userProgram)" 
-                        style="padding: 5px 10px;">
-                    📊 Log State
-                </button>
-            </div>
             <p class="card-subtitle">${state.selectedDestination ? 'Χάρτης για: ' + state.selectedDestination : 'Δεν έχετε επιλέξει προορισμό'}</p>
             
             ${!state.selectedDestination ? `
@@ -3526,15 +3513,6 @@ function initializeMapInStep() {
 
         console.log('✅ Χάρτης δημιουργήθηκε ΧΩΡΙΣ scroll zoom');
 
-        // 🔴 ΑΠΛΟΠΟΙΗΜΕΝΟ: City marker χωρίς zoom instructions
-        MapManager.setCityMarker(cityCoords, `
-            <div style="text-align: center; padding: 10px; min-width: 200px;">
-                <h3 style="margin: 0 0 5px 0; color: #4F46E5;">${state.selectedDestination}</h3>
-                <p style="margin: 0; color: #666;">
-                    <i class="fas fa-map-marker-alt"></i> Κέντρο πόλης
-                </p>
-            </div>
-        `);
         
         // Ενημέρωση status (μόνο για map readiness)
         const statusEl = document.getElementById('map-status');
