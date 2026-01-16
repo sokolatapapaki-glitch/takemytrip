@@ -7713,3 +7713,151 @@ function testNewClustering() {
     
     console.log('✅ === ΤΕΛΟΣ ΣΥΓΚΡΙΣΗΣ ===');
 }
+// ==================== SIMPLE DEBUG ====================
+// PASTE THIS AT THE VERY END OF YOUR FILE
+
+(function() {
+    'use strict';
+    
+    console.log('🔧 Loading debug tools...');
+    
+    // 1. Ορίζουμε τις debug συναρτήσεις
+    window.debugCheckProgram = function() {
+        console.log('=== DEBUG PROGRAM STATE ===');
+        console.log('1. Global userProgram:', window.userProgram);
+        console.log('2. State.userProgram:', window.state?.userProgram);
+        console.log('3. State.geographicProgram:', window.state?.geographicProgram);
+        
+        const saved = localStorage.getItem('travelPlannerData');
+        if (saved) {
+            const data = JSON.parse(saved);
+            console.log('4. localStorage userProgram:', data.userProgram);
+            console.log('5. localStorage geoProgram:', data.geographicProgram);
+        }
+        
+        console.log('6. Selected activities:', window.state?.selectedActivities?.length || 0);
+    };
+    
+    window.debugForceRestore = function() {
+        console.log('🔄 Force restore...');
+        const saved = localStorage.getItem('travelPlannerData');
+        if (saved) {
+            const data = JSON.parse(saved);
+            if (data.userProgram) {
+                window.userProgram = data.userProgram;
+                if (window.state) window.state.userProgram = data.userProgram;
+                
+                if (window.setupProgramDays) window.setupProgramDays();
+                if (window.renderProgramDays) window.renderProgramDays();
+                
+                console.log('✅ Restored!', window.userProgram);
+                alert('✅ Επαναφορά ολοκληρώθηκε!');
+            } else {
+                alert('⚠️ Δεν βρέθηκε userProgram στο localStorage!');
+            }
+        } else {
+            alert('⚠️ Δεν βρέθηκαν αποθηκευμένα δεδομένα!');
+        }
+    };
+    
+    // 2. Προσθήκη debug button αυτόματα
+    function addDebugButton() {
+        // Περιμένουμε να φορτωθεί η σελίδα
+        setTimeout(function() {
+            // Δημιουργούμε το κουμπί
+            const btn = document.createElement('button');
+            btn.innerHTML = '🐞<br>Debug';
+            btn.style.cssText = `
+                position: fixed;
+                bottom: 80px;
+                right: 20px;
+                z-index: 99999;
+                width: 60px;
+                height: 60px;
+                background: linear-gradient(135deg, #dc3545, #c82333);
+                color: white;
+                border: none;
+                border-radius: 50%;
+                cursor: pointer;
+                font-size: 24px;
+                box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                line-height: 1.2;
+            `;
+            
+            // On click - toggle debug panel
+            btn.addEventListener('click', function() {
+                // Αν υπάρχει ήδη panel, αφαίρεσέ το
+                const existingPanel = document.getElementById('debug-panel-floating');
+                if (existingPanel) {
+                    existingPanel.remove();
+                    return;
+                }
+                
+                // Δημιουργία panel
+                const panel = document.createElement('div');
+                panel.id = 'debug-panel-floating';
+                panel.style.cssText = `
+                    position: fixed;
+                    bottom: 150px;
+                    right: 20px;
+                    z-index: 99998;
+                    background: white;
+                    padding: 15px;
+                    border-radius: 10px;
+                    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+                    width: 250px;
+                    border: 2px solid #dc3545;
+                `;
+                
+                panel.innerHTML = `
+                    <h4 style="margin-top: 0; color: #dc3545;">
+                        <i class="fas fa-bug"></i> Debug Tools
+                    </h4>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <button onclick="debugCheckProgram()" style="padding: 8px; background: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                            🔍 Check State
+                        </button>
+                        <button onclick="debugForceRestore()" style="padding: 8px; background: #17a2b8; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                            🔄 Restore Program
+                        </button>
+                        <button onclick="console.clear(); console.log('Cleared console')" style="padding: 8px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                            🧹 Clear Console
+                        </button>
+                        <hr style="margin: 10px 0;">
+                        <button onclick="document.getElementById('debug-panel-floating').remove()" style="padding: 8px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                            ✕ Close
+                        </button>
+                    </div>
+                `;
+                
+                document.body.appendChild(panel);
+            });
+            
+            document.body.appendChild(btn);
+            console.log('✅ Debug button added!');
+        }, 3000); // 3 δευτερόλεπτα μετά το load
+    }
+    
+    // 3. Προσθήκη CSS για εικονίδια αν δεν υπάρχουν
+    if (!document.querySelector('#font-awesome-check')) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css';
+        link.id = 'font-awesome-check';
+        document.head.appendChild(link);
+    }
+    
+    // 4. Εκκίνηση
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', addDebugButton);
+    } else {
+        addDebugButton();
+    }
+    
+    console.log('✅ Debug tools loaded successfully!');
+})();
+
