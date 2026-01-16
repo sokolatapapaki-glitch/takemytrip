@@ -6719,7 +6719,7 @@ function saveUserProgram() {
         }, 500);
     }
 }
-// ==================== SYNCHRONIZE MAP WITH PROGRAM ====================
+
 // ==================== SYNCHRONIZE MAP WITH PROGRAM ====================
 function synchronizeMapMarkersWithProgram() {
     console.log('🔄 [DEBUG] Καλείται synchronizeMapMarkersWithProgram');
@@ -6811,7 +6811,58 @@ function synchronizeMapMarkersWithProgram() {
             }
         });
     });
+        // 3. Ενημέρωση των labels (τα μικρά κουτάκια με τα ονόματα)
+    console.log('🏷️ [DEBUG] Ενημέρωση labels...');
     
+    userProgram.days.forEach((dayActivities, dayIndex) => {
+        const dayNumber = dayIndex + 1;
+        const dayColor = getDayColor(dayNumber);
+        
+        dayActivities.forEach(activity => {
+            const activityId = activity.id;
+            const marker = MarkerCache.get(activityId);
+            
+            if (marker && marker.options && marker.options.label) {
+                try {
+                    const label = marker.options.label;
+                    const activityName = activity.name;
+                    
+                    // Ενημέρωση label με το χρώμα της ημέρας
+                    label.setIcon(L.divIcon({
+                        html: `
+                            <div style="
+                                background: ${dayColor};
+                                color: white;
+                                padding: 4px 12px;
+                                border-radius: 12px;
+                                font-size: 11px;
+                                font-weight: 600;
+                                border: 1px solid white;
+                                white-space: nowrap;
+                                max-width: 150px;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                                font-family: 'Roboto', sans-serif;
+                            ">
+                                ${activityName.length > 25 ? activityName.substring(0, 25) + '...' : activityName}
+                            </div>
+                        `,
+                        className: 'day-label',
+                        iconSize: [120, 28],
+                        iconAnchor: [60, -18]
+                    }));
+                    
+                    console.log(`   🏷️ [DEBUG] Ενημέρωση label για: ${activityName.substring(0, 20)}...`);
+                    
+                } catch (error) {
+                    console.warn(`⚠️ [DEBUG] Σφάλμα ενημέρωσης label: ${error.message}`);
+                }
+            }
+        });
+    });
+    
+    console.log('✅ [DEBUG] Ολοκλήρωση ενημέρωσης markers και labels');
     console.log(`✅ [DEBUG] Ενημερώθηκαν ${updatedMarkers} markers`);
     
     if (updatedMarkers > 0) {
