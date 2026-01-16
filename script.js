@@ -1724,7 +1724,97 @@ function getMapStepHTML() {
                     Θα δείτε όλες τις δραστηριότητες μαζί στον χάρτη.
                 </div>
                 `}
+
+   <!-- 🔴 ΝΕΟ: ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΓΡΑΜΜΑΤΟΣ ΚΑΤΩ ΑΠΟ ΤΟΝ ΧΑΡΤΗ -->
+                <div id="program-creation-section" class="card" style="margin-top: 40px; background: linear-gradient(135deg, #f8faff 0%, #f0f4ff 100%);">
+                    <h3 style="color: var(--primary); margin-bottom: 20px;">
+                        <i class="fas fa-calendar-plus"></i> Δημιουργία Προγράμματος
+                    </h3>
+                    
+                    ${!state.selectedActivities || state.selectedActivities.length === 0 ? `
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i>
+                            Δεν έχετε επιλέξει δραστηριότητες. Παρακαλώ επιστρέψτε στο βήμα "Δραστηριότητες".
+                            <button class="btn btn-primary" onclick="showStep('activities')" style="margin-top: 10px;">
+                                <i class="fas fa-arrow-left"></i> Επιστροφή στις Δραστηριότητες
+                            </button>
+                        </div>
+                    ` : `
+                        <!-- ΕΠΙΛΟΓΗ ΗΜΕΡΩΝ -->
+                        <div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 25px; border: 2px solid #e2e8f0;">
+                            <h4 style="margin: 0 0 15px 0; color: var(--dark);">
+                                <i class="fas fa-calendar-alt"></i> Επιλογή Ημερών
+                            </h4>
+                            <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                                <select id="program-days-select" class="form-control" style="width: 200px;"
+                                        onchange="setupProgramDays()">
+                                    <option value="1">1 μέρα</option>
+                                    <option value="2">2 μέρες</option>
+                                    <option value="3" selected>3 μέρες</option>
+                                    <option value="4">4 μέρες</option>
+                                    <option value="5">5 μέρες</option>
+                                    <option value="6">6 μέρες</option>
+                                    <option value="7">7 μέρες</option>
+                                </select>
+                                
+                                <div style="font-size: 14px; color: var(--success);">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span id="program-days-status">3 μέρες επιλέχθηκαν</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- ΚΑΛΠΕΣ ΗΜΕΡΩΝ -->
+                        <div id="program-days-container">
+                            <!-- Εδώ θα εμφανίζονται οι κάλπες των ημερών -->
+                        </div>
+                        
+                        <!-- ΔΡΑΣΤΗΡΙΟΤΗΤΕΣ -->
+                        <div style="background: white; padding: 20px; border-radius: 10px; margin-top: 25px;">
+                            <h4 style="margin: 0 0 15px 0; color: var(--dark);">
+                                <i class="fas fa-list-alt"></i> Διαθέσιμες Δραστηριότητες
+                            </h4>
+                            <p style="color: var(--gray); margin-bottom: 15px;">
+                                Σύρετε τις δραστηριότητες στις κάλπες των ημερών (ή κάντε διπλό κλικ)
+                            </p>
+                            
+                            <div id="program-activities-list" class="grid grid-3">
+                                <!-- Εδώ θα εμφανίζονται όλες οι δραστηριότητες -->
+                            </div>
+                        </div>
+                        
+                        <!-- ΚΟΥΜΠΙΑ -->
+                        <div style="display: flex; gap: 15px; margin-top: 30px; justify-content: center;">
+                            <button class="btn btn-primary" onclick="saveUserProgram()" id="save-program-btn">
+                                <i class="fas fa-save"></i> Αποθήκευση Προγράμματος
+                            </button>
+                            
+                            <button class="btn btn-outline" onclick="showProgramOnMap()" id="show-program-btn">
+                                <i class="fas fa-eye"></i> Προβολή στον Χάρτη
+                            </button>
+                            
+                            <button class="btn btn-danger" onclick="resetUserProgram()">
+                                <i class="fas fa-redo"></i> Επαναφορά
+                            </button>
+                        </div>
+                    `}
+                </div>
                 
+                <!-- ΟΔΗΓΙΕΣ ΧΡΗΣΗΣ -->
+                <div class="map-instructions-card" id="map-instructions-card">
+                    <!-- ... υπάρχουσες οδηγίες ... -->
+                </div>
+                
+                <!-- ΕΠΙΣΤΡΟΦΗ -->
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn btn-outline" onclick="showStep('activities')">
+                        <i class="fas fa-arrow-left"></i> Επιστροφή στις Δραστηριότητες
+                    </button>
+                </div>
+            `}
+        </div>
+    `;
+}              
 <!-- ΟΔΗΓΙΕΣ ΧΡΗΣΗΣ ΧΑΡΤΗ -->
 <div class="map-instructions-card" id="map-instructions-card">
     <div class="map-instructions-header">
