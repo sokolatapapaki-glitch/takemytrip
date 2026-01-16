@@ -5055,31 +5055,71 @@ function addConnectStyles() {
 function showToast(message, type = 'info') {
     // Δημιουργία toast notification
     const toast = document.createElement('div');
+    
+    // 🔴 ΚΑΙΝΟΥΡΓΙΑ: ΧΡΩΜΑΤΑ ΑΝΑΛΟΓΑ ΤΟΥ ΤΥΠΟΥ
+    let bgColor, textColor, icon;
+    
+    switch(type) {
+        case 'success':
+            bgColor = '#10B981';  // Πράσινο
+            textColor = '#ffffff';
+            icon = '✅';
+            break;
+        case 'warning':
+            bgColor = '#F59E0B';  // Κίτρινο
+            textColor = '#000000'; // 🔴 ΑΛΛΑΓΗ: ΜΑΥΡΑ ΓΡΑΜΜΑΤΑ!
+            icon = '⚠️';
+            break;
+        case 'danger':
+            bgColor = '#EF4444';  // Κόκκινο
+            textColor = '#ffffff';
+            icon = '❌';
+            break;
+        default: // info
+            bgColor = '#4F46E5';  // Μπλε
+            textColor = '#ffffff';
+            icon = 'ℹ️';
+    }
+    
     toast.style.cssText = `
         position: fixed;
         top: 20px;
         right: 20px;
-        background: ${type === 'success' ? '#10B981' : type === 'warning' ? '#F59E0B' : '#4F46E5'};
-        color: white;
-        padding: 15px 20px;
+        background: ${bgColor};
+        color: ${textColor};
+        padding: 12px 18px;
         border-radius: 8px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         z-index: 10000;
-        max-width: 400px;
+        max-width: 350px;
         font-family: 'Roboto', sans-serif;
         animation: slideIn 0.3s ease;
+        border-left: 4px solid ${type === 'warning' ? '#92400e' : 'rgba(255,255,255,0.3)'};
+        font-size: 14px;
+        line-height: 1.5;
     `;
     
     toast.innerHTML = `
         <div style="display: flex; align-items: flex-start; gap: 10px;">
-            <div style="font-size: 20px;">
-                ${type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️'}
+            <div style="font-size: 18px; margin-top: 2px;">
+                ${icon}
             </div>
-            <div style="flex: 1; font-size: 14px; line-height: 1.4;">
+            <div style="flex: 1;">
                 ${message}
             </div>
             <button onclick="this.parentElement.parentElement.remove()" 
-                    style="background: none; border: none; color: white; font-size: 20px; cursor: pointer; padding: 0 0 0 10px;">
+                    style="
+                        background: none; 
+                        border: none; 
+                        color: ${textColor}; 
+                        font-size: 20px; 
+                        cursor: pointer; 
+                        padding: 0 0 0 10px;
+                        opacity: 0.8;
+                        font-weight: bold;
+                    "
+                    onmouseover="this.style.opacity='1'"
+                    onmouseout="this.style.opacity='0.8'">
                 &times;
             </button>
         </div>
@@ -5087,7 +5127,7 @@ function showToast(message, type = 'info') {
     
     document.body.appendChild(toast);
     
-    // Αυτόματη αφαίρεση μετά από 5 δευτερόλεπτα
+    // Αυτόματη αφαίρεση
     setTimeout(() => {
         if (toast.parentNode) {
             toast.style.animation = 'slideOut 0.3s ease';
@@ -5097,7 +5137,7 @@ function showToast(message, type = 'info') {
                 }
             }, 300);
         }
-    }, 5000);
+    }, 4000);
 }
 
 function createMarkerWithConnectFunction(coords, title, activityData) {
