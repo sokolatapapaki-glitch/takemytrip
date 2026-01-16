@@ -880,30 +880,56 @@ function loadStepContent(stepName) {
     stepContent.innerHTML = getActivitiesStepHTML();
     setupActivitiesStep();
     break;
-         case 'map':
+       case 'map':
     stepContent.innerHTML = getMapStepHTML();
+    
+    // 🔴 ΚΡΙΤΙΚΟ: ΧΡΗΣΗ setTimeout ΜΕ 100ms (όχι 500ms)
     setTimeout(() => {
+        console.log('🗺️ [DEBUG] Φόρτωση χάρτη και προγράμματος...');
+        
+        // 1. Αρχικοποίηση χάρτη
         if (typeof L !== 'undefined') {
-            // ΠΡΟΣΘΕΣΑΜΕ TRY-CATCH ΓΙΑ ΝΑ ΜΗΝ ΚΡΑΣΑΡΕΙ Η ΕΦΑΡΜΟΓΗ
             try {
                 initializeMapInStep();
             } catch (error) {
-                console.error('❌ Σφάλμα αρχικοποίησης χάρτη:', error);
-                document.getElementById('map-container').innerHTML = `
-                    <div style="padding: 40px; text-align: center; color: #666;">
-                        <i class="fas fa-exclamation-triangle fa-3x"></i>
-                        <h3>Σφάλμα φόρτωσης χάρτη</h3>
-                        <p>${error.message}</p>
-                        <button onclick="showStep('activities')" class="btn btn-primary">
-                            <i class="fas fa-arrow-left"></i> Επιστροφή
-                        </button>
-                    </div>
-                `;
+                console.error('❌ Σφάλμα χάρτη:', error);
             }
-        } else {
-            console.error('❌ Leaflet library not loaded');
         }
-    }, 500);
+        
+        // 2. Επαναφορά προγράμματος στις κάλπες (ΚΡΙΤΙΚΟ)
+        if (state.userProgram) {
+            console.log('📅 [DEBUG] Φόρτωση userProgram στις κάλπες:', state.userProgram);
+            
+            // Αντικατάσταση του userProgram με το αποθηκευμένο
+            userProgram = JSON.parse(JSON.stringify(state.userProgram));
+            
+            // 🔴 ΔΙΟΡΘΩΣΗ: Ρύθμισε τις κάλπες ΜΕΤΑ από το setTimeout
+            setTimeout(() => {
+                // Α) Δημιούργησε τις κάλπες
+                setupProgramDays();
+                
+                // Β) Ενημέρωσε dropdown
+                const daysSelect = document.getElementById('program-days-select');
+                if (daysSelect && state.userProgram.totalDays) {
+                    daysSelect.value = state.userProgram.totalDays;
+                }
+                
+                // Γ) Εμφάνισε τις δραστηριότητες στις κάλπες
+                renderProgramDays();
+                renderAvailableActivities();
+                
+                console.log('✅ [DEBUG] Το πρόγραμμα φορτώθηκε στις κάλπες');
+                
+                // Δ) Ενημέρωσε χάρτη αν είναι ήδη φορτωμένος
+                if (window.travelMap) {
+                    setTimeout(() => {
+                        synchronizeMapMarkersWithProgram();
+                    }, 300);
+                }
+                
+            }, 300); // Μικρή καθυστέρηση για DOM
+        }
+    }, 100); // Μικρή καθυστέρηση
     break;
     } // Τέλος του switch
     
