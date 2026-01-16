@@ -2316,3 +2316,39 @@ select:valid {
     margin-left: 50px !important;
     margin-top: 10px !important;
 }
+/* Βελτιωμένα markers για προγράμματα */
+.program-marker {
+    transition: transform 0.2s ease;
+}
+
+.program-marker:hover {
+    transform: scale(1.1);
+    z-index: 1000 !important;
+}
+
+.day-number-label {
+    pointer-events: none !important; /* Δεν κάνει click */
+}
+
+.activity-label {
+    pointer-events: none !important;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Αν θέλουμε να κάνουμε hover effect */
+.program-color-marker:hover {
+    transform: scale(1.2);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.4) !important;
+}
+@media (max-width: 768px) {
+    /* Στα κινητά, κάντε τις πινέζες λίγο μεγαλύτερες */
+    .program-marker {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 16px !important;
+    }
+    
+    .day-number-label {
+        font-size: 11px !important;
+    }
+}
