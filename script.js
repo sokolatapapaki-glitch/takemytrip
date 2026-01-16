@@ -3874,7 +3874,7 @@ function showActivityMap() {
         // Create or reuse marker from cache
         if (!MarkerCache.has(activity.id)) {
             // Marker doesn't exist in cache, create new one
-            const marker = (coords, markerTitle, activityData);
+            const marker = createMarkerWithConnectFunction(coords, markerTitle, activityData);
             if (marker) {
                 MarkerCache.addOrUpdate(activity.id, marker);
                 window.selectedMarkers.push(marker);  // Backward compatibility
@@ -4983,7 +4983,7 @@ function showGroupedActivitiesOnMap() {
                 return;
             }
 
-            (
+            createMarkerWithConnectFunction(
                 [activity.location.lat, activity.location.lng],
                 activity.name,
                 activity
@@ -5442,186 +5442,6 @@ marker.options.label = label;
         `, 'info');
     }
 };
-// ==================== ΧΡΩΜΑΤΙΣΤΕΣ ΠΙΝΕΖΕΣ ΑΝΑ ΗΜΕΡΑ ====================
-
-// Συνάρτηση για να δημιουργήσει πινέζα με χρώμα ημέρας
-function createDayColoredMarker(coords, title, activityData, dayNumber) {
-    const dayColor = getDayColor(dayNumber);
-    
-    const marker = L.marker(coords, {
-        icon: L.divIcon({
-            html: `
-                <div style="
-                    background: ${dayColor}; 
-                    color: white; 
-                    width: 42px; 
-                    height: 42px; 
-                    border-radius: 50%; 
-                    display: flex; 
-                    align-items: center; 
-                    justify-content: center;
-                    font-weight: bold;
-                    font-size: 16px;
-                    border: 3px solid white;
-                    box-shadow: 0 3px 10px ${dayColor}80;
-                    cursor: pointer;
-                ">
-                    ${dayNumber}
-                </div>
-            `,
-            className: 'day-colored-marker',
-            iconSize: [42, 42],
-            iconAnchor: [21, 42]
-        })
-    });
-    
-    // Αποθήκευση πληροφοριών
-    marker.options.dayNumber = dayNumber;
-    marker.options.activityData = activityData;
-    marker.options.originalTitle = title;
-    
-    // Προσθήκη label με το όνομα
-    const label = L.marker(coords, {
-        icon: L.divIcon({
-            html: `
-                <div style="
-                    background: rgba(255, 255, 255, 0.95);
-                    color: ${dayColor};
-                    padding: 3px 10px;
-                    border-radius: 12px;
-                    font-size: 11px;
-                    font-weight: 600;
-                    border: 1px solid ${dayColor}40;
-                    white-space: nowrap;
-                    max-width: 120px;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-                    font-family: 'Roboto', sans-serif;
-                ">
-                    ${title.length > 18 ? title.substring(0, 18) + '...' : title}
-                </div>
-            `,
-            className: 'day-marker-label',
-            iconSize: [100, 24],
-            iconAnchor: [50, -15]
-        })
-    }).addTo(window.travelMap);
-    
-    marker.options.label = label;
-    
-    // Προσθήκη popup με πληροφορίες ημέρας
-    const popupContent = `
-        <div style="max-width: 300px; font-family: 'Roboto', sans-serif; padding: 8px;">
-            <div style="background: ${dayColor}; color: white; padding: 8px; border-radius: 6px; margin-bottom: 10px; text-align: center;">
-                <strong><i class="fas fa-calendar-day"></i> ΜΕΡΑ ${dayNumber}</strong>
-            </div>
-            ${createEnhancedPopup(activityData)}
-        </div>
-    `;
-    
-    marker.bindPopup(popupContent);
-    
-    // Κλικ για διαδρομές (ίδια λογική)
-    marker.on('click', function(e) {
-        handleDayMarkerClick(e, marker, dayNumber, activityData);
-    });
-    
-    return marker;
-}
-
-// Βοηθητική: Βρες σε ποια μέρα είναι μια δραστηριότητα
-function findActivityDay(activityId) {
-    if (!userProgram || !userProgram.days) return null;
-    
-    for (let day = 1; day <= userProgram.days.length; day++) {
-        const dayIndex = day - 1;
-        if (userProgram.days[dayIndex]?.some(activity => activity.id === activityId)) {
-            return day;
-        }
-    }
-    return null; // Δεν βρέθηκε σε καμία μέρα
-}
-
-// Κλικ handler για πινέζες ημερών
-function handleDayMarkerClick(event, marker, dayNumber, activityData) {
-    console.log(`📍 Κλικ στη Μέρα ${dayNumber}: ${activityData.name}`);
-    
-    // Υλοποίηση επιλογής για διαδρομές (όπως πριν)
-    if (!selectedPointA) {
-        selectedPointA = {
-            marker: marker,
-            coords: marker.getLatLng(),
-            title: activityData.name,
-            data: activityData,
-            day: dayNumber
-        };
-        
-        // Ενημέρωση εμφάνισης
-        updateDayMarkerAppearance(marker, 'A');
-        
-        showToast(`
-            <div style="text-align: left;">
-                <strong style="font-size: 15px;">📍 Επιλέχθηκε <span style="color: #10B981;">ΑΠΟ</span></strong><br>
-                <span style="font-weight: 600;">${activityData.name}</span><br>
-                <small style="opacity: 0.9;">Μέρα ${dayNumber}</small>
-            </div>
-        `, 'info');
-        
-    } else if (!selectedPointB && selectedPointA.marker !== marker) {
-        selectedPointB = {
-            marker: marker,
-            coords: marker.getLatLng(),
-            title: activityData.name,
-            data: activityData,
-            day: dayNumber
-        };
-        
-        updateDayMarkerAppearance(marker, 'B');
-        
-        // Σχεδίαση διαδρομής
-        setTimeout(() => {
-            drawRouteBetweenPoints();
-        }, 300);
-    }
-}
-
-// Ενημέρωση εμφάνισης marker ανά ημέρα
-function updateDayMarkerAppearance(marker, pointType) {
-    const dayNumber = marker.options.dayNumber;
-    const dayColor = getDayColor(dayNumber);
-    
-    const isPointA = pointType === 'A';
-    const color = isPointA ? '#10B981' : '#EF4444';
-    const letter = isPointA ? 'A' : 'B';
-    
-    marker.setIcon(L.divIcon({
-        html: `
-            <div style="
-                background: ${color}; 
-                color: white; 
-                width: 50px; 
-                height: 50px; 
-                border-radius: 50%; 
-                display: flex; 
-                align-items: center; 
-                justify-content: center;
-                font-weight: bold;
-                font-size: 20px;
-                border: 3px solid white;
-                box-shadow: 0 3px 15px ${color}80;
-                cursor: pointer;
-                animation: pulse 1.5s infinite;
-            ">
-                ${letter}
-            </div>
-        `,
-        className: isPointA ? 'selected-marker-a' : 'selected-marker-b',
-        iconSize: [50, 50],
-        iconAnchor: [25, 50]
-    }));
-}
-    
     // Συνάρτηση ανανέωσης εμφάνισης
     function updateMarkerAppearance() {
         try {
