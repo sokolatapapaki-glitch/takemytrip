@@ -6893,6 +6893,22 @@ setTimeout(() => {
     refreshMapWithProgram();
 }, 1000);
 }
+function resetUserProgram() {
+    if (confirm('⚠️ Θέλετε να επαναφέρετε το πρόγραμμα; Όλες οι τοποθετήσεις θα διαγραφούν.')) {
+        // Επαναφορά του userProgram
+        userProgram.days = userProgram.days.map(() => []); // Άδειασμα όλων των ημερών
+        
+        // Επαναφορά του UI
+        if (typeof renderProgramDays === 'function') {
+            renderProgramDays();
+        }
+        if (typeof renderAvailableActivities === 'function') {
+            renderAvailableActivities();
+        }
+        
+        showToast('🔄 Το πρόγραμμα επαναφέρθηκε', 'info');
+    }
+}
 
 // ==================== ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ: updateDayFilterUI() ====================
 function updateDayFilterUI() {
