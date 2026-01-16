@@ -6374,8 +6374,44 @@ function setupProgramDays() {
     if (!daysSelect) return;
     
     const days = parseInt(daysSelect.value) || 3;
+    
+    // 🔴 ΚΡΙΤΙΚΟ: ΜΗΝ διαγράψεις υπάρχοντα δεδομένα!
+    // Αν έχουμε ήδη δεδομένα, κράτα τα και επέκτεινε/σύμπτυξε
+    if (userProgram.days && userProgram.days.length > 0) {
+        console.log('📅 Υπάρχει ήδη πρόγραμμα, ρύθμιση ημερών...');
+        
+        if (days > userProgram.days.length) {
+            // Προσθήκη νέων κενών ημερών
+            const daysToAdd = days - userProgram.days.length;
+            for (let i = 0; i < daysToAdd; i++) {
+                userProgram.days.push([]);
+            }
+        } else if (days < userProgram.days.length) {
+            // Αφαίρεση ημερών (με προειδοποίηση αν έχουν δεδομένα)
+            const daysToRemove = userProgram.days.length - days;
+            let hasDataInRemovedDays = false;
+            
+            for (let i = userProgram.days.length - 1; i >= days; i--) {
+                if (userProgram.days[i].length > 0) {
+                    hasDataInRemovedDays = true;
+                }
+            }
+            
+            if (hasDataInRemovedDays) {
+                if (!confirm(`⚠️ Θέλετε να μειώσετε τις μέρες από ${userProgram.days.length} σε ${days};\n\nΟι δραστηριότητες στις τελευταίες μέρες θα διαγραφούν!`)) {
+                    daysSelect.value = userProgram.days.length;
+                    return;
+                }
+            }
+            
+            userProgram.days = userProgram.days.slice(0, days);
+        }
+    } else {
+        // Δεν υπάρχει πρόγραμμα, δημιούργησε νέο
+        userProgram.days = Array(days).fill().map(() => []);
+    }
+    
     userProgram.totalDays = days;
-    userProgram.days = Array(days).fill().map(() => []);
     
     // Ενημέρωση status
     const statusEl = document.getElementById('program-days-status');
