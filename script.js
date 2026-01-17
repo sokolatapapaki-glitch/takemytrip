@@ -2916,7 +2916,7 @@ html += `
              // 🔴 ΝΕΟ: ΑΠΟΘΗΚΕΥΣΗ ΤΩΝ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ ΓΙΑ ΤΟ ΒΗΜΑ 5
         console.log('💾 Αποθηκεύτηκαν', state.currentCityActivities.length, 'δραστηριότητες για το πρόγραμμα');
         saveState(); 
-        } // <-- ΚΛΕΙΣΕ ΤΟ else
+        }} 
         } catch (error) {
         console.error('❌ Σφάλμα φόρτωσης:', error);
         
