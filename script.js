@@ -1487,9 +1487,7 @@ function getActivitiesStepHTML() {
 
 <!-- Family Members Section -->
 <div class="card" style="background: #f8f9fa; margin-bottom: 30px;">
-             <!-- Family Members Section -->
-<div class="card" style="background: #f8f9fa; margin-bottom: 30px;">
-    <h3><i class="fas fa-users"></i> Τα Μέλη Της Οικογένειας</h3>
+              <h3><i class="fas fa-users"></i> Τα Μέλη Της Οικογένειας</h3>
     
     <div id="family-members-container" class="family-member-container">
         ${state.familyMembers.map((member, index) => `
@@ -1537,7 +1535,6 @@ function getActivitiesStepHTML() {
         <i class="fas fa-plus-circle"></i>
         <span>Προσθήκη Ατόμου</span>
     </button>
-</div>
 </div>
   
               <div style="margin: 20px 0; padding: 12px; background: linear-gradient(to bottom, #f0f9ff, #ffffff); border-radius: 10px; border: 2px solid #E0F2FE; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
