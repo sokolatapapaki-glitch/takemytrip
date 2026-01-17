@@ -1775,12 +1775,8 @@ function getMapStepHTML() {
                                     <i class="fas fa-times"></i>
                                 </button>
                             </div>
-                        `).join('') : `
-                            <div style="padding: 15px; text-align: center; color: var(--gray); font-size: 13px; background: white; border-radius: 6px; border: 2px dashed #ddd;">
-                                <i class="fas fa-map-marked-alt" style="font-size: 24px; opacity: 0.5; margin-bottom: 8px; display: block;"></i>
-                                Δεν έχετε προσθέσει προσωπικά σημεία ακόμα
-                            </div>
-                        `}
+                        `).join('') 
+                                                  ` : ''}
                     </div>
                 </div>
 
