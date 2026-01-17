@@ -2970,23 +2970,7 @@ async function setupActivitiesStep() {
         return 3;                        // Other activities third
     }
 
-    // ==================== REQUIRED USER NOTICE ====================
-    html += `
-        <div class="required-notice" style="grid-column: 1/-1; background: linear-gradient(135deg, #FFF3CD 0%, #FFF8E1 100%); border: 2px solid #F59E0B; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);">
-            <div style="display: flex; align-items: flex-start; gap: 15px;">
-                <div style="font-size: 32px; flex-shrink: 0;">⚠️</div>
-                <div style="flex: 1;">
-                    <h3 style="margin: 0 0 10px 0; color: #92400E; font-size: 18px;">
-                        <i class="fas fa-exclamation-circle"></i> Απαιτούμενες Ενέργειες
-                    </h3>
-                    <p style="margin: 0; color: #78350F; font-size: 15px; line-height: 1.6;">
-                        Για να υπολογιστεί σωστά το κόστος, πρέπει να δηλωθεί υποχρεωτικά η σύνθεση των ταξιδιωτών (ηλικίες).
-                        Για να μπορέσει να δημιουργηθεί το πρόγραμμα στο επόμενο βήμα, πρέπει να επιλεγούν όλες οι δραστηριότητες, συμπεριλαμβανομένων και των δωρεάν.
-                    </p>
-                </div>
-            </div>
-        </div>
-    `;
+   
 
     // ==================== CITY PASS INFO (if available) ====================
     if (cityData.cityPass) {
@@ -5671,7 +5655,7 @@ function createMarkerWithConnectFunction(coords, title, activityData) {
     marker.options.activityData = safeActivityData;
     marker.options.originalTitle = title;
     marker.options.coords = coords;
-    // ==== ΠΡΟΣΘΕΣΕ ΑΥΤΟ ΕΔΩ (ΜΕΤΑ ΑΠΟ 2 ΚΕΝΕΣ ΓΡΑΜΜΕΣ) ====
+    // === ΠΡΟΣΘΕΣΕ ΑΥΤΟ ΕΔΩ (ΜΕΤΑ ΑΠΟ 2 ΚΕΝΕΣ ΓΡΑΜΜΕΣ) ===
 // ΠΡΟΣΘΗΚΗ LABEL ΜΕ ΤΟ ΟΝΟΜΑ
 const label = L.marker(coords, {
     icon: L.divIcon({
@@ -7470,77 +7454,12 @@ window.addActivityToQuickDay = addActivityToQuickDay;
 if (!document.querySelector('#program-spinner-style')) {
     const style = document.createElement('style');
     style.id = 'program-spinner-style';
-    style.textContent = `
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-    `;
     document.head.appendChild(style);
 }
 // 🔵🔵🔵 ΠΡΟΣΘΕΣΕ ΑΥΤΟ ΓΙΑ ΤΟ ΝΕΟ ΠΡΟΓΡΑΜΜΑ 🔵🔵🔵
 if (!document.querySelector('#program-animations')) {
     const style = document.createElement('style');
     style.id = 'program-animations';
-    style.textContent = `
-        @keyframes pulse {
-            0% { 
-                box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4);
-            }
-            70% { 
-                box-shadow: 0 0 0 15px rgba(79, 70, 229, 0);
-            }
-            100% { 
-                box-shadow: 0 0 0 0 rgba(79, 70, 229, 0);
-            }
-        }
-        
-        @keyframes slideDown {
-            from { 
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        #geographic-program-section {
-            display: block !important;
-            animation: slideDown 0.5s ease-out;
-            border: 3px solid #4F46E5;
-            background: linear-gradient(to bottom, #ffffff, #f8faff);
-            margin-top: 30px;
-            border-radius: 15px;
-        }
-        
-        .day-card {
-            transition: all 0.3s ease;
-            animation: slideDown 0.6s ease-out;
-            animation-fill-mode: both;
-            margin-bottom: 25px;
-            padding: 20px;
-            background: white;
-            border-radius: 12px;
-            border-left: 4px solid #4F46E5;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-        }
-        
-        .day-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
-    `;
     document.head.appendChild(style);
 }
 
