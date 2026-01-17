@@ -4036,17 +4036,6 @@ function showActivityMap() {
     selectedPointA = null;
     selectedPointB = null;
     
-    // 4. Προσθήκη πινέζας για την πόλη
-    const cityCoords = getCityCoordinates(state.selectedDestinationId);
-    if (cityCoords) {
-        L.marker(cityCoords)
-            .addTo(window.travelMap)
-            .bindPopup(`<b>${state.selectedDestination}</b><br>Κύκλος πόλης`)
-            .openPopup();
-            
-        // Ζουμάρισμα στο κέντρο της πόλης
-        window.travelMap.setView(cityCoords, 13);
-    }
     
     if (state.selectedActivities.length === 0) {
         alert('⚠️ Δεν έχετε επιλέξει καμία δραστηριότητα ακόμα\n\nΠαρακαλώ πηγαίνετε στο βήμα "Δραστηριότητες" και επιλέξτε κάποιες.');
