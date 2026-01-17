@@ -3177,12 +3177,10 @@ async function setupActivitiesStep() {
             <!-- ΣΥΝΟΛΙΚΟ ΚΟΣΤΟΣ ΓΙΑ ΟΙΚΟΓΕΝΕΙΑ -->
             <div class="activity-total" style="background: var(--primary); color: white; padding: 12px; border-radius: 8px; text-align: center; font-weight: bold; margin-top: 10px;">
                 <i class="fas fa-users"></i> ${Number(familyCost).toFixed(2)}€ για ${state.familyMembers.length} ${state.familyMembers.length === 1 ? 'άτομο' : 'άτομα'}
-            </div>
-            ` : ''}
-        </div>
-        `;
+                      ` : ''}
+        </div>`;
     });
-        }
+}
         
         activitiesList.innerHTML = html;
         
