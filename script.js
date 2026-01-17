@@ -4,9 +4,8 @@ const state = {
     selectedDestinationId: null,
     selectedDays: 0,
     familyMembers: [
-        { name: "Ενήλικας 1", age: "" },
-        { name: "Ενήλικας 2", age: "" }
-    ],
+    { name: "Ενήλικας 1", age: "" }  // ΜΟΝΟ ΑΥΤΟ ΜΕΝΕΙ
+],
     currentStep: 'destination',
     currentCityActivities: [],
     customPoints: JSON.parse(localStorage.getItem('travel_custom_points')) || [],
