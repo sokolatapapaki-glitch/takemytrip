@@ -3217,47 +3217,7 @@ function initializeMap() {
             minZoom: 3
         }).addTo(window.travelMap);
         
-        // Προσθήκη marker για την πόλη
-        const cityMarker = L.marker(cityCoords, {
-            icon: L.divIcon({
-                html: `
-                    <div style="
-                        background: #4F46E5; 
-                        color: white; 
-                        width: 50px; 
-                        height: 50px; 
-                        border-radius: 50%; 
-                        display: flex; 
-                        align-items: center; 
-                        justify-content: center;
-                        font-weight: bold;
-                        font-size: 24px;
-                        border: 3px solid white;
-                        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
-                        cursor: pointer;
-                    ">
-                        🏙️
-                    </div>
-                `,
-                className: 'city-marker',
-                iconSize: [50, 50],
-                iconAnchor: [25, 50]
-            })
-        }).addTo(window.travelMap);
-        
-        cityMarker.bindPopup(`
-            <div style="text-align: center; padding: 10px; min-width: 200px;">
-                <h3 style="margin: 0 0 5px 0; color: #4F46E5;">${state.selectedDestination}</h3>
-                <p style="margin: 0; color: #666;">
-                    <i class="fas fa-map-marker-alt"></i> Κέντρο πόλης
-                </p>
-                <hr style="margin: 10px 0;">
-                <p style="margin: 0; font-size: 12px; color: #888;">
-                    👆 Κάντε κλικ στο κουμπί <strong>"Προβολή Σημείων"</strong> για τις δραστηριότητες
-                </p>
-            </div>
-        `).openPopup();
-        
+                
         // Προσθήκη scale control
         L.control.scale({ imperial: false, metric: true }).addTo(window.travelMap);
         
