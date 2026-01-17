@@ -4,8 +4,9 @@ const state = {
     selectedDestinationId: null,
     selectedDays: 0,
     familyMembers: [
-    { name: "", age: "" }  // ΜΟΝΟ 1 ΚΕΝΟ ΜΕΛΟΣ
-],
+        { name: "Ενήλικας 1", age: "" },
+        { name: "Ενήλικας 2", age: "" }
+    ],
     currentStep: 'destination',
     currentCityActivities: [],
     customPoints: JSON.parse(localStorage.getItem('travel_custom_points')) || [],
@@ -271,19 +272,14 @@ const MarkerCache = {
 // ==================== STATE VALIDATOR ====================
 const StateValidator = {
     validateFamilyMember(member) {
-    if (!member || typeof member !== 'object') {
-        return false;
-    }
+        if (!member || typeof member !== 'object') {
+            return false;
+        }
 
-    // Name can be empty now - we removed the name field
-    if (typeof member.name !== 'string') {
-        return false;
-    }
-    
-    // Age can be empty string (user hasn't set it yet)
-    if (member.age === '' || member.age === null || member.age === undefined) {
-        return true; // VALID - empty age is allowed
-    }
+        // Name must be a string
+        if (typeof member.name !== 'string' || member.name.trim() === '') {
+            return false;
+        }
 
         // Age can be empty string or valid number
         if (member.age === '' || member.age === null || member.age === undefined) {
@@ -1458,9 +1454,10 @@ function getActivitiesStepHTML() {
     return `
         <div class="card">
             <h1 class="card-title"><i class="fas fa-ticket-alt"></i> Οικογενειακές Δραστηριότητες</h1>
-            <p class="card-subtitle">${state.selectedDestination ? 'Αφού ορίσετε τα μέλη της οικογένειας, επιλέξτε δραστηριότητες για: ' + state.selectedDestination : 'Πρώτα επιλέξτε προορισμό'}</p>
-              ${!state.selectedDestination ? `     
-    <div class="alert alert-warning">
+            <p class="card-subtitle">${state.selectedDestination ? 'Επιλέξτε δραστηριότητες για: ' + state.selectedDestination : 'Πρώτα επιλέξτε προορισμό'}</p>
+            
+            ${!state.selectedDestination ? `
+                <div class="alert alert-warning">
                     <i class="fas fa-exclamation-triangle"></i>
                     Δεν έχετε επιλέξει προορισμό. Παρακαλώ επιστρέψτε στο βήμα 1.
                     <button class="btn btn-primary" onclick="showStep('destination')" style="margin-top: 10px;">
@@ -1468,29 +1465,25 @@ function getActivitiesStepHTML() {
                     </button>
                 </div>
             ` : `
-<!-- ΑΠΑΙΤΟΥΜΕΝΕΣ ΕΝΕΡΓΕΙΕΣ -->
-<div class="required-notice" style="grid-column: 1/-1; background: linear-gradient(135deg, #FFF3CD 0%, #FFF8E1 100%); border: 2px solid #F59E0B; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);">
-    <div style="display: flex; align-items: flex-start; gap: 15px;">
-        <div style="font-size: 32px; flex-shrink: 0;">⚠️</div>
-        <div style="flex: 1;">
-            <h3 style="margin: 0 0 10px 0; color: #92400E; font-size: 18px;">
-                <i class="fas fa-exclamation-circle"></i> Απαιτούμενες Ενέργειες
-            </h3>
-            <p style="margin: 0; color: #78350F; font-size: 15px; line-height: 1.6;">
-                Για να υπολογιστεί σωστά το κόστος, πρέπει να δηλωθεί υποχρεωτικά η σύνθεση των ταξιδιωτών (ηλικίες).
-                Για να μπορέσει να δημιουργηθεί το πρόγραμμα στο επόμενο βήμα, πρέπει να επιλεγούν όλες οι δραστηριότητες, συμπεριλαμβανομένων και των δωρεάν.
-            </p>
-        </div>
-    </div>
-</div>
-
-<!-- Family Members Section -->
+             <!-- Family Members Section -->
 <div class="card" style="background: #f8f9fa; margin-bottom: 30px;">
-              <h3><i class="fas fa-users"></i> Τα Μέλη Της Οικογένειας</h3>
+    <h3><i class="fas fa-users"></i> Τα Μέλη Της Οικογένειας</h3>
     
     <div id="family-members-container" class="family-member-container">
         ${state.familyMembers.map((member, index) => `
-                            
+            <div class="family-member">
+                <!-- Πρώτη γραμμή: Όνομα και Εικονίδιο -->
+                <div class="family-member-row">
+                    <div class="family-member-icon">
+                        ${index === 0 ? '👨' : index === 1 ? '👩' : '🧒'}
+                    </div>
+                    <input type="text" 
+                           class="form-control family-input" 
+                           value="${member.name}" 
+                           onchange="updateFamilyMemberName(${index}, this.value)"
+                           placeholder="Όνομα">
+                </div>
+                
                 <!-- Δεύτερη γραμμή: Ηλικία και Κουμπί Διαγραφής -->
                 <div class="family-member-row">
                     <div class="family-age-container">
@@ -1511,31 +1504,22 @@ function getActivitiesStepHTML() {
             </div>
         `).join('')}
     </div>
+    
     <!-- Κουμπιά Δράσης -->
-<div class="family-add-buttons" style="
-    display: flex;
-    justify-content: center;
-    margin-top: 15px;
-">
-    <button class="btn btn-outline" onclick="addFamilyMember('person')" style="
-        padding: 8px 16px;
-        font-size: 14px;
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        background: #4F46E5;
-        color: white;
-        border: none;
-        width: auto;
-        min-width: 140px;
-        justify-content: center;
-    ">
-        <i class="fas fa-plus-circle"></i>
-        <span>Προσθήκη Ατόμου</span>
-    </button>
+    <div class="family-actions">
+        <div class="family-add-buttons">
+            <button class="btn btn-outline" onclick="addFamilyMember('adult')">
+                <i class="fas fa-plus"></i> Προσθήκη Ενήλικα
+            </button>
+            <button class="btn btn-outline" onclick="addFamilyMember('child')">
+                <i class="fas fa-plus"></i> Προσθήκη Παιδιού
+            </button>
+        </div>
+        <button class="btn btn-primary family-update-btn" onclick="updateFamilyMembers()">
+            <i class="fas fa-save"></i> Ενημέρωση Οικογένειας
+        </button>
+    </div>
 </div>
-  
               <div style="margin: 20px 0; padding: 12px; background: linear-gradient(to bottom, #f0f9ff, #ffffff); border-radius: 10px; border: 2px solid #E0F2FE; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
     
     <!-- ΚΕΦΑΛΙ -->
@@ -1652,6 +1636,7 @@ function getActivitiesStepHTML() {
 }
 
 
+// ==================== STEP 5: SUMMARY ====================
 
 // ==================== ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ ΓΙΑ GEOGRAPHIC PROGRAM ====================
 function getFullActivitiesWithLocation() {
@@ -2688,8 +2673,8 @@ async function setupActivitiesStep() {
     }
 
     // ==================== REQUIRED USER NOTICE ====================
-html += `
-    <div class="required-notice" style="grid-column: 1/-1; background: linear-gradient(135deg, #FFF3CD 0%, #FFF8E1 100%); border: 2px solid #F59E0B; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);">
+    html += `
+        <div class="required-notice" style="grid-column: 1/-1; background: linear-gradient(135deg, #FFF3CD 0%, #FFF8E1 100%); border: 2px solid #F59E0B; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);">
             <div style="display: flex; align-items: flex-start; gap: 15px;">
                 <div style="font-size: 32px; flex-shrink: 0;">⚠️</div>
                 <div style="flex: 1;">
@@ -2704,6 +2689,7 @@ html += `
             </div>
         </div>
     `;
+
     // ==================== CITY PASS INFO (if available) ====================
     if (cityData.cityPass) {
         html += `
@@ -2915,13 +2901,9 @@ html += `
         console.log('✅ Δραστηριότητες εμφανίστηκαν επιτυχώς');
              // 🔴 ΝΕΟ: ΑΠΟΘΗΚΕΥΣΗ ΤΩΝ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ ΓΙΑ ΤΟ ΒΗΜΑ 5
         console.log('💾 Αποθηκεύτηκαν', state.currentCityActivities.length, 'δραστηριότητες για το πρόγραμμα');
-               saveState();
-} catch (error) {
+        saveState();   
+    } catch (error) {
         console.error('❌ Σφάλμα φόρτωσης:', error);
-    }
-} // <--- ΑΥΤΗ Η ΑΓΚΥΛΗ ΕΛΕΙΠΕ για να κλείσει η setupActivitiesStep
-
-
         
         activitiesList.innerHTML = `
             <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
@@ -4342,6 +4324,7 @@ function getActivityEmoji(category) {
 function updateFamilyMemberName(index, name) {
     state.familyMembers[index].name = name;
 }
+
 function updateFamilyMemberAge(index, age) {
     if (age === "" || isNaN(parseInt(age))) {
         state.familyMembers[index].age = "";
@@ -4350,39 +4333,16 @@ function updateFamilyMemberAge(index, age) {
     }
     // Recalculate prices when ages change (fixes stale prices issue)
     recalculateSelectedActivityPrices();
-    
-    // ΑΥΤΟΜΑΤΗ αποθήκευση και ενημέρωση (αντί για το κουμπί)
-    saveState();
-    updateActivitiesTotal();
-    
-    // Ανανέωση τιμών αν είμαστε στο βήμα δραστηριοτήτων
-    if (state.currentStep === 'activities') {
-        setTimeout(() => {
-            setupActivitiesStep();
-        }, 300);
-    }
 }
 
 function addFamilyMember(type) {
     const newMember = {
-        name: '',  // Κενό όνομα
-        age: ''    // ΚΕΝΗ ηλικία  <-- ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΝΕΟ
+        name: type === 'adult' ? 'Νέο Μέλος' : 'Νέο Παιδί',
+        age: type === 'adult' ? 30 : 10
     };
     state.familyMembers.push(newMember);
-    
-    // ΑΥΤΟΜΑΤΗ ενημέρωση
-    recalculateSelectedActivityPrices();
-    saveState();
-    updateActivitiesTotal();
-    
-    // Ανανέωση της σελίδας
-    if (state.currentStep === 'activities') {
-        setTimeout(() => {
-            setupActivitiesStep();
-        }, 100);
-    } else {
-        showStep('activities');
-    }
+    recalculateSelectedActivityPrices(); // Recalculate with new member
+    showStep('activities');
 }
 
 function removeFamilyMember(index) {
