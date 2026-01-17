@@ -4720,7 +4720,7 @@ function calculateSmartCombos() {
             } else {
                 // Διαφορετικά, δείξε μήνυμα
                 alert('ℹ️ Η λειτουργία combo υπολογισμού βρίσκεται υπό ανάπτυξη.\n\nΣύντομα θα ενσωματώσουμε έξυπνα πακέτα για: Disneyland, Merlin Pass, κλπ.');
-                simulateComboCalculation();
+                // simulateComboCalculation(); // Απενεργοποιημένο - χρησιμοποιείται combo-calculator.js
             }
         } catch (error) {
             console.error('❌ Σφάλμα combo υπολογισμού:', error);
@@ -4734,126 +4734,6 @@ function calculateSmartCombos() {
     }, 1500);
 }
 
-// ΠΡΟΣΩΡΙΝΗ ΣΥΝΑΡΤΗΣΗ ΜΕΧΡΙ ΝΑ ΕΝΣΩΜΑΤΩΘΕΙ ΤΟ combo-calculator.js
-function simulateComboCalculation() {
-    if (!state.selectedActivities || state.selectedActivities.length < 2) {
-        alert('ℹ️ Χρειάζονται τουλάχιστον 2 επιλεγμένες δραστηριότητες για combo υπολογισμό.');
-        return;
-    }
-    
-    // Υπολογισμός τρέχοντος κόστους
-    const currentCost = state.selectedActivities.reduce((sum, activity) => sum + (activity.price || 0), 0);
-    
-    // Προσομοίωση έκπτωσης
-    let discount = 0;
-    let comboName = '';
-    
-    if (state.selectedActivities.length >= 3) {
-        discount = currentCost * 0.15; // 15% έκπτωση
-        comboName = '🎁 Πακέτο 3+ Δραστηριοτήτων';
-    } else if (state.selectedActivities.length === 2) {
-        discount = currentCost * 0.10; // 10% έκπτωση
-        comboName = '🤝 Διπλό Πακέτο';
-    }
-    
-    const newCost = currentCost - discount;
-    
-    // Δημιουργία modal με τα αποτελέσματα
-    const modalHTML = `
-        <div style="
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 10000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Roboto', sans-serif;
-        ">
-            <div style="
-                background: white;
-                padding: 30px;
-                border-radius: 15px;
-                max-width: 500px;
-                max-height: 80vh;
-                overflow-y: auto;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            ">
-                <h2 style="color: var(--primary); text-align: center; margin-top: 0;">
-                    🧮 Αποτελέσματα Έξυπνου Combo
-                </h2>
-                
-                <div style="background: #f0f7ff; padding: 20px; border-radius: 10px; margin: 20px 0;">
-                    <h3 style="color: var(--dark); margin-top: 0;">${comboName}</h3>
-                    
-                    <div style="display: flex; justify-content: space-between; margin: 15px 0; padding: 10px; background: white; border-radius: 8px;">
-                        <span><strong>Κανονικό Κόστος:</strong></span>
-                        <span style="color: var(--danger); text-decoration: line-through; font-weight: bold;">
-                            ${currentCost.toFixed(2)}€
-                        </span>
-                    </div>
-                    
-                    <div style="display: flex; justify-content: space-between; margin: 15px 0; padding: 10px; background: white; border-radius: 8px;">
-                        <span><strong>Έκπτωση:</strong></span>
-                        <span style="color: var(--success); font-weight: bold;">
-                            -${discount.toFixed(2)}€
-                        </span>
-                    </div>
-                    
-                    <div style="display: flex; justify-content: space-between; margin: 15px 0; padding: 15px; background: linear-gradient(135deg, var(--primary), #4F46E5); color: white; border-radius: 8px;">
-                        <span><strong>Νέο Κόστος:</strong></span>
-                        <span style="font-size: 24px; font-weight: bold;">
-                            ${newCost.toFixed(2)}€
-                        </span>
-                    </div>
-                </div>
-                
-                <div style="margin-top: 20px;">
-                    <p style="color: var(--gray); font-size: 14px;">
-                        <i class="fas fa-info-circle"></i>
-                        <strong>Συμβουλή:</strong> Για περισσότερες επιλογές combos, επιλέξτε δραστηριότητες από την ίδια εταιρεία ή πόλη.
-                    </p>
-                </div>
-                
-                <div style="text-align: center; margin-top: 30px;">
-                    <button onclick="applyComboDiscount(${discount})" style="
-                        padding: 12px 30px;
-                        background: var(--primary);
-                        color: white;
-                        border: none;
-                        border-radius: 8px;
-                        font-size: 16px;
-                        font-weight: bold;
-                        cursor: pointer;
-                        margin-right: 10px;
-                    ">
-                        ✅ Εφαρμογή Έκπτωσης
-                    </button>
-                    
-                    <button onclick="this.parentElement.parentElement.parentElement.remove()" style="
-                        padding: 12px 30px;
-                        background: var(--light);
-                        color: var(--dark);
-                        border: 1px solid var(--border);
-                        border-radius: 8px;
-                        font-size: 16px;
-                        cursor: pointer;
-                    ">
-                        Κλείσιμο
-                    </button>
-                </div>
-            </div>
-        </div>
-    `;
-    
-    // Προσθήκη modal στο DOM
-    const modalDiv = document.createElement('div');
-    modalDiv.innerHTML = modalHTML;
-    document.body.appendChild(modalDiv);
-}
 
 // ΣΥΝΑΡΤΗΣΗ ΓΙΑ ΕΦΑΡΜΟΓΗ ΕΚΠΤΩΣΗΣ
 function applyComboDiscount(discount) {
