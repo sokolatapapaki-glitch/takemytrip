@@ -910,7 +910,7 @@ function loadStepContent(stepName) {
     stepContent.innerHTML = getActivitiesStepHTML();
     setupActivitiesStep();
     break;
-      case 'map':
+            case 'map':
     stepContent.innerHTML = getMapStepHTML();
     
     // ΧΡΗΣΗ 100ms για να φορτωθεί το DOM πρώτα
@@ -935,14 +935,13 @@ function loadStepContent(stepName) {
             
             // Μικρή καθυστέρηση για να φορτώσει το DOM
             setTimeout(() => {
-                console.log('🏗️ [DEBUG] Δημιουργία κάλπων...');
+                console.log('🏗️ [DEBUG] Δημιουργία κάλπες...');
                 
                 // 🔴 ΚΑΙΝΟΥΡΓΙΑ 1: Ενημέρωση dropdown πρώτα
                 updateDaysDropdownFromProgram();
                 
                 // 🔴 ΚΑΙΝΟΥΡΓΙΑ 2: Δημιούργησε τις κάλπες
                 renderProgramDays();
-                renderAvailableActivities();
                 
                 console.log('✅ [DEBUG] Κάλπες δημιουργήθηκαν:', userProgram);
                 
@@ -972,19 +971,27 @@ function loadStepContent(stepName) {
         
                
     }, 100);
-     // 🔴 ΑΛΛΑΓΗ 4: ΑΥΤΟΜΑΤΗ ΦΟΡΤΩΣΗ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ ΣΤΟΝ ΧΑΡΤΗ (ΜΟΝΟ ΓΙΑ ΑΡΧΙΚΗ ΕΜΦΑΝΙΣΗ)
-setTimeout(() => {
-    if (state.selectedActivities && state.selectedActivities.length > 0) {
-        console.log('📍 Αυτόματη φόρτωση δραστηριοτήτων στον χάρτη...');
-        
-        // ΜΟΝΟ αν ΔΕΝ υπάρχει αποθηκευμένο πρόγραμμα
-        if (!state.userProgram || state.userProgram.days.length === 0) {
-            showActivityMap();
-        } else {
-            console.log('⚠️ Έχει ήδη πρόγραμμα, παραλείπεται αυτόματη φόρτωση');
+    
+    // 🔴 ΑΛΛΑΓΗ 4: ΑΥΤΟΜΑΤΗ ΦΟΡΤΩΣΗ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ ΣΤΟΝ ΧΑΡΤΗ (ΜΟΝΟ ΓΙΑ ΑΡΧΙΚΗ ΕΜΦΑΝΙΣΗ)
+    setTimeout(() => {
+        if (state.selectedActivities && state.selectedActivities.length > 0) {
+            console.log('📍 Αυτόματη φόρτωση δραστηριοτήτων στον χάρτη...');
+            
+            // ΜΟΝΟ αν ΔΕΝ υπάρχει αποθηκευμένο πρόγραμμα
+            if (!state.userProgram || state.userProgram.days.length === 0) {
+                showActivityMap();
+            } else {
+                console.log('⚠️ Έχει ήδη πρόγραμμα, παραλείπεται αυτόματη φόρτωση');
+            }
         }
-    }
-}, 1500);       
+    }, 1500);
+    
+    // 🔴 ΑΛΛΑΓΗ 9: ΕΜΦΑΝΙΣΗ ΔΙΑΘΕΣΙΜΩΝ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ ΜΕ ΚΑΘΥΣΤΕΡΗΣΗ
+    setTimeout(() => {
+        console.log('📋 Εμφάνιση διαθέσιμων δραστηριοτήτων με καθυστέρηση 2000ms');
+        renderAvailableActivities();
+    }, 2000);
+    
     break;
     } // Τέλος του switch
     
@@ -6646,6 +6653,9 @@ function renderDayActivities(activities, day) {
 
 // 4. Εμφάνιση διαθέσιμων δραστηριοτήτων
 function renderAvailableActivities() {
+    console.log('🔴 renderAvailableActivities ΚΑΛΕΙΤΑΙ');
+    console.log('🔴 Container exists:', !!document.getElementById('program-activities-list'));
+    console.log('🔴 Selected activities:', state.selectedActivities?.length);
     const container = document.getElementById('program-activities-list');
     if (!container || !state.selectedActivities) return;
     
