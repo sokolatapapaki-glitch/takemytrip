@@ -2917,8 +2917,9 @@ html += `
         console.log('💾 Αποθηκεύτηκαν', state.currentCityActivities.length, 'δραστηριότητες για το πρόγραμμα');
                saveState();
 } catch (error) {
-    console.error('❌ Σφάλμα φόρτωσης:', error);
-}
+        console.error('❌ Σφάλμα φόρτωσης:', error);
+    }
+} // <--- ΑΥΤΗ Η ΑΓΚΥΛΗ ΕΛΕΙΠΕ για να κλείσει η setupActivitiesStep
 
 
         
