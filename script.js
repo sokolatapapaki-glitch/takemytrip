@@ -6810,6 +6810,16 @@ function renderAvailableActivities() {
     const container = document.getElementById('program-activities-list');
     if (!container || !state.selectedActivities) return;
     
+    // 🔴 ΑΛΛΑΓΗ 9: ΕΜΦΑΝΙΣΗ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ ΚΑΙ ΧΩΡΙΣ ΕΠΙΛΟΓΗ ΗΜΕΡΩΝ
+    // Αν δεν υπάρχει userProgram ή μέρες, δημιούργησε προσωρινά
+    if (!userProgram || !userProgram.days || userProgram.days.length === 0) {
+        userProgram = {
+            days: [],
+            totalDays: 0,
+            selectedDay: 1
+        };
+    }
+    
     // Βρες όλες τις δραστηριότητες που έχουν ήδη τοποθετηθεί
     const placedActivities = new Set();
     userProgram.days.forEach(dayActivities => {
