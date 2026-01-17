@@ -452,31 +452,7 @@ function cleanupMapState() {
 
     console.log('🧹 Map state cleaned up');
 }
-// ==================== MAIN INITIALIZATION FUNCTION ====================
-function initApp() {
-    console.log('🚀 Εκκίνηση εφαρμογής...');
-    
-    // 1. Φόρτωση αποθηκευμένων δεδομένων
-    loadSavedData();
-    
-    // 2. Ρύθμιση mobile navigation
-    setupMobileNavigation();
-    
-    // 3. Ρύθμιση navigation για βήματα
-    setupStepNavigation();
-    
-    // 4. Ρύθμιση event listeners
-    setupEventListeners();
-    
-    // 5. Fix για κουμπιά προορισμού
-    fixDestinationButtons();
-    
-    // 6. Εμφάνιση του σωστού βήματος
-    setTimeout(() => {
-        showStep(state.currentStep);
-        console.log('✅ Εφαρμογή αρχικοποιήθηκε');
-    }, 100);
-}
+
 
 // ==================== INITIALIZATION ====================
 document.addEventListener('DOMContentLoaded', function() {
@@ -2939,36 +2915,7 @@ async function setupActivitiesStep() {
         `;
     }
 }
-    // ==================== HELPER FUNCTIONS ====================
-
-    // Helper: Check if activity is free for all ages
-    function isActivityFreeForAll(prices) {
-        return Object.values(prices).every(p => p === 0);
-    }
-
-    // Helper: Get free age range text
-    function getFreeAgeRange(prices) {
-        const freeAges = Object.entries(prices)
-            .filter(([age, price]) => price === 0 && age !== 'adult')
-            .map(([age]) => parseInt(age))
-            .filter(age => !isNaN(age));
-
-        if (freeAges.length === 0) return null;
-
-        const maxFreeAge = Math.max(...freeAges);
-        return `ΔΩΡΕΑΝ ΓΙΑ ΚΑΤΩ ΤΩΝ ${maxFreeAge + 1} ΕΤΩΝ`;
-    }
-
-    // Helper: Categorize activity for sorting (returns priority number)
-    function categorizeActivity(activity) {
-        const isPlayground = activity.tags?.includes('playground') || activity.activityType === 'playground';
-        const isMuseum = activity.category === 'museum';
-
-        if (activity.top) return 1;      // Top activities first
-        if (isMuseum) return 2;          // Museums second
-        if (isPlayground) return 5;      // Playgrounds fourth
-        return 3;                        // Other activities third
-    }
+   
 
    
 
