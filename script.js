@@ -4,9 +4,8 @@ const state = {
     selectedDestinationId: null,
     selectedDays: 0,
     familyMembers: [
-        { name: "Ενήλικας 1", age: "" },
-        { name: "Ενήλικας 2", age: "" }
-    ],
+    { name: "", age: "" }  // ΜΟΝΟ 1 ΚΕΝΟ ΜΕΛΟΣ
+],
     currentStep: 'destination',
     currentCityActivities: [],
     customPoints: JSON.parse(localStorage.getItem('travel_custom_points')) || [],
@@ -272,14 +271,19 @@ const MarkerCache = {
 // ==================== STATE VALIDATOR ====================
 const StateValidator = {
     validateFamilyMember(member) {
-        if (!member || typeof member !== 'object') {
-            return false;
-        }
+    if (!member || typeof member !== 'object') {
+        return false;
+    }
 
-        // Name must be a string
-        if (typeof member.name !== 'string' || member.name.trim() === '') {
-            return false;
-        }
+    // Name can be empty now - we removed the name field
+    if (typeof member.name !== 'string') {
+        return false;
+    }
+    
+    // Age can be empty string (user hasn't set it yet)
+    if (member.age === '' || member.age === null || member.age === undefined) {
+        return true; // VALID - empty age is allowed
+    }
 
         // Age can be empty string or valid number
         if (member.age === '' || member.age === null || member.age === undefined) {
@@ -1455,7 +1459,8 @@ function getActivitiesStepHTML() {
         <div class="card">
             <h1 class="card-title"><i class="fas fa-ticket-alt"></i> Οικογενειακές Δραστηριότητες</h1>
             <p class="card-subtitle">${state.selectedDestination ? 'Αφού ορίσετε τα μέλη της οικογένειας, επιλέξτε δραστηριότητες για: ' + state.selectedDestination : 'Πρώτα επιλέξτε προορισμό'}</p>
-            
+           
+    <div class="required-notice" style="grid-column: 1/-1; background: linear-gradient(135deg, #FFF3CD 0%, #FFF8E1 100%); border: 2px solid #F59E0B; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);">
             ${!state.selectedDestination ? `
                 <div class="alert alert-warning">
                     <i class="fas fa-exclamation-triangle"></i>
@@ -1493,12 +1498,29 @@ function getActivitiesStepHTML() {
         `).join('')}
     </div>
     <!-- Κουμπιά Δράσης -->
-<div class="family-actions">
-    <div class="family-add-buttons">
-        <button class="btn btn-outline" onclick="addFamilyMember('person')"  // ή απλά "addFamilyMember()">
-            <i class="fas fa-plus"></i> Προσθήκη Ατόμου
-        </button>
-    </div>
+<div class="family-add-buttons" style="
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+">
+    <button class="btn btn-outline" onclick="addFamilyMember('person')" style="
+        padding: 8px 16px;
+        font-size: 14px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: #4F46E5;
+        color: white;
+        border: none;
+        width: auto;
+        min-width: 140px;
+        justify-content: center;
+    ">
+        <i class="fas fa-plus-circle"></i>
+        <span>Προσθήκη Ατόμου</span>
+    </button>
+</div>
 </div>
   
               <div style="margin: 20px 0; padding: 12px; background: linear-gradient(to bottom, #f0f9ff, #ffffff); border-radius: 10px; border: 2px solid #E0F2FE; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
@@ -2654,8 +2676,7 @@ async function setupActivitiesStep() {
     }
 
     // ==================== REQUIRED USER NOTICE ====================
-    html += `
-        <div class="required-notice" style="grid-column: 1/-1; background: linear-gradient(135deg, #FFF3CD 0%, #FFF8E1 100%); border: 2px solid #F59E0B; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);">
+    
             <div style="display: flex; align-items: flex-start; gap: 15px;">
                 <div style="font-size: 32px; flex-shrink: 0;">⚠️</div>
                 <div style="flex: 1;">
