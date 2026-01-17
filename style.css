@@ -2352,3 +2352,91 @@ select:valid {
         font-size: 11px !important;
     }
 }
+/* 🔴 ΝΕΑ CSS ΓΙΑ CHECKBOX ΚΑΙ ΤΙΚ */
+.activity-selector {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 2;
+}
+
+.activity-checkbox {
+    display: none;
+}
+
+.checkbox-label {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #4F46E5;
+    border-radius: 4px;
+    background: white;
+    display: block;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.checkbox-label:hover {
+    background: #f0f0f0;
+}
+
+.checkbox-label:after {
+    content: '';
+    position: absolute;
+    display: none;
+    left: 7px;
+    top: 3px;
+    width: 6px;
+    height: 12px;
+    border: solid #4F46E5;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.activity-checkbox:checked + .checkbox-label {
+    background: #4F46E5;
+    border-color: #4F46E5;
+}
+
+.activity-checkbox:checked + .checkbox-label:after {
+    display: block;
+    border-color: white;
+}
+
+.activity-star {
+    font-size: 24px;
+    color: #F59E0B;
+    margin-left: auto;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.activity-card.selected .activity-star {
+    opacity: 1;
+}
+
+.tik-indicator {
+    text-align: center;
+    margin-top: 15px;
+    animation: fadeIn 0.5s;
+}
+
+.tik-box {
+    display: inline-block;
+    background: #10B981;
+    color: white;
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    box-shadow: 0 3px 8px rgba(16, 185, 129, 0.3);
+}
+
+.tik-box i {
+    margin-right: 5px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
