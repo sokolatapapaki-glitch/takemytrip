@@ -2915,10 +2915,12 @@ html += `
         console.log('✅ Δραστηριότητες εμφανίστηκαν επιτυχώς');
              // 🔴 ΝΕΟ: ΑΠΟΘΗΚΕΥΣΗ ΤΩΝ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ ΓΙΑ ΤΟ ΒΗΜΑ 5
         console.log('💾 Αποθηκεύτηκαν', state.currentCityActivities.length, 'δραστηριότητες για το πρόγραμμα');
-        saveState(); 
-        }} 
-        } catch (error) {
-        console.error('❌ Σφάλμα φόρτωσης:', error);
+                saveState(); 
+    }
+} catch (error) {
+    console.error('❌ Σφάλμα φόρτωσης:', error);
+}
+
         
         activitiesList.innerHTML = `
             <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
