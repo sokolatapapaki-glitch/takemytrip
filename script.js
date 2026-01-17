@@ -1759,7 +1759,7 @@ function getMapStepHTML() {
                     </div>
 
                     <!-- List of custom points -->
-                    <div id="custom-points-list" style="max-height: 200px; overflow-y: auto;">
+                                        <div id="custom-points-list" style="max-height: 200px; overflow-y: auto;">
                         ${(state.customPoints || []).length > 0 ? state.customPoints.map((point, index) => `
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: white; border-radius: 6px; margin-bottom: 8px; border-left: 4px solid var(--accent);">
                                 <div>
@@ -1775,8 +1775,7 @@ function getMapStepHTML() {
                                     <i class="fas fa-times"></i>
                                 </button>
                             </div>
-                       `).join('') : ''}
-                                                  `
+                        `).join('') : ''}
                     </div>
                 </div>
 
