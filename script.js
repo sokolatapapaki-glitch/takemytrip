@@ -5263,7 +5263,7 @@ function showGroupedActivitiesOnMap() {
                         <div style="width: 12px; height: 12px; background: ${getGroupColor(i)}; border-radius: 50%; margin-right: 8px;"></div>
                         Ομάδα ${i + 1}: <strong>${g.count} δραστηριότητες</strong>
                     </div>`
-                ).join('')}
+               `).join('')` ` : ''}
             </div>
             
             <div style="background: #E0F2FE; padding: 10px; border-radius: 8px;">
