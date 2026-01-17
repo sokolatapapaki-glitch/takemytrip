@@ -1454,7 +1454,7 @@ function getActivitiesStepHTML() {
     return `
         <div class="card">
             <h1 class="card-title"><i class="fas fa-ticket-alt"></i> Οικογενειακές Δραστηριότητες</h1>
-            <p class="card-subtitle">${state.selectedDestination ? 'Επιλέξτε δραστηριότητες για: ' + state.selectedDestination : 'Πρώτα επιλέξτε προορισμό'}</p>
+            <p class="card-subtitle">${state.selectedDestination ? 'Αφού ορίσετε τα μέλη της οικογένειας, επιλέξτε δραστηριότητες για: ' + state.selectedDestination : 'Πρώτα επιλέξτε προορισμό'}</p>
             
             ${!state.selectedDestination ? `
                 <div class="alert alert-warning">
