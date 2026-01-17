@@ -1459,7 +1459,7 @@ function getActivitiesStepHTML() {
         <div class="card">
             <h1 class="card-title"><i class="fas fa-ticket-alt"></i> Οικογενειακές Δραστηριότητες</h1>
             <p class="card-subtitle">${state.selectedDestination ? 'Αφού ορίσετε τα μέλη της οικογένειας, επιλέξτε δραστηριότητες για: ' + state.selectedDestination : 'Πρώτα επιλέξτε προορισμό'}</p>
-       ${!state.selectedDestination ? `     
+              ${!state.selectedDestination ? `     
     <div class="alert alert-warning">
                     <i class="fas fa-exclamation-triangle"></i>
                     Δεν έχετε επιλέξει προορισμό. Παρακαλώ επιστρέψτε στο βήμα 1.
@@ -1467,7 +1467,6 @@ function getActivitiesStepHTML() {
                         <i class="fas fa-arrow-left"></i> Επιστροφή
                     </button>
                 </div>
-            ` : `
             ` : `
 <!-- ΑΠΑΙΤΟΥΜΕΝΕΣ ΕΝΕΡΓΕΙΕΣ -->
 <div class="required-notice" style="grid-column: 1/-1; background: linear-gradient(135deg, #FFF3CD 0%, #FFF8E1 100%); border: 2px solid #F59E0B; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);">
