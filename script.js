@@ -1471,19 +1471,7 @@ function getActivitiesStepHTML() {
     
     <div id="family-members-container" class="family-member-container">
         ${state.familyMembers.map((member, index) => `
-            <div class="family-member">
-                <!-- Πρώτη γραμμή: Όνομα και Εικονίδιο -->
-                <div class="family-member-row">
-                    <div class="family-member-icon">
-                        ${index === 0 ? '👨' : index === 1 ? '👩' : '🧒'}
-                    </div>
-                    <input type="text" 
-                           class="form-control family-input" 
-                           value="${member.name}" 
-                           onchange="updateFamilyMemberName(${index}, this.value)"
-                           placeholder="Όνομα">
-                </div>
-                
+                            
                 <!-- Δεύτερη γραμμή: Ηλικία και Κουμπί Διαγραφής -->
                 <div class="family-member-row">
                     <div class="family-age-container">
@@ -1504,22 +1492,15 @@ function getActivitiesStepHTML() {
             </div>
         `).join('')}
     </div>
-    
     <!-- Κουμπιά Δράσης -->
-    <div class="family-actions">
-        <div class="family-add-buttons">
-            <button class="btn btn-outline" onclick="addFamilyMember('adult')">
-                <i class="fas fa-plus"></i> Προσθήκη Ενήλικα
-            </button>
-            <button class="btn btn-outline" onclick="addFamilyMember('child')">
-                <i class="fas fa-plus"></i> Προσθήκη Παιδιού
-            </button>
-        </div>
-        <button class="btn btn-primary family-update-btn" onclick="updateFamilyMembers()">
-            <i class="fas fa-save"></i> Ενημέρωση Οικογένειας
+<div class="family-actions">
+    <div class="family-add-buttons">
+        <button class="btn btn-outline" onclick="addFamilyMember('person')"  // ή απλά "addFamilyMember()">
+            <i class="fas fa-plus"></i> Προσθήκη Ατόμου
         </button>
     </div>
 </div>
+  
               <div style="margin: 20px 0; padding: 12px; background: linear-gradient(to bottom, #f0f9ff, #ffffff); border-radius: 10px; border: 2px solid #E0F2FE; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
     
     <!-- ΚΕΦΑΛΙ -->
@@ -4324,7 +4305,6 @@ function getActivityEmoji(category) {
 function updateFamilyMemberName(index, name) {
     state.familyMembers[index].name = name;
 }
-
 function updateFamilyMemberAge(index, age) {
     if (age === "" || isNaN(parseInt(age))) {
         state.familyMembers[index].age = "";
@@ -4333,16 +4313,39 @@ function updateFamilyMemberAge(index, age) {
     }
     // Recalculate prices when ages change (fixes stale prices issue)
     recalculateSelectedActivityPrices();
+    
+    // ΑΥΤΟΜΑΤΗ αποθήκευση και ενημέρωση (αντί για το κουμπί)
+    saveState();
+    updateActivitiesTotal();
+    
+    // Ανανέωση τιμών αν είμαστε στο βήμα δραστηριοτήτων
+    if (state.currentStep === 'activities') {
+        setTimeout(() => {
+            setupActivitiesStep();
+        }, 300);
+    }
 }
 
 function addFamilyMember(type) {
     const newMember = {
-        name: type === 'adult' ? 'Νέο Μέλος' : 'Νέο Παιδί',
-        age: type === 'adult' ? 30 : 10
+        name: '',  // Κενό όνομα
+        age: ''    // ΚΕΝΗ ηλικία  <-- ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΝΕΟ
     };
     state.familyMembers.push(newMember);
-    recalculateSelectedActivityPrices(); // Recalculate with new member
-    showStep('activities');
+    
+    // ΑΥΤΟΜΑΤΗ ενημέρωση
+    recalculateSelectedActivityPrices();
+    saveState();
+    updateActivitiesTotal();
+    
+    // Ανανέωση της σελίδας
+    if (state.currentStep === 'activities') {
+        setTimeout(() => {
+            setupActivitiesStep();
+        }, 100);
+    } else {
+        showStep('activities');
+    }
 }
 
 function removeFamilyMember(index) {
