@@ -452,7 +452,31 @@ function cleanupMapState() {
 
     console.log('🧹 Map state cleaned up');
 }
-
+// ==================== MAIN INITIALIZATION FUNCTION ====================
+function initApp() {
+    console.log('🚀 Εκκίνηση εφαρμογής...');
+    
+    // 1. Φόρτωση αποθηκευμένων δεδομένων
+    loadSavedData();
+    
+    // 2. Ρύθμιση mobile navigation
+    setupMobileNavigation();
+    
+    // 3. Ρύθμιση navigation για βήματα
+    setupStepNavigation();
+    
+    // 4. Ρύθμιση event listeners
+    setupEventListeners();
+    
+    // 5. Fix για κουμπιά προορισμού
+    fixDestinationButtons();
+    
+    // 6. Εμφάνιση του σωστού βήματος
+    setTimeout(() => {
+        showStep(state.currentStep);
+        console.log('✅ Εφαρμογή αρχικοποιήθηκε');
+    }, 100);
+}
 
 // ==================== INITIALIZATION ====================
 document.addEventListener('DOMContentLoaded', function() {
@@ -2576,7 +2600,7 @@ async function setupActivitiesStep() {
             <div class="loading">
                 <i class="fas fa-ticket-alt fa-spin fa-3x" style="color: var(--primary); margin-bottom: 20px;"></i>
                 <h3 style="color: var(--dark); margin-bottom: 10px;">Φόρτωση Δραστηριοτήτων</h3>
-                <p style="color: var(--gray);">Φόρτωση δραστηριότητες για ${state.selectedDestination}...</p>
+                <p style="color: var(--gray);">Φόρτωση δραστηριοτήτων για ${state.selectedDestination}...</p>
                 <p style="font-size: 14px; color: #666; margin-top: 10px;">
                     Αναζήτηση: <code>data/${state.selectedDestinationId}.json</code>
                 </p>
@@ -2739,210 +2763,129 @@ async function setupActivitiesStep() {
 
         html += `
             <div class="activity-card ${isSelected ? 'selected' : ''} ${activity.top ? 'top-activity' : ''}"
+                 onclick="toggleActivitySelection(${activity.id})"
                  data-activity-id="${activity.id}">
 
-                <!-- 🔴 ΝΕΟ: CHECKBOX ΕΠΙΛΟΓΗΣ -->
-                <div class="activity-selector">
-                    <input type="checkbox" 
-                           id="activity-${activity.id}" 
-                           ${isSelected ? 'checked' : ''}
-                           onchange="toggleActivitySelection(${activity.id})"
-                           class="activity-checkbox">
-                    <label for="activity-${activity.id}" class="checkbox-label"></label>
+            <div class="activity-header">
+                <div class="activity-emoji">${getActivityEmoji(activity.category)}</div>
+                <div class="activity-title">
+                    ${activity.website ?
+                        `<a href="${activity.website}" target="_blank" rel="noopener" class="activity-link" onclick="event.stopPropagation()">
+                            ${activity.name}
+                            <i class="fas fa-external-link-alt"></i>
+                         </a>`
+                        : activity.name
+                    }
+                    ${activity.top ? '<span class="top-badge"><span class="top-emoji">🔝</span><span class="top-emoji">💯</span></span>' : ''}
+                    ${cityPassEligible && cityData.cityPass ? (cityData.cityPass.url ?
+                        `<a href="${cityData.cityPass.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="city-pass-badge" style="text-decoration: none;">🎫 Pass</a>` :
+                        '<span class="city-pass-badge">🎫 Pass</span>') : ''}
                 </div>
+                <div class="activity-star">${isSelected ? '⭐' : '☆'}</div>
+            </div>
 
-                <div class="activity-header">
-                    <div class="activity-emoji">${getActivityEmoji(activity.category)}</div>
-                    <div class="activity-title">
-                        ${activity.website ?
-                            `<a href="${activity.website}" target="_blank" rel="noopener" class="activity-link" onclick="event.stopPropagation()">
-                                ${activity.name}
-                                <i class="fas fa-external-link-alt"></i>
-                             </a>`
-                            : activity.name
-                        }
-                        ${activity.top ? '<span class="top-badge"><span class="top-emoji">🔝</span><span class="top-emoji">💯</span></span>' : ''}
-                        ${cityPassEligible && cityData.cityPass ? (cityData.cityPass.url ?
-                            `<a href="${cityData.cityPass.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="city-pass-badge" style="text-decoration: none;">🎫 Pass</a>` :
-                            '<span class="city-pass-badge">🎫 Pass</span>') : ''}
+            <!-- FREE PRICE LABEL (Horizontal) -->
+            ${!isPlayground && (isFreeForAll || freeAgeRange) ? `
+                <div class="free-price-label ${freeAgeRange ? 'free-price-label-conditional' : ''}">
+                    ${isFreeForAll ? 'ΔΩΡΕΑΝ' : freeAgeRange}
+                </div>
+            ` : ''}
+
+            <!-- PLAYGROUND LABEL -->
+            ${isPlayground ? `
+                <div class="playground-label">
+                    <i class="fas fa-child"></i> ΠΑΙΔΙΚΗ ΧΑΡΑ
+                </div>
+            ` : ''}
+
+            <div class="activity-description">
+                ${activity.description || 'Δραστηριότητα για οικογένειες'}
+            </div>
+
+            <div style="font-size: 12px; color: var(--gray); margin: 10px 0;">
+                <i class="fas fa-clock"></i> ${activity.duration_hours || '?'} ώρες
+                <span style="margin-left: 15px;">
+                    <i class="fas fa-tag"></i> ${activity.category || 'Γενική'}
+                </span>
+            </div>
+
+            <!-- RESTAURANT/CAFE RECOMMENDATION -->
+            ${activity.restaurant ? `
+                <div class="restaurant-recommendation">
+                    <div class="restaurant-header">
+                        <i class="fas fa-utensils"></i>
+                        <span class="restaurant-title">ΚΟΝΤΙΝΟ ${activity.restaurantType === 'cafe' ? 'ΚΑΦΕ' : 'ΕΣΤΙΑΤΟΡΙΟ'}</span>
                     </div>
-                    <div class="activity-star">${isSelected ? '⭐' : ''}</div>
-                </div>
-
-                <!-- FREE PRICE LABEL (Horizontal) -->
-                ${!isPlayground && (isFreeForAll || freeAgeRange) ? `
-                    <div class="free-price-label ${freeAgeRange ? 'free-price-label-conditional' : ''}">
-                        ${isFreeForAll ? 'ΔΩΡΕΑΝ' : freeAgeRange}
+                    <div class="restaurant-content">
+                        <p>${activity.restaurant.replace(/<a /g, '<a target="_blank" rel="noopener" ')}</p>
+                        <small class="restaurant-tip">
+                            <i class="fas fa-walking"></i>
+                            ${activity.restaurantType === 'cafe' ? 'καφέ' : 'εστιατόριο'}${activity.restaurantDistance !== undefined && activity.restaurantDistance !== null ? ` / ${activity.restaurantDistance === 0 ? 'εντός του ίδιου χώρου' : `${activity.restaurantDistance} λεπτά με τα πόδια`}` : ''}
+                        </small>
                     </div>
-                ` : ''}
+                </div>
+            ` : ''}
 
-                <!-- PLAYGROUND LABEL -->
-                ${isPlayground ? `
-                    <div class="playground-label">
-                        <i class="fas fa-child"></i> ΠΑΙΔΙΚΗ ΧΑΡΑ
-                    </div>
-                ` : ''}
-
-                <div class="activity-description">
-                    ${activity.description || 'Δραστηριότητα για οικογένειες'}
+            <!-- ΤΙΜΕΣ -->
+            ${state.familyMembers.length > 0 && state.familyMembers.every(m => m.age !== undefined && m.age !== null && m.age !== '') ? `
+            <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin: 10px 0;">
+                <div style="font-size: 12px; color: var(--gray); margin-bottom: 8px;">
+                    <i class="fas fa-money-bill-wave"></i>
+                    ${getPriceInfo(activity.prices)}
                 </div>
 
-                <div style="font-size: 12px; color: var(--gray); margin: 10px 0;">
-                    <i class="fas fa-clock"></i> ${activity.duration_hours || '?'} ώρες
-                    <span style="margin-left: 15px;">
-                        <i class="fas fa-tag"></i> ${activity.category || 'Γενική'}
-                    </span>
-                </div>
+                <!-- ΤΙΜΕΣ ΓΙΑ ΚΑΘΕ ΜΕΛΟΣ ΤΗΣ ΟΙΚΟΓΕΝΕΙΑΣ -->
+                ${state.familyMembers.map(member => {
+                    const age = member.age;
+                    let price = '?';
 
-                <!-- RESTAURANT/CAFE RECOMMENDATION -->
-                ${activity.restaurant ? `
-                    <div class="restaurant-recommendation">
-                        <div class="restaurant-header">
-                            <i class="fas fa-utensils"></i>
-                            <span class="restaurant-title">ΚΟΝΤΙΝΟ ${activity.restaurantType === 'cafe' ? 'ΚΑΦΕ' : 'ΕΣΤΙΑΤΟΡΙΟ'}</span>
-                        </div>
-                        <div class="restaurant-content">
-                            <p>${activity.restaurant.replace(/<a /g, '<a target="_blank" rel="noopener" ')}</p>
-                            <small class="restaurant-tip">
-                                <i class="fas fa-walking"></i>
-                                ${activity.restaurantType === 'cafe' ? 'καφέ' : 'εστιατόριο'}${activity.restaurantDistance !== undefined && activity.restaurantDistance !== null ? ` / ${activity.restaurantDistance === 0 ? 'εντός του ίδιου χώρου' : `${activity.restaurantDistance} λεπτά με τα πόδια`}` : ''}
-                            </small>
-                        </div>
-                    </div>
-                ` : ''}
-
-                <!-- ΤΙΜΕΣ -->
-                ${state.familyMembers.length > 0 && state.familyMembers.every(m => m.age !== undefined && m.age !== null && m.age !== '') ? `
-                <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin: 10px 0;">
-                    <div style="font-size: 12px; color: var(--gray); margin-bottom: 8px;">
-                        <i class="fas fa-money-bill-wave"></i>
-                        ${getPriceInfo(activity.prices)}
-                    </div>
-
-                    <!-- ΤΙΜΕΣ ΓΙΑ ΚΑΘΕ ΜΕΛΟΣ ΤΗΣ ΟΙΚΟΓΕΝΕΙΑΣ -->
-                    ${state.familyMembers.map(member => {
-                        const age = member.age;
-                        let price = '?';
-
-                        // Βρες τιμή για την συγκεκριμένη ηλικία
-                        if (activity.prices[age] !== undefined) {
-                            price = activity.prices[age] === 0 ? 'ΔΩΡΕΑΝ' : Number(activity.prices[age]).toFixed(2) + '€';
+                    // Βρες τιμή για την συγκεκριμένη ηλικία
+                    if (activity.prices[age] !== undefined) {
+                        price = activity.prices[age] === 0 ? 'ΔΩΡΕΑΝ' : Number(activity.prices[age]).toFixed(2) + '€';
+                    }
+                    // Για ενήλικες, χρησιμοποίησε 'adult' αν υπάρχει
+                    else if (age >= 16 && activity.prices.adult !== undefined) {
+                        price = Number(activity.prices.adult).toFixed(2) + '€';
+                    }
+                    // Για παιδιά 5-15, ψάξε για κοινές ηλικίες
+                    else if (age >= 5 && age <= 15) {
+                        if (activity.prices['10'] !== undefined) {
+                            price = Number(activity.prices['10']).toFixed(2) + '€';
+                        } else if (activity.prices['5'] !== undefined) {
+                            price = Number(activity.prices['5']).toFixed(2) + '€';
                         }
-                        // Για ενήλικες, χρησιμοποίησε 'adult' αν υπάρχει
-                        else if (age >= 16 && activity.prices.adult !== undefined) {
-                            price = Number(activity.prices.adult).toFixed(2) + '€';
-                        }
-                        // Για παιδιά 5-15, ψάξε για κοινές ηλικίες
-                        else if (age >= 5 && age <= 15) {
-                            if (activity.prices['10'] !== undefined) {
-                                price = Number(activity.prices['10']).toFixed(2) + '€';
-                            } else if (activity.prices['5'] !== undefined) {
-                                price = Number(activity.prices['5']).toFixed(2) + '€';
-                            }
-                        }
-                        // Για βρέφη 0-4, χρησιμοποίησε '0'
-                        else if (age <= 4 && activity.prices['0'] !== undefined) {
-                            price = activity.prices['0'] === 0 ? 'ΔΩΡΕΑΝ' : Number(activity.prices['0']).toFixed(2) + '€';
-                        }
+                    }
+                    // Για βρέφη 0-4, χρησιμοποίησε '0'
+                    else if (age <= 4 && activity.prices['0'] !== undefined) {
+                        price = activity.prices['0'] === 0 ? 'ΔΩΡΕΑΝ' : Number(activity.prices['0']).toFixed(2) + '€';
+                    }
 
-                        return `
-                        <div style="display: flex; justify-content: space-between; font-size: 13px; margin-top: 4px; padding: 2px 0;">
-                            <span>${member.name} (${age}):</span>
-                            <span><strong>${price}</strong></span>
-                        </div>`;
-                    }).join('')}
+                    return `
+                    <div style="display: flex; justify-content: space-between; font-size: 13px; margin-top: 4px; padding: 2px 0;">
+                        <span>${member.name} (${age}):</span>
+                        <span><strong>${price}</strong></span>
+                    </div>`;
+                }).join('')}
 
-                    <!-- ΠΛΗΡΟΦΟΡΙΕΣ ΑΠΟ ΤΟ JSON -->
-                    ${activity.notes && activity.notes.length > 0 ? `
-                        <div style="font-size: 11px; color: #666; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #ddd;">
-                            <i class="fas fa-info-circle"></i>
-                            ${activity.notes.join(' • ')}
-                        </div>
-                    ` : ''}
-                </div>
-
-                <!-- ΣΥΝΟΛΙΚΟ ΚΟΣΤΟΣ ΓΙΑ ΟΙΚΟΓΕΝΕΙΑ -->
-                <div class="activity-total" style="background: var(--primary); color: white; padding: 12px; border-radius: 8px; text-align: center; font-weight: bold; margin-top: 10px;">
-                    <i class="fas fa-users"></i> ${Number(familyCost).toFixed(2)}€ για ${state.familyMembers.length} ${state.familyMembers.length === 1 ? 'άτομο' : 'άτομα'}
-                </div>
-                ` : ''}
-
-                <!-- 🔴 ΝΕΟ: ΤΙΚ INDIKATOR (ΜΟΝΟ ΟΤΑΝ ΕΠΙΛΕΓΜΕΝΟ) -->
-                ${isSelected ? `
-                    <div class="tik-indicator">
-                        <div class="tik-box">
-                            <i class="fas fa-check-circle"></i> ΤΙΚ
-                        </div>
+                <!-- ΠΛΗΡΟΦΟΡΙΕΣ ΑΠΟ ΤΟ JSON -->
+                ${activity.notes && activity.notes.length > 0 ? `
+                    <div style="font-size: 11px; color: #666; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #ddd;">
+                        <i class="fas fa-info-circle"></i>
+                        ${activity.notes.join(' • ')}
                     </div>
                 ` : ''}
             </div>
+
+            <!-- ΣΥΝΟΛΙΚΟ ΚΟΣΤΟΣ ΓΙΑ ΟΙΚΟΓΕΝΕΙΑ -->
+            <div class="activity-total" style="background: var(--primary); color: white; padding: 12px; border-radius: 8px; text-align: center; font-weight: bold; margin-top: 10px;">
+                <i class="fas fa-users"></i> ${Number(familyCost).toFixed(2)}€ για ${state.familyMembers.length} ${state.familyMembers.length === 1 ? 'άτομο' : 'άτομα'}
+            </div>
+            ` : ''}
+        </div>
         `;
     });
         }
         
-        activitiesList.innerHTML = html;
-        
-        // Ενημέρωση συνολικού κόστους
-        updateActivitiesTotal();
-        
-        console.log('✅ Δραστηριότητες εμφανίστηκαν επιτυχώς');
-             // 🔴 ΝΕΟ: ΑΠΟΘΗΚΕΥΣΗ ΤΩΝ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ ΓΙΑ ΤΟ ΒΗΜΑ 5
-        console.log('💾 Αποθηκεύτηκαν', state.currentCityActivities.length, 'δραστηριότητες για το πρόγραμμα');
-        saveState();   
-    } catch (error) {
-        console.error('❌ Σφάλμα φόρτωσης:', error);
-        
-        activitiesList.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
-                <div class="alert alert-danger">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <h4>Σφάλμα φόρτωσης δραστηριοτήτων</h4>
-                    <p>${error.message}</p>
-                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left;">
-                        <strong>Πληροφορίες σφάλματος:</strong><br>
-                        • Αρχείο: <code>data/${state.selectedDestinationId}.json</code><br>
-                        • Προορισμός: ${state.selectedDestination || 'Άγνωστο'}<br>
-                        • ID: ${state.selectedDestinationId}
-                    </div>
-                    <button onclick="setupActivitiesStep()" class="btn btn-primary" style="margin-top: 15px;">
-                        <i class="fas fa-sync-alt"></i> Δοκιμή ξανά
-                    </button>
-                    <button onclick="showStep('destination')" class="btn btn-outline" style="margin-top: 15px; margin-left: 10px;">
-                        <i class="fas fa-arrow-left"></i> Επιστροφή σε Προορισμό
-                    </button>
-                </div>
-            </div>
-        `;
-    }
-}
-   
-
-   
-
-    // ==================== CITY PASS INFO (if available) ====================
-    if (cityData.cityPass) {
-        html += `
-            <div class="city-pass-info card" style="grid-column: 1/-1; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; margin-bottom: 20px;">
-                <div style="display: flex; align-items: center; gap: 15px;">
-                    <i class="fas fa-ticket-alt fa-3x"></i>
-                    <div style="flex: 1;">
-                        <h3 style="margin: 0 0 5px 0; font-size: 20px;">${cityData.cityPass.name}</h3>
-                        <p style="margin: 0; opacity: 0.95; font-size: 14px;">${cityData.cityPass.description}</p>
-                        <p style="margin: 5px 0 0 0; font-weight: bold; font-size: 16px;">
-                            💰 Έως ${cityData.cityPass.discountPercent}% έκπτωση
-                        </p>
-                        ${cityData.cityPass.url ? `
-                            <a href="${cityData.cityPass.url}" target="_blank" rel="noopener"
-                               style="display: inline-block; margin-top: 10px; padding: 8px 16px; background: white; color: #667eea; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px;">
-                                <i class="fas fa-external-link-alt"></i> Περισσότερες Πληροφορίες
-                            </a>
-                        ` : ''}
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-          
         activitiesList.innerHTML = html;
         
         // Ενημέρωση συνολικού κόστους
@@ -4497,7 +4440,7 @@ function calculateSmartCombos() {
             } else {
                 // Διαφορετικά, δείξε μήνυμα
                 alert('ℹ️ Η λειτουργία combo υπολογισμού βρίσκεται υπό ανάπτυξη.\n\nΣύντομα θα ενσωματώσουμε έξυπνα πακέτα για: Disneyland, Merlin Pass, κλπ.');
-                // simulateComboCalculation(); // Απενεργοποιημένο - χρησιμοποιείται combo-calculator.js
+                simulateComboCalculation();
             }
         } catch (error) {
             console.error('❌ Σφάλμα combo υπολογισμού:', error);
@@ -4511,6 +4454,126 @@ function calculateSmartCombos() {
     }, 1500);
 }
 
+// ΠΡΟΣΩΡΙΝΗ ΣΥΝΑΡΤΗΣΗ ΜΕΧΡΙ ΝΑ ΕΝΣΩΜΑΤΩΘΕΙ ΤΟ combo-calculator.js
+function simulateComboCalculation() {
+    if (!state.selectedActivities || state.selectedActivities.length < 2) {
+        alert('ℹ️ Χρειάζονται τουλάχιστον 2 επιλεγμένες δραστηριότητες για combo υπολογισμό.');
+        return;
+    }
+    
+    // Υπολογισμός τρέχοντος κόστους
+    const currentCost = state.selectedActivities.reduce((sum, activity) => sum + (activity.price || 0), 0);
+    
+    // Προσομοίωση έκπτωσης
+    let discount = 0;
+    let comboName = '';
+    
+    if (state.selectedActivities.length >= 3) {
+        discount = currentCost * 0.15; // 15% έκπτωση
+        comboName = '🎁 Πακέτο 3+ Δραστηριοτήτων';
+    } else if (state.selectedActivities.length === 2) {
+        discount = currentCost * 0.10; // 10% έκπτωση
+        comboName = '🤝 Διπλό Πακέτο';
+    }
+    
+    const newCost = currentCost - discount;
+    
+    // Δημιουργία modal με τα αποτελέσματα
+    const modalHTML = `
+        <div style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Roboto', sans-serif;
+        ">
+            <div style="
+                background: white;
+                padding: 30px;
+                border-radius: 15px;
+                max-width: 500px;
+                max-height: 80vh;
+                overflow-y: auto;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            ">
+                <h2 style="color: var(--primary); text-align: center; margin-top: 0;">
+                    🧮 Αποτελέσματα Έξυπνου Combo
+                </h2>
+                
+                <div style="background: #f0f7ff; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                    <h3 style="color: var(--dark); margin-top: 0;">${comboName}</h3>
+                    
+                    <div style="display: flex; justify-content: space-between; margin: 15px 0; padding: 10px; background: white; border-radius: 8px;">
+                        <span><strong>Κανονικό Κόστος:</strong></span>
+                        <span style="color: var(--danger); text-decoration: line-through; font-weight: bold;">
+                            ${currentCost.toFixed(2)}€
+                        </span>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; margin: 15px 0; padding: 10px; background: white; border-radius: 8px;">
+                        <span><strong>Έκπτωση:</strong></span>
+                        <span style="color: var(--success); font-weight: bold;">
+                            -${discount.toFixed(2)}€
+                        </span>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; margin: 15px 0; padding: 15px; background: linear-gradient(135deg, var(--primary), #4F46E5); color: white; border-radius: 8px;">
+                        <span><strong>Νέο Κόστος:</strong></span>
+                        <span style="font-size: 24px; font-weight: bold;">
+                            ${newCost.toFixed(2)}€
+                        </span>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <p style="color: var(--gray); font-size: 14px;">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Συμβουλή:</strong> Για περισσότερες επιλογές combos, επιλέξτε δραστηριότητες από την ίδια εταιρεία ή πόλη.
+                    </p>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <button onclick="applyComboDiscount(${discount})" style="
+                        padding: 12px 30px;
+                        background: var(--primary);
+                        color: white;
+                        border: none;
+                        border-radius: 8px;
+                        font-size: 16px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        margin-right: 10px;
+                    ">
+                        ✅ Εφαρμογή Έκπτωσης
+                    </button>
+                    
+                    <button onclick="this.parentElement.parentElement.parentElement.remove()" style="
+                        padding: 12px 30px;
+                        background: var(--light);
+                        color: var(--dark);
+                        border: 1px solid var(--border);
+                        border-radius: 8px;
+                        font-size: 16px;
+                        cursor: pointer;
+                    ">
+                        Κλείσιμο
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Προσθήκη modal στο DOM
+    const modalDiv = document.createElement('div');
+    modalDiv.innerHTML = modalHTML;
+    document.body.appendChild(modalDiv);
+}
 
 // ΣΥΝΑΡΤΗΣΗ ΓΙΑ ΕΦΑΡΜΟΓΗ ΕΚΠΤΩΣΗΣ
 function applyComboDiscount(discount) {
@@ -5312,7 +5375,7 @@ function createMarkerWithConnectFunction(coords, title, activityData) {
     marker.options.activityData = safeActivityData;
     marker.options.originalTitle = title;
     marker.options.coords = coords;
-    // === ΠΡΟΣΘΕΣΕ ΑΥΤΟ ΕΔΩ (ΜΕΤΑ ΑΠΟ 2 ΚΕΝΕΣ ΓΡΑΜΜΕΣ) ===
+    // ==== ΠΡΟΣΘΕΣΕ ΑΥΤΟ ΕΔΩ (ΜΕΤΑ ΑΠΟ 2 ΚΕΝΕΣ ΓΡΑΜΜΕΣ) ====
 // ΠΡΟΣΘΗΚΗ LABEL ΜΕ ΤΟ ΟΝΟΜΑ
 const label = L.marker(coords, {
     icon: L.divIcon({
@@ -7111,12 +7174,77 @@ window.addActivityToQuickDay = addActivityToQuickDay;
 if (!document.querySelector('#program-spinner-style')) {
     const style = document.createElement('style');
     style.id = 'program-spinner-style';
+    style.textContent = `
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+    `;
     document.head.appendChild(style);
 }
 // 🔵🔵🔵 ΠΡΟΣΘΕΣΕ ΑΥΤΟ ΓΙΑ ΤΟ ΝΕΟ ΠΡΟΓΡΑΜΜΑ 🔵🔵🔵
 if (!document.querySelector('#program-animations')) {
     const style = document.createElement('style');
     style.id = 'program-animations';
+    style.textContent = `
+        @keyframes pulse {
+            0% { 
+                box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4);
+            }
+            70% { 
+                box-shadow: 0 0 0 15px rgba(79, 70, 229, 0);
+            }
+            100% { 
+                box-shadow: 0 0 0 0 rgba(79, 70, 229, 0);
+            }
+        }
+        
+        @keyframes slideDown {
+            from { 
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        #geographic-program-section {
+            display: block !important;
+            animation: slideDown 0.5s ease-out;
+            border: 3px solid #4F46E5;
+            background: linear-gradient(to bottom, #ffffff, #f8faff);
+            margin-top: 30px;
+            border-radius: 15px;
+        }
+        
+        .day-card {
+            transition: all 0.3s ease;
+            animation: slideDown 0.6s ease-out;
+            animation-fill-mode: both;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            border-left: 4px solid #4F46E5;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        
+        .day-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+    `;
     document.head.appendChild(style);
 }
 
