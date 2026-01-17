@@ -2764,7 +2764,14 @@ async function setupActivitiesStep() {
         html += `
             <div class="activity-card ${isSelected ? 'selected' : ''} ${activity.top ? 'top-activity' : ''}"
                  onclick="toggleActivitySelection(${activity.id})"
-                 data-activity-id="${activity.id}">
+                data-activity-id="${activity.id}" style="position: relative;">
+    
+    <!-- CHECKBOX ΠΡΟΣΤΗΚΗ -->
+    <div class="activity-card-checkbox" onclick="event.stopPropagation();">
+        <input type="checkbox" 
+               onclick="handleActivityCheckbox(event, ${activity.id})"
+               ${isSelected ? 'checked' : ''}>
+    </div>
 
             <div class="activity-header">
                 <div class="activity-emoji">${getActivityEmoji(activity.category)}</div>
@@ -7094,7 +7101,27 @@ function resetUserProgram() {
         showToast('🔄 Το πρόγραμμα επαναφέρθηκε', 'info');
     }
 }
-
+// ==================== ACTIVITY CHECKBOX HANDLER ====================
+function handleActivityCheckbox(event, activityId) {
+    event.stopPropagation(); // Σταμάτα την διάδοση του κλικ
+    
+    const checkbox = event.target;
+    const isChecked = checkbox.checked;
+    
+    // Κάνει το ίδιο με το toggleActivitySelection
+    toggleActivitySelection(activityId);
+    
+    // Ενημέρωση του checkbox state (για να μείνει συγχρονισμένο)
+    const activityCard = document.querySelector(`.activity-card[data-activity-id="${activityId}"]`);
+    if (activityCard) {
+        const cardCheckbox = activityCard.querySelector('.activity-card-checkbox input');
+        if (cardCheckbox) {
+            cardCheckbox.checked = isChecked;
+        }
+    }
+    
+    console.log(`✅ Checkbox ${isChecked ? 'επιλέχθηκε' : 'αποεπιλέχθηκε'} για δραστηριότητα: ${activityId}`);
+}
 window.showStep = showStep;
 window.filterDestinations = filterDestinations;
 window.resetFilters = resetFilters;
@@ -7110,8 +7137,6 @@ window.searchBookingHotels = searchBookingHotels;
 window.searchExpediaHotels = searchExpediaHotels;
 window.setupActivitiesStep = setupActivitiesStep;
 window.toggleActivitySelection = toggleActivitySelection;
-
-
 window.reloadMap = reloadMap;
 window.addCustomMapPoint = addCustomMapPoint;
 window.removeCustomPoint = removeCustomPoint;
@@ -7167,7 +7192,7 @@ window.handleProgramDragOver = handleProgramDragOver;
 window.handleProgramDragLeave = handleProgramDragLeave;
 window.handleProgramDrop = handleProgramDrop;
 window.addActivityToQuickDay = addActivityToQuickDay;
-
+window.handleActivityCheckbox = handleActivityCheckbox;
 
 // ==================== CSS ANIMATIONS FOR PROGRAM ====================
 // Προσθήκη CSS animation για το spinner (για το βήμα 5)
