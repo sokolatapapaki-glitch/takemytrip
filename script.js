@@ -3855,8 +3855,7 @@ function removeCustomPoint(index) {
     saveCustomPoints();
 
     // Refresh the map step to update the list
-    renderCurrentStep();
-
+    loadStepContent(); // Αυτό είναι το σωστό όνομα
     showToast(`🗑️ Αφαιρέθηκε: ${removed.name}`, 'success');
 }
 
