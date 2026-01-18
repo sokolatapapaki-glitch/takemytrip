@@ -6,7 +6,7 @@
   "pricing_model": "per_age",
   "cityPass": {
     "name": "I amsterdam City Card",
-    "description": "Free entry to 70+ museums, unlimited public transport, canal cruise, and 25% discounts at restaurants and attractions",
+    "description": "Δωρεάν είσοδος σε περισσότερα από 70 μουσεία, απεριόριστη χρήση δημόσιων συγκοινωνιών, κρουαζιέρα στα κανάλια και 25% έκπτωση σε εστιατόρια και αξιοθέατα",
     "discountPercent": 25,
     "url": "https://www.iamsterdam.com/en/tickets/i-amsterdam-city-card"
   },
@@ -41,7 +41,7 @@
         "lat": 52.3744,
         "lng": 4.9122
       },
-      "restaurant": "<a href='https://maps.google.com/?q=NEMO+Museum+Restaurant+Amsterdam' target='_blank'>NEMO Restaurant</a> - rooftop cafe με θέα",
+      "restaurant": "<a href='https://maps.google.com/?q=NEMO+Museum+Restaurant+Amsterdam' target='_blank'>NEMO Restaurant</a> - rooftop cafe με θέα, εντός του μουσείου",
       "website": "https://www.nemosciencemuseum.nl/",
       "notes": [
         "0-3 ετών: δωρεάν",
@@ -132,7 +132,7 @@
         "lat": 52.3584,
         "lng": 4.8811
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Van+Gogh+Museum+Cafe+Amsterdam' target='_blank'>Van Gogh Museum Cafe</a> - σύγχρονο cafe",
+      "restaurant": "<a href='https://maps.app.goo.gl/cRAUf8u3AfMiy2yS9' target='_blank'>Van Gogh Museum Cafe-Bistro Vincent</a> - cafe και εστιατόριο εντός του μουσείου",
       "website": "https://www.vangoghmuseum.nl/",
       "notes": [
         "0-17 ετών: δωρεάν",
