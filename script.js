@@ -1464,58 +1464,7 @@ function getActivitiesStepHTML() {
                     </button>
                 </div>
             ` : `
-             <!-- Family Members Section -->
-<div class="card" style="background: #f8f9fa; margin-bottom: 30px;">
-    <h3><i class="fas fa-users"></i> Τα Μέλη Της Οικογένειας</h3>
-    
-    <div id="family-members-container" class="family-member-container">
-        ${state.familyMembers.map((member, index) => `
-            <div class="family-member">
-                <!-- Πρώτη γραμμή: Όνομα και Εικονίδιο -->
-                <div class="family-member-row">
-                    <div class="family-member-icon">
-                        ${index === 0 ? '👨' : index === 1 ? '👩' : '🧒'}
-                    </div>
-                    <input type="text" 
-                           class="form-control family-input" 
-                           value="${member.name}" 
-                           onchange="updateFamilyMemberName(${index}, this.value)"
-                           placeholder="Όνομα">
-                </div>
-                
-                <!-- Δεύτερη γραμμή: Ηλικία και Κουμπί Διαγραφής -->
-                <div class="family-member-row">
-                    <div class="family-age-container">
-                        <input type="number" 
-                               class="form-control family-input" 
-                               value="${member.age}" 
-                               min="0" 
-                               max="120" 
-                               placeholder="Ηλικία"
-                               onchange="updateFamilyMemberAge(${index}, this.value)">
-                        <span class="age-label">ετών</span>
-                    </div>
-                    <button class="btn btn-outline family-delete-btn" 
-                            onclick="removeFamilyMember(${index})">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            </div>
-        `).join('')}
-    </div>
-    
-    <!-- Κουμπιά Δράσης -->
-    <div class="family-actions">
-        <div class="family-add-buttons">
-    <button class="btn btn-outline" onclick="addFamilyMember()">
-        <i class="fas fa-user-plus"></i> ΠΡΟΣΘΗΚΗ ΑΤΟΜΟΥ
-    </button>
-</div>
-        <button class="btn btn-primary family-update-btn" onclick="updateFamilyMembers()">
-            <i class="fas fa-save"></i> Ενημέρωση Οικογένειας
-        </button>
-    </div>
-</div>
+
               <div style="margin: 20px 0; padding: 12px; background: linear-gradient(to bottom, #f0f9ff, #ffffff); border-radius: 10px; border: 2px solid #E0F2FE; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
     
     <!-- ΚΕΦΑΛΙ -->
