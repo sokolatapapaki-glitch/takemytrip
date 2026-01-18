@@ -54,6 +54,8 @@ const selectedActivities = (state && state.selectedActivities && state.selectedA
     availableCombos = findViennaCombos(selectedActivities, ageGroups);
 } else if (state.selectedDestination.includes("Βερολίνο")) {
     availableCombos = findBerlinCombos(selectedActivities, ageGroups);
+} else if (state.selectedDestination.includes("Άμστερνταμ")) {
+    availableCombos = findAmsterdamCombos(selectedActivities, ageGroups);
 } else {
     availableCombos = findGenericCombos(selectedActivities, ageGroups);
 }
@@ -329,19 +331,19 @@ function findViennaCombos(selectedActivities, ageGroups) {
 function findBerlinCombos(selectedActivities, ageGroups) {
     console.log("🇩🇪 Αναζήτηση combos για Βερολίνο");
     const combos = [];
-    
+
     // BERLIN WELCOME CARD
-    const berlinAttractions = selectedActivities.filter(act => 
+    const berlinAttractions = selectedActivities.filter(act =>
         act.name.includes("Museum") ||
         act.name.includes("Fernsehturm") ||
         act.name.includes("Checkpoint") ||
         act.name.includes("Reichstag")
     );
-    
+
     if (berlinAttractions.length >= 3) {
         const normalCost = calculateComboRegularCost(berlinAttractions, ageGroups);
         const cardCost = 29;
-        
+
         if (normalCost > cardCost) {
             combos.push({
                 name: "🎫 Berlin WelcomeCard",
@@ -354,7 +356,103 @@ function findBerlinCombos(selectedActivities, ageGroups) {
             });
         }
     }
-    
+
+    return combos;
+}
+
+function findAmsterdamCombos(selectedActivities, ageGroups) {
+    console.log("🌷 Αναζήτηση combos για Άμστερνταμ");
+    const combos = [];
+
+    // Find specific activities
+    const madameTussauds = selectedActivities.find(act =>
+        act.name.toLowerCase().includes("madame tussauds")
+    );
+    const thisIsHolland = selectedActivities.find(act =>
+        act.name.toLowerCase().includes("this is holland")
+    );
+    const canalCruise = selectedActivities.find(act =>
+        act.name.toLowerCase().includes("canal cruise") &&
+        !act.name.toLowerCase().includes("pancake")
+    );
+    const pancakeBoat = selectedActivities.find(act =>
+        act.name.toLowerCase().includes("pancake")
+    );
+
+    // COMBO 1: Madame Tussauds + This is Holland
+    if (madameTussauds && thisIsHolland) {
+        const normalCost = calculateComboRegularCost([madameTussauds, thisIsHolland], ageGroups);
+
+        // Combo pricing: 0-1 free, 2-14: 32€, 15+: 37€
+        const infants = (ageGroups["0-2"] || 0);
+        const children = (ageGroups["3-5"] || 0) + (ageGroups["6-14"] || 0);
+        const teens = (ageGroups["15-19"] || 0);
+        const adults = (ageGroups["18+"] || 0);
+
+        const comboCost = (infants * 0) + (children * 32) + (teens * 37) + (adults * 37);
+
+        if (normalCost > comboCost) {
+            combos.push({
+                name: "🎭 Madame Tussauds + This is Holland Combo",
+                description: "Συνδυασμός κέρινων ομοιωμάτων και 5D πτήση",
+                activities: [madameTussauds.name, thisIsHolland.name],
+                regularPrice: normalCost,
+                comboPrice: comboCost,
+                saving: normalCost - comboCost,
+                note: `💰 Combo: 0-1 ετών δωρεάν, 2-14 ετών: 32€, 15+ ετών: 37€`
+            });
+        }
+    }
+
+    // COMBO 2: Madame Tussauds + Canal Cruise
+    if (madameTussauds && canalCruise) {
+        const normalCost = calculateComboRegularCost([madameTussauds, canalCruise], ageGroups);
+
+        // Combo pricing: 0-1 free, 2-14: 29.5€, 15+: 37€
+        const infants = (ageGroups["0-2"] || 0);
+        const children = (ageGroups["3-5"] || 0) + (ageGroups["6-14"] || 0);
+        const teens = (ageGroups["15-19"] || 0);
+        const adults = (ageGroups["18+"] || 0);
+
+        const comboCost = (infants * 0) + (children * 29.5) + (teens * 37) + (adults * 37);
+
+        if (normalCost > comboCost) {
+            combos.push({
+                name: "🎭 Madame Tussauds + Canal Cruise Combo",
+                description: "Κέρινα ομοιώματα και κρουαζιέρα στα κανάλια",
+                activities: [madameTussauds.name, canalCruise.name],
+                regularPrice: normalCost,
+                comboPrice: comboCost,
+                saving: normalCost - comboCost,
+                note: `💰 Combo: 0-1 ετών δωρεάν, 2-14 ετών: 29.5€, 15+ ετών: 37€`
+            });
+        }
+    }
+
+    // COMBO 3: This is Holland + Pancakes Cruise
+    if (thisIsHolland && pancakeBoat) {
+        const normalCost = calculateComboRegularCost([thisIsHolland, pancakeBoat], ageGroups);
+
+        // Combo pricing: 4-12: 35.5€, 13+: 43.5€ (0-3 not allowed for This is Holland)
+        const children = (ageGroups["3-5"] || 0) + (ageGroups["6-14"] || 0);
+        const teens = (ageGroups["15-19"] || 0);
+        const adults = (ageGroups["18+"] || 0);
+
+        const comboCost = (children * 35.5) + (teens * 43.5) + (adults * 43.5);
+
+        if (normalCost > comboCost && comboCost > 0) {
+            combos.push({
+                name: "🥞 This is Holland + Pancakes Cruise Combo",
+                description: "5D πτήση και κρουαζιέρα με απεριόριστες τηγανίτες",
+                activities: [thisIsHolland.name, pancakeBoat.name],
+                regularPrice: normalCost,
+                comboPrice: comboCost,
+                saving: normalCost - comboCost,
+                note: `💰 Combo: 4-12 ετών: 35.5€, 13+ ετών: 43.5€ (0-3 ετών δεν επιτρέπονται)`
+            });
+        }
+    }
+
     return combos;
 }
 
