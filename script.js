@@ -1609,7 +1609,7 @@ function getActivitiesStepHTML() {
     </button>
     
 </div>
-                
+       }         
                 <!-- Total Cost -->
                 <div class="card" style="background: linear-gradient(135deg, #8B5CF6, #7C3AED); color: white; text-align: center; border: none;">
                     <h3 style="color: white; margin-bottom: 10px;">Συνολικό Κόστος</h3>
@@ -1628,8 +1628,6 @@ function getActivitiesStepHTML() {
     `;
 }
 
-
-// ==================== STEP 5: SUMMARY ====================
 
 // ==================== ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ ΓΙΑ GEOGRAPHIC PROGRAM ====================
 function getFullActivitiesWithLocation() {
