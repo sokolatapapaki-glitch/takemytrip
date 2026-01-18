@@ -4002,8 +4002,11 @@ function showActivityMap() {
         alert('Παρακαλώ πρώτα φορτώστε τον χάρτη');
         return;
     }
-    
+
     console.log('📍 Προσθήκη πινέζων για τις επιλεγμένες δραστηριότητες');
+
+    // Get city coordinates for map centering and fallback locations
+    const cityCoords = getCityCoordinates(state.selectedDestinationId);
 
     // 1. Sync marker cache (remove only markers no longer needed)
     const currentActivityIds = new Set(state.selectedActivities.map(a => a.id));
@@ -6495,7 +6498,7 @@ function addActivityToProgramDay(activityId, day) {
         ...activity,
         activityId: activityId  // <-- ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΚΛΕΙΔΙ!
     };
-    
+
     // Προσθήκη στη νέα μέρα
     userProgram.days[day-1].push(activityWithId);  // <-- ΣΩΣΤΟ!
     
