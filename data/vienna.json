@@ -22,10 +22,26 @@
       "description": "Βασικό εισιτήριο για τα κρατικά/ιδιωτικά διαμερίσματα με audio-guide. Timed entry.",
       "category": "attraction",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
-        "6": 28, "7": 28, "8": 28, "9": 28, "10": 28, "11": 28, "12": 28, "13": 28, "14": 28,
-        "15": 31.5, "16": 31.5, "17": 31.5,
-        "18": 38, "19": 38,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 28,
+        "7": 28,
+        "8": 28,
+        "9": 28,
+        "10": 28,
+        "11": 28,
+        "12": 28,
+        "13": 28,
+        "14": 28,
+        "15": 31.5,
+        "16": 31.5,
+        "17": 31.5,
+        "18": 38,
+        "19": 38,
         "adult": 38
       },
       "location": {
@@ -34,10 +50,18 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Cafe+Residenz+Schönbrunn+Vienna' target='_blank'>Café Residenz</a> - μέσα στο Schönbrunn",
       "website": "https://www.schoenbrunn.at/en/",
-      "notes": ["Σχολικές ομάδες (6-18): €18.00"],
-      "tags": ["palace", "unesco", "imperial", "audio guide"],
+      "notes": [
+        "Σχολικές ομάδες (6-18): €18.00"
+      ],
+      "tags": [
+        "palace",
+        "unesco",
+        "imperial",
+        "audio guide"
+      ],
       "duration_hours": 2.5,
-      "best_time": "morning"
+      "best_time": "morning",
+      "cafe": "<a href='https://maps.google.com/?q=Cafe+Residenz+Schonbrunn+Vienna' target='_blank'>Café Residenz</a> - café στο παλάτι"
     },
     {
       "id": 2,
@@ -45,10 +69,26 @@
       "description": "Σύντομη ξενάγηση ή θεματική ξενάγηση μεγαλύτερης διάρκειας.",
       "category": "attraction",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
-        "6": 19, "7": 19, "8": 19, "9": 19, "10": 19, "11": 19, "12": 19, "13": 19, "14": 19,
-        "15": 29, "16": 29, "17": 29,
-        "18": 39, "19": 39,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 19,
+        "7": 19,
+        "8": 19,
+        "9": 19,
+        "10": 19,
+        "11": 19,
+        "12": 19,
+        "13": 19,
+        "14": 19,
+        "15": 29,
+        "16": 29,
+        "17": 29,
+        "18": 39,
+        "19": 39,
         "adult": 39
       },
       "location": {
@@ -58,9 +98,14 @@
       "restaurant": "<a href='https://maps.google.com/?q=Figlmüller+Vienna' target='_blank'>Figlmüller</a> - διάσημο για schnitzel",
       "website": "https://www.schoenbrunn.at/en/",
       "notes": [],
-      "tags": ["palace", "guided tour", "imperial apartments"],
+      "tags": [
+        "palace",
+        "guided tour",
+        "imperial apartments"
+      ],
       "duration_hours": 1.5,
-      "best_time": "any"
+      "best_time": "any",
+      "cafe": "<a href='https://maps.google.com/?q=Cafe+Central+Vienna' target='_blank'>Café Central</a> - διάσημο Viennese café"
     },
     {
       "id": 3,
@@ -68,10 +113,26 @@
       "description": "Schönbrunn Palace + Sisi Museum (Hofburg) + Vienna Furniture Museum. Χωρίς timeslot για μουσεία.",
       "category": "attraction",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
-        "6": 37, "7": 37, "8": 37, "9": 37, "10": 37, "11": 37, "12": 37, "13": 37, "14": 37,
-        "15": 37, "16": 37, "17": 37,
-        "18": 57, "19": 57,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 37,
+        "7": 37,
+        "8": 37,
+        "9": 37,
+        "10": 37,
+        "11": 37,
+        "12": 37,
+        "13": 37,
+        "14": 37,
+        "15": 37,
+        "16": 37,
+        "17": 37,
+        "18": 57,
+        "19": 57,
         "adult": 57
       },
       "location": {
@@ -80,10 +141,18 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Cafe+Central+Vienna' target='_blank'>Café Central</a> - ιστορικό καφέ",
       "website": "https://www.schoenbrunn.at/en/",
-      "notes": ["Εκπτωτικό combo για 3 αξιοθέατα"],
-      "tags": ["combo pass", "museum", "palace", "imperial"],
+      "notes": [
+        "Εκπτωτικό combo για 3 αξιοθέατα"
+      ],
+      "tags": [
+        "combo pass",
+        "museum",
+        "palace",
+        "imperial"
+      ],
       "duration_hours": 6,
-      "best_time": "any"
+      "best_time": "any",
+      "cafe": "<a href='https://maps.google.com/?q=Cafe+Sacher+Vienna' target='_blank'>Café Sacher</a> - famous Sachertorte café"
     },
     {
       "id": 4,
@@ -91,10 +160,26 @@
       "description": "Palace Ticket + Zoo + Desert House + Palm House. Ισχύει 3 Nov 2025–26 Mar 2026.",
       "category": "attraction",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
-        "6": 47, "7": 47, "8": 47, "9": 47, "10": 47, "11": 47, "12": 47, "13": 47, "14": 47,
-        "15": 47, "16": 47, "17": 47,
-        "18": 69, "19": 69,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 47,
+        "7": 47,
+        "8": 47,
+        "9": 47,
+        "10": 47,
+        "11": 47,
+        "12": 47,
+        "13": 47,
+        "14": 47,
+        "15": 47,
+        "16": 47,
+        "17": 47,
+        "18": 69,
+        "19": 69,
         "adult": 69
       },
       "location": {
@@ -104,10 +189,17 @@
       "restaurant": "<a href='https://maps.google.com/?q=Schweizerhaus+Vienna' target='_blank'>Schweizerhaus</a> - πέρδικα και μπύρα",
       "website": "https://www.schoenbrunn.at/en/",
       "notes": [],
-      "tags": ["combo pass", "seasonal", "winter", "zoo", "garden"],
+      "tags": [
+        "combo pass",
+        "seasonal",
+        "winter",
+        "zoo",
+        "garden"
+      ],
       "duration_hours": 5,
       "best_time": "any",
-      "seasonal": true
+      "seasonal": true,
+      "cafe": "<a href='https://maps.google.com/?q=Prater+Cafe+Vienna' target='_blank'>Prater Café</a> - amusement café"
     },
     {
       "id": 5,
@@ -115,10 +207,26 @@
       "description": "Palace Ticket + Privy Garden + Maze & Labyrinth + Orangery Garden + Gloriette terrace.",
       "category": "attraction",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
-        "6": 28, "7": 28, "8": 28, "9": 28, "10": 28, "11": 28, "12": 28, "13": 28, "14": 28,
-        "15": 31, "16": 31, "17": 31,
-        "18": 40, "19": 40,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 28,
+        "7": 28,
+        "8": 28,
+        "9": 28,
+        "10": 28,
+        "11": 28,
+        "12": 28,
+        "13": 28,
+        "14": 28,
+        "15": 31,
+        "16": 31,
+        "17": 31,
+        "18": 40,
+        "19": 40,
         "adult": 40
       },
       "location": {
@@ -127,10 +235,18 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Cafe+Gloriette+Vienna' target='_blank'>Café Gloriette</a> - με θέα",
       "website": "https://www.schoenbrunn.at/en/",
-      "notes": ["Ιδανικό για μονοήμερη επίσκεψη"],
-      "tags": ["combo pass", "garden", "maze", "view"],
+      "notes": [
+        "Ιδανικό για μονοήμερη επίσκεψη"
+      ],
+      "tags": [
+        "combo pass",
+        "garden",
+        "maze",
+        "view"
+      ],
       "duration_hours": 4,
-      "best_time": "any"
+      "best_time": "any",
+      "cafe": "<a href='https://maps.google.com/?q=Belvedere+Cafe+Vienna' target='_blank'>Belvedere Café</a> - palace café"
     },
     {
       "id": 6,
@@ -138,10 +254,26 @@
       "description": "Classic Pass + Zoo + Desert House + Palm House - σχεδόν όλο το Schönbrunn.",
       "category": "attraction",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
-        "6": 53.5, "7": 53.5, "8": 53.5, "9": 53.5, "10": 53.5, "11": 53.5, "12": 53.5, "13": 53.5, "14": 53.5,
-        "15": 53.5, "16": 53.5, "17": 53.5,
-        "18": 76, "19": 76,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 53.5,
+        "7": 53.5,
+        "8": 53.5,
+        "9": 53.5,
+        "10": 53.5,
+        "11": 53.5,
+        "12": 53.5,
+        "13": 53.5,
+        "14": 53.5,
+        "15": 53.5,
+        "16": 53.5,
+        "17": 53.5,
+        "18": 76,
+        "19": 76,
         "adult": 76
       },
       "location": {
@@ -150,10 +282,18 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Tiergarten+Restaurant+Vienna' target='_blank'>Tiergarten Restaurant</a> - στο zoo",
       "website": "https://zoovienna.at/",
-      "notes": ["20-30% εξοικονόμηση"],
-      "tags": ["combo pass", "full package", "zoo", "garden"],
+      "notes": [
+        "20-30% εξοικονόμηση"
+      ],
+      "tags": [
+        "combo pass",
+        "full package",
+        "zoo",
+        "garden"
+      ],
       "duration_hours": 6,
-      "best_time": "any"
+      "best_time": "any",
+      "cafe": "<a href='https://maps.google.com/?q=Hofburg+Cafe+Vienna' target='_blank'>Hofburg Café</a> - imperial café"
     },
     {
       "id": 7,
@@ -161,22 +301,44 @@
       "description": "Διαδραστικό μουσείο για παιδιά 3-18 ετών με συνδυαστικά tickets.",
       "category": "museum",
       "prices": {
-        "0": 0, "1": 0, "2": 0,
-        "3": 12, "4": 12, "5": 12, "6": 12, "7": 12, "8": 12, "9": 12, "10": 12, "11": 12, "12": 12, "13": 12, "14": 12,
-        "15": 12, "16": 12, "17": 12,
-        "18": 12, "19": 12,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 12,
+        "4": 12,
+        "5": 12,
+        "6": 12,
+        "7": 12,
+        "8": 12,
+        "9": 12,
+        "10": 12,
+        "11": 12,
+        "12": 12,
+        "13": 12,
+        "14": 12,
+        "15": 12,
+        "16": 12,
+        "17": 12,
+        "18": 12,
+        "19": 12,
         "adult": 12
       },
       "location": {
-        "lat": 48.1850,
+        "lat": 48.185,
         "lng": 16.3127
       },
       "restaurant": "<a href='https://maps.google.com/?q=Cafe+Kindermuseum+Vienna' target='_blank'>Cafe Kindermuseum</a>",
       "website": "https://www.schoenbrunn.at/en/",
       "notes": [],
-      "tags": ["museum", "interactive", "children", "family"],
+      "tags": [
+        "museum",
+        "interactive",
+        "children",
+        "family"
+      ],
       "duration_hours": 1.5,
-      "best_time": "afternoon"
+      "best_time": "afternoon",
+      "cafe": "<a href='https://maps.google.com/?q=Kunsthistorisches+Museum+Cafe+Vienna' target='_blank'>Museum Café</a> - art museum café"
     },
     {
       "id": 8,
@@ -184,22 +346,45 @@
       "description": "5 εισιτήρια (2 adults + 3 children/adolescents) - ισχύει 1 χρόνο.",
       "category": "zoo",
       "prices": {
-        "0": 0, "1": 0, "2": 0,
-        "3": 19.2, "4": 19.2, "5": 19.2, "6": 19.2, "7": 19.2, "8": 19.2, "9": 19.2, "10": 19.2, "11": 19.2, "12": 19.2, "13": 19.2, "14": 19.2,
-        "15": 19.2, "16": 19.2, "17": 19.2,
-        "18": 19.2, "19": 19.2,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 19.2,
+        "4": 19.2,
+        "5": 19.2,
+        "6": 19.2,
+        "7": 19.2,
+        "8": 19.2,
+        "9": 19.2,
+        "10": 19.2,
+        "11": 19.2,
+        "12": 19.2,
+        "13": 19.2,
+        "14": 19.2,
+        "15": 19.2,
+        "16": 19.2,
+        "17": 19.2,
+        "18": 19.2,
+        "19": 19.2,
         "adult": 19.2
       },
       "location": {
-        "lat": 48.1800,
+        "lat": 48.18,
         "lng": 16.3028
       },
       "restaurant": "<a href='https://maps.google.com/?q=Tiergarten+Cafe+Vienna' target='_blank'>Tiergarten Cafe</a>",
       "website": "https://zoovienna.at/",
-      "notes": ["Σύνολο: €96 για 5 άτομα"],
-      "tags": ["zoo", "family ticket", "validity 1 year"],
+      "notes": [
+        "Σύνολο: €96 για 5 άτομα"
+      ],
+      "tags": [
+        "zoo",
+        "family ticket",
+        "validity 1 year"
+      ],
       "duration_hours": 3,
-      "best_time": "morning"
+      "best_time": "morning",
+      "cafe": "<a href='https://maps.google.com/?q=Albertina+Cafe+Vienna' target='_blank'>Albertina Café</a> - museum café"
     },
     {
       "id": 9,
@@ -207,10 +392,26 @@
       "description": "Συνδυαστικό εισιτήριο για μία επίσκεψη σε κάθε αξιοθέατο.",
       "category": "zoo",
       "prices": {
-        "0": 0, "1": 0, "2": 0,
-        "3": 22.5, "4": 22.5, "5": 22.5, "6": 22.5, "7": 22.5, "8": 22.5, "9": 22.5, "10": 22.5, "11": 22.5, "12": 22.5, "13": 22.5, "14": 22.5,
-        "15": 22.5, "16": 22.5, "17": 22.5,
-        "18": 36, "19": 36,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 22.5,
+        "4": 22.5,
+        "5": 22.5,
+        "6": 22.5,
+        "7": 22.5,
+        "8": 22.5,
+        "9": 22.5,
+        "10": 22.5,
+        "11": 22.5,
+        "12": 22.5,
+        "13": 22.5,
+        "14": 22.5,
+        "15": 22.5,
+        "16": 22.5,
+        "17": 22.5,
+        "18": 36,
+        "19": 36,
         "adult": 36
       },
       "location": {
@@ -219,10 +420,18 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Palm+House+Cafe+Vienna' target='_blank'>Palm House Cafe</a>",
       "website": "https://zoovienna.at/",
-      "notes": ["Ιδανικό για οικογένειες"],
-      "tags": ["zoo", "combo", "garden", "greenhouse"],
+      "notes": [
+        "Ιδανικό για οικογένειες"
+      ],
+      "tags": [
+        "zoo",
+        "combo",
+        "garden",
+        "greenhouse"
+      ],
       "duration_hours": 4,
-      "best_time": "any"
+      "best_time": "any",
+      "cafe": "<a href='https://maps.google.com/?q=Spanish+Riding+School+Cafe+Vienna' target='_blank'>Riding School Café</a> - historic café"
     },
     {
       "id": 10,
@@ -230,22 +439,44 @@
       "description": "Ενυδρείο και μικρός ζωολογικός κήπος στο κέντρο της Βιέννης.",
       "category": "aquarium",
       "prices": {
-        "0": 0, "1": 0, "2": 0,
-        "3": 6.5, "4": 6.5, "5": 6.5, "6": 9.8, "7": 9.8, "8": 9.8, "9": 9.8, "10": 9.8, "11": 9.8, "12": 9.8, "13": 9.8, "14": 9.8,
-        "15": 22.9, "16": 22.9, "17": 22.9,
-        "18": 22.9, "19": 22.9,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 6.5,
+        "4": 6.5,
+        "5": 6.5,
+        "6": 9.8,
+        "7": 9.8,
+        "8": 9.8,
+        "9": 9.8,
+        "10": 9.8,
+        "11": 9.8,
+        "12": 9.8,
+        "13": 9.8,
+        "14": 9.8,
+        "15": 22.9,
+        "16": 22.9,
+        "17": 22.9,
+        "18": 22.9,
+        "19": 22.9,
         "adult": 22.9
       },
       "location": {
-        "lat": 48.2050,
+        "lat": 48.205,
         "lng": 16.3575
       },
       "restaurant": "<a href='https://maps.google.com/?q=Cafe+Ritter+Mariahilfer+Straße+Vienna' target='_blank'>Café Ritter</a> - Mariahilfer Straße",
       "website": "https://www.haus-des-meeres.at/en",
       "notes": [],
-      "tags": ["aquarium", "zoo", "city center", "tower"],
+      "tags": [
+        "aquarium",
+        "zoo",
+        "city center",
+        "tower"
+      ],
       "duration_hours": 2.5,
-      "best_time": "afternoon"
+      "best_time": "afternoon",
+      "cafe": "<a href='https://maps.google.com/?q=St+Stephens+Cathedral+Cafe+Vienna' target='_blank'>Stephansdom Café</a> - cathedral café"
     },
     {
       "id": 11,
@@ -253,10 +484,26 @@
       "description": "Διαδραστικό ταξίδι 2000 χρόνων ιστορίας της Βιέννης.",
       "category": "attraction",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
-        "6": 18, "7": 18, "8": 18, "9": 18, "10": 18, "11": 18, "12": 18, "13": 18, "14": 18,
-        "15": 22, "16": 22, "17": 22,
-        "18": 22, "19": 22,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 18,
+        "7": 18,
+        "8": 18,
+        "9": 18,
+        "10": 18,
+        "11": 18,
+        "12": 18,
+        "13": 18,
+        "14": 18,
+        "15": 22,
+        "16": 22,
+        "17": 22,
+        "18": 22,
+        "19": 22,
         "adult": 22
       },
       "location": {
@@ -266,9 +513,15 @@
       "restaurant": "<a href='https://maps.google.com/?q=Time+Travel+Cafe+Vienna' target='_blank'>Time Travel Cafe</a>",
       "website": "https://www.timetravel-vienna.at/en",
       "notes": [],
-      "tags": ["interactive", "history", "multimedia", "family"],
+      "tags": [
+        "interactive",
+        "history",
+        "multimedia",
+        "family"
+      ],
       "duration_hours": 1.5,
-      "best_time": "any"
+      "best_time": "any",
+      "cafe": "<a href='https://maps.google.com/?q=Naschmarkt+Cafe+Vienna' target='_blank'>Naschmarkt Cafés</a> - market cafés"
     },
     {
       "id": 12,
@@ -276,10 +529,26 @@
       "description": "VR εμπειρία για τη ζωή της αυτοκράτειρας Σίσσι.",
       "category": "attraction",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
-        "6": 14, "7": 14, "8": 14, "9": 14, "10": 14, "11": 14, "12": 14, "13": 14, "14": 14,
-        "15": 14, "16": 14, "17": 14,
-        "18": 14, "19": 14,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 14,
+        "7": 14,
+        "8": 14,
+        "9": 14,
+        "10": 14,
+        "11": 14,
+        "12": 14,
+        "13": 14,
+        "14": 14,
+        "15": 14,
+        "16": 14,
+        "17": 14,
+        "18": 14,
+        "19": 14,
         "adult": 14
       },
       "location": {
@@ -288,10 +557,18 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=VR+Cafe+Vienna' target='_blank'>VR Experience Cafe</a>",
       "website": "https://www.hofburg-wien.at/en/",
-      "notes": ["Combo με Time Travel διαθέσιμο"],
-      "tags": ["vr", "interactive", "sisi", "imperial"],
+      "notes": [
+        "Combo με Time Travel διαθέσιμο"
+      ],
+      "tags": [
+        "vr",
+        "interactive",
+        "sisi",
+        "imperial"
+      ],
       "duration_hours": 0.75,
-      "best_time": "any"
+      "best_time": "any",
+      "cafe": "<a href='https://maps.google.com/?q=Karlskirche+Cafe+Vienna' target='_blank'>Karlskirche Café</a> - church café"
     },
     {
       "id": 13,
@@ -299,10 +576,26 @@
       "description": "Διαδραστικό μουσείο μουσικής για όλες τις ηλικίες.",
       "category": "museum",
       "prices": {
-        "0": 0, "1": 0, "2": 0,
-        "3": 10, "4": 10, "5": 10, "6": 10, "7": 10, "8": 10, "9": 10, "10": 10, "11": 10, "12": 10, "13": 10, "14": 10,
-        "15": 22, "16": 22, "17": 22,
-        "18": 22, "19": 22,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 10,
+        "4": 10,
+        "5": 10,
+        "6": 10,
+        "7": 10,
+        "8": 10,
+        "9": 10,
+        "10": 10,
+        "11": 10,
+        "12": 10,
+        "13": 10,
+        "14": 10,
+        "15": 22,
+        "16": 22,
+        "17": 22,
+        "18": 22,
+        "19": 22,
         "adult": 22
       },
       "location": {
@@ -312,10 +605,16 @@
       "restaurant": "<a href='https://maps.google.com/?q=Cafe+Schwarzenberg+Vienna' target='_blank'>Café Schwarzenberg</a>",
       "website": "https://www.hausdermusik.com/en",
       "notes": [],
-      "tags": ["museum", "music", "interactive", "sound"],
+      "tags": [
+        "museum",
+        "music",
+        "interactive",
+        "sound"
+      ],
       "duration_hours": 2,
       "best_time": "afternoon",
-      "familyTicket": "2 adults + up to 3 children = 35€"
+      "familyTicket": "2 adults + up to 3 children = 35€",
+      "cafe": "<a href='https://maps.google.com/?q=Haus+des+Meeres+Cafe+Vienna' target='_blank'>Aquarium Café</a> - aquarium café"
     },
     {
       "id": 14,
@@ -323,10 +622,26 @@
       "description": "Οπτικές ψευδαισθήσεις και διαδραστικά εκθέματα.",
       "category": "museum",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
-        "6": 10, "7": 10, "8": 10, "9": 10, "10": 10, "11": 10, "12": 10, "13": 10, "14": 10,
-        "15": 12, "16": 12, "17": 12,
-        "18": 14, "19": 14,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 10,
+        "7": 10,
+        "8": 10,
+        "9": 10,
+        "10": 10,
+        "11": 10,
+        "12": 10,
+        "13": 10,
+        "14": 10,
+        "15": 12,
+        "16": 12,
+        "17": 12,
+        "18": 14,
+        "19": 14,
         "adult": 14
       },
       "location": {
@@ -336,9 +651,15 @@
       "restaurant": "<a href='https://maps.google.com/?q=Illusions+Cafe+Vienna' target='_blank'>Illusions Cafe</a>",
       "website": "https://www.museumderillusionen.at/wien/",
       "notes": [],
-      "tags": ["museum", "illusions", "interactive", "optical"],
+      "tags": [
+        "museum",
+        "illusions",
+        "interactive",
+        "optical"
+      ],
       "duration_hours": 1.5,
-      "best_time": "any"
+      "best_time": "any",
+      "cafe": "<a href='https://maps.google.com/?q=Vienna+Zoo+Cafe' target='_blank'>Zoo Café</a> - oldest zoo café"
     },
     {
       "id": 15,
@@ -346,10 +667,26 @@
       "description": "Ξενάγηση στο ιστορικό κτήριο της όπερας.",
       "category": "attraction",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
-        "6": 9, "7": 9, "8": 9, "9": 9, "10": 9, "11": 9, "12": 9, "13": 9, "14": 9,
-        "15": 15, "16": 15, "17": 15,
-        "18": 15, "19": 15,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 9,
+        "7": 9,
+        "8": 9,
+        "9": 9,
+        "10": 9,
+        "11": 9,
+        "12": 9,
+        "13": 9,
+        "14": 9,
+        "15": 15,
+        "16": 15,
+        "17": 15,
+        "18": 15,
+        "19": 15,
         "adult": 15
       },
       "location": {
@@ -359,9 +696,15 @@
       "restaurant": "<a href='https://maps.google.com/?q=Cafe+Sacher+Vienna' target='_blank'>Café Sacher</a> - για Sachertorte",
       "website": "https://www.wiener-staatsoper.at/en/",
       "notes": [],
-      "tags": ["opera", "guided tour", "historic", "architecture"],
+      "tags": [
+        "opera",
+        "guided tour",
+        "historic",
+        "architecture"
+      ],
       "duration_hours": 1,
-      "best_time": "afternoon"
+      "best_time": "afternoon",
+      "cafe": "<a href='https://maps.google.com/?q=Zoom+Museum+Cafe+Vienna' target='_blank'>ZOOM Café</a> - children's museum café"
     },
     {
       "id": 16,
@@ -369,22 +712,46 @@
       "description": "Αυτοκρατορικό παλάτι με μόνιμη συλλογή τέχνης.",
       "category": "museum",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
-        "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0,
-        "15": 0, "16": 0, "17": 0,
-        "18": 29, "19": 29,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 29,
+        "19": 29,
         "adult": 29
       },
       "location": {
-        "lat": 48.1910,
+        "lat": 48.191,
         "lng": 16.3805
       },
       "restaurant": "<a href='https://maps.google.com/?q=Salm+Bräu+Vienna' target='_blank'>Salm Bräu</a> - μπύρα και κουζίνα",
       "website": "https://www.belvedere.at/en",
-      "notes": ["Δωρεάν για κάτω των 19 (μόνιμη συλλογή)"],
-      "tags": ["palace", "museum", "art", "baroque"],
+      "notes": [
+        "Δωρεάν για κάτω των 19 (μόνιμη συλλογή)"
+      ],
+      "tags": [
+        "palace",
+        "museum",
+        "art",
+        "baroque"
+      ],
       "duration_hours": 2.5,
-      "best_time": "morning"
+      "best_time": "morning",
+      "cafe": "<a href='https://maps.google.com/?q=Stadtpark+Cafe+Vienna' target='_blank'>Stadtpark Café</a> - park café"
     },
     {
       "id": 17,
@@ -392,10 +759,26 @@
       "description": "Πανοραμική θέα της Βιέννης από τον πύργο του Δούναβη.",
       "category": "attraction",
       "prices": {
-        "0": 0, "1": 0, "2": 0,
-        "3": 4, "4": 4, "5": 4, "6": 8, "7": 8, "8": 8, "9": 8, "10": 8, "11": 8, "12": 8, "13": 8, "14": 8,
-        "15": 12, "16": 12, "17": 12,
-        "18": 12, "19": 12,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 4,
+        "4": 4,
+        "5": 4,
+        "6": 8,
+        "7": 8,
+        "8": 8,
+        "9": 8,
+        "10": 8,
+        "11": 8,
+        "12": 8,
+        "13": 8,
+        "14": 8,
+        "15": 12,
+        "16": 12,
+        "17": 12,
+        "18": 12,
+        "19": 12,
         "adult": 12
       },
       "location": {
@@ -405,9 +788,15 @@
       "restaurant": "<a href='https://maps.google.com/?q=Donauturm+Restaurant+Vienna' target='_blank'>Donauturm Restaurant</a> - στροφείο",
       "website": "https://www.donauturm.at/en/",
       "notes": [],
-      "tags": ["tower", "view", "panorama", "restaurant"],
+      "tags": [
+        "tower",
+        "view",
+        "panorama",
+        "restaurant"
+      ],
       "duration_hours": 1,
-      "best_time": "any"
+      "best_time": "any",
+      "cafe": "<a href='https://maps.google.com/?q=Technisches+Museum+Cafe+Vienna' target='_blank'>Technical Museum Café</a> - museum café"
     },
     {
       "id": 18,
@@ -415,10 +804,26 @@
       "description": "Το σπίτι όπου έζησε ο Mozart, τώρα μουσείο.",
       "category": "museum",
       "prices": {
-        "0": 0, "1": 0, "2": 0,
-        "3": 4.5, "4": 4.5, "5": 4.5, "6": 4.5, "7": 4.5, "8": 4.5, "9": 4.5, "10": 4.5, "11": 4.5, "12": 4.5, "13": 4.5, "14": 4.5,
-        "15": 14, "16": 14, "17": 14,
-        "18": 14, "19": 14,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 4.5,
+        "4": 4.5,
+        "5": 4.5,
+        "6": 4.5,
+        "7": 4.5,
+        "8": 4.5,
+        "9": 4.5,
+        "10": 4.5,
+        "11": 4.5,
+        "12": 4.5,
+        "13": 4.5,
+        "14": 4.5,
+        "15": 14,
+        "16": 14,
+        "17": 14,
+        "18": 14,
+        "19": 14,
         "adult": 14
       },
       "location": {
@@ -428,10 +833,16 @@
       "restaurant": "<a href='https://maps.google.com/?q=Cafe+Mozart+Vienna' target='_blank'>Café Mozart</a> - κλασικό",
       "website": "https://www.mozarthausvienna.at/en/",
       "notes": [],
-      "tags": ["museum", "mozart", "composer", "historic house"],
+      "tags": [
+        "museum",
+        "mozart",
+        "composer",
+        "historic house"
+      ],
       "duration_hours": 1.5,
       "best_time": "afternoon",
-      "familyTicket": "2 adults + up to 3 children = 29€"
+      "familyTicket": "2 adults + up to 3 children = 29€",
+      "cafe": "<a href='https://maps.google.com/?q=Naturhistorisches+Museum+Cafe+Vienna' target='_blank'>Natural History Café</a> - museum café"
     },
     {
       "id": 19,
@@ -439,22 +850,44 @@
       "description": "Επίσκεψη στην κρύπτη του διάσημου καθεδρικού ναού.",
       "category": "attraction",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
-        "6": 3, "7": 3, "8": 3, "9": 3, "10": 3, "11": 3, "12": 3, "13": 3, "14": 3,
-        "15": 5, "16": 5, "17": 5,
-        "18": 5, "19": 5,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 3,
+        "7": 3,
+        "8": 3,
+        "9": 3,
+        "10": 3,
+        "11": 3,
+        "12": 3,
+        "13": 3,
+        "14": 3,
+        "15": 5,
+        "16": 5,
+        "17": 5,
+        "18": 5,
+        "19": 5,
         "adult": 5
       },
       "location": {
         "lat": 48.2085,
-        "lng": 16.3730
+        "lng": 16.373
       },
       "restaurant": "<a href='https://maps.google.com/?q=Do+Co+Stephansplatz+Vienna' target='_blank'>Do & Co</a> - με θέα",
       "website": "https://www.stephanskirche.at/",
       "notes": [],
-      "tags": ["cathedral", "crypt", "historic", "gothic"],
+      "tags": [
+        "cathedral",
+        "crypt",
+        "historic",
+        "gothic"
+      ],
       "duration_hours": 0.75,
-      "best_time": "any"
+      "best_time": "any",
+      "cafe": "<a href='https://maps.google.com/?q=Madame+Tussauds+Vienna+Cafe' target='_blank'>Madame Tussauds Café</a> - wax museum café"
     },
     {
       "id": 20,
@@ -462,10 +895,26 @@
       "description": "Προπόνηση των διάσημων ίππων Lipizzaner. ⚠️ <strong>Ηλικιακοί περιορισμοί:</strong> Παιδιά κάτω 3 ετών: ΑΔΥΝΑΤΗ ΕΙΣΟΔΟΣ | 3-5 ετών: Μόνο σε family performances",
       "category": "attraction",
       "prices": {
-        "0": "N/A", "1": "N/A", "2": "N/A",
-        "3": 8, "4": 8, "5": 8, "6": 14, "7": 14, "8": 14, "9": 14, "10": 14, "11": 14, "12": 14, "13": 14, "14": 14,
-        "15": 16, "16": 16, "17": 16,
-        "18": 16, "19": 16,
+        "0": "N/A",
+        "1": "N/A",
+        "2": "N/A",
+        "3": 8,
+        "4": 8,
+        "5": 8,
+        "6": 14,
+        "7": 14,
+        "8": 14,
+        "9": 14,
+        "10": 14,
+        "11": 14,
+        "12": 14,
+        "13": 14,
+        "14": 14,
+        "15": 16,
+        "16": 16,
+        "17": 16,
+        "18": 16,
+        "19": 16,
         "adult": 16
       },
       "location": {
@@ -474,13 +923,21 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Griechenbeisl+Vienna' target='_blank'>Griechenbeisl</a> - παλαιότερο εστιατόριο",
       "website": "https://www.srs.at/en/",
-      "notes": ["⚠️ Παιδιά κάτω των 3 ετών ΔΕΝ επιτρέπονται. 3-5 ετών: μόνο σε family performances"],
-      "tags": ["horses", "equestrian", "training", "historic"],
+      "notes": [
+        "⚠️ Παιδιά κάτω των 3 ετών ΔΕΝ επιτρέπονται. 3-5 ετών: μόνο σε family performances"
+      ],
+      "tags": [
+        "horses",
+        "equestrian",
+        "training",
+        "historic"
+      ],
       "duration_hours": 1.5,
       "best_time": "morning",
       "ageRestrictions": true,
       "minAge": 3,
-      "ageWarning": "⚠️ Παιδιά κάτω των 3 ετών ΔΕΝ επιτρέπονται. 3-5 ετών: μόνο σε family performances"
+      "ageWarning": "⚠️ Παιδιά κάτω των 3 ετών ΔΕΝ επιτρέπονται. 3-5 ετών: μόνο σε family performances",
+      "cafe": "<a href='https://maps.google.com/?q=Time+Travel+Vienna+Cafe' target='_blank'>Time Travel Café</a> - attraction café"
     }
   ]
 }

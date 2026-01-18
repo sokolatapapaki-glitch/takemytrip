@@ -5,10 +5,16 @@
   "emoji": "🇬🇧",
   "pricing_model": "per_age",
   "cityPass": {
-    "name": "The London Pass",
-    "description": "Access to 95+ attractions including Tower of London, Westminster Abbey, and hop-on hop-off bus tour",
+    "name": "Merlin Multi-Attraction Pass (2–4 Attractions)",
+    "description": "Συνδυαστικό εισιτήριο για 2 έως 4 δραστηριότητες της Merlin (London Eye, SEA LIFE, Madame Tussauds, Shrek’s Adventure). Ισχύει για τουρίστες, όχι ετήσιο. Η πιο συμφέρουσα επιλογή για λίγες ημέρες.",
     "discountPercent": 35,
-    "url": "https://londonpass.com/en"
+    "applicableActivities": [
+      1,
+      29,
+      30,
+      31
+    ],
+    "url": "https://www.visitsealife.com/london/tickets-and-passes/multi-attraction-tickets/"
   },
   "activities": [
     {
@@ -17,21 +23,46 @@
       "description": "Η γιγαντιαία ρόδα με πανοραμική θέα του Λονδίνου.",
       "category": "attraction",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 34, "6": 34, "7": 34, "8": 34, "9": 34, "10": 34, "11": 34, "12": 34, "13": 34, "14": 34, "15": 34,
-        "16": 37, "17": 37,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 34,
+        "6": 34,
+        "7": 34,
+        "8": 34,
+        "9": 34,
+        "10": 34,
+        "11": 34,
+        "12": 34,
+        "13": 34,
+        "14": 34,
+        "15": 34,
+        "16": 37,
+        "17": 37,
         "adult": 37
       },
-      "location": { "lat": 51.5033, "lng": -0.1195 },
+      "location": {
+        "lat": 51.5033,
+        "lng": -0.1195
+      },
       "restaurant": "<a href='https://maps.google.com/?q=London+Eye+Restaurant' target='_blank'>London Eye Restaurant</a>",
       "restaurantType": "restaurant",
       "restaurantDistance": 0,
       "website": "https://www.londoneye.com/",
-      "notes": ["Κράτηση online συχνά φθηνότερη."],
-      "tags": ["wheel", "view", "landmark"],
+      "notes": [
+        "Κράτηση online συχνά φθηνότερη."
+      ],
+      "tags": [
+        "wheel",
+        "view",
+        "landmark"
+      ],
       "duration_hours": 1,
       "best_time": "any",
-      "top": true
+      "top": true,
+      "cafe": "<a href='https://maps.google.com/?q=Sea+Life+London+Cafe' target='_blank'>Sea Life Café</a> - café at aquarium"
     },
     {
       "id": 2,
@@ -39,21 +70,47 @@
       "description": "Ιστορικό κάστρο με τα βασιλικά κοσμήματα της Αγγλίας.",
       "category": "castle",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 20, "6": 20, "7": 20, "8": 20, "9": 20, "10": 20, "11": 20, "12": 20, "13": 20, "14": 20, "15": 20,
-        "16": 41, "17": 41,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 20,
+        "6": 20,
+        "7": 20,
+        "8": 20,
+        "9": 20,
+        "10": 20,
+        "11": 20,
+        "12": 20,
+        "13": 20,
+        "14": 20,
+        "15": 20,
+        "16": 41,
+        "17": 41,
         "adult": 41
       },
-      "location": { "lat": 51.5081, "lng": -0.0759 },
+      "location": {
+        "lat": 51.5081,
+        "lng": -0.0759
+      },
       "restaurant": "<a href='https://maps.google.com/?q=New+Armouries+Cafe+London' target='_blank'>New Armouries Cafe</a>",
       "restaurantType": "cafe",
       "restaurantDistance": 0,
       "website": "https://www.hrp.org.uk/tower-of-london/",
-      "notes": ["Δωρεάν για κάτω των 5.", "Κράτηση απαιτείται."],
-      "tags": ["castle", "history", "crown jewels"],
+      "notes": [
+        "Δωρεάν για κάτω των 5.",
+        "Κράτηση απαιτείται."
+      ],
+      "tags": [
+        "castle",
+        "history",
+        "crown jewels"
+      ],
       "top": true,
       "duration_hours": 3,
-      "best_time": "morning"
+      "best_time": "morning",
+      "cafe": "<a href='https://maps.google.com/?q=London+Eye+Cafe' target='_blank'>London Eye Café</a> - riverside café"
     },
     {
       "id": 3,
@@ -61,9 +118,24 @@
       "description": "Δωρεάν μουσείο με δεινόσαυρους και φυσική ιστορία.",
       "category": "museum",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
-        "16": 0, "17": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
         "adult": 0
       },
       "location": {
@@ -74,10 +146,17 @@
       "restaurantType": "cafe",
       "restaurantDistance": 0,
       "website": "https://www.nhm.ac.uk/",
-      "notes": ["ΔΩΡΕΑΝ είσοδος. Συνεισφορά προαιρετική."],
-      "tags": ["museum", "free", "dinosaurs"],
+      "notes": [
+        "ΔΩΡΕΑΝ είσοδος. Συνεισφορά προαιρετική."
+      ],
+      "tags": [
+        "museum",
+        "free",
+        "dinosaurs"
+      ],
       "duration_hours": 2.5,
-      "best_time": "afternoon"
+      "best_time": "afternoon",
+      "cafe": "<a href='https://maps.google.com/?q=Madame+Tussauds+Cafe+London' target='_blank'>Madame Tussauds Café</a> - museum café"
     },
     {
       "id": 4,
@@ -85,21 +164,45 @@
       "description": "Περιήγηση στα κινηματογραφικά στούντιο του Harry Potter.",
       "category": "attraction",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 51, "6": 51, "7": 51, "8": 51, "9": 51, "10": 51, "11": 51, "12": 51, "13": 51, "14": 51, "15": 51,
-        "16": 63, "17": 63,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 51,
+        "6": 51,
+        "7": 51,
+        "8": 51,
+        "9": 51,
+        "10": 51,
+        "11": 51,
+        "12": 51,
+        "13": 51,
+        "14": 51,
+        "15": 51,
+        "16": 63,
+        "17": 63,
         "adult": 63
       },
       "location": {
-        "lat": 51.6900,
+        "lat": 51.69,
         "lng": -0.4187
       },
       "restaurant": "<a href='https://maps.google.com/?q=Studio+Tour+Cafe' target='_blank'>Studio Tour Cafe</a>",
       "website": "https://www.wbstudiotour.co.uk/",
-      "notes": ["Χωρίς μεταφορά.", "Οικογενειακή έκπτωση 26€ (2 ενήλικες + 2 παιδιά).", "Κράτηση απαραίτητη."],
-      "tags": ["harry potter", "movie", "studio"],
+      "notes": [
+        "Χωρίς μεταφορά.",
+        "Οικογενειακή έκπτωση 26€ (2 ενήλικες + 2 παιδιά).",
+        "Κράτηση απαραίτητη."
+      ],
+      "tags": [
+        "harry potter",
+        "movie",
+        "studio"
+      ],
       "duration_hours": 3.5,
-      "best_time": "any"
+      "best_time": "any",
+      "cafe": "<a href='https://maps.google.com/?q=Shreks+Adventure+Cafe+London' target='_blank'>Shrek's Café</a> - themed café"
     },
     {
       "id": 5,
@@ -107,9 +210,24 @@
       "description": "Ιστορικός ζωολογικός κήπος στο Ρίτζεντς Παρκ.",
       "category": "zoo",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 26, "6": 26, "7": 26, "8": 26, "9": 26, "10": 26, "11": 26, "12": 26, "13": 26, "14": 26, "15": 26,
-        "16": 32, "17": 32,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 26,
+        "6": 26,
+        "7": 26,
+        "8": 26,
+        "9": 26,
+        "10": 26,
+        "11": 26,
+        "12": 26,
+        "13": 26,
+        "14": 26,
+        "15": 26,
+        "16": 32,
+        "17": 32,
         "adult": 32
       },
       "location": {
@@ -120,10 +238,18 @@
       "restaurantType": "restaurant",
       "restaurantDistance": 0,
       "website": "https://www.zsl.org/zsl-london-zoo",
-      "notes": ["Τιμές Off-Peak. Peak: Παιδιά 30€, Ενήλικες 37€.", "Κράτηση συνιστάται."],
-      "tags": ["zoo", "animals", "family"],
+      "notes": [
+        "Τιμές Off-Peak. Peak: Παιδιά 30€, Ενήλικες 37€.",
+        "Κράτηση συνιστάται."
+      ],
+      "tags": [
+        "zoo",
+        "animals",
+        "family"
+      ],
       "duration_hours": 4,
-      "best_time": "morning"
+      "best_time": "morning",
+      "cafe": "<a href='https://maps.google.com/?q=Tower+of+London+Cafe' target='_blank'>Tower Café</a> - historic café"
     },
     {
       "id": 6,
@@ -131,9 +257,24 @@
       "description": "Το ιστορικό αστεροσκοπείο στον Πρώτο Μεσημβρινό.",
       "category": "museum",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 8, "6": 8, "7": 8, "8": 8, "9": 8, "10": 8, "11": 8, "12": 8, "13": 8, "14": 8, "15": 8,
-        "16": 16, "17": 16,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 8,
+        "6": 8,
+        "7": 8,
+        "8": 8,
+        "9": 8,
+        "10": 8,
+        "11": 8,
+        "12": 8,
+        "13": 8,
+        "14": 8,
+        "15": 8,
+        "16": 16,
+        "17": 16,
         "adult": 16
       },
       "location": {
@@ -142,10 +283,18 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Greenwich+Observatory+Cafe' target='_blank'>Observatory Cafe</a>",
       "website": "https://www.rmg.co.uk/royal-observatory",
-      "notes": ["Greenwich Park (έξω) είναι δωρεάν.", "Εκτίμηση τιμών."],
-      "tags": ["observatory", "planetarium", "history"],
+      "notes": [
+        "Greenwich Park (έξω) είναι δωρεάν.",
+        "Εκτίμηση τιμών."
+      ],
+      "tags": [
+        "observatory",
+        "planetarium",
+        "history"
+      ],
       "duration_hours": 2,
-      "best_time": "afternoon"
+      "best_time": "afternoon",
+      "cafe": "<a href='https://maps.google.com/?q=Tower+Bridge+Cafe+London' target='_blank'>Bridge Café</a> - café with bridge view"
     },
     {
       "id": 7,
@@ -153,9 +302,31 @@
       "description": "Μουσείο ταχυδρομείου με υπογεια σιδηροδρομική διαδρομή.",
       "category": "museum",
       "prices": {
-        "0": 0, "1": 0,
-        "2": 12.5, "3": 12.5, "4": 12.5, "5": 12.5, "6": 12.5, "7": 12.5, "8": 12.5, "9": 12.5, "10": 12.5, "11": 12.5, "12": 12.5, "13": 12.5, "14": 12.5, "15": 12.5,
-        "16": 14.5, "17": 14.5, "18": 14.5, "19": 14.5, "20": 14.5, "21": 14.5, "22": 14.5, "23": 14.5, "24": 14.5,
+        "0": 0,
+        "1": 0,
+        "2": 12.5,
+        "3": 12.5,
+        "4": 12.5,
+        "5": 12.5,
+        "6": 12.5,
+        "7": 12.5,
+        "8": 12.5,
+        "9": 12.5,
+        "10": 12.5,
+        "11": 12.5,
+        "12": 12.5,
+        "13": 12.5,
+        "14": 12.5,
+        "15": 12.5,
+        "16": 14.5,
+        "17": 14.5,
+        "18": 14.5,
+        "19": 14.5,
+        "20": 14.5,
+        "21": 14.5,
+        "22": 14.5,
+        "23": 14.5,
+        "24": 14.5,
         "adult": 21
       },
       "location": {
@@ -164,10 +335,18 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Postal+Museum+Cafe' target='_blank'>Postal Museum Cafe</a>",
       "website": "https://www.postalmuseum.org/",
-      "notes": ["⚠️ Η τιμή 'adult' (21€) ισχύει για επισκέπτες 25 ετών και άνω.", "Επισκέπτες 16-24 ετών: 14.5€."],
-      "tags": ["interactive", "train", "history"],
+      "notes": [
+        "⚠️ Η τιμή 'adult' (21€) ισχύει για επισκέπτες 25 ετών και άνω.",
+        "Επισκέπτες 16-24 ετών: 14.5€."
+      ],
+      "tags": [
+        "interactive",
+        "train",
+        "history"
+      ],
       "duration_hours": 2,
-      "best_time": "any"
+      "best_time": "any",
+      "cafe": "<a href='https://maps.google.com/?q=Westminster+Abbey+Cafe' target='_blank'>Westminster Café</a> - abbey café"
     },
     {
       "id": 8,
@@ -175,9 +354,24 @@
       "description": "Ενυδρείο στο Horniman Museum. Το μουσείο & οι κήποι είναι δωρεάν.",
       "category": "aquarium",
       "prices": {
-        "0": 0, "1": 0, "2": 0,
-        "3": 5, "4": 5, "5": 5, "6": 5, "7": 5, "8": 5, "9": 5, "10": 5, "11": 5, "12": 5, "13": 5, "14": 5, "15": 5,
-        "16": 6, "17": 6,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 5,
+        "4": 5,
+        "5": 5,
+        "6": 5,
+        "7": 5,
+        "8": 5,
+        "9": 5,
+        "10": 5,
+        "11": 5,
+        "12": 5,
+        "13": 5,
+        "14": 5,
+        "15": 5,
+        "16": 6,
+        "17": 6,
         "adult": 6
       },
       "location": {
@@ -186,10 +380,19 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Horniman+Museum+Cafe' target='_blank'>Horniman Museum Cafe</a>",
       "website": "https://www.horniman.ac.uk/",
-      "notes": ["Μόνο το ενυδρείο είναι πληρωτέο.", "Το μουσείο & οι κήποι είναι ΔΩΡΕΑΝ.", "Εκτίμηση τιμών."],
-      "tags": ["aquarium", "museum", "garden"],
+      "notes": [
+        "Μόνο το ενυδρείο είναι πληρωτέο.",
+        "Το μουσείο & οι κήποι είναι ΔΩΡΕΑΝ.",
+        "Εκτίμηση τιμών."
+      ],
+      "tags": [
+        "aquarium",
+        "museum",
+        "garden"
+      ],
       "duration_hours": 1.5,
-      "best_time": "afternoon"
+      "best_time": "afternoon",
+      "cafe": "<a href='https://maps.google.com/?q=St+Pauls+Cathedral+Cafe+London' target='_blank'>St Paul's Café</a> - cathedral café"
     },
     {
       "id": 9,
@@ -197,9 +400,24 @@
       "description": "Διαδραστικό μουσείο επιστήμης και τεχνολογίας.",
       "category": "museum",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
-        "16": 0, "17": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
         "adult": 0
       },
       "location": {
@@ -208,10 +426,18 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Science+Museum+Cafe' target='_blank'>Science Museum Cafe</a>",
       "website": "https://www.sciencemuseum.org.uk/",
-      "notes": ["ΔΩΡΕΑΝ είσοδος. Συνεισφορά προαιρετική."],
-      "tags": ["museum", "free", "science", "interactive"],
+      "notes": [
+        "ΔΩΡΕΑΝ είσοδος. Συνεισφορά προαιρετική."
+      ],
+      "tags": [
+        "museum",
+        "free",
+        "science",
+        "interactive"
+      ],
       "duration_hours": 3,
-      "best_time": "afternoon"
+      "best_time": "afternoon",
+      "cafe": "<a href='https://maps.google.com/?q=British+Museum+Cafe+London' target='_blank'>Great Court Restaurant</a> - museum café"
     },
     {
       "id": 10,
@@ -219,9 +445,24 @@
       "description": "Σημαντικό μουσείο παγκόσμιας ιστορίας και πολιτισμού.",
       "category": "museum",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
-        "16": 0, "17": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
         "adult": 0
       },
       "location": {
@@ -232,11 +473,19 @@
       "restaurantType": "restaurant",
       "restaurantDistance": 0,
       "website": "https://www.britishmuseum.org/",
-      "notes": ["ΔΩΡΕΑΝ είσοδος. Συνεισφορά προαιρετική."],
-      "tags": ["museum", "free", "history", "art"],
+      "notes": [
+        "ΔΩΡΕΑΝ είσοδος. Συνεισφορά προαιρετική."
+      ],
+      "tags": [
+        "museum",
+        "free",
+        "history",
+        "art"
+      ],
       "top": true,
       "duration_hours": 4,
-      "best_time": "morning"
+      "best_time": "morning",
+      "cafe": "<a href='https://maps.google.com/?q=Natural+History+Museum+Cafe+London' target='_blank'>Natural History Café</a> - museum café"
     },
     {
       "id": 11,
@@ -244,9 +493,24 @@
       "description": "Μουσείο μοντέρνας και σύγχρονης τέχνης.",
       "category": "museum",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
-        "16": 0, "17": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
         "adult": 0
       },
       "location": {
@@ -255,10 +519,18 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Tate+Modern+Restaurant' target='_blank'>Tate Modern Restaurant</a>",
       "website": "https://www.tate.org.uk/visit/tate-modern",
-      "notes": ["ΔΩΡΕΑΝ είσοδος στις μόνιμες συλλογές.", "Ορισμένες ειδικές εκθέσεις έχουν χρέωση."],
-      "tags": ["museum", "free", "modern art"],
+      "notes": [
+        "ΔΩΡΕΑΝ είσοδος στις μόνιμες συλλογές.",
+        "Ορισμένες ειδικές εκθέσεις έχουν χρέωση."
+      ],
+      "tags": [
+        "museum",
+        "free",
+        "modern art"
+      ],
       "duration_hours": 2.5,
-      "best_time": "afternoon"
+      "best_time": "afternoon",
+      "cafe": "<a href='https://maps.google.com/?q=Science+Museum+Cafe+London' target='_blank'>Science Museum Café</a> - interactive café"
     },
     {
       "id": 12,
@@ -266,9 +538,24 @@
       "description": "Μουσείο για την ιστορία του Λονδίνου και του ποταμού Τάμεση.",
       "category": "museum",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
-        "16": 0, "17": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
         "adult": 0
       },
       "location": {
@@ -277,10 +564,18 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Museum+of+London+Docklands+Cafe' target='_blank'>Μουσείο Cafe</a>",
       "website": "https://www.museumoflondon.org.uk/museum-london-docklands",
-      "notes": ["ΔΩΡΕΑΝ είσοδος."],
-      "tags": ["museum", "free", "history", "docklands"],
+      "notes": [
+        "ΔΩΡΕΑΝ είσοδος."
+      ],
+      "tags": [
+        "museum",
+        "free",
+        "history",
+        "docklands"
+      ],
       "duration_hours": 2,
-      "best_time": "afternoon"
+      "best_time": "afternoon",
+      "cafe": "<a href='https://maps.google.com/?q=V&A+Museum+Cafe+London' target='_blank'>V&A Café</a> - elegant museum café"
     },
     {
       "id": 13,
@@ -288,9 +583,24 @@
       "description": "Μεγάλο βασιλικό πάρκο με κήπους και λίμνη.",
       "category": "park",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
-        "16": 0, "17": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
         "adult": 0
       },
       "location": {
@@ -299,10 +609,17 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Regents+Park+Cafe' target='_blank'>Park Cafe</a>",
       "website": "https://www.royalparks.org.uk/parks/the-regents-park",
-      "notes": ["ΔΩΡΕΑΝ είσοδος."],
-      "tags": ["park", "free", "garden"],
+      "notes": [
+        "ΔΩΡΕΑΝ είσοδος."
+      ],
+      "tags": [
+        "park",
+        "free",
+        "garden"
+      ],
       "duration_hours": 1.5,
-      "best_time": "afternoon"
+      "best_time": "afternoon",
+      "cafe": "<a href='https://maps.google.com/?q=Kensington+Palace+Cafe' target='_blank'>Pavilion Café</a> - palace gardens café"
     },
     {
       "id": 14,
@@ -310,9 +627,24 @@
       "description": "Δωρεάν κήπος σε ουρανοξύστη με πανοραμική θέα (απαιτείται κράτηση).",
       "category": "viewpoint",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
-        "16": 0, "17": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
         "adult": 0
       },
       "location": {
@@ -321,11 +653,19 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Sky+Garden+Restaurant' target='_blank'>Sky Garden Restaurant</a>",
       "website": "https://skygarden.london/",
-      "notes": ["ΔΩΡΕΑΝ, αλλά απαιτείται ΚΡΑΤΗΣΗ online."],
-      "tags": ["view", "free", "garden", "skyscraper"],
+      "notes": [
+        "ΔΩΡΕΑΝ, αλλά απαιτείται ΚΡΑΤΗΣΗ online."
+      ],
+      "tags": [
+        "view",
+        "free",
+        "garden",
+        "skyscraper"
+      ],
       "top": true,
       "duration_hours": 1,
-      "best_time": "any"
+      "best_time": "any",
+      "cafe": "<a href='https://maps.google.com/?q=Hampton+Court+Cafe' target='_blank'>Tiltyard Café</a> - palace café"
     },
     {
       "id": 15,
@@ -333,9 +673,24 @@
       "description": "Ιστορική αγορά τροφίμων με παραδοσιακά και διεθνή προϊόντα.",
       "category": "market",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
-        "16": 0, "17": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
         "adult": 0
       },
       "location": {
@@ -344,10 +699,17 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Borough+Market+Food+Stalls' target='_blank'>Πολλά street food stalls</a>",
       "website": "https://boroughmarket.org.uk/",
-      "notes": ["ΔΩΡΕΑΝ είσοδος."],
-      "tags": ["market", "free", "food"],
+      "notes": [
+        "ΔΩΡΕΑΝ είσοδος."
+      ],
+      "tags": [
+        "market",
+        "free",
+        "food"
+      ],
       "duration_hours": 1.5,
-      "best_time": "morning"
+      "best_time": "morning",
+      "cafe": "<a href='https://maps.google.com/?q=Shakespeares+Globe+Cafe+London' target='_blank'>Swan Bar & Restaurant</a> - Globe café"
     },
     {
       "id": 16,
@@ -355,9 +717,24 @@
       "description": "Βασιλικό πάρκο με εκπληκτική θέα προς το Canary Wharf και το Royal Observatory.",
       "category": "park",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
-        "16": 0, "17": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
         "adult": 0
       },
       "location": {
@@ -366,10 +743,19 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Greenwich+Park+Pavillion+Cafe' target='_blank'>Pavillion Cafe</a>",
       "website": "https://www.royalparks.org.uk/parks/greenwich-park",
-      "notes": ["ΔΩΡΕΑΝ.", "Έξω από το Royal Observatory (που έχει είσοδο)."],
-      "tags": ["park", "free", "view", "unesco"],
+      "notes": [
+        "ΔΩΡΕΑΝ.",
+        "Έξω από το Royal Observatory (που έχει είσοδο)."
+      ],
+      "tags": [
+        "park",
+        "free",
+        "view",
+        "unesco"
+      ],
       "duration_hours": 1.5,
-      "best_time": "afternoon"
+      "best_time": "afternoon",
+      "cafe": "<a href='https://maps.google.com/?q=National+Gallery+Cafe+London' target='_blank'>National Café</a> - gallery café"
     },
     {
       "id": 17,
@@ -377,9 +763,24 @@
       "description": "Το μεγαλύτερο Βασιλικό Πάρκο του Λονδίνου, γνωστό για τα ελεύθερα ελάφια.",
       "category": "park",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
-        "16": 0, "17": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
         "adult": 0
       },
       "location": {
@@ -388,10 +789,19 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Pembroke+Lodge+Richmond+Park' target='_blank'>Pembroke Lodge</a>",
       "website": "https://www.royalparks.org.uk/parks/richmond-park",
-      "notes": ["ΔΩΡΕΑΝ.", "Προσοχή στα ελάφια, ιδιαίτερα την περίοδο του ζευγαρώματος."],
-      "tags": ["park", "free", "deer", "nature"],
+      "notes": [
+        "ΔΩΡΕΑΝ.",
+        "Προσοχή στα ελάφια, ιδιαίτερα την περίοδο του ζευγαρώματος."
+      ],
+      "tags": [
+        "park",
+        "free",
+        "deer",
+        "nature"
+      ],
       "duration_hours": 2.5,
-      "best_time": "morning"
+      "best_time": "morning",
+      "cafe": "<a href='https://maps.google.com/?q=Tate+Modern+Cafe+London' target='_blank'>Tate Modern Café</a> - art café"
     },
     {
       "id": 18,
@@ -399,9 +809,24 @@
       "description": "Ήρεμος Ιαπωνικός κήπος μέσα στο Holland Park.",
       "category": "park",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
-        "16": 0, "17": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
         "adult": 0
       },
       "location": {
@@ -410,10 +835,19 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Holland+Park+Cafe' target='_blank'>Holland Park Cafe</a>",
       "website": "https://www.rbkc.gov.uk/leisure-and-culture/parks/holland-park",
-      "notes": ["ΔΩΡΕΑΝ.", "Μέρος του Holland Park."],
-      "tags": ["park", "free", "japanese garden", "peaceful"],
+      "notes": [
+        "ΔΩΡΕΑΝ.",
+        "Μέρος του Holland Park."
+      ],
+      "tags": [
+        "park",
+        "free",
+        "japanese garden",
+        "peaceful"
+      ],
       "duration_hours": 0.75,
-      "best_time": "any"
+      "best_time": "any",
+      "cafe": "<a href='https://maps.google.com/?q=Covent+Garden+Market+Cafe+London' target='_blank'>Covent Garden Cafés</a> - market cafés"
     },
     {
       "id": 19,
@@ -421,9 +855,24 @@
       "description": "Ερείπια παλιάς εκκλησίας μετατραμμένα σε ήσυχο αστικό κήπο.",
       "category": "park",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
-        "16": 0, "17": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
         "adult": 0
       },
       "location": {
@@ -432,10 +881,20 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=St+Dunstan+Hill+Cafes' target='_blank'>Κοντινά Cafes</a>",
       "website": "",
-      "notes": ["ΔΩΡΕΑΝ.", "Ιδανικό για μια σύντομη ξεκούραση από την πόλη."],
-      "tags": ["park", "free", "garden", "ruins", "hidden gem"],
+      "notes": [
+        "ΔΩΡΕΑΝ.",
+        "Ιδανικό για μια σύντομη ξεκούραση από την πόλη."
+      ],
+      "tags": [
+        "park",
+        "free",
+        "garden",
+        "ruins",
+        "hidden gem"
+      ],
       "duration_hours": 0.5,
-      "best_time": "afternoon"
+      "best_time": "afternoon",
+      "cafe": "<a href='https://maps.google.com/?q=Hamleys+Cafe+London' target='_blank'>Hamleys Café</a> - toy store café"
     },
     {
       "id": 20,
@@ -443,9 +902,24 @@
       "description": "Γραφική περιοχή όπου συναντούνται δύο κανάλια, γεμάτη με πλοιάρια και καφέ.",
       "category": "area",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
-        "16": 0, "17": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
         "adult": 0
       },
       "location": {
@@ -454,10 +928,19 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Cafe+Little+Venice' target='_blank'>Πολλά καφέ στις όχθες</a>",
       "website": "",
-      "notes": ["ΔΩΡΕΑΝ βόλτα.", "Σημείο αναχώρησης για βόλτες με βαρκάδα προς το Camden."],
-      "tags": ["canal", "free", "walk", "picturesque"],
+      "notes": [
+        "ΔΩΡΕΑΝ βόλτα.",
+        "Σημείο αναχώρησης για βόλτες με βαρκάδα προς το Camden."
+      ],
+      "tags": [
+        "canal",
+        "free",
+        "walk",
+        "picturesque"
+      ],
       "duration_hours": 1,
-      "best_time": "afternoon"
+      "best_time": "afternoon",
+      "cafe": "<a href='https://maps.google.com/?q=Harrods+Cafe+London' target='_blank'>Harrods Tea Room</a> - luxury café"
     },
     {
       "id": 21,
@@ -465,9 +948,24 @@
       "description": "Μεγάλη αστική φάρμα με ζώα, ιδανική για οικογένειες.",
       "category": "park",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
-        "16": 0, "17": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
         "adult": 0
       },
       "location": {
@@ -476,10 +974,20 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Mudchute+Farm+Cafe' target='_blank'>Farm Cafe</a>",
       "website": "https://www.mudchute.org/",
-      "notes": ["ΔΩΡΕΑΝ.", "Επαφή με φάρμα και χωράφι στην καρδιά του Λονδίνου."],
-      "tags": ["park", "free", "farm", "animals", "family"],
+      "notes": [
+        "ΔΩΡΕΑΝ.",
+        "Επαφή με φάρμα και χωράφι στην καρδιά του Λονδίνου."
+      ],
+      "tags": [
+        "park",
+        "free",
+        "farm",
+        "animals",
+        "family"
+      ],
       "duration_hours": 2,
-      "best_time": "morning"
+      "best_time": "morning",
+      "cafe": "<a href='https://maps.google.com/?q=Camden+Market+Cafe+London' target='_blank'>Camden Market Cafés</a> - street food cafés"
     },
     {
       "id": 22,
@@ -487,9 +995,24 @@
       "description": "Μεγάλος χώρος παιχνιδιών και πρασίνου, προσβάσιμος μόνο σε ενήλικες που συνοδεύουν παιδιά.",
       "category": "park",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
-        "16": 0, "17": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
         "adult": 0
       },
       "location": {
@@ -498,10 +1021,20 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Cafe+Brunswick+Centre+London' target='_blank'>Brunswick Centre Cafes</a>",
       "website": "https://www.coramsfields.org/",
-      "notes": ["ΔΩΡΕΑΝ.", "Είσοδος ΜΟΝΟ για ενήλικες που συνοδεύουν παιδί/παιδιά."],
-      "tags": ["park", "free", "playground", "family", "children only"],
+      "notes": [
+        "ΔΩΡΕΑΝ.",
+        "Είσοδος ΜΟΝΟ για ενήλικες που συνοδεύουν παιδί/παιδιά."
+      ],
+      "tags": [
+        "park",
+        "free",
+        "playground",
+        "family",
+        "children only"
+      ],
       "duration_hours": 1.5,
-      "best_time": "afternoon"
+      "best_time": "afternoon",
+      "cafe": "<a href='https://maps.google.com/?q=Kidzania+London+Cafe' target='_blank'>KidZania Café</a> - family café"
     },
     {
       "id": 23,
@@ -509,9 +1042,24 @@
       "description": "Αγορά με έντονο αρχιτεκτονικό στοιχείο, με άπειρα πρατήρια ρούχων, παράξενα αντικείμενα και street food από όλο τον κόσμο.",
       "category": "market",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
-        "16": 0, "17": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
         "adult": 0
       },
       "location": {
@@ -520,10 +1068,20 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Camden+Market+Food+Stalls' target='_blank'>Αμέτρητα street food stalls</a>",
       "website": "https://www.camdenmarket.com/",
-      "notes": ["ΔΩΡΕΑΝ είσοδος.", "Πολυσύχναστη, ιδιαίτερα το Σαββατοκύριακο."],
-      "tags": ["market", "free", "food", "alternative", "shopping"],
+      "notes": [
+        "ΔΩΡΕΑΝ είσοδος.",
+        "Πολυσύχναστη, ιδιαίτερα το Σαββατοκύριακο."
+      ],
+      "tags": [
+        "market",
+        "free",
+        "food",
+        "alternative",
+        "shopping"
+      ],
       "duration_hours": 2.5,
-      "best_time": "afternoon"
+      "best_time": "afternoon",
+      "cafe": "<a href='https://maps.google.com/?q=Warner+Bros+Studio+Cafe+London' target='_blank'>Studio Café</a> - Harry Potter café"
     },
     {
       "id": 24,
@@ -531,9 +1089,24 @@
       "description": "Η κινεζική συνοικία του Λονδίνου, με τα παραδοσιακά της πύλη, εστιατόρια και καταστήματα.",
       "category": "area",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
-        "16": 0, "17": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
         "adult": 0
       },
       "location": {
@@ -542,10 +1115,20 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Chinatown+London+Restaurants' target='_blank'>Δωδεκάδες κινέζικα εστιατόρια</a>",
       "website": "https://www.chinatownlondon.org/",
-      "notes": ["ΔΩΡΕΑΝ βόλτα.", "Ιδιαίτερα ζωντανή κατά τις βραδινές ώρες και για το Κινέζικο Νέο Έτος."],
-      "tags": ["area", "free", "chinese", "food", "walk"],
+      "notes": [
+        "ΔΩΡΕΑΝ βόλτα.",
+        "Ιδιαίτερα ζωντανή κατά τις βραδινές ώρες και για το Κινέζικο Νέο Έτος."
+      ],
+      "tags": [
+        "area",
+        "free",
+        "chinese",
+        "food",
+        "walk"
+      ],
       "duration_hours": 1,
-      "best_time": "evening"
+      "best_time": "evening",
+      "cafe": "<a href='https://maps.google.com/?q=Thorpe+Park+Cafe' target='_blank'>Thorpe Park Cafés</a> - theme park cafés"
     },
     {
       "id": 25,
@@ -553,21 +1136,47 @@
       "description": "Μοναδική έκθεση από νεόν και βιντάζ σε μια παλιά βιομηχανική αίθουσα.",
       "category": "exhibition",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
-        "16": 0, "17": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
         "adult": 0
       },
       "location": {
-        "lat": 51.5850,
+        "lat": 51.585,
         "lng": -0.0047
       },
       "restaurant": "<a href='https://maps.google.com/?q=Rolling+Scones+Cafe+Gods+Own+Junkyard' target='_blank'>Rolling Scones Cafe</a>",
       "website": "https://www.godsownjunkyard.co.uk/",
-      "notes": ["ΔΩΡΕΑΝ.", "Απαγορεύεται η εμπορική φωτογραφία.", "Καλύτερα να ελέγξετε ώρες λειτουργίας."],
-      "tags": ["exhibition", "free", "neon", "art", "unique"],
+      "notes": [
+        "ΔΩΡΕΑΝ.",
+        "Απαγορεύεται η εμπορική φωτογραφία.",
+        "Καλύτερα να ελέγξετε ώρες λειτουργίας."
+      ],
+      "tags": [
+        "exhibition",
+        "free",
+        "neon",
+        "art",
+        "unique"
+      ],
       "duration_hours": 1,
-      "best_time": "afternoon"
+      "best_time": "afternoon",
+      "cafe": "<a href='https://maps.google.com/?q=Legoland+Windsor+Cafe' target='_blank'>LEGOLAND Cafés</a> - park cafés"
     },
     {
       "id": 26,
@@ -575,9 +1184,24 @@
       "description": "Μεγάλος, μαγικός χώρος παιχνιδιών με πειρατικό πλοίο ως κεντρικό στοιχείο, αφιερωμένος στη πριγκίπισσα Νταϊάνα.",
       "category": "park",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
-        "16": 0, "17": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
         "adult": 0
       },
       "location": {
@@ -586,10 +1210,21 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Kensington+Gardens+Cafe' target='_blank'>Kensington Gardens Cafe</a>",
       "website": "https://www.royalparks.org.uk/parks/kensington-gardens/diana-memorial-playground",
-      "notes": ["ΔΩΡΕΑΝ.", "Συχνά υπάρχει ουρά για είσοδο.", "Είσοδος ΜΟΝΟ για ενήλικες που συνοδεύουν παιδί/παιδιά."],
-      "tags": ["park", "free", "playground", "family", "children only"],
+      "notes": [
+        "ΔΩΡΕΑΝ.",
+        "Συχνά υπάρχει ουρά για είσοδο.",
+        "Είσοδος ΜΟΝΟ για ενήλικες που συνοδεύουν παιδί/παιδιά."
+      ],
+      "tags": [
+        "park",
+        "free",
+        "playground",
+        "family",
+        "children only"
+      ],
       "duration_hours": 1.5,
-      "best_time": "morning"
+      "best_time": "morning",
+      "cafe": "<a href='https://maps.google.com/?q=Chessington+Cafe' target='_blank'>Chessington Cafés</a> - adventure cafés"
     },
     {
       "id": 27,
@@ -597,9 +1232,24 @@
       "description": "Το παλαιότερο και πιο διάσημο παιχνιδάδικο του κόσμου, 7 ορόφων στο κέντρο του Λονδίνου.",
       "category": "shop",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
-        "16": 0, "17": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
         "adult": 0
       },
       "location": {
@@ -608,10 +1258,21 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Regent+Street+Restaurants+London' target='_blank'>Regent Street Restaurants</a>",
       "website": "https://www.hamleys.com/",
-      "notes": ["ΔΩΡΕΑΝ είσοδος.", "Εμπειρία περιήγησης και παιχνιδιού, όχι απλά ψώνια.", "Πολυσύχναστο, ιδιαίτερα το Σαββατοκύριακο."],
-      "tags": ["shop", "free", "toys", "family", "landmark"],
+      "notes": [
+        "ΔΩΡΕΑΝ είσοδος.",
+        "Εμπειρία περιήγησης και παιχνιδιού, όχι απλά ψώνια.",
+        "Πολυσύχναστο, ιδιαίτερα το Σαββατοκύριακο."
+      ],
+      "tags": [
+        "shop",
+        "free",
+        "toys",
+        "family",
+        "landmark"
+      ],
       "duration_hours": 1,
-      "best_time": "morning"
+      "best_time": "morning",
+      "cafe": "<a href='https://maps.google.com/?q=Hyde+Park+Cafe+London' target='_blank'>Serpentine Bar & Kitchen</a> - park café"
     },
     {
       "id": 28,
@@ -619,9 +1280,24 @@
       "description": "Μουσείο με εκθέσεις φυσικής ιστορίας, ανθρωπολογίας και μουσικών οργάνων. Οι κήποι και η θέα είναι υπέροχοι.",
       "category": "museum",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
-        "16": 0, "17": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
         "adult": 0
       },
       "location": {
@@ -630,10 +1306,21 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Horniman+Museum+Cafe' target='_blank'>Horniman Museum Cafe</a>",
       "website": "https://www.horniman.ac.uk/",
-      "notes": ["ΔΩΡΕΑΝ για τις κύριες συλλογές.", "Το Ενυδρείο είναι ξεχωριστή πληρωμένη είσοδος.", "Οι κήποι είναι επίσης δωρεάν."],
-      "tags": ["museum", "free", "gardens", "view", "anthropology"],
+      "notes": [
+        "ΔΩΡΕΑΝ για τις κύριες συλλογές.",
+        "Το Ενυδρείο είναι ξεχωριστή πληρωμένη είσοδος.",
+        "Οι κήποι είναι επίσης δωρεάν."
+      ],
+      "tags": [
+        "museum",
+        "free",
+        "gardens",
+        "view",
+        "anthropology"
+      ],
       "duration_hours": 2,
-      "best_time": "afternoon"
+      "best_time": "afternoon",
+      "cafe": "<a href='https://maps.google.com/?q=Regents+Park+Cafe+London' target='_blank'>Regent's Park Café</a> - park café"
     },
     {
       "id": 29,
@@ -641,9 +1328,24 @@
       "description": "Μουσείο κέρινων αγαλμάτων με 150+ διασημότητες και διαδραστικές ζώνες.",
       "category": "museum",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 35, "6": 35, "7": 35, "8": 35, "9": 35, "10": 35, "11": 35, "12": 35, "13": 35, "14": 35, "15": 35,
-        "16": 40, "17": 40,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 35,
+        "6": 35,
+        "7": 35,
+        "8": 35,
+        "9": 35,
+        "10": 35,
+        "11": 35,
+        "12": 35,
+        "13": 35,
+        "14": 35,
+        "15": 35,
+        "16": 40,
+        "17": 40,
         "adult": 40
       },
       "location": {
@@ -652,11 +1354,18 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Madame+Tussauds+Cafe' target='_blank'>Madame Tussauds Cafe</a>",
       "website": "https://www.madametussauds.com/london/",
-      "notes": ["Συχνά περιλαμβάνεται σε Combo Passes."],
-      "tags": ["wax", "museum", "celebrities"],
+      "notes": [
+        "Συχνά περιλαμβάνεται σε Combo Passes."
+      ],
+      "tags": [
+        "wax",
+        "museum",
+        "celebrities"
+      ],
       "top": true,
       "duration_hours": 2,
-      "best_time": "afternoon"
+      "best_time": "afternoon",
+      "cafe": "<a href='https://maps.google.com/?q=Greenwich+Park+Cafe+London' target='_blank'>Pavilion Tea House</a> - Greenwich café"
     },
     {
       "id": 30,
@@ -664,9 +1373,24 @@
       "description": "Ενυδρείο στο South Bank με πάνω από 500 είδη θαλάσσιας ζωής.",
       "category": "aquarium",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 25, "6": 25, "7": 25, "8": 25, "9": 25, "10": 25, "11": 25, "12": 25, "13": 25, "14": 25, "15": 25,
-        "16": 30, "17": 30,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 25,
+        "6": 25,
+        "7": 25,
+        "8": 25,
+        "9": 25,
+        "10": 25,
+        "11": 25,
+        "12": 25,
+        "13": 25,
+        "14": 25,
+        "15": 25,
+        "16": 30,
+        "17": 30,
         "adult": 30
       },
       "location": {
@@ -675,11 +1399,18 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=SEA+LIFE+London+Cafe' target='_blank'>SEA LIFE Cafe</a>",
       "website": "https://www.visitsealife.com/london/",
-      "notes": ["Συχνά περιλαμβάνεται σε Combo Passes."],
-      "tags": ["aquarium", "fish", "family"],
+      "notes": [
+        "Συχνά περιλαμβάνεται σε Combo Passes."
+      ],
+      "tags": [
+        "aquarium",
+        "fish",
+        "family"
+      ],
       "top": true,
       "duration_hours": 1.5,
-      "best_time": "any"
+      "best_time": "any",
+      "cafe": "<a href='https://maps.google.com/?q=Thames+Cruise+Cafe+London' target='_blank'>Thames Café</a> - riverside café"
     },
     {
       "id": 31,
@@ -687,9 +1418,24 @@
       "description": "Διαδραστική περιπέτεια με τους ήρωες του Shrek και τα άλλα παραμύθια.",
       "category": "attraction",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
-        "5": 28, "6": 28, "7": 28, "8": 28, "9": 28, "10": 28, "11": 28, "12": 28, "13": 28, "14": 28, "15": 28,
-        "16": 32, "17": 32,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 28,
+        "6": 28,
+        "7": 28,
+        "8": 28,
+        "9": 28,
+        "10": 28,
+        "11": 28,
+        "12": 28,
+        "13": 28,
+        "14": 28,
+        "15": 28,
+        "16": 32,
+        "17": 32,
         "adult": 32
       },
       "location": {
@@ -698,17 +1444,18 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Shreks+Adventure+Cafe' target='_blank'>Shrek's Cafe</a>",
       "website": "https://www.shreksadventure.com/london/",
-      "notes": ["Συχνά περιλαμβάνεται σε Combo Passes."],
-      "tags": ["shrek", "interactive", "family", "adventure"],
+      "notes": [
+        "Συχνά περιλαμβάνεται σε Combo Passes."
+      ],
+      "tags": [
+        "shrek",
+        "interactive",
+        "family",
+        "adventure"
+      ],
       "duration_hours": 1.5,
-      "best_time": "any"
+      "best_time": "any",
+      "cafe": "<a href='https://maps.google.com/?q=London+Dungeon+Cafe' target='_blank'>Dungeon Café</a> - themed café"
     }
-  ],
- "cityPass": {
-    "name": "Merlin Multi-Attraction Pass (2–4 Attractions)",
-    "description": "Συνδυαστικό εισιτήριο για 2 έως 4 δραστηριότητες της Merlin (London Eye, SEA LIFE, Madame Tussauds, Shrek’s Adventure). Ισχύει για τουρίστες, όχι ετήσιο. Η πιο συμφέρουσα επιλογή για λίγες ημέρες.",
-    "discountPercent": 35,
-    "applicableActivities": [1, 29, 30, 31],
-    "url": "https://www.visitsealife.com/london/tickets-and-passes/multi-attraction-tickets/"
-  }
+  ]
 }
