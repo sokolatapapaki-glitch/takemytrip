@@ -1454,21 +1454,40 @@ function getActivitiesStepHTML() {
         <div class="card">
             <h1 class="card-title"><i class="fas fa-ticket-alt"></i> Οικογενειακές Δραστηριότητες</h1>
             <p class="card-subtitle">${state.selectedDestination ? 'Επιλέξτε δραστηριότητες για: ' + state.selectedDestination : 'Πρώτα επιλέξτε προορισμό'}</p>
-            
-        <div class="required-notice" style="grid-column: 1/-1; background: linear-gradient(135deg, #FFF3CD 0%, #FFF8E1 100%); border: 2px solid #F59E0B; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);">
-            <div style="display: flex; align-items: flex-start; gap: 15px;">
-                <div style="font-size: 32px; flex-shrink: 0;">⚠️</div>
-                <div style="flex: 1;">
-                    <h3 style="margin: 0 0 10px 0; color: #92400E; font-size: 18px;">
-                        <i class="fas fa-exclamation-circle"></i> Απαιτούμενες Ενέργειες
-                    </h3>
-                    <p style="margin: 0; color: #78350F; font-size: 15px; line-height: 1.6;">
-                        Για να υπολογιστεί σωστά το κόστος, πρέπει να δηλωθεί υποχρεωτικά η σύνθεση των ταξιδιωτών (ηλικίες).
-                        Για να μπορέσει να δημιουργηθεί το πρόγραμμα στο επόμενο βήμα, πρέπει να επιλεγούν όλες οι δραστηριότητες, συμπεριλαμβανομένων και των δωρεάν.
-                    </p>
-                </div>
-            </div>
+          <!-- TWO COLUMN INFO BOXES -->
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0 15px 0;">
+
+    <!-- LEFT: REQUIRED ACTIONS -->
+    <div style="background: linear-gradient(135deg, #FFF3CD 0%, #FFF8E1 100%); border: 1px solid #F59E0B; border-radius: 8px; padding: 10px; font-size: 12px;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+            <div style="font-size: 18px;">⚠️</div>
+            <h4 style="margin: 0; color: #92400E; font-size: 13px;">
+                <i class="fas fa-exclamation-circle"></i> Απαιτούμενες Ενέργειες
+            </h4>
         </div>
+        <p style="margin: 0; color: #78350F; line-height: 1.4;">
+            • Δηλώστε υποχρεωτικά ηλικίες<br>
+            • Επιλέξτε ΟΛΕΣ τις δραστηριότητες
+        </p>
+    </div>
+
+    <!-- RIGHT: IMPORTANT INFO -->
+    <div style="background: linear-gradient(to bottom, #f0f9ff, #ffffff); border: 1px solid #E0F2FE; border-radius: 8px; padding: 10px; font-size: 12px;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+            <div style="font-size: 18px; color: #4F46E5;">💡</div>
+            <h4 style="margin: 0; color: #1A202C; font-size: 13px;">
+                <i class="fas fa-info-circle" style="color: #4F46E5;"></i> Σημαντικές Πληροφορίες
+            </h4>
+        </div>
+        <div style="color: #4A5568; line-height: 1.4;">
+            <strong>📊 Ενδεικτικές τιμές</strong><br>
+            <strong>✅ Προτείνουμε:</strong> Ελέγξτε τελικές τιμές<br>
+            <strong>💡 Συμβουλή:</strong> Κλείστε online!
+        </div>
+    </div>
+
+</div>  
+        
     
             ${!state.selectedDestination ? `
                 <div class="alert alert-warning">
@@ -1526,50 +1545,7 @@ function getActivitiesStepHTML() {
         </button>
     </div>
 </div>
-              <div style="margin: 20px 0; padding: 12px; background: linear-gradient(to bottom, #f0f9ff, #ffffff); border-radius: 10px; border: 2px solid #E0F2FE; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
-    
-    <!-- ΚΕΦΑΛΙ -->
-    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-        <div style="font-size: 24px; color: #4F46E5; background: white; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-            💡
-        </div>
-        <h4 style="margin: 0; color: #1A202C; font-size: 16px;">
-            <i class="fas fa-info-circle" style="color: #4F46E5; margin-right: 6px;"></i> 
-            Σημαντικές Πληροφορίες
-        </h4>
-    </div>
-    
-    <!-- ΠΕΡΙΕΧΟΜΕΝΟ -->
-    <div style="background: white; padding: 12px; border-radius: 8px; border: 1px solid #E2E8F0;">
-        
-        <!-- ΠΑΡΑΓΡΑΦΟΣ 1 -->
-        <div style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed #e2e8f0;">
-            <div style="color: #4F46E5; font-weight: bold; font-size: 14px; margin-bottom: 4px;">
-                📊 Οι τιμές είναι ενδεικτικές
-            </div>
-            <div style="color: #4A5568; font-size: 14px; line-height: 1.5;">
-                Μπορεί να υπάρχουν διαφορές λόγω εποχικότητας, προσφορών ή ηλικιακών κατηγοριών.
-            </div>
-        </div>
-        
-        <!-- ΠΑΡΑΓΡΑΦΟΣ 2 -->
-        <div style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed #e2e8f0;">
-            <div style="color: #10B981; font-weight: bold; font-size: 14px; margin-bottom: 4px;">
-                ✅ Προτείνουμε
-            </div>
-            <div style="color: #4A5568; font-size: 14px; line-height: 1.5;">
-                Να ελέγχετε πάντα τις <strong>τελικές τιμές</strong> στα επίσημα site ή στα ταμεία πριν από κράτηση/αγορά.
-            </div>
-        </div>
-        
-        <!-- ΠΑΡΑΓΡΑΦΟΣ 3 -->
-        <div style="color: #F59E0B; font-size: 13px; line-height: 1.5;">
-            <i class="fas fa-lightbulb" style="margin-right: 6px;"></i>
-            <strong>Χρήσιμη συμβουλή:</strong> Κλείστε online για καλύτερες τιμές!
-        </div>
-        
-    </div>
-</div>
+
                 <!-- Activities Container -->
                 <div id="activities-list" class="grid grid-3">
                     <div class="loading" style="text-align: center; padding: 40px; grid-column: 1 / -1;">
