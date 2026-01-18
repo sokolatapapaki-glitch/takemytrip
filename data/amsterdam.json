@@ -54,7 +54,8 @@
         "top"
       ],
       "duration_hours": 3,
-      "best_time": "any"
+      "best_time": "any",
+      "cafe": "<a href='https://maps.google.com/?q=Roest+Amsterdam' target='_blank'>Roest</a> - industrial cafe κοντά στο NEMO"
     },
     {
       "id": 2,
@@ -100,7 +101,8 @@
         "top"
       ],
       "duration_hours": 2.5,
-      "best_time": "morning"
+      "best_time": "morning",
+      "cafe": "<a href='https://maps.google.com/?q=Rijks+Restaurant+Amsterdam' target='_blank'>Rijks</a> - fine dining café στο Rijksmuseum"
     },
     {
       "id": 3,
@@ -145,7 +147,8 @@
         "top"
       ],
       "duration_hours": 2,
-      "best_time": "afternoon"
+      "best_time": "afternoon",
+      "cafe": "<a href='https://maps.google.com/?q=Le+Pain+Quotidien+Museumplein+Amsterdam' target='_blank'>Le Pain Quotidien</a> - όμορφο cafe στην πλατεία"
     },
     {
       "id": 4,
@@ -193,7 +196,8 @@
         "top"
       ],
       "duration_hours": 1.5,
-      "best_time": "any"
+      "best_time": "any",
+      "cafe": "<a href='https://maps.google.com/?q=Greenwoods+Amsterdam' target='_blank'>Greenwoods</a> - English breakfast & coffee"
     },
     {
       "id": 5,
@@ -239,7 +243,8 @@
         "top"
       ],
       "duration_hours": 1.5,
-      "best_time": "any"
+      "best_time": "any",
+      "cafe": "<a href='https://maps.google.com/?q=Coffee+Company+Amsterdam+Centrum' target='_blank'>Coffee Company</a> - chain coffee shop"
     },
     {
       "id": 6,
@@ -290,7 +295,8 @@
         "top"
       ],
       "duration_hours": 1,
-      "best_time": "any"
+      "best_time": "any",
+      "cafe": "<a href='https://maps.google.com/?q=Pluk+Amsterdam' target='_blank'>Pluk</a> - healthy brunch spot"
     },
     {
       "id": 7,
@@ -336,7 +342,8 @@
         "top"
       ],
       "duration_hours": 4,
-      "best_time": "morning"
+      "best_time": "morning",
+      "cafe": "<a href='https://maps.google.com/?q=De+Plantage+Cafe+Artis' target='_blank'>De Plantage</a> - café στο Artis"
     },
     {
       "id": 8,
@@ -379,7 +386,8 @@
         "free"
       ],
       "duration_hours": 2,
-      "best_time": "afternoon"
+      "best_time": "afternoon",
+      "cafe": "<a href='https://maps.google.com/?q=Blauwe+Theehuis+Vondelpark' target='_blank'>Blauwe Theehuis</a> - iconic cafe στο Vondelpark"
     },
     {
       "id": 9,
@@ -422,7 +430,8 @@
         "free"
       ],
       "duration_hours": 3,
-      "best_time": "any"
+      "best_time": "any",
+      "cafe": "<a href='https://maps.google.com/?q=Grand+Cafe+De+Bosbaan' target='_blank'>Grand Cafe De Bosbaan</a> - lakeside cafe"
     },
     {
       "id": 10,
@@ -466,7 +475,8 @@
         "minigolf"
       ],
       "duration_hours": 2.5,
-      "best_time": "afternoon"
+      "best_time": "afternoon",
+      "cafe": "<a href='https://maps.google.com/?q=Cafe+Het+Glazen+Huis+Amstelpark' target='_blank'>Het Glazen Huis</a> - glass house cafe"
     },
     {
       "id": 11,
@@ -512,7 +522,8 @@
         "sightseeing"
       ],
       "duration_hours": 1,
-      "best_time": "any"
+      "best_time": "any",
+      "cafe": "<a href='https://maps.google.com/?q=Coffee+Bru+Amsterdam' target='_blank'>Coffee Bru</a> - specialty coffee near canal"
     },
     {
       "id": 12,
@@ -558,7 +569,8 @@
         "food"
       ],
       "duration_hours": 1.5,
-      "best_time": "any"
+      "best_time": "any",
+      "cafe": "<a href='https://maps.google.com/?q=Pancakes+Amsterdam' target='_blank'>Pancakes Amsterdam</a> - traditional Dutch pancakes"
     }
   ]
 }

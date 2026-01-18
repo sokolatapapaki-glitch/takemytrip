@@ -2792,22 +2792,32 @@ async function setupActivitiesStep() {
                 </span>
             </div>
 
-            <!-- RESTAURANT/CAFE RECOMMENDATION -->
+            <!-- RESTAURANT RECOMMENDATION -->
             ${activity.restaurant ? `
                 <div class="restaurant-recommendation">
                     <div class="restaurant-header">
                         <i class="fas fa-utensils"></i>
-                        <span class="restaurant-title">ΚΟΝΤΙΝΟ ${activity.restaurantType === 'cafe' ? 'ΚΑΦΕ' : 'ΕΣΤΙΑΤΟΡΙΟ'}</span>
+                        <span class="restaurant-title">ΚΟΝΤΙΝΟ ΕΣΤΙΑΤΟΡΙΟ</span>
                     </div>
                     <div class="restaurant-content">
                         <p>${activity.restaurant.replace(/<a /g, '<a target="_blank" rel="noopener" ')}</p>
-                        <small class="restaurant-tip">
-                            <i class="fas fa-walking"></i>
-                            ${activity.restaurantType === 'cafe' ? 'καφέ' : 'εστιατόριο'}${activity.restaurantDistance !== undefined && activity.restaurantDistance !== null ? ` / ${activity.restaurantDistance === 0 ? 'εντός του ίδιου χώρου' : `${activity.restaurantDistance} λεπτά με τα πόδια`}` : ''}
-                        </small>
                     </div>
                 </div>
             ` : ''}
+
+            <!-- CAFE RECOMMENDATION -->
+            ${activity.cafe ? `
+                <div class="restaurant-recommendation">
+                    <div class="restaurant-header">
+                        <i class="fas fa-coffee"></i>
+                        <span class="restaurant-title">ΚΟΝΤΙΝΟ ΚΑΦΕ</span>
+                    </div>
+                    <div class="restaurant-content">
+                        <p>${activity.cafe.replace(/<a /g, '<a target="_blank" rel="noopener" ')}</p>
+                    </div>
+                </div>
+            ` : ''}
+
 
             <!-- ΤΙΜΕΣ -->
             ${state.familyMembers.length > 0 && state.familyMembers.every(m => m.age !== undefined && m.age !== null && m.age !== '') ? `
@@ -3959,19 +3969,27 @@ function createEnhancedPopup(activity) {
                 <strong>Κόστος:</strong> ${activity.price ? Number(activity.price).toFixed(2) + '€' : 'Δείτε τις τιμές'}
             </div>` : ''}
             
-            <!-- ΚΑΙΝΟΥΡΓΙΟ: ΠΡΟΤΕΙΝΟΜΕΝΟ ΕΣΤΙΑΤΟΡΙΟ -->
+            <!-- ΚΟΝΤΙΝΟ ΕΣΤΙΑΤΟΡΙΟ -->
             ${activity.restaurant ? `
             <div style="background: rgba(239, 68, 68, 0.08); padding: 10px; border-radius: 6px; margin: 10px 0; border-left: 3px solid #EF4444;">
                 <div style="display: flex; align-items: center; margin-bottom: 6px;">
                     <i class="fas fa-utensils" style="color: #EF4444; margin-right: 8px; font-size: 14px;"></i>
-                    <strong style="color: #1F2937; font-size: 13px;">Κοντινό Εστιατόριο:</strong>
+                    <strong style="color: #1F2937; font-size: 13px;">ΚΟΝΤΙΝΟ ΕΣΤΙΑΤΟΡΙΟ</strong>
                 </div>
                 <div style="font-size: 13px; color: #374151; line-height: 1.4;">
                     ${activity.restaurant.replace(/<a /g, '<a target="_blank" rel="noopener" style="color: #3B82F6; text-decoration: none; font-weight: 600;" ')}
                 </div>
-                <div style="font-size: 11px; color: #6B7280; margin-top: 6px; display: flex; align-items: center;">
-                    <i class="fas fa-lightbulb" style="margin-right: 4px; color: #F59E0B;"></i>
-                    Ιδανικό για φαγητό μετά την επίσκεψη
+            </div>` : ''}
+
+            <!-- ΚΟΝΤΙΝΟ ΚΑΦΕ -->
+            ${activity.cafe ? `
+            <div style="background: rgba(139, 92, 246, 0.08); padding: 10px; border-radius: 6px; margin: 10px 0; border-left: 3px solid #8B5CF6;">
+                <div style="display: flex; align-items: center; margin-bottom: 6px;">
+                    <i class="fas fa-coffee" style="color: #8B5CF6; margin-right: 8px; font-size: 14px;"></i>
+                    <strong style="color: #1F2937; font-size: 13px;">ΚΟΝΤΙΝΟ ΚΑΦΕ</strong>
+                </div>
+                <div style="font-size: 13px; color: #374151; line-height: 1.4;">
+                    ${activity.cafe.replace(/<a /g, '<a target="_blank" rel="noopener" style="color: #3B82F6; text-decoration: none; font-weight: 600;" ')}
                 </div>
             </div>` : ''}
             
