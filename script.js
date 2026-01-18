@@ -364,15 +364,15 @@ const StateValidator = {
             // Ensure at least default members
             if (cleaned.familyMembers.length === 0) {
                 cleaned.familyMembers = [
-                    { name: "Ενήλικας 1", age: "" },
-                    { name: "Ενήλικας 2", age: "" }
+                    { name: "Ενήλικας 1", age: "" }
+                    
                 ];
                 console.log('✅ StateValidator: Reset to default family members');
             }
         } else {
             cleaned.familyMembers = [
-                { name: "Ενήλικας 1", age: "" },
-                { name: "Ενήλικας 2", age: "" }
+                { name: "Ενήλικας 1", age: "" }
+               
             ];
         }
 
@@ -1507,13 +1507,10 @@ function getActivitiesStepHTML() {
     <!-- Κουμπιά Δράσης -->
     <div class="family-actions">
         <div class="family-add-buttons">
-            <button class="btn btn-outline" onclick="addFamilyMember('adult')">
-                <i class="fas fa-plus"></i> Προσθήκη Ενήλικα
-            </button>
-            <button class="btn btn-outline" onclick="addFamilyMember('child')">
-                <i class="fas fa-plus"></i> Προσθήκη Παιδιού
-            </button>
-        </div>
+    <button class="btn btn-outline" onclick="addFamilyMember('person')">
+        <i class="fas fa-user-plus"></i> ΠΡΟΣΘΗΚΗ ΑΤΟΜΟΥ
+    </button>
+</div>
         <button class="btn btn-primary family-update-btn" onclick="updateFamilyMembers()">
             <i class="fas fa-save"></i> Ενημέρωση Οικογένειας
         </button>
