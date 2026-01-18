@@ -1684,7 +1684,7 @@ function getGroupColor(index) {
 }
 
 
-// ==================== STEP 6: MAP (FIXED) ====================
+// ==================== STEP 5: MAP (FIXED) ====================
 function getMapStepHTML() {
     return `
         <div class="card">
@@ -3410,9 +3410,9 @@ function initializeMap() {
         `;
     }
 }
-// ==================== INITIALIZE MAP IN STEP 6 ====================
+// ==================== INITIALIZE MAP IN STEP 5 ====================
 function initializeMapInStep() {
-    console.log('🗺️ Αρχικοποίηση χάρτη στο βήμα 6...');
+    console.log('🗺️ Αρχικοποίηση χάρτη στο βήμα 5...');
     
     const mapElement = document.getElementById('travel-map');
     if (!mapElement) {
