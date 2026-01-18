@@ -6499,6 +6499,11 @@ function addActivityToProgramDay(activityId, day) {
         activityId: activityId  // <-- ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΚΛΕΙΔΙ!
     };
 
+    // Ensure day array exists before push (defensive fix for undefined array)
+    if (!userProgram.days[day-1]) {
+        userProgram.days[day-1] = [];
+    }
+
     // Προσθήκη στη νέα μέρα
     userProgram.days[day-1].push(activityWithId);  // <-- ΣΩΣΤΟ!
     
