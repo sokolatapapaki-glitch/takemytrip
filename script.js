@@ -1476,12 +1476,7 @@ function getActivitiesStepHTML() {
                     <div class="family-member-icon">
                         ${index === 0 ? '👨' : index === 1 ? '👩' : '🧒'}
                     </div>
-                    <input type="text" 
-                           class="form-control family-input" 
-                           value="${member.name}" 
-                           onchange="updateFamilyMemberName(${index}, this.value)"
-                           placeholder="Όνομα">
-                </div>
+                    </div>
                 
                 <!-- Δεύτερη γραμμή: Ηλικία και Κουμπί Διαγραφής -->
                 <div class="family-member-row">
