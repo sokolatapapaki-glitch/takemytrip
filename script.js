@@ -1507,7 +1507,7 @@ function getActivitiesStepHTML() {
     <!-- Κουμπιά Δράσης -->
     <div class="family-actions">
         <div class="family-add-buttons">
-    <button class="btn btn-outline" onclick="addFamilyMember('person')">
+    <button class="btn btn-outline" onclick="addFamilyMember()">
         <i class="fas fa-user-plus"></i> ΠΡΟΣΘΗΚΗ ΑΤΟΜΟΥ
     </button>
 </div>
@@ -4331,10 +4331,10 @@ function updateFamilyMemberAge(index, age) {
     recalculateSelectedActivityPrices();
 }
 
-function addFamilyMember(type) {
+function addFamilyMember() {  // Αφαίρεσε την παράμετρο type
     const newMember = {
-        name: type === 'adult' ? 'Νέο Μέλος' : 'Νέο Παιδί',
-        age: type === 'adult' ? 30 : 10
+        name: 'Νέο Άτομο',  // Μία μόνο επιλογή
+        age: ""  // ΚΕΝΟ, χωρίς default age
     };
     state.familyMembers.push(newMember);
     recalculateSelectedActivityPrices(); // Recalculate with new member
