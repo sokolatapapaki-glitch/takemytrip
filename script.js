@@ -1607,7 +1607,7 @@ function getActivitiesStepHTML() {
                 </div>
                 
                 <!-- Next Button -->
-                <div style="text-align: center; margin-top: 40px;">
+                <div style="text-align: center; margin-top: 20px;">
                     <button class="btn btn-primary" onclick="showStep('map')" style="padding: 18px 50px; font-size: 18px;">
                         <i class="fas fa-arrow-right"></i> Συνέχεια στον Χάρτη
                     </button>
@@ -1692,11 +1692,7 @@ function getMapStepHTML() {
                     </button>
                 </div>
             ` : `
-                <!-- ΧΑΡΤΗΣ -->
-                <div id="map-container" style="height: 600px; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 20px; border: 2px solid var(--border);">
-                    <div id="travel-map" style="height: 100%; width: 100%;"></div>
-                </div>
-                
+                                
                 <!-- ΚΟΥΜΠΙΑ ΕΛΕΓΧΟΥ -->
                 <div style="display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap;">
                     <button class="btn btn-primary" onclick="showActivityMap()">
@@ -1721,107 +1717,12 @@ function getMapStepHTML() {
                         <strong>Ετοιμότητα:</strong> Πατήστε "Προβολή Σημείων" για τις δραστηριότητες σας
                     </div>
                 </div>
-
-                <!-- CUSTOM MAP POINTS SECTION -->
-                <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);">
-                    <h4 style="margin: 0 0 15px 0; color: var(--dark);">
-                        <i class="fas fa-map-marker-alt"></i> Προσθήκη Προσωπικών Σημείων
-                    </h4>
-                    <p style="color: var(--gray); margin-bottom: 15px; font-size: 14px;">
-                        Προσθέστε ξενοδοχείο, εστιατόρια ή άλλα σημεία ενδιαφέροντος στον χάρτη
-                    </p>
-
-                    <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
-                        <input type="text"
-                               id="custom-point-name"
-                               placeholder="π.χ. Hotel Grande, Eiffel Tower"
-                               style="flex: 1; min-width: 250px; padding: 10px 15px; border: 2px solid var(--primary-light); border-radius: 8px; font-size: 14px;"
-                               onkeypress="if(event.key === 'Enter') addCustomMapPoint()">
-                        <button onclick="addCustomMapPoint()" class="btn btn-primary">
-                            <i class="fas fa-plus-circle"></i> Προσθήκη
-                        </button>
-                    </div>
-
-                    <div id="custom-points-status" style="display: none; padding: 8px; background: #fff; border-radius: 6px; font-size: 13px; margin-bottom: 10px;">
-                        <i class="fas fa-spinner fa-spin"></i>
-                        <span id="custom-points-status-text">Αναζήτηση τοποθεσίας...</span>
-                    </div>
-
-                    <!-- List of custom points -->
-                                        <div id="custom-points-list" style="max-height: 200px; overflow-y: auto;">
-                        ${(state.customPoints || []).length > 0 ? state.customPoints.map((point, index) => `
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: white; border-radius: 6px; margin-bottom: 8px; border-left: 4px solid var(--accent);">
-                                <div>
-                                    <i class="fas fa-map-marker-alt" style="color: var(--accent); margin-right: 8px;"></i>
-                                    <strong>${point.name}</strong>
-                                    <span style="color: var(--gray); font-size: 12px; margin-left: 10px;">
-                                        (${point.location.lat.toFixed(4)}, ${point.location.lng.toFixed(4)})
-                                    </span>
-                                </div>
-                                <button onclick="removeCustomPoint(${index})"
-                                        class="btn btn-outline"
-                                        style="padding: 4px 8px; font-size: 12px;">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                        `).join('') : ''}
-                    </div>
+<!-- ΧΑΡΤΗΣ -->
+                <div id="map-container" style="height: 600px; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 20px; border: 2px solid var(--border);">
+                    <div id="travel-map" style="height: 100%; width: 100%;"></div>
                 </div>
-
-                <!-- 🔴 ΒΗΜΑ 2: ΦΙΛΤΡΟ ΗΜΕΡΩΝ (ΕΜΦΑΝΙΖΕΤΑΙ ΜΟΝΟ ΑΝ ΥΠΑΡΧΕΙ ΠΡΟΓΡΑΜΜΑ) -->
-                ${state.geographicProgram ? `
-                <div id="day-filter-container" class="card" style="margin-bottom: 20px; background: #f8f9fa;">
-                    <h4 style="margin: 0 0 15px 0; color: var(--dark);">
-                        <i class="fas fa-calendar-alt"></i> Εμφάνιση ανά Ημέρα
-                    </h4>
-                    <p style="color: var(--gray); margin-bottom: 12px; font-size: 14px;">
-                        Επιλέξτε ποιες μέρες του προγράμματός σας να εμφανιστούν στον χάρτη:
-                    </p>
-                    
-                    <div id="day-checkboxes" style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px;">
-                        <label style="display: flex; align-items: center; cursor: pointer; padding: 8px 12px; background: white; border-radius: 6px; border: 1px solid #ddd;">
-                            <input type="checkbox" class="day-checkbox" value="all" checked 
-                                   onchange="updateMapDayFilter(this)" 
-                                   style="margin-right: 8px;">
-                            <span style="font-weight: bold; color: var(--primary);">Όλες οι μέρες</span>
-                        </label>
-                        
-                        ${Array.from({ length: state.geographicProgram.totalDays }, (_, i) => i + 1).map(day => `
-                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px 12px; background: white; border-radius: 6px; border: 1px solid ${getDayColor(day)};">
-                                <input type="checkbox" class="day-checkbox" value="day${day}" 
-                                       onchange="updateMapDayFilter(this)"
-                                       style="margin-right: 8px;">
-                                <span style="font-weight: bold; color: ${getDayColor(day)};">
-                                    Μέρα ${day}
-                                </span>
-                                <span style="margin-left: 8px; font-size: 12px; color: var(--gray);">
-                                    (${state.geographicProgram.days[day-1]?.totalActivities || 0} δραστηριότητες)
-                                </span>
-                            </label>
-                        `).join('')}
-                    </div>
-                    
-                    <div style="display: flex; gap: 10px;">
-                        <button onclick="selectAllDays()" class="btn btn-outline" style="padding: 6px 12px; font-size: 13px;">
-                            <i class="fas fa-check-square"></i> Επιλογή όλων
-                        </button>
-                        <button onclick="deselectAllDays()" class="btn btn-outline" style="padding: 6px 12px; font-size: 13px;">
-                            <i class="fas fa-square"></i> Αποεπιλογή όλων
-                        </button>
-                        <button onclick="applyDayFilter()" class="btn btn-primary" style="padding: 6px 12px; font-size: 13px;">
-                            <i class="fas fa-filter"></i> Εφαρμογή φίλτρου
-                        </button>
-                    </div>
-                    
-                    <div id="day-filter-status" style="margin-top: 10px; padding: 8px; background: #e0f2fe; border-radius: 6px; font-size: 12px; display: none;">
-                        <i class="fas fa-sync-alt fa-spin"></i>
-                        <span>Ενημέρωση χάρτη...</span>
-                    </div>
-                </div>
-                `: ''}
-                
-                <!-- 🔴 ΝΕΟ: ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΓΡΑΜΜΑΤΟΣ ΚΑΤΩ ΑΠΟ ΤΟΝ ΧΑΡΤΗ -->
-                <div id="program-creation-section" class="card" style="margin-top: 40px; background: linear-gradient(135deg, #f8faff 0%, #f0f4ff 100%);">
+                 <!-- 🔴 ΝΕΟ: ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΓΡΑΜΜΑΤΟΣ ΚΑΤΩ ΑΠΟ ΤΟΝ ΧΑΡΤΗ -->
+                <div id="program-creation-section" class="card" style="margin-top: 20px; background: linear-gradient(135deg, #f8faff 0%, #f0f4ff 100%);">
                     <h3 style="color: var(--primary); margin-bottom: 20px;">
                         <i class="fas fa-calendar-plus"></i> Δημιουργία Προγράμματος
                     </h3>
@@ -1898,7 +1799,51 @@ function getMapStepHTML() {
                         </div>
                     `}
                 </div>
-                
+                  <!-- CUSTOM MAP POINTS SECTION -->
+                <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);">
+                    <h4 style="margin: 0 0 15px 0; color: var(--dark);">
+                        <i class="fas fa-map-marker-alt"></i> Προσθήκη Προσωπικών Σημείων
+                    </h4>
+                    <p style="color: var(--gray); margin-bottom: 15px; font-size: 14px;">
+                        Προσθέστε ξενοδοχείο, εστιατόρια ή άλλα σημεία ενδιαφέροντος στον χάρτη
+                    </p>
+
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+                        <input type="text"
+                               id="custom-point-name"
+                               placeholder="π.χ. Hotel Grande, Eiffel Tower"
+                               style="flex: 1; min-width: 250px; padding: 10px 15px; border: 2px solid var(--primary-light); border-radius: 8px; font-size: 14px;"
+                               onkeypress="if(event.key === 'Enter') addCustomMapPoint()">
+                        <button onclick="addCustomMapPoint()" class="btn btn-primary">
+                            <i class="fas fa-plus-circle"></i> Προσθήκη
+                        </button>
+                    </div>
+
+                    <div id="custom-points-status" style="display: none; padding: 8px; background: #fff; border-radius: 6px; font-size: 13px; margin-bottom: 10px;">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <span id="custom-points-status-text">Αναζήτηση τοποθεσίας...</span>
+                    </div>
+
+                    <!-- List of custom points -->
+                                        <div id="custom-points-list" style="max-height: 200px; overflow-y: auto;">
+                        ${(state.customPoints || []).length > 0 ? state.customPoints.map((point, index) => `
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: white; border-radius: 6px; margin-bottom: 8px; border-left: 4px solid var(--accent);">
+                                <div>
+                                    <i class="fas fa-map-marker-alt" style="color: var(--accent); margin-right: 8px;"></i>
+                                    <strong>${point.name}</strong>
+                                    <span style="color: var(--gray); font-size: 12px; margin-left: 10px;">
+                                        (${point.location.lat.toFixed(4)}, ${point.location.lng.toFixed(4)})
+                                    </span>
+                                </div>
+                                <button onclick="removeCustomPoint(${index})"
+                                        class="btn btn-outline"
+                                        style="padding: 4px 8px; font-size: 12px;">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        `).join('') : ''}
+                    </div>
+                </div>
                 <!-- ΟΔΗΓΙΕΣ ΧΡΗΣΗΣ ΧΑΡΤΗ -->
                 <div class="map-instructions-card" id="map-instructions-card">
                     <div class="map-instructions-header">
@@ -1947,6 +1892,62 @@ function getMapStepHTML() {
         </div>
     `;
 }
+                
+              
+
+                <!-- 🔴 ΒΗΜΑ 2: ΦΙΛΤΡΟ ΗΜΕΡΩΝ (ΕΜΦΑΝΙΖΕΤΑΙ ΜΟΝΟ ΑΝ ΥΠΑΡΧΕΙ ΠΡΟΓΡΑΜΜΑ) -->
+                ${state.geographicProgram ? `
+                <div id="day-filter-container" class="card" style="margin-bottom: 20px; background: #f8f9fa;">
+                    <h4 style="margin: 0 0 15px 0; color: var(--dark);">
+                        <i class="fas fa-calendar-alt"></i> Εμφάνιση ανά Ημέρα
+                    </h4>
+                    <p style="color: var(--gray); margin-bottom: 12px; font-size: 14px;">
+                        Επιλέξτε ποιες μέρες του προγράμματός σας να εμφανιστούν στον χάρτη:
+                    </p>
+                    
+                    <div id="day-checkboxes" style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px;">
+                        <label style="display: flex; align-items: center; cursor: pointer; padding: 8px 12px; background: white; border-radius: 6px; border: 1px solid #ddd;">
+                            <input type="checkbox" class="day-checkbox" value="all" checked 
+                                   onchange="updateMapDayFilter(this)" 
+                                   style="margin-right: 8px;">
+                            <span style="font-weight: bold; color: var(--primary);">Όλες οι μέρες</span>
+                        </label>
+                        
+                        ${Array.from({ length: state.geographicProgram.totalDays }, (_, i) => i + 1).map(day => `
+                            <label style="display: flex; align-items: center; cursor: pointer; padding: 8px 12px; background: white; border-radius: 6px; border: 1px solid ${getDayColor(day)};">
+                                <input type="checkbox" class="day-checkbox" value="day${day}" 
+                                       onchange="updateMapDayFilter(this)"
+                                       style="margin-right: 8px;">
+                                <span style="font-weight: bold; color: ${getDayColor(day)};">
+                                    Μέρα ${day}
+                                </span>
+                                <span style="margin-left: 8px; font-size: 12px; color: var(--gray);">
+                                    (${state.geographicProgram.days[day-1]?.totalActivities || 0} δραστηριότητες)
+                                </span>
+                            </label>
+                        `).join('')}
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px;">
+                        <button onclick="selectAllDays()" class="btn btn-outline" style="padding: 6px 12px; font-size: 13px;">
+                            <i class="fas fa-check-square"></i> Επιλογή όλων
+                        </button>
+                        <button onclick="deselectAllDays()" class="btn btn-outline" style="padding: 6px 12px; font-size: 13px;">
+                            <i class="fas fa-square"></i> Αποεπιλογή όλων
+                        </button>
+                        <button onclick="applyDayFilter()" class="btn btn-primary" style="padding: 6px 12px; font-size: 13px;">
+                            <i class="fas fa-filter"></i> Εφαρμογή φίλτρου
+                        </button>
+                    </div>
+                    
+                    <div id="day-filter-status" style="margin-top: 10px; padding: 8px; background: #e0f2fe; border-radius: 6px; font-size: 12px; display: none;">
+                        <i class="fas fa-sync-alt fa-spin"></i>
+                        <span>Ενημέρωση χάρτη...</span>
+                    </div>
+                </div>
+                `: ''}
+                
+               
 // ==================== MANUAL DESTINATION MODAL ====================
 function showManualDestinationModal() {
     console.log('📋 Άνοιγμα dropdown για χειροκίνητη επιλογή');
