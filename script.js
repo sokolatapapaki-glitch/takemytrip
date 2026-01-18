@@ -1471,35 +1471,38 @@ function getActivitiesStepHTML() {
     <div id="family-members-container" class="family-member-container">
         ${state.familyMembers.map((member, index) => `
             <div class="family-member">
-               <!-- ΜΟΝΟ ΗΛΙΚΙΑ (ΧΩΡΙΣ ΟΝΟΜΑ) -->
-<div class="family-member-row">
-    <div class="family-member-icon">
-        ${index === 0 ? '👨' : index === 1 ? '👩' : '🧒'}
+                <!-- Πρώτη γραμμή: Όνομα και Εικονίδιο -->
+                <div class="family-member-row">
+                    <div class="family-member-icon">
+                        ${index === 0 ? '👨' : index === 1 ? '👩' : '🧒'}
+                    </div>
+                    <input type="text" 
+                           class="form-control family-input" 
+                           value="${member.name}" 
+                           onchange="updateFamilyMemberName(${index}, this.value)"
+                           placeholder="Όνομα">
+                </div>
+                
+                <!-- Δεύτερη γραμμή: Ηλικία και Κουμπί Διαγραφής -->
+                <div class="family-member-row">
+                    <div class="family-age-container">
+                        <input type="number" 
+                               class="form-control family-input" 
+                               value="${member.age}" 
+                               min="0" 
+                               max="120" 
+                               placeholder="Ηλικία"
+                               onchange="updateFamilyMemberAge(${index}, this.value)">
+                        <span class="age-label">ετών</span>
+                    </div>
+                    <button class="btn btn-outline family-delete-btn" 
+                            onclick="removeFamilyMember(${index})">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        `).join('')}
     </div>
-    <div class="family-age-container">
-        <input type="number" 
-               class="form-control family-input" 
-               value="${member.age}" 
-               min="0" 
-               max="120" 
-               placeholder="Ηλικία"
-               onchange="updateFamilyMemberAge(${index}, this.value)">
-        <span class="age-label">ετών</span>
-    </div>
-</div>
-                <!-- ΜΟΝΟ ΗΛΙΚΙΑ -->
-<div class="family-member-row">
-    <div class="family-age-container">
-        <input type="number" 
-               class="form-control family-input" 
-               value="${member.age}" 
-               min="0" 
-               max="120" 
-               onchange="updateFamilyMemberAge(${index}, this.value)">
-        <span class="age-label">ετών</span>
-    </div>
-</div>
-               
     
     <!-- Κουμπιά Δράσης -->
     <div class="family-actions">
@@ -1609,7 +1612,7 @@ function getActivitiesStepHTML() {
     </button>
     
 </div>
-       }         
+                
                 <!-- Total Cost -->
                 <div class="card" style="background: linear-gradient(135deg, #8B5CF6, #7C3AED); color: white; text-align: center; border: none;">
                     <h3 style="color: white; margin-bottom: 10px;">Συνολικό Κόστος</h3>
@@ -1628,6 +1631,8 @@ function getActivitiesStepHTML() {
     `;
 }
 
+
+// ==================== STEP 5: SUMMARY ====================
 
 // ==================== ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ ΓΙΑ GEOGRAPHIC PROGRAM ====================
 function getFullActivitiesWithLocation() {
