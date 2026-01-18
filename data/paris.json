@@ -50,7 +50,12 @@
       },
       "restaurant": "<a href='https://maps.google.com/?q=Disneyland+Restaurant+Paris' target='_blank'>Disney Restaurant</a>",
       "website": "https://www.disneylandparis.com/",
-      "notes": [],
+      "notes": [
+        "0-2 ετών: δωρεάν",
+        "3-11 ετών: περίπου 45-55€",
+        "12 ετών και άνω: περίπου 65-75€",
+        "Οι τιμές διαφέρουν ανάλογα με την ημερομηνία (dynamic pricing)"
+      ],
       "tags": [
         "Οικογένειες",
         "Παιδιά",
@@ -66,7 +71,7 @@
     {
       "id": 2,
       "name": "Πύργος του Άιφελ",
-      "description": "Το παγκόσμια γνωστό αξιοθέατο",
+      "description": "Το παγκόσμια γνωστό αξιοθέατο της Γαλλίας με θέα στο Παρίσι",
       "category": "landmark",
       "prices": {
         "0": 0,
@@ -95,20 +100,573 @@
         "lat": 48.8584,
         "lng": 2.2945
       },
-      "restaurant": "<a href='https://maps.google.com/?q=58+Tour+Eiffel+Paris' target='_blank'>58 Tour Eiffel</a>",
+      "restaurant": "<a href='https://maps.google.com/?q=58+Tour+Eiffel+Paris' target='_blank'>58 Tour Eiffel</a> - εστιατόριο στον πύργο",
       "website": "https://www.toureiffel.paris/",
-      "notes": [],
+      "notes": [
+        "0-3 ετών: δωρεάν",
+        "4-11 ετών: 8.5€ (ανελκυστήρας κορυφή)",
+        "12-24 ετών: 17€",
+        "25 ετών και άνω: 26€"
+      ],
       "tags": [
         "Ζευγάρια",
         "Φωτογραφίες",
         "eiffel tower",
         "landmark",
-        "view"
+        "view",
+        "top"
       ],
       "duration_hours": 2.5,
       "best_time": "evening",
       "emoji": "🗼",
-      "cafe": "<a href='https://maps.google.com/?q=Parc+Asterix+Cafe+Paris' target='_blank'>Astérix Cafés</a> - theme park cafés"
+      "cafe": "<a href='https://maps.google.com/?q=Cafe+Gustave+Eiffel+Tower' target='_blank'>Café Gustave</a> - στην πλατεία του πύργου"
+    },
+    {
+      "id": 3,
+      "name": "Μουσείο του Λούβρου",
+      "description": "Το μεγαλύτερο μουσείο τέχνης στον κόσμο με τη Μόνα Λίζα και χιλιάδες αριστουργήματα",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 32
+      },
+      "location": {
+        "lat": 48.8606,
+        "lng": 2.3376
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Bistrot+Benoit+Louvre' target='_blank'>Bistrot Benoit</a> - Παρισινό bistro εντός μουσείου",
+      "website": "https://www.louvre.fr/en",
+      "notes": [
+        "0-17 ετών: δωρεάν",
+        "18 ετών και άνω (εκτός ΕΟΧ): 32€",
+        "Πολίτες/κάτοικοι ΕΟΧ: χαμηλότερη τιμή",
+        "Δωρεάν κάθε πρώτη Παρασκευή του μήνα μετά τις 18:00"
+      ],
+      "tags": [
+        "art",
+        "museum",
+        "mona lisa",
+        "culture",
+        "top"
+      ],
+      "duration_hours": 4,
+      "best_time": "morning",
+      "emoji": "🖼️",
+      "cafe": "<a href='https://maps.google.com/?q=Cafe+Marly+Louvre+Paris' target='_blank'>Café Marly</a> - café με θέα στην πυραμίδα"
+    },
+    {
+      "id": 4,
+      "name": "Αψίδα του Θριάμβου",
+      "description": "Το εμβληματικό μνημείο στη Champs-Élysées με πανοραμική θέα του Παρισιού",
+      "category": "landmark",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 16
+      },
+      "location": {
+        "lat": 48.8738,
+        "lng": 2.2950
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Le+Relais+de+l+Entrecote+Paris' target='_blank'>Le Relais de l'Entrecôte</a> - φημισμένο για steak frites",
+      "website": "https://www.paris-arc-de-triomphe.fr/en",
+      "notes": [
+        "0-17 ετών: δωρεάν",
+        "18-25 ετών (πολίτες ΕΕ): δωρεάν",
+        "18 ετών και άνω: 16€ (online) / 17€ (ταμείο)",
+        "Δωρεάν κάθε πρώτη Κυριακή (Ιαν-Μαρ & Νοε-Δεκ)"
+      ],
+      "tags": [
+        "landmark",
+        "monument",
+        "view",
+        "history",
+        "top"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "evening",
+      "emoji": "🏛️",
+      "cafe": "<a href='https://maps.google.com/?q=Laduree+Champs+Elysees+Paris' target='_blank'>Ladurée</a> - διάσημο για macarons"
+    },
+    {
+      "id": 5,
+      "name": "Μουσείο Ορσέ",
+      "description": "Εντυπωσιακό μουσείο ιμπρεσιονιστικής τέχνης σε πρώην σιδηροδρομικό σταθμό",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 16
+      },
+      "location": {
+        "lat": 48.8600,
+        "lng": 2.3266
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Le+Restaurant+Musee+d+Orsay' target='_blank'>Le Restaurant</a> - Belle-Epoque εστιατόριο εντός μουσείου",
+      "website": "https://www.musee-orsay.fr/en",
+      "notes": [
+        "0-17 ετών: δωρεάν",
+        "18-25 ετών (πολίτες ΕΕ): δωρεάν",
+        "18 ετών και άνω: 16€",
+        "Δωρεάν κάθε πρώτη Κυριακή του μήνα"
+      ],
+      "tags": [
+        "art",
+        "museum",
+        "impressionism",
+        "culture",
+        "top"
+      ],
+      "duration_hours": 3,
+      "best_time": "afternoon",
+      "emoji": "🎨",
+      "cafe": "<a href='https://maps.google.com/?q=Cafe+Campana+Musee+d+Orsay' target='_blank'>Café Campana</a> - café με θέα στον 5ο όροφο"
+    },
+    {
+      "id": 6,
+      "name": "Ανάκτορα των Βερσαλλιών",
+      "description": "Το μεγαλοπρεπές ανάκτορο του Βασιλιά Ήλιου με τους θρυλικούς κήπους",
+      "category": "palace",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 30
+      },
+      "location": {
+        "lat": 48.8049,
+        "lng": 2.1204
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Ore+Alain+Ducasse+Versailles' target='_blank'>Ore by Alain Ducasse</a> - εστιατόριο εντός ανακτόρου",
+      "website": "https://en.chateauversailles.fr/",
+      "notes": [
+        "0-17 ετών: δωρεάν",
+        "18-25 ετών (πολίτες ΕΕ): δωρεάν",
+        "18 ετών και άνω: 25€ (χειμώνας) / 35€ (καλοκαίρι)",
+        "Το εισιτήριο Passport περιλαμβάνει ανάκτορο, κήπους και Trianon"
+      ],
+      "tags": [
+        "palace",
+        "gardens",
+        "history",
+        "luxury",
+        "top"
+      ],
+      "duration_hours": 5,
+      "best_time": "morning",
+      "emoji": "👑",
+      "cafe": "<a href='https://maps.google.com/?q=Angelina+Versailles' target='_blank'>Angelina</a> - tea room στο ανάκτορο"
+    },
+    {
+      "id": 7,
+      "name": "Sainte-Chapelle",
+      "description": "Γοτθικό αριστούργημα με εκπληκτικά βιτρό παράθυρα",
+      "category": "monument",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 22
+      },
+      "location": {
+        "lat": 48.8554,
+        "lng": 2.3450
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Au+Vieux+Paris+d+Arcole' target='_blank'>Au Vieux Paris d'Arcole</a> - ιστορικό εστιατόριο κοντά στη Sainte-Chapelle",
+      "website": "https://www.sainte-chapelle.fr/en",
+      "notes": [
+        "0-17 ετών: δωρεάν",
+        "18-25 ετών (πολίτες ΕΕ): δωρεάν",
+        "18 ετών και άνω (εκτός ΕΟΧ): 22€",
+        "18 ετών και άνω (ΕΟΧ): 16€",
+        "Combo με Conciergerie: 30€"
+      ],
+      "tags": [
+        "church",
+        "gothic",
+        "stained glass",
+        "architecture",
+        "top"
+      ],
+      "duration_hours": 1,
+      "best_time": "morning",
+      "emoji": "⛪",
+      "cafe": "<a href='https://maps.google.com/?q=Cafe+Saint+Regis+Paris' target='_blank'>Café Saint-Régis</a> - παραδοσιακό Παρισινό café"
+    },
+    {
+      "id": 8,
+      "name": "Πάνθεον",
+      "description": "Νεοκλασικό μνημείο όπου ενταφιάζονται μεγάλες προσωπικότητες της Γαλλίας",
+      "category": "monument",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 14
+      },
+      "location": {
+        "lat": 48.8462,
+        "lng": 2.3464
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Les+Papilles+Paris' target='_blank'>Les Papilles</a> - bistro & wine shop κοντά στο Πάνθεον",
+      "website": "https://www.paris-pantheon.fr/en",
+      "notes": [
+        "0-17 ετών: δωρεάν",
+        "18-25 ετών (πολίτες ΕΕ): δωρεάν",
+        "18 ετών και άνω: 13€ (online) / 14€ (ταμείο)",
+        "Δωρεάν κάθε πρώτη Κυριακή (Ιαν-Μαρ & Νοε-Δεκ)"
+      ],
+      "tags": [
+        "monument",
+        "history",
+        "neoclassical",
+        "culture"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "afternoon",
+      "emoji": "🏛️",
+      "cafe": "<a href='https://maps.google.com/?q=Strada+Cafe+Pantheon+Paris' target='_blank'>Strada Café</a> - café με θέα στο Πάνθεον"
+    },
+    {
+      "id": 9,
+      "name": "Μουσείο Ροντέν",
+      "description": "Υπέροχο μουσείο με γλυπτά του Rodin σε μανουάλι με κήπο",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 14
+      },
+      "location": {
+        "lat": 48.8553,
+        "lng": 2.3159
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Cafe+du+Musee+Rodin' target='_blank'>Café du Musée Rodin</a> - εστιατόριο στον κήπο του μουσείου",
+      "website": "https://www.musee-rodin.fr/en",
+      "notes": [
+        "0-17 ετών: δωρεάν",
+        "18-25 ετών (πολίτες ΕΕ): δωρεάν",
+        "18 ετών και άνω: 14€",
+        "Δωρεάν κάθε πρώτη Κυριακή (Οκτ-Μαρ)"
+      ],
+      "tags": [
+        "art",
+        "museum",
+        "sculpture",
+        "garden"
+      ],
+      "duration_hours": 2,
+      "best_time": "afternoon",
+      "emoji": "🗿",
+      "cafe": "<a href='https://maps.google.com/?q=Le+Jardin+de+Varenne+Paris' target='_blank'>Le Jardin de Varenne</a> - café κοντά στο μουσείο"
+    },
+    {
+      "id": 10,
+      "name": "Conciergerie",
+      "description": "Μεσαιωνικό παλάτι που έγινε φυλακή κατά τη Γαλλική Επανάσταση",
+      "category": "monument",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 13
+      },
+      "location": {
+        "lat": 48.8566,
+        "lng": 2.3469
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Brasserie+Les+Deux+Palais+Paris' target='_blank'>Brasserie Les Deux Palais</a> - κοντά στη Conciergerie",
+      "website": "https://www.paris-conciergerie.fr/en",
+      "notes": [
+        "0-17 ετών: δωρεάν",
+        "18-25 ετών (πολίτες ΕΕ): δωρεάν",
+        "18 ετών και άνω: 13€",
+        "Combo με Sainte-Chapelle: 20€",
+        "Δωρεάν κάθε πρώτη Κυριακή (Οκτ-Μαρ)"
+      ],
+      "tags": [
+        "history",
+        "medieval",
+        "revolution",
+        "monument"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "any",
+      "emoji": "🏰",
+      "cafe": "<a href='https://maps.google.com/?q=Carette+Paris+Notre+Dame' target='_blank'>Carette</a> - παραδοσιακό Παρισινό salon de thé"
+    },
+    {
+      "id": 11,
+      "name": "Aquarium de Paris",
+      "description": "Εντυπωσιακό ενυδρείο με 10.000 ψάρια και καρχαρίες κοντά στον Πύργο του Άιφελ",
+      "category": "aquarium",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 13,
+        "4": 13,
+        "5": 13,
+        "6": 13,
+        "7": 13,
+        "8": 13,
+        "9": 13,
+        "10": 13,
+        "11": 13,
+        "12": 13,
+        "13": 20.5,
+        "14": 20.5,
+        "15": 20.5,
+        "16": 20.5,
+        "17": 20.5,
+        "adult": 20.5
+      },
+      "location": {
+        "lat": 48.8631,
+        "lng": 2.2933
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Cafe+de+l+Homme+Trocadero+Paris' target='_blank'>Café de l'Homme</a> - εστιατόριο με θέα τον Πύργο του Άιφελ",
+      "website": "https://aquariumdeparis.com/en",
+      "notes": [
+        "0-2 ετών: δωρεάν",
+        "3-12 ετών: 13€ (online)",
+        "13 ετών και άνω: 20.50€ (online)",
+        "Οι τιμές διαφέρουν online vs ταμείο"
+      ],
+      "tags": [
+        "aquarium",
+        "family",
+        "kids",
+        "marine life"
+      ],
+      "duration_hours": 2,
+      "best_time": "any",
+      "emoji": "🐠",
+      "cafe": "<a href='https://maps.google.com/?q=Cafe+Carlu+Trocadero' target='_blank'>Café Carlu</a> - café στο Trocadéro"
+    },
+    {
+      "id": 12,
+      "name": "Μουσείο de l'Orangerie",
+      "description": "Μουσείο με τους Νούφαρα του Monet και ιμπρεσιονιστική τέχνη",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 12.5
+      },
+      "location": {
+        "lat": 48.8638,
+        "lng": 2.3228
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Cafe+des+Marronniers+Tuileries+Paris' target='_blank'>Café des Marronniers</a> - στους κήπους Tuileries",
+      "website": "https://www.musee-orangerie.fr/en",
+      "notes": [
+        "0-17 ετών: δωρεάν",
+        "18-25 ετών (πολίτες ΕΕ): δωρεάν",
+        "18 ετών και άνω: 12.50€",
+        "Δωρεάν κάθε πρώτη Κυριακή του μήνα"
+      ],
+      "tags": [
+        "art",
+        "museum",
+        "monet",
+        "impressionism"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "morning",
+      "emoji": "🌸",
+      "cafe": "<a href='https://maps.google.com/?q=Angelina+Tuileries+Paris' target='_blank'>Angelina</a> - διάσημο για hot chocolate"
+    },
+    {
+      "id": 13,
+      "name": "Sacré-Cœur (Θόλος)",
+      "description": "Βασιλική στο Montmartre με εκπληκτική πανοραμική θέα του Παρισιού",
+      "category": "monument",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 8,
+        "17": 8,
+        "adult": 8
+      },
+      "location": {
+        "lat": 48.8867,
+        "lng": 2.3431
+      },
+      "restaurant": "<a href='https://maps.google.com/?q=Le+Consulat+Montmartre+Paris' target='_blank'>Le Consulat</a> - ιστορικό bistro στο Montmartre",
+      "website": "https://www.sacre-coeur-montmartre.com/en",
+      "notes": [
+        "Βασιλική: δωρεάν είσοδος",
+        "Θόλος: 0-15 ετών: 5€, 16+ ετών: 8€",
+        "Πρόσβαση μόνο με σκάλες (280 σκαλοπάτια)",
+        "Δεν υπάρχει ασανσέρ"
+      ],
+      "tags": [
+        "church",
+        "view",
+        "montmartre",
+        "landmark",
+        "top"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "evening",
+      "emoji": "⛪",
+      "cafe": "<a href='https://maps.google.com/?q=Cafe+des+Deux+Moulins+Montmartre' target='_blank'>Café des Deux Moulins</a> - café από την ταινία Amélie"
     }
   ]
 }
