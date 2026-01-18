@@ -17,20 +17,42 @@
       "description": "Το κορυφαίο διαδραστικό μουσείο επιστημών. Μην ξεχάσετε την ταράτσα με τη θέα και τα παιχνίδια νερού.",
       "category": "museum",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0,
-        "4": 21.5, "5": 21.5, "6": 21.5, "7": 21.5, "8": 21.5, "9": 21.5, "10": 21.5,
-        "11": 21.5, "12": 21.5, "13": 21.5, "14": 21.5,
-        "15": 21.5, "16": 21.5, "17": 21.5,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 21.5,
+        "5": 21.5,
+        "6": 21.5,
+        "7": 21.5,
+        "8": 21.5,
+        "9": 21.5,
+        "10": 21.5,
+        "11": 21.5,
+        "12": 21.5,
+        "13": 21.5,
+        "14": 21.5,
+        "15": 21.5,
+        "16": 21.5,
+        "17": 21.5,
         "adult": 21.5
       },
       "location": {
         "lat": 52.3744,
         "lng": 4.9122
       },
-      "restaurant": "https://maps.google.com/?q=NEMO+Museum+Restaurant+Amsterdam",
+      "restaurant": "<a href='https://maps.google.com/?q=NEMO+Museum+Restaurant+Amsterdam' target='_blank'>NEMO Restaurant</a> - rooftop cafe με θέα",
       "website": "https://www.nemosciencemuseum.nl/",
-      "notes": ["0-3 ετών: δωρεάν", "4 ετών και άνω: 21.5€"],
-      "tags": ["science", "interactive", "rooftop", "top"],
+      "notes": [
+        "0-3 ετών: δωρεάν",
+        "4 ετών και άνω: 21.5€"
+      ],
+      "tags": [
+        "science",
+        "interactive",
+        "rooftop",
+        "top"
+      ],
       "duration_hours": 3,
       "best_time": "any"
     },
@@ -40,18 +62,43 @@
       "description": "Κλασική τέχνη με ειδικά προγράμματα και 'κυνήγι θησαυρού' για παιδιά.",
       "category": "museum",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0,
-        "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0, "16": 0, "17": 0, "18": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
         "adult": 25
       },
       "location": {
         "lat": 52.3598,
         "lng": 4.8852
       },
-      "restaurant": "https://maps.google.com/?q=Rijksmuseum+Cafe+Amsterdam",
+      "restaurant": "<a href='https://maps.google.com/?q=Rijksmuseum+Cafe+Amsterdam' target='_blank'>Rijksmuseum Cafe</a> - καφέ εντός του μουσείου",
       "website": "https://www.rijksmuseum.nl/",
-      "notes": ["0-18 ετών: δωρεάν", "19 ετών και άνω: 25€"],
-      "tags": ["art", "museum", "history", "top"],
+      "notes": [
+        "0-18 ετών: δωρεάν",
+        "19 ετών και άνω: 25€"
+      ],
+      "tags": [
+        "art",
+        "museum",
+        "history",
+        "top"
+      ],
       "duration_hours": 2.5,
       "best_time": "morning"
     },
@@ -61,18 +108,42 @@
       "description": "Ειδικές οικογενειακές ξεναγήσεις για να γνωρίσουν οι μικροί επισκέπτες τον μεγάλο ζωγράφο.",
       "category": "museum",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0,
-        "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0, "16": 0, "17": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
         "adult": 24
       },
       "location": {
         "lat": 52.3584,
         "lng": 4.8811
       },
-      "restaurant": "https://maps.google.com/?q=Van+Gogh+Museum+Cafe+Amsterdam",
+      "restaurant": "<a href='https://maps.google.com/?q=Van+Gogh+Museum+Cafe+Amsterdam' target='_blank'>Van Gogh Museum Cafe</a> - σύγχρονο cafe",
       "website": "https://www.vangoghmuseum.nl/",
-      "notes": ["0-17 ετών: δωρεάν", "18 ετών και άνω: 24€"],
-      "tags": ["art", "vangogh", "museum", "top"],
+      "notes": [
+        "0-17 ετών: δωρεάν",
+        "18 ετών και άνω: 24€"
+      ],
+      "tags": [
+        "art",
+        "vangogh",
+        "museum",
+        "top"
+      ],
       "duration_hours": 2,
       "best_time": "afternoon"
     },
@@ -82,17 +153,31 @@
       "description": "Το διάσημο μουσείο κέρινων ομοιωμάτων στην πλατεία Dam.",
       "category": "museum",
       "prices": {
-        "0": 0, "1": 0,
-        "2": 22, "3": 22, "4": 22, "5": 22, "6": 22, "7": 22, "8": 22, "9": 22, "10": 22,
-        "11": 22, "12": 22, "13": 22, "14": 22,
-        "15": 27, "16": 27, "17": 27,
+        "0": 0,
+        "1": 0,
+        "2": 22,
+        "3": 22,
+        "4": 22,
+        "5": 22,
+        "6": 22,
+        "7": 22,
+        "8": 22,
+        "9": 22,
+        "10": 22,
+        "11": 22,
+        "12": 22,
+        "13": 22,
+        "14": 22,
+        "15": 27,
+        "16": 27,
+        "17": 27,
         "adult": 27
       },
       "location": {
         "lat": 52.3731,
         "lng": 4.8925
       },
-      "restaurant": "https://maps.google.com/?q=Madame+Tussauds+Cafe+Amsterdam",
+      "restaurant": "<a href='https://maps.google.com/?q=Madame+Tussauds+Cafe+Amsterdam' target='_blank'>Madame Tussauds Cafe</a> - στο ίδιο κτίριο",
       "website": "https://www.madametussauds.com/amsterdam/",
       "notes": [
         "0-1 ετών: δωρεάν",
@@ -101,7 +186,12 @@
         "COMBO: Madame Tussauds + This is Holland - 0-1 ετών: δωρεάν, 2-14 ετών: 32€, 15+ ετών: 37€",
         "COMBO: Madame Tussauds + Canal cruise - 0-1 ετών: δωρεάν, 2-14 ετών: 29.5€, 15+ ετών: 37€"
       ],
-      "tags": ["wax", "celebrities", "interactive", "top"],
+      "tags": [
+        "wax",
+        "celebrities",
+        "interactive",
+        "top"
+      ],
       "duration_hours": 1.5,
       "best_time": "any"
     },
@@ -111,19 +201,43 @@
       "description": "Μια 'Instagrammable' παιδική χαρά με πισίνες από marshmallows και δωμάτια γεμάτα χρώμα.",
       "category": "experience",
       "prices": {
-        "0": 0, "1": 0, "2": 0,
-        "3": 19, "4": 19, "5": 19, "6": 19, "7": 19, "8": 19, "9": 19, "10": 19,
-        "11": 27, "12": 27, "13": 27, "14": 27, "15": 27, "16": 27, "17": 27,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 19,
+        "4": 19,
+        "5": 19,
+        "6": 19,
+        "7": 19,
+        "8": 19,
+        "9": 19,
+        "10": 19,
+        "11": 27,
+        "12": 27,
+        "13": 27,
+        "14": 27,
+        "15": 27,
+        "16": 27,
+        "17": 27,
         "adult": 27
       },
       "location": {
         "lat": 52.3886,
         "lng": 4.8689
       },
-      "restaurant": "https://maps.google.com/?q=WONDR+Cafe+Amsterdam",
+      "restaurant": "<a href='https://maps.google.com/?q=WONDR+Cafe+Amsterdam' target='_blank'>WONDR Cafe</a> - Instagram-worthy treats",
       "website": "https://www.wondrexperience.com/",
-      "notes": ["0-2 ετών: δωρεάν", "3-10 ετών: 19€", "11 ετών και άνω: 27€"],
-      "tags": ["instagram", "interactive", "play", "top"],
+      "notes": [
+        "0-2 ετών: δωρεάν",
+        "3-10 ετών: 19€",
+        "11 ετών και άνω: 27€"
+      ],
+      "tags": [
+        "instagram",
+        "interactive",
+        "play",
+        "top"
+      ],
       "duration_hours": 1.5,
       "best_time": "any"
     },
@@ -137,16 +251,27 @@
         "1": "ΔΕΝ ΕΠΙΤΡΕΠΕΤΑΙ",
         "2": "ΔΕΝ ΕΠΙΤΡΕΠΕΤΑΙ",
         "3": "ΔΕΝ ΕΠΙΤΡΕΠΕΤΑΙ",
-        "4": 19, "5": 19, "6": 19, "7": 19, "8": 19, "9": 19,
-        "10": 19, "11": 19, "12": 19,
-        "13": 24, "14": 24, "15": 24, "16": 24, "17": 24,
+        "4": 19,
+        "5": 19,
+        "6": 19,
+        "7": 19,
+        "8": 19,
+        "9": 19,
+        "10": 19,
+        "11": 19,
+        "12": 19,
+        "13": 24,
+        "14": 24,
+        "15": 24,
+        "16": 24,
+        "17": 24,
         "adult": 24
       },
       "location": {
         "lat": 52.3758,
         "lng": 4.8979
       },
-      "restaurant": "https://maps.google.com/?q=This+is+Holland+Cafe+Amsterdam",
+      "restaurant": "<a href='https://maps.google.com/?q=This+is+Holland+Cafe+Amsterdam' target='_blank'>This is Holland Cafe</a> - Dutch snacks",
       "website": "https://www.thisisholland.com/",
       "notes": [
         "ΠΡΟΣΟΧΗ: Δεν επιτρέπονται κάτω των 4 ετών και κάτω του 100cm",
@@ -158,7 +283,12 @@
         "Family tickets: 2 ενήλικες + 3 παιδιά (4-12): 84.75€",
         "Τα παιδιά αποκλειστικά 4-12 ετών. Ενήλικες 18+"
       ],
-      "tags": ["5d", "flight", "simulator", "top"],
+      "tags": [
+        "5d",
+        "flight",
+        "simulator",
+        "top"
+      ],
       "duration_hours": 1,
       "best_time": "any"
     },
@@ -168,20 +298,43 @@
       "description": "Ένας ιστορικός ζωολογικός κήπος που περιλαμβάνει ενυδρείο και πλανητάριο.",
       "category": "zoo",
       "prices": {
-        "0": 0, "1": 0, "2": 0,
-        "3": 25.5, "4": 25.5, "5": 25.5, "6": 25.5, "7": 25.5, "8": 25.5, "9": 25.5,
-        "10": 25.5, "11": 25.5, "12": 25.5,
-        "13": 29.5, "14": 29.5, "15": 29.5, "16": 29.5, "17": 29.5,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 25.5,
+        "4": 25.5,
+        "5": 25.5,
+        "6": 25.5,
+        "7": 25.5,
+        "8": 25.5,
+        "9": 25.5,
+        "10": 25.5,
+        "11": 25.5,
+        "12": 25.5,
+        "13": 29.5,
+        "14": 29.5,
+        "15": 29.5,
+        "16": 29.5,
+        "17": 29.5,
         "adult": 29.5
       },
       "location": {
         "lat": 52.3661,
         "lng": 4.9145
       },
-      "restaurant": "https://maps.google.com/?q=Artis+Zoo+Restaurant+Amsterdam",
+      "restaurant": "<a href='https://maps.google.com/?q=Artis+Zoo+Restaurant+Amsterdam' target='_blank'>Artis Restaurant</a> - οικογενειακό εστιατόριο στο ζωολογικό",
       "website": "https://www.artis.nl/",
-      "notes": ["0-2 ετών: δωρεάν", "3-12 ετών: 25.5€", "13 ετών και άνω: 29.5€"],
-      "tags": ["zoo", "animals", "planetarium", "top"],
+      "notes": [
+        "0-2 ετών: δωρεάν",
+        "3-12 ετών: 25.5€",
+        "13 ετών και άνω: 29.5€"
+      ],
+      "tags": [
+        "zoo",
+        "animals",
+        "planetarium",
+        "top"
+      ],
       "duration_hours": 4,
       "best_time": "morning"
     },
@@ -191,18 +344,40 @@
       "description": "Το κεντρικό πάρκο της πόλης με πολλές παιδικές χαρές και το φιλικό προς παιδιά καφέ 'Grote Melkhuis'.",
       "category": "park",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0,
-        "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0, "16": 0, "17": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
         "adult": 0
       },
       "location": {
         "lat": 52.3586,
         "lng": 4.8681
       },
-      "restaurant": "https://maps.google.com/?q=Grote+Melkhuis+Vondelpark",
+      "restaurant": "<a href='https://maps.google.com/?q=Grote+Melkhuis+Vondelpark' target='_blank'>Grote Melkhuis</a> - παιδική χαρά & pancakes στο πάρκο",
       "website": "https://www.hetgrotemelkhuis.nl/",
-      "notes": ["Δωρεάν είσοδος"],
-      "tags": ["park", "playground", "free"],
+      "notes": [
+        "Δωρεάν είσοδος"
+      ],
+      "tags": [
+        "park",
+        "playground",
+        "free"
+      ],
       "duration_hours": 2,
       "best_time": "afternoon"
     },
@@ -212,18 +387,40 @@
       "description": "Ένα τεράστιο δάσος στις παρυφές της πόλης με λίμνες, κανό, φάρμα με κατσίκες και πάρκο αναρρίχησης.",
       "category": "park",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0,
-        "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0, "16": 0, "17": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
         "adult": 0
       },
       "location": {
         "lat": 52.3161,
         "lng": 4.8319
       },
-      "restaurant": "https://maps.google.com/?q=Boerderij+Megan+Amsterdamse+Bos",
+      "restaurant": "<a href='https://maps.google.com/?q=Boerderij+Megan+Amsterdamse+Bos' target='_blank'>Boerderij Meerzicht</a> - φάρμα με goat cheese & playground",
       "website": "https://www.amsterdamsebos.nl/",
-      "notes": ["Δωρεάν είσοδος"],
-      "tags": ["forest", "nature", "free"],
+      "notes": [
+        "Δωρεάν είσοδος"
+      ],
+      "tags": [
+        "forest",
+        "nature",
+        "free"
+      ],
       "duration_hours": 3,
       "best_time": "any"
     },
@@ -233,18 +430,41 @@
       "description": "Ιδανικό για το μικρό του τρενάκι, το μίνι γκολφ και τον λαβύρινθο.",
       "category": "park",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0,
-        "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0, "16": 0, "17": 0,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
         "adult": 0
       },
       "location": {
         "lat": 52.3325,
         "lng": 4.8883
       },
-      "restaurant": "https://maps.google.com/?q=Amstelpark+Pavilion",
+      "restaurant": "<a href='https://maps.google.com/?q=Amstelpark+Pavilion' target='_blank'>Amstelpark Pavilion</a> - κήπος με παιδική χαρά",
       "website": "https://www.amstelpark.nl/",
-      "notes": ["Είσοδος δωρεάν", "Χρέωση ανάλογα με επιλογές δραστηριοτήτων εντός του πάρκου"],
-      "tags": ["park", "train", "minigolf"],
+      "notes": [
+        "Είσοδος δωρεάν",
+        "Χρέωση ανάλογα με επιλογές δραστηριοτήτων εντός του πάρκου"
+      ],
+      "tags": [
+        "park",
+        "train",
+        "minigolf"
+      ],
       "duration_hours": 2.5,
       "best_time": "afternoon"
     },
@@ -254,20 +474,43 @@
       "description": "Κρουαζιέρα στα κανάλια του Άμστερνταμ.",
       "category": "cruise",
       "prices": {
-        "0": 0, "1": 0, "2": 0, "3": 0,
-        "4": 9.9, "5": 9.9, "6": 9.9, "7": 9.9, "8": 9.9, "9": 9.9, "10": 9.9,
-        "11": 9.9, "12": 9.9,
-        "13": 15.5, "14": 15.5, "15": 15.5, "16": 15.5, "17": 15.5,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 9.9,
+        "5": 9.9,
+        "6": 9.9,
+        "7": 9.9,
+        "8": 9.9,
+        "9": 9.9,
+        "10": 9.9,
+        "11": 9.9,
+        "12": 9.9,
+        "13": 15.5,
+        "14": 15.5,
+        "15": 15.5,
+        "16": 15.5,
+        "17": 15.5,
         "adult": 15.5
       },
       "location": {
         "lat": 52.3676,
         "lng": 4.9041
       },
-      "restaurant": "https://maps.google.com/?q=Canal+Cruise+Snacks+Amsterdam",
+      "restaurant": "<a href='https://maps.google.com/?q=Canal+Cruise+Snacks+Amsterdam' target='_blank'>Canal Cruise Cafe</a> - snacks on board",
       "website": "https://www.canal.nl/",
-      "notes": ["0-3 ετών: δωρεάν", "4-12 ετών: 9.90€", "13 ετών και άνω: 15.5€", "Κατά μέσο όρο - οι τιμές διαφέρουν ανά εταιρεία"],
-      "tags": ["boat", "canal", "sightseeing"],
+      "notes": [
+        "0-3 ετών: δωρεάν",
+        "4-12 ετών: 9.90€",
+        "13 ετών και άνω: 15.5€",
+        "Κατά μέσο όρο - οι τιμές διαφέρουν ανά εταιρεία"
+      ],
+      "tags": [
+        "boat",
+        "canal",
+        "sightseeing"
+      ],
       "duration_hours": 1,
       "best_time": "any"
     },
@@ -277,19 +520,43 @@
       "description": "Κρουαζιέρα με απεριόριστες τηγανίτες κατά τη διάρκεια της βόλτας.",
       "category": "cruise",
       "prices": {
-        "0": 0, "1": 0, "2": 0,
-        "3": 21, "4": 21, "5": 21, "6": 21, "7": 21, "8": 21, "9": 21, "10": 21, "11": 21,
-        "12": 26, "13": 26, "14": 26, "15": 26, "16": 26, "17": 26,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 21,
+        "4": 21,
+        "5": 21,
+        "6": 21,
+        "7": 21,
+        "8": 21,
+        "9": 21,
+        "10": 21,
+        "11": 21,
+        "12": 26,
+        "13": 26,
+        "14": 26,
+        "15": 26,
+        "16": 26,
+        "17": 26,
         "adult": 26
       },
       "location": {
         "lat": 52.3756,
         "lng": 4.9039
       },
-      "restaurant": "https://maps.google.com/?q=Pancake+Boat+Restaurant",
+      "restaurant": "<a href='https://maps.google.com/?q=Pancake+Boat+Restaurant' target='_blank'>Pancake Boat</a> - unlimited pancakes κατά την κρουαζιέρα",
       "website": "https://www.pannenkoekenboot.nl/",
-      "notes": ["0-2 ετών: δωρεάν", "3-11 ετών: 21€", "12 ετών και άνω: 26€", "Προσοχή: οι τιμές αλλάζουν σε σαββατοκύριακα και αργίες"],
-      "tags": ["boat", "pancakes", "food"],
+      "notes": [
+        "0-2 ετών: δωρεάν",
+        "3-11 ετών: 21€",
+        "12 ετών και άνω: 26€",
+        "Προσοχή: οι τιμές αλλάζουν σε σαββατοκύριακα και αργίες"
+      ],
+      "tags": [
+        "boat",
+        "pancakes",
+        "food"
+      ],
       "duration_hours": 1.5,
       "best_time": "any"
     }
