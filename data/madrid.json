@@ -9,6 +9,12 @@
     "lat": 40.4168,
     "lng": -3.7038
   },
+  "cityPass": {
+    "name": "Madrid City Card",
+    "description": "Official city pass with discounts at museums, skip-the-line access, and Tourist Travel Pass for public transport",
+    "discountPercent": 15,
+    "url": "https://citycard.esmadrid.com/en"
+  },
   "activities": [
     {
       "id": 1,

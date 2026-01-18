@@ -5,14 +5,10 @@
   "emoji": "🌷",
   "pricing_model": "per_age",
   "cityPass": {
-    "name": "Amsterdam City Pass",
-    "description": "Επιλογή 2, 3 ή 5 αξιοθέατων από κορυφαίες δραστηριότητες της πόλης σε πολύ χαμηλή τιμή. Ισχύει έως 7 ημέρες μετά το πρώτο check-in.",
-    "prices": {
-      "2_attractions": 49,
-      "3_attractions": 59,
-      "5_attractions": 69
-    },
-    "notes": "Ιδανικό για τουρίστες λίγων ημερών. Τα εισιτήρια ισχύουν για 7 ημέρες μετά το πρώτο check-in. Προτείνεται κράτηση online για κάποια δημοφιλή αξιοθέατα (π.χ. Van Gogh, Rijksmuseum, NEMO)."
+    "name": "I amsterdam City Card",
+    "description": "Free entry to 70+ museums, unlimited public transport, canal cruise, and 25% discounts at restaurants and attractions",
+    "discountPercent": 25,
+    "url": "https://www.iamsterdam.com/en/tickets/i-amsterdam-city-card"
   },
   "activities": [
     {

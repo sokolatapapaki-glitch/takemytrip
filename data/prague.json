@@ -9,6 +9,12 @@
     "lat": 50.0875,
     "lng": 14.4213
   },
+  "cityPass": {
+    "name": "Prague Visitor Pass",
+    "description": "Free admission to 70+ attractions, guided tours, Vltava cruise, and unlimited public transport including airport",
+    "discountPercent": 25,
+    "url": "https://praguepass.eu/en/"
+  },
   "activities": [
     {
       "id": 1,

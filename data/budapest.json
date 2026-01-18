@@ -9,6 +9,12 @@
     "lat": 47.4979,
     "lng": 19.0402
   },
+  "cityPass": {
+    "name": "Budapest Card",
+    "description": "Free entry to 22 museums, unlimited public transport, free thermal bath, and 10-50% discounts at attractions",
+    "discountPercent": 30,
+    "url": "https://www.budapestcard.org/"
+  },
   "activities": [
     {
       "id": 1,

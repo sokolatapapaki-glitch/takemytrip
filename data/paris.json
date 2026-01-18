@@ -9,6 +9,12 @@
     "lat": 48.8566,
     "lng": 2.3522
   },
+  "cityPass": {
+    "name": "Paris Museum Pass",
+    "description": "Free skip-the-line entry to 50+ museums and monuments including Louvre, Versailles, and Sainte-Chapelle",
+    "discountPercent": 25,
+    "url": "https://www.parismuseumpass.fr/en"
+  },
   "activities": [
     {
       "id": 1,

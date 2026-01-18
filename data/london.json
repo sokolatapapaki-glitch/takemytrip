@@ -4,6 +4,12 @@
   "currency": "GBP",
   "emoji": "🇬🇧",
   "pricing_model": "per_age",
+  "cityPass": {
+    "name": "The London Pass",
+    "description": "Access to 95+ attractions including Tower of London, Westminster Abbey, and hop-on hop-off bus tour",
+    "discountPercent": 35,
+    "url": "https://londonpass.com/en"
+  },
   "activities": [
     {
       "id": 1,

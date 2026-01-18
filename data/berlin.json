@@ -9,6 +9,12 @@
 "lat": 52.5200,
 "lng": 13.4050
 },
+"cityPass": {
+"name": "Berlin WelcomeCard",
+"description": "Minimum 25% discount at 200+ attractions, free public transport, and priority access to major sites",
+"discountPercent": 25,
+"url": "https://www.berlin-welcomecard.de/en"
+},
 "passes": [
 {
 "name": "Berlin WelcomeCard",

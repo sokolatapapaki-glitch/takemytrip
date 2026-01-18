@@ -9,6 +9,12 @@
     "lat": 41.0086,
     "lng": 28.9802
   },
+  "cityPass": {
+    "name": "Istanbul Museum Pass",
+    "description": "Free one-time access to 10+ museums including Topkapi Palace, skip-the-line entry, valid for 5 consecutive days",
+    "discountPercent": 20,
+    "url": "https://muze.gen.tr/MuseumPasses"
+  },
   "activities": [
     {
       "id": 1,

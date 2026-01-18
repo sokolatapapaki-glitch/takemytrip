@@ -9,6 +9,12 @@
     "lat": 48.2082,
     "lng": 16.3738
   },
+  "cityPass": {
+    "name": "Vienna Pass",
+    "description": "Free admission to 90+ attractions including Schönbrunn Palace, hop-on hop-off bus, and fast-track entry",
+    "discountPercent": 30,
+    "url": "https://www.viennapass.de/en"
+  },
   "activities": [
     {
       "id": 1,

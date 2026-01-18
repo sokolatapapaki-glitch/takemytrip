@@ -9,6 +9,12 @@
     "lat": 38.7223,
     "lng": -9.1393
   },
+  "cityPass": {
+    "name": "Lisboa Card",
+    "description": "Free entry to 51 attractions, unlimited public transport including trains to Sintra/Cascais, and 5-50% discounts",
+    "discountPercent": 30,
+    "url": "https://www.lisboacard.org/"
+  },
   "activities": [
     {
       "id": 1,
