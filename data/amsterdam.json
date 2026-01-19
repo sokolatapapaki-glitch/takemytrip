@@ -102,7 +102,7 @@
       ],
       "duration_hours": 2.5,
       "best_time": "morning",
-      "cafe": "<a href='https://maps.google.com/?q=Rijks+Restaurant+Amsterdam' target='_blank'>Rijks</a> - fine dining café στο Rijksmuseum"
+      "cafe": "<a href='https://maps.google.com/?q=Le+Pain+Quotidien+Museumplein+Amsterdam' target='_blank'>Le Pain Quotidien</a> - όμορφο cafe στην πλατεία"
     },
     {
       "id": 3,
@@ -276,7 +276,7 @@
         "lat": 52.3758,
         "lng": 4.8979
       },
-      "restaurant": "<a href='https://maps.google.com/?q=This+is+Holland+Cafe+Amsterdam' target='_blank'>This is Holland Cafe</a> - Dutch snacks",
+      "restaurant": "<a href='https://tolhuistuin.nl/en/eat-drink' target='_blank'>THT (Tolhuistuin)</a> - Ευρύχωρο εστιατόριο με ωραία θέα, ακριβώς δίπλα στο This is Holland",
       "website": "https://www.thisisholland.com/",
       "notes": [
         "ΠΡΟΣΟΧΗ: Δεν επιτρέπονται κάτω των 4 ετών και κάτω του 100cm",
@@ -296,7 +296,7 @@
       ],
       "duration_hours": 1,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Pluk+Amsterdam' target='_blank'>Pluk</a> - healthy brunch spot"
+      "cafe": "<a href='https://maps.google.com/?q=This+is+Holland+Cafe+Amsterdam' target='_blank'>This is Holland Cafe</a> - Dutch snacks"
     },
     {
       "id": 7,
