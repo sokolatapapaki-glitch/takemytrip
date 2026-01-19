@@ -2039,9 +2039,7 @@ function saveManualDestination() {
     updateActivitiesCost();
     
     closeManualDestinationModal();
-    
-    alert(`✅ Επιλέξατε: ${cityName}\n\nΣυνέχεια στις πτήσεις. Μπορείτε να ορίσετε τις μέρες στο βήμα "Πρόγραμμα".`);
-    
+
     saveState();
     
     setTimeout(() => {
