@@ -56,6 +56,12 @@ const selectedActivities = (state && state.selectedActivities && state.selectedA
     availableCombos = findBerlinCombos(selectedActivities, ageGroups);
 } else if (state.selectedDestination.includes("Άμστερνταμ")) {
     availableCombos = findAmsterdamCombos(selectedActivities, ageGroups);
+} else if (state.selectedDestination.includes("Μαδρίτη")) {
+    availableCombos = findMadridCombos(selectedActivities, ageGroups);
+} else if (state.selectedDestination.includes("Παρίσι")) {
+    availableCombos = findParisCombos(selectedActivities, ageGroups);
+} else if (state.selectedDestination.includes("Κωνσταντινούπολη")) {
+    availableCombos = findIstanbulCombos(selectedActivities, ageGroups);
 } else {
     availableCombos = findGenericCombos(selectedActivities, ageGroups);
 }
@@ -299,32 +305,41 @@ function findLondonCombos(selectedActivities, ageGroups) {
 function findViennaCombos(selectedActivities, ageGroups) {
     console.log("🇦🇹 Αναζήτηση combos για Βιέννη");
     const combos = [];
-    
-    // SISI PASS
-    const imperialActivities = selectedActivities.filter(act => 
-        act.name.includes("Schönbrunn") || 
-        act.name.includes("Sisi") ||
-        act.name.includes("Hofburg") ||
-        act.name.includes("Palace")
+
+    // Note: Sisi Pass is a standalone pass (not a combo), so not included here
+
+    // TIME TRAVEL VIENNA + SISI'S JOURNEY COMBO
+    const timeTravel = selectedActivities.find(act =>
+        act.name.toLowerCase().includes("time travel")
     );
-    
-    if (imperialActivities.length >= 2) {
-        const normalCost = calculateComboRegularCost(imperialActivities, ageGroups);
-        const passCost = 57;
-        
-        if (normalCost > passCost) {
+    const sisiJourney = selectedActivities.find(act =>
+        act.name.toLowerCase().includes("sisi") && act.name.toLowerCase().includes("journey")
+    );
+
+    if (timeTravel && sisiJourney) {
+        const normalCost = calculateComboRegularCost([timeTravel, sisiJourney], ageGroups);
+
+        // Combo pricing: 0-4 free, 5-14: 24€, 15+: 28€
+        const toddlers = (ageGroups["0-2"] || 0) + (ageGroups["3-5"] || 0);
+        const children = (ageGroups["6-14"] || 0);
+        const teens = (ageGroups["15-19"] || 0);
+        const adults = (ageGroups["18+"] || 0);
+
+        const comboCost = (toddlers * 0) + (children * 24) + (teens * 28) + (adults * 28);
+
+        if (normalCost > comboCost) {
             combos.push({
-                name: "👑 Sisi Pass Vienna",
-                description: "Πρόσβαση σε 3 αυτοκρατορικά αξιοθέατα",
-                activities: imperialActivities.map(a => a.name),
+                name: "🎬 Time Travel Vienna + Sisi's Journey Combo",
+                description: "Διπλό VR experience για την ιστορία της Βιέννης",
+                activities: [timeTravel.name, sisiJourney.name],
                 regularPrice: normalCost,
-                comboPrice: passCost,
-                saving: normalCost - passCost,
-                note: "Schönbrunn + Sisi Museum + Furniture Museum"
+                comboPrice: comboCost,
+                saving: normalCost - comboCost,
+                note: "💰 Combo: 0-4 ετών δωρεάν, 5-14 ετών: 24€, 15+ ετών: 28€"
             });
         }
     }
-    
+
     return combos;
 }
 
@@ -449,6 +464,147 @@ function findAmsterdamCombos(selectedActivities, ageGroups) {
                 comboPrice: comboCost,
                 saving: normalCost - comboCost,
                 note: `💰 Combo: 4-12 ετών: 35.5€, 13+ ετών: 43.5€ (0-3 ετών δεν επιτρέπονται)`
+            });
+        }
+    }
+
+    return combos;
+}
+
+function findMadridCombos(selectedActivities, ageGroups) {
+    console.log("🇪🇸 Αναζήτηση combos για Μαδρίτη");
+    const combos = [];
+
+    // ZOO + FAUNIA COMBO
+    const zoo = selectedActivities.find(act =>
+        act.name.toLowerCase().includes("zoo aquarium")
+    );
+    const faunia = selectedActivities.find(act =>
+        act.name.toLowerCase().includes("faunia")
+    );
+
+    if (zoo && faunia) {
+        const normalCost = calculateComboRegularCost([zoo, faunia], ageGroups);
+
+        // Combo pricing: 0-2 free, 3+ all ages: 39.90€
+        const infants = (ageGroups["0-2"] || 0);
+        const children = (ageGroups["3-5"] || 0) + (ageGroups["6-14"] || 0);
+        const teens = (ageGroups["15-19"] || 0);
+        const adults = (ageGroups["18+"] || 0);
+
+        const payingPeople = children + teens + adults;
+        const comboCost = payingPeople * 39.90;
+
+        if (normalCost > comboCost) {
+            combos.push({
+                name: "🦁 Zoo + Faunia Madrid Combo",
+                description: "Συνδυασμός ζωολογικού κήπου και πάρκου οικοσυστημάτων",
+                activities: [zoo.name, faunia.name],
+                regularPrice: normalCost,
+                comboPrice: comboCost,
+                saving: normalCost - comboCost,
+                note: "💰 Combo: 0-2 ετών δωρεάν, 3+ ετών: 39.90€ (ειδικοί κανόνες για παιδιά)"
+            });
+        }
+    }
+
+    return combos;
+}
+
+function findParisCombos(selectedActivities, ageGroups) {
+    console.log("🇫🇷 Αναζήτηση combos για Παρίσι");
+    const combos = [];
+
+    // SAINTE-CHAPELLE + CONCIERGERIE COMBO
+    const sainteChapelle = selectedActivities.find(act =>
+        act.name.toLowerCase().includes("sainte-chapelle")
+    );
+    const conciergerie = selectedActivities.find(act =>
+        act.name.toLowerCase().includes("conciergerie")
+    );
+
+    if (sainteChapelle && conciergerie) {
+        const normalCost = calculateComboRegularCost([sainteChapelle, conciergerie], ageGroups);
+
+        // Combo pricing: 0-17 free, 18-25 free (EU only - simplified to all), 18+: 23€
+        // Note: We simplify and assume 18-25 free applies to all for consistency
+        const children = (ageGroups["0-2"] || 0) + (ageGroups["3-5"] || 0) + (ageGroups["6-14"] || 0) + (ageGroups["15-19"] || 0);
+        const adults = (ageGroups["18+"] || 0);
+
+        const comboCost = (children * 0) + (adults * 23);
+
+        if (normalCost > comboCost) {
+            combos.push({
+                name: "⛪ Sainte-Chapelle + Conciergerie Combo",
+                description: "Γοτθικό αριστούργημα και ιστορική φυλακή της Επανάστασης",
+                activities: [sainteChapelle.name, conciergerie.name],
+                regularPrice: normalCost,
+                comboPrice: comboCost,
+                saving: normalCost - comboCost,
+                note: "💰 Combo: 0-17 ετών δωρεάν, 18+ ετών: 23€ (18-25 ΕΕ κατοίκων δωρεάν)"
+            });
+        }
+    }
+
+    return combos;
+}
+
+function findIstanbulCombos(selectedActivities, ageGroups) {
+    console.log("🇹🇷 Αναζήτηση combos για Κωνσταντινούπολη");
+    const combos = [];
+
+    // COMBO 1: HAGIA SOPHIA + TOPKAPI PALACE
+    const hagiaSophia = selectedActivities.find(act =>
+        act.name.includes("Αγία Σοφία") || act.name.toLowerCase().includes("hagia sophia")
+    );
+    const topkapi = selectedActivities.find(act =>
+        act.name.includes("Τοπ Καπί") || act.name.toLowerCase().includes("topkapi")
+    );
+
+    if (hagiaSophia && topkapi) {
+        const normalCost = calculateComboRegularCost([hagiaSophia, topkapi], ageGroups);
+        const comboCost = 75; // Fixed combo price per person
+
+        const totalPeople = (ageGroups["0-2"] || 0) + (ageGroups["3-5"] || 0) + (ageGroups["6-14"] || 0) + (ageGroups["15-19"] || 0) + (ageGroups["18+"] || 0);
+        const totalComboCost = totalPeople * comboCost;
+
+        if (normalCost > totalComboCost) {
+            combos.push({
+                name: "🕌 Αγία Σοφία + Τοπ Καπί Combo",
+                description: "Συνδυαστικό εισιτήριο για τα 2 κύρια αξιοθέατα",
+                activities: [hagiaSophia.name, topkapi.name],
+                regularPrice: normalCost,
+                comboPrice: totalComboCost,
+                saving: normalCost - totalComboCost,
+                note: "💰 Combo: 75€ ανά άτομο (εξοικονόμηση 15€)"
+            });
+        }
+    }
+
+    // COMBO 2: GALATA TOWER + BOSPHORUS CRUISE
+    const galataTower = selectedActivities.find(act =>
+        act.name.includes("Γαλατά") || act.name.toLowerCase().includes("galata")
+    );
+    const bosphorusCruise = selectedActivities.find(act =>
+        act.name.includes("Βόσπορο") || act.name.toLowerCase().includes("bosphorus")
+    );
+
+    if (galataTower && bosphorusCruise) {
+        const normalCost = calculateComboRegularCost([galataTower, bosphorusCruise], ageGroups);
+        const comboCost = 65; // Fixed combo price per person
+
+        const totalPeople = (ageGroups["0-2"] || 0) + (ageGroups["3-5"] || 0) + (ageGroups["6-14"] || 0) + (ageGroups["15-19"] || 0) + (ageGroups["18+"] || 0);
+        const totalComboCost = totalPeople * comboCost;
+
+        if (normalCost > totalComboCost) {
+            combos.push({
+                name: "🗼 Πύργος Γαλατά + Κρουαζιέρα Βόσπορου Combo",
+                description: "Πανοραμική θέα και θαλάσσια διαδρομή",
+                activities: [galataTower.name, bosphorusCruise.name],
+                regularPrice: normalCost,
+                comboPrice: totalComboCost,
+                saving: normalCost - totalComboCost,
+                note: "💰 Combo: 65€ ανά άτομο (εξοικονόμηση 15€)"
             });
         }
     }
