@@ -73,7 +73,7 @@
         "lat": 52.5206,
         "lng": 13.3878
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Curry+36+Berlin+Kreuzberg' target='_blank'>Curry 36</a> - διάσημα currywurst",
+      "restaurant": "<a href='https://www.curry61.de/' target='_blank'>Curry 61</a> - Το καλύτερο currywurst στο Mitte, πολύ κοντά στο μουσείο και πολύ οικονομικό.",
       "website": "https://www.illuseum.de/en/",
       "notes": [],
       "tags": [
@@ -84,7 +84,7 @@
       ],
       "duration_hours": 1.5,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Mitte+Meer+Berlin' target='_blank'>Mitte Meer</a> - cozy café near Illuseum"
+      "cafe": "<a href='https://zeitfuerbrot.com/' target='_blank'>Zeit für Brot</a> - Διάσημο για τα φρέσκα cinnamon rolls (Schnecken) που λατρεύουν τα παιδιά."
     },
     {
       "id": 2,
@@ -119,7 +119,7 @@
         "lat": 52.4986,
         "lng": 13.3779
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Schleusenkrug+Berlin' target='_blank'>Schleusenkrug</a> - beer garden",
+      "restaurant": "<a href='https://www.facebook.com/Gleis0Berlin/' target='_blank'>Gleis 0</a> - Βρίσκεται ακριβώς δίπλα στο μουσείο, πολύ βολικό για οικογένειες με κλασικές γερμανικές επιλογές.",
       "website": "https://technikmuseum.berlin/en/",
       "notes": [],
       "tags": [
@@ -131,7 +131,7 @@
       ],
       "duration_hours": 3,
       "best_time": "afternoon",
-      "cafe": "<a href='https://maps.google.com/?q=Cafe+am+Neuen+See+Berlin' target='_blank'>Cafe am Neuen See</a> - beer garden café"
+      "cafe": "<a href='https://www.tor25.de/' target='_blank'>Tor 25</a> - Ένα ήσυχο και cozy καφέ σε απόσταση αναπνοής από την είσοδο του μουσείου."
     },
     {
       "id": 3,
@@ -166,7 +166,7 @@
         "lat": 52.5194,
         "lng": 13.4025
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Zur+letzten+Instanz+Berlin' target='_blank'>Zur letzten Instanz</a> - παλιό εστιατόριο",
+      "restaurant": "<a href='https://www.hofbraeu-wirtshaus.de/berlin/' target='_blank'>Hofbräu Wirtshaus Berlin</a> - Τεράστιο εστιατόριο με βαυαρική ατμόσφαιρα, πολύ φιλικό για παιδιά και μεγάλες παρέες.",
       "website": "https://www.ddr-museum.de/en",
       "notes": [],
       "tags": [
@@ -178,12 +178,12 @@
       ],
       "duration_hours": 2,
       "best_time": "afternoon",
-      "cafe": "<a href='https://maps.google.com/?q=Einstein+Unter+den+Linden+Berlin' target='_blank'>Einstein Kaffee</a> - traditional Viennese café"
+      "cafe": "<a href='https://www.berlinerdom.de/en/visit/domcafe/' target='_blank'>Domcafé</a> - Καφέ ακριβώς δίπλα στον Καθεδρικό Ναό με ωραία θέα στο ποτάμι."
     },
     {
       "id": 4,
       "name": "Museum für Naturkunde",
-      "description": "Ψηλότερος σκελετός δεινοσαύρου και μεγάλη συλλογή ζώων και ορυκτών.",
+      "description": "Ο ψηλότερος σκελετός δεινοσαύρου και μεγάλη συλλογή ζώων και ορυκτών.",
       "category": "museum",
       "top": true,
       "prices": {
@@ -213,7 +213,7 @@
         "lat": 52.5302,
         "lng": 13.3793
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Transit+Berlin+Mitte' target='_blank'>Transit</a> - modern German cuisine",
+      "restaurant": "<a href='https://www.peterpane.de/' target='_blank'>Peter Pane Burgers</a> - Εξαιρετικά burger με παραμυθένια διακόσμηση που ξετρελαίνει τα παιδιά, μόλις 5 λεπτά με τα πόδια.",
       "website": "https://www.museumfuernaturkunde.berlin/en",
       "notes": [],
       "tags": [
@@ -225,7 +225,7 @@
       ],
       "duration_hours": 2.5,
       "best_time": "morning",
-      "cafe": "<a href='https://maps.google.com/?q=Augustiner+am+Gendarmenmarkt+Berlin' target='_blank'>Augustiner</a> - Bavarian beer garden"
+      "cafe": "<a href='https://thebarn.de/pages/roastery' target='_blank'>The Barn</a> - Για τους γονείς που θέλουν πραγματικά καλό καφέ, βρίσκεται πολύ κοντά στο μουσείο."
     },
     {
       "id": 5,
@@ -260,7 +260,7 @@
         "lat": 52.5015,
         "lng": 13.3371
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Vapiano+Berlin+Potsdamer+Platz' target='_blank'>Vapiano</a> - Italian",
+      "restaurant": "<a href='https://www.vapiano.de/en/' target='_blank'>Vapiano Potsdamer Platz</a> - Η πιο ασφαλής λύση για παιδιά (μακαρονάδες/πίτσα) με γρήγορη εξυπηρέτηση και καλές τιμές.",
       "website": "https://www.legolanddiscoverycentre.de/berlin/",
       "notes": [],
       "tags": [
@@ -272,7 +272,7 @@
       ],
       "duration_hours": 3,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Cafe+Fleury+Berlin' target='_blank'>Café Fleury</a> - French-style café"
+      "cafe": "<a href='https://www.lindenbraeu-berlin.de/' target='_blank'>Lindenbräu am Sony Center</a> - Εντυπωσιακό σημείο κάτω από τον θόλο του Sony Center, ιδανικό για καφέ ή σνακ."
     },
     {
       "id": 6,
@@ -307,7 +307,7 @@
         "lat": 52.5032,
         "lng": 13.3385
       },
-      "restaurant": "<a href='https://maps.google.com/?q=California+Berlin' target='_blank'>California</a> - American style",
+      "restaurant": "<a href='https://www.vapiano.de/en/' target='_blank'>Vapiano Potsdamer Platz</a> - Η πιο ασφαλής λύση για παιδιά (μακαρονάδες/πίτσα) με γρήγορη εξυπηρέτηση και καλές τιμές.",
       "website": "https://www.madametussauds.com/berlin/en/",
       "notes": [],
       "tags": [
@@ -319,7 +319,7 @@
       ],
       "duration_hours": 2,
       "best_time": "afternoon",
-      "cafe": "<a href='https://maps.google.com/?q=House+of+Small+Wonder+Berlin' target='_blank'>House of Small Wonder</a> - trendy brunch spot"
+      "cafe": "<a href='https://www.lindenbraeu-berlin.de/' target='_blank'>Lindenbräu am Sony Center</a> - Εντυπωσιακό σημείο κάτω από τον θόλο του Sony Center, ιδανικό για καφέ ή σνακ."
     },
     {
       "id": 7,
@@ -495,7 +495,7 @@
         "lat": 52.5075,
         "lng": 13.3375
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Block+House+Berlin' target='_blank'>Block House</a> - steakhouse",
+      "restaurant": "<a href='https://www.block-house.de/' target='_blank'>Block House am Zoo</a> - Πολύ ποιοτικό steak house με ειδικό παιδικό μενού, ακριβώς απέναντι από τον σταθμό του Zoo.",
       "website": "https://www.zoo-berlin.de/en",
       "notes": [],
       "tags": [
@@ -507,7 +507,7 @@
       ],
       "duration_hours": 4,
       "best_time": "morning",
-      "cafe": "<a href='https://maps.google.com/?q=Cafe+am+Neuen+See+Berlin' target='_blank'>Café am Neuen See</a> - iconic lakeside café"
+      "cafe": "<a href='https://www.whatdoyoufancylove.de/' target='_blank'>What Do You Fancy Love?</a> - Πολύ cool spot με φανταστικούς χυμούς, bagels και γλυκά που αρέσουν πολύ στα παιδιά."
     },
     {
       "id": 11,
@@ -542,7 +542,7 @@
         "lat": 52.5075,
         "lng": 13.3375
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Hard+Rock+Cafe+Berlin' target='_blank'>Hard Rock Cafe</a> - American",
+      "restaurant": "<a href='https://www.block-house.de/' target='_blank'>Block House am Zoo</a> - Πολύ ποιοτικό steak house με ειδικό παιδικό μενού, ακριβώς απέναντι από τον σταθμό του Zoo.",
       "website": "https://www.aquarium-berlin.de/en",
       "notes": [],
       "tags": [
@@ -554,7 +554,7 @@
       ],
       "duration_hours": 5,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Brauhaus+Lemke+Berlin' target='_blank'>Brauhaus Lemke</a> - brewery & café"
+      "cafe": "<a href='https://www.whatdoyoufancylove.de/' target='_blank'>What Do You Fancy Love?</a> - Πολύ cool spot με φανταστικούς χυμούς, bagels και γλυκά που αρέσουν πολύ στα παιδιά."
     },
     {
       "id": 12,
@@ -871,7 +871,7 @@
         "lat": 52.5111,
         "lng": 13.4478
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Burger+Me+Berlin' target='_blank'>Burger Me</a> - burgers",
+      "restaurant": "<a href='https://www.burgermeister.de/' target='_blank'>Burgermeister</a> - Το πιο εμβληματικό burger του Βερολίνου, οικονομικό και γρήγορο, σε μικρή απόσταση με το μετρό ή περπάτημα.",
       "website": "https://www.computerspielemuseum.de/",
       "notes": [],
       "tags": [
@@ -883,7 +883,6 @@
       ],
       "duration_hours": 2,
       "best_time": "afternoon",
-      "cafe": "<a href='https://maps.google.com/?q=Observatory+Cafe+Berlin' target='_blank'>Observatory Café</a> - near Planetarium"
-    }
+      "cafe": "<a href='https://www.kaffee9.de/' target='_blank'>Kaffee 9</a> - Βρίσκεται μέσα στην Markthalle Neun, μια υπέροχη στεγασμένη αγορά με φαγητό και καφέ."
   ]
 }
