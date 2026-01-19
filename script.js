@@ -1394,14 +1394,14 @@ function getHotelStepHTML() {
                     
                     <!-- TICKETSELLER -->
                     <div style="width: 100%; max-width: 320px;">
-                        <button class="btn" onclick="window.open('https://ticketseller.gr/el/home-2/', '_blank')" 
+                        <button class="btn" onclick="handleTicketSellerClick()"
                                 style="
                                     width: 100%;
-                                    padding: 12px 15px; 
-                                    font-size: 15px; 
+                                    padding: 12px 15px;
+                                    font-size: 15px;
                                     font-weight: 600;
-                                    background: linear-gradient(135deg, #4CAF50, #2E7D32); 
-                                    color: white; 
+                                    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+                                    color: white;
                                     border: none;
                                     border-radius: 8px;
                                 ">
@@ -2567,6 +2567,23 @@ function searchExpediaHotels() {
     
     if (userConfirmed) {
         window.open(expediaBaseUrl, '_blank');
+    }
+}
+
+function handleTicketSellerClick() {
+    // Show informational warning before redirecting to ticketseller.gr
+    const userConfirmed = confirm(
+        '⚠️ Σημαντική ενημέρωση\n\n' +
+        'Η συγκεκριμένη επιλογή δεν υποστηρίζει αυτόματη μεταφορά των στοιχείων που συμπλήρωσες.\n\n' +
+        'Στην επόμενη σελίδα θα χρειαστεί να εισαγάγεις ξανά:\n' +
+        '• Ημερομηνίες\n' +
+        '• Αριθμό ατόμων\n' +
+        '• Αριθμό δωματίων\n\n' +
+        'Θέλεις να συνεχίσεις;'
+    );
+
+    if (userConfirmed) {
+        window.open('https://ticketseller.gr/el/home-2/', '_blank');
     }
 }
 
