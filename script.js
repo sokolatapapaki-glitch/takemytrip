@@ -2735,6 +2735,11 @@ async function setupActivitiesStep() {
         // ==================== RENDER ACTIVITY CARD ====================
         // Υπολόγισε το κόστος για την οικογένεια
         const familyCost = calculateFamilyCost(activity.prices);
+        // Υπολόγισε μόνο τα μέλη με έγκυρη ηλικία
+        const validMembersCount = state.familyMembers.filter(m => {
+            const age = m.age;
+            return age !== "" && age !== null && age !== undefined && !isNaN(parseInt(age));
+        }).length;
         const isSelected = state.selectedActivities.some(a => a.id === activity.id);
 
         html += `
@@ -2871,7 +2876,7 @@ async function setupActivitiesStep() {
 
             <!-- ΣΥΝΟΛΙΚΟ ΚΟΣΤΟΣ ΓΙΑ ΟΙΚΟΓΕΝΕΙΑ -->
             <div class="activity-total" style="background: var(--primary); color: white; padding: 12px; border-radius: 8px; text-align: center; font-weight: bold; margin-top: 10px;">
-                <i class="fas fa-users"></i> ${Number(familyCost).toFixed(2)}€ για ${state.familyMembers.length} ${state.familyMembers.length === 1 ? 'άτομο' : 'άτομα'}
+                <i class="fas fa-users"></i> ${Number(familyCost).toFixed(2)}€ για ${validMembersCount} ${validMembersCount === 1 ? 'άτομο' : 'άτομα'}
             </div>
             ` : ''}
         </div>
