@@ -508,7 +508,7 @@
         "lat": 52.3676,
         "lng": 4.9041
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Canal+Cruise+Snacks+Amsterdam' target='_blank'>Canal Cruise Cafe</a> - snacks on board",
+      "restaurant": "<a href='https://omelegg.com/' target='_blank'>Omelegg City Center</a> - Το καλύτερο brunch με ομελέτες, πολύ κοντά στην αφετηρία της κρουαζιέρας",
       "website": "https://amsterdamcanalcruises.nl/",
       "notes": [
         "0-3 ετών: δωρεάν",
@@ -523,7 +523,7 @@
       ],
       "duration_hours": 1,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Coffee+Bru+Amsterdam' target='_blank'>Coffee Bru</a> - specialty coffee near canal"
+      "cafe": "<a href='https://www.koffieschenkerij.com/' target='_blank'>De Koffieschenkerij</a> - Ένα μοναδικό καφέ στην παλαιότερη εκκλησία της πόλης, με υπέροχο κήπο και σπιτικά γλυκά."
     },
     {
       "id": 12,
