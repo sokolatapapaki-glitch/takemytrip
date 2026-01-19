@@ -48,7 +48,7 @@
         "lat": 47.496,
         "lng": 19.0396
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Ruszwurm+Cafe+Budapest' target='_blank'>Ruszwurm Cafe</a> - το παλιότερο ζαχαροπλαστείο",
+      "restaurant": "<a href='https://www.21restaurant.hu/' target='_blank'>21 Hungarian Kitchen</a> - Μοντέρνα ουγγρική κουζίνα στο λόφο του Κάστρου, πολύ φιλόξενο για οικογένειες.",
       "website": "https://budacastlebudapest.com/",
       "notes": [
         "ΔΩΡΕΑΝ ΓΙΑ ΟΛΟΥΣ (εξωτερικοί χώροι)"
@@ -64,7 +64,7 @@
       "best_time": "morning",
       "freeActivity": true,
       "freeExterior": true,
-      "cafe": "<a href='https://maps.google.com/?q=New+York+Cafe+Budapest' target='_blank'>New York Café</a> - πολυτελές ιστορικό καφέ"
+      "cafe": "<a href='https://www.ruszwurm.hu/' target='_blank'>Ruszwurm Cukrászda</a> - Το παλαιότερο ζαχαροπλαστείο της πόλης (από το 1827). Πρέπει να δοκιμάσετε την κρέμα Ruszwurm!"
     },
     {
       "id": 2,
@@ -98,7 +98,7 @@
         "lat": 47.4965,
         "lng": 19.0398
       },
-      "restaurant": "<a href='https://maps.google.com/?q=St.+Andrea+Borászbár' target='_blank'>St. Andrea</a> - οίνος και κουζίνα",
+      "restaurant": "<a href='https://www.21restaurant.hu/' target='_blank'>21 Hungarian Kitchen</a> - Μοντέρνα ουγγρική κουζίνα στο λόφο του Κάστρου, πολύ φιλόξενο για οικογένειες.",
       "website": "https://budacastlebudapest.com/",
       "notes": [
         "⚠️ Δεν επιτρέπονται παιδιά κάτω των 12 ετών"
@@ -114,7 +114,7 @@
       "best_time": "afternoon",
       "minAge": 12,
       "ageWarning": "Δεν επιτρέπονται παιδιά κάτω των 12 ετών",
-      "cafe": "<a href='https://maps.google.com/?q=Cafe+Gerbeaud+Budapest' target='_blank'>Café Gerbeaud</a> - παραδοσιακό καφέ από το 1858"
+      "cafe": "<a href='https://www.ruszwurm.hu/' target='_blank'>Ruszwurm Cukrászda</a> - Το παλαιότερο ζαχαροπλαστείο της πόλης (από το 1827). Πρέπει να δοκιμάσετε την κρέμα Ruszwurm!"
     },
     {
       "id": 3,
@@ -148,7 +148,7 @@
         "lat": 47.4962,
         "lng": 19.0395
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Labyrinth+Cafe+Budapest' target='_blank'>Labyrinth Cafe</a> - στην είσοδο",
+      "restaurant": "<a href='https://www.21restaurant.hu/' target='_blank'>21 Hungarian Kitchen</a> - Μοντέρνα ουγγρική κουζίνα στο λόφο του Κάστρου, πολύ φιλόξενο για οικογένειες.",
       "website": "https://www.labirintus.com/",
       "notes": [],
       "tags": [
@@ -161,7 +161,7 @@
       "duration_hours": 1.5,
       "best_time": "afternoon",
       "minAge": 0,
-      "cafe": "<a href='https://maps.google.com/?q=Rudas+Thermal+Bath+Cafe+Budapest' target='_blank'>Rudas Café</a> - café στα λουτρά"
+      "cafe": "<a href='https://www.ruszwurm.hu/' target='_blank'>Ruszwurm Cukrászda</a> - Το παλαιότερο ζαχαροπλαστείο της πόλης (από το 1827). Πρέπει να δοκιμάσετε την κρέμα Ruszwurm!"
     },
     {
       "id": 4,
@@ -195,7 +195,7 @@
         "lat": 47.5072,
         "lng": 19.0457
       },
-      "restaurant": "<a href='https://maps.google.com/?q=New+York+Cafe+Budapest' target='_blank'>New York Cafe</a> - το πιο όμορφο καφέ στον κόσμο",
+      "restaurant": "<a href='https://www.biarritz.hu/' target='_blank'>Biarritz Bistro</a> - Ένα κλασικό, φιλικό εστιατόριο ακριβώς δίπλα στο Κοινοβούλιο με εξαιρετικό γκούλας.",
       "website": "https://www.parlament.hu/",
       "notes": [],
       "tags": [
@@ -207,7 +207,7 @@
       ],
       "duration_hours": 2,
       "best_time": "morning",
-      "cafe": "<a href='https://maps.google.com/?q=Fishermans+Bastion+Cafe+Budapest' target='_blank'>Halászbástya Café</a> - café με θέα"
+      "cafe": "<a href='https://www.szamos.hu/uzletek/szamos-cafe' target='_blank'>Szamos Café</a> - Στον επάνω όροφο έχει και μουσείο σοκολάτας! Τέλεια στάση μετά την ξενάγηση."
     },
     {
       "id": 5,
@@ -241,7 +241,7 @@
         "lat": 47.5153,
         "lng": 19.0831
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Gundel+Restaurant+Budapest' target='_blank'>Gundel</a> - παλιό εστιατόριο",
+      "restaurant": "<a href='https://vanyolai.hu/' target='_blank'>Városliget Café</a> - Με θέα στη λίμνη και το κάστρο Vajdahunyad. Έχει ειδικό μενού για \"μικρούς εξερευνητές\".",
       "website": "https://www.mezogazdasagimuzeum.hu/",
       "notes": [
         "🏰 Εξωτερικοί χώροι: ΔΩΡΕΑΝ | Εσωτερικό μουσείο: ΠΛΗΡΩΤΕΟ"
@@ -257,7 +257,7 @@
       "best_time": "afternoon",
       "freeExterior": true,
       "priceNote": "🏰 Εξωτερικοί χώροι: ΔΩΡΕΑΝ | Εσωτερικό μουσείο: ΠΛΗΡΩΤΕΟ",
-      "cafe": "<a href='https://maps.google.com/?q=Szechenyi+Bath+Cafe+Budapest' target='_blank'>Széchenyi Café</a> - snack bar στα λουτρά"
+      "cafe": "<a href='https://gundel.hu/en/patisserie/' target='_blank'>Gundel Patisserie</a> - Ιστορικό σημείο. Αν δεν θέλετε πλήρες γεύμα, πάρτε μια αυθεντική κρέπα Gundel στο χέρι."
     },
     {
       "id": 6,
@@ -291,7 +291,7 @@
         "lat": 47.5075,
         "lng": 19.0657
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Menza+Budapest' target='_blank'>Menza</a> - retro restaurant",
+      "restaurant": "<a href='https://www.menza.hu/' target='_blank'>Menza</a> - Το πιο διάσημο \"retro\" εστιατόριο της πόλης. Πολύ ζωντανή ατμόσφαιρα, ιδανικό για μεσημεριανό.",
       "website": "https://www.terrorhaza.hu/",
       "notes": [
         "⚠️ Ακατάλληλο για άτομα κάτω των 14 ετών"
@@ -307,7 +307,7 @@
       "best_time": "afternoon",
       "minAge": 14,
       "ageWarning": "⚠️ Ακατάλληλο για άτομα κάτω των 14 ετών",
-      "cafe": "<a href='https://maps.google.com/?q=Central+Kavehaz+Budapest' target='_blank'>Centrál Kávéház</a> - historic café"
+      "cafe": "<a href='https://muveszkavehaz.hu/' target='_blank'>Művész Kávéház</a> - Ένα παραδοσιακό καλλιτεχνικό καφέ με φανταστικά γλυκά, ακριβώς απέναντι από την Όπερα."
     },
     {
       "id": 7,
@@ -341,7 +341,7 @@
         "lat": 47.4975,
         "lng": 19.065
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Cafe+Science+Budapest' target='_blank'>Cafe Science</a> - κοντά στο μουσείο",
+      "restaurant": "<a href='https://www.vakvarju.com/en' target='_blank'>VakVarjú Restaurant</a> - Πολύ δημοφιλές σε οικογένειες, διαθέτει παιδότοπο και πολύ φιλικό προσωπικό.",
       "website": "https://www.csodakpalotaja.hu/",
       "notes": [
         "Κατάλληλο για παιδιά από 3 ετών και πάνω"
@@ -357,7 +357,7 @@
       "best_time": "any",
       "minAge": 3,
       "ageWarning": "Κατάλληλο για παιδιά από 3 ετών και πάνω",
-      "cafe": "<a href='https://maps.google.com/?q=Cafe+Alibi+Budapest' target='_blank'>Café Alibi</a> - cozy café"
+      "cafe": "<a href='https://www.szamos.hu/' target='_blank'>Szamos Gourmet Ház</a> - Στην πλατεία Vörösmarty. Δοκιμάστε τα παραδοσιακά marzipan."
     },
     {
       "id": 8,
@@ -391,7 +391,7 @@
         "lat": 47.502,
         "lng": 19.055
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Illusion+Cafe+Budapest' target='_blank'>Illusion Cafe</a> - δίπλα στο μουσείο",
+      "restaurant": "<a href='https://www.vakvarju.com/en' target='_blank'>VakVarjú Restaurant</a> - Πολύ δημοφιλές σε οικογένειες, διαθέτει παιδότοπο και πολύ φιλικό προσωπικό.",
       "website": "https://museumofillusions.hu/",
       "notes": [
         "Οικογενειακό εισιτήριο: 53€ (2 ενήλικες + 2 παιδιά 6-14 ετών)"
@@ -408,7 +408,7 @@
       "familyTicket": true,
       "familyPrice": 53,
       "familyDescription": "2 ενήλικες + 2 παιδιά (6-14 ετών)",
-      "cafe": "<a href='https://maps.google.com/?q=Budapest+Eye+Cafe' target='_blank'>Budapest Eye Café</a> - near the wheel"
+      "cafe": "<a href='https://www.szamos.hu/' target='_blank'>Szamos Gourmet Ház</a> - Στην πλατεία Vörösmarty. Δοκιμάστε τα παραδοσιακά marzipan."
     },
     {
       "id": 9,
@@ -442,7 +442,7 @@
         "lat": 47.4989,
         "lng": 19.0437
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Spreegold+Berlin' target='_blank'>Spreegold</a> - German cuisine",
+      "restaurant": "<a href='https://www.dunacorso.hu/' target='_blank'>Duna Corso</a> - Πάνω στον πεζόδρομο του ποταμού με ζωντανή μουσική και θέα στο Κάστρο.",
       "website": "https://www.budapestrivercruise.com/",
       "notes": [],
       "tags": [
@@ -456,7 +456,7 @@
       "best_time": "afternoon",
       "cruiseType": "daytime",
       "duration": "1 ώρα",
-      "cafe": "<a href='https://maps.google.com/?q=Cafe+Vian+Budapest' target='_blank'>Café Vian</a> - trendy café"
+      "cafe": "<a href='https://www.gerbeaud.hu/' target='_blank'>Café Gerbeaud</a> - Ένα από τα πιο εμβληματικά καφέ της Ευρώπης. Λίγο ακριβό, αλλά η εμπειρία αξίζει."
     },
     {
       "id": 10,
@@ -490,7 +490,7 @@
         "lat": 47.4989,
         "lng": 19.0437
       },
-      "restaurant": "Ποτά/κρασιά περιλαμβάνονται στην κρουαζιέρα",
+      "restaurant": "<a href='https://www.dunacorso.hu/' target='_blank'>Duna Corso</a> - Πάνω στον πεζόδρομο του ποταμού με ζωντανή μουσική και θέα στο Κάστρο.",
       "website": "https://www.budapestrivercruise.com/",
       "notes": [
         "Ελάχιστη ηλικία: 6 ετών"
@@ -508,7 +508,7 @@
       "cruiseType": "evening",
       "duration": "1-1.5 ώρες",
       "minAge": 6,
-      "cafe": "<a href='https://maps.google.com/?q=Tropicarium+Cafe+Budapest' target='_blank'>Tropicarium Café</a> - aquarium café"
+      "cafe": "<a href='https://www.gerbeaud.hu/' target='_blank'>Café Gerbeaud</a> - Ένα από τα πιο εμβληματικά καφέ της Ευρώπης. Λίγο ακριβό, αλλά η εμπειρία αξίζει."
     },
     {
       "id": 11,
@@ -542,7 +542,7 @@
         "lat": 47.5186,
         "lng": 19.0816
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Gett%C3%B3+Guly%C3%A1s+Budapest' target='_blank'>Gettó Gulyás</a> - παραδοσιακή ουγγρική κουζίνα",
+      "restaurant": "<a href='https://vanyolai.hu/' target='_blank'>Városliget Café</a> - Με θέα στη λίμνη και το κάστρο Vajdahunyad. Έχει ειδικό μενού για \"μικρούς εξερευνητές\".",
       "website": "https://www.szechenyifurdo.hu/",
       "notes": [
         "⚠️ Ακατάλληλο για παιδιά κάτω των 14 ετών."
@@ -558,7 +558,7 @@
       "best_time": "morning",
       "minAge": 14,
       "ageWarning": "⚠️ Ακατάλληλο για παιδιά κάτω των 14 ετών.",
-      "cafe": "<a href='https://maps.google.com/?q=Varosliget+Cafe+Budapest' target='_blank'>Városliget Café</a> - park café"
+      "cafe": "<a href='https://gundel.hu/en/patisserie/' target='_blank'>Gundel Patisserie</a> - Ιστορικό σημείο. Αν δεν θέλετε πλήρες γεύμα, πάρτε μια αυθεντική κρέπα Gundel στο χέρι."
     },
     {
       "id": 12,
@@ -592,7 +592,7 @@
         "lat": 47.497,
         "lng": 19.051
       },
-      "restaurant": "<a href='https://maps.google.com/?q=360+Bar+Budapest' target='_blank'>360 Bar</a> - rooftop bar",
+      "restaurant": "<a href='https://www.akvariumklub.hu/' target='_blank'>Akvárium Klub</a> - Ακριβώς κάτω από την πισίνα/σιντριβάνι της πλατείας. Έχει μεγάλο εξωτερικό χώρο για να τρέξουν τα παιδιά.",
       "website": "https://budapesteye.com/",
       "notes": [],
       "tags": [
@@ -605,7 +605,7 @@
       "duration_hours": 0.5,
       "best_time": "evening",
       "minAge": 0,
-      "cafe": "<a href='https://maps.google.com/?q=Palatinus+Strand+Cafe+Budapest' target='_blank'>Palatinus Café</a> - beach café"
+      "cafe": "<a href='https://www.facebook.com/tokyocoffeebp/' target='_blank'>Tokyo Coffee</a> - Μικρό και μοντέρνο για έναν γρήγορο ποιοτικό καφέ στο χέρι."
     },
     {
       "id": 13,
@@ -639,7 +639,7 @@
         "lat": 47.5189,
         "lng": 19.0778
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Zoo+Cafe+Budapest+Zoo' target='_blank'>Zoo Cafe</a> - μέσα στο ζωολογικό",
+      "restaurant": "<a href='https://vanyolai.hu/' target='_blank'>Városliget Café</a> - Με θέα στη λίμνη και το κάστρο Vajdahunyad. Έχει ειδικό μενού για \"μικρούς εξερευνητές\".",
       "website": "https://zoobudapest.com/",
       "notes": [],
       "tags": [
@@ -652,7 +652,7 @@
       "duration_hours": 4,
       "best_time": "morning",
       "minAge": 0,
-      "cafe": "<a href='https://maps.google.com/?q=Holnemvolt+Park+Cafe+Budapest' target='_blank'>Holnemvolt Café</a> - fairy tale café"
+      "cafe": "<a href='https://gundel.hu/en/patisserie/' target='_blank'>Gundel Patisserie</a> - Ιστορικό σημείο. Αν δεν θέλετε πλήρες γεύμα, πάρτε μια αυθεντική κρέπα Gundel στο χέρι."
     },
     {
       "id": 14,
@@ -686,7 +686,7 @@
         "lat": 47.4979,
         "lng": 19.0402
       },
-      "restaurant": "Το ίδιο το MAGIC2 - θεματικό εστιατόριο",
+      "restaurant": "Το ίδιο το Magic2 είναι η εμπειρία. Αν θέλετε κάτι διαφορετικό δίπλα, υπάρχει το <a href='https://www.sir lancelot.hu/' target='_blank'>Sir Lancelot</a> (Μεσαιωνικό εστιατόριο) για απόλυτο θεματικό σκηνικό.",
       "website": "https://www.magic2.hu/",
       "notes": [
         "💰 Τιμή βασίζεται σε μέση κατανάλωση (15€ ανά άτομο)"
@@ -702,7 +702,7 @@
       "best_time": "evening",
       "consumptionBased": true,
       "priceNote": "💰 Τιμή βασίζεται σε μέση κατανάλωση (15€ ανά άτομο)",
-      "cafe": "<a href='https://maps.google.com/?q=Miniversum+Cafe+Budapest' target='_blank'>Miniversum Café</a> - model café"
+      "cafe": ""
     },
     {
       "id": 15,
@@ -736,7 +736,7 @@
         "lat": 47.526,
         "lng": 19.049
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Palatinus+Strand+Budapest' target='_blank'>Palatinus Strand</a> - restaurant στις πισίνες",
+      "restaurant": "<a href='https://www.holdudvar.hu/' target='_blank'>Holdudvar</a> - Μεγάλος κήπος, χαλαρή ατμόσφαιρα, ό,τι πρέπει για μετά τη βόλτα στο νησί.",
       "website": "https://www.budapest.com/",
       "notes": [
         "ΔΩΡΕΑΝ ΓΙΑ ΟΛΟΥΣ"
@@ -753,7 +753,7 @@
       "best_time": "afternoon",
       "freeActivity": true,
       "activityType": "playground",
-      "cafe": "<a href='https://maps.google.com/?q=St+Stephens+Basilica+Cafe+Budapest' target='_blank'>Basilica Café</a> - café near basilica"
+      "cafe": "<a href='https://www.facebook.com/hippisziget/' target='_blank'>Hippi Sziget</a> - Ένα \"χαλαρό\" spot για χυμούς και σνακς μέσα στο πράσινο."
     }
   ]
 }
