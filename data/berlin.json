@@ -528,11 +528,11 @@
       ],
       "duration_hours": 2,
       "best_time": "afternoon",
-      "cafe": {
-        "name": "Datscha",
-        "description": "Russian-inspired café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Datscha+Berlin"
-      }
+     "cafe": {
+  "name": "Kindercafé Spielzimmer",
+  "description": "Ένα χαρούμενο καφέ με εσωτερικό παιδότοπο, ιδανικό για οικογένειες. Προσφέρει ένα μενού φιλικό προς τα παιδιά και έναν ασφαλή χώρο παιχνιδιού, αποτελώντας την τέλεια συνέχεια μετά την επίσκεψη στο μουσείο MACHmit!.",
+  "map_url": "https://maps.google.com/?cid=288468161165856801&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+}
     },
     {
       "id": 10,
@@ -639,9 +639,9 @@
       "duration_hours": 5,
       "best_time": "any",
       "cafe": {
-        "name": "What Do You Fancy Love?",
-        "description": "Πολύ cool spot με φανταστικούς χυμούς, bagels και γλυκά που αρέσουν πολύ στα παιδιά.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=What+Do+You+Fancy+Love?"
+  "name": "What do you fancy love?",
+  "description": "Ένα από τα πιο δημοφιλή και στιλάτα καφέ στο Charlottenburg. Φημίζεται για τα φρέσκα bagels, τους υγιεινούς χυμούς και την ιδιαίτερη διακόσμηση με φωτογραφίες, αποτελώντας αγαπημένο σημείο για πρωινό ή σνακ κοντά στον Ζωολογικό Κήπο.",
+  "map_url": "https://maps.google.com/?cid=15724724136414435716&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
       }
     },
     {
@@ -695,14 +695,14 @@
       "best_time": "afternoon",
       "cafe": {
         "name": "Cafe am Neuen See (Biergarten)",
-        "description": "Ένα από τα ωραιότερα σημεία στο πάρκο. Μπορείτε να πάρετε καφέ και πρέτσελ στο χέρι ή να καθίσετε δίπλα στη λίμνη όπου τα παιδιά μπορούν να δουν τις πάπιες.",
+        "description": "Ένα από τα ωραιότερα σημεία στο πάρκο.",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+am+Neuen+See+Berlin"
       }
     },
     {
       "id": 13,
       "name": "Garten der Welt",
-      "description": "Εντυπωσιακό πάρκο με θεματικούς κήπους και τελεφερίκ. Ιδανικό για κάθε ηλικία.",
+      "description": "Εντυπωσιακό πάρκο με θεματικούς κήπους (Ιαπωνικό, Κορεάτικο, Μπαλινέζικο, Ιταλικό Αναγεννησιακό κ.α) και τελεφερίκ. Ιδανικό για κάθε ηλικία.",
       "category": "park",
       "top": false,
       "prices": {
@@ -750,10 +750,10 @@
       "duration_hours": 3,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Tea Salon",
-        "description": "traditional tea house",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Tea+Salon+Marzahn+Berlin"
-      }
+  "name": "Café Krümelkeks",
+  "description": "Ένα εξαιρετικά φιλόξενο και οικογενειακό καφέ κοντά στους Gärten der Welt. Με βαθμολογία 4.3, ξεχωρίζει για τα σπιτικά του κέικ και τη φιλική εξυπηρέτηση, αποτελώντας ένα κρυμμένο διαμάντι της περιοχής.",
+  "map_url": "https://maps.google.com/?cid=12302034046578710587&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+}
     },
     {
       "id": 14,
@@ -915,10 +915,10 @@
       "duration_hours": 2,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Zille Stube",
-        "description": "traditional Berlin pub",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Zille+Stube+Berlin"
-      }
+  "name": "Zimt & Zucker",
+  "description": "Ένα πανέμορφο, vintage καφέ δίπλα στον ποταμό Spree. Φημίζεται για το σπιτικό του brunch και τα παραδοσιακά γλυκά του. Είναι εξαιρετικά φιλικό προς τις οικογένειες, προσφέροντας έναν ζεστό χώρο για ξεκούραση μετά την κρουαζιέρα.",
+  "map_url": "https://maps.google.com/?cid=12407621192773975392&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+}
     },
     {
       "id": 17,
