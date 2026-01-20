@@ -11,7 +11,7 @@
   },
   "cityPass": {
     "name": "Berlin WelcomeCard",
-    "description": "Minimum 25% discount at 200+ attractions, free public transport, and priority access to major sites",
+    "description": "Η Berlin WelcomeCard προσφέρει απεριόριστες μετακινήσεις με όλα τα ΜΜΕ και εκπτώσεις έως 50% σε 200+ αξιοθέατα και μουσεία. Ιδανική για οικογένειες, καθώς επιτρέπει σε έως 3 παιδιά (6-14 ετών) να ταξιδεύουν δωρεάν με έναν ενήλικα.",
     "discountPercent": 25,
     "url": "https://www.berlin-welcomecard.de/en"
   },
