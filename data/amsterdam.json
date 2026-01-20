@@ -377,9 +377,9 @@
         "lng": 4.9145
       },
       "restaurant": {
-        "name": "Artis Restaurant",
-        "description": "οικογενειακό εστιατόριο στο ζωολογικό",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Artis+Zoo+Restaurant+Amsterdam"
+        "name": "De Plantage",
+        "description": "Ένα εμβληματικό εστιατόριο-καφέ σε ένα ιστορικό κτίριο του 19ου αιώνα, με υπέροχη βεράντα κάτω από τα δέντρα και θέα στον ζωολογικό κήπο.",
+        "map_url": "https://maps.google.com/?cid=153695864003453909&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       },
       "website": "https://www.artis.nl/",
       "notes": [
@@ -396,9 +396,10 @@
       "duration_hours": 4,
       "best_time": "morning",
       "cafe": {
-        "name": "De Plantage",
-        "description": "café στο Artis",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=De+Plantage+Cafe+Artis"
+        "name": "De Serre",
+        "description": "Κεντρικό εστιατόριο εντός του ARTIS, ιδανικό για ένα γρήγορο γεύμα, σνακ ή καφέ σε χαλαρή ατμόσφαιρα.",
+        "map_url": "https://maps.google.com/?cid=1377385187891197699&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+      }
       }
     },
     {
@@ -485,7 +486,7 @@
       },
       "restaurant": {
         "name": "Boerderij Meerzicht",
-        "description": "φάρμα με goat cheese & playground",
+        "description": "φάρμα με χειροποίητα προϊόντα & παιδική χαρά",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Boerderij+Megan+Amsterdamse+Bos"
       },
       "website": "https://www.amsterdamsebos.nl/",
@@ -500,9 +501,9 @@
       "duration_hours": 3,
       "best_time": "any",
       "cafe": {
-        "name": "Grand Cafe De Bosbaan",
-        "description": "lakeside cafe",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Grand+Cafe+De+Bosbaan"
+        "name": "De Boshalte",
+        "description": "Ένα χαλαρό 'koffie tentje' στην είσοδο του δάσους, ιδανικό για καφέ, ζεστή σοκολάτα και ελαφριά σνακ.",
+        "map_url": "https://maps.google.com/?cid=16148306879835281686&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       }
     },
     {
@@ -536,9 +537,9 @@
         "lng": 4.8883
       },
       "restaurant": {
-        "name": "Amstelpark Pavilion",
-        "description": "κήπος με παιδική χαρά",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Amstelpark+Pavilion"
+        "name": "Rosarium Amsterdam",
+        "description": "Εστιατόριο με υπέροχη βεράντα δίπλα στον κήπο. Με ποιοτικό φαγητό σε ένα ήρεμο περιβάλλον, ιδανικό για οικογενειακό γεύμα.",
+        "map_url": "https://maps.google.com/?cid=4683538794829262812&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       },
       "website": "https://www.amstelpark.info/",
       "notes": [
@@ -553,9 +554,9 @@
       "duration_hours": 2.5,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Het Glazen Huis",
-        "description": "glass house cafe",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Het+Glazen+Huis+Amstelpark"
+        "name": "Café de Orchidee",
+        "description": "Πολύ ζεστό και οικονομικό καφέ εντός του πάρκου. Ιδανικό για καφέ, παγωτό ή ένα γρήγορο σνακ ανάμεσα στις δραστηριότητες των παιδιών.",
+        "map_url": "https://maps.google.com/?cid=893613239285080731&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       }
     },
     {
