@@ -261,10 +261,10 @@
         "lat": 52.3886,
         "lng": 4.8689
       },
-      "restaurant": {
-        "name": "WONDR Cafe",
-        "description": "Instagram-worthy treats",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=WONDR+Cafe+Amsterdam"
+     "restaurant": {
+        "name": "Lowlander Botanical Bar & Restaurant",
+        "description": "Ένα πανέμορφο εστιατόριο με βοτανικό κήπο στο εσωτερικό του. Προσφέρει φρέσκα πιάτα και έναν πολύ ευχάριστο, ανοιχτό χώρο που λατρεύουν οι οικογένειες.",
+        "map_url": "https://maps.google.com/?cid=10492291773382815161&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       },
       "website": "https://www.wondrexperience.com/",
       "notes": [
@@ -281,9 +281,9 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "cafe": {
-        "name": "Coffee Company",
-        "description": "chain coffee shop",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Coffee+Company+Amsterdam+Centrum"
+        "name": "SUBCULT",
+        "description": "Ένα εναλλακτικό και δημιουργικό καφέ-πολυχώρος ακριβώς δίπλα στο WONDR. Ιδανικό για καφέ και σνακ σε ένα χαλαρό και φιλικό περιβάλλον.",
+        "map_url": "https://maps.google.com/?cid=9577572624550529966&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       }
     },
     {
@@ -340,10 +340,10 @@
       ],
       "duration_hours": 1,
       "best_time": "any",
-      "cafe": {
-        "name": "This is Holland Cafe",
-        "description": "Dutch snacks",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=This+is+Holland+Cafe+Amsterdam"
+     "cafe": {
+        "name": "Eye Bar Restaurant",
+        "description": "Μοντέρνο καφέ-εστιατόριο στο Eye Film Museum με τεράστια τζαμαρία και θέα στο ποτάμι IJ. Πολύ άνετο για οικογένειες.",
+        "map_url": "https://maps.google.com/maps/contrib/118214478004548871284"
       }
     },
     {
@@ -645,9 +645,9 @@
         "lng": 4.9039
       },
       "restaurant": {
-        "name": "Pancake Boat",
-        "description": "unlimited pancakes κατά την κρουαζιέρα",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Pancake+Boat+Restaurant"
+        "name": "Pllek",
+        "description": "Ένα πολύ ιδιαίτερο εστιατόριο φτιαγμένο από containers με δική του αμμουδιά δίπλα στο νερό. Πολύ φιλικό για παιδιά, με χαλαρή ατμόσφαιρα και ωραία θέα.",
+        "map_url": "https://maps.google.com/?cid=18315978441786872412&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       },
       "website": "https://www.pannenkoekenboot.nl/",
       "notes": [
@@ -663,10 +663,10 @@
       ],
       "duration_hours": 1.5,
       "best_time": "any",
-      "cafe": {
-        "name": "Pancakes Amsterdam",
-        "description": "traditional Dutch pancakes",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Pancakes+Amsterdam"
+     "cafe": {
+        "name": "IJver Amsterdam",
+        "description": "Ένα ευρύχωρο, βιομηχανικού στυλ καφέ-εστιατόριο μέσα σε μια παλιά αποθήκη πλοίων, με μεγάλη εσωτερική και εξωτερική αυλή.",
+        "map_url": "https://maps.google.com/?cid=15616292713757750973&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       }
     }
   ]
