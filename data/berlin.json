@@ -89,9 +89,9 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "cafe": {
-        "name": "Zeit für Brot",
-        "description": "Διάσημο για τα φρέσκα cinnamon rolls (Schnecken) που λατρεύουν τα παιδιά.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Zeit+für+Brot"
+  "name": "Zeit für Brot",
+  "description": "Ένας εμβληματικός βιολογικός φούρνος στην καρδιά του Βερολίνου. Φημίζεται για τα ολόφρεσκα υλικά του και κυρίως για τα θρυλικά ρολά κανέλας και σοκολάτας (Schnecken), αποτελώντας αγαπημένο σημείο για μικρούς και μεγάλους.",
+  "map_url": "https://maps.google.com/?cid=81937325099938836&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
       }
     },
     {
@@ -144,9 +144,9 @@
       "duration_hours": 3,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Tor 25",
-        "description": "Ένα ήσυχο και cozy καφέ σε απόσταση αναπνοής από την είσοδο του μουσείου.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Tor+25"
+        "name": "Anhalt",
+  "description": "Το κεντρικό καφέ-εστιατόριο εντός του Γερμανικού Τεχνικού Μουσείου. Προσφέρει μια ποικιλία από ζεστά και κρύα πιάτα, σάντουιτς και γλυκά σε έναν ευρύχωρο και φωτεινό χώρο, ιδανικό για ένα διάλειμμα κατά την περιήγηση.",
+  "map_url": "https://maps.google.com/?cid=9325083312355965361&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
       }
     },
     {
@@ -199,9 +199,9 @@
       "duration_hours": 2,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Domcafé",
-        "description": "Καφέ ακριβώς δίπλα στον Καθεδρικό Ναό με ωραία θέα στο ποτάμι.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Domcafé"
+        "name": "Domcafé im Berliner Dom",
+  "description": "Ένα μικρό καφέ με self-service μέσα στον Καθεδρικό Ναό του Βερολίνου. Ιδανικό για καφέ, κέικ και σνακ, με μια υπέροχη βεράντα που προσφέρει θέα στον ποταμό Spree.",
+  "map_url": "https://maps.google.com/?cid=2100599542758113360&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
       }
     },
     {
@@ -364,9 +364,9 @@
       "duration_hours": 2,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Einstein Kaffee Unter den Linden",
-        "description": "Κλασικό Βερολινέζικο καφέ με ωραία ζεστή σοκολάτα και γλυκά, πολύ κοντά στο μουσείο.",
-        "map_url": "https://maps.google.com/maps/contrib/103687562499924418974"
+  "name": "MarcAnn's",
+  "description": "Ένα πολύ βολικό καφέ-εστιατόριο ακριβώς απέναντι από το Μουσείο Φυσικής Ιστορίας. Προσφέρει φρέσκα σάντουιτς, σαλάτες και ζεστά πιάτα σε ένα χαλαρό περιβάλλον, ιδανικό για ένα γρήγορο γεύμα με την οικογένεια.",
+  "map_url": "https://maps.google.com/?cid=16794391772855960528&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
       }
     },
     {
@@ -418,11 +418,11 @@
       ],
       "duration_hours": 1.5,
       "best_time": "afternoon",
-      "cafe": {
-        "name": "Kaffeebar",
-        "description": "Ένα cozy καφέ με εξαιρετικό καφέ και σπιτικά κέικ σε απόσταση 5 λεπτών με τα πόδια.",
-        "map_url": "https://maps.app.goo.gl/N6DZj-4JxkcRh4jDXf9xbfg4"
-      }
+     "cafe": {
+  "name": "Café Nea",
+  "description": "Ένα πολύ κοντινό και εξαιρετικά βαθμολογημένο καφέ ακριβώς δίπλα στο ANOHA και το Εβραϊκό Μουσείο.",
+  "map_url": "https://maps.google.com/?cid=12815854450517571719&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+}
     },
     {
       "id": 8,
@@ -475,9 +475,9 @@
       "best_time": "afternoon",
       "cafe": {
   "name": "Rosa Parks Café",
-  "description": "Ένα πανέμορφο καφέ ακριβώς δίπλα στο Labyrinth Kindermuseum. Ιδανικό για οικογένειες, προσφέρει σπιτικές λιχουδιές, υγιεινά σνακ και έναν πολύ ζεστό χώρο για να χαλαρώσετε.",
-  "map_url": "https://maps.app.goo.gl/Vapiano8"
-      }
+  "description": "Ένα ζεστό και φιλόξενο καφέ στο Wedding, πολύ κοντά στο Labyrinth Kindermuseum. Φημίζεται για την κοινωνική του ατμόσφαιρα, τα σπιτικά κέικ και την πολυπολιτισμική του αύρα, αποτελώντας ένα αγαπημένο σημείο ξεκούρασης για την τοπική κοινότητα και τις οικογένειες.",
+  "map_url": "https://maps.google.com/?cid=9972998877331073287&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
+}
     },
     {
       "id": 9,
@@ -584,9 +584,9 @@
       "duration_hours": 4,
       "best_time": "morning",
       "cafe": {
-        "name": "What Do You Fancy Love?",
-        "description": "Πολύ cool spot με φανταστικούς χυμούς, bagels και γλυκά που αρέσουν πολύ στα παιδιά.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=What+Do+You+Fancy+Love?"
+  "name": "What do you fancy love?",
+  "description": "Ένα από τα πιο δημοφιλή και στιλάτα καφέ στο Charlottenburg. Φημίζεται για τα φρέσκα bagels, τους υγιεινούς χυμούς και την ιδιαίτερη διακόσμηση με φωτογραφίες, αποτελώντας αγαπημένο σημείο για πρωινό ή σνακ κοντά στον Ζωολογικό Κήπο.",
+  "map_url": "https://maps.google.com/?cid=15724724136414435716&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
       }
     },
     {
@@ -860,9 +860,9 @@
       "duration_hours": 1.5,
       "best_time": "evening",
       "cafe": {
-        "name": "Cinema Café",
-        "description": "near cinema",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cinema+Cafe+Berlin"
+  "name": "ALEX Berlin am Alex",
+  "description": "Ένα ευρύχωρο καφέ-εστιατόριο στη βάση του Πύργου της Τηλεόρασης. Ιδανικό για οικογένειες λόγω του μεγάλου καταλόγου και της χαλαρής ατμόσφαιρας. Έχει τα πάντα, από σνακ μέχρι πλήρη γεύματα.",
+  "map_url": "https://maps.google.com/?cid=10721610518833991441&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
       }
     },
     {
@@ -970,10 +970,10 @@
       "duration_hours": 2.5,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Restaurant Spree",
-        "description": "riverside café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Restaurant+Spree+Berlin"
-      }
+  "name": "Café Miss Green Bean",
+  "description": "Ένα ζεστό και φιλόξενο καφέ στο Πότσνταμ, ιδανικό για οικογένειες. Προσφέρει μεγάλη ποικιλία από υγιεινά σνακ, φρέσκους χυμούς και νόστιμα γλυκά σε έναν φωτεινό χώρο που σας κάνει να νιώθετε άνετα.",
+  "map_url": "https://maps.google.com/?cid=9027542363738271767&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+}
     },
     {
       "id": 18,
