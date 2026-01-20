@@ -341,9 +341,10 @@
       "duration_hours": 1,
       "best_time": "any",
      "cafe": {
-        "name": "Eye Bar Restaurant",
-        "description": "Μοντέρνο καφέ-εστιατόριο στο Eye Film Museum με τεράστια τζαμαρία και θέα στο ποτάμι IJ. Πολύ άνετο για οικογένειες.",
-        "map_url": "https://maps.google.com/maps/contrib/118214478004548871284"
+  "name": "Eye Bar & Restaurant",
+  "description": "Μοντέρνο καφέ-εστιατόριο στο Eye Film Museum με τεράστια τζαμαρία και πανοραμική θέα στο ποτάμι IJ. Πολύ ευρύχωρο και άνετο για οικογένειες.",
+  "map_url": "https://maps.google.com/?cid=9368306361257283331&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ",
+  "website": "https://www.eyefilm.nl/restaurant"
       }
     },
     {
