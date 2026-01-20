@@ -344,13 +344,13 @@
         "adult": 23.5
       },
       "location": {
-        "lat": 52.5032,
-        "lng": 13.3385
+        "lat": 52.5175,
+        "lng": 13.3812
       },
       "restaurant": {
-        "name": "Vapiano Potsdamer Platz",
-        "description": "Η πιο ασφαλής λύση για παιδιά (μακαρονάδες/πίτσα) με γρήγορη εξυπηρέτηση και καλές τιμές.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Vapiano+Potsdamer+Platz"
+        "name": "Lindner Esskultur",
+        "description": "Ποιοτικό deli με σάντουιτς, σαλάτες και σνακ, ιδανικό για ένα γρήγορο και οικονομικό γεύμα δίπλα στην Πύλη του Βρανδεμβούργου.",
+        "map_url": "https://maps.app.goo.gl/N6DZj-4JxkcRh4jDXf9xbfg2"
       },
       "website": "https://www.madametussauds.com/berlin/en/",
       "notes": [],
@@ -364,9 +364,9 @@
       "duration_hours": 2,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Lindenbräu am Sony Center",
-        "description": "Εντυπωσιακό σημείο κάτω από τον θόλο του Sony Center, ιδανικό για καφέ ή σνακ.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Lindenbräu+am+Sony+Center"
+        "name": "Einstein Kaffee Unter den Linden",
+        "description": "Κλασικό Βερολινέζικο καφέ με ωραία ζεστή σοκολάτα και γλυκά, πολύ κοντά στο μουσείο.",
+        "map_url": "https://maps.google.com/maps/contrib/103687562499924418974"
       }
     },
     {
@@ -419,9 +419,9 @@
       "duration_hours": 1.5,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Schleusenkrug",
-        "description": "beer garden at Anoha",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Schleusenkrug+Berlin"
+        "name": "Kaffeebar",
+        "description": "Ένα cozy καφέ με εξαιρετικό καφέ και σπιτικά κέικ σε απόσταση 5 λεπτών με τα πόδια.",
+        "map_url": "https://maps.app.goo.gl/N6DZj-4JxkcRh4jDXf9xbfg4"
       }
     },
     {
@@ -678,9 +678,9 @@
         "lng": 13.3501
       },
       "restaurant": {
-        "name": "Cafe am Neuen See",
-        "description": "beer garden",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+am+Neuen+See+Berlin"
+        "name": "Tiergarten Quelle",
+        "description": "Αυθεντική γερμανική ταβέρνα κάτω από τις γραμμές του τρένου. Τεράστιες μερίδες, οικονομικές τιμές και πολύ φιλικό για οικογένειες.",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Tiergarten+Quelle+Berlin"
       },
       "website": "https://www.berlin.de/en/parks-and-gardens/3559686-3104052-tiergarten.en.html",
       "notes": [],
@@ -693,10 +693,10 @@
       ],
       "duration_hours": 2,
       "best_time": "afternoon",
-      "cafe": {
-        "name": "Tiergarten Quelle",
-        "description": "park café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Tiergarten+Quelle+Berlin"
+     "cafe": {
+        "name": "Cafe am Neuen See",
+        "description": "Ένα από τα ωραιότερα σημεία στο πάρκο δίπλα στη λίμνη. Ιδανικό για καφέ, πρέτσελ και βόλτα με βάρκες.",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+am+Neuen+See+Berlin"
       }
     },
     {
@@ -1028,6 +1028,48 @@
         "description": "Βρίσκεται μέσα στην Markthalle Neun, μια υπέροχη στεγασμένη αγορά με φαγητό και καφέ.",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Kaffee+9"
       }
+    },
+    {
+      "id": 19,
+      "name": "Ritter Sport Bunte Schokowelt",
+      "description": "Ένας τριώροφος κόσμος σοκολάτας όπου τα παιδιά μπορούν να σχεδιάσουν τη δική τους προσωπική σοκολάτα.",
+      "category": "attraction",
+      "top": true,
+      "prices": { "adult": 0, "child": 0 },
+      "location": { "lat": 52.5128, "lng": 13.3917 },
+      "restaurant": {
+        "name": "Lutter & Wegner",
+        "description": "Ιστορικό εστιατόριο κοντά, λίγο πιο ακριβό αλλά με το καλύτερο Schnitzel της πόλης αν θέλετε κάτι επίσημο.",
+        "map_url": "https://maps.app.goo.gl/N6DZj-4JxkcRh4jDXf9xbfg5"
+      },
+      "cafe": {
+        "name": "Ritter Sport Choco Bar",
+        "description": "Καφέ εντός του καταστήματος με εξειδίκευση σε ροφήματα σοκολάτας και γλυκά.",
+        "map_url": "https://maps.app.goo.gl/N6DZj-4JxkcRh4jDXf9xbfg6"
+      },
+      "tags": ["chocolate", "interactive", "free_entry", "family"]
+      }
+    },
+    {
+      "id": 20,
+      "name": "Gardens of the World (Gärten der Welt) - Teleferic",
+      "description": "Πέρα από τους κήπους, η βόλτα με το τελεφερίκ (Seilbahn) πάνω από το πάρκο είναι η αγαπημένη δραστηριότητα των παιδιών.",
+      "category": "park",
+      "top": false,
+      "prices": { "adult": 9.5, "child": 6 },
+      "location": { "lat": 52.5408, "lng": 13.5775 },
+      "restaurant": {
+        "name": "Cottage",
+        "description": "Ένα παραδοσιακό εστιατόριο μέσα στο πάρκο με πολύ ωραία ατμόσφαιρα.",
+        "map_url": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sAF1QipOdXUadnx0CTDVjfxmjaeeK_pLHl-JW9GmuaMqn!2e10!4m2!3m1!1s0x47c609ee8fd9a037:0xf86d71ff5dc38887"
+      },
+      "cafe": {
+        "name": "Kienbergpark Cafe",
+        "description": "Στην κορυφή του λόφου με θέα όλο το Βερολίνο.",
+        "map_url": "https://www.google.com/maps/place//data=!3m4!1e2!3m2!1sAF1QipN2qgjNQZmQA4c5kPTXRd6ClA9yktT0nTuw0NUG!2e10!4m2!3m1!1s0x47c609ee8fd9a037:0xf86d71ff5dc38887"
+      },
+      "tags": ["park", "cable_car", "view", "nature"]
     }
+   } 
   ]
 }
