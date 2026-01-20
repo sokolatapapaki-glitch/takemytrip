@@ -48,7 +48,11 @@
         "lat": 38.7633,
         "lng": -9.0937
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Sea+Me+Lisbon' target='_blank'>Sea Me</a> - ψαροταβέρνα",
+      "restaurant": {
+        "name": "Sea Me",
+        "description": "ψαροταβέρνα",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Sea+Me+Lisbon"
+      },
       "website": "https://www.oceanario.pt/en/",
       "notes": [],
       "tags": [
@@ -60,7 +64,11 @@
       ],
       "duration_hours": 3,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Cafe+do+Oceanario+Lisbon' target='_blank'>Café do Oceanário</a> - café στο ενυδρείο"
+      "cafe": {
+        "name": "Café do Oceanário",
+        "description": "café στο ενυδρείο",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+do+Oceanario+Lisbon"
+      }
     },
     {
       "id": 2,
@@ -94,7 +102,11 @@
         "lat": 38.7625,
         "lng": -9.095
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Restaurante+do+Oceanário' target='_blank'>Restaurante do Oceanário</a>",
+      "restaurant": {
+        "name": "Restaurante do Oceanário",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Restaurante+do+Oceanário"
+      },
       "website": "https://www.pavconhecimento.pt/en/",
       "notes": [],
       "tags": [
@@ -106,7 +118,11 @@
       ],
       "duration_hours": 2.5,
       "best_time": "afternoon",
-      "cafe": "<a href='https://maps.google.com/?q=Pasteis+de+Belem+Lisbon' target='_blank'>Pastéis de Belém</a> - διάσημα pastéis από το 1837"
+      "cafe": {
+        "name": "Pastéis de Belém",
+        "description": "διάσημα pastéis από το 1837",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Pasteis+de+Belem+Lisbon"
+      }
     },
     {
       "id": 3,
@@ -140,7 +156,11 @@
         "lat": 38.6916,
         "lng": -9.216
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Pasteis+de+Belem' target='_blank'>Pasteis de Belem</a> - διάσημα παστέλ νάτα",
+      "restaurant": {
+        "name": "Pasteis de Belem",
+        "description": "διάσημα παστέλ νάτα",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Pasteis+de+Belem"
+      },
       "website": "https://www.torrebelem.pt/en/",
       "notes": [],
       "tags": [
@@ -152,7 +172,11 @@
       ],
       "duration_hours": 1,
       "best_time": "morning",
-      "cafe": "<a href='https://maps.google.com/?q=Time+Out+Market+Lisbon' target='_blank'>Time Out Market</a> - food hall με πολλές επιλογές"
+      "cafe": {
+        "name": "Time Out Market",
+        "description": "food hall με πολλές επιλογές",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Time+Out+Market+Lisbon"
+      }
     },
     {
       "id": 4,
@@ -186,7 +210,11 @@
         "lat": 38.6978,
         "lng": -9.2067
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Antiga+Confeitaria+de+Belem' target='_blank'>Antiga Confeitaria</a> - παραδοσιακά γλυκά",
+      "restaurant": {
+        "name": "Antiga Confeitaria",
+        "description": "παραδοσιακά γλυκά",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Antiga+Confeitaria+de+Belem"
+      },
       "website": "https://www.mosteirojeronimos.pt/en/",
       "notes": [],
       "tags": [
@@ -198,7 +226,11 @@
       ],
       "duration_hours": 1.5,
       "best_time": "morning",
-      "cafe": "<a href='https://maps.google.com/?q=Cafe+A+Brasileira+Lisbon' target='_blank'>A Brasileira</a> - ιστορικό καφέ"
+      "cafe": {
+        "name": "A Brasileira",
+        "description": "ιστορικό καφέ",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+A+Brasileira+Lisbon"
+      }
     },
     {
       "id": 5,
@@ -232,7 +264,11 @@
         "lat": 38.7139,
         "lng": -9.1335
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Chapito' target='_blank'>Chapito</a> - εστιατόριο με θέα",
+      "restaurant": {
+        "name": "Chapito",
+        "description": "εστιατόριο με θέα",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Chapito"
+      },
       "website": "https://castelodesaojorge.pt/en/",
       "notes": [],
       "tags": [
@@ -244,7 +280,11 @@
       ],
       "duration_hours": 2,
       "best_time": "evening",
-      "cafe": "<a href='https://maps.google.com/?q=Vertigo+Cafe+Lisbon' target='_blank'>Vertigo Café</a> - rooftop café"
+      "cafe": {
+        "name": "Vertigo Café",
+        "description": "rooftop café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Vertigo+Cafe+Lisbon"
+      }
     }
   ]
 }

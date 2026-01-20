@@ -41,7 +41,11 @@
         "lat": 52.3744,
         "lng": 4.9122
       },
-      "restaurant": "<a href='https://maps.google.com/?q=NEMO+Museum+Restaurant+Amsterdam' target='_blank'>NEMO Restaurant</a> - rooftop cafe με θέα, εντός του μουσείου",
+      "restaurant": {
+        "name": "NEMO Restaurant",
+        "description": "rooftop cafe με θέα, εντός του μουσείου",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=NEMO+Museum+Restaurant+Amsterdam"
+      },
       "website": "https://www.nemosciencemuseum.nl/",
       "notes": [
         "0-3 ετών: δωρεάν",
@@ -55,7 +59,11 @@
       ],
       "duration_hours": 3,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Roest+Amsterdam' target='_blank'>Roest</a> - industrial cafe κοντά στο NEMO"
+      "cafe": {
+        "name": "Roest",
+        "description": "industrial cafe κοντά στο NEMO",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Roest+Amsterdam"
+      }
     },
     {
       "id": 2,
@@ -88,7 +96,11 @@
         "lat": 52.3598,
         "lng": 4.8852
       },
-      "restaurant": "<a href='https://www.decarrouselpannenkoeken.nl/' target='_blank'>De Carrousel Pannenkoeken</a> - Το καλύτερο εστιατόριο για τηγανίτες (pancakes) σε έναν χώρο που μοιάζει με καρουζέλ, ακριβώς δίπλα στο Rijksmuseum.",
+      "restaurant": {
+        "name": "De Carrousel Pannenkoeken",
+        "description": "Το καλύτερο εστιατόριο για τηγανίτες (pancakes) σε έναν χώρο που μοιάζει με καρουζέλ, ακριβώς δίπλα στο Rijksmuseum.",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=De+Carrousel+Pannenkoeken"
+      },
       "website": "https://www.rijksmuseum.nl/",
       "notes": [
         "0-18 ετών: δωρεάν",
@@ -102,7 +114,11 @@
       ],
       "duration_hours": 2.5,
       "best_time": "morning",
-      "cafe": "<a href='https://maps.google.com/?q=Le+Pain+Quotidien+Museumplein+Amsterdam' target='_blank'>Le Pain Quotidien</a> - όμορφο cafe στην πλατεία"
+      "cafe": {
+        "name": "Le Pain Quotidien",
+        "description": "όμορφο cafe στην πλατεία",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Le+Pain+Quotidien+Museumplein+Amsterdam"
+      }
     },
     {
       "id": 3,
@@ -134,7 +150,11 @@
         "lat": 52.3584,
         "lng": 4.8811
       },
-      "restaurant": "<a href='https://maps.app.goo.gl/cRAUf8u3AfMiy2yS9' target='_blank'>Van Gogh Museum Cafe-Bistro Vincent</a> - cafe και εστιατόριο εντός του μουσείου",
+      "restaurant": {
+        "name": "Van Gogh Museum Cafe-Bistro Vincent",
+        "description": "cafe και εστιατόριο εντός του μουσείου",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Van+Gogh+Museum+Cafe-Bistro+Vincent"
+      },
       "website": "https://www.vangoghmuseum.nl/",
       "notes": [
         "0-17 ετών: δωρεάν",
@@ -148,7 +168,11 @@
       ],
       "duration_hours": 2,
       "best_time": "afternoon",
-      "cafe": "<a href='https://maps.google.com/?q=Le+Pain+Quotidien+Museumplein+Amsterdam' target='_blank'>Le Pain Quotidien</a> - όμορφο cafe στην πλατεία"
+      "cafe": {
+        "name": "Le Pain Quotidien",
+        "description": "όμορφο cafe στην πλατεία",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Le+Pain+Quotidien+Museumplein+Amsterdam"
+      }
     },
     {
       "id": 4,
@@ -180,7 +204,11 @@
         "lat": 52.3731,
         "lng": 4.8925
       },
-      "restaurant": "<a href='https://www.google.com/maps/search/?api=1&query=Omelegg+City+Center+Amsterdam' target='_blank'>Omelegg City Center</a> - Το καλύτερο σημείο για ομελέτες και brunch, πολύ φιλικό για παιδιά και οικονομικό, 5 λεπτά από την πλατεία Dam.",
+      "restaurant": {
+        "name": "Omelegg City Center",
+        "description": "Το καλύτερο σημείο για ομελέτες και brunch, πολύ φιλικό για παιδιά και οικονομικό, 5 λεπτά από την πλατεία Dam.",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Omelegg+City+Center"
+      },
       "website": "https://www.madametussauds.com/amsterdam/",
       "notes": [
         "0-1 ετών: δωρεάν",
@@ -197,7 +225,11 @@
       ],
       "duration_hours": 1.5,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Greenwoods+Amsterdam' target='_blank'>Greenwoods</a> - English breakfast & coffee"
+      "cafe": {
+        "name": "Greenwoods",
+        "description": "English breakfast & coffee",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Greenwoods+Amsterdam"
+      }
     },
     {
       "id": 5,
@@ -229,7 +261,11 @@
         "lat": 52.3886,
         "lng": 4.8689
       },
-      "restaurant": "<a href='https://maps.google.com/?q=WONDR+Cafe+Amsterdam' target='_blank'>WONDR Cafe</a> - Instagram-worthy treats",
+      "restaurant": {
+        "name": "WONDR Cafe",
+        "description": "Instagram-worthy treats",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=WONDR+Cafe+Amsterdam"
+      },
       "website": "https://www.wondrexperience.com/",
       "notes": [
         "0-2 ετών: δωρεάν",
@@ -244,7 +280,11 @@
       ],
       "duration_hours": 1.5,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Coffee+Company+Amsterdam+Centrum' target='_blank'>Coffee Company</a> - chain coffee shop"
+      "cafe": {
+        "name": "Coffee Company",
+        "description": "chain coffee shop",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Coffee+Company+Amsterdam+Centrum"
+      }
     },
     {
       "id": 6,
@@ -276,7 +316,11 @@
         "lat": 52.3758,
         "lng": 4.8979
       },
-      "restaurant": "<a href='https://tolhuistuin.nl/en/eat-drink' target='_blank'>THT (Tolhuistuin)</a> - Ευρύχωρο εστιατόριο με ωραία θέα, ακριβώς δίπλα στο This is Holland",
+      "restaurant": {
+        "name": "THT (Tolhuistuin)",
+        "description": "Ευρύχωρο εστιατόριο με ωραία θέα, ακριβώς δίπλα στο This is Holland",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=THT+(Tolhuistuin)"
+      },
       "website": "https://www.thisisholland.com/",
       "notes": [
         "ΠΡΟΣΟΧΗ: Δεν επιτρέπονται κάτω των 4 ετών και κάτω του 100cm",
@@ -296,7 +340,11 @@
       ],
       "duration_hours": 1,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=This+is+Holland+Cafe+Amsterdam' target='_blank'>This is Holland Cafe</a> - Dutch snacks"
+      "cafe": {
+        "name": "This is Holland Cafe",
+        "description": "Dutch snacks",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=This+is+Holland+Cafe+Amsterdam"
+      }
     },
     {
       "id": 7,
@@ -328,7 +376,11 @@
         "lat": 52.3661,
         "lng": 4.9145
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Artis+Zoo+Restaurant+Amsterdam' target='_blank'>Artis Restaurant</a> - οικογενειακό εστιατόριο στο ζωολογικό",
+      "restaurant": {
+        "name": "Artis Restaurant",
+        "description": "οικογενειακό εστιατόριο στο ζωολογικό",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Artis+Zoo+Restaurant+Amsterdam"
+      },
       "website": "https://www.artis.nl/",
       "notes": [
         "0-2 ετών: δωρεάν",
@@ -343,7 +395,11 @@
       ],
       "duration_hours": 4,
       "best_time": "morning",
-      "cafe": "<a href='https://maps.google.com/?q=De+Plantage+Cafe+Artis' target='_blank'>De Plantage</a> - café στο Artis"
+      "cafe": {
+        "name": "De Plantage",
+        "description": "café στο Artis",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=De+Plantage+Cafe+Artis"
+      }
     },
     {
       "id": 8,
@@ -375,7 +431,11 @@
         "lat": 52.3586,
         "lng": 4.8681
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Grote+Melkhuis+Vondelpark' target='_blank'>Grote Melkhuis</a> - παιδική χαρά & pancakes στο πάρκο",
+      "restaurant": {
+        "name": "Grote Melkhuis",
+        "description": "παιδική χαρά & pancakes στο πάρκο",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Grote+Melkhuis+Vondelpark"
+      },
       "website": "https://www.tripadvisor.com.gr/Attraction_Review-g188590-d189384-Reviews-Vondelpark-Amsterdam_North_Holland_Province.html",
       "notes": [
         "Δωρεάν είσοδος"
@@ -387,7 +447,11 @@
       ],
       "duration_hours": 2,
       "best_time": "afternoon",
-      "cafe": "<a href='https://maps.google.com/?q=Blauwe+Theehuis+Vondelpark' target='_blank'>Blauwe Theehuis</a> - iconic cafe στο Vondelpark"
+      "cafe": {
+        "name": "Blauwe Theehuis",
+        "description": "iconic cafe στο Vondelpark",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Blauwe+Theehuis+Vondelpark"
+      }
     },
     {
       "id": 9,
@@ -419,7 +483,11 @@
         "lat": 52.3161,
         "lng": 4.8319
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Boerderij+Megan+Amsterdamse+Bos' target='_blank'>Boerderij Meerzicht</a> - φάρμα με goat cheese & playground",
+      "restaurant": {
+        "name": "Boerderij Meerzicht",
+        "description": "φάρμα με goat cheese & playground",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Boerderij+Megan+Amsterdamse+Bos"
+      },
       "website": "https://www.amsterdamsebos.nl/",
       "notes": [
         "Δωρεάν είσοδος"
@@ -431,7 +499,11 @@
       ],
       "duration_hours": 3,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Grand+Cafe+De+Bosbaan' target='_blank'>Grand Cafe De Bosbaan</a> - lakeside cafe"
+      "cafe": {
+        "name": "Grand Cafe De Bosbaan",
+        "description": "lakeside cafe",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Grand+Cafe+De+Bosbaan"
+      }
     },
     {
       "id": 10,
@@ -463,7 +535,11 @@
         "lat": 52.3325,
         "lng": 4.8883
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Amstelpark+Pavilion' target='_blank'>Amstelpark Pavilion</a> - κήπος με παιδική χαρά",
+      "restaurant": {
+        "name": "Amstelpark Pavilion",
+        "description": "κήπος με παιδική χαρά",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Amstelpark+Pavilion"
+      },
       "website": "https://www.amstelpark.info/",
       "notes": [
         "Είσοδος δωρεάν",
@@ -476,7 +552,11 @@
       ],
       "duration_hours": 2.5,
       "best_time": "afternoon",
-      "cafe": "<a href='https://maps.google.com/?q=Cafe+Het+Glazen+Huis+Amstelpark' target='_blank'>Het Glazen Huis</a> - glass house cafe"
+      "cafe": {
+        "name": "Het Glazen Huis",
+        "description": "glass house cafe",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Het+Glazen+Huis+Amstelpark"
+      }
     },
     {
       "id": 11,
@@ -508,7 +588,11 @@
         "lat": 52.3676,
         "lng": 4.9041
       },
-      "restaurant": "<a href='https://omelegg.com/' target='_blank'>Omelegg City Center</a> - Το καλύτερο brunch με ομελέτες, πολύ κοντά στην αφετηρία της κρουαζιέρας",
+      "restaurant": {
+        "name": "Omelegg City Center",
+        "description": "Το καλύτερο brunch με ομελέτες, πολύ κοντά στην αφετηρία της κρουαζιέρας",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Omelegg+City+Center"
+      },
       "website": "https://amsterdamcanalcruises.nl/",
       "notes": [
         "0-3 ετών: δωρεάν",
@@ -523,7 +607,11 @@
       ],
       "duration_hours": 1,
       "best_time": "any",
-      "cafe": "<a href='https://www.koffieschenkerij.com/' target='_blank'>De Koffieschenkerij</a> - Ένα μοναδικό καφέ στην παλαιότερη εκκλησία της πόλης, με υπέροχο κήπο και σπιτικά γλυκά."
+      "cafe": {
+        "name": "De Koffieschenkerij",
+        "description": "Ένα μοναδικό καφέ στην παλαιότερη εκκλησία της πόλης, με υπέροχο κήπο και σπιτικά γλυκά.",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=De+Koffieschenkerij"
+      }
     },
     {
       "id": 12,
@@ -555,7 +643,11 @@
         "lat": 52.3756,
         "lng": 4.9039
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Pancake+Boat+Restaurant' target='_blank'>Pancake Boat</a> - unlimited pancakes κατά την κρουαζιέρα",
+      "restaurant": {
+        "name": "Pancake Boat",
+        "description": "unlimited pancakes κατά την κρουαζιέρα",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Pancake+Boat+Restaurant"
+      },
       "website": "https://www.pannenkoekenboot.nl/",
       "notes": [
         "0-2 ετών: δωρεάν",
@@ -570,7 +662,11 @@
       ],
       "duration_hours": 1.5,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Pancakes+Amsterdam' target='_blank'>Pancakes Amsterdam</a> - traditional Dutch pancakes"
+      "cafe": {
+        "name": "Pancakes Amsterdam",
+        "description": "traditional Dutch pancakes",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Pancakes+Amsterdam"
+      }
     }
   ]
 }

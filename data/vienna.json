@@ -48,7 +48,11 @@
         "lat": 48.1845,
         "lng": 16.3122
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Cafe+Residenz+Schönbrunn+Vienna' target='_blank'>Café Residenz</a> - μέσα στο Schönbrunn",
+      "restaurant": {
+        "name": "Café Residenz",
+        "description": "μέσα στο Schönbrunn",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Residenz+Schönbrunn+Vienna"
+      },
       "website": "https://www.schoenbrunn.at/en/",
       "notes": [
         "Σχολικές ομάδες (6-18): €18.00"
@@ -61,7 +65,11 @@
       ],
       "duration_hours": 2.5,
       "best_time": "morning",
-      "cafe": "<a href='https://maps.google.com/?q=Cafe+Residenz+Schonbrunn+Vienna' target='_blank'>Café Residenz</a> - café στο παλάτι"
+      "cafe": {
+        "name": "Café Residenz",
+        "description": "café στο παλάτι",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Residenz+Schonbrunn+Vienna"
+      }
     },
     {
       "id": 2,
@@ -95,7 +103,11 @@
         "lat": 48.1846,
         "lng": 16.3123
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Figlmüller+Vienna' target='_blank'>Figlmüller</a> - διάσημο για schnitzel",
+      "restaurant": {
+        "name": "Figlmüller",
+        "description": "διάσημο για schnitzel",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Figlmüller+Vienna"
+      },
       "website": "https://www.schoenbrunn.at/en/",
       "notes": [],
       "tags": [
@@ -105,7 +117,11 @@
       ],
       "duration_hours": 1.5,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Cafe+Central+Vienna' target='_blank'>Café Central</a> - διάσημο Viennese café"
+      "cafe": {
+        "name": "Café Central",
+        "description": "διάσημο Viennese café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Central+Vienna"
+      }
     },
     {
       "id": 3,
@@ -139,7 +155,11 @@
         "lat": 48.2058,
         "lng": 16.3698
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Cafe+Central+Vienna' target='_blank'>Café Central</a> - ιστορικό καφέ",
+      "restaurant": {
+        "name": "Café Central",
+        "description": "ιστορικό καφέ",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Central+Vienna"
+      },
       "website": "https://www.schoenbrunn.at/en/",
       "notes": [
         "Εκπτωτικό combo για 3 αξιοθέατα"
@@ -152,7 +172,11 @@
       ],
       "duration_hours": 6,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Cafe+Sacher+Vienna' target='_blank'>Café Sacher</a> - famous Sachertorte café"
+      "cafe": {
+        "name": "Café Sacher",
+        "description": "famous Sachertorte café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Sacher+Vienna"
+      }
     },
     {
       "id": 4,
@@ -186,7 +210,11 @@
         "lat": 48.1847,
         "lng": 16.3124
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Schweizerhaus+Vienna' target='_blank'>Schweizerhaus</a> - πέρδικα και μπύρα",
+      "restaurant": {
+        "name": "Schweizerhaus",
+        "description": "πέρδικα και μπύρα",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Schweizerhaus+Vienna"
+      },
       "website": "https://www.schoenbrunn.at/en/",
       "notes": [],
       "tags": [
@@ -199,7 +227,11 @@
       "duration_hours": 5,
       "best_time": "any",
       "seasonal": true,
-      "cafe": "<a href='https://maps.google.com/?q=Prater+Cafe+Vienna' target='_blank'>Prater Café</a> - amusement café"
+      "cafe": {
+        "name": "Prater Café",
+        "description": "amusement café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Prater+Cafe+Vienna"
+      }
     },
     {
       "id": 5,
@@ -233,7 +265,11 @@
         "lat": 48.1848,
         "lng": 16.3125
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Cafe+Gloriette+Vienna' target='_blank'>Café Gloriette</a> - με θέα",
+      "restaurant": {
+        "name": "Café Gloriette",
+        "description": "με θέα",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Gloriette+Vienna"
+      },
       "website": "https://www.schoenbrunn.at/en/",
       "notes": [
         "Ιδανικό για μονοήμερη επίσκεψη"
@@ -246,7 +282,11 @@
       ],
       "duration_hours": 4,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Belvedere+Cafe+Vienna' target='_blank'>Belvedere Café</a> - palace café"
+      "cafe": {
+        "name": "Belvedere Café",
+        "description": "palace café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Belvedere+Cafe+Vienna"
+      }
     },
     {
       "id": 6,
@@ -280,7 +320,11 @@
         "lat": 48.1849,
         "lng": 16.3126
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Tiergarten+Restaurant+Vienna' target='_blank'>Tiergarten Restaurant</a> - στο zoo",
+      "restaurant": {
+        "name": "Tiergarten Restaurant",
+        "description": "στο zoo",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Tiergarten+Restaurant+Vienna"
+      },
       "website": "https://zoovienna.at/",
       "notes": [
         "20-30% εξοικονόμηση"
@@ -293,7 +337,11 @@
       ],
       "duration_hours": 6,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Hofburg+Cafe+Vienna' target='_blank'>Hofburg Café</a> - imperial café"
+      "cafe": {
+        "name": "Hofburg Café",
+        "description": "imperial café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Hofburg+Cafe+Vienna"
+      }
     },
     {
       "id": 7,
@@ -327,7 +375,11 @@
         "lat": 48.185,
         "lng": 16.3127
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Cafe+Kindermuseum+Vienna' target='_blank'>Cafe Kindermuseum</a>",
+      "restaurant": {
+        "name": "Cafe Kindermuseum",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Kindermuseum+Vienna"
+      },
       "website": "https://www.schoenbrunn.at/en/",
       "notes": [],
       "tags": [
@@ -338,7 +390,11 @@
       ],
       "duration_hours": 1.5,
       "best_time": "afternoon",
-      "cafe": "<a href='https://maps.google.com/?q=Kunsthistorisches+Museum+Cafe+Vienna' target='_blank'>Museum Café</a> - art museum café"
+      "cafe": {
+        "name": "Museum Café",
+        "description": "art museum café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Kunsthistorisches+Museum+Cafe+Vienna"
+      }
     },
     {
       "id": 8,
@@ -372,7 +428,11 @@
         "lat": 48.18,
         "lng": 16.3028
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Tiergarten+Cafe+Vienna' target='_blank'>Tiergarten Cafe</a>",
+      "restaurant": {
+        "name": "Tiergarten Cafe",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Tiergarten+Cafe+Vienna"
+      },
       "website": "https://zoovienna.at/",
       "notes": [
         "Σύνολο: €96 για 5 άτομα"
@@ -384,7 +444,11 @@
       ],
       "duration_hours": 3,
       "best_time": "morning",
-      "cafe": "<a href='https://maps.google.com/?q=Albertina+Cafe+Vienna' target='_blank'>Albertina Café</a> - museum café"
+      "cafe": {
+        "name": "Albertina Café",
+        "description": "museum café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Albertina+Cafe+Vienna"
+      }
     },
     {
       "id": 9,
@@ -418,7 +482,11 @@
         "lat": 48.1801,
         "lng": 16.3029
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Palm+House+Cafe+Vienna' target='_blank'>Palm House Cafe</a>",
+      "restaurant": {
+        "name": "Palm House Cafe",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Palm+House+Cafe+Vienna"
+      },
       "website": "https://zoovienna.at/",
       "notes": [
         "Ιδανικό για οικογένειες"
@@ -431,7 +499,11 @@
       ],
       "duration_hours": 4,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Spanish+Riding+School+Cafe+Vienna' target='_blank'>Riding School Café</a> - historic café"
+      "cafe": {
+        "name": "Riding School Café",
+        "description": "historic café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Spanish+Riding+School+Cafe+Vienna"
+      }
     },
     {
       "id": 10,
@@ -465,7 +537,11 @@
         "lat": 48.205,
         "lng": 16.3575
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Cafe+Ritter+Mariahilfer+Straße+Vienna' target='_blank'>Café Ritter</a> - Mariahilfer Straße",
+      "restaurant": {
+        "name": "Café Ritter",
+        "description": "Mariahilfer Straße",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Ritter+Mariahilfer+Straße+Vienna"
+      },
       "website": "https://www.haus-des-meeres.at/en",
       "notes": [],
       "tags": [
@@ -476,7 +552,11 @@
       ],
       "duration_hours": 2.5,
       "best_time": "afternoon",
-      "cafe": "<a href='https://maps.google.com/?q=St+Stephens+Cathedral+Cafe+Vienna' target='_blank'>Stephansdom Café</a> - cathedral café"
+      "cafe": {
+        "name": "Stephansdom Café",
+        "description": "cathedral café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=St+Stephens+Cathedral+Cafe+Vienna"
+      }
     },
     {
       "id": 11,
@@ -510,7 +590,11 @@
         "lat": 48.2084,
         "lng": 16.3731
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Time+Travel+Cafe+Vienna' target='_blank'>Time Travel Cafe</a>",
+      "restaurant": {
+        "name": "Time Travel Cafe",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Time+Travel+Cafe+Vienna"
+      },
       "website": "https://www.timetravel-vienna.at/en",
       "notes": [],
       "tags": [
@@ -521,7 +605,11 @@
       ],
       "duration_hours": 1.5,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Naschmarkt+Cafe+Vienna' target='_blank'>Naschmarkt Cafés</a> - market cafés"
+      "cafe": {
+        "name": "Naschmarkt Cafés",
+        "description": "market cafés",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Naschmarkt+Cafe+Vienna"
+      }
     },
     {
       "id": 12,
@@ -555,7 +643,11 @@
         "lat": 48.2058,
         "lng": 16.3698
       },
-      "restaurant": "<a href='https://maps.google.com/?q=VR+Cafe+Vienna' target='_blank'>VR Experience Cafe</a>",
+      "restaurant": {
+        "name": "VR Experience Cafe",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=VR+Cafe+Vienna"
+      },
       "website": "https://www.hofburg-wien.at/en/",
       "notes": [
         "Combo με Time Travel διαθέσιμο"
@@ -568,7 +660,11 @@
       ],
       "duration_hours": 0.75,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Karlskirche+Cafe+Vienna' target='_blank'>Karlskirche Café</a> - church café"
+      "cafe": {
+        "name": "Karlskirche Café",
+        "description": "church café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Karlskirche+Cafe+Vienna"
+      }
     },
     {
       "id": 13,
@@ -602,7 +698,11 @@
         "lat": 48.2032,
         "lng": 16.3738
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Cafe+Schwarzenberg+Vienna' target='_blank'>Café Schwarzenberg</a>",
+      "restaurant": {
+        "name": "Café Schwarzenberg",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Schwarzenberg+Vienna"
+      },
       "website": "https://www.hausdermusik.com/en",
       "notes": [],
       "tags": [
@@ -614,7 +714,11 @@
       "duration_hours": 2,
       "best_time": "afternoon",
       "familyTicket": "2 adults + up to 3 children = 35€",
-      "cafe": "<a href='https://maps.google.com/?q=Haus+des+Meeres+Cafe+Vienna' target='_blank'>Aquarium Café</a> - aquarium café"
+      "cafe": {
+        "name": "Aquarium Café",
+        "description": "aquarium café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Haus+des+Meeres+Cafe+Vienna"
+      }
     },
     {
       "id": 14,
@@ -648,7 +752,11 @@
         "lat": 48.2095,
         "lng": 16.3702
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Illusions+Cafe+Vienna' target='_blank'>Illusions Cafe</a>",
+      "restaurant": {
+        "name": "Illusions Cafe",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Illusions+Cafe+Vienna"
+      },
       "website": "https://www.museumderillusionen.at/wien/",
       "notes": [],
       "tags": [
@@ -659,7 +767,11 @@
       ],
       "duration_hours": 1.5,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Vienna+Zoo+Cafe' target='_blank'>Zoo Café</a> - oldest zoo café"
+      "cafe": {
+        "name": "Zoo Café",
+        "description": "oldest zoo café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Vienna+Zoo+Cafe"
+      }
     },
     {
       "id": 15,
@@ -693,7 +805,11 @@
         "lat": 48.2034,
         "lng": 16.3692
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Cafe+Sacher+Vienna' target='_blank'>Café Sacher</a> - για Sachertorte",
+      "restaurant": {
+        "name": "Café Sacher",
+        "description": "για Sachertorte",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Sacher+Vienna"
+      },
       "website": "https://www.wiener-staatsoper.at/en/",
       "notes": [],
       "tags": [
@@ -704,7 +820,11 @@
       ],
       "duration_hours": 1,
       "best_time": "afternoon",
-      "cafe": "<a href='https://maps.google.com/?q=Zoom+Museum+Cafe+Vienna' target='_blank'>ZOOM Café</a> - children's museum café"
+      "cafe": {
+        "name": "ZOOM Café",
+        "description": "children's museum café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Zoom+Museum+Cafe+Vienna"
+      }
     },
     {
       "id": 16,
@@ -738,7 +858,11 @@
         "lat": 48.191,
         "lng": 16.3805
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Salm+Bräu+Vienna' target='_blank'>Salm Bräu</a> - μπύρα και κουζίνα",
+      "restaurant": {
+        "name": "Salm Bräu",
+        "description": "μπύρα και κουζίνα",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Salm+Bräu+Vienna"
+      },
       "website": "https://www.belvedere.at/en",
       "notes": [
         "Δωρεάν για κάτω των 19 (μόνιμη συλλογή)"
@@ -751,7 +875,11 @@
       ],
       "duration_hours": 2.5,
       "best_time": "morning",
-      "cafe": "<a href='https://maps.google.com/?q=Stadtpark+Cafe+Vienna' target='_blank'>Stadtpark Café</a> - park café"
+      "cafe": {
+        "name": "Stadtpark Café",
+        "description": "park café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Stadtpark+Cafe+Vienna"
+      }
     },
     {
       "id": 17,
@@ -785,7 +913,11 @@
         "lat": 48.2389,
         "lng": 16.4103
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Donauturm+Restaurant+Vienna' target='_blank'>Donauturm Restaurant</a> - στροφείο",
+      "restaurant": {
+        "name": "Donauturm Restaurant",
+        "description": "στροφείο",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Donauturm+Restaurant+Vienna"
+      },
       "website": "https://www.donauturm.at/en/",
       "notes": [],
       "tags": [
@@ -796,7 +928,11 @@
       ],
       "duration_hours": 1,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Technisches+Museum+Cafe+Vienna' target='_blank'>Technical Museum Café</a> - museum café"
+      "cafe": {
+        "name": "Technical Museum Café",
+        "description": "museum café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Technisches+Museum+Cafe+Vienna"
+      }
     },
     {
       "id": 18,
@@ -830,7 +966,11 @@
         "lat": 48.2086,
         "lng": 16.3735
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Cafe+Mozart+Vienna' target='_blank'>Café Mozart</a> - κλασικό",
+      "restaurant": {
+        "name": "Café Mozart",
+        "description": "κλασικό",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Mozart+Vienna"
+      },
       "website": "https://www.mozarthausvienna.at/en/",
       "notes": [],
       "tags": [
@@ -842,7 +982,11 @@
       "duration_hours": 1.5,
       "best_time": "afternoon",
       "familyTicket": "2 adults + up to 3 children = 29€",
-      "cafe": "<a href='https://maps.google.com/?q=Naturhistorisches+Museum+Cafe+Vienna' target='_blank'>Natural History Café</a> - museum café"
+      "cafe": {
+        "name": "Natural History Café",
+        "description": "museum café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Naturhistorisches+Museum+Cafe+Vienna"
+      }
     },
     {
       "id": 19,
@@ -876,7 +1020,11 @@
         "lat": 48.2085,
         "lng": 16.373
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Do+Co+Stephansplatz+Vienna' target='_blank'>Do & Co</a> - με θέα",
+      "restaurant": {
+        "name": "Do & Co",
+        "description": "με θέα",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Do+Co+Stephansplatz+Vienna"
+      },
       "website": "https://www.stephanskirche.at/",
       "notes": [],
       "tags": [
@@ -887,7 +1035,11 @@
       ],
       "duration_hours": 0.75,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Madame+Tussauds+Vienna+Cafe' target='_blank'>Madame Tussauds Café</a> - wax museum café"
+      "cafe": {
+        "name": "Madame Tussauds Café",
+        "description": "wax museum café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Madame+Tussauds+Vienna+Cafe"
+      }
     },
     {
       "id": 20,
@@ -921,7 +1073,11 @@
         "lat": 48.2068,
         "lng": 16.3675
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Griechenbeisl+Vienna' target='_blank'>Griechenbeisl</a> - παλαιότερο εστιατόριο",
+      "restaurant": {
+        "name": "Griechenbeisl",
+        "description": "παλαιότερο εστιατόριο",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Griechenbeisl+Vienna"
+      },
       "website": "https://www.srs.at/en/",
       "notes": [
         "⚠️ Παιδιά κάτω των 3 ετών ΔΕΝ επιτρέπονται. 3-5 ετών: μόνο σε family performances"
@@ -937,7 +1093,11 @@
       "ageRestrictions": true,
       "minAge": 3,
       "ageWarning": "⚠️ Παιδιά κάτω των 3 ετών ΔΕΝ επιτρέπονται. 3-5 ετών: μόνο σε family performances",
-      "cafe": "<a href='https://maps.google.com/?q=Time+Travel+Vienna+Cafe' target='_blank'>Time Travel Café</a> - attraction café"
+      "cafe": {
+        "name": "Time Travel Café",
+        "description": "attraction café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Time+Travel+Vienna+Cafe"
+      }
     }
   ]
 }

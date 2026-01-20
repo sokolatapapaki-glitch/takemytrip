@@ -62,8 +62,16 @@
       "duration_hours": 1.5,
       "best_time": "morning",
       "comboAvailable": true,
-      "restaurant": "<a href='https://maps.google.com/?q=Seven+Hills+Restaurant+Istanbul+Sultanahmet' target='_blank'>Seven Hills Restaurant</a> - terrace με θέα στην Αγία Σοφία",
-      "cafe": "<a href='https://maps.google.com/?q=Hafiz+Mustafa+Sultanahmet+Istanbul' target='_blank'>Hafız Mustafa</a> - παραδοσιακά γλυκά & τούρκικος καφές"
+      "restaurant": {
+        "name": "Seven Hills Restaurant",
+        "description": "terrace με θέα στην Αγία Σοφία",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Seven+Hills+Restaurant+Istanbul+Sultanahmet"
+      },
+      "cafe": {
+        "name": "Hafız Mustafa",
+        "description": "παραδοσιακά γλυκά & τούρκικος καφές",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Hafiz+Mustafa+Sultanahmet+Istanbul"
+      }
     },
     {
       "id": 2,
@@ -112,8 +120,16 @@
       "duration_hours": 1,
       "best_time": "any",
       "freeActivity": true,
-      "restaurant": "<a href='https://maps.google.com/?q=Sultanahmet+Koftecisi+Istanbul' target='_blank'>Sultanahmet Köftecisi</a> - παραδοσιακά κεφτεδάκια από το 1920",
-      "cafe": "<a href='https://maps.google.com/?q=Tarihi+Sultanahmet+Koftecisi+Cafe+Istanbul' target='_blank'>Derviş Aile Çay Bahçesi</a> - τσαγερί με θέα στο τζαμί"
+      "restaurant": {
+        "name": "Sultanahmet Köftecisi",
+        "description": "παραδοσιακά κεφτεδάκια από το 1920",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Sultanahmet+Koftecisi+Istanbul"
+      },
+      "cafe": {
+        "name": "Derviş Aile Çay Bahçesi",
+        "description": "τσαγερί με θέα στο τζαμί",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Tarihi+Sultanahmet+Koftecisi+Cafe+Istanbul"
+      }
     },
     {
       "id": 3,
@@ -162,8 +178,16 @@
       "duration_hours": 1,
       "best_time": "afternoon",
       "eveningPrice": 49,
-      "restaurant": "<a href='https://maps.google.com/?q=Serbethane+Cafe+Istanbul' target='_blank'>Serbethane Cafe</a> - Ottoman cafe κοντά στην Κινστέρνα",
-      "cafe": "<a href='https://maps.google.com/?q=Basilica+Cistern+Cafe+Istanbul' target='_blank'>Medusa Café</a> - κοντά στην Κινστέρνα"
+      "restaurant": {
+        "name": "Serbethane Cafe",
+        "description": "Ottoman cafe κοντά στην Κινστέρνα",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Serbethane+Cafe+Istanbul"
+      },
+      "cafe": {
+        "name": "Medusa Café",
+        "description": "κοντά στην Κινστέρνα",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Basilica+Cistern+Cafe+Istanbul"
+      }
     },
     {
       "id": 4,
@@ -214,8 +238,16 @@
       "closedDays": [
         "Τρίτη"
       ],
-      "restaurant": "<a href='https://maps.google.com/?q=Konyali+Restaurant+Topkapi+Istanbul' target='_blank'>Konyalı Restaurant</a> - εντός του παλατιού με θέα στον Βόσπορο",
-      "cafe": "<a href='https://maps.google.com/?q=Set+Ust+Basi+Topkapi+Istanbul' target='_blank'>Set Üstü Başı</a> - Ottoman τσαγερί"
+      "restaurant": {
+        "name": "Konyalı Restaurant",
+        "description": "εντός του παλατιού με θέα στον Βόσπορο",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Konyali+Restaurant+Topkapi+Istanbul"
+      },
+      "cafe": {
+        "name": "Set Üstü Başı",
+        "description": "Ottoman τσαγερί",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Set+Ust+Basi+Topkapi+Istanbul"
+      }
     },
     {
       "id": 5,
@@ -261,8 +293,16 @@
       ],
       "duration_hours": 2.5,
       "best_time": "afternoon",
-      "restaurant": "<a href='https://maps.google.com/?q=Tarihi+Sultanahmet+Koftecisi+Istanbul' target='_blank'>Tarihi Sultanahmet Köftecisi</a> - κοντά στο μουσείο",
-      "cafe": "<a href='https://maps.google.com/?q=Gulhane+Sark+Sofrasi+Istanbul' target='_blank'>Gülhane Şark Sofrası</a> - παραδοσιακό café"
+      "restaurant": {
+        "name": "Tarihi Sultanahmet Köftecisi",
+        "description": "κοντά στο μουσείο",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Tarihi+Sultanahmet+Koftecisi+Istanbul"
+      },
+      "cafe": {
+        "name": "Gülhane Şark Sofrası",
+        "description": "παραδοσιακό café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Gulhane+Sark+Sofrasi+Istanbul"
+      }
     },
     {
       "id": 6,
@@ -309,8 +349,16 @@
       ],
       "duration_hours": 1,
       "best_time": "evening",
-      "restaurant": "<a href='https://maps.google.com/?q=Galata+Tower+Cafe+Restaurant+Istanbul' target='_blank'>Galata Tower Cafe</a> - στον πύργο με πανοραμική θέα",
-      "cafe": "<a href='https://maps.google.com/?q=Anemon+Galata+Rooftop+Istanbul' target='_blank'>Anemon Galata Rooftop</a> - cafe με θέα"
+      "restaurant": {
+        "name": "Galata Tower Cafe",
+        "description": "στον πύργο με πανοραμική θέα",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Galata+Tower+Cafe+Restaurant+Istanbul"
+      },
+      "cafe": {
+        "name": "Anemon Galata Rooftop",
+        "description": "cafe με θέα",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Anemon+Galata+Rooftop+Istanbul"
+      }
     },
     {
       "id": 7,
@@ -362,8 +410,16 @@
         "γεύμα",
         "σόου Δερβίσηδων"
       ],
-      "restaurant": "<a href='https://maps.google.com/?q=Mikla+Restaurant+Istanbul' target='_blank'>Mikla Restaurant</a> - rooftop με θέα στον Βόσπορο",
-      "cafe": "<a href='https://maps.google.com/?q=Eminonu+Pier+Cafes+Istanbul' target='_blank'>Eminönü Pier Cafés</a> - riverside cafés"
+      "restaurant": {
+        "name": "Mikla Restaurant",
+        "description": "rooftop με θέα στον Βόσπορο",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Mikla+Restaurant+Istanbul"
+      },
+      "cafe": {
+        "name": "Eminönü Pier Cafés",
+        "description": "riverside cafés",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Eminonu+Pier+Cafes+Istanbul"
+      }
     },
     {
       "id": 8,
@@ -409,8 +465,16 @@
       ],
       "duration_hours": 4,
       "best_time": "morning",
-      "restaurant": "<a href='https://maps.google.com/?q=Lunapark+Cafe+Buyukada+Istanbul' target='_blank'>Lunapark Cafe</a> - στα Πριγκηπονήσια",
-      "cafe": "<a href='https://maps.google.com/?q=Moda+Buyukada+Cafe+Istanbul' target='_blank'>Moda Café</a> - island café"
+      "restaurant": {
+        "name": "Lunapark Cafe",
+        "description": "στα Πριγκηπονήσια",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Lunapark+Cafe+Buyukada+Istanbul"
+      },
+      "cafe": {
+        "name": "Moda Café",
+        "description": "island café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Moda+Buyukada+Cafe+Istanbul"
+      }
     },
     {
       "id": 9,
@@ -457,8 +521,16 @@
       ],
       "duration_hours": 2,
       "best_time": "afternoon",
-      "restaurant": "<a href='https://maps.google.com/?q=Karakoy+Lokantasi+Istanbul' target='_blank'>Karaköy Lokantası</a> - παραδοσιακή κουζίνα κοντά στο μουσείο",
-      "cafe": "<a href='https://maps.google.com/?q=Karakoy+Gulluoglu+Istanbul' target='_blank'>Karaköy Güllüoğlu</a> - baklava & coffee"
+      "restaurant": {
+        "name": "Karaköy Lokantası",
+        "description": "παραδοσιακή κουζίνα κοντά στο μουσείο",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Karakoy+Lokantasi+Istanbul"
+      },
+      "cafe": {
+        "name": "Karaköy Güllüoğlu",
+        "description": "baklava & coffee",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Karakoy+Gulluoglu+Istanbul"
+      }
     },
     {
       "id": 10,
@@ -506,8 +578,16 @@
       ],
       "duration_hours": 2.5,
       "best_time": "any",
-      "restaurant": "<a href='https://maps.google.com/?q=Aqua+Florya+Shopping+Mall+Restaurants+Istanbul' target='_blank'>Aqua Florya Mall</a> - εστιατόρια δίπλα στο ενυδρείο",
-      "cafe": "<a href='https://maps.google.com/?q=Aqua+Florya+Starbucks+Istanbul' target='_blank'>Starbucks Aqua Florya</a> - mall café"
+      "restaurant": {
+        "name": "Aqua Florya Mall",
+        "description": "εστιατόρια δίπλα στο ενυδρείο",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Aqua+Florya+Shopping+Mall+Restaurants+Istanbul"
+      },
+      "cafe": {
+        "name": "Starbucks Aqua Florya",
+        "description": "mall café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Aqua+Florya+Starbucks+Istanbul"
+      }
     },
     {
       "id": 11,
@@ -555,8 +635,16 @@
       ],
       "duration_hours": 2,
       "best_time": "afternoon",
-      "restaurant": "<a href='https://maps.google.com/?q=Sutis+Miniaturk+Istanbul' target='_blank'>Sütis Cafe</a> - εντός του πάρκου",
-      "cafe": "<a href='https://maps.google.com/?q=Miniaturk+Cafe+Pierre+Loti+Istanbul' target='_blank'>Pierre Loti Café</a> - historic hilltop café"
+      "restaurant": {
+        "name": "Sütis Cafe",
+        "description": "εντός του πάρκου",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Sutis+Miniaturk+Istanbul"
+      },
+      "cafe": {
+        "name": "Pierre Loti Café",
+        "description": "historic hilltop café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Miniaturk+Cafe+Pierre+Loti+Istanbul"
+      }
     },
     {
       "id": 12,
@@ -603,8 +691,16 @@
       ],
       "duration_hours": 5,
       "best_time": "any",
-      "restaurant": "<a href='https://maps.google.com/?q=Vialand+Food+Court+Istanbul' target='_blank'>Vialand Food Court</a> - πολλές επιλογές εντός του πάρκου",
-      "cafe": "<a href='https://maps.google.com/?q=Vialand+Starbucks+Istanbul' target='_blank'>Starbucks Vialand</a> - theme park café"
+      "restaurant": {
+        "name": "Vialand Food Court",
+        "description": "πολλές επιλογές εντός του πάρκου",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Vialand+Food+Court+Istanbul"
+      },
+      "cafe": {
+        "name": "Starbucks Vialand",
+        "description": "theme park café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Vialand+Starbucks+Istanbul"
+      }
     },
     {
       "id": 13,
@@ -650,8 +746,16 @@
       "duration_hours": 1,
       "best_time": "afternoon",
       "freeActivity": true,
-      "restaurant": "<a href='https://maps.google.com/?q=Set+Ust+Basi+Cafe+Istanbul' target='_blank'>Set Üstü Başı Cafe</a> - παραδοσιακό τσαγερί στο πάρκο",
-      "cafe": "<a href='https://maps.google.com/?q=Gulhane+Park+Tea+Garden+Istanbul' target='_blank'>Gülhane Park Tea Garden</a> - τσαγερί στο πάρκο"
+      "restaurant": {
+        "name": "Set Üstü Başı Cafe",
+        "description": "παραδοσιακό τσαγερί στο πάρκο",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Set+Ust+Basi+Cafe+Istanbul"
+      },
+      "cafe": {
+        "name": "Gülhane Park Tea Garden",
+        "description": "τσαγερί στο πάρκο",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Gulhane+Park+Tea+Garden+Istanbul"
+      }
     },
     {
       "id": 14,
@@ -697,8 +801,16 @@
       "duration_hours": 0.5,
       "best_time": "morning",
       "freeActivity": true,
-      "restaurant": "<a href='https://maps.google.com/?q=Fener+Balat+Cafes+Istanbul' target='_blank'>Fener Balat Cafes</a> - vintage cafes στη γειτονιά",
-      "cafe": "<a href='https://maps.google.com/?q=Fener+Greek+Patriarchate+Cafe+Istanbul' target='_blank'>Fes Café</a> - colorful neighborhood café"
+      "restaurant": {
+        "name": "Fener Balat Cafes",
+        "description": "vintage cafes στη γειτονιά",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Fener+Balat+Cafes+Istanbul"
+      },
+      "cafe": {
+        "name": "Fes Café",
+        "description": "colorful neighborhood café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Fener+Greek+Patriarchate+Cafe+Istanbul"
+      }
     },
     {
       "id": 15,
@@ -744,8 +856,16 @@
       "duration_hours": 1,
       "best_time": "any",
       "freeActivity": true,
-      "restaurant": "<a href='https://maps.google.com/?q=Asitane+Restaurant+Chora+Istanbul' target='_blank'>Asitane Restaurant</a> - Ottoman κουζίνα κοντά στα τείχη",
-      "cafe": "<a href='https://maps.google.com/?q=Mihrimah+Sultan+Camii+Cafe+Istanbul' target='_blank'>Edirnekapı Çay Bahçesi</a> - τσαγερί κοντά στα τείχη"
+      "restaurant": {
+        "name": "Asitane Restaurant",
+        "description": "Ottoman κουζίνα κοντά στα τείχη",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Asitane+Restaurant+Chora+Istanbul"
+      },
+      "cafe": {
+        "name": "Edirnekapı Çay Bahçesi",
+        "description": "τσαγερί κοντά στα τείχη",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Mihrimah+Sultan+Camii+Cafe+Istanbul"
+      }
     }
   ],
   "passes": [

@@ -48,7 +48,11 @@
         "lat": 40.415,
         "lng": -3.6834
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Cafe+del+Retiro+Madrid' target='_blank'>Café del Retiro</a> - μέσα στο πάρκο",
+      "restaurant": {
+        "name": "Café del Retiro",
+        "description": "μέσα στο πάρκο",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+del+Retiro+Madrid"
+      },
       "notes": [],
       "tags": [
         "park",
@@ -60,7 +64,11 @@
       "duration_hours": 2.5,
       "best_time": "afternoon",
       "freeActivity": true,
-      "cafe": "<a href='https://maps.google.com/?q=Cafe+del+Prado+Madrid' target='_blank'>Café del Prado</a> - café κοντά στο μουσείο"
+      "cafe": {
+        "name": "Café del Prado",
+        "description": "café κοντά στο μουσείο",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+del+Prado+Madrid"
+      }
     },
     {
       "id": 2,
@@ -94,7 +102,11 @@
         "lat": 40.4242,
         "lng": -3.7587
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Restaurante+Casa+de+Campo+Madrid' target='_blank'>Restaurante Casa de Campo</a>",
+      "restaurant": {
+        "name": "Restaurante Casa de Campo",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Restaurante+Casa+de+Campo+Madrid"
+      },
       "notes": [],
       "tags": [
         "park",
@@ -106,7 +118,11 @@
       "duration_hours": 4,
       "best_time": "any",
       "freeActivity": true,
-      "cafe": "<a href='https://maps.google.com/?q=Chocolateria+San+Gines+Madrid' target='_blank'>San Ginés</a> - διάσημο για churros"
+      "cafe": {
+        "name": "San Ginés",
+        "description": "διάσημο για churros",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Chocolateria+San+Gines+Madrid"
+      }
     },
     {
       "id": 3,
@@ -140,7 +156,11 @@
         "lat": 40.398,
         "lng": -3.72
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Matadero+Madrid' target='_blank'>Matadero Madrid</a> - πολιτιστικό κέντρο με εστιατόρια",
+      "restaurant": {
+        "name": "Matadero Madrid",
+        "description": "πολιτιστικό κέντρο με εστιατόρια",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Matadero+Madrid"
+      },
       "notes": [],
       "tags": [
         "park",
@@ -152,7 +172,11 @@
       "duration_hours": 2,
       "best_time": "afternoon",
       "freeActivity": true,
-      "cafe": "<a href='https://maps.google.com/?q=Cafe+de+Oriente+Madrid' target='_blank'>Café de Oriente</a> - café με θέα στο παλάτι"
+      "cafe": {
+        "name": "Café de Oriente",
+        "description": "café με θέα στο παλάτι",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+de+Oriente+Madrid"
+      }
     },
     {
       "id": 4,
@@ -186,7 +210,11 @@
         "lat": 40.4238,
         "lng": -3.7185
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Restaurante+con+vistas+Templo+de+Debod' target='_blank'>Εστιατόριο με θέα στον ναό</a>",
+      "restaurant": {
+        "name": "Εστιατόριο με θέα στον ναό",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Restaurante+con+vistas+Templo+de+Debod"
+      },
       "notes": [],
       "tags": [
         "temple",
@@ -198,7 +226,11 @@
       "duration_hours": 1,
       "best_time": "evening",
       "freeActivity": true,
-      "cafe": "<a href='https://maps.google.com/?q=Retiro+Park+Cafe+Madrid' target='_blank'>Casita del Pescador</a> - café στο πάρκο"
+      "cafe": {
+        "name": "Casita del Pescador",
+        "description": "café στο πάρκο",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Retiro+Park+Cafe+Madrid"
+      }
     },
     {
       "id": 5,
@@ -232,7 +264,11 @@
         "lat": 40.4531,
         "lng": -3.6883
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Cafe+MUNCYT+Madrid' target='_blank'>Café MUNCYT</a>",
+      "restaurant": {
+        "name": "Café MUNCYT",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+MUNCYT+Madrid"
+      },
       "notes": [],
       "tags": [
         "museum",
@@ -244,7 +280,11 @@
       "duration_hours": 2.5,
       "best_time": "afternoon",
       "freeActivity": true,
-      "cafe": "<a href='https://maps.google.com/?q=Zoo+Aquarium+Madrid+Cafe' target='_blank'>Zoo Café</a> - café στο ζωολογικό"
+      "cafe": {
+        "name": "Zoo Café",
+        "description": "café στο ζωολογικό",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Zoo+Aquarium+Madrid+Cafe"
+      }
     },
     {
       "id": 6,
@@ -278,7 +318,11 @@
         "lat": 40.4176,
         "lng": -3.692
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Cafe+Gijon+Madrid' target='_blank'>Café Gijón</a> - ιστορικό καφέ",
+      "restaurant": {
+        "name": "Café Gijón",
+        "description": "ιστορικό καφέ",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Gijon+Madrid"
+      },
       "notes": [],
       "tags": [
         "museum",
@@ -290,7 +334,11 @@
       "duration_hours": 2,
       "best_time": "afternoon",
       "freeActivity": true,
-      "cafe": "<a href='https://maps.google.com/?q=Parque+Warner+Cafe+Madrid' target='_blank'>Warner Cafés</a> - theme park cafés"
+      "cafe": {
+        "name": "Warner Cafés",
+        "description": "theme park cafés",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Parque+Warner+Cafe+Madrid"
+      }
     },
     {
       "id": 7,
@@ -324,7 +372,11 @@
         "lat": 40.4567,
         "lng": -3.6894
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Restaurante+Tierno+Galvan+Madrid' target='_blank'>Restaurante Tierno Galván</a> - κοντά στο πάρκο",
+      "restaurant": {
+        "name": "Restaurante Tierno Galván",
+        "description": "κοντά στο πάρκο",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Restaurante+Tierno+Galvan+Madrid"
+      },
       "website": "https://planetmad.es/",
       "notes": [],
       "tags": [
@@ -335,7 +387,11 @@
       ],
       "duration_hours": 1.5,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Faunia+Cafe+Madrid' target='_blank'>Faunia Café</a> - nature park café"
+      "cafe": {
+        "name": "Faunia Café",
+        "description": "nature park café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Faunia+Cafe+Madrid"
+      }
     },
     {
       "id": 8,
@@ -369,7 +425,11 @@
         "lat": 40.4405,
         "lng": -3.6902
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Cafe+Museo+Ciencias+Naturales' target='_blank'>Café του Μουσείου</a>",
+      "restaurant": {
+        "name": "Café του Μουσείου",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Museo+Ciencias+Naturales"
+      },
       "website": "https://www.mncn.csic.es/",
       "notes": [],
       "tags": [
@@ -381,7 +441,11 @@
       ],
       "duration_hours": 2.5,
       "best_time": "afternoon",
-      "cafe": "<a href='https://maps.google.com/?q=Parque+Atracciones+Cafe+Madrid' target='_blank'>Parque Café</a> - amusement café"
+      "cafe": {
+        "name": "Parque Café",
+        "description": "amusement café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Parque+Atracciones+Cafe+Madrid"
+      }
     },
     {
       "id": 9,
@@ -415,7 +479,11 @@
         "lat": 40.4201,
         "lng": -3.6964
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Cafe+Museo+Cera+Madrid' target='_blank'>Café Museo de Cera</a>",
+      "restaurant": {
+        "name": "Café Museo de Cera",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Museo+Cera+Madrid"
+      },
       "website": "https://museoceramadrid.com/",
       "notes": [],
       "tags": [
@@ -427,7 +495,11 @@
       ],
       "duration_hours": 2,
       "best_time": "afternoon",
-      "cafe": "<a href='https://maps.google.com/?q=Teleferico+Madrid+Cafe' target='_blank'>Teleférico Café</a> - cable car café"
+      "cafe": {
+        "name": "Teleférico Café",
+        "description": "cable car café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Teleferico+Madrid+Cafe"
+      }
     },
     {
       "id": 10,
@@ -461,7 +533,11 @@
         "lat": 40.4062,
         "lng": -3.7584
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Restaurante+Zoo+Madrid' target='_blank'>Restaurante Zoo Madrid</a>",
+      "restaurant": {
+        "name": "Restaurante Zoo Madrid",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Restaurante+Zoo+Madrid"
+      },
       "website": "https://www.zoomadrid.com/",
       "notes": [
         "Combo με Faunia: 39.90€ (online)"
@@ -475,7 +551,11 @@
       ],
       "duration_hours": 4,
       "best_time": "morning",
-      "cafe": "<a href='https://maps.google.com/?q=Casa+de+Campo+Cafe+Madrid' target='_blank'>Casa de Campo Café</a> - park café"
+      "cafe": {
+        "name": "Casa de Campo Café",
+        "description": "park café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Casa+de+Campo+Cafe+Madrid"
+      }
     },
     {
       "id": 11,
@@ -509,7 +589,11 @@
         "lat": 40.3742,
         "lng": -3.6026
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Restaurante+Faunia+Madrid' target='_blank'>Restaurante Faunia</a>",
+      "restaurant": {
+        "name": "Restaurante Faunia",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Restaurante+Faunia+Madrid"
+      },
       "website": "https://www.faunia.es/",
       "notes": [
         "Combo με Zoo: 39.90€ (online)"
@@ -523,7 +607,11 @@
       ],
       "duration_hours": 4,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Templo+Debod+Cafe+Madrid' target='_blank'>Templo Café</a> - Egyptian temple café"
+      "cafe": {
+        "name": "Templo Café",
+        "description": "Egyptian temple café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Templo+Debod+Cafe+Madrid"
+      }
     },
     {
       "id": 12,
@@ -557,7 +645,11 @@
         "lat": 40.4156,
         "lng": -3.7032
       },
-      "restaurant": "<a href='https://maps.google.com/?q=X-Madrid+food+court' target='_blank'>Food Court X-Madrid</a>",
+      "restaurant": {
+        "name": "Food Court X-Madrid",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=X-Madrid+food+court"
+      },
       "website": "https://atlantisaquarium-madrid.es/",
       "notes": [],
       "tags": [
@@ -569,7 +661,11 @@
       ],
       "duration_hours": 2,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Matadero+Madrid+Cafe' target='_blank'>Matadero Café</a> - cultural center café"
+      "cafe": {
+        "name": "Matadero Café",
+        "description": "cultural center café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Matadero+Madrid+Cafe"
+      }
     },
     {
       "id": 13,
@@ -603,7 +699,11 @@
         "lat": 40.424,
         "lng": -3.7572
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Restaurante+Parque+Atracciones+Madrid' target='_blank'>Restaurante Parque Atracciones</a>",
+      "restaurant": {
+        "name": "Restaurante Parque Atracciones",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Restaurante+Parque+Atracciones+Madrid"
+      },
       "website": "https://www.parquedeatracciones.es/",
       "notes": [
         "⚠️ Δυναμική τιμολόγηση - ελέγξτε online για ακριβή τιμή"
@@ -616,7 +716,11 @@
       ],
       "duration_hours": 5,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=CaixaForum+Madrid+Cafe' target='_blank'>CaixaForum Café</a> - museum café"
+      "cafe": {
+        "name": "CaixaForum Café",
+        "description": "museum café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=CaixaForum+Madrid+Cafe"
+      }
     },
     {
       "id": 14,
@@ -650,7 +754,11 @@
         "lat": 40.2311,
         "lng": -3.5931
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Restaurante+Warner+Madrid' target='_blank'>Restaurante Warner Park</a>",
+      "restaurant": {
+        "name": "Restaurante Warner Park",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Restaurante+Warner+Madrid"
+      },
       "website": "https://www.parquewarner.com/",
       "notes": [
         "⚠️ ΜΟΝΟ online αγορά - στο ταμείο πιο ακριβά"
@@ -664,7 +772,11 @@
       ],
       "duration_hours": 6,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Museo+Sorolla+Cafe+Madrid' target='_blank'>Sorolla Café</a> - museum café"
+      "cafe": {
+        "name": "Sorolla Café",
+        "description": "museum café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Museo+Sorolla+Cafe+Madrid"
+      }
     },
     {
       "id": 15,
@@ -698,7 +810,11 @@
         "lat": 40.102,
         "lng": -3.245
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Restaurante+Safari+Madrid' target='_blank'>Restaurante Safari Madrid</a>",
+      "restaurant": {
+        "name": "Restaurante Safari Madrid",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Restaurante+Safari+Madrid"
+      },
       "website": "https://www.safarimadrid.com/",
       "notes": [
         "⚠️ ΥΠΟΧΡΕΩΤΙΚΑ online αγορά εκ των προτέρων"
@@ -712,7 +828,11 @@
       ],
       "duration_hours": 3,
       "best_time": "morning",
-      "cafe": "<a href='https://maps.google.com/?q=Thyssen+Museum+Cafe+Madrid' target='_blank'>Thyssen Café</a> - museum café"
+      "cafe": {
+        "name": "Thyssen Café",
+        "description": "museum café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Thyssen+Museum+Cafe+Madrid"
+      }
     },
     {
       "id": 16,
@@ -746,7 +866,11 @@
         "lat": 40.453,
         "lng": -3.6883
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Restaurante+Bernabeu+Madrid' target='_blank'>Restaurante Bernabéu</a>",
+      "restaurant": {
+        "name": "Restaurante Bernabéu",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Restaurante+Bernabeu+Madrid"
+      },
       "website": "https://www.realmadrid.com/",
       "notes": [
         "⚠️ Δυναμική τιμολόγηση - οι τιμές διαφέρουν ανά ημερομηνία"
@@ -760,7 +884,11 @@
       ],
       "duration_hours": 2,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Bernabeu+Stadium+Cafe+Madrid' target='_blank'>Real Café</a> - stadium café"
+      "cafe": {
+        "name": "Real Café",
+        "description": "stadium café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Bernabeu+Stadium+Cafe+Madrid"
+      }
     },
     {
       "id": 17,
@@ -794,7 +922,11 @@
         "lat": 40.4735,
         "lng": -3.6128
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Restaurante+Micropolix+Madrid' target='_blank'>Restaurante Micropolix</a>",
+      "restaurant": {
+        "name": "Restaurante Micropolix",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Restaurante+Micropolix+Madrid"
+      },
       "website": "https://micropolix.com/",
       "notes": [],
       "tags": [
@@ -806,7 +938,11 @@
       ],
       "duration_hours": 4,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Planetario+Madrid+Cafe' target='_blank'>Planetario Café</a> - planetarium café"
+      "cafe": {
+        "name": "Planetario Café",
+        "description": "planetarium café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Planetario+Madrid+Cafe"
+      }
     },
     {
       "id": 18,
@@ -840,7 +976,11 @@
         "lat": 40.4255,
         "lng": -3.7035
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Sweet+Space+Cafe+Madrid' target='_blank'>Sweet Space Cafe</a>",
+      "restaurant": {
+        "name": "Sweet Space Cafe",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Sweet+Space+Cafe+Madrid"
+      },
       "website": "https://sweetspace.es/",
       "notes": [
         "👨‍👩‍👧‍👦 Οικογενειακό πακέτο (2+2): 40€"
@@ -854,7 +994,11 @@
       ],
       "duration_hours": 2,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Micropolix+Cafe+Madrid' target='_blank'>Micropolix Café</a> - kids' city café"
+      "cafe": {
+        "name": "Micropolix Café",
+        "description": "kids' city café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Micropolix+Cafe+Madrid"
+      }
     },
     {
       "id": 19,
@@ -888,7 +1032,11 @@
         "lat": 40.418,
         "lng": -3.702
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Cafe+IKONO+Madrid' target='_blank'>Café IKONO</a>",
+      "restaurant": {
+        "name": "Café IKONO",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+IKONO+Madrid"
+      },
       "website": "https://ikonomadrid.com/",
       "notes": [
         "👨‍👩‍👧‍👦 Οικογενειακό πακέτο: 3 άτομα x 13.90€"
@@ -902,7 +1050,11 @@
       ],
       "duration_hours": 1.5,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Railway+Museum+Madrid+Cafe' target='_blank'>Railway Café</a> - train museum café"
+      "cafe": {
+        "name": "Railway Café",
+        "description": "train museum café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Railway+Museum+Madrid+Cafe"
+      }
     },
     {
       "id": 20,
@@ -936,7 +1088,11 @@
         "lat": 40.38,
         "lng": -3.625
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Cafe+Urban+Planet+Madrid' target='_blank'>Café Urban Planet</a>",
+      "restaurant": {
+        "name": "Café Urban Planet",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Urban+Planet+Madrid"
+      },
       "website": "https://urbanplanetmadrid.com/",
       "notes": [
         "💰 ~12€ για 60 λεπτά"
@@ -950,7 +1106,11 @@
       ],
       "duration_hours": 1.5,
       "best_time": "any",
-      "cafe": "<a href='https://maps.google.com/?q=Madrid+Rio+Cafe' target='_blank'>Madrid Río Café</a> - riverside café"
+      "cafe": {
+        "name": "Madrid Río Café",
+        "description": "riverside café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Madrid+Rio+Cafe"
+      }
     },
     {
       "id": 21,
@@ -984,7 +1144,11 @@
         "lat": 40.4245,
         "lng": -3.721
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Casa+Mingo+Madrid' target='_blank'>Casa Mingo</a> - παραδοσιακό",
+      "restaurant": {
+        "name": "Casa Mingo",
+        "description": "παραδοσιακό",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Casa+Mingo+Madrid"
+      },
       "website": "https://www.teleferico.com/",
       "notes": [
         "⚠️ ΠΡΟΣΩΡΙΝΑ ΚΛΕΙΣΤΟ - Ελέγξτε πριν από επίσκεψη"
@@ -998,7 +1162,11 @@
       "duration_hours": 1,
       "best_time": "any",
       "currentlyClosed": true,
-      "cafe": "<a href='https://maps.google.com/?q=Gran+Via+Cafe+Madrid' target='_blank'>Gran Vía Cafés</a> - shopping street cafés"
+      "cafe": {
+        "name": "Gran Vía Cafés",
+        "description": "shopping street cafés",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Gran+Via+Cafe+Madrid"
+      }
     }
   ]
 }

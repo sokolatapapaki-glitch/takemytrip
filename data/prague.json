@@ -48,7 +48,11 @@
         "lat": 50.0875,
         "lng": 14.4213
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Old+Town+Square+Prague+restaurants' target='_blank'>Restaurants in Old Town Square</a>",
+      "restaurant": {
+        "name": "Restaurants in Old Town Square",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Old+Town+Square+Prague+restaurants"
+      },
       "website": "https://www.prague.eu/en/object/places/141/old-town-square-and-hanavsky-pavilon",
       "notes": [],
       "tags": [
@@ -61,7 +65,11 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "emoji": "🏛️",
-      "cafe": "<a href='https://maps.google.com/?q=Cafe+Louvre+Prague' target='_blank'>Café Louvre</a> - ιστορικό καφέ από το 1902"
+      "cafe": {
+        "name": "Café Louvre",
+        "description": "ιστορικό καφέ από το 1902",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Louvre+Prague"
+      }
     },
     {
       "id": 2,
@@ -95,7 +103,11 @@
         "lat": 50.0865,
         "lng": 14.4114
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Cafe+Charles+Bridge+Prague' target='_blank'>Cafe Charles Bridge</a>",
+      "restaurant": {
+        "name": "Cafe Charles Bridge",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Charles+Bridge+Prague"
+      },
       "website": "https://www.prague.eu/en/object/places/30/charles-bridge-karluv-most",
       "notes": [],
       "tags": [
@@ -108,7 +120,11 @@
       "duration_hours": 1.5,
       "best_time": "morning",
       "emoji": "🌉",
-      "cafe": "<a href='https://maps.google.com/?q=Grand+Cafe+Orient+Prague' target='_blank'>Grand Café Orient</a> - cubist café"
+      "cafe": {
+        "name": "Grand Café Orient",
+        "description": "cubist café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Grand+Cafe+Orient+Prague"
+      }
     },
     {
       "id": 3,
@@ -142,7 +158,11 @@
         "lat": 50.0833,
         "lng": 14.4167
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Lego+Museum+Cafe+Prague' target='_blank'>Lego Museum Cafe</a>",
+      "restaurant": {
+        "name": "Lego Museum Cafe",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Lego+Museum+Cafe+Prague"
+      },
       "website": "https://muzeumlega.cz/en/",
       "notes": [],
       "tags": [
@@ -155,7 +175,11 @@
       "duration_hours": 2.5,
       "best_time": "afternoon",
       "emoji": "🧱",
-      "cafe": "<a href='https://maps.google.com/?q=Cafe+Imperial+Prague' target='_blank'>Café Imperial</a> - Art Deco café"
+      "cafe": {
+        "name": "Café Imperial",
+        "description": "Art Deco café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Imperial+Prague"
+      }
     },
     {
       "id": 4,
@@ -189,7 +213,11 @@
         "lat": 50.0878,
         "lng": 14.4205
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Illusion+Museum+Cafe+Prague' target='_blank'>Illusion Museum Cafe</a>",
+      "restaurant": {
+        "name": "Illusion Museum Cafe",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Illusion+Museum+Cafe+Prague"
+      },
       "website": "https://museumfantasy.eu/",
       "notes": [],
       "tags": [
@@ -202,7 +230,11 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "emoji": "🎭",
-      "cafe": "<a href='https://maps.google.com/?q=Prague+Zoo+Cafe' target='_blank'>Zoo Café</a> - café στο ζωολογικό"
+      "cafe": {
+        "name": "Zoo Café",
+        "description": "café στο ζωολογικό",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Prague+Zoo+Cafe"
+      }
     },
     {
       "id": 5,
@@ -236,7 +268,11 @@
         "lat": 50.087,
         "lng": 14.4198
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Sense+Museum+Cafe+Prague' target='_blank'>Sense Museum Cafe</a>",
+      "restaurant": {
+        "name": "Sense Museum Cafe",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Sense+Museum+Cafe+Prague"
+      },
       "website": "https://www.sensemuseum.com/",
       "notes": [],
       "tags": [
@@ -249,7 +285,11 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "emoji": "👁️",
-      "cafe": "<a href='https://maps.google.com/?q=Prague+Castle+Cafe' target='_blank'>Castle Café</a> - café στο κάστρο"
+      "cafe": {
+        "name": "Castle Café",
+        "description": "café στο κάστρο",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Prague+Castle+Cafe"
+      }
     },
     {
       "id": 6,
@@ -283,7 +323,11 @@
         "lat": 50.0911,
         "lng": 14.4015
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Castle+Restaurant+Prague' target='_blank'>Castle Restaurant</a>",
+      "restaurant": {
+        "name": "Castle Restaurant",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Castle+Restaurant+Prague"
+      },
       "website": "https://www.hrad.cz/en",
       "notes": [],
       "tags": [
@@ -296,7 +340,11 @@
       "duration_hours": 3.5,
       "best_time": "morning",
       "emoji": "🏰",
-      "cafe": "<a href='https://maps.google.com/?q=Petrin+Tower+Cafe+Prague' target='_blank'>Petřín Café</a> - tower café"
+      "cafe": {
+        "name": "Petřín Café",
+        "description": "tower café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Petrin+Tower+Cafe+Prague"
+      }
     },
     {
       "id": 7,
@@ -330,7 +378,11 @@
         "lat": 50.0913,
         "lng": 14.4018
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Toy+Museum+Cafe+Prague' target='_blank'>Toy Museum Cafe</a>",
+      "restaurant": {
+        "name": "Toy Museum Cafe",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Toy+Museum+Cafe+Prague"
+      },
       "website": "https://www.muzeumhracek.cz/en/",
       "notes": [],
       "tags": [
@@ -343,7 +395,11 @@
       "duration_hours": 1.5,
       "best_time": "afternoon",
       "emoji": "🎪",
-      "cafe": "<a href='https://maps.google.com/?q=National+Museum+Prague+Cafe' target='_blank'>Museum Café</a> - café στο μουσείο"
+      "cafe": {
+        "name": "Museum Café",
+        "description": "café στο μουσείο",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=National+Museum+Prague+Cafe"
+      }
     },
     {
       "id": 8,
@@ -377,7 +433,11 @@
         "lat": 50.1167,
         "lng": 14.4058
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Zoo+Prague+Restaurant' target='_blank'>Zoo Restaurant</a>",
+      "restaurant": {
+        "name": "Zoo Restaurant",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Zoo+Prague+Restaurant"
+      },
       "website": "https://www.zoopraha.cz/en",
       "notes": [],
       "tags": [
@@ -390,7 +450,11 @@
       "duration_hours": 4,
       "best_time": "morning",
       "emoji": "🦁",
-      "cafe": "<a href='https://maps.google.com/?q=Vysehrad+Cafe+Prague' target='_blank'>Vyšehrad Café</a> - fortress café"
+      "cafe": {
+        "name": "Vyšehrad Café",
+        "description": "fortress café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Vysehrad+Cafe+Prague"
+      }
     },
     {
       "id": 9,
@@ -424,7 +488,11 @@
         "lat": 50.1078,
         "lng": 14.4378
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Sea+World+Cafe+Prague' target='_blank'>Sea World Cafe</a>",
+      "restaurant": {
+        "name": "Sea World Cafe",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Sea+World+Cafe+Prague"
+      },
       "website": "https://www.morsky-svet.cz/en/",
       "notes": [],
       "tags": [
@@ -437,7 +505,11 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "emoji": "🐠",
-      "cafe": "<a href='https://maps.google.com/?q=Old+Town+Square+Cafe+Prague' target='_blank'>Old Town Cafés</a> - square cafés"
+      "cafe": {
+        "name": "Old Town Cafés",
+        "description": "square cafés",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Old+Town+Square+Cafe+Prague"
+      }
     },
     {
       "id": 10,
@@ -484,7 +556,11 @@
       "duration_hours": 1.5,
       "best_time": "evening",
       "emoji": "🚢",
-      "cafe": "<a href='https://maps.google.com/?q=Kampa+Park+Cafe+Prague' target='_blank'>Kampa Café</a> - riverside café"
+      "cafe": {
+        "name": "Kampa Café",
+        "description": "riverside café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Kampa+Park+Cafe+Prague"
+      }
     }
   ]
 }

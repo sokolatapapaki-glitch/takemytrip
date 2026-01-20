@@ -48,7 +48,11 @@
         "lat": 48.8722,
         "lng": 2.7758
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Disneyland+Restaurant+Paris' target='_blank'>Disney Restaurant</a>",
+      "restaurant": {
+        "name": "Disney Restaurant",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Disneyland+Restaurant+Paris"
+      },
       "website": "https://www.disneylandparis.com/",
       "notes": [
         "0-2 ετών: δωρεάν",
@@ -66,7 +70,11 @@
       "duration_hours": 7,
       "best_time": "any",
       "emoji": "🏰",
-      "cafe": "<a href='https://maps.google.com/?q=Disneyland+Paris+Cafe' target='_blank'>Disney Village Cafés</a> - πολλές επιλογές"
+      "cafe": {
+        "name": "Disney Village Cafés",
+        "description": "πολλές επιλογές",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Disneyland+Paris+Cafe"
+      }
     },
     {
       "id": 2,
@@ -100,7 +108,11 @@
         "lat": 48.8584,
         "lng": 2.2945
       },
-      "restaurant": "<a href='https://maps.google.com/?q=58+Tour+Eiffel+Paris' target='_blank'>58 Tour Eiffel</a> - εστιατόριο στον πύργο",
+      "restaurant": {
+        "name": "58 Tour Eiffel",
+        "description": "εστιατόριο στον πύργο",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=58+Tour+Eiffel+Paris"
+      },
       "website": "https://www.toureiffel.paris/",
       "notes": [
         "0-3 ετών: δωρεάν",
@@ -119,7 +131,11 @@
       "duration_hours": 2.5,
       "best_time": "evening",
       "emoji": "🗼",
-      "cafe": "<a href='https://maps.google.com/?q=Cafe+Gustave+Eiffel+Tower' target='_blank'>Café Gustave</a> - στην πλατεία του πύργου"
+      "cafe": {
+        "name": "Café Gustave",
+        "description": "στην πλατεία του πύργου",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Gustave+Eiffel+Tower"
+      }
     },
     {
       "id": 3,
@@ -151,7 +167,11 @@
         "lat": 48.8606,
         "lng": 2.3376
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Bistrot+Benoit+Louvre' target='_blank'>Bistrot Benoit</a> - Παρισινό bistro εντός μουσείου",
+      "restaurant": {
+        "name": "Bistrot Benoit",
+        "description": "Παρισινό bistro εντός μουσείου",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Bistrot+Benoit+Louvre"
+      },
       "website": "https://www.louvre.fr/en",
       "notes": [
         "0-17 ετών: δωρεάν",
@@ -169,7 +189,11 @@
       "duration_hours": 4,
       "best_time": "morning",
       "emoji": "🖼️",
-      "cafe": "<a href='https://maps.google.com/?q=Cafe+Marly+Louvre+Paris' target='_blank'>Café Marly</a> - café με θέα στην πυραμίδα"
+      "cafe": {
+        "name": "Café Marly",
+        "description": "café με θέα στην πυραμίδα",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Marly+Louvre+Paris"
+      }
     },
     {
       "id": 4,
@@ -199,9 +223,13 @@
       },
       "location": {
         "lat": 48.8738,
-        "lng": 2.2950
+        "lng": 2.295
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Le+Relais+de+l+Entrecote+Paris' target='_blank'>Le Relais de l'Entrecôte</a> - φημισμένο για steak frites",
+      "restaurant": {
+        "name": "Le Relais de l'Entrecôte",
+        "description": "φημισμένο για steak frites",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Le+Relais+de+l+Entrecote+Paris"
+      },
       "website": "https://www.paris-arc-de-triomphe.fr/en",
       "notes": [
         "0-17 ετών: δωρεάν",
@@ -219,7 +247,11 @@
       "duration_hours": 1.5,
       "best_time": "evening",
       "emoji": "🏛️",
-      "cafe": "<a href='https://maps.google.com/?q=Laduree+Champs+Elysees+Paris' target='_blank'>Ladurée</a> - διάσημο για macarons"
+      "cafe": {
+        "name": "Ladurée",
+        "description": "διάσημο για macarons",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Laduree+Champs+Elysees+Paris"
+      }
     },
     {
       "id": 5,
@@ -248,10 +280,14 @@
         "adult": 16
       },
       "location": {
-        "lat": 48.8600,
+        "lat": 48.86,
         "lng": 2.3266
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Le+Restaurant+Musee+d+Orsay' target='_blank'>Le Restaurant</a> - Belle-Epoque εστιατόριο εντός μουσείου",
+      "restaurant": {
+        "name": "Le Restaurant",
+        "description": "Belle-Epoque εστιατόριο εντός μουσείου",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Le+Restaurant+Musee+d+Orsay"
+      },
       "website": "https://www.musee-orsay.fr/en",
       "notes": [
         "0-17 ετών: δωρεάν",
@@ -269,7 +305,11 @@
       "duration_hours": 3,
       "best_time": "afternoon",
       "emoji": "🎨",
-      "cafe": "<a href='https://maps.google.com/?q=Cafe+Campana+Musee+d+Orsay' target='_blank'>Café Campana</a> - café με θέα στον 5ο όροφο"
+      "cafe": {
+        "name": "Café Campana",
+        "description": "café με θέα στον 5ο όροφο",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Campana+Musee+d+Orsay"
+      }
     },
     {
       "id": 6,
@@ -301,7 +341,11 @@
         "lat": 48.8049,
         "lng": 2.1204
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Ore+Alain+Ducasse+Versailles' target='_blank'>Ore by Alain Ducasse</a> - εστιατόριο εντός ανακτόρου",
+      "restaurant": {
+        "name": "Ore by Alain Ducasse",
+        "description": "εστιατόριο εντός ανακτόρου",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Ore+Alain+Ducasse+Versailles"
+      },
       "website": "https://en.chateauversailles.fr/",
       "notes": [
         "0-17 ετών: δωρεάν",
@@ -319,7 +363,11 @@
       "duration_hours": 5,
       "best_time": "morning",
       "emoji": "👑",
-      "cafe": "<a href='https://maps.google.com/?q=Angelina+Versailles' target='_blank'>Angelina</a> - tea room στο ανάκτορο"
+      "cafe": {
+        "name": "Angelina",
+        "description": "tea room στο ανάκτορο",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Angelina+Versailles"
+      }
     },
     {
       "id": 7,
@@ -349,9 +397,13 @@
       },
       "location": {
         "lat": 48.8554,
-        "lng": 2.3450
+        "lng": 2.345
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Au+Vieux+Paris+d+Arcole' target='_blank'>Au Vieux Paris d'Arcole</a> - ιστορικό εστιατόριο κοντά στη Sainte-Chapelle",
+      "restaurant": {
+        "name": "Au Vieux Paris d'Arcole",
+        "description": "ιστορικό εστιατόριο κοντά στη Sainte-Chapelle",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Au+Vieux+Paris+d+Arcole"
+      },
       "website": "https://www.sainte-chapelle.fr/en",
       "notes": [
         "0-17 ετών: δωρεάν",
@@ -370,7 +422,11 @@
       "duration_hours": 1,
       "best_time": "morning",
       "emoji": "⛪",
-      "cafe": "<a href='https://maps.google.com/?q=Cafe+Saint+Regis+Paris' target='_blank'>Café Saint-Régis</a> - παραδοσιακό Παρισινό café"
+      "cafe": {
+        "name": "Café Saint-Régis",
+        "description": "παραδοσιακό Παρισινό café",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Saint+Regis+Paris"
+      }
     },
     {
       "id": 8,
@@ -402,7 +458,11 @@
         "lat": 48.8462,
         "lng": 2.3464
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Les+Papilles+Paris' target='_blank'>Les Papilles</a> - bistro & wine shop κοντά στο Πάνθεον",
+      "restaurant": {
+        "name": "Les Papilles",
+        "description": "bistro & wine shop κοντά στο Πάνθεον",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Les+Papilles+Paris"
+      },
       "website": "https://www.paris-pantheon.fr/en",
       "notes": [
         "0-17 ετών: δωρεάν",
@@ -419,7 +479,11 @@
       "duration_hours": 1.5,
       "best_time": "afternoon",
       "emoji": "🏛️",
-      "cafe": "<a href='https://maps.google.com/?q=Strada+Cafe+Pantheon+Paris' target='_blank'>Strada Café</a> - café με θέα στο Πάνθεον"
+      "cafe": {
+        "name": "Strada Café",
+        "description": "café με θέα στο Πάνθεον",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Strada+Cafe+Pantheon+Paris"
+      }
     },
     {
       "id": 9,
@@ -451,7 +515,11 @@
         "lat": 48.8553,
         "lng": 2.3159
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Cafe+du+Musee+Rodin' target='_blank'>Café du Musée Rodin</a> - εστιατόριο στον κήπο του μουσείου",
+      "restaurant": {
+        "name": "Café du Musée Rodin",
+        "description": "εστιατόριο στον κήπο του μουσείου",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+du+Musee+Rodin"
+      },
       "website": "https://www.musee-rodin.fr/en",
       "notes": [
         "0-17 ετών: δωρεάν",
@@ -468,7 +536,11 @@
       "duration_hours": 2,
       "best_time": "afternoon",
       "emoji": "🗿",
-      "cafe": "<a href='https://maps.google.com/?q=Le+Jardin+de+Varenne+Paris' target='_blank'>Le Jardin de Varenne</a> - café κοντά στο μουσείο"
+      "cafe": {
+        "name": "Le Jardin de Varenne",
+        "description": "café κοντά στο μουσείο",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Le+Jardin+de+Varenne+Paris"
+      }
     },
     {
       "id": 10,
@@ -500,7 +572,11 @@
         "lat": 48.8566,
         "lng": 2.3469
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Brasserie+Les+Deux+Palais+Paris' target='_blank'>Brasserie Les Deux Palais</a> - κοντά στη Conciergerie",
+      "restaurant": {
+        "name": "Brasserie Les Deux Palais",
+        "description": "κοντά στη Conciergerie",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Brasserie+Les+Deux+Palais+Paris"
+      },
       "website": "https://www.paris-conciergerie.fr/en",
       "notes": [
         "0-17 ετών: δωρεάν",
@@ -518,7 +594,11 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "emoji": "🏰",
-      "cafe": "<a href='https://maps.google.com/?q=Carette+Paris+Notre+Dame' target='_blank'>Carette</a> - παραδοσιακό Παρισινό salon de thé"
+      "cafe": {
+        "name": "Carette",
+        "description": "παραδοσιακό Παρισινό salon de thé",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Carette+Paris+Notre+Dame"
+      }
     },
     {
       "id": 11,
@@ -550,7 +630,11 @@
         "lat": 48.8631,
         "lng": 2.2933
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Cafe+de+l+Homme+Trocadero+Paris' target='_blank'>Café de l'Homme</a> - εστιατόριο με θέα τον Πύργο του Άιφελ",
+      "restaurant": {
+        "name": "Café de l'Homme",
+        "description": "εστιατόριο με θέα τον Πύργο του Άιφελ",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+de+l+Homme+Trocadero+Paris"
+      },
       "website": "https://aquariumdeparis.com/en",
       "notes": [
         "0-2 ετών: δωρεάν",
@@ -567,7 +651,11 @@
       "duration_hours": 2,
       "best_time": "any",
       "emoji": "🐠",
-      "cafe": "<a href='https://maps.google.com/?q=Cafe+Carlu+Trocadero' target='_blank'>Café Carlu</a> - café στο Trocadéro"
+      "cafe": {
+        "name": "Café Carlu",
+        "description": "café στο Trocadéro",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Carlu+Trocadero"
+      }
     },
     {
       "id": 12,
@@ -599,7 +687,11 @@
         "lat": 48.8638,
         "lng": 2.3228
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Cafe+des+Marronniers+Tuileries+Paris' target='_blank'>Café des Marronniers</a> - στους κήπους Tuileries",
+      "restaurant": {
+        "name": "Café des Marronniers",
+        "description": "στους κήπους Tuileries",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+des+Marronniers+Tuileries+Paris"
+      },
       "website": "https://www.musee-orangerie.fr/en",
       "notes": [
         "0-17 ετών: δωρεάν",
@@ -616,7 +708,11 @@
       "duration_hours": 1.5,
       "best_time": "morning",
       "emoji": "🌸",
-      "cafe": "<a href='https://maps.google.com/?q=Angelina+Tuileries+Paris' target='_blank'>Angelina</a> - διάσημο για hot chocolate"
+      "cafe": {
+        "name": "Angelina",
+        "description": "διάσημο για hot chocolate",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Angelina+Tuileries+Paris"
+      }
     },
     {
       "id": 13,
@@ -648,7 +744,11 @@
         "lat": 48.8867,
         "lng": 2.3431
       },
-      "restaurant": "<a href='https://maps.google.com/?q=Le+Consulat+Montmartre+Paris' target='_blank'>Le Consulat</a> - ιστορικό bistro στο Montmartre",
+      "restaurant": {
+        "name": "Le Consulat",
+        "description": "ιστορικό bistro στο Montmartre",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Le+Consulat+Montmartre+Paris"
+      },
       "website": "https://www.sacre-coeur-montmartre.com/en",
       "notes": [
         "Βασιλική: δωρεάν είσοδος",
@@ -666,7 +766,11 @@
       "duration_hours": 1.5,
       "best_time": "evening",
       "emoji": "⛪",
-      "cafe": "<a href='https://maps.google.com/?q=Cafe+des+Deux+Moulins+Montmartre' target='_blank'>Café des Deux Moulins</a> - café από την ταινία Amélie"
+      "cafe": {
+        "name": "Café des Deux Moulins",
+        "description": "café από την ταινία Amélie",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+des+Deux+Moulins+Montmartre"
+      }
     }
   ]
 }
