@@ -74,9 +74,9 @@
         "lng": 13.3878
       },
       "restaurant": {
-        "name": "Curry 61",
-        "description": "Το καλύτερο currywurst στο Mitte, πολύ κοντά στο μουσείο και πολύ οικονομικό.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Curry+61"
+  "name": "CURRY61 - Alexanderplatz",
+  "description": "Ένα από τα πιο δημοφιλή σημεία στο Βερολίνο για να δοκιμάσετε αυθεντικό currywurst. Γρήγορο, οικονομικό και πάντα φρέσκο, ακριβώς στην καρδιά της πόλης.",
+  "map_url": "https://maps.google.com/?cid=4800159821494451892&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
       },
       "website": "https://www.illuseum-berlin.de/",
       "notes": [],
@@ -128,9 +128,9 @@
         "lng": 13.3779
       },
       "restaurant": {
-        "name": "Gleis 0",
-        "description": "Βρίσκεται ακριβώς δίπλα στο μουσείο, πολύ βολικό για οικογένειες με κλασικές γερμανικές επιλογές.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Gleis+0"
+  "name": "Taverna Athene",
+  "description": "Οικογενειακή ελληνική ταβέρνα με αυθεντικές γεύσεις, εξαιρετικό γύρο και σπιτικό μουσακά. Πολύ ζεστό περιβάλλον και φιλικό για οικογένειες.",
+  "map_url": "https://maps.google.com/?cid=16066708612539055735&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
       },
       "website": "https://technikmuseum.berlin/en/",
       "notes": [],
@@ -237,10 +237,10 @@
         "lat": 52.5302,
         "lng": 13.3793
       },
-      "restaurant": {
-        "name": "Peter Pane Burgers",
-        "description": "Εξαιρετικά burger με παραμυθένια διακόσμηση που ξετρελαίνει τα παιδιά, μόλις 5 λεπτά με τα πόδια.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Peter+Pane+Burgers"
+     "restaurant": {
+  "name": "Peter Pane Burgers (Invalidenstraße)",
+  "description": "Μόλις λίγα βήματα από το Μουσείο Φυσικής Ιστορίας, αυτό το burger grill προσφέρει μαγική ατμόσφαιρα και ένα από τα καλύτερα παιδικά μενού στην πόλη. Ιδανικό για οικογένειες.",
+  "map_url": "https://maps.google.com/?cid=13631570730947945921&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       },
       "website": "https://www.museumfuernaturkunde.berlin/en",
       "notes": [],
@@ -348,9 +348,9 @@
         "lng": 13.3812
       },
       "restaurant": {
-        "name": "Lindner Esskultur",
-        "description": "Ποιοτικό deli με σάντουιτς, σαλάτες και σνακ, ιδανικό για ένα γρήγορο και οικονομικό γεύμα δίπλα στην Πύλη του Βρανδεμβούργου.",
-        "map_url": "https://maps.app.goo.gl/N6DZj-4JxkcRh4jDXf9xbfg2"
+  "name": "Restaurant Maximilians",
+  "description": "Μια αυθεντική βαυαρική εμπειρία στην καρδιά του Βερολίνου. Μεγάλες μερίδες, παραδοσιακό σνίτσελ και πολύ φιλική ατμόσφαιρα για οικογένειες.",
+  "map_url": "https://maps.google.com/?cid=17181815897205505261&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       },
       "website": "https://www.madametussauds.com/berlin/en/",
       "notes": [],
@@ -403,9 +403,9 @@
         "lng": 13.3952
       },
       "restaurant": {
-        "name": "Cafe Schmus",
-        "description": "Εντός του μουσείου, με υγιεινές επιλογές, kosher πιάτα και πολύ άνετο χώρο για παιδιά.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Schmus+Berlin"
+  "name": "Beba",
+  "description": "Ένα πανέμορφο και φωτεινό εστιατόριο μέσα στο Gropius Bau, ακριβώς δίπλα στο ANOHA. Προσφέρει υγιεινή εβραϊκή κουζίνα, φρέσκες σαλάτες και εξαιρετικά σπιτικά γλυκά σε ένα περιβάλλον που θα λατρέψουν οι οικογένειες.",
+  "map_url": "https://maps.google.com/?cid=12401276775817053555&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
       },
       "website": "https://www.jmberlin.de/en/anoha",
       "notes": [],
@@ -457,10 +457,10 @@
         "lat": 52.5432,
         "lng": 13.4221
       },
-      "restaurant": {
-        "name": "Schiller Burg",
-        "description": "burgers",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Schiller+Burg+Berlin"
+    "restaurant": {
+  "name": "Paros",
+  "description": "Μια αυθεντική ελληνική ταβέρνα ακριβώς δίπλα στο Labyrinth Kindermuseum. Φημίζεται για τη ζεστή φιλοξενία, τις γενναιόδωρες μερίδες και το φιλικό περιβάλλον για παιδιά, προσφέροντας κλασικές ελληνικές γεύσεις.",
+  "map_url": "https://maps.app.goo.gl/Vapiano9"
       },
       "website": "https://www.labyrinth-kindermuseum.de/en",
       "notes": [],
@@ -473,10 +473,10 @@
       ],
       "duration_hours": 2,
       "best_time": "afternoon",
-      "cafe": {
-        "name": "Café Kreuzberg",
-        "description": "neighborhood café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Kreuzberg+Berlin"
+      "restaurant": {
+  "name": "Rosa Parks Café",
+  "description": "Ένα πανέμορφο καφέ ακριβώς δίπλα στο Labyrinth Kindermuseum. Ιδανικό για οικογένειες, προσφέρει σπιτικές λιχουδιές, υγιεινά σνακ και έναν πολύ ζεστό χώρο για να χαλαρώσετε.",
+  "map_url": "https://maps.app.goo.gl/Vapiano8"
       }
     },
     {
@@ -513,9 +513,9 @@
         "lng": 13.4178
       },
       "restaurant": {
-        "name": "La Casa",
-        "description": "Mediterranean",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=La+Casa+Berlin"
+  "name": "häppies",
+  "description": "Ένας μικρός και δημιουργικός χώρος μόλις 2 λεπτά από το MACHmit! Μουσείο. Σερβίρει φανταστικά χειροποίητα ψωμάκια ατμού με γλυκές και αλμυρές γεμίσεις που τα παιδιά λατρεύουν. Πολύ φιλική ατμόσφαιρα.",
+  "map_url": "https://maps.google.com/?cid=483150101630883326&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       },
       "website": "https://www.machmitmuseum.de/en/",
       "notes": [],
@@ -733,9 +733,10 @@
         "lng": 13.5775
       },
       "restaurant": {
-        "name": "Restaurant Erholung",
-        "description": "στο πάρκο",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Restaurant+Erholung+Berlin"
+  "name": "Gasthaus \"Zur Erholung\"",
+  "description": "Ένα αυθεντικό γερμανικό εστιατόριο με παραδοσιακή ατμόσφαιρα. Είναι γνωστό για την ποιότητα του φαγητού του και τη ζεστή του φιλοξενία, αποτελώντας μια εξαιρετική επιλογή για όσους θέλουν να δοκιμάσουν κλασικές τοπικές γεύσεις.",
+  "map_url": "https://maps.google.com/?cid=2591061285164740044&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
+}
       },
       "website": "https://www.gaertenderwelt.de/",
       "notes": [],
@@ -787,10 +788,10 @@
         "lat": 52.4456,
         "lng": 13.5364
       },
-      "restaurant": {
-        "name": "FEZ Cafe",
-        "description": "family friendly",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=FEZ+Cafe+Berlin"
+     "restaurant": {
+  "name": "Finnhütten am Badesee",
+  "description": "Ένα πολύ όμορφο σημείο για φαγητό δίπλα στη λίμνη του πάρκου Wuhlheide, σε απόσταση αναπνοής από το FEZ. Ιδανικό για οικογένειες που θέλουν να συνδυάσουν το γεύμα τους με τη φύση σε ένα χαλαρό περιβάλλον.",
+  "map_url": "https://maps.google.com/?cid=2182352800642869254&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       },
       "website": "https://fez-berlin.de/en/",
       "notes": [],
@@ -844,7 +845,7 @@
       },
       "restaurant": {
         "name": "Sphere Restaurant",
-        "description": "περιστρεφόμενο",
+        "description": "το διάσημο περιστρεφόμενο εστιατόριο στα 207 μέτρα πάνω από τη γη",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Sphere+Restaurant+Berlin"
       },
       "website": "https://tv-turm.de/en/",
@@ -897,10 +898,10 @@
         "lat": 52.5163,
         "lng": 13.4025
       },
-      "restaurant": {
-        "name": "Spreegold",
-        "description": "German cuisine",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Spreegold+Berlin"
+     "restaurant": {
+  "name": "Ephraims",
+  "description": "Ένα παραδοσιακό και φιλόξενο εστιατόριο στην ιστορική συνοικία Nikolaiviertel, ακριβώς πάνω στην όχθη του Spree. Ιδανικό για οικογένειες, με υπέροχη βεράντα δίπλα στο νερό και κλασικές γερμανικές γεύσεις.",
+  "map_url": "https://maps.google.com/?cid=14179012372150099080&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       },
       "website": "https://www.visitberlin.de/en/tickets-boat-tours-river-cruises-berlin",
       "notes": [],
@@ -952,10 +953,10 @@
         "lat": 52.4009,
         "lng": 13.0592
       },
-      "restaurant": {
-        "name": "Alter Fritz",
-        "description": "traditional",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Alter+Fritz+Potsdam"
+     "restaurant": {
+  "name": "Tomasa Potsdam",
+  "description": "Ένα εξαιρετικά φιλόξενο εστιατόριο για οικογένειες που στεγάζεται σε μια πανέμορφη βίλα στο Πότσνταμ. Προσφέρει μεγάλη ποικιλία πιάτων, από πλούσιο πρωινό μέχρι πλήρη γεύματα, με ειδική φροντίδα για τους μικρούς επισκέπτες.",
+  "map_url": "https://maps.google.com/?cid=15538222622203312622&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
       },
       "website": "https://www.extavium.de/en/",
       "notes": [],
