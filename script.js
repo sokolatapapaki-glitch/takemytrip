@@ -2792,7 +2792,10 @@ async function setupActivitiesStep() {
                         <span class="restaurant-title">ΚΟΝΤΙΝΟ ${activity.restaurantType === 'cafe' ? 'ΚΑΦΕ' : 'ΕΣΤΙΑΤΟΡΙΟ'}</span>
                     </div>
                     <div class="restaurant-content">
-                        <p>${activity.restaurant.replace(/<a /g, '<a target="_blank" rel="noopener" ')}</p>
+                        <p><strong>${typeof activity.restaurant === 'object' ? activity.restaurant.name : activity.restaurant}</strong></p>
+                        ${typeof activity.restaurant === 'object' && activity.restaurant.description ? `<p>${activity.restaurant.description}</p>` : ''}
+                        ${typeof activity.restaurant === 'object' && activity.restaurant.map_url ? `<p><a href="${activity.restaurant.map_url}" target="_blank" rel="noopener"><i class="fas fa-map-marker-alt"></i> Δείτε στο χάρτη</a></p>` : ''}
+                        ${typeof activity.restaurant === 'string' ? `<p>${activity.restaurant.replace(/<a /g, '<a target="_blank" rel="noopener" ')}</p>` : ''}
                         <small class="restaurant-tip">
                             <i class="fas fa-walking"></i>
                             ${activity.restaurantType === 'cafe' ? 'καφέ' : 'εστιατόριο'}${activity.restaurantDistance !== undefined && activity.restaurantDistance !== null ? ` / ${activity.restaurantDistance === 0 ? 'εντός του ίδιου χώρου' : `${activity.restaurantDistance} λεπτά με τα πόδια`}` : ''}
@@ -3959,7 +3962,11 @@ function createEnhancedPopup(activity) {
                     <strong style="color: #1F2937; font-size: 13px;">Κοντινό Εστιατόριο:</strong>
                 </div>
                 <div style="font-size: 13px; color: #374151; line-height: 1.4;">
-                    ${activity.restaurant.replace(/<a /g, '<a target="_blank" rel="noopener" style="color: #3B82F6; text-decoration: none; font-weight: 600;" ')}
+                    ${typeof activity.restaurant === 'object' ? `
+                        <div style="font-weight: 600; margin-bottom: 4px;">${activity.restaurant.name}</div>
+                        ${activity.restaurant.description ? `<div style="margin-bottom: 6px;">${activity.restaurant.description}</div>` : ''}
+                        ${activity.restaurant.map_url ? `<a href="${activity.restaurant.map_url}" target="_blank" rel="noopener" style="color: #3B82F6; text-decoration: none; font-weight: 600;"><i class="fas fa-map-marker-alt"></i> Δείτε στο χάρτη</a>` : ''}
+                    ` : activity.restaurant.replace(/<a /g, '<a target="_blank" rel="noopener" style="color: #3B82F6; text-decoration: none; font-weight: 600;" ')}
                 </div>
                 <div style="font-size: 11px; color: #6B7280; margin-top: 6px; display: flex; align-items: center;">
                     <i class="fas fa-lightbulb" style="margin-right: 4px; color: #F59E0B;"></i>
