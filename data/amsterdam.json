@@ -115,9 +115,9 @@
       "duration_hours": 2.5,
       "best_time": "morning",
       "cafe": {
-        "name": "Le Pain Quotidien",
-        "description": "όμορφο cafe στην πλατεία",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Le+Pain+Quotidien+Museumplein+Amsterdam"
+        "name": "Groot Melkhuis",
+        "description": "Family-friendly καφέ μέσα στο Vondelpark με μεγάλη παιδική χαρά και εξωτερική βεράντα δίπλα στο νερό.",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Groot+Melkhuis&query_place_id=ChIJgcR47OIJxkcR6JS-5U83nMA"
       }
     },
     {
