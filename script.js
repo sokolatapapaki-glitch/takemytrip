@@ -524,10 +524,40 @@ function setupMobileNavigation() {
         }
     };
 }
+
+// ==================== HELPER FUNCTIONS ====================
+/**
+ * Format restaurant/cafe field for display
+ * Handles both old string format and new object format {name, description, map_url}
+ */
+function formatRestaurantCafe(field, linkStyle = '') {
+    if (!field) return '';
+
+    // Old format: string with HTML
+    if (typeof field === 'string') {
+        return field.replace(/<a /g, `<a target="_blank" rel="noopener" ${linkStyle}`);
+    }
+
+    // New format: object with name, description, map_url
+    if (typeof field === 'object' && field.name) {
+        const name = field.name || '';
+        const description = field.description || '';
+        const mapUrl = field.map_url || '';
+
+        if (mapUrl) {
+            return `<a href="${mapUrl}" target="_blank" rel="noopener" ${linkStyle}>${name}</a>${description ? ' - ' + description : ''}`;
+        } else {
+            return `<strong>${name}</strong>${description ? ' - ' + description : ''}`;
+        }
+    }
+
+    return '';
+}
+
 function getStepName(stepId) {
     const stepNames = {
         'destination': '📍 Προορισμός',
-        'flight': '✈️ Πτήσεις', 
+        'flight': '✈️ Πτήσεις',
         'hotel': '🏨 Ξενοδοχεία',
         'activities': '🎫 Δραστηριότητες',
         'map': '🗺️ Χάρτης'
@@ -2820,7 +2850,7 @@ async function setupActivitiesStep() {
                         <span class="restaurant-title">ΚΟΝΤΙΝΟ ΕΣΤΙΑΤΟΡΙΟ</span>
                     </div>
                     <div class="restaurant-content">
-                        <p>${activity.restaurant.replace(/<a /g, '<a target="_blank" rel="noopener" ')}</p>
+                        <p>${formatRestaurantCafe(activity.restaurant)}</p>
                     </div>
                 </div>
             ` : ''}
@@ -2833,7 +2863,7 @@ async function setupActivitiesStep() {
                         <span class="restaurant-title">ΚΟΝΤΙΝΟ ΚΑΦΕ</span>
                     </div>
                     <div class="restaurant-content">
-                        <p>${activity.cafe.replace(/<a /g, '<a target="_blank" rel="noopener" ')}</p>
+                        <p>${formatRestaurantCafe(activity.cafe)}</p>
                     </div>
                 </div>
             ` : ''}
@@ -3997,7 +4027,7 @@ function createEnhancedPopup(activity) {
                     <strong style="color: #1F2937; font-size: 13px;">ΚΟΝΤΙΝΟ ΕΣΤΙΑΤΟΡΙΟ</strong>
                 </div>
                 <div style="font-size: 13px; color: #374151; line-height: 1.4;">
-                    ${activity.restaurant.replace(/<a /g, '<a target="_blank" rel="noopener" style="color: #3B82F6; text-decoration: none; font-weight: 600;" ')}
+                    ${formatRestaurantCafe(activity.restaurant, 'style="color: #3B82F6; text-decoration: none; font-weight: 600;"')}
                 </div>
             </div>` : ''}
 
@@ -4009,7 +4039,7 @@ function createEnhancedPopup(activity) {
                     <strong style="color: #1F2937; font-size: 13px;">ΚΟΝΤΙΝΟ ΚΑΦΕ</strong>
                 </div>
                 <div style="font-size: 13px; color: #374151; line-height: 1.4;">
-                    ${activity.cafe.replace(/<a /g, '<a target="_blank" rel="noopener" style="color: #3B82F6; text-decoration: none; font-weight: 600;" ')}
+                    ${formatRestaurantCafe(activity.cafe, 'style="color: #3B82F6; text-decoration: none; font-weight: 600;"')}
                 </div>
             </div>` : ''}
             
