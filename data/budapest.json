@@ -11,10 +11,10 @@
   },
   "cityPass": {
   "name": "Budapest Card",
-  "description": "Δωρεάν απεριόριστες μετακινήσεις, δωρεάν είσοδος σε 20+ μουσεία και στα λουτρά Lukács, συν εκπτώσεις 10-50% σε αξιοθέατα και εστίαση.",
+  "description": "Δωρεάν απεριόριστες μετακινήσεις, δωρεάν είσοδος σε 20+ μουσεία και στα λουτρά Lukács.",
   "officialPrice24h": 33,
   "officialPrice72h": 63,
-  "discountPercent": "Variable", 
+  "discountPercent": "10-50", 
   "url": "https://www.budapestcard.org/"
 },
   "activities": [
@@ -184,10 +184,10 @@
       "best_time": "afternoon",
       "minAge": 0,
       "cafe": {
-        "name": "Ruszwurm Cukrászda",
-        "description": "Το παλαιότερο ζαχαροπλαστείο της πόλης (από το 1827). Πρέπει να δοκιμάσετε την κρέμα Ruszwurm!",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Ruszwurm+Cukrászda"
-      }
+  "name": "Walzer Café",
+  "description": "Ένα ζεστό και φιλικό προς οικογένειες καφέ στην καρδιά του Κάστρου. Ιδανικό για ξεκούραση σε μια ήσυχη και σπιτική ατμόσφαιρα.",
+  "map_url": "https://www.google.com/maps/search/?api=1&query=Walzer+Café+Budapest&query_place_id=ChIJF3WFNB_cQUcRJqKVqwLujsM"
+}
     },
     {
       "id": 4,
@@ -297,7 +297,7 @@
       "priceNote": "🏰 Εξωτερικοί χώροι: ΔΩΡΕΑΝ | Εσωτερικό μουσείο: ΠΛΗΡΩΤΕΟ",
       "cafe": {
         "name": "Gundel Patisserie",
-        "description": "Ιστορικό σημείο. Αν δεν θέλετε πλήρες γεύμα, πάρτε μια αυθεντική κρέπα Gundel στο χέρι.",
+        "description": "Ιστορικό σημείο με υψηλό κόστος γεύματος. Το προτείνουμε για καφέ / γλυκό , για την εμπειρία 5 αστέρων εξυπηρέτησης, πάρτε μια αυθεντική κρέπα Gundel στο χέρι.",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Gundel+Patisserie"
       }
     },
@@ -700,9 +700,9 @@
       "best_time": "evening",
       "minAge": 0,
       "cafe": {
-        "name": "Szamos Gourmet Ház",
-        "description": "Εξαιρετικό καφέ και ζαχαροπλαστείο στην πλατεία Vörösmarty. Δοκιμάστε τις περίφημες σοκολάτες Szamos και τα παραδοσιακά γλυκά.",
-        "map_url": "https://maps.google.com/maps/contrib/100310607525571313309"
+        "name": "Szamos Café",
+        "description": "Στον επάνω όροφο έχει και μουσείο σοκολάτας! Τέλεια στάση μετά την ξενάγηση.",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Szamos+Café"
       }
     },
     {
@@ -755,8 +755,8 @@
       "best_time": "morning",
       "minAge": 0,
       "cafe": {
-    "name": "Gundel Restaurant",
-    "description": "Fine dining εμπειρία με παραδοσιακή ουγγρική κουζίνα υψηλού επιπέδου.",
+    "name": "Gundel Patisserie-restaurant",
+    "description": "Fine dining εμπειρία με παραδοσιακή ουγγρική κουζίνα υψηλού επιπέδου. Οι τιμές είναι ακριβές, αξίζει η εμπειρία για καφέ / γλυκό ",
     "map_url": "https://maps.app.goo.gl/tJDcUZ77RUSX7j757"
       }
     },
@@ -900,10 +900,10 @@
     "duration_hours": 1,
     "best_time": "sunset",
     "cafe": {
-      "name": "Ruszwurm Cukrászda",
-      "description": "Το παλαιότερο ζαχαροπλαστείο της πόλης (5 λεπτά περπάτημα). Δοκιμάστε το Ruszwurm Cream Cake.",
-      "map_url": "https://www.google.com/maps/search/?api=1&query=Biarritz+Bistro"
-    }
+  "name": "Walzer Café",
+  "description": "Ένα ζεστό και φιλικό προς οικογένειες καφέ στην καρδιά του Κάστρου. Ιδανικό για ξεκούραση σε μια ήσυχη και σπιτική ατμόσφαιρα.",
+  "map_url": "https://www.google.com/maps/search/?api=1&query=Walzer+Café+Budapest&query_place_id=ChIJF3WFNB_cQUcRJqKVqwLujsM"
+}
   },
   {
     "id": 17,
@@ -926,7 +926,7 @@
     },
     "website": "https://mujegpalya.hu/en/",
     "notes": [
-      "⛸️ Διαθέσιμη ενοικίαση πατινιών (περίπου 3500 HUF).",
+      "⛸️ Διαθέσιμη ενοικίαση πατινιών (περίπου 8-9 Ευρώ).",
       "⏰ Λειτουργεί σε δύο βάρδιες: πρωί (9-13:00) και απόγευμα (17-21:00).",
       "🎟️ Οι τιμές διαφέρουν ελαφρώς τα Σαββατοκύριακα (peak hours)."
     ],
@@ -934,9 +934,9 @@
     "duration_hours": 2,
     "best_time": "evening",
     "cafe": {
-      "name": "Gundel Patisserie",
-      "description": "Για την περίφημη Gundel pancake σε ένα από τα πιο ιστορικά κτήρια της πόλης.",
-      "map_url": "https://www.google.com/maps/search/?api=1&query=Szamos+Gourmet+Ház"
+    "name": "Gundel Restaurant",
+    "description": "Δοκιμάστε την περίφημη Gundel Pncake. Οι τιμές είναι ακριβές για γεύμα όμως αξίζει η εμπειρία για καφέ / γλυκό σε αυτο το ιστορικό μέρος.",
+    "map_url": "https://maps.app.goo.gl/tJDcUZ77RUSX7j757"
             
       }
     }
