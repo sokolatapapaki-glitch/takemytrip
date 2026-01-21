@@ -115,9 +115,9 @@
       "duration_hours": 2.5,
       "best_time": "morning",
       "cafe": {
-        "name": "Le Pain Quotidien",
-        "description": "όμορφο cafe στην πλατεία",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Le+Pain+Quotidien+Museumplein+Amsterdam"
+        "name": "Groot Melkhuis",
+        "description": "Family-friendly καφέ μέσα στο Vondelpark με μεγάλη παιδική χαρά και εξωτερική βεράντα δίπλα στο νερό.",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Groot+Melkhuis&query_place_id=ChIJgcR47OIJxkcR6JS-5U83nMA"
       }
     },
     {
@@ -169,9 +169,9 @@
       "duration_hours": 2,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Le Pain Quotidien",
-        "description": "όμορφο cafe στην πλατεία",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Le+Pain+Quotidien+Museumplein+Amsterdam"
+        "name": "Moods Coffee & Brunch",
+        "description": "Πολύ προσεγμένο καφέ με εξαιρετικό brunch και φιλική εξυπηρέτηση, λίγα λεπτά από το μουσείο.",
+        "map_url": "https://maps.google.com/?cid=6518910348384035671&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       }
     },
     {
@@ -261,10 +261,10 @@
         "lat": 52.3886,
         "lng": 4.8689
       },
-      "restaurant": {
-        "name": "WONDR Cafe",
-        "description": "Instagram-worthy treats",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=WONDR+Cafe+Amsterdam"
+     "restaurant": {
+        "name": "Lowlander Botanical Bar & Restaurant",
+        "description": "Ένα πανέμορφο εστιατόριο με βοτανικό κήπο στο εσωτερικό του. Προσφέρει φρέσκα πιάτα και έναν πολύ ευχάριστο, ανοιχτό χώρο που λατρεύουν οι οικογένειες.",
+        "map_url": "https://maps.google.com/?cid=10492291773382815161&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       },
       "website": "https://www.wondrexperience.com/",
       "notes": [
@@ -281,9 +281,9 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "cafe": {
-        "name": "Coffee Company",
-        "description": "chain coffee shop",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Coffee+Company+Amsterdam+Centrum"
+        "name": "SUBCULT",
+        "description": "Ένα εναλλακτικό και δημιουργικό καφέ-πολυχώρος ακριβώς δίπλα στο WONDR. Ιδανικό για καφέ και σνακ σε ένα χαλαρό και φιλικό περιβάλλον.",
+        "map_url": "https://maps.google.com/?cid=9577572624550529966&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       }
     },
     {
@@ -340,10 +340,11 @@
       ],
       "duration_hours": 1,
       "best_time": "any",
-      "cafe": {
-        "name": "This is Holland Cafe",
-        "description": "Dutch snacks",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=This+is+Holland+Cafe+Amsterdam"
+     "cafe": {
+  "name": "Eye Bar & Restaurant",
+  "description": "Μοντέρνο καφέ-εστιατόριο στο Eye Film Museum με τεράστια τζαμαρία και πανοραμική θέα στο ποτάμι IJ. Πολύ ευρύχωρο και άνετο για οικογένειες.",
+  "map_url": "https://maps.google.com/?cid=9368306361257283331&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ",
+  "website": "https://www.eyefilm.nl/restaurant"
       }
     },
     {
@@ -377,9 +378,9 @@
         "lng": 4.9145
       },
       "restaurant": {
-        "name": "Artis Restaurant",
-        "description": "οικογενειακό εστιατόριο στο ζωολογικό",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Artis+Zoo+Restaurant+Amsterdam"
+        "name": "De Plantage",
+        "description": "Ένα εμβληματικό εστιατόριο-καφέ σε ένα ιστορικό κτίριο του 19ου αιώνα, με υπέροχη βεράντα κάτω από τα δέντρα και θέα στον ζωολογικό κήπο.",
+        "map_url": "https://maps.google.com/?cid=153695864003453909&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       },
       "website": "https://www.artis.nl/",
       "notes": [
@@ -396,11 +397,11 @@
       "duration_hours": 4,
       "best_time": "morning",
       "cafe": {
-        "name": "De Plantage",
-        "description": "café στο Artis",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=De+Plantage+Cafe+Artis"
+        "name": "De Serre",
+        "description": "Κεντρικό εστιατόριο εντός του ARTIS, ιδανικό για ένα γρήγορο γεύμα, σνακ ή καφέ σε χαλαρή ατμόσφαιρα.",
+        "map_url": "https://maps.google.com/?cid=1377385187891197699&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       }
-    },
+   },
     {
       "id": 8,
       "name": "Vondelpark",
@@ -485,7 +486,7 @@
       },
       "restaurant": {
         "name": "Boerderij Meerzicht",
-        "description": "φάρμα με goat cheese & playground",
+        "description": "φάρμα με χειροποίητα προϊόντα & παιδική χαρά",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Boerderij+Megan+Amsterdamse+Bos"
       },
       "website": "https://www.amsterdamsebos.nl/",
@@ -500,9 +501,9 @@
       "duration_hours": 3,
       "best_time": "any",
       "cafe": {
-        "name": "Grand Cafe De Bosbaan",
-        "description": "lakeside cafe",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Grand+Cafe+De+Bosbaan"
+        "name": "De Boshalte",
+        "description": "Ένα χαλαρό 'koffie tentje' στην είσοδο του δάσους, ιδανικό για καφέ, ζεστή σοκολάτα και ελαφριά σνακ.",
+        "map_url": "https://maps.google.com/?cid=16148306879835281686&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       }
     },
     {
@@ -536,9 +537,9 @@
         "lng": 4.8883
       },
       "restaurant": {
-        "name": "Amstelpark Pavilion",
-        "description": "κήπος με παιδική χαρά",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Amstelpark+Pavilion"
+        "name": "Rosarium Amsterdam",
+        "description": "Εστιατόριο με υπέροχη βεράντα δίπλα στον κήπο. Με ποιοτικό φαγητό σε ένα ήρεμο περιβάλλον, ιδανικό για οικογενειακό γεύμα.",
+        "map_url": "https://maps.google.com/?cid=4683538794829262812&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       },
       "website": "https://www.amstelpark.info/",
       "notes": [
@@ -553,9 +554,9 @@
       "duration_hours": 2.5,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Het Glazen Huis",
-        "description": "glass house cafe",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Het+Glazen+Huis+Amstelpark"
+        "name": "Café de Orchidee",
+        "description": "Πολύ ζεστό και οικονομικό καφέ εντός του πάρκου. Ιδανικό για καφέ, παγωτό ή ένα γρήγορο σνακ ανάμεσα στις δραστηριότητες των παιδιών.",
+        "map_url": "https://maps.google.com/?cid=893613239285080731&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       }
     },
     {
@@ -644,9 +645,9 @@
         "lng": 4.9039
       },
       "restaurant": {
-        "name": "Pancake Boat",
-        "description": "unlimited pancakes κατά την κρουαζιέρα",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Pancake+Boat+Restaurant"
+        "name": "Pllek",
+        "description": "Ένα πολύ ιδιαίτερο εστιατόριο φτιαγμένο από containers με δική του αμμουδιά δίπλα στο νερό. Πολύ φιλικό για παιδιά, με χαλαρή ατμόσφαιρα και ωραία θέα.",
+        "map_url": "https://maps.google.com/?cid=18315978441786872412&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       },
       "website": "https://www.pannenkoekenboot.nl/",
       "notes": [
@@ -662,10 +663,10 @@
       ],
       "duration_hours": 1.5,
       "best_time": "any",
-      "cafe": {
-        "name": "Pancakes Amsterdam",
-        "description": "traditional Dutch pancakes",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Pancakes+Amsterdam"
+     "cafe": {
+        "name": "IJver Amsterdam",
+        "description": "Ένα ευρύχωρο, βιομηχανικού στυλ καφέ-εστιατόριο μέσα σε μια παλιά αποθήκη πλοίων, με μεγάλη εσωτερική και εξωτερική αυλή.",
+        "map_url": "https://maps.google.com/?cid=15616292713757750973&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       }
     }
   ]

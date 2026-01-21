@@ -10,11 +10,13 @@
     "lng": 19.0402
   },
   "cityPass": {
-    "name": "Budapest Card",
-    "description": "Free entry to 22 museums, unlimited public transport, free thermal bath, and 10-50% discounts at attractions",
-    "discountPercent": 30,
-    "url": "https://www.budapestcard.org/"
-  },
+  "name": "Budapest Card",
+  "description": "Δωρεάν απεριόριστες μετακινήσεις, δωρεάν είσοδος σε 20+ μουσεία και στα λουτρά Lukács, συν εκπτώσεις 10-50% σε αξιοθέατα και εστίαση.",
+  "officialPrice24h": 33,
+  "officialPrice72h": 63,
+  "discountPercent": "Variable", 
+  "url": "https://www.budapestcard.org/"
+},
   "activities": [
     {
       "id": 1,
@@ -135,7 +137,7 @@
     {
       "id": 3,
       "name": "Labyrinth of Buda Castle (Υπόγειος Λαβύρινθος)",
-      "description": "Υπόγειος λαβύρινθος κάτω από το Κάστρο της Βούδας, με ιστορικές εκθέσεις και ατμόσφαιρα μυστηρίου.",
+      "description": "Υπόγειος λαβύρινθος κάτω από το Κάστρο της Βούδας, με ιστορικές εκθέσεις και ατμόσφαιρα μυστηρίου.Προτείνεται για παιδιά 8 ετών και άνω, και εφόσον δεν υπάρχει θέμα κλειστοφοβίας.",
       "category": "attraction",
       "prices": {
         "0": 3,
@@ -169,7 +171,7 @@
         "description": "Μοντέρνα ουγγρική κουζίνα στο λόφο του Κάστρου, πολύ φιλόξενο για οικογένειες.",
         "map_url": "https://www.google.com/maps/search/?api=1&query=21+Hungarian+Kitchen"
       },
-      "website": "https://www.labirintus.com/",
+      "website": "https://labirintus.eu/",
       "notes": [],
       "tags": [
         "labyrinth",
@@ -190,7 +192,7 @@
     {
       "id": 4,
       "name": "Hungarian Parliament",
-      "description": "Μνημείο UNESCO με τον μεγαλύτερο καθεδρικό ναό της Ουγγαρίας. Παιδιά 0-5 ετών: δωρεάν, 6-14: 8€, 15+: 16€",
+      "description": "Μνημείο UNESCO . Παιδιά 0-5 ετών: δωρεάν, 6-14: 8€, 15+: 16€",
       "category": "monument",
       "prices": {
         "0": 0,
@@ -224,7 +226,7 @@
         "description": "Ένα κλασικό, φιλικό εστιατόριο ακριβώς δίπλα στο Κοινοβούλιο με εξαιρετικό γκούλας.",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Biarritz+Bistro"
       },
-      "website": "https://www.parlament.hu/",
+      "website": "https://www.tripadvisor.com/Attraction_Review-g274887-d276817-Reviews-Hungarian_Parliament_Building-Budapest_Central_Hungary.html",
       "notes": [],
       "tags": [
         "parliament",
@@ -244,7 +246,7 @@
     {
       "id": 5,
       "name": "Vajdahunyad Castle & Museum of Hungarian Agriculture",
-      "description": "Κάστρο με αρχιτεκτονικά στυλ (Ρομανικό, Γοτθικό, Μπαρόκ). Φιλοξενεί το Μουσείο Αγροτικής Ζωής.",
+      "description": "Κάστρο με αρχιτεκτονικά στυλ (Ρομανικό, Γοτθικό, Μπαρόκ). Φιλοξενεί το Μουσείο Αγροτικής Ζωής.Η επίσκεψη στους εξωτερικούς χώρους του κάστρου είναι καλή για όλες τις ηλικίες. Το εσωτερικό μουσείο τυπικά “δουλεύει” καλύτερα για παιδιά από ~6 ετών και άνω",
       "category": "castle",
       "prices": {
         "0": 0,
@@ -302,7 +304,7 @@
     {
       "id": 6,
       "name": "House of Terror Museum",
-      "description": "Διαδραστικό μουσείο για τις δύο δικτατορίες στην Ουγγαρία (φασιστική και κομμουνιστική περίοδο).",
+      "description": "Διαδραστικό μουσείο για τις δύο δικτατορίες στην Ουγγαρία (φασιστική και κομμουνιστική περίοδο).Προτείνεται για παιδιά άνω των 14 ετών λόγω της σκληρότητας των εικόνων.",
       "category": "museum",
       "prices": {
         "0": 0,
@@ -360,7 +362,7 @@
     {
       "id": 7,
       "name": "Palace of Wonders (Csodák Palotája)",
-      "description": "Παιδικό διαδραστικό μουσείο επιστήμης και τεχνολογίας.",
+      "description": "Παιδικό διαδραστικό μουσείο επιστήμης και τεχνολογίας.Προτείνεται από 3 ετών και άνω, ενώ θα περάσουν καλά και οι έφηβοι αλλά και οι ενήλικες!",
       "category": "museum",
       "prices": {
         "0": 0,
@@ -394,7 +396,7 @@
         "description": "Πολύ δημοφιλές σε οικογένειες, διαθέτει παιδότοπο και πολύ φιλικό προσωπικό.",
         "map_url": "https://www.google.com/maps/search/?api=1&query=VakVarjú+Restaurant"
       },
-      "website": "https://www.csodakpalotaja.hu/",
+      "website": "https://www.csopa.hu/en/home/",
       "notes": [
         "Κατάλληλο για παιδιά από 3 ετών και πάνω"
       ],
@@ -418,7 +420,7 @@
     {
       "id": 8,
       "name": "Museum of Illusions Budapest",
-      "description": "Οπτικές ψευδαισθήσεις, διαδραστικά εκθέματα και παζλ για όλη την οικογένεια.",
+      "description": "Οπτικές ψευδαισθήσεις, διαδραστικά εκθέματα και παζλ για όλη την οικογένεια.Κατάλληλο για κάθε ηλικία.",
       "category": "museum",
       "prices": {
         "0": 0,
@@ -452,7 +454,7 @@
         "description": "Πολύ δημοφιλές σε οικογένειες, διαθέτει παιδότοπο και πολύ φιλικό προσωπικό.",
         "map_url": "https://www.google.com/maps/search/?api=1&query=VakVarjú+Restaurant"
       },
-      "website": "https://museumofillusions.hu/",
+      "website": "https://www.illuziokmuzeuma.hu/",
       "notes": [
         "Οικογενειακό εισιτήριο: 53€ (2 ενήλικες + 2 παιδιά 6-14 ετών)"
       ],
@@ -651,7 +653,7 @@
     {
       "id": 12,
       "name": "Budapest Eye",
-      "description": "Τροχός με πανοραμική θέα του Βουδαπέστης και του Δούναβη.",
+      "description": "Ρόδα με πανοραμική θέα του Βουδαπέστης και του Δούναβη. Κατάλληλο για κάθε ηλικία",
       "category": "attraction",
       "prices": {
         "0": 0,
@@ -680,12 +682,12 @@
         "lat": 47.497,
         "lng": 19.051
       },
-      "restaurant": {
+     "restaurant": {
         "name": "Akvárium Klub",
         "description": "Ακριβώς κάτω από την πισίνα/σιντριβάνι της πλατείας. Έχει μεγάλο εξωτερικό χώρο για να τρέξουν τα παιδιά.",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Akvárium+Klub"
       },
-      "website": "https://budapesteye.com/",
+      "website": "https://oriaskerek.com/en/",
       "notes": [],
       "tags": [
         "ferris wheel",
@@ -698,15 +700,15 @@
       "best_time": "evening",
       "minAge": 0,
       "cafe": {
-        "name": "Tokyo Coffee",
-        "description": "Μικρό και μοντέρνο για έναν γρήγορο ποιοτικό καφέ στο χέρι.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Tokyo+Coffee"
+        "name": "Szamos Gourmet Ház",
+        "description": "Εξαιρετικό καφέ και ζαχαροπλαστείο στην πλατεία Vörösmarty. Δοκιμάστε τις περίφημες σοκολάτες Szamos και τα παραδοσιακά γλυκά.",
+        "map_url": "https://maps.google.com/maps/contrib/100310607525571313309"
       }
     },
     {
       "id": 13,
       "name": "Budapest Zoo & Botanical Garden",
-      "description": "Ζωολογικός κήπος με ζώα και φυτά, εκπαιδευτικές δραστηριότητες για παιδιά.",
+      "description": "Ζωολογικός κήπος με ζώα και φυτά, εκπαιδευτικές δραστηριότητες για παιδιά. Κατάλληλη δραστηριότητα για κάθε ηλικία.",
       "category": "zoo",
       "prices": {
         "0": 0,
@@ -753,17 +755,17 @@
       "best_time": "morning",
       "minAge": 0,
       "cafe": {
-        "name": "Gundel Patisserie",
-        "description": "Ιστορικό σημείο. Αν δεν θέλετε πλήρες γεύμα, πάρτε μια αυθεντική κρέπα Gundel στο χέρι.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Gundel+Patisserie"
+    "name": "Gundel Restaurant",
+    "description": "Fine dining εμπειρία με παραδοσιακή ουγγρική κουζίνα υψηλού επιπέδου.",
+    "map_url": "https://maps.app.goo.gl/tJDcUZ77RUSX7j757"
       }
     },
     {
       "id": 14,
-      "name": "MAGIC2 - Θεματικό Εστιατόριο με Μάγους",
-      "description": "Ξεχωριστή εμπειρία: θεματικό εστιατόριο με ζωντανές παραστάσεις μάγων.",
-      "category": "restaurant",
-      "prices": {
+  "name": "MAGIC2 - Θεματικό Εστιατόριο με Μάγους",
+  "description": "Ξεχωριστή εμπειρία: θεματικό εστιατόριο με ζωντανές παραστάσεις μάγων. Κατάλληλο για κάθε ηλικία.",
+  "category": "restaurant",
+  "prices": {
         "0": 15,
         "1": 15,
         "2": 15,
@@ -785,33 +787,35 @@
         "18": 15,
         "19": 15,
         "adult": 15
-      },
-      "location": {
-        "lat": 47.4979,
-        "lng": 19.0402
-      },
-      "restaurant": "Το ίδιο το Magic2 είναι η εμπειρία. Αν θέλετε κάτι διαφορετικό δίπλα, υπάρχει το <a href='https://www.sir lancelot.hu/' target='_blank'>Sir Lancelot</a> (Μεσαιωνικό εστιατόριο) για απόλυτο θεματικό σκηνικό.",
-      "website": "https://www.magic2.hu/",
-      "notes": [
-        "💰 Τιμή βασίζεται σε μέση κατανάλωση (15€ ανά άτομο)"
-      ],
-      "tags": [
-        "restaurant",
-        "magic show",
-        "themed",
-        "entertainment",
-        "dining"
-      ],
-      "duration_hours": 2.5,
-      "best_time": "evening",
-      "consumptionBased": true,
-      "priceNote": "💰 Τιμή βασίζεται σε μέση κατανάλωση (15€ ανά άτομο)",
-      "cafe": ""
+     },
+  "location": {
+    "lat": 47.5025,
+    "lng": 19.0592
+  },
+  "restaurant": {
+    "name": "Sir Lancelot Knights' Restaurant",
+    "description": "Αν θέλετε άλλη μια θεματική εμπειρία κοντά, το Sir Lancelot προσφέρει μεσαιωνικό σκηνικό.",
+    "map_url": "https://maps.app.goo.gl/uXyX8"
+  },
+  "website": "https://www.themagic2.hu/",
+  "notes": [
+    "💰 Τιμή βασίζεται σε μέση κατανάλωση (15€ ανά άτομο)"
+  ],
+  "tags": ["restaurant", "magic show", "themed", "entertainment", "dining"],
+  "duration_hours": 2.5,
+  "best_time": "evening",
+  "consumptionBased": true,
+  "priceNote": "💰 Τιμή βασίζεται σε μέση κατανάλωση (15€ ανά άτομο)",
+  "cafe": {
+    "name": "Művész Kávéház",
+    "description": "Ιστορικό καλλιτεχνικό καφέ σε απόσταση 5 λεπτών με τα πόδια.",
+    "map_url": "https://www.google.com/maps/search/?api=1&query=Művész+Kávéház"
+     }
     },
     {
       "id": 15,
       "name": "Margaret Island (Margitsziget) - Playgrounds",
-      "description": "Νησί στο Δούναβη με 4 μεγάλες παιδικές χαρές και πολλά πράσινα χώρους.",
+      "description": "Νησί στο Δούναβη με 4 μεγάλες παιδικές χαρές, συντριβάνι, μίνι zoo, ενοικιαζόμενα ποδήλατα.",
       "category": "park",
       "prices": {
         "0": 0,
@@ -845,7 +849,7 @@
         "description": "Μεγάλος κήπος, χαλαρή ατμόσφαιρα, ό,τι πρέπει για μετά τη βόλτα στο νησί.",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Holdudvar"
       },
-      "website": "https://www.budapest.com/",
+      "website": "https://www.themagic2.hu/",
       "notes": [
         "ΔΩΡΕΑΝ ΓΙΑ ΟΛΟΥΣ"
       ],
@@ -865,6 +869,75 @@
         "name": "Hippi Sziget",
         "description": "Ένα \"χαλαρό\" spot για χυμούς και σνακς μέσα στο πράσινο.",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Hippi+Sziget"
+          }
+        },
+       {
+ 
+    "id": 16,
+    "name": "Fisherman's Bastion (Halászbástya)",
+    "description": "Το πιο διάσημο σημείο για φωτογραφίες με πανοραμική θέα στον Δούναβη και το Κοινοβούλιο. Οι κάτω ταράτσες είναι δωρεάν, οι πάνω πύργοι έχουν εισιτήριο.είναι από τα πιο φιλικά αξιοθέατα της Βουδαπέστης για καρότσι, αν αποφύγετε τους πύργους και μείνετε στις εξωτερικές διαδρομές.",
+    "category": "monument",
+    "prices": {
+      "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
+      "6": 2, "7": 2, "8": 2, "9": 2, "10": 2, "11": 2, "12": 2, "13": 2, "14": 2,
+      "15": 4, "16": 4, "17": 4, "18": 4, "19": 4, "adult": 4
+    },
+    "location": {
+      "lat": 47.5022,
+      "lng": 19.0348
+    },
+    "restaurant": {
+      "name": "Halászbástya Restaurant",
+      "description": "Πολυτελές εστιατόριο μέσα στον πύργο! Ιδανικό για μια ξεχωριστή στιγμή, αν και ακριβό.",
+      "map_url": "https://www.google.com/maps/search/?api=1&query=Hippi+Sziget1"
+    },
+    "website": "https://fishermansbastion.com/",
+    "notes": [
+      "📸 Οι κάτω ταράτσες είναι δωρεάν όλο το 24ωρο.",
+      "🎟️ Το εισιτήριο για τους πάνω πύργους είναι περίπου 1200-1700 HUF (~3-4€)."
+    ],
+    "tags": ["viewpoint", "castle district", "unesco", "landmark", "photography"],
+    "duration_hours": 1,
+    "best_time": "sunset",
+    "cafe": {
+      "name": "Ruszwurm Cukrászda",
+      "description": "Το παλαιότερο ζαχαροπλαστείο της πόλης (5 λεπτά περπάτημα). Δοκιμάστε το Ruszwurm Cream Cake.",
+      "map_url": "https://www.google.com/maps/search/?api=1&query=Biarritz+Bistro"
+    }
+  },
+  {
+    "id": 17,
+    "name": "City Park Ice Rink (Városligeti Műjégpálya)",
+    "description": "Ένα από τα παλαιότερα και ομορφότερα ανοιχτά παγοδρόμια της Ευρώπης, με φόντο το κάστρο Vajdahunyad. Λειτουργεί μόνο τον χειμώνα.",
+    "category": "activity",
+    "prices": {
+      "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
+      "6": 6, "7": 6, "8": 6, "9": 6, "10": 6, "11": 6, "12": 6, "13": 6, "14": 6,
+      "15": 8.5, "16": 8.5, "17": 8.5, "18": 8.5, "19": 8.5, "adult": 8.5
+    },
+    "location": {
+      "lat": 47.5148,
+      "lng": 19.0785
+    },
+    "restaurant": {
+  "name": "Paprika Vendéglő",
+  "description": "Ίσως το καλύτερο παραδοσιακό εστιατόριο στην περιοχή του πάρκου. Πολύ δημοφιλές, απαιτείται κράτηση!",
+  "map_url": "https://maps.google.com/?cid=14202764795224194273&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+    },
+    "website": "https://mujegpalya.hu/en/",
+    "notes": [
+      "⛸️ Διαθέσιμη ενοικίαση πατινιών (περίπου 3500 HUF).",
+      "⏰ Λειτουργεί σε δύο βάρδιες: πρωί (9-13:00) και απόγευμα (17-21:00).",
+      "🎟️ Οι τιμές διαφέρουν ελαφρώς τα Σαββατοκύριακα (peak hours)."
+    ],
+    "tags": ["winter", "skating", "city park", "family", "activity"],
+    "duration_hours": 2,
+    "best_time": "evening",
+    "cafe": {
+      "name": "Gundel Patisserie",
+      "description": "Για την περίφημη Gundel pancake σε ένα από τα πιο ιστορικά κτήρια της πόλης.",
+      "map_url": "https://www.google.com/maps/search/?api=1&query=Szamos+Gourmet+Ház"
+            
       }
     }
   ]
