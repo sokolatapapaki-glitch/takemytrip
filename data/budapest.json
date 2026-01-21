@@ -10,11 +10,13 @@
     "lng": 19.0402
   },
   "cityPass": {
-    "name": "Budapest Card",
-    "description": "Free entry to 22 museums, unlimited public transport, free thermal bath, and 10-50% discounts at attractions",
-    "discountPercent": 30,
-    "url": "https://www.budapestcard.org/"
-  },
+  "name": "Budapest Card",
+  "description": "Δωρεάν απεριόριστες μετακινήσεις, δωρεάν είσοδος σε 20+ μουσεία και στα λουτρά Lukács, συν εκπτώσεις 10-50% σε αξιοθέατα και εστίαση.",
+  "officialPrice24h": 33,
+  "officialPrice72h": 63,
+  "discountPercent": "Variable", 
+  "url": "https://www.budapestcard.org/"
+},
   "activities": [
     {
       "id": 1,
@@ -680,12 +682,12 @@
         "lat": 47.497,
         "lng": 19.051
       },
-      "restaurant": {
+     "restaurant": {
         "name": "Akvárium Klub",
         "description": "Ακριβώς κάτω από την πισίνα/σιντριβάνι της πλατείας. Έχει μεγάλο εξωτερικό χώρο για να τρέξουν τα παιδιά.",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Akvárium+Klub"
       },
-      "website": "https://oriaskerek.com/en/",
+      "website": "https://budapesteye.com/",
       "notes": [],
       "tags": [
         "ferris wheel",
@@ -698,9 +700,9 @@
       "best_time": "evening",
       "minAge": 0,
       "cafe": {
-        "name": "Tokyo Coffee",
-        "description": "Μικρό και μοντέρνο για έναν γρήγορο ποιοτικό καφέ στο χέρι.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Tokyo+Coffee"
+        "name": "Szamos Gourmet Ház",
+        "description": "Εξαιρετικό καφέ και ζαχαροπλαστείο στην πλατεία Vörösmarty. Δοκιμάστε τις περίφημες σοκολάτες Szamos και τα παραδοσιακά γλυκά.",
+        "map_url": "https://maps.google.com/maps/contrib/100310607525571313309"
       }
     },
     {
@@ -753,9 +755,9 @@
       "best_time": "morning",
       "minAge": 0,
       "cafe": {
-        "name": "Gundel Patisserie",
-        "description": "Ιστορικό σημείο. Αν δεν θέλετε πλήρες γεύμα, πάρτε μια αυθεντική κρέπα Gundel στο χέρι.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Gundel+Patisserie"
+    "name": "Gundel Restaurant",
+    "description": "Fine dining εμπειρία με παραδοσιακή ουγγρική κουζίνα υψηλού επιπέδου.",
+    "map_url": "https://maps.app.goo.gl/tJDcUZ77RUSX7j757"
       }
     },
     {
@@ -795,7 +797,7 @@
     "description": "Αν θέλετε άλλη μια θεματική εμπειρία κοντά, το Sir Lancelot προσφέρει μεσαιωνικό σκηνικό.",
     "map_url": "https://maps.app.goo.gl/uXyX8"
   },
-  "website": "https://www.magic2.hu/",
+  "website": "https://www.themagic2.hu/",
   "notes": [
     "💰 Τιμή βασίζεται σε μέση κατανάλωση (15€ ανά άτομο)"
   ],
