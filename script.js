@@ -2868,6 +2868,15 @@ async function setupActivitiesStep() {
                 </div>
             ` : ''}
 
+            <!-- ΠΛΗΡΟΦΟΡΙΕΣ ΑΠΟ ΤΟ JSON (NOTES) -->
+            ${activity.notes && activity.notes.length > 0 ? `
+                <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 12px; margin: 10px 0; border-radius: 4px;">
+                    <div style="font-size: 13px; color: #856404; font-weight: 500;">
+                        <i class="fas fa-exclamation-triangle" style="margin-right: 6px;"></i>
+                        ${activity.notes.join(' • ')}
+                    </div>
+                </div>
+            ` : ''}
 
             <!-- ΤΙΜΕΣ -->
             ${state.familyMembers.length > 0 && state.familyMembers.every(m => m.age !== undefined && m.age !== null && m.age !== '') ? `
@@ -2909,14 +2918,6 @@ async function setupActivitiesStep() {
                         <span><strong>${price}</strong></span>
                     </div>`;
                 }).join('')}
-
-                <!-- ΠΛΗΡΟΦΟΡΙΕΣ ΑΠΟ ΤΟ JSON -->
-                ${activity.notes && activity.notes.length > 0 ? `
-                    <div style="font-size: 11px; color: #666; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #ddd;">
-                        <i class="fas fa-info-circle"></i>
-                        ${activity.notes.join(' • ')}
-                    </div>
-                ` : ''}
             </div>
 
             <!-- ΣΥΝΟΛΙΚΟ ΚΟΣΤΟΣ ΓΙΑ ΟΙΚΟΓΕΝΕΙΑ -->
