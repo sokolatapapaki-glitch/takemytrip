@@ -11,10 +11,10 @@
   },
   "cityPass": {
   "name": "Budapest Card",
-  "description": "Δωρεάν απεριόριστες μετακινήσεις, δωρεάν είσοδος σε 20+ μουσεία και στα λουτρά Lukács, συν εκπτώσεις 10-50% σε αξιοθέατα και εστίαση.",
+  "description": "Δωρεάν απεριόριστες μετακινήσεις, δωρεάν είσοδος σε 20+ μουσεία και στα λουτρά Lukács.",
   "officialPrice24h": 33,
   "officialPrice72h": 63,
-  "discountPercent": "Variable", 
+  "discountPercent": "10-50", 
   "url": "https://www.budapestcard.org/"
 },
   "activities": [
@@ -184,10 +184,10 @@
       "best_time": "afternoon",
       "minAge": 0,
       "cafe": {
-        "name": "Ruszwurm Cukrászda",
-        "description": "Το παλαιότερο ζαχαροπλαστείο της πόλης (από το 1827). Πρέπει να δοκιμάσετε την κρέμα Ruszwurm!",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Ruszwurm+Cukrászda"
-      }
+  "name": "Walzer Café",
+  "description": "Ένα ζεστό και φιλικό προς οικογένειες καφέ στην καρδιά του Κάστρου. Ιδανικό για ξεκούραση σε μια ήσυχη και σπιτική ατμόσφαιρα.",
+  "map_url": "https://www.google.com/maps/search/?api=1&query=Walzer+Café+Budapest&query_place_id=ChIJF3WFNB_cQUcRJqKVqwLujsM"
+}
     },
     {
       "id": 4,
@@ -222,9 +222,9 @@
         "lng": 19.0457
       },
       "restaurant": {
-        "name": "Biarritz Bistro",
-        "description": "Ένα κλασικό, φιλικό εστιατόριο ακριβώς δίπλα στο Κοινοβούλιο με εξαιρετικό γκούλας.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Biarritz+Bistro"
+  "name": "Hungarikum Bisztró",
+  "description": "Ένα από τα πιο φημισμένα εστιατόρια για παραδοσιακή ουγγρική κουζίνα. Ζεστή ατμόσφαιρα με σπιτικές γεύσεις και ζωντανή μουσική.",
+  "map_url": "https://maps.google.com/?cid=2546406375633060549&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       },
       "website": "https://www.tripadvisor.com/Attraction_Review-g274887-d276817-Reviews-Hungarian_Parliament_Building-Budapest_Central_Hungary.html",
       "notes": [],
@@ -297,7 +297,7 @@
       "priceNote": "🏰 Εξωτερικοί χώροι: ΔΩΡΕΑΝ | Εσωτερικό μουσείο: ΠΛΗΡΩΤΕΟ",
       "cafe": {
         "name": "Gundel Patisserie",
-        "description": "Ιστορικό σημείο. Αν δεν θέλετε πλήρες γεύμα, πάρτε μια αυθεντική κρέπα Gundel στο χέρι.",
+        "description": "Ιστορικό σημείο με υψηλό κόστος γεύματος. Το προτείνουμε για καφέ / γλυκό , για την εμπειρία 5 αστέρων εξυπηρέτησης, πάρτε μια αυθεντική κρέπα Gundel στο χέρι.",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Gundel+Patisserie"
       }
     },
@@ -509,10 +509,10 @@
         "lng": 19.0437
       },
       "restaurant": {
-        "name": "Duna Corso",
-        "description": "Πάνω στον πεζόδρομο του ποταμού με ζωντανή μουσική και θέα στο Κάστρο.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Duna+Corso"
-      },
+  "name": "BOATanic Terrace & Bar",
+  "description": "Μοντέρνο εστιατόριο πάνω σε πλοίο στην πλατεία Vigadó. Προσφέρει παραδοσιακή ουγγρική κουζίνα με την καλύτερη θέα στον Δούναβη.",
+  "map_url": "https://maps.google.com/?cid=10463028830285212705&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+},
       "website": "https://www.budapestrivercruise.com/",
       "notes": [],
       "tags": [
@@ -565,10 +565,10 @@
         "lng": 19.0437
       },
       "restaurant": {
-        "name": "Duna Corso",
-        "description": "Πάνω στον πεζόδρομο του ποταμού με ζωντανή μουσική και θέα στο Κάστρο.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Duna+Corso"
-      },
+  "name": "BOATanic Terrace & Bar",
+  "description": "Μοντέρνο εστιατόριο πάνω σε πλοίο στην πλατεία Vigadó. Προσφέρει παραδοσιακή ουγγρική κουζίνα με την καλύτερη θέα στον Δούναβη.",
+  "map_url": "https://maps.google.com/?cid=10463028830285212705&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+},
       "website": "https://www.budapestrivercruise.com/",
       "notes": [
         "Ελάχιστη ηλικία: 6 ετών"
@@ -700,9 +700,9 @@
       "best_time": "evening",
       "minAge": 0,
       "cafe": {
-        "name": "Szamos Gourmet Ház",
-        "description": "Εξαιρετικό καφέ και ζαχαροπλαστείο στην πλατεία Vörösmarty. Δοκιμάστε τις περίφημες σοκολάτες Szamos και τα παραδοσιακά γλυκά.",
-        "map_url": "https://maps.google.com/maps/contrib/100310607525571313309"
+        "name": "Szamos Café",
+        "description": "Στον επάνω όροφο έχει και μουσείο σοκολάτας! Τέλεια στάση μετά την ξενάγηση.",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Szamos+Café"
       }
     },
     {
@@ -755,8 +755,8 @@
       "best_time": "morning",
       "minAge": 0,
       "cafe": {
-    "name": "Gundel Restaurant",
-    "description": "Fine dining εμπειρία με παραδοσιακή ουγγρική κουζίνα υψηλού επιπέδου.",
+    "name": "Gundel Patisserie-restaurant",
+    "description": "Fine dining εμπειρία με παραδοσιακή ουγγρική κουζίνα υψηλού επιπέδου. Οι τιμές είναι ακριβές, αξίζει η εμπειρία για καφέ / γλυκό ",
     "map_url": "https://maps.app.goo.gl/tJDcUZ77RUSX7j757"
       }
     },
@@ -793,9 +793,9 @@
     "lng": 19.0592
   },
   "restaurant": {
-    "name": "Sir Lancelot Knights' Restaurant",
-    "description": "Αν θέλετε άλλη μια θεματική εμπειρία κοντά, το Sir Lancelot προσφέρει μεσαιωνικό σκηνικό.",
-    "map_url": "https://maps.app.goo.gl/uXyX8"
+    "name": "Sugar! Design Confectionery",
+  "description": "Το φαγητό θα έχει ήδη καλυφθεί από το magic2! Αν όμως θέλετε ένα πολύχρωμο παράδεισο γλυκών με ευφάνταστες τούρτες, παγωτά και ζαχαρωτά εδώ είναι ένας χώρος που μοιάζει με σκηνικό από παραμύθι.",
+  "map_url": "https://maps.google.com/?cid=6274783971889070650&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
   },
   "website": "https://www.themagic2.hu/",
   "notes": [
@@ -844,10 +844,10 @@
         "lat": 47.526,
         "lng": 19.049
       },
-      "restaurant": {
-        "name": "Holdudvar",
-        "description": "Μεγάλος κήπος, χαλαρή ατμόσφαιρα, ό,τι πρέπει για μετά τη βόλτα στο νησί.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Holdudvar"
+     "restaurant": {
+  "name": "Wonder Island",
+  "description": "Ένα πανέμορφο εστιατόριο μέσα στο πράσινο του Νησιού της Μαργαρίτας.",
+  "map_url": "https://maps.google.com/?cid=14767016708618972955&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       },
       "website": "https://www.themagic2.hu/",
       "notes": [
@@ -887,10 +887,10 @@
       "lng": 19.0348
     },
     "restaurant": {
-      "name": "Halászbástya Restaurant",
-      "description": "Πολυτελές εστιατόριο μέσα στον πύργο! Ιδανικό για μια ξεχωριστή στιγμή, αν και ακριβό.",
-      "map_url": "https://www.google.com/maps/search/?api=1&query=Hippi+Sziget1"
-    },
+  "name": "Spíler Biergarten",
+  "description": "Η πιο οικονομική και χαλαρή επιλογή μέσα στο Κάστρο. Ιδανικό για burgers, λουκάνικα και τοπικές μπύρες σε έναν πανέμορφο κήπο.",
+  "map_url": "https://maps.google.com/?cid=7847821974609468061&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+},
     "website": "https://fishermansbastion.com/",
     "notes": [
       "📸 Οι κάτω ταράτσες είναι δωρεάν όλο το 24ωρο.",
@@ -900,10 +900,10 @@
     "duration_hours": 1,
     "best_time": "sunset",
     "cafe": {
-      "name": "Ruszwurm Cukrászda",
-      "description": "Το παλαιότερο ζαχαροπλαστείο της πόλης (5 λεπτά περπάτημα). Δοκιμάστε το Ruszwurm Cream Cake.",
-      "map_url": "https://www.google.com/maps/search/?api=1&query=Biarritz+Bistro"
-    }
+  "name": "Walzer Café",
+  "description": "Ένα ζεστό και φιλικό προς οικογένειες καφέ στην καρδιά του Κάστρου. Ιδανικό για ξεκούραση σε μια ήσυχη και σπιτική ατμόσφαιρα.",
+  "map_url": "https://www.google.com/maps/search/?api=1&query=Walzer+Café+Budapest&query_place_id=ChIJF3WFNB_cQUcRJqKVqwLujsM"
+}
   },
   {
     "id": 17,
@@ -926,7 +926,7 @@
     },
     "website": "https://mujegpalya.hu/en/",
     "notes": [
-      "⛸️ Διαθέσιμη ενοικίαση πατινιών (περίπου 3500 HUF).",
+      "⛸️ Διαθέσιμη ενοικίαση πατινιών (περίπου 8-9 Ευρώ).",
       "⏰ Λειτουργεί σε δύο βάρδιες: πρωί (9-13:00) και απόγευμα (17-21:00).",
       "🎟️ Οι τιμές διαφέρουν ελαφρώς τα Σαββατοκύριακα (peak hours)."
     ],
@@ -934,11 +934,36 @@
     "duration_hours": 2,
     "best_time": "evening",
     "cafe": {
-      "name": "Gundel Patisserie",
-      "description": "Για την περίφημη Gundel pancake σε ένα από τα πιο ιστορικά κτήρια της πόλης.",
-      "map_url": "https://www.google.com/maps/search/?api=1&query=Szamos+Gourmet+Ház"
-            
-      }
+    "name": "Gundel Restaurant",
+    "description": "Δοκιμάστε την περίφημη Gundel Pncake. Οι τιμές είναι ακριβές για γεύμα όμως αξίζει η εμπειρία για καφέ / γλυκό σε αυτο το ιστορικό μέρος.",
+    "map_url": "https://maps.app.goo.gl/tJDcUZ77RUSX7j757"
     }
-  ]
-}
+  },
+  {  
+  "id": 22,
+  "name": "Sir Lancelot Knights' Restaurant",
+  "description": "Ένα μεσαιωνικό θεματικό εστιατόριο που σε μεταφέρει στην εποχή των ιπποτών. Μεγάλα ξύλινα τραπέζια, τεράστιες μερίδες και ζωντανά μεσαιωνικά σόου δημιουργούν μια αξέχαστη ατμόσφαιρα.",
+  "category": "restaurant",
+  "prices": {
+    "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
+    "6": 18, "7": 18, "8": 18, "9": 18, "10": 18, "11": 18, "12": 18, "13": 18, "14": 18,
+    "15": 30, "16": 30, "17": 18, "18": 30, "19": 30, "adult": 30
+  },
+  "location": {
+    "lat": 47.5097,
+    "lng": 19.0578
+  },
+  "website": "http://www.sirlancelot.hu/",
+  "notes": [
+    "⚔️ Περιλαμβάνει ζωντανά σόου με μονομαχίες και φωτιές.",
+    "🍗 Οι μερίδες είναι τεράστιες (συχνά μία πιατέλα φτάνει για δύο).",
+    "👐 Ετοιμαστείτε να φάτε με τα χέρια, όπως τον μεσαίωνα!",
+    "📅 Η κράτηση είναι απολύτως απαραίτητη λόγω μεγάλης ζήτησης."
+  ],
+  "tags": ["themed", "medieval", "family friendly", "shows", "large portions"],
+  "duration_hours": 2,
+  "best_time": "dinner",
+  "consumptionBased": true
+            
+     }]
+    } 
