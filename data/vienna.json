@@ -49,9 +49,9 @@
         "lng": 16.3122
       },
       "restaurant": {
-        "name": "Gasthaus zum Weinhof",
-        "description": "Παραδοσιακό, χαλαρό, σε απόσταση 8-10 λεπτών από το παλάτι. Ιδανικό για παραδοσιακή βιεννέζικη κουζίνα μετά την επίσκεψη.",
-        "map_url": "https://maps.app.goo.gl/xxxx"
+        "name": "Brandauer Schlossbräu",
+        "description": "Απέχει μόλις 5-7 λεπτά με τα πόδια από την έξοδο του παλατιού. Είναι ένα ευρύχωρο, παραδοσιακό εστιατόριο-ζυθοποιία που στεγάζεται σε ένα ιστορικό κτίριο.",
+        "map_url": "https://maps.app.goo.gl/XoZmtt1fygAJnt6a9"
       },
       "website": "https://www.schoenbrunn.at/en/",
       "notes": [
@@ -67,7 +67,7 @@
       "best_time": "morning",
       "cafe": {
         "name": "Café Gloriette",
-        "description": "υπέροχη θέα, μέσα στον χώρο",
+        "description": "Βρίσκεται στον λόφο απέναντι απο το παλάτι και έχει υπέροχη πανοραμική θέα. ",
         "map_url": "https://maps.app.goo.gl/bvTHsxUrY8XodUrP8"
       }
     },
@@ -104,9 +104,9 @@
         "lng": 16.3123
       },
       "restaurant": {
-        "name": "Figlmüller – Wollzeile",
-        "description": "διάσημο για schnitzel",
-        "map_url": "https://maps.app.goo.gl/X9ienGyWdk3VkHMc7"
+        "name": "Brandauer Schlossbräu",
+        "description": "Απέχει μόλις 5-7 λεπτά με τα πόδια από την έξοδο του παλατιού. Είναι ένα ευρύχωρο, παραδοσιακό εστιατόριο-ζυθοποιία που στεγάζεται σε ένα ιστορικό κτίριο.",
+        "map_url": "https://maps.app.goo.gl/XoZmtt1fygAJnt6a9"
       },
       "website": "https://www.schoenbrunn.at/en/",
       "notes": [],
@@ -117,9 +117,9 @@
       ],
       "duration_hours": 1.5,
       "best_time": "any",
-      "cafe": {
-        "name": "Café Central",
-        "description": "διάσημο Viennese café",
+       "cafe": {
+        "name": "Café Gloriette",
+        "description": "υπέροχη θέα, μέσα στον χώρο",
         "map_url": "https://maps.app.goo.gl/bvTHsxUrY8XodUrP8"
       }
     },
@@ -156,9 +156,9 @@
         "lng": 16.3698
       },
       "restaurant": {
-        "name": "Gasthaus Reinthaler (Beim „Kaiserlichen Hof“)",
-        "description": "Από τα παλαιότερα Gasthaus της Βιέννης (1896), δίπλα στο Hofburg. Αυθεντικό, πολύ φθηνό για την περιοχή, με καθημερινό μενού.",
-        "map_url": "https://maps.app.goo.gl/xxxx"
+        "name": "Figlmüller – Wollzeile",
+        "description": "διάσημο για τα  καλύτερα schnitzel της Βιέννης",
+        "map_url": "https://maps.app.goo.gl/X9ienGyWdk3VkHMc7"
       },
       "website": "https://www.schoenbrunn.at/en/all-tickets/sisi-pass",
       "notes": [
@@ -172,10 +172,10 @@
       ],
       "duration_hours": 6,
       "best_time": "any",
-      "cafe": {
-        "name": "Kaffee Alt Wien",
-        "description": "Καφές με παλιά, αυθεντική βιεννέζικη ατμόσφαιρα, πλήρως γεμάτος από ντόπιους. 5 λεπτά με τα πόδια από το Hofburg.",
-        "map_url": "https://maps.app.goo.gl/xxxx"
+       "cafe": {
+        "name": "Café Central",
+        "description": "H πιο διάσημh ιστορική καφετέρια της Βιέννης, με υπέροχη νεογοτθική αίθουσα. Τόπος συνάντησης διανοουμένων και καλλιτεχνών",
+        "map_url": "https://maps.app.goo.gl/x37tEi7C843zCohk9"
       }
     },
     {
@@ -338,9 +338,9 @@
       "duration_hours": 6,
       "best_time": "any",
       "cafe": {
-        "name": "Café Dommayer",
-        "description": "Κλασικό βιεννέζικο καφέ, 5 λεπτά από το zoo. Διάσημο για τουρτες και ησυχία.",
-        "map_url": "https://maps.app.goo.gl/xxxx"
+        "name": "Café Gloriette",
+        "description": "Βρίσκεται στον λόφο απέναντι από το παλάτι και έχει πανοραμική υπέροχη θέα.",
+        "map_url": "https://maps.app.goo.gl/RSzzSCTv5VWbCuFy7"
       }
     },
     {
@@ -538,8 +538,8 @@
         "lng": 16.3575
       },
       "restaurant": {
-        "name": "360 ocean skay",
-        "description": "Εστιατόριο με περιστρεφόμενο πάτωμα και πανοραμική θέα 360 μοιρών της Βιέννης. Σύγχρονη, εντυπωσιακή εμπειρία",
+        "name": "360 ocean sky",
+        "description": "Εστιατόριο με περιστρεφόμενο πάτωμα και πανοραμική θέα 360 μοιρών της Βιέννης. Eντυπωσιακή εμπειρία",
         "map_url": "https://maps.app.goo.gl/iA2AEYzEw4qijmMK6"
       },
       "website": "https://www.haus-des-meeres.at/en",
@@ -591,9 +591,9 @@
         "lng": 16.3731
       },
       "restaurant": {
-        "name": "Café Time Travel",
-        "description": "",
-        "map_url": "https://share.google/k5eeIzvZqatoexTWj"
+        "name": "Esterházykeller",
+        "description": "Μετά το ταξίδι στην ιστορία με το Time Travel, το Esterházykeller σας μεταφέρει σε ένα αυθεντικό ιστορικό περιβάλλον, σε μια από τις παλαιότερες κελάρια-ταβέρνες της πόλης.",
+        "map_url": "https://maps.app.goo.gl/85c2eNxYoTfLv7o16"
       },
       "website": "https://www.timetravel-vienna.at/en",
       "notes": [],
@@ -606,9 +606,9 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "cafe": {
-        "name": "Café am Naschmarkt",
-        "description": "market cafés",
-        "map_url": "https://maps.app.goo.gl/vyodbxJcW8gvjuqY6"
+        "name": "Café Central",
+        "description": "Είναι ίσως το πιο διάσημο καφέ της πόλης και απέχει μόλις 3 λεπτά με τα πόδια (250 μέτρα)",
+        "map_url": "https://maps.app.goo.gl/6hoDQTWwVDaBs2Au7"
       }
     },
     {
@@ -644,9 +644,9 @@
         "lng": 16.3698
       },
       "restaurant": {
-        "name": "Café VR Experience",
-        "description": "",
-        "map_url": "https://share.google/k5eeIzvZqatoexTWj"
+        "name": "Esterházykeller",
+        "description": "Μετά το ταξίδι στην ιστορία με το Time Travel, το Esterházykeller σας μεταφέρει σε ένα αυθεντικό ιστορικό περιβάλλον, σε μια από τις παλαιότερες κελάρια-ταβέρνες της πόλης.",
+        "map_url": "https://maps.app.goo.gl/85c2eNxYoTfLv7o16"
       },
       "website": "https://www.amazing-sisi.at/?utm_source=google&utm_medium=seo&utm_campaign=google-my-business",
       "notes": [
@@ -661,9 +661,9 @@
       "duration_hours": 0.75,
       "best_time": "any",
       "cafe": {
-        "name": "Café Karlskirche",
-        "description": "church café",
-        "map_url": "https://maps.app.goo.gl/vyodbxJcW8gvjuqY6"
+        "name": "Café Central",
+        "description": "Είναι ίσως το πιο διάσημο καφέ της πόλης και απέχει μόλις 3 λεπτά με τα πόδια (250 μέτρα)",
+        "map_url": "https://maps.app.goo.gl/6hoDQTWwVDaBs2Au7"
       }
     },
     {
@@ -968,7 +968,7 @@
       },
       "restaurant": {
         "name": "Figlmüller – Restaurant Bäckerstraße",
-        "description": "μαγαζί θρύλος της Βιέννης και το πιο διάσημο σνίτσελ στον κόσμο.",
+        "description": "μαγαζί θρύλος της Βιέννης και το πιο διάσημο schnitzel στον κόσμο.",
         "map_url": "https://maps.app.goo.gl/Wkmv9kFiHL3zPMm2A"
       },
       "website": "https://www.mozarthausvienna.at/en/",
@@ -1021,9 +1021,9 @@
         "lng": 16.373
       },
       "restaurant": {
-        "name": "Do & Co Restaurant",
-        "description": "με θέα",
-        "map_url": "https://maps.app.goo.gl/36ixZMGVM91kg6HSA"
+        "name": "Figlmüller – Restaurant Bäckerstraße",
+        "description": "Πασίγνωστο για το καλύτερο schnitzel της Βιέννης",
+        "map_url": "https://maps.app.goo.gl/g9ngtkpLLEQuNenM7"
       },
       "website": "https://www.stephanskirche.at/",
       "notes": [],
@@ -1036,8 +1036,8 @@
       "duration_hours": 0.75,
       "best_time": "any",
       "cafe": {
-        "name": "Café im Madame Tussauds",
-        "description": "wax museum café",
+        "name": "Aida cafe",
+        "description": "Η πιο αναγνωρίσιμη αλυσίδα καφέ στην Βιέννη! Όλα είναι ρετρό και ροζ! ",
         "map_url": "https://maps.app.goo.gl/vyodbxJcW8gvjuqY6"
       }
     },
@@ -1074,8 +1074,8 @@
         "lng": 16.3675
       },
       "restaurant": {
-        "name": "Griechenbeisl",
-        "description": "παλαιότερο εστιατόριο",
+        "name": "Ribs of Vienna",
+        "description": "Το σήμα κατατεθέν τους είναι τα παϊδάκια που σερβίρονται με το μέτρο! Η κλασική μερίδα αποτελείται από τρεις σειρές σιγοψημένων παϊδακίων, συνολικού μήκους περίπου ενός μέτρου. Προσοχή, θέλει πολύ καιρό πριν κράτηση",
         "map_url": "https://maps.app.goo.gl/ALZT47jqDKqZzZzs7"
       },
       "website": "https://www.srs.at/en/",
@@ -1094,8 +1094,8 @@
       "minAge": 3,
       "ageWarning": "⚠️ Παιδιά κάτω των 3 ετών ΔΕΝ επιτρέπονται. 3-5 ετών: μόνο σε family performances",
       "cafe": {
-        "name": "Café Time Travel Vienna",
-        "description": "attraction café",
+        "name": "Café Spanish Riding School",
+        "description": "Διάσημο για την βεράντα (το καλοκαίρι) ή τα παράθυρα που βλέπουν απευθείας στην Αυλή Stallburg, και κάποιες φορές στα πανέμορφα λευκά άλογα Lipizzaner.",
         "map_url": "https://maps.app.goo.gl/4MHjxuVhQkYtk3yM6"
       }
     }
