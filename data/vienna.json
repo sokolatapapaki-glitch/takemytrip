@@ -11,7 +11,7 @@
   },
   "cityPass": {
     "name": "Vienna Pass",
-    "description": "΄Δωρεάν είσοδος σε πάνω από 90 δραστηριότητες",
+    "description": "Free admission to 90+ attractions including Schönbrunn Palace, hop-on hop-off bus, and fast-track entry",
     "discountPercent": 30,
     "url": "https://www.viennapass.de/en"
   },
@@ -376,9 +376,9 @@
         "lng": 16.3127
       },
       "restaurant": {
-  "name": "Café Restaurant Residenz",
-  "description": "στο Schönbrunn Palace, πολύ κοντά",
-  "map_url": "https://maps.app.goo.gl/X9ienGyWdk3VkHMc7"
+        "name": "Café im Kindermuseum",
+        "description": "",
+        "map_url": "https://maps.app.goo.gl/jWCk4Es43kKrKEt99"
       },
       "website": "https://www.kindermuseumschoenbrunn.at/en/",
       "notes": [],
@@ -391,9 +391,9 @@
       "duration_hours": 1.5,
       "best_time": "afternoon",
       "cafe": {
-  "name": "Café Restaurant Residenz",
-  "description": "café στο παλάτι",
-  "map_url": "https://maps.app.goo.gl/bvTHsxUrY8XodUrP8"
+        "name": "Café im MuseumsQuartier",
+        "description": "art museum café",
+        "map_url": "https://maps.app.goo.gl/jWCk4Es43kKrKEt99"
       }
     },
     {
@@ -699,9 +699,9 @@
         "lng": 16.3738
       },
       "restaurant": {
-  "name": "Huth Gastwirtschaft",
-  "description": "εστιατόριο σε παλιό λεωφορείο (Jolly), για burgers",
-  "map_url": "https://maps.app.goo.gl/5WbBdfBKPK9LyMvdA"
+        "name": "Café Schwarzenberg",
+        "description": "",
+        "map_url": "https://maps.app.goo.gl/pHDM281APeHafzv1A"
       },
       "website": "https://www.hausdermusik.com/en",
       "notes": [],
@@ -715,9 +715,9 @@
       "best_time": "afternoon",
       "familyTicket": "2 adults + up to 3 children = 35€",
       "cafe": {
-  "name": "Café Frauenhuber",
-  "description": "το παλαιότερο καφέ της Βιέννης (από 1824)",
-  "map_url": "https://maps.app.goo.gl/aNW6Fg645LDi885Z8"
+        "name": "Café im Haus des Meeres",
+        "description": "aquarium café",
+        "map_url": "https://maps.app.goo.gl/kzUPxBrPPvkhhquV8"
       }
     },
     {
@@ -859,9 +859,9 @@
         "lng": 16.3805
       },
       "restaurant": {
-  "name": "Salm Bräu",
-  "description": "παραδοσιακή μπυραρία εντός του κτιρίου",
-  "map_url": "https://maps.app.goo.gl/JL8sTh6RfshSjd7R8"
+        "name": "Salm Bräu",
+        "description": "μπύρα και κουζίνα",
+        "map_url": "https://maps.app.goo.gl/o4aRAU9t25ADoSZV8"
       },
       "website": "https://www.belvedere.at/en",
       "notes": [
@@ -875,11 +875,11 @@
       ],
       "duration_hours": 2.5,
       "best_time": "morning",
-     "cafe": {
-  "name": "Parkcafé im Unteren Belvedere",
-  "description": "café στο Lower Belvedere Palace",
-  "map_url": "https://maps.app.goo.gl/ykv2g3btzCbC8TPb9"
-}
+      "cafe": {
+        "name": "Café im Stadtpark",
+        "description": "park café",
+        "map_url": "https://maps.app.goo.gl/1hVS6UmE42NYt9w1A"
+      }
     },
     {
       "id": 17,
@@ -966,11 +966,10 @@
         "lat": 48.2086,
         "lng": 16.3735
       },
-     "restaurant": {
-"name": "Figlmüller",
-  "description": "Το διάσημο εστιατόριο του αυθεντικού Wiener Schnitzel",
-  "map_url": "https://maps.app.goo.gl/WqqoxkxNfS5V7hAm9"
-      
+      "restaurant": {
+        "name": "Café Mozart",
+        "description": "κλασικό",
+        "map_url": "https://maps.app.goo.gl/Wkmv9kFiHL3zPMm2A"
       },
       "website": "https://www.mozarthausvienna.at/en/",
       "notes": [],
