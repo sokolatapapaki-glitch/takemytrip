@@ -48,10 +48,10 @@
         "lat": 48.1845,
         "lng": 16.3122
       },
-      "restaurant": {
-        "name": "Café Residenz",
-        "description": "μέσα στο Schönbrunn",
-        "map_url": "https://maps.app.goo.gl/X9ienGyWdk3VkHMc7"
+       "restaurant": {
+    "name": "Gasthaus zum Weinhof",
+    "description": "Παραδοσιακό, χαλαρό, σε απόσταση 8-10 λεπτών από το παλάτι. Ιδανικό για παραδοσιακή βιεννέζικη κουζίνα μετά την επίσκεψη.",
+    "map_url": "https://maps.app.goo.gl/xxxx"
       },
       "website": "https://www.schoenbrunn.at/en/",
       "notes": [
@@ -66,8 +66,8 @@
       "duration_hours": 2.5,
       "best_time": "morning",
       "cafe": {
-        "name": "Café Residenz",
-        "description": "café στο παλάτι",
+        "name": "Café Gloriette",
+        "description": "υπέροχη θέα, μέσα στον χώρο",
         "map_url": "https://maps.app.goo.gl/bvTHsxUrY8XodUrP8"
       }
     },
@@ -155,10 +155,10 @@
         "lat": 48.2058,
         "lng": 16.3698
       },
-      "restaurant": {
-        "name": "Café Central",
-        "description": "ιστορικό καφέ",
-        "map_url": "https://maps.app.goo.gl/bgiFTRhG5YyvmWv2A"
+     "restaurant": {
+    "name": "Gasthaus Reinthaler (Beim „Kaiserlichen Hof“)",
+    "description": "Από τα παλαιότερα Gasthaus της Βιέννης (1896), δίπλα στο Hofburg. Αυθεντικό, πολύ φθηνό για την περιοχή, με καθημερινό μενού.",
+    "map_url": "https://maps.app.goo.gl/xxxx"
       },
       "website": "https://www.schoenbrunn.at/en/all-tickets/sisi-pass",
       "notes": [
@@ -173,9 +173,9 @@
       "duration_hours": 6,
       "best_time": "any",
       "cafe": {
-        "name": "Café Sacher Wien",
-        "description": "famous Sachertorte café",
-        "map_url": "https://maps.app.goo.gl/9id94cW3tSFXnaiF8"
+    "name": "Kaffee Alt Wien",
+    "description": "Καφές με παλιά, αυθεντική βιεννέζικη ατμόσφαιρα, πλήρως γεμάτος από ντόπιους. 5 λεπτά με τα πόδια από το Hofburg.",
+    "map_url": "https://maps.app.goo.gl/xxxx"
       }
     },
     {
@@ -266,9 +266,9 @@
         "lng": 16.3125
       },
       "restaurant": {
-        "name": "Café Gloriette",
-        "description": "με θέα",
-        "map_url": "https://maps.app.goo.gl/X9ienGyWdk3VkHMc7"
+    "name": "Gasthaus zum Weinhof",
+    "description": "Παραδοσιακό, χαλαρό, σε απόσταση 8-10 λεπτών από το παλάτι. Ιδανικό για παραδοσιακή βιεννέζικη κουζίνα μετά την επίσκεψη.",
+    "map_url": "https://maps.app.goo.gl/xxxx"
       },
       "website": "https://www.schoenbrunn.at/en/all-tickets/classic-pass",
       "notes": [
@@ -283,8 +283,8 @@
       "duration_hours": 4,
       "best_time": "any",
       "cafe": {
-        "name": "Café im Belvedere",
-        "description": "palace café",
+        "name": "Café Gloriette",
+        "description": "υπέροχη θέα, μέσα στον χώρο",
         "map_url": "https://maps.app.goo.gl/bvTHsxUrY8XodUrP8"
       }
     },
@@ -321,9 +321,9 @@
         "lng": 16.3126
       },
       "restaurant": {
-        "name": "Tiergarten Restaurant",
-        "description": "στο zoo",
-        "map_url": "https://maps.app.goo.gl/X9ienGyWdk3VkHMc7"
+    "name": "Gasthaus Wratschko",
+    "description": "Παραδοσιακό, χαλαρό, 2 λεπτά περπατημα από τη νότια έξοδο του Zoo Schönbrunn. Ιδανικό για οικογένειες μετά το zoo.",
+    "map_url": "https://maps.app.goo.gl/2N9g6Pr6M2bqWNZo9"
       },
       "website": "https://www.schoenbrunn.at/en/all-tickets/classic-pass-plus",
       "notes": [
@@ -337,10 +337,11 @@
       ],
       "duration_hours": 6,
       "best_time": "any",
-      "cafe": {
-        "name": "Café Hofburg",
-        "description": "imperial café",
-        "map_url": "https://maps.app.goo.gl/bvTHsxUrY8XodUrP8"
+      json
+"cafe": {
+    "name": "Café Dommayer",
+    "description": "Κλασικό βιεννέζικο καφέ, 5 λεπτά από το zoo. Διάσημο για τουρτες και ησυχία.",
+    "map_url": "https://maps.app.goo.gl/xxxx"
       }
     },
     {
@@ -390,10 +391,10 @@
       ],
       "duration_hours": 1.5,
       "best_time": "afternoon",
-      "cafe": {
-        "name": "Café im MuseumsQuartier",
-        "description": "art museum café",
-        "map_url": "https://maps.app.goo.gl/jWCk4Es43kKrKEt99"
+     "cafe": {
+    "name": "Café-Restaurant Goodies im Schlosspark",
+    "description": "Άμεσα απέναντι από το μουσείο, μέσα στο πάρκο. Απλό, με σάντουιτς, γλυκά και παιδικό παιχνίδι.",
+    "map_url": "https://maps.app.goo.gl/Yx5Ny2AKprNckkq1A"
       }
     },
     {
@@ -538,8 +539,8 @@
         "lng": 16.3575
       },
       "restaurant": {
-        "name": "Café Ritter",
-        "description": "Mariahilfer Straße",
+        "name": "360 ocean skay",
+        "description": "Εστιατόριο με περιστρεφόμενο πάτωμα και πανοραμική θέα 360 μοιρών της Βιέννης. Σύγχρονη, εντυπωσιακή εμπειρία",
         "map_url": "https://maps.app.goo.gl/iA2AEYzEw4qijmMK6"
       },
       "website": "https://www.haus-des-meeres.at/en",
@@ -553,8 +554,8 @@
       "duration_hours": 2.5,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Café am Stephansplatz",
-        "description": "cathedral café",
+        "name": "cafe Sperl",
+        "description": "Αυθεντικό, πατροπαράδοτο βιεννέζικο καφέ του 1880. Διατηρεί την παλιά γοητεία χωρίς τουριστική οχλαγωγία",
         "map_url": "https://maps.app.goo.gl/NW6y5oMWs95PX1Xa9"
       }
     },
@@ -699,7 +700,7 @@
         "lng": 16.3738
       },
       "restaurant": {
-        "name": "Café Schwarzenberg",
+        "name": "Huth Gastwirtschaft",
         "description": "",
         "map_url": "https://maps.app.goo.gl/pHDM281APeHafzv1A"
       },
@@ -715,8 +716,8 @@
       "best_time": "afternoon",
       "familyTicket": "2 adults + up to 3 children = 35€",
       "cafe": {
-        "name": "Café im Haus des Meeres",
-        "description": "aquarium café",
+        "name": "Café Frauenhuber",
+        "description": "Ένα από τα παλαιότερα καφέ της Βιέννης, με μουσική πιάνο και αυθεντική βιεννέζικη ατμόσφαιρα",
         "map_url": "https://maps.app.goo.gl/kzUPxBrPPvkhhquV8"
       }
     },
@@ -753,8 +754,8 @@
         "lng": 16.3702
       },
       "restaurant": {
-        "name": "Café der Illusionen",
-        "description": "",
+        "name": "Joyce Café Restaurant",
+        "description": "Μοντέρνο, κομψό καφέ-εστιατόριο με αμερικανική/διεθνή κουζίνα, δημοφιλές για μπρατς και ημερήσιο μενού",
         "map_url": "https://maps.app.goo.gl/1f7tECnDJmNJZ5HP8"
       },
       "website": "https://www.museumderillusionen.at/wien/",
@@ -768,8 +769,8 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "cafe": {
-        "name": "Café im Zoo Vienna",
-        "description": "oldest zoo café",
+        "name": "Café Central",
+        "description": "Ο πιο διάσημος ιστορικός καφές της Βιέννης, με υπέροχη νεογοτθική αίθουσα. Τόπος συνάντησης διανοουμένων και καλλιτεχνών",
         "map_url": "https://maps.app.goo.gl/x37tEi7C843zCohk9"
       }
     },
@@ -860,7 +861,7 @@
       },
       "restaurant": {
         "name": "Salm Bräu",
-        "description": "μπύρα και κουζίνα",
+        "description": "παραδοσιακή μπυραρία με φαγητό",
         "map_url": "https://maps.app.goo.gl/o4aRAU9t25ADoSZV8"
       },
       "website": "https://www.belvedere.at/en",
@@ -876,7 +877,7 @@
       "duration_hours": 2.5,
       "best_time": "morning",
       "cafe": {
-        "name": "Café im Stadtpark",
+        "name": "Café Goldegg",
         "description": "park café",
         "map_url": "https://maps.app.goo.gl/1hVS6UmE42NYt9w1A"
       }
@@ -914,8 +915,8 @@
         "lng": 16.4103
       },
       "restaurant": {
-        "name": "Donauturm Restaurant",
-        "description": "στροφείο",
+        "name": "Τurm Restaurant",
+        "description": "Εστιατόριο με υπέροχη θέα, μέσα στο παλάτι Schönbrunn, στον πύργο. Σύγχρονη αυστριακή κουζίνα με επίσημη ατμόσφαιρα.",
         "map_url": "https://maps.app.goo.gl/9dyEhjTh5Sb91HQy5"
       },
       "website": "https://www.donauturm.at/en/",
@@ -929,8 +930,8 @@
       "duration_hours": 1,
       "best_time": "any",
       "cafe": {
-        "name": "Café im Technischen Museum",
-        "description": "museum café",
+        "name": "Turm cafe",
+        "description": "Απλούστερο και χαλαρότερο από το Turm Restaurant, ιδανικό για καφέ, σνακ ή ελαφρύ γεύμα με θέα στον κήπο.",
         "map_url": "https://maps.app.goo.gl/Y1cDcKYuQemdMzhU6"
       }
     },
@@ -967,8 +968,8 @@
         "lng": 16.3735
       },
       "restaurant": {
-        "name": "Café Mozart",
-        "description": "κλασικό",
+        "name": "Figlmüller – Restaurant Bäckerstraße",
+        "description": "μαγαζί θρύλος της Βιέννης και το πιο διάσημο σνίτσελ στον κόσμο.",
         "map_url": "https://maps.app.goo.gl/Wkmv9kFiHL3zPMm2A"
       },
       "website": "https://www.mozarthausvienna.at/en/",
@@ -983,7 +984,7 @@
       "best_time": "afternoon",
       "familyTicket": "2 adults + up to 3 children = 29€",
       "cafe": {
-        "name": "Café im Naturhistorischen Museum",
+        "name": "cafe Mozart",
         "description": "museum café",
         "map_url": "https://maps.app.goo.gl/97YvBzCmvYhUxFfT9"
       }
