@@ -48,10 +48,10 @@
         "lat": 48.1845,
         "lng": 16.3122
       },
-       "restaurant": {
-    "name": "Gasthaus zum Weinhof",
-    "description": "Παραδοσιακό, χαλαρό, σε απόσταση 8-10 λεπτών από το παλάτι. Ιδανικό για παραδοσιακή βιεννέζικη κουζίνα μετά την επίσκεψη.",
-    "map_url": "https://maps.app.goo.gl/xxxx"
+      "restaurant": {
+        "name": "Gasthaus zum Weinhof",
+        "description": "Παραδοσιακό, χαλαρό, σε απόσταση 8-10 λεπτών από το παλάτι. Ιδανικό για παραδοσιακή βιεννέζικη κουζίνα μετά την επίσκεψη.",
+        "map_url": "https://maps.app.goo.gl/xxxx"
       },
       "website": "https://www.schoenbrunn.at/en/",
       "notes": [
@@ -155,10 +155,10 @@
         "lat": 48.2058,
         "lng": 16.3698
       },
-     "restaurant": {
-    "name": "Gasthaus Reinthaler (Beim „Kaiserlichen Hof“)",
-    "description": "Από τα παλαιότερα Gasthaus της Βιέννης (1896), δίπλα στο Hofburg. Αυθεντικό, πολύ φθηνό για την περιοχή, με καθημερινό μενού.",
-    "map_url": "https://maps.app.goo.gl/xxxx"
+      "restaurant": {
+        "name": "Gasthaus Reinthaler (Beim „Kaiserlichen Hof“)",
+        "description": "Από τα παλαιότερα Gasthaus της Βιέννης (1896), δίπλα στο Hofburg. Αυθεντικό, πολύ φθηνό για την περιοχή, με καθημερινό μενού.",
+        "map_url": "https://maps.app.goo.gl/xxxx"
       },
       "website": "https://www.schoenbrunn.at/en/all-tickets/sisi-pass",
       "notes": [
@@ -173,9 +173,9 @@
       "duration_hours": 6,
       "best_time": "any",
       "cafe": {
-    "name": "Kaffee Alt Wien",
-    "description": "Καφές με παλιά, αυθεντική βιεννέζικη ατμόσφαιρα, πλήρως γεμάτος από ντόπιους. 5 λεπτά με τα πόδια από το Hofburg.",
-    "map_url": "https://maps.app.goo.gl/xxxx"
+        "name": "Kaffee Alt Wien",
+        "description": "Καφές με παλιά, αυθεντική βιεννέζικη ατμόσφαιρα, πλήρως γεμάτος από ντόπιους. 5 λεπτά με τα πόδια από το Hofburg.",
+        "map_url": "https://maps.app.goo.gl/xxxx"
       }
     },
     {
@@ -266,9 +266,9 @@
         "lng": 16.3125
       },
       "restaurant": {
-    "name": "Gasthaus zum Weinhof",
-    "description": "Παραδοσιακό, χαλαρό, σε απόσταση 8-10 λεπτών από το παλάτι. Ιδανικό για παραδοσιακή βιεννέζικη κουζίνα μετά την επίσκεψη.",
-    "map_url": "https://maps.app.goo.gl/xxxx"
+        "name": "Gasthaus zum Weinhof",
+        "description": "Παραδοσιακό, χαλαρό, σε απόσταση 8-10 λεπτών από το παλάτι. Ιδανικό για παραδοσιακή βιεννέζικη κουζίνα μετά την επίσκεψη.",
+        "map_url": "https://maps.app.goo.gl/xxxx"
       },
       "website": "https://www.schoenbrunn.at/en/all-tickets/classic-pass",
       "notes": [
@@ -321,9 +321,9 @@
         "lng": 16.3126
       },
       "restaurant": {
-    "name": "Gasthaus Wratschko",
-    "description": "Παραδοσιακό, χαλαρό, 2 λεπτά περπατημα από τη νότια έξοδο του Zoo Schönbrunn. Ιδανικό για οικογένειες μετά το zoo.",
-    "map_url": "https://maps.app.goo.gl/2N9g6Pr6M2bqWNZo9"
+        "name": "Gasthaus Wratschko",
+        "description": "Παραδοσιακό, χαλαρό, 2 λεπτά περπατημα από τη νότια έξοδο του Zoo Schönbrunn. Ιδανικό για οικογένειες μετά το zoo.",
+        "map_url": "https://maps.app.goo.gl/2N9g6Pr6M2bqWNZo9"
       },
       "website": "https://www.schoenbrunn.at/en/all-tickets/classic-pass-plus",
       "notes": [
@@ -338,9 +338,9 @@
       "duration_hours": 6,
       "best_time": "any",
       "cafe": {
-    "name": "Café Dommayer",
-    "description": "Κλασικό βιεννέζικο καφέ, 5 λεπτά από το zoo. Διάσημο για τουρτες και ησυχία.",
-    "map_url": "https://maps.app.goo.gl/xxxx"
+        "name": "Café Dommayer",
+        "description": "Κλασικό βιεννέζικο καφέ, 5 λεπτά από το zoo. Διάσημο για τουρτες και ησυχία.",
+        "map_url": "https://maps.app.goo.gl/xxxx"
       }
     },
     {
@@ -376,9 +376,9 @@
         "lng": 16.3127
       },
       "restaurant": {
-    "name": "Restaurant Kolar",
-    "description": "Οικογενειακό, παραδοσιακό με καλές τιμές. 7 λεπτά με τα πόδια από το μουσείο.",
-    "map_url": "https://maps.app.goo.gl/YUdjxZ5h8PhNzqZg6"
+        "name": "Restaurant Kolar",
+        "description": "Οικογενειακό, παραδοσιακό με καλές τιμές. 7 λεπτά με τα πόδια από το μουσείο.",
+        "map_url": "https://maps.app.goo.gl/YUdjxZ5h8PhNzqZg6"
       },
       "website": "https://www.kindermuseumschoenbrunn.at/en/",
       "notes": [],
@@ -390,10 +390,10 @@
       ],
       "duration_hours": 1.5,
       "best_time": "afternoon",
-     "cafe": {
-    "name": "Café-Restaurant Goodies im Schlosspark",
-    "description": "Άμεσα απέναντι από το μουσείο, μέσα στο πάρκο. Απλό, με σάντουιτς, γλυκά και παιδικό παιχνίδι.",
-    "map_url": "https://maps.app.goo.gl/Yx5Ny2AKprNckkq1A"
+      "cafe": {
+        "name": "Café-Restaurant Goodies im Schlosspark",
+        "description": "Άμεσα απέναντι από το μουσείο, μέσα στο πάρκο. Απλό, με σάντουιτς, γλυκά και παιδικό παιχνίδι.",
+        "map_url": "https://maps.app.goo.gl/Yx5Ny2AKprNckkq1A"
       }
     },
     {
