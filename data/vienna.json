@@ -104,7 +104,7 @@
         "lng": 16.3123
       },
       "restaurant": {
-        "name": "Figlmüller",
+        "name": "Figlmüller – Wollzeile",
         "description": "διάσημο για schnitzel",
         "map_url": "https://maps.app.goo.gl/X9ienGyWdk3VkHMc7"
       },
@@ -173,7 +173,7 @@
       "duration_hours": 6,
       "best_time": "any",
       "cafe": {
-        "name": "Café Sacher",
+        "name": "Café Sacher Wien",
         "description": "famous Sachertorte café",
         "map_url": "https://maps.app.goo.gl/9id94cW3tSFXnaiF8"
       }
@@ -228,7 +228,7 @@
       "best_time": "any",
       "seasonal": true,
       "cafe": {
-        "name": "Prater Café",
+        "name": "Café Prückel",
         "description": "amusement café",
         "map_url": "https://maps.app.goo.gl/bvTHsxUrY8XodUrP8"
       }
@@ -283,7 +283,7 @@
       "duration_hours": 4,
       "best_time": "any",
       "cafe": {
-        "name": "Belvedere Café",
+        "name": "Café im Belvedere",
         "description": "palace café",
         "map_url": "https://maps.app.goo.gl/bvTHsxUrY8XodUrP8"
       }
@@ -338,7 +338,7 @@
       "duration_hours": 6,
       "best_time": "any",
       "cafe": {
-        "name": "Hofburg Café",
+        "name": "Café Hofburg",
         "description": "imperial café",
         "map_url": "https://maps.app.goo.gl/bvTHsxUrY8XodUrP8"
       }
@@ -376,7 +376,7 @@
         "lng": 16.3127
       },
       "restaurant": {
-        "name": "Cafe Kindermuseum",
+        "name": "Café im Kindermuseum",
         "description": "",
         "map_url": "https://maps.app.goo.gl/jWCk4Es43kKrKEt99"
       },
@@ -391,7 +391,7 @@
       "duration_hours": 1.5,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Museum Café",
+        "name": "Café im MuseumsQuartier",
         "description": "art museum café",
         "map_url": "https://maps.app.goo.gl/jWCk4Es43kKrKEt99"
       }
@@ -429,7 +429,7 @@
         "lng": 16.3028
       },
       "restaurant": {
-        "name": "Tiergarten Cafe",
+        "name": "Café im Tiergarten Schönbrunn",
         "description": "",
         "map_url": "https://maps.app.goo.gl/XRkfxBAACm4tCnNE6"
       },
@@ -445,7 +445,7 @@
       "duration_hours": 3,
       "best_time": "morning",
       "cafe": {
-        "name": "Albertina Café",
+        "name": "Café Albertina",
         "description": "museum café",
         "map_url": "https://maps.app.goo.gl/XRkfxBAACm4tCnNE6"
       }
@@ -483,7 +483,7 @@
         "lng": 16.3029
       },
       "restaurant": {
-        "name": "Palm House Cafe",
+        "name": "Palm House Café",
         "description": "",
         "map_url": "https://maps.app.goo.gl/XRkfxBAACm4tCnNE6"
       },
@@ -500,7 +500,7 @@
       "duration_hours": 4,
       "best_time": "any",
       "cafe": {
-        "name": "Riding School Café",
+        "name": "Café in der Hofreitschule",
         "description": "historic café",
         "map_url": "https://maps.app.goo.gl/XRkfxBAACm4tCnNE6"
       }
@@ -553,7 +553,7 @@
       "duration_hours": 2.5,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Stephansdom Café",
+        "name": "Café am Stephansplatz",
         "description": "cathedral café",
         "map_url": "https://maps.app.goo.gl/NW6y5oMWs95PX1Xa9"
       }
@@ -591,7 +591,7 @@
         "lng": 16.3731
       },
       "restaurant": {
-        "name": "Time Travel Cafe",
+        "name": "Café Time Travel",
         "description": "",
         "map_url": "https://share.google/k5eeIzvZqatoexTWj"
       },
@@ -606,7 +606,7 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "cafe": {
-        "name": "Naschmarkt Cafés",
+        "name": "Café am Naschmarkt",
         "description": "market cafés",
         "map_url": "https://maps.app.goo.gl/vyodbxJcW8gvjuqY6"
       }
@@ -644,7 +644,7 @@
         "lng": 16.3698
       },
       "restaurant": {
-        "name": "VR Experience Cafe",
+        "name": "Café VR Experience",
         "description": "",
         "map_url": "https://share.google/k5eeIzvZqatoexTWj"
       },
@@ -661,7 +661,7 @@
       "duration_hours": 0.75,
       "best_time": "any",
       "cafe": {
-        "name": "Karlskirche Café",
+        "name": "Café Karlskirche",
         "description": "church café",
         "map_url": "https://maps.app.goo.gl/vyodbxJcW8gvjuqY6"
       }
@@ -715,7 +715,7 @@
       "best_time": "afternoon",
       "familyTicket": "2 adults + up to 3 children = 35€",
       "cafe": {
-        "name": "Aquarium Café",
+        "name": "Café im Haus des Meeres",
         "description": "aquarium café",
         "map_url": "https://maps.app.goo.gl/kzUPxBrPPvkhhquV8"
       }
@@ -753,7 +753,7 @@
         "lng": 16.3702
       },
       "restaurant": {
-        "name": "Illusions Cafe",
+        "name": "Café der Illusionen",
         "description": "",
         "map_url": "https://maps.app.goo.gl/1f7tECnDJmNJZ5HP8"
       },
@@ -768,7 +768,7 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "cafe": {
-        "name": "Zoo Café",
+        "name": "Café im Zoo Vienna",
         "description": "oldest zoo café",
         "map_url": "https://maps.app.goo.gl/x37tEi7C843zCohk9"
       }
@@ -806,7 +806,7 @@
         "lng": 16.3692
       },
       "restaurant": {
-        "name": "Café Sacher",
+        "name": "Café Sacher Wien",
         "description": "για Sachertorte",
         "map_url": "https://maps.app.goo.gl/UL6vWoKkzCXriJ1h6"
       },
@@ -821,7 +821,7 @@
       "duration_hours": 1,
       "best_time": "afternoon",
       "cafe": {
-        "name": "ZOOM Café",
+        "name": "Café im ZOOM Kindermuseum",
         "description": "children's museum café",
         "map_url": "https://maps.app.goo.gl/UL6vWoKkzCXriJ1h6"
       }
@@ -876,7 +876,7 @@
       "duration_hours": 2.5,
       "best_time": "morning",
       "cafe": {
-        "name": "Stadtpark Café",
+        "name": "Café im Stadtpark",
         "description": "park café",
         "map_url": "https://maps.app.goo.gl/1hVS6UmE42NYt9w1A"
       }
@@ -929,7 +929,7 @@
       "duration_hours": 1,
       "best_time": "any",
       "cafe": {
-        "name": "Technical Museum Café",
+        "name": "Café im Technischen Museum",
         "description": "museum café",
         "map_url": "https://maps.app.goo.gl/Y1cDcKYuQemdMzhU6"
       }
@@ -983,7 +983,7 @@
       "best_time": "afternoon",
       "familyTicket": "2 adults + up to 3 children = 29€",
       "cafe": {
-        "name": "Natural History Café",
+        "name": "Café im Naturhistorischen Museum",
         "description": "museum café",
         "map_url": "https://maps.app.goo.gl/97YvBzCmvYhUxFfT9"
       }
@@ -1021,7 +1021,7 @@
         "lng": 16.373
       },
       "restaurant": {
-        "name": "Do & Co",
+        "name": "Do & Co Restaurant",
         "description": "με θέα",
         "map_url": "https://maps.app.goo.gl/36ixZMGVM91kg6HSA"
       },
@@ -1036,7 +1036,7 @@
       "duration_hours": 0.75,
       "best_time": "any",
       "cafe": {
-        "name": "Madame Tussauds Café",
+        "name": "Café im Madame Tussauds",
         "description": "wax museum café",
         "map_url": "https://maps.app.goo.gl/vyodbxJcW8gvjuqY6"
       }
@@ -1094,7 +1094,7 @@
       "minAge": 3,
       "ageWarning": "⚠️ Παιδιά κάτω των 3 ετών ΔΕΝ επιτρέπονται. 3-5 ετών: μόνο σε family performances",
       "cafe": {
-        "name": "Time Travel Café",
+        "name": "Café Time Travel Vienna",
         "description": "attraction café",
         "map_url": "https://maps.app.goo.gl/4MHjxuVhQkYtk3yM6"
       }
