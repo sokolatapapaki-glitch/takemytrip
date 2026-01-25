@@ -966,7 +966,11 @@
         "lat": 48.2086,
         "lng": 16.3735
       },
-     
+     "restaurant": {
+"name": "Figlmüller",
+  "description": "Το διάσημο εστιατόριο του αυθεντικού Wiener Schnitzel",
+  "map_url": "https://maps.app.goo.gl/WqqoxkxNfS5V7hAm9"
+      
       },
       "website": "https://www.mozarthausvienna.at/en/",
       "notes": [],
