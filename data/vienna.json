@@ -376,9 +376,9 @@
         "lng": 16.3127
       },
       "restaurant": {
-        "name": "Café im Kindermuseum",
-        "description": "",
-        "map_url": "https://maps.app.goo.gl/jWCk4Es43kKrKEt99"
+    "name": "Restaurant Kolar",
+    "description": "Οικογενειακό, παραδοσιακό με καλές τιμές. 7 λεπτά με τα πόδια από το μουσείο.",
+    "map_url": "https://maps.app.goo.gl/YUdjxZ5h8PhNzqZg6"
       },
       "website": "https://www.kindermuseumschoenbrunn.at/en/",
       "notes": [],
