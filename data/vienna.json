@@ -21,18 +21,12 @@
       "name": "Palace Ticket - Schönbrunn Palace",
       "description": "Βασικό εισιτήριο για τα κρατικά/ιδιωτικά διαμερίσματα με audio-guide. Timed entry.",
       "category": "attraction",
-      "prices": {
-        "adult": 38
-      },
+      "prices": { "adult": 38 },
       "location": { "lat": 48.1845, "lng": 16.3122 },
       "restaurant": {
-        "name": "Café Residenz",
-        "description": "κλασική αυστριακή κουζίνα στον προαύλιο χώρο του παλατιού",
         "map_url": "https://maps.app.goo.gl/X9ienGyWdk3VkHMc7"
       },
       "cafe": {
-        "name": "Gerstner K. u. K. Hofzuckerbäcker",
-        "description": "αυτοκρατορικό ζαχαροπλαστείο",
         "map_url": "https://maps.app.goo.gl/bvTHsxUrY8XodUrP8"
       },
       "website": "https://www.schoenbrunn.at/en/",
@@ -47,11 +41,9 @@
       "prices": { "adult": 39 },
       "location": { "lat": 48.1846, "lng": 16.3123 },
       "restaurant": {
-        "name": "Café Residenz",
         "map_url": "https://maps.app.goo.gl/X9ienGyWdk3VkHMc7"
       },
       "cafe": {
-        "name": "Gerstner K. u. K. Hofzuckerbäcker",
         "map_url": "https://maps.app.goo.gl/bvTHsxUrY8XodUrP8"
       },
       "website": "https://www.schoenbrunn.at/en/",
@@ -66,11 +58,9 @@
       "prices": { "adult": 57 },
       "location": { "lat": 48.2058, "lng": 16.3698 },
       "restaurant": {
-        "name": "Café Central",
         "map_url": "https://maps.app.goo.gl/bgiFTRhG5YyvmWv2A"
       },
       "cafe": {
-        "name": "Café Sacher Wien",
         "map_url": "https://maps.app.goo.gl/9id94cW3tSFXnaiF8"
       },
       "website": "https://www.schoenbrunn.at/en/all-tickets/sisi-pass",
@@ -85,11 +75,9 @@
       "prices": { "adult": 69 },
       "location": { "lat": 48.1847, "lng": 16.3124 },
       "restaurant": {
-        "name": "Café Residenz",
         "map_url": "https://maps.app.goo.gl/X9ienGyWdk3VkHMc7"
       },
       "cafe": {
-        "name": "Gerstner K. u. K. Hofzuckerbäcker",
         "map_url": "https://maps.app.goo.gl/bvTHsxUrY8XodUrP8"
       },
       "website": "https://www.schoenbrunn.at/en/all-tickets/winter-pass",
@@ -104,11 +92,9 @@
       "prices": { "adult": 40 },
       "location": { "lat": 48.1848, "lng": 16.3125 },
       "restaurant": {
-        "name": "Café Residenz",
         "map_url": "https://maps.app.goo.gl/X9ienGyWdk3VkHMc7"
       },
       "cafe": {
-        "name": "Gerstner K. u. K. Hofzuckerbäcker",
         "map_url": "https://maps.app.goo.gl/bvTHsxUrY8XodUrP8"
       },
       "website": "https://www.schoenbrunn.at/en/all-tickets/classic-pass",
@@ -123,11 +109,9 @@
       "prices": { "adult": 76 },
       "location": { "lat": 48.1849, "lng": 16.3126 },
       "restaurant": {
-        "name": "Café Residenz",
         "map_url": "https://maps.app.goo.gl/X9ienGyWdk3VkHMc7"
       },
       "cafe": {
-        "name": "Gerstner K. u. K. Hofzuckerbäcker",
         "map_url": "https://maps.app.goo.gl/bvTHsxUrY8XodUrP8"
       },
       "website": "https://www.schoenbrunn.at/en/all-tickets/classic-pass-plus",
@@ -142,11 +126,9 @@
       "prices": { "adult": 12 },
       "location": { "lat": 48.185, "lng": 16.3127 },
       "restaurant": {
-        "name": "Landtmann's Jausenstation",
         "map_url": "https://maps.app.goo.gl/jWCk4Es43kKrKEt99"
       },
       "cafe": {
-        "name": "Landtmann's Jausenstation",
         "map_url": "https://maps.app.goo.gl/jWCk4Es43kKrKEt99"
       },
       "website": "https://www.kindermuseumschoenbrunn.at/en/",
@@ -161,12 +143,10 @@
       "prices": { "adult": 19.2 },
       "location": { "lat": 48.18, "lng": 16.3028 },
       "restaurant": {
-        "name": "Gasthaus Tirolergarten",
-        "map_url": "https://maps.app.goo.gl/XRkfxBAACm4tCnNE6 "
+        "map_url": "https://maps.app.goo.gl/XRkfxBAACm4tCnNE6"
       },
       "cafe": {
-        "name": "Gasthaus Tirolergarten",
-        "map_url": "https://maps.app.goo.gl/XRkfxBAACm4tCnNE6 "
+        "map_url": "https://maps.app.goo.gl/XRkfxBAACm4tCnNE6"
       },
       "website": "https://zoovienna.at/",
       "duration_hours": 3,
@@ -180,12 +160,10 @@
       "prices": { "adult": 36 },
       "location": { "lat": 48.1801, "lng": 16.3029 },
       "restaurant": {
-        "name": "Gasthaus Tirolergarten",
-        "map_url": "https://maps.app.goo.gl/XRkfxBAACm4tCnNE6 "
+        "map_url": "https://maps.app.goo.gl/XRkfxBAACm4tCnNE6"
       },
       "cafe": {
-        "name": "Gasthaus Tirolergarten",
-        "map_url": "https://maps.app.goo.gl/XRkfxBAACm4tCnNE6 "
+        "map_url": "https://maps.app.goo.gl/XRkfxBAACm4tCnNE6"
       },
       "website": "https://zoovienna.at/",
       "duration_hours": 4,
@@ -199,11 +177,9 @@
       "prices": { "adult": 22.9 },
       "location": { "lat": 48.205, "lng": 16.3575 },
       "restaurant": {
-        "name": "360° Ocean Sky",
         "map_url": "https://maps.app.goo.gl/iA2AEYzEw4qijmMK6"
       },
       "cafe": {
-        "name": "Café Ritter Maria Hilf",
         "map_url": "https://maps.app.goo.gl/NW6y5oMWs95PX1Xa9"
       },
       "website": "https://www.haus-des-meeres.at/en",
@@ -218,11 +194,9 @@
       "prices": { "adult": 22 },
       "location": { "lat": 48.2084, "lng": 16.3731 },
       "restaurant": {
-        "name": "Lugeck (by Figlmüller)",
         "map_url": "https://share.google/k5eeIzvZqatoexTWj"
       },
       "cafe": {
-        "name": "Café Hawelka",
         "map_url": "https://maps.app.goo.gl/vyodbxJcW8gvjuqY6"
       },
       "website": "https://www.timetravel-vienna.at/en",
@@ -237,14 +211,12 @@
       "prices": { "adult": 14 },
       "location": { "lat": 48.2058, "lng": 16.3698 },
       "restaurant": {
-        "name": "Lugeck (by Figlmüller)",
         "map_url": "https://share.google/k5eeIzvZqatoexTWj"
       },
       "cafe": {
-        "name": "Café Diglas Wollzeile",
         "map_url": "https://maps.app.goo.gl/vyodbxJcW8gvjuqY6"
       },
-      "website": "https://www.amazing-sisi.at/?utm_source=google&utm_medium=seo&utm_campaign=google-my-business",
+      "website": "https://www.amazing-sisi.at/",
       "duration_hours": 0.75,
       "tags": ["vr", "interactive", "sisi"]
     },
@@ -256,11 +228,9 @@
       "prices": { "adult": 22 },
       "location": { "lat": 48.2032, "lng": 16.3738 },
       "restaurant": {
-        "name": "Café Schwarzenberg",
         "map_url": "https://maps.app.goo.gl/pHDM281APeHafzv1A"
       },
       "cafe": {
-        "name": "Motto am Fluss",
         "map_url": "https://maps.app.goo.gl/kzUPxBrPPvkhhquV8"
       },
       "website": "https://www.hausdermusik.com/en",
@@ -275,11 +245,9 @@
       "prices": { "adult": 14 },
       "location": { "lat": 48.2095, "lng": 16.3702 },
       "restaurant": {
-        "name": "Fabios",
         "map_url": "https://maps.app.goo.gl/1f7tECnDJmNJZ5HP8"
       },
       "cafe": {
-        "name": "Café Prückel",
         "map_url": "https://maps.app.goo.gl/x37tEi7C843zCohk9"
       },
       "website": "https://www.museumderillusionen.at/wien/",
@@ -294,11 +262,9 @@
       "prices": { "adult": 15 },
       "location": { "lat": 48.2034, "lng": 16.3692 },
       "restaurant": {
-        "name": "Café Sacher Wien",
         "map_url": "https://maps.app.goo.gl/UL6vWoKkzCXriJ1h6"
       },
       "cafe": {
-        "name": "Café Sacher Wien",
         "map_url": "https://maps.app.goo.gl/UL6vWoKkzCXriJ1h6"
       },
       "website": "https://www.wiener-staatsoper.at/en/",
@@ -313,11 +279,9 @@
       "prices": { "adult": 29 },
       "location": { "lat": 48.191, "lng": 16.3805 },
       "restaurant": {
-        "name": "Salm Bräu",
-        "map_url": "https://maps.app.goo.gl/o4aRAU9t25ADoSZV8 "
+        "map_url": "https://maps.app.goo.gl/o4aRAU9t25ADoSZV8"
       },
       "cafe": {
-        "name": "Café Sperl",
         "map_url": "https://maps.app.goo.gl/1hVS6UmE42NYt9w1A"
       },
       "website": "https://www.belvedere.at/en",
@@ -332,12 +296,10 @@
       "prices": { "adult": 12 },
       "location": { "lat": 48.2389, "lng": 16.4103 },
       "restaurant": {
-        "name": "Turm Restaurant Donauturm",
         "map_url": "https://maps.app.goo.gl/9dyEhjTh5Sb91HQy5"
       },
       "cafe": {
-        "name": "Das Loft",
-        "map_url": "https://maps.app.goo.gl/Y1cDcKYuQemdMzhU6 "
+        "map_url": "https://maps.app.goo.gl/Y1cDcKYuQemdMzhU6"
       },
       "website": "https://www.donauturm.at/en/",
       "duration_hours": 1,
@@ -351,12 +313,10 @@
       "prices": { "adult": 14 },
       "location": { "lat": 48.2086, "lng": 16.3735 },
       "restaurant": {
-        "name": "Café Mozart",
         "map_url": "https://maps.app.goo.gl/Wkmv9kFiHL3zPMm2A"
       },
       "cafe": {
-        "name": "Kleines Café",
-        "map_url": "https://maps.app.goo.gl/97YvBzCmvYhUxFfT9 "
+        "map_url": "https://maps.app.goo.gl/97YvBzCmvYhUxFfT9"
       },
       "website": "https://www.mozarthausvienna.at/en/",
       "duration_hours": 1.5,
@@ -370,11 +330,9 @@
       "prices": { "adult": 5 },
       "location": { "lat": 48.2085, "lng": 16.373 },
       "restaurant": {
-        "name": "DO & CO Albertina",
         "map_url": "https://maps.app.goo.gl/36ixZMGVM91kg6HSA"
       },
       "cafe": {
-        "name": "Manner Shop / Café Hawelka",
         "map_url": "https://maps.app.goo.gl/vyodbxJcW8gvjuqY6"
       },
       "website": "https://www.stephanskirche.at/",
@@ -389,11 +347,9 @@
       "prices": { "adult": 16 },
       "location": { "lat": 48.2068, "lng": 16.3675 },
       "restaurant": {
-        "name": "Griechenbeisl",
         "map_url": "https://maps.app.goo.gl/ALZT47jqDKqZzZzs7"
       },
       "cafe": {
-        "name": "Café Reber",
         "map_url": "https://maps.app.goo.gl/4MHjxuVhQkYtk3yM6"
       },
       "website": "https://www.srs.at/en/",
