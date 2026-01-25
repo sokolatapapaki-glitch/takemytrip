@@ -11,7 +11,7 @@
   },
   "cityPass": {
     "name": "Vienna Pass",
-    "description": "Free admission to 90+ attractions including Schönbrunn Palace, hop-on hop-off bus, and fast-track entry",
+    "description": "Δωρεάν είσοδος σε περισσότερα από 90 αξιοθέατα",
     "discountPercent": 30,
     "url": "https://www.viennapass.de/en"
   },
@@ -266,9 +266,9 @@
         "lng": 16.3125
       },
       "restaurant": {
-        "name": "Gasthaus zum Weinhof",
-        "description": "Παραδοσιακό, χαλαρό, σε απόσταση 8-10 λεπτών από το παλάτι. Ιδανικό για παραδοσιακή βιεννέζικη κουζίνα μετά την επίσκεψη.",
-        "map_url": "https://maps.app.goo.gl/xxxx"
+        "name": "Brandauer Schlossbräu",
+        "description": "Απέχει μόλις 5-7 λεπτά με τα πόδια από την έξοδο του παλατιού. Είναι ένα ευρύχωρο, παραδοσιακό εστιατόριο-ζυθοποιία που στεγάζεται σε ένα ιστορικό κτίριο.",
+        "map_url": "https://maps.app.goo.gl/XoZmtt1fygAJnt6a9"
       },
       "website": "https://www.schoenbrunn.at/en/all-tickets/classic-pass",
       "notes": [
@@ -321,9 +321,9 @@
         "lng": 16.3126
       },
       "restaurant": {
-        "name": "Gasthaus Wratschko",
-        "description": "Παραδοσιακό, χαλαρό, 2 λεπτά περπατημα από τη νότια έξοδο του Zoo Schönbrunn. Ιδανικό για οικογένειες μετά το zoo.",
-        "map_url": "https://maps.app.goo.gl/2N9g6Pr6M2bqWNZo9"
+        "name": "Tyrolean Garden Inn",
+        "description": "Πρόκειται για ένα παραδοσιακό αυστριακό εστιατόριο που μοιάζει με ορεινό καταφύγιο των Άλπεων, παρόλο που βρίσκεται μέσα στην πόλη.",
+        "map_url": "https://maps.app.goo.gl/29hDDm92VGo4v6uj7"
       },
       "website": "https://www.schoenbrunn.at/en/all-tickets/classic-pass-plus",
       "notes": [
@@ -376,9 +376,9 @@
         "lng": 16.3127
       },
       "restaurant": {
-        "name": "Restaurant Kolar",
-        "description": "Οικογενειακό, παραδοσιακό με καλές τιμές. 7 λεπτά με τα πόδια από το μουσείο.",
-        "map_url": "https://maps.app.goo.gl/YUdjxZ5h8PhNzqZg6"
+        "name": "Brandauer Schlossbräu",
+        "description": "Οικογενειακό, παραδοσιακό με εσωτερικό παιδότοπο.",
+        "map_url": "https://maps.app.goo.gl/vv2b1VsfMP41wTHA7"
       },
       "website": "https://www.kindermuseumschoenbrunn.at/en/",
       "notes": [],
@@ -391,9 +391,9 @@
       "duration_hours": 1.5,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Café-Restaurant Goodies im Schlosspark",
-        "description": "Άμεσα απέναντι από το μουσείο, μέσα στο πάρκο. Απλό, με σάντουιτς, γλυκά και παιδικό παιχνίδι.",
-        "map_url": "https://maps.app.goo.gl/Yx5Ny2AKprNckkq1A"
+        "name": "Gerstner K. u. K. Hofzuckerbäcker",
+        "description": "Βρίσκεται ακριβώς δίπλα στην κύρια είσοδο του παλατιού. Είναι ένα ιστορικό καφενείο με αυθεντική βιεννέζικη εμπειρία.",
+        "map_url": "https://maps.app.goo.gl/Z8KdxpmKJDpmstSn7"
       }
     },
     {
@@ -700,7 +700,7 @@
       },
       "restaurant": {
         "name": "Huth Gastwirtschaft",
-        "description": "",
+        "description": "οικογενειακή ατμόσφαιρα και βιεννέζικη κουζίνα",
         "map_url": "https://maps.app.goo.gl/pHDM281APeHafzv1A"
       },
       "website": "https://www.hausdermusik.com/en",
@@ -754,7 +754,7 @@
       },
       "restaurant": {
         "name": "Joyce Café Restaurant",
-        "description": "Μοντέρνο, κομψό καφέ-εστιατόριο με αμερικανική/διεθνή κουζίνα, δημοφιλές για μπρατς και ημερήσιο μενού",
+        "description": "Μοντέρνο, κομψό καφέ-εστιατόριο με αμερικανική/διεθνή κουζίνα, δημοφιλές για branch και ημερήσιο μενού",
         "map_url": "https://maps.app.goo.gl/1f7tECnDJmNJZ5HP8"
       },
       "website": "https://www.museumderillusionen.at/wien/",
@@ -769,7 +769,7 @@
       "best_time": "any",
       "cafe": {
         "name": "Café Central",
-        "description": "Ο πιο διάσημος ιστορικός καφές της Βιέννης, με υπέροχη νεογοτθική αίθουσα. Τόπος συνάντησης διανοουμένων και καλλιτεχνών",
+        "description": "H πιο διάσημh ιστορική καφετέρια της Βιέννης, με υπέροχη νεογοτθική αίθουσα. Τόπος συνάντησης διανοουμένων και καλλιτεχνών",
         "map_url": "https://maps.app.goo.gl/x37tEi7C843zCohk9"
       }
     },
@@ -861,7 +861,7 @@
       "restaurant": {
         "name": "Salm Bräu",
         "description": "παραδοσιακή μπυραρία με φαγητό",
-        "map_url": "https://maps.app.goo.gl/o4aRAU9t25ADoSZV8"
+        "map_url": "https://maps.app.goo.gl/7cupuAVJth5Y8DYv8"
       },
       "website": "https://www.belvedere.at/en",
       "notes": [
@@ -877,7 +877,7 @@
       "best_time": "morning",
       "cafe": {
         "name": "Café Goldegg",
-        "description": "park café",
+        "description": "αυθεντικό βιεννέζικο καφενείο",
         "map_url": "https://maps.app.goo.gl/1hVS6UmE42NYt9w1A"
       }
     },
@@ -983,9 +983,9 @@
       "best_time": "afternoon",
       "familyTicket": "2 adults + up to 3 children = 29€",
       "cafe": {
-        "name": "cafe Mozart",
-        "description": "museum café",
-        "map_url": "https://maps.app.goo.gl/97YvBzCmvYhUxFfT9"
+        "name": "Café Frauenhuber",
+        "description": "Ένα από τα παλαιότερα καφενεία της πόλης, όπου λέγεται ότι έπαιζε μουσική ο ίδιος ο Μότσαρτ",
+        "map_url": "https://maps.app.goo.gl/VE81BVs76WXbXMC46"
       }
     },
     {
