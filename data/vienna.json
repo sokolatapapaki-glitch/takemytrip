@@ -337,8 +337,7 @@
       ],
       "duration_hours": 6,
       "best_time": "any",
-      json
-"cafe": {
+      "cafe": {
     "name": "Café Dommayer",
     "description": "Κλασικό βιεννέζικο καφέ, 5 λεπτά από το zoo. Διάσημο για τουρτες και ησυχία.",
     "map_url": "https://maps.app.goo.gl/xxxx"
