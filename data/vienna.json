@@ -210,10 +210,10 @@
         "lat": 48.1847,
         "lng": 16.3124
       },
-      "restaurant": {
-        "name": "Schweizerhaus",
-        "description": "πέρδικα και μπύρα",
-        "map_url": "https://maps.app.goo.gl/X9ienGyWdk3VkHMc7"
+       "restaurant": {
+        "name": "Brandauer Schlossbräu",
+        "description": "Απέχει μόλις 5-7 λεπτά με τα πόδια από την έξοδο του παλατιού. Είναι ένα ευρύχωρο, παραδοσιακό εστιατόριο-ζυθοποιία που στεγάζεται σε ένα ιστορικό κτίριο.",
+        "map_url": "https://maps.app.goo.gl/XoZmtt1fygAJnt6a9"
       },
       "website": "https://www.schoenbrunn.at/en/all-tickets/winter-pass",
       "notes": [],
@@ -228,8 +228,8 @@
       "best_time": "any",
       "seasonal": true,
       "cafe": {
-        "name": "Café Prückel",
-        "description": "amusement café",
+        "name": "Café Gloriette",
+        "description": "υπέροχη θέα, μέσα στον χώρο",
         "map_url": "https://maps.app.goo.gl/bvTHsxUrY8XodUrP8"
       }
     },
@@ -806,9 +806,9 @@
         "lng": 16.3692
       },
       "restaurant": {
-        "name": "Café Sacher Wien",
-        "description": "για Sachertorte",
-        "map_url": "https://maps.app.goo.gl/UL6vWoKkzCXriJ1h6"
+        "name": "L'opéra Restaurant and Cafe",
+        "description": "Πολύ βολικό καθώς είναι ακριβώς δίπλα. Μια μίξη βιεννέζικης και διεθνούς κουζίνας",
+        "map_url": "https://maps.app.goo.gl/P4j6gY5m6UrDJkgUA"
       },
       "website": "https://www.wiener-staatsoper.at/en/",
       "notes": [],
@@ -821,8 +821,8 @@
       "duration_hours": 1,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Café im ZOOM Kindermuseum",
-        "description": "children's museum café",
+        "name": "Gerstner K. u. K. Hofzuckerbäcker",
+        "description": "Βρίσκεται ακριβώς απέναντι από την Όπερα. Πρόκειται για ένα από τα πιο όμορφα και ιστορικά ζαχαροπλαστεία της Βιέννης",
         "map_url": "https://maps.app.goo.gl/UL6vWoKkzCXriJ1h6"
       }
     },
