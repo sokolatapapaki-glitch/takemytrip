@@ -527,6 +527,63 @@
         "description": "Πρέπει να δοκιμάσετε: * Travesseiros: Σφολιάτα γεμιστή με κρέμα αμυγδάλου.\n* Queijadas de Sintra: Μικρά ταρτάκια με βάση το τυρί, κανέλα και ζάχαρη.",
         "map_url": "https://maps.app.goo.gl/D4XuJ2XmR2KkhEaB9"
       }
+    },
+    {
+      "id": 10,
+      "name": "Palácio da Pena",
+      "description": "Ρομαντικό παλάτι στη Σίντρα με εκπληκτική αρχιτεκτονική και χρώματα, περιστοιχισμένο από εξωτικούς κήπους.",
+      "category": "palace",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 10,
+        "7": 10,
+        "8": 10,
+        "9": 10,
+        "10": 10,
+        "11": 10,
+        "12": 10,
+        "13": 10,
+        "14": 10,
+        "15": 10,
+        "16": 10,
+        "17": 10,
+        "18": 13,
+        "19": 13,
+        "adult": 13
+      },
+      "location": {
+        "lat": 38.7860,
+        "lng": -9.3877
+      },
+      "restaurant": {
+        "name": "ATASKAQUI",
+        "description": "Ένα εξαιρετικό μέρος για tapas και πορτογαλικές γεύσεις στην περιοχή São Pedro.",
+        "map_url": "https://maps.app.goo.gl/bj7mwMKhbQ3Hiia38"
+      },
+      "website": "https://bilheteira.parquesdesintra.pt/home/en",
+      "notes": [
+        "Οι τιμές αφορούν είσοδο στο Palácio da Pena και υπάρχουν διαθέσιμα οικογενειακά εισιτήρια.",
+        "Εισιτήριο οικογένειας: 2 ενήλικες + 2 νέοι (6-17 ετών) = 35€"
+      ],
+      "tags": [
+        "palace",
+        "unesco",
+        "romantic",
+        "sintra",
+        "gardens"
+      ],
+      "duration_hours": 3,
+      "best_time": "morning",
+      "cafe": {
+        "name": "Café Saudade",
+        "description": "Είναι ίσως η καλύτερη επιλογή για οικογένειες. Ένας μεγάλος, καλλιτεχνικός χώρος με άνετα τραπέζια, υπέροχα σπιτικά κέικ και scones.",
+        "map_url": "https://maps.app.goo.gl/cGgwgvSEBxQHNKky8"
+      }
     }
   ]
 }
