@@ -126,8 +126,8 @@
     },
     {
       "id": 3,
-      "name": "Πύργος του Μπέλεν",
-      "description": "Ιστορικός πύργος από τον 16ο αιώνα, σύμβολο της Πορτογαλίας.",
+      "name": "Πύργος του Μπελέμ",
+      "description": "Μνημείο της UNESCO και το πιο αναγνωρίσιμο ορόσημο της Λισαβόνας, εντυπωσιάζοντας με τη «δαντελωτή» αρχιτεκτονική του που μοιάζει με κάστρο μέσα στο νερό.Το εσωτερικό του είναι δύσκολο με παιδιά κάτω των 5-6 ετών λόγω στενών σκαλιών.",
       "category": "monument",
       "prices": {
         "0": 0,
@@ -173,9 +173,9 @@
       "duration_hours": 1,
       "best_time": "morning",
       "cafe": {
-        "name": "Time Out Market",
-        "description": "food hall με πολλές επιλογές",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Time+Out+Market+Lisbon"
+        "name": "Pasteis de Belem",
+        "description": "διάσημα παστέλ νάτα",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Pasteis+de+Belem"
       }
     },
     {
