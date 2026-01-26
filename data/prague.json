@@ -11,7 +11,7 @@
   },
   "cityPass": {
     "name": "Prague Visitor Pass",
-    "description": "Free admission to 70+ attractions, guided tours, Vltava cruise, and unlimited public transport including airport",
+    "description": "Δωρεάν είσοδος σε πάνω απο 70 δραστηριότητες, κρουαζιέρα και απεριόριστες μετακινήσεις με τα μέσα",
     "discountPercent": 25,
     "url": "https://praguepass.eu/en/"
   },
@@ -269,11 +269,11 @@
         "lng": 14.4198
       },
       "restaurant": {
-        "name": "Sense Museum Cafe",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Sense+Museum+Cafe+Prague"
+        "name": "Restaurace U Jindřišské věže",
+        "description": "Παραδοσιακή τσέχικη παμπ, για οικογένειες που θέλουν να δοκιμάσουν τοπικές γεύσεις. ",
+        "map_url": "https://maps.app.goo.gl/11sTcYv4KyxyzuqZA"
       },
-      "website": "https://www.sensemuseum.com/",
+      "website": "https://museumofsenses.cz/#tickets",
       "notes": [],
       "tags": [
         "Οικογένειες",
@@ -286,9 +286,9 @@
       "best_time": "any",
       "emoji": "👁️",
       "cafe": {
-        "name": "Castle Café",
-        "description": "café στο κάστρο",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Prague+Castle+Cafe"
+        "name": "Spell Coffee",
+        "description": "μέσα στο μουσείο",
+        "map_url": "https://maps.app.goo.gl/WDtpEh1AEQiPztgH9"
       }
     },
     {
@@ -383,7 +383,7 @@
         "description": "",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Toy+Museum+Cafe+Prague"
       },
-      "website": "https://www.muzeumhracek.cz/en/",
+      "website": "https://narodnimuzeumhracek.cz/",
       "notes": [],
       "tags": [
         "Παιδιά",
