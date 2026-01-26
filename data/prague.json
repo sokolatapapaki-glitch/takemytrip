@@ -159,9 +159,9 @@
         "lng": 14.4167
       },
       "restaurant": {
-        "name": "Lego Museum Cafe",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Lego+Museum+Cafe+Prague"
+        "name": "Sad Man's Tongue Bar & Bistro",
+        "description": "θεωρείται ένα από τα μέρη με τα καλύτερα burger στην πόλη.",
+        "map_url": "https://maps.app.goo.gl/saZCpE7y1rcWkq2A6"
       },
       "website": "https://muzeumlega.cz/en/",
       "notes": [],
@@ -176,15 +176,15 @@
       "best_time": "afternoon",
       "emoji": "🧱",
       "cafe": {
-        "name": "Café Imperial",
-        "description": "Art Deco café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Imperial+Prague"
+        "name": "Café Louvre",
+        "description": "ένας πανέμορφος, μεγάλος χώρος με ατμόσφαιρα 100 ετών",
+        "map_url": "https://maps.app.goo.gl/7S3D81X8JR6AsAtN8"
       }
     },
     {
       "id": 4,
       "name": "Illusion Art Museum Prague",
-      "description": "Διαδραστικές οπτικές ψευδαισθήσεις.",
+      "description": "Το πρώτο μουσείο στην Τσεχία αφιερωμένο στις οπτικές ψευδαισθήσεις και το trick-art, για μια άκρως διαδραστική εμπειρία για όλες τις ηλικίες..",
       "category": "museum",
       "prices": {
         "0": 0,
@@ -214,11 +214,11 @@
         "lng": 14.4205
       },
       "restaurant": {
-        "name": "Illusion Museum Cafe",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Illusion+Museum+Cafe+Prague"
+        "name": "Ribs of Prague",
+        "description": "Ειδικεύεται στα παϊδάκια (ribs) και το χοιρινό κότσι.Aν θέλετε κάτι χορταστικό και παραδοσιακό σε πολύ κοντινή απόσταση",
+        "map_url": "https://maps.app.goo.gl/9YgEDou9kMbkj4xDA"
       },
-      "website": "https://museumfantasy.eu/",
+      "website": "https://iamprague.eu/en/home/",
       "notes": [],
       "tags": [
         "Οικογένειες",
@@ -231,9 +231,9 @@
       "best_time": "any",
       "emoji": "🎭",
       "cafe": {
-        "name": "Zoo Café",
-        "description": "café στο ζωολογικό",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Prague+Zoo+Cafe"
+        "name": "Art Cafe",
+        "description": "Μια πολύ όμορφη επιλογή στην περιοχή Malá Strana, αν θέλετε να συνδυάσετε τον καφέ σας με μια βόλτα προς τη γέφυρα του Καρόλου.",
+        "map_url": "https://maps.app.goo.gl/mjXe24umbWYXZsnw9"
       }
     },
     {
@@ -379,9 +379,9 @@
         "lng": 14.4018
       },
       "restaurant": {
-        "name": "Toy Museum Cafe",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Toy+Museum+Cafe+Prague"
+        "name": "Lobkowicz Palace Restaurant & Café",
+        "description": "μέσα στο συγκρότημα , εστιατόριο και καφέ, με εκπληκτική θέα",
+        "map_url": "https://maps.app.goo.gl/puZ6cduKeJWLJp1G9"
       },
       "website": "https://narodnimuzeumhracek.cz/",
       "notes": [],
@@ -396,9 +396,9 @@
       "best_time": "afternoon",
       "emoji": "🎪",
       "cafe": {
-        "name": "Museum Café",
-        "description": "café στο μουσείο",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=National+Museum+Prague+Cafe"
+        "name": "Lobkowicz Palace Restaurant & Café",
+        "description": "μέσα στο συγκρότημα, εστιατόριο και καφέ, με εκπληκτική θέα",
+        "map_url": "https://maps.app.goo.gl/puZ6cduKeJWLJp1G9"
       }
     },
     {
