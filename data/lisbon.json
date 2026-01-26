@@ -285,6 +285,68 @@
         "description": "rooftop café",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Vertigo+Cafe+Lisbon"
       }
+    },
+    {
+      "id": 6,
+      "name": "Museu da Marioneta",
+      "description": "Μουσείο μαριονέτας με συλλογή από όλο τον κόσμο και παραστάσεις.",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 2.5,
+        "14": 2.5,
+        "15": 2.5,
+        "16": 2.5,
+        "17": 2.5,
+        "18": 2.5,
+        "19": 2.5,
+        "20": 2.5,
+        "21": 2.5,
+        "22": 2.5,
+        "23": 2.5,
+        "24": 2.5,
+        "25": 2.5,
+        "adult": 5
+      },
+      "location": {
+        "lat": 38.707917,
+        "lng": -9.156117
+      },
+      "restaurant": {
+        "name": "Taberna da Esperança",
+        "description": "",
+        "map_url": "https://maps.app.goo.gl/bYHhqTsUrstQctDo9"
+      },
+      "website": "https://www.museudamarioneta.pt/pt/",
+      "notes": [
+        "Οι τιμές για παραστάσεις (shows) είναι περίπου 2€ ακριβότερες."
+      ],
+      "tags": [
+        "museum",
+        "puppets",
+        "marionettes",
+        "culture",
+        "family"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "PUT IT ON LISBON",
+        "description": "",
+        "map_url": "https://maps.app.goo.gl/sXMTyTN87kZ4rc9v5"
+      }
     }
   ]
 }
