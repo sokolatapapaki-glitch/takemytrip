@@ -471,6 +471,62 @@
         "description": "Ένα από τα πιο αγαπημένα μέρη των ντόπιων με εξαιρετικό καφέ και πολύ φιλική ατμόσφαιρα.",
         "map_url": "https://maps.app.goo.gl/WiFabfPsVkaDmfi6A"
       }
+    },
+    {
+      "id": 9,
+      "name": "Quinta da Regaleira (Sintra)",
+      "description": "Μυστηριώδης έπαυλη στη Σίντρα με εντυπωσιακούς κήπους, μυστικά τούνελ και το διάσημο πηγάδι μύησης.",
+      "category": "palace",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 15,
+        "7": 15,
+        "8": 15,
+        "9": 15,
+        "10": 15,
+        "11": 15,
+        "12": 15,
+        "13": 15,
+        "14": 15,
+        "15": 15,
+        "16": 15,
+        "17": 15,
+        "18": 20,
+        "19": 20,
+        "adult": 20
+      },
+      "location": {
+        "lat": 38.7911,
+        "lng": -9.3910
+      },
+      "restaurant": {
+        "name": "Tascantiga",
+        "description": "Ιδανικό για να δοκιμάσετε πολλές διαφορετικές γεύσεις. Βρίσκεται σε ένα γραφικό δρομάκι με σκαλιά και έχει υπέροχη ατμόσφαιρα.",
+        "map_url": "https://maps.app.goo.gl/KHko88uvXBnJPV9D8"
+      },
+      "website": "https://www.regaleira.pt/pt/",
+      "notes": [
+        "Εισιτήριο οικογένειας: 2 ενήλικες + 2 παιδιά (6-17 ετών) = 60€"
+      ],
+      "tags": [
+        "palace",
+        "garden",
+        "sintra",
+        "mystery",
+        "unesco"
+      ],
+      "duration_hours": 2.5,
+      "best_time": "morning",
+      "cafe": {
+        "name": "Casa Piriquita",
+        "description": "Πρέπει να δοκιμάσετε: * Travesseiros: Σφολιάτα γεμιστή με κρέμα αμυγδάλου.\n* Queijadas de Sintra: Μικρά ταρτάκια με βάση το τυρί, κανέλα και ζάχαρη.",
+        "map_url": "https://maps.app.goo.gl/D4XuJ2XmR2KkhEaB9"
+      }
     }
   ]
 }
