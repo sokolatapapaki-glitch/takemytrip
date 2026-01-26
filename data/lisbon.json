@@ -49,9 +49,9 @@
         "lng": -9.0937
       },
       "restaurant": {
-        "name": "ZeroZero Parque das Nações",
-        "description": "πίτσες εξαιρετικής ποιότητας με υλικά από την Ιταλία",
-        "map_url": "https://maps.app.goo.gl/m8auyvHpnRcNFcgu5"
+        "name": "D'Bacalhau",
+        "description": "ο ειδικός στον μπακαλιάρο (το εθνικό πιάτο της Πορτογαλίας).",
+        "map_url": "https://maps.app.goo.gl/A23JUbVkU75PfJ1k9"
       },
       "website": "https://www.oceanario.pt/en/",
       "notes": [],
@@ -65,9 +65,9 @@
       "duration_hours": 3,
       "best_time": "any",
       "cafe": {
-        "name": "Café do Oceanário",
-        "description": "café στο ενυδρείο",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+do+Oceanario+Lisbon"
+        "name": "The Primus Açai & Friends",
+        "description": "αυτό το μέρος έχει τέλειες κριτικές (5.0) και προσφέρει υγιεινές επιλογές.",
+        "map_url": "https://maps.app.goo.gl/Xapirz9aLeKDMfrC9"
       }
     },
     {
@@ -157,9 +157,9 @@
         "lng": -9.216
       },
       "restaurant": {
-        "name": "Pasteis de Belem",
-        "description": "διάσημα παστέλ νάτα",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Pasteis+de+Belem"
+        "name": "Restaurante O Frade",
+        "description": "Ένα μικρό, μοντέρνο εστιατόριο (Michelin Bib Gourmand) που σερβίρει παραδοσιακές γεύσεις από την περιοχή Alentejo.",
+        "map_url": "https://maps.app.goo.gl/etun1SRJGbXjYQfW7"
       },
       "website": "https://www.torrebelem.pt/en/",
       "notes": [],
