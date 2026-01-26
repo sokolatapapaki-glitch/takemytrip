@@ -409,6 +409,68 @@
         "description": "",
         "map_url": "https://maps.app.goo.gl/GvZUYQ5ofubpowGVA"
       }
+    },
+    {
+      "id": 8,
+      "name": "Cascais",
+      "description": "Παραθαλάσσια πόλη 30 λεπτά με τρένο από τη Λισαβόνα, ιδανική για ημερήσια εκδρομή.",
+      "category": "daytrip",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "20": 0,
+        "21": 0,
+        "22": 0,
+        "23": 0,
+        "24": 0,
+        "25": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 38.6979,
+        "lng": -9.4215
+      },
+      "restaurant": {
+        "name": "Mana",
+        "description": "Το Mana θεωρείται από τα πιο 'child-friendly' εστιατόρια στο Cascais, καθώς συνδυάζει μια χαλαρή ατμόσφαιρα με συγκεκριμένες παροχές για παιδιά.",
+        "map_url": "https://maps.app.goo.gl/me7esT2ef9a6ZgzM7"
+      },
+      "website": "https://www.tripadvisor.com.gr/Tourism-g189154-Cascais_Lisbon_District_Central_Portugal-Vacations.html",
+      "notes": [
+        "Το εύρος τιμών εισιτηρίου τρένου είναι περίπου 5€ ανά άτομο, με εκπτώσεις για παιδιά."
+      ],
+      "tags": [
+        "daytrip",
+        "beach",
+        "coastal",
+        "train",
+        "family"
+      ],
+      "duration_hours": 6,
+      "best_time": "any",
+      "cafe": {
+        "name": "Saira Cafe",
+        "description": "Ένα από τα πιο αγαπημένα μέρη των ντόπιων με εξαιρετικό καφέ και πολύ φιλική ατμόσφαιρα.",
+        "map_url": "https://maps.app.goo.gl/WiFabfPsVkaDmfi6A"
+      }
     }
   ]
 }
