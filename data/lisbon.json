@@ -326,7 +326,7 @@
       },
       "restaurant": {
         "name": "Taberna da Esperança",
-        "description": "",
+        "description": "Αυτό το εστιατόριο είναι ιδανικό αν θέλετε να δοκιμάσετε πολλά διαφορετικά πιάτα, καθώς ειδικεύεται στα petiscos (τα πορτογαλικά tapas).",
         "map_url": "https://maps.app.goo.gl/bYHhqTsUrstQctDo9"
       },
       "website": "https://www.museudamarioneta.pt/pt/",
@@ -344,7 +344,7 @@
       "best_time": "afternoon",
       "cafe": {
         "name": "PUT IT ON LISBON",
-        "description": "",
+        "description": "Πολύ κοντά, με εξαιρετικό καφέ και μοντέρνα ατμόσφαιρα",
         "map_url": "https://maps.app.goo.gl/sXMTyTN87kZ4rc9v5"
       }
     }
