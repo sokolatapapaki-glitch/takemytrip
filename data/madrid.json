@@ -265,9 +265,10 @@
         "lng": -3.6883
       },
       "restaurant": {
-        "name": "Café MUNCYT",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+MUNCYT+Madrid"
+        "name": "Restaurante Daily
+",
+        "description": "Είναι μια εξαιρετική επιλογή για οικογένειες, ποιοτικό φαγητό σε λογικές τιμές",
+        "map_url": "https://maps.app.goo.gl/Hq7SsiCTivB81hCw6"
       },
       "notes": [],
       "tags": [
@@ -281,9 +282,9 @@
       "best_time": "afternoon",
       "freeActivity": true,
       "cafe": {
-        "name": "Zoo Café",
-        "description": "café στο ζωολογικό",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Zoo+Aquarium+Madrid+Cafe"
+        "name": "Cafeteria Portomarin",
+        "description": "Ένα κλασικό καφέ με πολύ καλή βαθμολογία (4.7), που ανοίγει πολύ νωρίς το πρωί.",
+        "map_url": "https://maps.app.goo.gl/eam7Mp7GNfJoJCKt5"
       }
     },
     {
@@ -480,9 +481,9 @@
         "lng": -3.6964
       },
       "restaurant": {
-        "name": "Café Museo de Cera",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Museo+Cera+Madrid"
+        "name": "Casa Dani",
+        "description": "Πολύ διάσημο για την καλύτερη ίσως tortilla de patatas (ισπανική ομελέτα) στην πόλη. Βρίσκεται μέσα στην αγορά Mercado de la Paz, περίπου 10 λεπτά με τα πόδια. Είναι μια αυθεντική και οικονομική εμπειρία.",
+        "map_url": "https://maps.app.goo.gl/eNzmfV9WgmfUz2366"
       },
       "website": "https://museoceramadrid.com/",
       "notes": [],
@@ -1033,9 +1034,9 @@
         "lng": -3.702
       },
       "restaurant": {
-        "name": "Café IKONO",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+IKONO+Madrid"
+        "name": "Tierra Burrito Bar",
+        "description": "Αν ψάχνετε για κάτι πολύ γρήγορο, οικονομικό και σίγουρο (ειδικά για παιδιά που αγαπούν τα burritos και τα nachos), το Tierra είναι η καλύτερη επιλογή στην περιοχή",
+        "map_url": "https://maps.app.goo.gl/6T3fMQ5TqSTS1SxbA"
       },
       "website": "https://ikonomadrid.com/",
       "notes": [
@@ -1051,9 +1052,9 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "cafe": {
-        "name": "Railway Café",
-        "description": "train museum café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Railway+Museum+Madrid+Cafe"
+        "name": "Hola Coffee Fourquet",
+        "description": "Είναι ένα από τα πιο διάσημα "specialty coffee" spots στη Μαδρίτη",
+        "map_url": "https://maps.app.goo.gl/gwQju4P36JM32uP2A"
       }
     },
     {
