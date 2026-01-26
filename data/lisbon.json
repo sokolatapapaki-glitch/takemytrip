@@ -4,14 +4,14 @@
   "currency": "EUR",
   "emoji": "🇵🇹",
   "pricing_model": "per_age",
-  "description": "Η ηλιακή πρωτεύουσα της Πορτογαλίας, χτισμένη σε επτά λόφους, με ιστορικά μνημεία, παραδοσιακές συνοικίες και θέα στον Τάγο.",
+  "description": "Η  πρωτεύουσα της Πορτογαλίας, χτισμένη σε επτά λόφους, με ιστορικά μνημεία, παραδοσιακές συνοικίες και θέα στον Τάγο.",
   "location": {
     "lat": 38.7223,
     "lng": -9.1393
   },
   "cityPass": {
     "name": "Lisboa Card",
-    "description": "Free entry to 51 attractions, unlimited public transport including trains to Sintra/Cascais, and 5-50% discounts",
+    "description": "Δωρεάν είσοδος σε 51 δραστηριότητες, απεριόριστη πρόσβαση στα μέσα μεταφοράς συμπεριλαμβανομένου του τρένου προς Sintra ",
     "discountPercent": 30,
     "url": "https://www.lisboacard.org/"
   },
@@ -49,9 +49,9 @@
         "lng": -9.0937
       },
       "restaurant": {
-        "name": "Sea Me",
-        "description": "ψαροταβέρνα",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Sea+Me+Lisbon"
+        "name": "D'Bacalhau",
+        "description": "ο ειδικός στον μπακαλιάρο (το εθνικό πιάτο της Πορτογαλίας).",
+        "map_url": "https://maps.app.goo.gl/A23JUbVkU75PfJ1k9"
       },
       "website": "https://www.oceanario.pt/en/",
       "notes": [],
@@ -65,15 +65,15 @@
       "duration_hours": 3,
       "best_time": "any",
       "cafe": {
-        "name": "Café do Oceanário",
-        "description": "café στο ενυδρείο",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+do+Oceanario+Lisbon"
+        "name": "The Primus Açai & Friends",
+        "description": "αυτό το μέρος έχει τέλειες κριτικές (5.0) και προσφέρει υγιεινές επιλογές.",
+        "map_url": "https://maps.app.goo.gl/Xapirz9aLeKDMfrC9"
       }
     },
     {
       "id": 2,
       "name": "Pavilhão do Conhecimento",
-      "description": "Διαδραστικό μουσείο επιστήμης ιδανικό για παιδιά και εφήβους.",
+      "description": "Διαδραστικό μουσείο επιστήμης ιδανικό για παιδιά και εφήβους (3-16 ετών).",
       "category": "museum",
       "prices": {
         "0": 0,
@@ -102,10 +102,10 @@
         "lat": 38.7625,
         "lng": -9.095
       },
-      "restaurant": {
-        "name": "Restaurante do Oceanário",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Restaurante+do+Oceanário"
+     "restaurant": {
+        "name": "ZeroZero Parque das Nações",
+        "description": "πίτσες εξαιρετικής ποιότητας με υλικά από την Ιταλία",
+        "map_url": "https://maps.app.goo.gl/m8auyvHpnRcNFcgu5"
       },
       "website": "https://www.pavconhecimento.pt/en/",
       "notes": [],
@@ -119,15 +119,15 @@
       "duration_hours": 2.5,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Pastéis de Belém",
-        "description": "διάσημα pastéis από το 1837",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Pasteis+de+Belem+Lisbon"
+        "name": "A Padaria Portuguesa",
+        "description": "δημοφιλής πορτογαλική αλυσίδα, γνωστή για την καλή ποιότητα και τις λογικές τιμές της",
+        "map_url": "https://maps.app.goo.gl/f7jZqZ8Ndhq2GCMX7"
       }
     },
     {
       "id": 3,
-      "name": "Πύργος του Μπέλεν",
-      "description": "Ιστορικός πύργος από τον 16ο αιώνα, σύμβολο της Πορτογαλίας.",
+      "name": "Πύργος του Μπελέμ",
+      "description": "Μνημείο της UNESCO και το πιο αναγνωρίσιμο ορόσημο της Λισαβόνας, εντυπωσιάζοντας με τη «δαντελωτή» αρχιτεκτονική του που μοιάζει με κάστρο μέσα στο νερό.Το εσωτερικό του είναι δύσκολο με παιδιά κάτω των 5-6 ετών λόγω στενών σκαλιών.",
       "category": "monument",
       "prices": {
         "0": 0,
@@ -157,9 +157,9 @@
         "lng": -9.216
       },
       "restaurant": {
-        "name": "Pasteis de Belem",
-        "description": "διάσημα παστέλ νάτα",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Pasteis+de+Belem"
+        "name": "Restaurante O Frade",
+        "description": "Ένα μικρό, μοντέρνο εστιατόριο (Michelin Bib Gourmand) που σερβίρει παραδοσιακές γεύσεις από την περιοχή Alentejo.",
+        "map_url": "https://maps.app.goo.gl/etun1SRJGbXjYQfW7"
       },
       "website": "https://www.torrebelem.pt/en/",
       "notes": [],
@@ -173,15 +173,15 @@
       "duration_hours": 1,
       "best_time": "morning",
       "cafe": {
-        "name": "Time Out Market",
-        "description": "food hall με πολλές επιλογές",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Time+Out+Market+Lisbon"
+        "name": "Pasteis de Belem",
+        "description": "διάσημα παστέλ νάτα",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Pasteis+de+Belem"
       }
     },
     {
       "id": 4,
       "name": "Μοναστήρι των Ιερονομιτών",
-      "description": "Μνημείο UNESCO με εκπληκτική αρχιτεκτονική και ιστορία.",
+      "description": "Μνημείο UNESCO με εκπληκτική αρχιτεκτονική και ιστορία. Κατάλληλο για παιδιά από 3 ετών αν και ίσως κουραστούν. Θα εκτιμηθεί περισσότερο από ηλικίες άνω των 6-7 ετών",
       "category": "monument",
       "prices": {
         "0": 0,
@@ -211,9 +211,9 @@
         "lng": -9.2067
       },
       "restaurant": {
-        "name": "Antiga Confeitaria",
-        "description": "παραδοσιακά γλυκά",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Antiga+Confeitaria+de+Belem"
+        "name": "Guelra Restaurante",
+        "description": "Ένα από τα κορυφαία εστιατόρια της περιοχής με βαθμολογία 4.7, γνωστό για τα θαλασσινά και τα ψάρια του",
+        "map_url": "https://maps.app.goo.gl/9u91arxvTrCeqzCD7"
       },
       "website": "https://www.mosteirojeronimos.pt/en/",
       "notes": [],
@@ -227,15 +227,15 @@
       "duration_hours": 1.5,
       "best_time": "morning",
       "cafe": {
-        "name": "A Brasileira",
-        "description": "ιστορικό καφέ",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+A+Brasileira+Lisbon"
+        "name": "Pastéis de Belém",
+        "description": "Είναι το ιστορικότερο ζαχαροπλαστείο της Λισαβόνας (από το 1837), που σερβίρει τις αυθεντικές τάρτες με τη «μυστική συνταγή» των μοναχών. Το μαγαζί είναι τεράστιο εσωτερικά , οι τάρτες τρώγονται ζεστές με κανέλα και άχνη, και παρόλο που έχει πάντα ουρές, η εξυπηρέτηση είναι ταχύτατη.",
+        "map_url": "https://maps.app.goo.gl/uWiGeyhkDk4aNbNf6"
       }
     },
     {
       "id": 5,
       "name": "Κάστρο του Αγίου Γεωργίου",
-      "description": "Μεσαιωνικό κάστρο με πανοραμική θέα της Λισαβόνας.",
+      "description": "Μεσαιωνικό κάστρο με πανοραμική θέα της Λισαβόνας.Δύσκολο για καρότσι. Ιδανική ηλικία άνω των 5 ετών",
       "category": "castle",
       "prices": {
         "0": 0,
@@ -265,9 +265,9 @@
         "lng": -9.1335
       },
       "restaurant": {
-        "name": "Chapito",
-        "description": "εστιατόριο με θέα",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Chapito"
+        "name": "Paladarium",
+        "description": "παραδοσιακές πορτογαλικές σπεσιαλιτέ και κρασί σε ένα περιβάλλον που θυμίζει παλιά Λισαβόνα",
+        "map_url": "https://maps.app.goo.gl/UV1r4jnZNBi7689Z8"
       },
       "website": "https://castelodesaojorge.pt/en/",
       "notes": [],
@@ -281,9 +281,9 @@
       "duration_hours": 2,
       "best_time": "evening",
       "cafe": {
-        "name": "Vertigo Café",
-        "description": "rooftop café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Vertigo+Cafe+Lisbon"
+        "name": "Quase Café",
+        "description": "Ένα από τα πιο κοντινά και γραφικά καφέ, ιδανικό για ένα χαλαρό διάλειμμα. Είναι γνωστό για την ποιότητα του καφέ του και τις σπιτικές λιχουδιές του.",
+        "map_url": "https://maps.app.goo.gl/MT7V59QW1XxaGNg36"
       }
     },
     {
