@@ -347,6 +347,68 @@
         "description": "",
         "map_url": "https://maps.app.goo.gl/sXMTyTN87kZ4rc9v5"
       }
+    },
+    {
+      "id": 7,
+      "name": "Μνημείο των Ανακαλύψεων",
+      "description": "Εντυπωσιακό μνημείο αφιερωμένο στους Πορτογάλους εξερευνητές με πανοραμική θέα της Λισαβόνας.",
+      "category": "monument",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 5,
+        "14": 5,
+        "15": 5,
+        "16": 5,
+        "17": 5,
+        "18": 5,
+        "19": 5,
+        "20": 5,
+        "21": 5,
+        "22": 5,
+        "23": 5,
+        "24": 5,
+        "25": 5,
+        "adult": 10
+      },
+      "location": {
+        "lat": 38.693596,
+        "lng": -9.205712
+      },
+      "restaurant": {
+        "name": "Portugália Cervejaria Belém",
+        "description": "",
+        "map_url": "https://maps.app.goo.gl/fk4v9RDqVmnx7Yf88"
+      },
+      "website": "https://padraodosdescobrimentos.pt/",
+      "notes": [
+        "Οι τιμές περιλαμβάνουν την πρόσβαση στην κορυφή για θέα, την ταινία και την έκθεση."
+      ],
+      "tags": [
+        "monument",
+        "historic",
+        "view",
+        "explorers",
+        "panorama"
+      ],
+      "duration_hours": 1,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "Miolo",
+        "description": "",
+        "map_url": "https://maps.app.goo.gl/GvZUYQ5ofubpowGVA"
+      }
     }
   ]
 }
