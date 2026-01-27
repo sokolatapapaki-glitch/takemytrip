@@ -373,9 +373,9 @@
         "lng": -3.6894
       },
       "restaurant": {
-        "name": "Restaurante Tierno Galván",
-        "description": "κοντά στο πάρκο",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Restaurante+Tierno+Galvan+Madrid"
+        "name": "In-Pulso Restaurante",
+        "description": "Είναι το πιο κοντινό και θεωρείται ένα από τα καλύτερα γαστρονομικά σημεία της περιοχής (έχει βραβευτεί και με Bib Gourmand από τον οδηγό Michelin).",
+        "map_url": "https://maps.app.goo.gl/qPqJZxf34AXpxhfF9"
       },
       "website": "https://planetmad.es/",
       "notes": [],
@@ -388,9 +388,9 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "cafe": {
-        "name": "Faunia Café",
-        "description": "nature park café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Faunia+Cafe+Madrid"
+        "name": "In-Pulso Restaurante",
+        "description": "Είναι το πιο κοντινό και θεωρείται ένα από τα καλύτερα γαστρονομικά σημεία της περιοχής (έχει βραβευτεί και με Bib Gourmand από τον οδηγό Michelin). Ιδανικό και για καφέ",
+        "map_url": "https://maps.app.goo.gl/qPqJZxf34AXpxhfF9"
       }
     },
     {
@@ -702,7 +702,7 @@
       "restaurant": {
         "name": "Mercado de San Isidro",
         "description": "εντός του πάρκου",
-        "map_url": "https://share.google/6yZcs7GF0kgQaLJi4"
+        "map_url": "https://maps.app.goo.gl/mjASDbthz6reV6Tk7"
       },
       "website": "https://www.parquedeatracciones.es/",
       "notes": [
@@ -719,7 +719,7 @@
       "cafe": {
         "name": "Nickelodeon café",
         "description": "Βρίσκεται στη ζώνη των παιδικών παιχνιδιών (Nickelodeon Land)",
-        "map_url": "https://share.google/9cfm2dxnm7LQgY2AO"
+        "map_url": "https://maps.app.goo.gl/i3PfBB5RTAdWwniRA"
       }
     },
     {
@@ -755,9 +755,9 @@
         "lng": -3.5931
       },
       "restaurant": {
-        "name": "Restaurante Warner Park",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Restaurante+Warner+Madrid"
+        "name": "El Rancho",
+        "description": "Eντός του πάρκου με αμερικανικό στυλ φαγητού (κυρίως κρέατα και grill)",
+        "map_url": "https://maps.app.goo.gl/j9u1AJSs8hz9urDX8"
       },
       "website": "https://www.parquewarner.com/",
       "notes": [
@@ -773,15 +773,15 @@
       "duration_hours": 6,
       "best_time": "any",
       "cafe": {
-        "name": "Sorolla Café",
-        "description": "museum café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Museo+Sorolla+Cafe+Madrid"
+        "name": "Starbucks",
+        "description": "Κλασικά Starbucks",
+        "map_url": "https://maps.app.goo.gl/BuZGhuFCqc1kZP6s6"
       }
     },
     {
       "id": 15,
-      "name": "Safari Madrid (στο Αλμπένθε)",
-      "description": "Σαφάρι με ζώα. Απαιτεί αυτοκίνητο (50χλμ από Μαδρίτη).",
+      "name": "Safari Madrid (Aldea del Fresno)",
+      "description": "Σαφάρι με ζώα.Μπαίνεις με το δικό σου αυτοκίνητο σε μεγάλες περιφραγμένες εκτάσεις όπου κυκλοφορούν ελεύθερα ζώα. (50χλμ από Μαδρίτη).",
       "category": "zoo",
       "prices": {
         "0": 0,
@@ -811,9 +811,9 @@
         "lng": -3.245
       },
       "restaurant": {
-        "name": "Restaurante Safari Madrid",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Restaurante+Safari+Madrid"
+        "name": "Restaurante Amboseli",
+        "description": "Είναι το κεντρικό εστιατόριο του πάρκου. Κυρίως κλασικές επιλογές όπως μπέργκερ, σάντουιτς και κάποια ισπανικά πιάτα.",
+        "map_url": "https://maps.app.goo.gl/FSZYorv9fYnrFUjR6"
       },
       "website": "https://www.safarimadrid.com/",
       "notes": [
@@ -829,9 +829,9 @@
       "duration_hours": 3,
       "best_time": "morning",
       "cafe": {
-        "name": "Thyssen Café",
-        "description": "museum café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Thyssen+Museum+Cafe+Madrid"
+        "name": "Bar El Barril",
+        "description": "Το χωριό Aldea del Fresno (μόλις 5-8 λεπτά με το αυτοκίνητο) έχει πολύ ωραίες  επιλογές: Το Bar El Barril είναι υπέροχο για καφέ, σνακ ή τάπας, με πολύ υψηλή βαθμολογία (4.6). ",
+        "map_url": "https://maps.app.goo.gl/LQHHW7DgZ2rMChX57"
       }
     },
     {
@@ -867,9 +867,9 @@
         "lng": -3.6883
       },
       "restaurant": {
-        "name": "Restaurante Bernabéu",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Restaurante+Bernabeu+Madrid"
+        "name": "Tony Roma's",
+        "description": "ναι μια κλασική επιλογή για όσους αγαπούν το αμερικάνικο BBQ. Πιο οικονομική λύση από τα εστιατόρια εντός του γηπέδου",
+        "map_url": "https://maps.app.goo.gl/EdnSqbr1gVtA9hk46"
       },
       "website": "https://www.realmadrid.com/",
       "notes": [
