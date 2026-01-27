@@ -173,9 +173,9 @@
       "best_time": "afternoon",
       "freeActivity": true,
       "cafe": {
-        "name": "Café de Oriente",
-        "description": "café με θέα στο παλάτι",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+de+Oriente+Madrid"
+        "name": "Dot Café Bar",
+        "description": "Μην παραλείψετε να δοκιμάσετε τα σπιτικά γλυκά τους ή το περίφημο bikini sandwich τους.",
+        "map_url": "https://maps.app.goo.gl/JjArVpyUJwdFWQcv7"
       }
     },
     {
@@ -924,8 +924,8 @@
       },
       "restaurant": {
         "name": "Restaurante Micropolix",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Restaurante+Micropolix+Madrid"
+        "description": "Εστιατόριο μέσα στον χώρο",
+        "map_url": "https://maps.app.goo.gl/y2VpL2TUQcX2MecR9"
       },
       "website": "https://micropolix.com/",
       "notes": [],
@@ -939,9 +939,9 @@
       "duration_hours": 4,
       "best_time": "any",
       "cafe": {
-        "name": "Planetario Café",
-        "description": "planetarium café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Planetario+Madrid+Cafe"
+        "name": "The Chatter Cafe",
+        "description": "Βρίσκεται ακριβώς δίπλα, εντός του συγκροτήματος",
+        "map_url": "https://maps.app.goo.gl/scQ6Es4BYRsYnMie6"
       }
     },
     {
