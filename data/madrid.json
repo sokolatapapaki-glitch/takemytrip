@@ -868,7 +868,7 @@
       },
       "restaurant": {
         "name": "Tony Roma's",
-        "description": "ναι μια κλασική επιλογή για όσους αγαπούν το αμερικάνικο BBQ. Πιο οικονομική λύση από τα εστιατόρια εντός του γηπέδου",
+        "description": "Eίναι μια κλασική επιλογή για όσους αγαπούν το αμερικάνικο BBQ. Πιο οικονομική λύση από τα εστιατόρια εντός του γηπέδου",
         "map_url": "https://maps.app.goo.gl/EdnSqbr1gVtA9hk46"
       },
       "website": "https://www.realmadrid.com/",
@@ -885,9 +885,9 @@
       "duration_hours": 2,
       "best_time": "any",
       "cafe": {
-        "name": "Real Café",
-        "description": "stadium café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Bernabeu+Stadium+Cafe+Madrid"
+        "name": "Maison Kayser Bernabéu",
+        "description": "Μια εξαιρετική γαλλική boulangerie/café ακριβώς απέναντι. Ιδανικό για πολύ καλό καφέ, φρέσκα κρουασάν και γλυκά σε έναν πολύ όμορφο χώρο.",
+        "map_url": "https://maps.app.goo.gl/dNJdjtU87QuPsT9F9"
       }
     },
     {
@@ -977,9 +977,9 @@
         "lng": -3.7035
       },
       "restaurant": {
-        "name": "Sweet Space Cafe",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Sweet+Space+Cafe+Madrid"
+        "name": "VIPS",
+        "description": "Πρόκειται για μια πολύ δημοφιλή αλυσίδα στην Ισπανία, η οποία αποτελεί την ιδανική λύση για κοντά και οικονομικά.",
+        "map_url": "https://maps.app.goo.gl/LdqdN6FXoyPziPSa7"
       },
       "website": "https://sweetspace.es/",
       "notes": [
@@ -995,9 +995,9 @@
       "duration_hours": 2,
       "best_time": "any",
       "cafe": {
-        "name": "Micropolix Café",
-        "description": "kids' city café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Micropolix+Cafe+Madrid"
+        "name": "VIPS",
+        "description": "Πρόκειται για μια πολύ δημοφιλή αλυσίδα στην Ισπανία, η οποία αποτελεί την ιδανική λύση για κοντά και οικονομικά.",
+        "map_url": "https://maps.app.goo.gl/LdqdN6FXoyPziPSa7"
       }
     },
     {
@@ -1149,7 +1149,7 @@
         "description": "παραδοσιακό",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Casa+Mingo+Madrid"
       },
-      "website": "https://www.teleferico.com/",
+      "website": "https://teleferico.emtmadrid.es/",
       "notes": [
         "⚠️ ΠΡΟΣΩΡΙΝΑ ΚΛΕΙΣΤΟ - Ελέγξτε πριν από επίσκεψη"
       ],
@@ -1163,9 +1163,9 @@
       "best_time": "any",
       "currentlyClosed": true,
       "cafe": {
-        "name": "Gran Vía Cafés",
-        "description": "shopping street cafés",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Gran+Via+Cafe+Madrid"
+        "name": "Starbucks",
+        "description": "Απέχει μόλις 4-5 λεπτά με τα πόδια (περίπου 350 μέτρα) από το Casa Mingo. το προτεινόμενο για φαγητό",
+        "map_url": "https://maps.app.goo.gl/kbLr3GZybNH73PFR8"
       }
     }
   ]
