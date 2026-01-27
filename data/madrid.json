@@ -211,9 +211,9 @@
         "lng": -3.7185
       },
       "restaurant": {
-        "name": "Εστιατόριο με θέα στον ναό",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Restaurante+con+vistas+Templo+de+Debod"
+        "name": "Restaurante Aladino",
+        "description": "Μια από τις πιο κοντινές και οικονομικές επιλογές. Aυθεντική συριακή και μεσογειακή κουζίνα σε καλές τιμές.",
+        "map_url": "https://maps.app.goo.gl/jHNDBoKnRj5egpY88"
       },
       "notes": [],
       "tags": [
@@ -227,9 +227,9 @@
       "best_time": "evening",
       "freeActivity": true,
       "cafe": {
-        "name": "Casita del Pescador",
-        "description": "café στο πάρκο",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Retiro+Park+Cafe+Madrid"
+        "name": "The Fix - Café de Especialidad",
+        "description": "Ένα σύγχρονο καφέ με εξαιρετικό καφέ  και πολύ καλές κριτικές.",
+        "map_url": "https://maps.app.goo.gl/MmoZYi94RPU4k54K9"
       }
     },
     {
@@ -1058,7 +1058,7 @@
     },
     {
       "id": 20,
-      "name": "Urban Planet ",
+      "name": "Urban Planet Las Rejas ",
       "description": "ένα σύγχρονο δίκτυο κλειστών πάρκων με τραμπολίνο. Κατάλληλο για άνω των 5 ετών",
       "category": "sports",
       "prices": {
@@ -1089,11 +1089,11 @@
         "lng": -3.625
       },
       "restaurant": {
-        "name": "Café Urban Planet",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Urban+Planet+Madrid"
+        "name": "Freestyle Cantina: Sports Bar con Bolera",
+        "description": "Λειτουργεί ως Sports Bar, προσφέροντας κυρίως πίτσες, hot dogs, nachos και άλλα σνακ που είναι δημοφιλή σε μικρούς και μεγάλους.",
+        "map_url": "https://maps.app.goo.gl/Z1Mf5dum8dV9TaRs5"
       },
-      "website": "https://urbanplanetmadrid.com/",
+      "website": "https://urbanplanetjump.es/parques/las-rejas/",
       "notes": [
         "💰 ~12€ για 60 λεπτά"
       ],
@@ -1107,9 +1107,9 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "cafe": {
-        "name": "Madrid Río Café",
-        "description": "riverside café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Madrid+Rio+Cafe"
+       "name": "Freestyle Cantina: Sports Bar con Bolera",
+        "description": "Λειτουργεί ως Sports Bar, προσφέροντας κυρίως πίτσες, hot dogs, nachos και άλλα σνακ που είναι δημοφιλή σε μικρούς και μεγάλους.",
+        "map_url": "https://maps.app.goo.gl/Z1Mf5dum8dV9TaRs5"
       }
     },
     {
