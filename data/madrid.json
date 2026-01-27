@@ -289,7 +289,7 @@
     {
       "id": 6,
       "name": "Museo Naval (Ναυτικό Μουσείο)",
-      "description": "Σπουδαία συλλογή με ναυτικά χάρτη, μακέτες πλοίων και ιστορικά αντικείμενα. Κοντά στο κέντρο.Ιδανικό για ηλικίες 6-14 ετών",
+      "description": "Σπουδαία συλλογή με ναυτικούς χάρτες, μακέτες πλοίων και ιστορικά αντικείμενα. Κοντά στο κέντρο.Ιδανικό για ηλικίες 6-14 ετών",
       "category": "museum",
       "prices": {
         "0": 0,
@@ -319,9 +319,9 @@
         "lng": -3.692
       },
       "restaurant": {
-        "name": "Café Gijón",
-        "description": "ιστορικό καφέ",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Gijon+Madrid"
+        "name": "VIPS",
+        "description": "Όπως όλα τα VIPS, διαθέτει παιδικό μενού, παιδικά καθίσματα και είναι συνηθισμένο σε οικογένειες με καρότσια.Burgers, σάντουιτς και σαλάτες σε πολύ καλές τιμές",
+        "map_url": "https://maps.app.goo.gl/TKd4Ms8F1Ti1RPDx8"
       },
       "notes": [],
       "tags": [
@@ -335,9 +335,9 @@
       "best_time": "afternoon",
       "freeActivity": true,
       "cafe": {
-        "name": "Warner Cafés",
-        "description": "theme park cafés",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Parque+Warner+Cafe+Madrid"
+        "name": "Osom Coffee Cantine",
+        "description": "Είναι ένας μοντέρνος και φωτεινός χώρος με εξαιρετικό specialty coffee και υγιεινά σνακ",
+        "map_url": "https://maps.app.goo.gl/86pgHKPUZDGjVyAL9"
       }
     },
     {
@@ -395,7 +395,7 @@
     },
     {
       "id": 8,
-      "name": "Museo Nacional de Ciencias Naturales",
+      "name": "Museo Nacional de Ciencias Naturales - Μουσείο Φυσικών Επιστημών",
       "description": "Περιλαμβάνει εκθέσεις με δεινόσαυρους και διάφορα οικοσυστήματα.Ιδανικά από 6-7 ετών και πάνω, κατάλληλο όμως και από 3 ετών",
       "category": "museum",
       "prices": {
@@ -426,9 +426,9 @@
         "lng": -3.6902
       },
       "restaurant": {
-        "name": "Café του Μουσείου",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Museo+Ciencias+Naturales"
+        "name": "VIPS",
+        "description": "Είναι η "κλασική" οικογενειακή επιλογή στην Ισπανία. Είναι εξαιρετικά προετοιμασμένοι για παιδιά, έχουν πάντα παιδικά καθίσματα, ειδικό μενού για μικρούς και πολύ χώρο για καρότσια.",
+        "map_url": "https://maps.app.goo.gl/PXJRjkWuAX7Ywyvj9"
       },
       "website": "https://www.mncn.csic.es/",
       "notes": [],
@@ -442,9 +442,9 @@
       "duration_hours": 2.5,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Parque Café",
-        "description": "amusement café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Parque+Atracciones+Cafe+Madrid"
+        "name": "La Deseada Specialty Coffee",
+        "description": "Ένα από τα καλύτερα μέρη στην περιοχή. Είναι μικρό και cozy, με πολύ ποιοτικό καφέ και ωραία σνακ.",
+        "map_url": "https://maps.app.goo.gl/5wwtSK3NrzREySCf8"
       }
     },
     {
@@ -497,7 +497,7 @@
       "best_time": "afternoon",
       "cafe": {
         "name": "Café Colón Madrid",
-        "description": "Βρίσκεται ακριβώς δίπλα",
+        "description": "Βρίσκεται ακριβώς δίπλα στο μουσείο!",
         "map_url": "https://maps.app.goo.gl/zP9RFCxDBtdaic2y9"
       }
     },
