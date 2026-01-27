@@ -49,9 +49,9 @@
         "lng": -3.6834
       },
       "restaurant": {
-        "name": "Café del Retiro",
-        "description": "μέσα στο πάρκο",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+del+Retiro+Madrid"
+        "name": "Erre Que Erre Retiro",
+        "description": "Είναι ένας χαλαρός χώρος που προσφέρει καλή ποιότητα σε πολύ λογικές τιμές. Σερβίρει από πρωινό και καφέ μέχρι τάπας, σάντουιτς και μερίδες",
+        "map_url": "https://maps.app.goo.gl/vx8rsMjYL9yHQeg26"
       },
       "notes": [],
       "tags": [
@@ -65,9 +65,9 @@
       "best_time": "afternoon",
       "freeActivity": true,
       "cafe": {
-        "name": "Café del Prado",
-        "description": "café κοντά στο μουσείο",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+del+Prado+Madrid"
+        "name": "VEIA Café & Clubhouse",
+        "description": "Με την εντυπωσιακή βαθμολογία 4.9, είναι ίσως η καλύτερη επιλογή στην περιοχή. Είναι ένας πολύ προσεγμένος χώρος",
+        "map_url": "https://maps.app.goo.gl/Yc6qE8yYQYbyTZgf9"
       }
     },
     {
@@ -700,9 +700,9 @@
         "lng": -3.7572
       },
       "restaurant": {
-        "name": "Restaurante Parque Atracciones",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Restaurante+Parque+Atracciones+Madrid"
+        "name": "Mercado de San Isidro",
+        "description": "εντός του πάρκου",
+        "map_url": "https://share.google/6yZcs7GF0kgQaLJi4"
       },
       "website": "https://www.parquedeatracciones.es/",
       "notes": [
@@ -717,9 +717,9 @@
       "duration_hours": 5,
       "best_time": "any",
       "cafe": {
-        "name": "CaixaForum Café",
-        "description": "museum café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=CaixaForum+Madrid+Cafe"
+        "name": "Nickelodeon café",
+        "description": "Βρίσκεται στη ζώνη των παιδικών παιχνιδιών (Nickelodeon Land)",
+        "map_url": "https://share.google/9cfm2dxnm7LQgY2AO"
       }
     },
     {
