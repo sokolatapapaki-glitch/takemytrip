@@ -103,9 +103,9 @@
         "lng": -3.7587
       },
       "restaurant": {
-        "name": "Restaurante Casa de Campo",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Restaurante+Casa+de+Campo+Madrid"
+        "name": "TriCiclo l Restaurante Mediterráneo Madrid",
+        "description": "Λίγο πιο μοντέρνο αλλά με παραδοσιακές βάσεις. Eξαιρετικό μέρος για να μοιραστείτε πιάτα (tapas/raciones).",
+        "map_url": "https://maps.app.goo.gl/hCTkdDgqFGAEDz5X7"
       },
       "notes": [],
       "tags": [
@@ -119,9 +119,9 @@
       "best_time": "any",
       "freeActivity": true,
       "cafe": {
-        "name": "San Ginés",
-        "description": "διάσημο για churros",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Chocolateria+San+Gines+Madrid"
+        "name": "Café del Lago",
+        "description": "Βρίσκεται ακριβώς δίπλα στο νερό σε φωτεινό χώρο με μεγάλη βεράντα. Είναι πολύ δημοφιλές για την προνομιακή του θέση.",
+        "map_url": "https://maps.app.goo.gl/1Zx7qfMecpzXvRCs6"
       }
     },
     {
@@ -590,9 +590,10 @@
         "lng": -3.6026
       },
       "restaurant": {
-        "name": "Restaurante Faunia",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Restaurante+Faunia+Madrid"
+        "name": "Restaurante A'Cañada
+",
+        "description": "Είναι ένα παραδοσιακό ισπανικό εστιατόριο, γνωστό για το "cocido madrileño" και τις γενναίες μερίδες του",
+        "map_url": "https://maps.app.goo.gl/CpyjFnBPcP6uT7tp6"
       },
       "website": "https://www.faunia.es/",
       "notes": [
@@ -647,7 +648,7 @@
       },
       "restaurant": {
         "name": "Food Court X-Madrid",
-        "description": "",
+        "description": "εντός του εμπορικού κέντρου ,  πολλές επιλογές",
         "map_url": "https://www.google.com/maps/search/?api=1&query=X-Madrid+food+court"
       },
       "website": "https://atlantisaquarium-madrid.es/",
@@ -662,9 +663,9 @@
       "duration_hours": 2,
       "best_time": "any",
       "cafe": {
-        "name": "Matadero Café",
-        "description": "cultural center café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Matadero+Madrid+Cafe"
+         "name": "Food Court X-Madrid",
+        "description": "εντός του εμπορικού κέντρου ,πολλές επιλογές",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=X-Madrid+food+court"
       }
     },
     {
