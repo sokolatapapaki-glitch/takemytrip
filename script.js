@@ -5494,97 +5494,97 @@ const bikeTime = Math.round(distance * 8);      // Ποδήλατο
     const routePopup = L.popup()
     .setLatLng(middlePoint)
     .setContent(`
-        <div style="min-width: 280px; font-family: 'Roboto', sans-serif; padding: 5px;">
-            <h4 style="margin: 0 0 12px 0; color: #1A202C; text-align: center; font-size: 16px;">
+        <div style="min-width: 220px; font-family: 'Roboto', sans-serif; padding: 3px;">
+            <h4 style="margin: 0 0 8px 0; color: #1A202C; text-align: center; font-size: 14px;">
                 🛣️ Πληροφορίες Διαδρομής
             </h4>
-            
-            <div style="background: #F7FAFC; padding: 12px; border-radius: 8px; margin-bottom: 15px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+
+            <div style="background: #F7FAFC; padding: 8px; border-radius: 6px; margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 3px; font-size: 12px;">
                     <span><strong>📍 Από:</strong></span>
                     <span style="color: #10B981; font-weight: bold;">${selectedPointA.title}</span>
                 </div>
-                <div style="display: flex; justify-content: space-between;">
+                <div style="display: flex; justify-content: space-between; font-size: 12px;">
                     <span><strong>🎯 Προς:</strong></span>
                     <span style="color: #EF4444; font-weight: bold;">${selectedPointB.title}</span>
                 </div>
             </div>
-            
-            <div style="background: #E6FFFA; padding: 12px; border-radius: 6px; margin-bottom: 15px;">
-                <div style="text-align: center; font-size: 24px; font-weight: bold; color: #0D9488;">
+
+            <div style="background: #E6FFFA; padding: 8px; border-radius: 6px; margin-bottom: 10px;">
+                <div style="text-align: center; font-size: 20px; font-weight: bold; color: #0D9488;">
                     ${distance} km
                 </div>
-                <div style="text-align: center; font-size: 12px; color: #4A5568;">
+                <div style="text-align: center; font-size: 10px; color: #4A5568;">
                     Ευθεία γραμμή (περίπου)
                 </div>
             </div>
-            
-            <div style="margin-bottom: 15px;">
-                <h5 style="color: var(--dark); margin-bottom: 8px; font-size: 14px;">
+
+            <div style="margin-bottom: 10px;">
+                <h5 style="color: var(--dark); margin-bottom: 6px; font-size: 12px;">
                     <i class="fas fa-clock"></i> Εκτιμώμενος Χρόνος:
                 </h5>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                    <div style="text-align: center; padding: 8px; background: #e3f2fd; border-radius: 4px;">
-                        <div style="font-size: 18px;">🚶</div>
-                        <div style="font-size: 14px; font-weight: bold;">${walkTime} λεπτά</div>
-                        <div style="font-size: 10px; color: var(--gray);">Περπάτημα*</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px;">
+                    <div style="text-align: center; padding: 5px; background: #e3f2fd; border-radius: 4px;">
+                        <div style="font-size: 14px;">🚶</div>
+                        <div style="font-size: 12px; font-weight: bold;">${walkTime} λεπτά</div>
+                        <div style="font-size: 9px; color: var(--gray);">Περπάτημα*</div>
                     </div>
-                    <div style="text-align: center; padding: 8px; background: #fff3e0; border-radius: 4px;">
-                        <div style="font-size: 18px;">🚗</div>
-                        <div style="font-size: 14px; font-weight: bold;">${carTime} λεπτά</div>
-                        <div style="font-size: 10px; color: var(--gray);">Αυτοκίνητο*</div>
+                    <div style="text-align: center; padding: 5px; background: #fff3e0; border-radius: 4px;">
+                        <div style="font-size: 14px;">🚗</div>
+                        <div style="font-size: 12px; font-weight: bold;">${carTime} λεπτά</div>
+                        <div style="font-size: 9px; color: var(--gray);">Αυτοκίνητο*</div>
                     </div>
-                        <div style="text-align: center; padding: 8px; background: #e8f5e9; border-radius: 4px;">
-        <div style="font-size: 18px;">🚇</div>
-        <div style="font-size: 14px; font-weight: bold;">~${Math.round(distance * 5)} λεπτά</div>
-        <div style="font-size: 10px; color: var(--gray);">ΜΜΜ*</div>
+                        <div style="text-align: center; padding: 5px; background: #e8f5e9; border-radius: 4px;">
+        <div style="font-size: 14px;">🚇</div>
+        <div style="font-size: 12px; font-weight: bold;">~${Math.round(distance * 5)} λεπτά</div>
+        <div style="font-size: 9px; color: var(--gray);">ΜΜΜ*</div>
     </div>
-    <div style="text-align: center; padding: 8px; background: #f3e5f5; border-radius: 4px;">
-        <div style="font-size: 18px;">🚲</div>
-        <div style="font-size: 14px; font-weight: bold;">~${Math.round(distance * 8)} λεπτά</div>
-        <div style="font-size: 10px; color: var(--gray);">Ποδήλατο*</div>
+    <div style="text-align: center; padding: 5px; background: #f3e5f5; border-radius: 4px;">
+        <div style="font-size: 14px;">🚲</div>
+        <div style="font-size: 12px; font-weight: bold;">~${Math.round(distance * 8)} λεπτά</div>
+        <div style="font-size: 9px; color: var(--gray);">Ποδήλατο*</div>
     </div>
                 </div>
-                <p style="font-size: 10px; color: #666; text-align: center; margin-top: 8px; margin-bottom: 0;">
+                <p style="font-size: 9px; color: #666; text-align: center; margin-top: 5px; margin-bottom: 0;">
                     *Εκτίμηση. Για πραγματικές οδηγίες πατήστε ένα κουμπί.
                 </p>
             </div>
-            
+
             <!-- ΚΟΥΜΠΙΑ ΜΕΤΑΦΟΡΑΣ -->
-            <div style="border-top: 1px solid #eee; padding-top: 15px;">
-                <h5 style="color: #1A202C; margin-bottom: 10px; font-size: 14px; text-align: center;">
+            <div style="border-top: 1px solid #eee; padding-top: 10px;">
+                <h5 style="color: #1A202C; margin-bottom: 6px; font-size: 12px; text-align: center;">
                     <i class="fas fa-directions"></i> Άνοιγμα Google Maps
                 </h5>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 6px;">
                     <a href="https://www.google.com/maps/dir/?api=1&origin=${selectedPointA.coords[0]},${selectedPointA.coords[1]}&destination=${selectedPointB.coords[0]},${selectedPointB.coords[1]}&travelmode=walking"
                        target="_blank"
-                       style="text-align: center; padding: 10px; background: #10B981; color: white; border-radius: 6px; text-decoration: none; font-weight: 600; display: flex; flex-direction: column; align-items: center; font-size: 13px;">
-                        <i class="fas fa-walking" style="font-size: 16px; margin-bottom: 5px;"></i>
+                       style="text-align: center; padding: 6px; background: #10B981; color: white; border-radius: 4px; text-decoration: none; font-weight: 600; display: flex; flex-direction: column; align-items: center; font-size: 11px;">
+                        <i class="fas fa-walking" style="font-size: 13px; margin-bottom: 3px;"></i>
                         <span>Περπάτημα</span>
                     </a>
-                    
+
                     <a href="https://www.google.com/maps/dir/?api=1&origin=${selectedPointA.coords[0]},${selectedPointA.coords[1]}&destination=${selectedPointB.coords[0]},${selectedPointB.coords[1]}&travelmode=driving"
                        target="_blank"
-                       style="text-align: center; padding: 10px; background: #3B82F6; color: white; border-radius: 6px; text-decoration: none; font-weight: 600; display: flex; flex-direction: column; align-items: center; font-size: 13px;">
-                        <i class="fas fa-car" style="font-size: 16px; margin-bottom: 5px;"></i>
+                       style="text-align: center; padding: 6px; background: #3B82F6; color: white; border-radius: 4px; text-decoration: none; font-weight: 600; display: flex; flex-direction: column; align-items: center; font-size: 11px;">
+                        <i class="fas fa-car" style="font-size: 13px; margin-bottom: 3px;"></i>
                         <span>Αυτοκίνητο</span>
                     </a>
-                    
+
                     <a href="https://www.google.com/maps/dir/?api=1&origin=${selectedPointA.coords[0]},${selectedPointA.coords[1]}&destination=${selectedPointB.coords[0]},${selectedPointB.coords[1]}&travelmode=transit"
                        target="_blank"
-                       style="text-align: center; padding: 10px; background: #8B5CF6; color: white; border-radius: 6px; text-decoration: none; font-weight: 600; display: flex; flex-direction: column; align-items: center; font-size: 13px;">
-                        <i class="fas fa-bus" style="font-size: 16px; margin-bottom: 5px;"></i>
+                       style="text-align: center; padding: 6px; background: #8B5CF6; color: white; border-radius: 4px; text-decoration: none; font-weight: 600; display: flex; flex-direction: column; align-items: center; font-size: 11px;">
+                        <i class="fas fa-bus" style="font-size: 13px; margin-bottom: 3px;"></i>
                         <span>ΜΜΜ</span>
                     </a>
-                    
+
                     <a href="https://www.google.com/maps/dir/?api=1&origin=${selectedPointA.coords[0]},${selectedPointA.coords[1]}&destination=${selectedPointB.coords[0]},${selectedPointB.coords[1]}&travelmode=bicycling"
                        target="_blank"
-                       style="text-align: center; padding: 10px; background: #F59E0B; color: white; border-radius: 6px; text-decoration: none; font-weight: 600; display: flex; flex-direction: column; align-items: center; font-size: 13px;">
-                        <i class="fas fa-bicycle" style="font-size: 16px; margin-bottom: 5px;"></i>
+                       style="text-align: center; padding: 6px; background: #F59E0B; color: white; border-radius: 4px; text-decoration: none; font-weight: 600; display: flex; flex-direction: column; align-items: center; font-size: 11px;">
+                        <i class="fas fa-bicycle" style="font-size: 13px; margin-bottom: 3px;"></i>
                         <span>Ποδήλατο</span>
                     </a>
                 </div>
-                <p style="font-size: 11px; color: #666; text-align: center; margin-top: 5px; margin-bottom: 0;">
+                <p style="font-size: 9px; color: #666; text-align: center; margin-top: 3px; margin-bottom: 0;">
                     Ανοίγει Google Maps με πλήρεις οδηγίες και πραγματικό χρόνο.
                 </p>
             </div>
