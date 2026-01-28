@@ -294,7 +294,9 @@
     {
       "id": 6,
       "name": "Royal Observatory Greenwich",
-      "description": "Το ιστορικό αστεροσκοπείο στον Πρώτο Μεσημβρινό.",
+      "description": "Το Royal Observatory Greenwich είναι το σημείο όπου ορίστηκε ο παγκόσμιος χρόνος (GMT) και ο Πρώτος Μεσημβρινός.
+Στέκεσαι στη γραμμή που χωρίζει την Ανατολή από τη Δύση, βλέπεις ιστορικά τηλεσκόπια και μαθαίνεις πώς μετρούσαν τον χρόνο και τη θέση στη θάλασσα.
+Ιδανικό για οικογένειες, με διαδραστικά εκθέματα και εντυπωσιακό πλανητάριο.Κατάλληλο για κάθε ηλικία, έχει και μια από τις καλύτερες παιδικές χαρές του Λονδίνου.",
       "category": "museum",
       "prices": {
         "0": 0,
@@ -322,9 +324,9 @@
         "lng": -0.0005
       },
       "restaurant": {
-        "name": "Observatory Cafe",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Greenwich+Observatory+Cafe"
+        "name": "Bill's Greenwich Restaurant",
+        "description": "Απέχει περίπου 7-9 λεπτά με τα πόδια από το Βασιλικό Αστεροσκοπείο, κατηφορίζοντας τον λόφο προς το κέντρο της πόλης.Aπό τις πιο σίγουρες και αγαπημένες επιλογές για οικογένειες στην περιοχή.",
+        "map_url": "https://maps.app.goo.gl/kjkSZKS3wjr1pULp9"
       },
       "website": "https://www.rmg.co.uk/royal-observatory",
       "notes": [
@@ -339,9 +341,9 @@
       "duration_hours": 2,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Bridge Café",
-        "description": "café with bridge view",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Tower+Bridge+Cafe+London"
+        "name": "Royal Teas",
+        "description": "Εκτός απο τις καφετέριες εντός του πάρκου, για καφέ μπορείτε να πάτε και σε αυτό, είναι πολύ δημοφιλές , σε απόσταση περίπου 8-10 λεπτών με τα πόδια κατηφορίζοντας τον λόφο προς την πλευρά της πόλης.",
+        "map_url": "https://maps.app.goo.gl/jTjZGJQUkSasXcJHA"
       }
     },
     {
