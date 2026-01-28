@@ -572,7 +572,8 @@
     {
       "id": 11,
       "name": "Tate Modern",
-      "description": "Μουσείο μοντέρνας και σύγχρονης τέχνης.",
+      "description": "Το κορυφαίο μουσείο μοντέρνας τέχνης,σε ένα παλιό εργοστάσιο παραγωγής ρεύματος.Με εντυπωσιακά έργα (Πικάσο, Νταλί), την τεράστια αίθουσα Turbine Hall για υπερμεγέθη εκθέματα και τη δωρεάν πανοραμική θέα στον Τάμεση και τον Άγιο Παύλο.
+ Ιδανικό για εφήβους και παιδιά 5-12 ετών λόγω των χρωμάτων και των μεγάλων εγκαταστάσεων..",
       "category": "museum",
       "prices": {
         "0": 0,
@@ -600,9 +601,9 @@
         "lng": -0.0994
       },
       "restaurant": {
-        "name": "Tate Modern Restaurant",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Tate+Modern+Restaurant"
+        "name": "The Corner at Tate Modern",
+        "description": "Ένα υπέροχο καφέ/εστιατόριο στο ισόγειο που σερβίρει από καφέ μέχρι πλήρη γεύματα.",
+        "map_url": "https://maps.app.goo.gl/84m8kdR3kFyqUBY49"
       },
       "website": "https://www.tate.org.uk/visit/tate-modern",
       "notes": [
@@ -617,9 +618,9 @@
       "duration_hours": 2.5,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Science Museum Café",
-        "description": "interactive café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Science+Museum+Cafe+London"
+         "name": "The Corner at Tate Modern",
+        "description": "Ένα υπέροχο καφέ/εστιατόριο στο ισόγειο που σερβίρει από καφέ μέχρι πλήρη γεύματα.",
+        "map_url": "https://maps.app.goo.gl/84m8kdR3kFyqUBY49"
       }
     },
     {
@@ -784,7 +785,7 @@
     {
       "id": 15,
       "name": "Borough Market",
-      "description": "Ιστορική αγορά τροφίμων με παραδοσιακά και διεθνή προϊόντα.",
+      "description": "η πιο διάσημη και ιστορική αγορά τροφίμων του Λονδίνου. Είναι ένας "παράδεισος" για τους λάτρεις του φαγητού και βρίσκεται δίπλα στη γέφυρα London Bridge.Έχει τεράστια ποικιλία από φρέσκα προϊόντα από όλο τον κόσμο, αλλά και εξαιρετικό street food..",
       "category": "market",
       "prices": {
         "0": 0,
@@ -828,9 +829,9 @@
       "duration_hours": 1.5,
       "best_time": "morning",
       "cafe": {
-        "name": "Swan Bar & Restaurant",
-        "description": "Globe café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Shakespeares+Globe+Cafe+London"
+        "name": "Monmouth Coffee Company",
+        "description": "Eίναι η πιο κοντινή επιλογή (λιγότερο από 1 λεπτό). Είναι θρυλικό σημείο για καφέ, αν και συνήθως έχει ουρά.",
+        "map_url": "https://maps.app.goo.gl/nxoyhzkrSgTcpT4t9"
       }
     },
     {
@@ -1217,7 +1218,7 @@
     {
       "id": 23,
       "name": "Camden Market",
-      "description": "Αγορά με έντονο αρχιτεκτονικό στοιχείο, με άπειρα πρατήρια ρούχων, παράξενα αντικείμενα και street food από όλο τον κόσμο.",
+      "description": "Αγορά με άπειρα πρατήρια ρούχων, παράξενα αντικείμενα και street food από όλο τον κόσμο.Μπορείτε από το Little Venice να φτάσετε στο Camden Market με κρουαζιέρα με θέα τις πολυτελείς επαύλεις του Regent's Park και τον Ζωολογικό Κήπο του Λονδίνου.",
       "category": "market",
       "prices": {
         "0": 0,
@@ -1245,9 +1246,9 @@
         "lng": -0.1468
       },
       "restaurant": {
-        "name": "Αμέτρητα street food stalls",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Camden+Market+Food+Stalls"
+        "name": "Andy’s Greek Taverna",
+        "description": "Μια ιστορική και πολύ αγαπημένη ελληνική ταβέρνα (από το 1967) αν σας λείψει το σπιτικό φαγητό.",
+        "map_url": "https://maps.app.goo.gl/yfmxpaRtXnC8gtyo9"
       },
       "website": "https://www.camdenmarket.com/",
       "notes": [
@@ -1264,15 +1265,15 @@
       "duration_hours": 2.5,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Studio Café",
-        "description": "Harry Potter café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Warner+Bros+Studio+Cafe+London"
+        "name": "Hans & Gretel",
+        "description": "Ένα πραγματικά παραμυθένιο γλυκοπωλείο  στην καρδιά του Camden Market. Ο χώρος είναι γεμάτος με γιγάντια γλειφιτζούρια, κρεμαστά ζαχαρωτά, μαγικά δέντρα και μια ιπτάμενη μάγισσα. ",
+        "map_url": "https://maps.app.goo.gl/zRwAQ94CBsc6LcNn6"
       }
     },
     {
       "id": 24,
       "name": "Chinatown",
-      "description": "Η κινεζική συνοικία του Λονδίνου, με τα παραδοσιακά της πύλη, εστιατόρια και καταστήματα.",
+      "description": "Ένα από τα πιο ζωντανά σημεία της πόλης. Είναι γεμάτη με πολύχρωμες πύλες, κρεμαστά φανάρια και εκατοντάδες εστιατόρια που προσφέρουν αυθεντικές γεύσεις από την Κίνα και την ευρύτερη Ασία.",
       "category": "area",
       "prices": {
         "0": 0,
@@ -1300,9 +1301,9 @@
         "lng": -0.1304
       },
       "restaurant": {
-        "name": "Δωδεκάδες κινέζικα εστιατόρια",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Chinatown+London+Restaurants"
+        "name": "Misato",
+        "description": "Ιαπωνέζικο εστιατόριο, θρυλικό για τις τεράστιες μερίδες και τις χαμηλές τιμές.Πολλές επιλογές για απλά πιάτα για τα παιδιά",
+        "map_url": "https://maps.app.goo.gl/54RxumajzyuSYYUQ7"
       },
       "website": "https://chinatown.co.uk/en/",
       "notes": [
@@ -1319,15 +1320,15 @@
       "duration_hours": 1,
       "best_time": "evening",
       "cafe": {
-        "name": "Thorpe Park Cafés",
-        "description": "theme park cafés",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Thorpe+Park+Cafe"
+        "name": "Bubblewrap Dessert Shop Chinatown",
+        "description": "Εδώ η βάφλα έχει σχήμα με φυσαλίδες και γεμίζει με παγωτό,  φρούτα, σοκολάτες, μπισκότα και διάφορα σιρόπια.",
+        "map_url": "https://maps.app.goo.gl/3sjTpjJvP6jNYwZ76"
       }
     },
     {
       "id": 25,
       "name": "God's Own Junkyard",
-      "description": "Μοναδική έκθεση από νεόν και βιντάζ σε μια παλιά βιομηχανική αίθουσα.",
+      "description": "Mια τεράστια συλλογή από neon επιγραφές, vintage πινακίδες, ντίσκο μπάλες και κινηματογραφικά σκηνικά, μια δωρεάν γκαλερί τέχνης. Kατάλληλο για κάθε ηλικία. Προσοχή, ανοιχτό μόνο Παρ.-Σάβ.-Κυρ.  ",
       "category": "exhibition",
       "prices": {
         "0": 0,
@@ -1355,9 +1356,9 @@
         "lng": -0.0047
       },
       "restaurant": {
-        "name": "Rolling Scones Cafe",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Rolling+Scones+Cafe+Gods+Own+Junkyard"
+        "name": "Pillars Brewery- East London Lager",
+        "description": " Zυθοποιία με εξαιρετική πίτσα σε ξυλόφουρνο. Τα Σαββατοκύριακα η αυλή γεμίζει με κόσμο και οικογένειες",
+        "map_url": "https://maps.app.goo.gl/cfJyDMqgTKpAaqfx5"
       },
       "website": "https://www.godsownjunkyard.co.uk/",
       "notes": [
@@ -1375,9 +1376,9 @@
       "duration_hours": 1,
       "best_time": "afternoon",
       "cafe": {
-        "name": "LEGOLAND Cafés",
-        "description": "park cafés",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Legoland+Windsor+Cafe"
+        "name": "HAVEN Coffee",
+        "description": "Για καφέ σε μια από τις πιο χωριάτικες γειτονιές, μπορείτε να πάτε στο Walthamstow Village (10–12 λεπτά περπάτημα) και στο HAVEN Coffee (5.0/5). Εξαιρετικός καφές με κοινωνικό σκοπό, αφού υποστηρίζουν πρόσφυγες.",
+        "map_url": "https://maps.app.goo.gl/JorJejidMt1wXMBv5"
       }
     },
     {
