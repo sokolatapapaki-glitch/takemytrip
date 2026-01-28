@@ -1028,7 +1028,7 @@
         "description": "",
         "map_url": "https://www.google.com/maps/search/?api=1&query=St+Dunstan+Hill+Cafes"
       },
-      "website": "",
+      "website": "https://www.tripadvisor.com/Attraction_Review-g186338-d5998784-Reviews-St_Dunstan_In_The_East-London_England.html",
       "notes": [
         "ΔΩΡΕΑΝ.",
         "Ιδανικό για μια σύντομη ξεκούραση από την πόλη."
@@ -1381,7 +1381,7 @@
     {
       "id": 26,
       "name": "Diana Memorial Playground",
-      "description": "Μεγάλος, μαγικός χώρος παιχνιδιών με πειρατικό πλοίο ως κεντρικό στοιχείο, αφιερωμένος στη πριγκίπισσα Νταϊάνα.",
+      "description": "Μεγάλος, μαγικός χώρος παιχνιδιών με πειρατικό πλοίο ως κεντρικό στοιχείο, αφιερωμένος στη πριγκίπισσα Νταϊάνα. Προσωρινά κλειστά, ενημερωθείτε απο την ιστοσελίδα",
       "category": "park",
       "prices": {
         "0": 0,
@@ -1413,7 +1413,7 @@
         "description": "",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Kensington+Gardens+Cafe"
       },
-      "website": "https://www.royalparks.org.uk/parks/kensington-gardens/diana-memorial-playground",
+      "website": "https://www.royalparks.org.uk/visit/parks/kensington-gardens/diana-memorial-playground",
       "notes": [
         "ΔΩΡΕΑΝ.",
         "Συχνά υπάρχει ουρά για είσοδο.",
