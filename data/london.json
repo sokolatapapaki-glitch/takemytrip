@@ -1440,7 +1440,7 @@
     {
       "id": 27,
       "name": "Hamleys Toy Store",
-      "description": "Το παλαιότερο και πιο διάσημο παιχνιδάδικο του κόσμου, 7 ορόφων στο κέντρο του Λονδίνου.",
+      "description": "Το παλαιότερο και πιο διάσημο παιχνιδάδικο του κόσμου, 7 ορόφων στο κέντρο του Λονδίνου.Σε κάθε γωνιά υπάρχουν υπάλληλοι που παίζουν με τα παιχνίδια, πετούν drones, φτιάχνουν τεράστιες σαπουνόφουσκες ή δείχνουν μαγικά κόλπα, δημιουργώντας μια ατμόσφαιρα γιορτής.",
       "category": "shop",
       "prices": {
         "0": 0,
@@ -1468,9 +1468,9 @@
         "lng": -0.1405
       },
       "restaurant": {
-        "name": "Regent Street Restaurants",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Regent+Street+Restaurants+London"
+        "name": "Pizza Pilgrims",
+        "description": "Τέλεια επιλογή για οικογένειες.Αυθεντική ναπολιτάνικη πίτσα σε πολύ καλές τιμές σε απόσταση 3-4 λεπτά με τα πόδια",
+        "map_url": "https://maps.app.goo.gl/Y2p7tVAuZpRwpKvVA"
       },
       "website": "https://www.hamleys.com/",
       "notes": [
@@ -1488,9 +1488,9 @@
       "duration_hours": 1,
       "best_time": "morning",
       "cafe": {
-        "name": "Serpentine Bar & Kitchen",
-        "description": "park café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Hyde+Park+Cafe+London"
+        "name": "Hagen Espresso Bar (Hagen Mayfair)",
+        "description": "Πρόκειται για ένα δανέζικο espresso bar με πολύ προσεγμένο design και έμφαση στην ποιότητα του καφέ (specialty coffee).",
+        "map_url": "https://maps.app.goo.gl/C4ryUQPwTjGc155Q8"
       }
     },
     {
