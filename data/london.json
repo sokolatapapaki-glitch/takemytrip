@@ -20,7 +20,7 @@
     {
       "id": 1,
       "name": "London Eye",
-      "description": "Η γιγαντιαία ρόδα με πανοραμική θέα του Λονδίνου.",
+      "description": "Η γιγαντιαία ρόδα με πανοραμική θέα του Λονδίνου.Κατάλληλη για κάθε ηλικία",
       "category": "attraction",
       "prices": {
         "0": 0,
@@ -48,9 +48,9 @@
         "lng": -0.1195
       },
       "restaurant": {
-        "name": "London Eye Restaurant",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=London+Eye+Restaurant"
+        "name": "Giraffe",
+        "description": "Είναι μια αλυσίδα με πολύ ζωντανή και χρωματιστή ατμόσφαιρα, σχεδιασμένη για να υποδέχεται οικογένειες με παιδιά. Μόλις 5 λεπτά απόσταση από την ρόδα",
+        "map_url": "https://maps.app.goo.gl/XLgpTe7V3sohSoaw8"
       },
       "restaurantType": "restaurant",
       "restaurantDistance": 0,
@@ -67,9 +67,9 @@
       "best_time": "any",
       "top": true,
       "cafe": {
-        "name": "Sea Life Café",
-        "description": "café at aquarium",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Sea+Life+London+Cafe"
+        "name": "GAIL's Bakery Southbank",
+        "description": "Είναι η ιδανική επιλογή για οικογένειες. Φημίζεται για τον ποιοτικό καφέ του και είναι σε πολυ κοντινή απόσταση 3 λεπτών με τα πόδια.",
+        "map_url": "https://maps.app.goo.gl/o1br5hTqufX2HoQZ8"
       }
     },
     {
@@ -514,7 +514,7 @@
     {
       "id": 10,
       "name": "British Museum",
-      "description": "Σημαντικό μουσείο παγκόσμιας ιστορίας και πολιτισμού.",
+      "description": "ένας επιβλητικός χώρος που προσφέρει ένα συναρπαστικό ταξίδι στους πολιτισμούς όλης της γης μέσα από την τέχνη και την αρχαιολογία.Ιδανικό από 6 ετών και πάνω",
       "category": "museum",
       "prices": {
         "0": 0,
@@ -543,7 +543,7 @@
       },
       "restaurant": {
         "name": "Great Court Restaurant",
-        "description": "",
+        "description": "Βρίσκεται εντός του μουσείου. Έχει ευρωπαϊκή κουζίνα και απογευματινό τσάι σε έναν πολύ φωτεινό χώρο με λευκούς τοίχους, ακριβώς κάτω από την περίφημη γυάλινη οροφή.",
         "map_url": "https://www.google.com/maps/search/?api=1&query=British+Museum+Great+Court+Restaurant"
       },
       "restaurantType": "restaurant",
@@ -562,9 +562,9 @@
       "duration_hours": 4,
       "best_time": "morning",
       "cafe": {
-        "name": "Natural History Café",
-        "description": "museum café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Natural+History+Museum+Cafe+London"
+        "name": "Museum Street Cafe",
+        "description": "Ένα από τα πιο κοντινά και κλασικά καφέ ακριβώς απέναντι από την κεντρική πύλη.",
+        "map_url": "https://maps.app.goo.gl/V75PMd93rpzkowgd7"
       }
     },
     {
@@ -1577,9 +1577,9 @@
         "lng": -0.1544
       },
       "restaurant": {
-        "name": "Madame Tussauds Cafe",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Madame+Tussauds+Cafe"
+        "name": "Bill's Baker Street Restaurant",
+        "description": "Είναι μια μοντέρνα ευρωπαϊκή αλυσίδα που έχει τα πάντα, από burgers και σαλάτες μέχρι πρωινό και απογευματινό τσάι.",
+        "map_url": "https://maps.app.goo.gl/B9cZQCcpffTAkDhr8"
       },
       "website": "https://www.madametussauds.com/london/",
       "notes": [
@@ -1594,9 +1594,9 @@
       "duration_hours": 2,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Pavilion Tea House",
-        "description": "Greenwich café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Greenwich+Park+Cafe+London"
+        "name": "The Marylebone Corner",
+        "description": "Ένα εξαιρετικό καφέ (βαθμολογία 4.7) που βρίσκεται περίπου 5 λεπτά με τα πόδια από το μουσείο",
+        "map_url": "https://maps.app.goo.gl/2ssQEpzJX97RfghQ6"
       }
     },
     {
