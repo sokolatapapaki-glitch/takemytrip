@@ -756,9 +756,9 @@
         "lng": -0.0841
       },
       "restaurant": {
-        "name": "Sky Garden Restaurant",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Sky+Garden+Restaurant"
+        "name": "Blacklock City",
+        "description": "Είναι ένας ατμοσφαιρικός, υπόγειος χώρος (στεγάζεται σε ένα παλιό κελάρι) που ειδικεύεται στα chops (παϊδάκια/μπριζολάκια) ψημένα στα κάρβουνα. ",
+        "map_url": "https://maps.app.goo.gl/VMChM5n1aDztrc5i7"
       },
       "website": "https://skygarden.london/",
       "notes": [
@@ -774,9 +774,9 @@
       "duration_hours": 1,
       "best_time": "any",
       "cafe": {
-        "name": "Tiltyard Café",
-        "description": "palace café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Hampton+Court+Cafe"
+        "name": "Sky Pod Bar",
+        "description": "Είναι το ιδανικό μέρος αν θέλετε να απολαύσετε έναν καφέ με την εντυπωσιακή πανοραμική θέα του Λονδίνου",
+        "map_url": "https://maps.app.goo.gl/bidxnhAxH1kARYL36"
       }
     },
     {
@@ -1630,9 +1630,9 @@
         "lng": -0.1192
       },
       "restaurant": {
-        "name": "SEA LIFE Cafe",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=SEA+LIFE+London+Cafe"
+        "name": "Giraffe",
+        "description": "Είναι μια αλυσίδα με πολύ ζωντανή και χρωματιστή ατμόσφαιρα, σχεδιασμένη για να υποδέχεται οικογένειες με παιδιά. Μόλις 5 λεπτά απόσταση από την ρόδα",
+        "map_url": "https://maps.app.goo.gl/XLgpTe7V3sohSoaw8"
       },
       "website": "https://www.visitsealife.com/london/",
       "notes": [
@@ -1647,9 +1647,9 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "cafe": {
-        "name": "Thames Café",
-        "description": "riverside café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Thames+Cruise+Cafe+London"
+        "name": "GAIL's Bakery Southbank",
+        "description": "Είναι η ιδανική επιλογή για οικογένειες. Φημίζεται για τον ποιοτικό καφέ του και είναι σε πολυ κοντινή απόσταση 3 λεπτών με τα πόδια.",
+        "map_url": "https://maps.app.goo.gl/o1br5hTqufX2HoQZ8"
       }
     },
     {
