@@ -75,7 +75,7 @@
     {
       "id": 2,
       "name": "Tower of London",
-      "description": "Ιστορικό κάστρο με τα βασιλικά κοσμήματα της Αγγλίας.",
+      "description": "Ο Πύργος του Λονδίνου είναι ένα ιστορικό κάστρο-φρούριο που φιλοξενεί τα εντυπωσιακά **Κοσμήματα του Στέμματος** και συναρπαστικές ιστορίες για φυλακισμένους και βασιλείς. Αξίζει απόλυτα η είσοδος για όλες τις ηλικίες (ιδανικά 7+), καθώς προσφέρει μια μοναδική εμπειρία ζωντανής ιστορίας μέσα από τις ξεναγήσεις των Beefeaters.",
       "category": "castle",
       "prices": {
         "0": 0,
@@ -103,9 +103,9 @@
         "lng": -0.0759
       },
       "restaurant": {
-        "name": "New Armouries Cafe",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=New+Armouries+Cafe+London"
+        "name": "Coppa Club Tower Bridge",
+        "description": "Βρίσκεται ακριβώς δίπλα στο ποτάμι και προσφέρει εκπληκτική θέα στη Tower Bridge. Αν και φαίνεται ακριβό λόγω των θέσεων σε igloos , το μενού του είναι αρκετά προσιτό για την τοποθεσία του",
+        "map_url": "https://maps.app.goo.gl/vGSc2LeYRxL6Lak69"
       },
       "restaurantType": "cafe",
       "restaurantDistance": 0,
@@ -123,9 +123,9 @@
       "duration_hours": 3,
       "best_time": "morning",
       "cafe": {
-        "name": "London Eye Café",
-        "description": "riverside café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=London+Eye+Cafe"
+        "name": "White Mulberries",
+        "description": "Φημίζεται για τον ποιοτικό καφέ του (χρησιμοποιούν κόκκους που αλλάζουν ανάλογα με την εποχή), τα φρέσκα σάντουιτς, τις πίτες και τα εξαιρετικά γλυκά του (δοκιμάστε οπωσδήποτε το banana bread",
+        "map_url": "https://maps.app.goo.gl/VrTDBRqxuAQtXqVK7"
       }
     },
     {
@@ -435,8 +435,8 @@
         "lng": -0.0618
       },
       "restaurant": {
-        "name": "Horniman Museum Cafe",
-        "description": "",
+         "name": "Horniman Museum Cafe",
+        "description": "Βρίσκεται μέσα στο πάρκο του μουσείου, σε ένα φωτεινό κτίριο με μεγάλες τζαμαρίες που προσφέρουν ωραία θέα στους κήπους.Έχει καφέ, γλυκά, σνακ και ζεστό φαγητό",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Horniman+Museum+Cafe"
       },
       "website": "https://www.horniman.ac.uk/event/aquarium/",
@@ -453,9 +453,9 @@
       "duration_hours": 1.5,
       "best_time": "afternoon",
       "cafe": {
-        "name": "St Paul's Café",
-        "description": "cathedral café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=St+Pauls+Cathedral+Cafe+London"
+        "name": "Horniman Museum Cafe",
+        "description": "Βρίσκεται μέσα στο πάρκο του μουσείου, σε ένα φωτεινό κτίριο με μεγάλες τζαμαρίες που προσφέρουν ωραία θέα στους κήπους.Έχει καφέ, γλυκά, σνακ και ζεστό φαγητό",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Horniman+Museum+Cafe"
       }
     },
     {
@@ -623,7 +623,7 @@
     {
       "id": 12,
       "name": "Museum of London Docklands",
-      "description": "Μουσείο για την ιστορία του Λονδίνου και του ποταμού Τάμεση.",
+      "description": "'Ενα εξαιρετικό μουσείο για την ιστορία του  Τάμεση και των αποβαθρών του Λονδίνου, στεγασμένο σε μια παλιά αποθήκη ζάχαρης 200 ετών.Ιδανικό από 0 ετών καθώς έχει την περίφημη γκαλερί Mudlarks, ένα διαδραστικό χώρο παιχνιδιού όπου τα πολύ μικρά παιδιά μπορούν να φορτώσουν πλοία, να οδηγήσουν έναν συρμό του DLR ή να παίξουν με το νερό.",
       "category": "museum",
       "prices": {
         "0": 0,
@@ -651,9 +651,9 @@
         "lng": -0.0236
       },
       "restaurant": {
-        "name": "Μουσείο Cafe",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Museum+of+London+Docklands+Cafe"
+        "name": "Browns West India Quay",
+        "description": "Είναι μια κλασική βρετανική μπρασερί. Το μενού τους είναι πολύ πλούσιο και περιλαμβάνει από πρωινό και brunch μέχρι παραδοσιακό fish & chips, φρέσκο αστακό, burgers και steaks αλλα και καφέ και τσάι",
+        "map_url": "https://maps.app.goo.gl/v6uiATMWzMBshZXA6"
       },
       "website": "https://www.museumoflondon.org.uk/museum-london-docklands",
       "notes": [
@@ -668,9 +668,9 @@
       "duration_hours": 2,
       "best_time": "afternoon",
       "cafe": {
-        "name": "V&A Café",
-        "description": "elegant museum café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=V"
+        "name": "Museum Cafe",
+        "description": "Βρίσκεται κυριολεκτικά μέσα στον ίδιο χώρο με το μουσείο. Είναι η πιο βολική επιλογή αν θέλετε κάτι άμεσο χωρίς να απομακρυνθείτε καθόλου.",
+        "map_url": "https://maps.app.goo.gl/Mo129km6Su4QmmvJA"
       }
     },
     {
@@ -1493,7 +1493,7 @@
     {
       "id": 28,
       "name": "Horniman Museum (Main Collections)",
-      "description": "Μουσείο με εκθέσεις φυσικής ιστορίας, ανθρωπολογίας και μουσικών οργάνων. Οι κήποι και η θέα είναι υπέροχοι.",
+      "description": "Μουσείο με εκθέσεις φυσικής ιστορίας, ανθρωπολογίας και μουσικών οργάνων. Οι κήποι και η θέα είναι υπέροχοι.Είναι παράδεισος για οικογένειες, ιδανικό για παιδιά από 0 ετών, με πολλά διαδραστικά και στο ύψος τους εκθέματα, μια από τις καλύτερες επιλογές για κάθε ηλικία",
       "category": "museum",
       "prices": {
         "0": 0,
@@ -1522,7 +1522,7 @@
       },
       "restaurant": {
         "name": "Horniman Museum Cafe",
-        "description": "",
+        "description": "Βρίσκεται μέσα στο πάρκο του μουσείου, σε ένα φωτεινό κτίριο με μεγάλες τζαμαρίες που προσφέρουν ωραία θέα στους κήπους.Έχει καφέ, γλυκά, σνακ και ζεστό φαγητό",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Horniman+Museum+Cafe"
       },
       "website": "https://www.horniman.ac.uk/",
@@ -1541,9 +1541,9 @@
       "duration_hours": 2,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Regent's Park Café",
-        "description": "park café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Regents+Park+Cafe+London"
+       "name": "Horniman Museum Cafe",
+        "description": "Βρίσκεται μέσα στο πάρκο του μουσείου, σε ένα φωτεινό κτίριο με μεγάλες τζαμαρίες που προσφέρουν ωραία θέα στους κήπους.Έχει καφέ, γλυκά, σνακ και ζεστό φαγητό",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Horniman+Museum+Cafe"
       }
     },
     {
@@ -1602,7 +1602,7 @@
     {
       "id": 30,
       "name": "SEA LIFE London Aquarium",
-      "description": "Ενυδρείο στο South Bank με πάνω από 500 είδη θαλάσσιας ζωής.",
+      "description": "Ενυδρείο στο South Bank με πάνω από 500 είδη θαλάσσιας ζωής. Κατάλληλο για όλες τις ηλικίες",
       "category": "aquarium",
       "prices": {
         "0": 0,
