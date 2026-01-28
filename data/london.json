@@ -347,7 +347,7 @@
     {
       "id": 7,
       "name": "Postal Museum + Mail Rail",
-      "description": "Μουσείο ταχυδρομείου με υπογεια σιδηροδρομική διαδρομή.",
+      "description": "Το Postal Museum είναι ένα από τα πιο πρωτότυπα μουσεία του Λονδίνου, με κορυφαία εμπειρία τη βόλτα με το Mail Rail, ένα μικροσκοπικό υπόγειο τρένο που διασχίζει τις παλιές σήραγγες μεταφοράς αλληλογραφίας.Ιδανικό για 1-12 ετών.",
       "category": "museum",
       "prices": {
         "0": 0,
@@ -382,8 +382,8 @@
         "lng": -0.1213
       },
       "restaurant": {
-        "name": "Postal Museum Cafe",
-        "description": "",
+        "name": "Ciao Bella (Lamb's Conduit St)",
+        "description": "Μια από τις πιο αγαπημένες ιταλικές τρατορίες της περιοχής.",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Postal+Museum+Cafe"
       },
       "website": "https://www.postalmuseum.org/",
@@ -399,9 +399,9 @@
       "duration_hours": 2,
       "best_time": "any",
       "cafe": {
-        "name": "Westminster Café",
-        "description": "abbey café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Westminster+Abbey+Cafe"
+        "name": "Mouse Tail Coffee Farringdon",
+        "description": "Βρίσκεται στην οδό Mount Pleasant, μόλις 1-2 λεπτά με τα πόδια από το μουσείο. Είναι ένα εξαιρετικό specialty coffee shop με πολύ καλή βαθμολογία (4.5/5).",
+        "map_url": "https://maps.app.goo.gl/rJRGXvDw6MJ6J7Gm7"
       }
     },
     {
@@ -489,9 +489,9 @@
         "lng": -0.1747
       },
       "restaurant": {
-        "name": "Science Museum Cafe",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Science+Museum+Cafe"
+        "name": "Energy Cafe",
+        "description": "Βρίσκεται ακριβώς δίπλα στο Science Museum (1 λεπτό από το Φυσικής Ιστορίας) και είναι πολύ καλό για κάτι γρήγορο και οικονομικό.",
+        "map_url": "https://maps.app.goo.gl/GYWwPgsoLQoYpADg7"
       },
       "website": "https://www.sciencemuseum.org.uk/",
       "notes": [
@@ -506,9 +506,9 @@
       "duration_hours": 3,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Great Court Restaurant",
-        "description": "museum café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=British+Museum+Cafe+London"
+         "name": "Energy Cafe",
+        "description": "Βρίσκεται ακριβώς δίπλα στο Science Museum (1 λεπτό από το Φυσικής Ιστορίας) και είναι πολύ καλό για κάτι γρήγορο και οικονομικό.",
+        "map_url": "https://maps.app.goo.gl/GYWwPgsoLQoYpADg7"
       }
     },
     {
