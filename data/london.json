@@ -6,7 +6,7 @@
   "pricing_model": "per_age",
   "cityPass": {
     "name": "Merlin Multi-Attraction Pass (2–4 Attractions)",
-    "description": "Συνδυαστικό εισιτήριο για 2 έως 4 δραστηριότητες της Merlin (London Eye, SEA LIFE, Madame Tussauds, Shrek’s Adventure). Ισχύει για τουρίστες, όχι ετήσιο. Η πιο συμφέρουσα επιλογή για λίγες ημέρες.",
+    "description": "Συνδυαστικό εισιτήριο για 2 έως 4 δραστηριότητες της Merlin (London Eye, SEA LIFE, Madame Tussauds, Shrek’s Adventure).",
     "discountPercent": 35,
     "applicableActivities": [
       1,
@@ -439,7 +439,7 @@
         "description": "",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Horniman+Museum+Cafe"
       },
-      "website": "https://www.horniman.ac.uk/",
+      "website": "https://www.horniman.ac.uk/event/aquarium/",
       "notes": [
         "Μόνο το ενυδρείο είναι πληρωτέο.",
         "Το μουσείο & οι κήποι είναι ΔΩΡΕΑΝ.",
@@ -974,7 +974,7 @@
         "description": "",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Holland+Park+Cafe"
       },
-      "website": "https://www.rbkc.gov.uk/leisure-and-culture/parks/holland-park",
+      "website": "https://www.tripadvisor.com/Attraction_Review-g186338-d7379922-Reviews-Kyoto_Garden-London_England.html",
       "notes": [
         "ΔΩΡΕΑΝ.",
         "Μέρος του Holland Park."
@@ -1083,7 +1083,7 @@
         "description": "",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Little+Venice"
       },
-      "website": "",
+      "website": "https://www.tripadvisor.com/Attraction_Review-g186338-d189033-Reviews-Little_Venice-London_England.html",
       "notes": [
         "ΔΩΡΕΑΝ βόλτα.",
         "Σημείο αναχώρησης για βόλτες με βαρκάδα προς το Camden."
@@ -1302,7 +1302,7 @@
         "description": "",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Chinatown+London+Restaurants"
       },
-      "website": "https://www.chinatownlondon.org/",
+      "website": "https://chinatown.co.uk/en/",
       "notes": [
         "ΔΩΡΕΑΝ βόλτα.",
         "Ιδιαίτερα ζωντανή κατά τις βραδινές ώρες και για το Κινέζικο Νέο Έτος."
@@ -1687,7 +1687,7 @@
         "description": "",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Shreks+Adventure+Cafe"
       },
-      "website": "https://www.shreksadventure.com/london/",
+      "website": "https://www.shreksadventure.com/",
       "notes": [
         "Συχνά περιλαμβάνεται σε Combo Passes."
       ],
