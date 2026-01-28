@@ -676,7 +676,7 @@
     {
       "id": 13,
       "name": "Regent's Park",
-      "description": "Μεγάλο βασιλικό πάρκο με κήπους και λίμνη.",
+      "description": "Ένα από τα πιο όμορφα Βασιλικά Πάρκα του Λονδίνου. Ξεχωρίζει για τα Queen Mary’s Gardens με 12.000 τριαντάφυλλα και για το London Zoo, τον παλαιότερο επιστημονικό ζωολογικό κήπο στον κόσμο.",
       "category": "park",
       "prices": {
         "0": 0,
@@ -704,9 +704,9 @@
         "lng": -0.1566
       },
       "restaurant": {
-        "name": "Park Cafe",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Regents+Park+Cafe"
+       "name": "The Waterside Café",
+        "description": "Kοντά στην είσοδο Hanover Gate, με χαρακτηριστική θέα στη λίμνη με τις βάρκες (Boating Lake).",
+        "map_url": "https://maps.app.goo.gl/Yqncu9yHQ15E2EEt6"
       },
       "website": "https://www.royalparks.org.uk/parks/the-regents-park",
       "notes": [
@@ -720,9 +720,9 @@
       "duration_hours": 1.5,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Pavilion Café",
-        "description": "palace gardens café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Kensington+Palace+Cafe"
+        "name": "The Waterside Café",
+        "description": "Kοντά στην είσοδο Hanover Gate, με χαρακτηριστική θέα στη λίμνη με τις βάρκες (Boating Lake).",
+        "map_url": "https://maps.app.goo.gl/Yqncu9yHQ15E2EEt6"
       }
     },
     {
@@ -1105,7 +1105,7 @@
     {
       "id": 21,
       "name": "Mudchute Park & Farm",
-      "description": "Μεγάλη αστική φάρμα με ζώα, ιδανική για οικογένειες.",
+      "description": "Ένα κοινοτικό πάρκο και αγρόκτημα με πάνω από 100 ζώα, συμπεριλαμβανομένων σπάνιων φυλών, αλόγων, πόνι, προβάτων και γουρουνιών. Ιδανικό για κάθε ηλικία. ",
       "category": "park",
       "prices": {
         "0": 0,
@@ -1133,9 +1133,9 @@
         "lng": -0.0114
       },
       "restaurant": {
-        "name": "Farm Cafe",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Mudchute+Farm+Cafe"
+        "name": "The Old Millwall Fire Station Restaurant",
+        "description": "Σε παλιό πυροσβεστικό σταθμό με τουρκική κουζίνα και εξαιρετικές κριτικές.",
+        "map_url": "https://maps.app.goo.gl/UuDZtKHrjUocwvx17"
       },
       "website": "https://www.mudchute.org/",
       "notes": [
@@ -1152,9 +1152,9 @@
       "duration_hours": 2,
       "best_time": "morning",
       "cafe": {
-        "name": "Camden Market Cafés",
-        "description": "street food cafés",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Camden+Market+Cafe+London"
+        "name": "Cafe No 92",
+        "description": "Ένα μοντέρνο τοπικό καφέ με γλυκά και ελαφριά γεύματα. Απέχει ελάχιστα λεπτά με τα πόδια.",
+        "map_url": "https://maps.app.goo.gl/7tQ5oFGN2EGDyxxA8"
       }
     },
     {
