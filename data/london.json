@@ -407,7 +407,7 @@
     {
       "id": 8,
       "name": "Horniman Museum – Ενυδρείο",
-      "description": "Ενυδρείο στο Horniman Museum. Το μουσείο & οι κήποι είναι δωρεάν.",
+      "description": "Ενυδρείο στο Horniman Museum με τέλειο μέγεθος για παιδιά που κουράζονται εύκολα. Συνδυάζεται με το Animal Walk που είναι δωρεάν και έχει αλπακά, κατσίκες και πρόβατα.Ιδανικό και για πολύ μικρά παιδιά",
       "category": "aquarium",
       "prices": {
         "0": 0,
@@ -942,7 +942,7 @@
     {
       "id": 18,
       "name": "Kyoto Garden (Holland Park)",
-      "description": "Ήρεμος Ιαπωνικός κήπος μέσα στο Holland Park.",
+      "description": "Ένα από τα πιο κρυμμένα διαμάντια, ένας παραδοσιακός ιαπωνικός κήπος  Είναι σχεδόν βέβαιο ότι θα συναντήσετε παγώνια .",
       "category": "park",
       "prices": {
         "0": 0,
@@ -970,9 +970,9 @@
         "lng": -0.2045
       },
       "restaurant": {
-        "name": "Holland Park Cafe",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Holland+Park+Cafe"
+        "name": "Daisy Green at Holland Park",
+        "description": "καφέ ή brunch ακριβώς μέσα στο πάρκο",
+        "map_url": "https://maps.app.goo.gl/nkCMr96BHpTxL2WW9"
       },
       "website": "https://www.tripadvisor.com/Attraction_Review-g186338-d7379922-Reviews-Kyoto_Garden-London_England.html",
       "notes": [
@@ -988,9 +988,9 @@
       "duration_hours": 0.75,
       "best_time": "any",
       "cafe": {
-        "name": "Covent Garden Cafés",
-        "description": "market cafés",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Covent+Garden+Market+Cafe+London"
+        "name": "Daisy Green at Holland Park",
+        "description": "καφέ ή brunch ακριβώς μέσα στο πάρκο",
+        "map_url": "https://maps.app.goo.gl/nkCMr96BHpTxL2WW9"
       }
     },
     {
@@ -1079,9 +1079,9 @@
         "lng": -0.1837
       },
       "restaurant": {
-        "name": "Πολλά καφέ στις όχθες",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Little+Venice"
+        "name": "The Waterway",
+        "description": "Η μεγάλη του βεράντα δίπλα στο κανάλι είναι ένα από τα πιο δημοφιλή σημεία της περιοχής",
+        "map_url": "https://maps.app.goo.gl/uqb78XpS66enfHkSA"
       },
       "website": "https://www.tripadvisor.com/Attraction_Review-g186338-d189033-Reviews-Little_Venice-London_England.html",
       "notes": [
@@ -1097,9 +1097,9 @@
       "duration_hours": 1,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Harrods Tea Room",
-        "description": "luxury café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Harrods+Cafe+London"
+        "name": "Waterside Cafe",
+        "description": "Eμβληματικό καφέ που στεγάζεται πάνω σε μια παραδοσιακή πλωτή μαούνα",
+        "map_url": "https://maps.app.goo.gl/AYLKQnnaFKkrD2U68"
       }
     },
     {
