@@ -6,7 +6,7 @@
   "pricing_model": "per_age",
   "cityPass": {
     "name": "Merlin Multi-Attraction Pass (2–4 Attractions)",
-    "description": "Συνδυαστικό εισιτήριο για 2 έως 4 δραστηριότητες της Merlin (London Eye, SEA LIFE, Madame Tussauds, Shrek’s Adventure). Πέραν των προτεινόμενων δραστηριοτήτων μπορείτε να δείτε κάποιο απο τα διαθέσιμα μιούζικαλ την περιόδο που θα βρίσκεστε στο Λονδίνο. Ανάμεσα στα καλύτερα, είναι το The Lion King",
+    "description": "Συνδυαστικό εισιτήριο για 2 έως 4 δραστηριότητες της Merlin (London Eye, SEA LIFE, Madame Tussauds, Shrek’s Adventure).",
     "discountPercent": 35,
     "applicableActivities": [
       1,
