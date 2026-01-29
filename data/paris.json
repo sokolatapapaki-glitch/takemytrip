@@ -226,9 +226,9 @@
         "lng": 2.295
       },
       "restaurant": {
-        "name": "Le Relais de l'Entrecôte",
-        "description": "φημισμένο για steak frites",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Le+Relais+de+l+Entrecote+Paris"
+        "name": "Le Café de Paris Friedland",
+        "description": "κλασικό γαλλικό μπιστρό με βεράντα και θέα απευθείας στην Αψίδα του Θριάμβου σε πολύ κοντινή απόσταση.",
+        "map_url": "https://maps.app.goo.gl/sSBTN8hivjB9h9wBA"
       },
       "website": "https://www.paris-arc-de-triomphe.fr/en",
       "notes": [
@@ -248,9 +248,9 @@
       "best_time": "evening",
       "emoji": "🏛️",
       "cafe": {
-        "name": "Ladurée",
-        "description": "διάσημο για macarons",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Laduree+Champs+Elysees+Paris"
+        "name": "Café Latéral",
+        "description": "Κλασικό παριζιάνικο καφέ ακριβώς δίπλα στην Αψίδα. Έχει από καφέ μέχρι brunch και γλυκά,",
+        "map_url": "https://maps.app.goo.gl/yaEVcdewrPC1c3m2A"
       }
     },
     {
@@ -431,7 +431,7 @@
     {
       "id": 8,
       "name": "Πάνθεον",
-      "description": "Νεοκλασικό μνημείο όπου ενταφιάζονται μεγάλες προσωπικότητες της Γαλλίας",
+      "description": "Μαυσωλείο με τάφους διάσημων προσωπικοτήτων όπως Βολταίρος, Ρουσσώ, Βίκτωρ Ουγκώ και Μαρί Κιουρί.Στο εσωτερικό εντυπωσιάζει το Εκκρεμές του Φουκώ, που δείχνει την περιστροφή της Γης. Ιδανικά για άνω των 6 ετών",
       "category": "monument",
       "prices": {
         "0": 0,
@@ -459,9 +459,9 @@
         "lng": 2.3464
       },
       "restaurant": {
-        "name": "Les Papilles",
-        "description": "bistro & wine shop κοντά στο Πάνθεον",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Les+Papilles+Paris"
+        "name": "JOZI BRUNCH Pantheon",
+        "description": "Ένα πολύ ζεστό και πολύχρωμο καφέ, ιδανικό για πρωινό ή brunch. Σερβίρουν χειροποίητο καφέ, pancakes και τοστ με αβοκάντο.",
+        "map_url": "https://maps.app.goo.gl/Mi88qwTToBmVNdPq9"
       },
       "website": "https://www.paris-pantheon.fr/en",
       "notes": [
