@@ -1106,7 +1106,7 @@
     {
       "id": 22,
       "name": "Coram's Fields",
-      "description": "Παιδικές χαρές, φάρμες και παιχνίδια στο νερό..Ένας τεράστιος χώρος προσβάσιμος μόνο σε ενήλικες που συνοδεύουν παιδιά.",
+      "description": "Παιδικές χαρές, φάρμες και παιχνίδια στο νερό..Ένας τεράστιος χώρος προσβάσιμος μόνο σε ενήλικες που συνοδεύουν παιδιά. Μόλις 10 λεπτά περπάτημα απο το Βρετανικό Μουσείο",
       "category": "park",
       "prices": {
         "0": 0,
@@ -1135,8 +1135,8 @@
       },
       "restaurant": {
         "name": "Brunswick Centre Cafes",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Brunswick+Centre+London"
+        "description": "Μόλις 5 λεπτά με τα πόδια βρίσκεται το Brunswick Centre, ένα ανοιχτό εμπορικό κέντρο με πολλές επιλογές για φαγητό και καφέ ή σούπερ μάρκετ για εφοδιασμό πικ-νικ! ",
+        "map_url": "https://maps.app.goo.gl/KxQsH4tDL9aiK5fCA"
       },
       "website": "https://www.coramsfields.org/",
       "notes": [
@@ -1153,9 +1153,9 @@
       "duration_hours": 1.5,
       "best_time": "afternoon",
       "cafe": {
-        "name": "KidZania Café",
-        "description": "family café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Kidzania+London+Cafe"
+        "name": "Brunswick Centre Cafes",
+        "description": "Μόλις 5 λεπτά με τα πόδια βρίσκεται το Brunswick Centre, ένα ανοιχτό εμπορικό κέντρο με πολλές επιλογές για φαγητό και καφέ ή σούπερ μάρκετ για εφοδιασμό πικ-νικ! ",
+        "map_url": "https://maps.app.goo.gl/KxQsH4tDL9aiK5fCA"
       }
     },
     {
@@ -1355,9 +1355,9 @@
         "lng": -0.1874
       },
       "restaurant": {
-        "name": "Kensington Gardens Cafe",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Kensington+Gardens+Cafe"
+        "name": "Jacuzzi",
+        "description": "Ένα εντυπωσιακό ιταλικό εστιατόριο στην Kensington High Street με πολύ ωραία ατμόσφαιρα. Είναι λίγο πιο μακριά (15 λεπτά με τα πόδια) αλλά είναι πραγματικά ξεχωριστό ",
+        "map_url": "https://maps.app.goo.gl/7C3yiXWGwFpr1t1E9"
       },
       "website": "https://www.royalparks.org.uk/visit/parks/kensington-gardens/diana-memorial-playground",
       "notes": [
@@ -1375,9 +1375,9 @@
       "duration_hours": 1.5,
       "best_time": "morning",
       "cafe": {
-        "name": "Chessington Cafés",
-        "description": "adventure cafés",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Chessington+Cafe"
+        "name": "Cafe Diana",
+        "description": "Βρίσκεται ακριβώς απέναντι από την πύλη (Black Lion Gate), λιγότερο από 2 λεπτά περπάτημα. Kαφέ αφιερωμένο στην Πριγκίπισσα Νταϊάνα, γνωστό για το πρωινό του και τα κεμπάπ του.",
+        "map_url": "https://maps.app.goo.gl/RgnLUGAbYCeNXS2Z9"
       }
     },
     {
