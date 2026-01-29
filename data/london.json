@@ -862,14 +862,14 @@
         "lng": -0.2802
       },
       "restaurant": {
-        "name": "Pembroke Lodge",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Pembroke+Lodge+Richmond+Park"
+        "name": "Bill's Richmond Restaurant",
+        "description": "Από πρωινό, μεσημεριανό, τσάι έως δείπνο",
+        "map_url": "https://maps.app.goo.gl/taWPqEqQjkpqTXk46"
       },
       "website": "https://www.royalparks.org.uk/parks/richmond-park",
       "notes": [
         "ΔΩΡΕΑΝ.",
-        "Προσοχή στα ελάφια, ιδιαίτερα την περίοδο του ζευγαρώματος."
+        "Προσοχή στα ελάφια!."
       ],
       "tags": [
         "park",
@@ -880,9 +880,9 @@
       "duration_hours": 2.5,
       "best_time": "morning",
       "cafe": {
-        "name": "Tate Modern Café",
-        "description": "art café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Tate+Modern+Cafe+London"
+        "name": "Long Black Richmond",
+        "description": "Βρίσκεται πολύ κοντά στην πύλη Richmond Gate και έχει πολυ υψηλή βαθμολογία",
+        "map_url": "https://maps.app.goo.gl/vBMjfrcRZQt8HdEZ7"
       }
     },
     {
@@ -942,7 +942,7 @@
     {
       "id": 19,
       "name": "St Dunstan in the East",
-      "description": "Ερείπια παλιάς εκκλησίας μετατραμμένα σε ήσυχο αστικό κήπο.",
+      "description":  Τα ερείπια της εκκλησίας που βομβαρδίστηκε έχουν καταληφθεί από αναρριχητικά φυτά και το σκηνικό μοιάζει από ταινία  Harry Potter. Ιδανική στάση μετά το Tower of London ή το Sky Garden. ",
       "category": "park",
       "prices": {
         "0": 0,
@@ -970,9 +970,9 @@
         "lng": -0.0806
       },
       "restaurant": {
-        "name": "Κοντινά Cafes",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=St+Dunstan+Hill+Cafes"
+        "name": "HAZ Plantation Place",
+        "description": "Το πιο κοντινό (3 λεπτά). Ιδανικό για τουρκική κουζίνα και πολύ γρήγορη πρόσβαση.",
+        "map_url": "https://maps.app.goo.gl/tZYs1vwpui7PTE216"
       },
       "website": "https://www.tripadvisor.com/Attraction_Review-g186338-d5998784-Reviews-St_Dunstan_In_The_East-London_England.html",
       "notes": [
@@ -989,9 +989,9 @@
       "duration_hours": 0.5,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Hamleys Café",
-        "description": "toy store café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Hamleys+Cafe+London"
+        "name": "Byward Kitchen and Bar",
+        "description": "Λειτουργεί και ως εστιατόριο με κλασικό βρετανικό μενού, αλλά και ως καφέ.",
+        "map_url": "https://maps.app.goo.gl/BhvcSEjLUV3cncdTA"
       }
     },
     {
@@ -1601,7 +1601,7 @@
     {
       "id": 31,
       "name": "Shrek's Adventure London",
-      "description": "Διαδραστική περιπέτεια με τους ήρωες του Shrek και τα άλλα παραμύθια.",
+      "description": "Διαδραστική περιπέτεια. Ξεκινά με μια εντυπωσιακή βόλτα σε ένα ιπτάμενο λεωφορείο 4D με οδηγό τον Γάιδαρο. Ιδανικό για ηλικίες 6-12, κατάλληλο απο 3 και πάνω. ",
       "category": "attraction",
       "prices": {
         "0": 0,
@@ -1629,13 +1629,13 @@
         "lng": -0.1193
       },
       "restaurant": {
-        "name": "Shrek's Cafe",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Shreks+Adventure+Cafe"
+        "name": "Troia Southbank",
+        "description": "Το πιο κοντινό, στα 300 μέτρα, με πολύ υψηλή βαθμολογία",
+        "map_url": "https://maps.app.goo.gl/HAJGTUaSra43KKeNA"
       },
       "website": "https://www.shreksadventure.com/",
       "notes": [
-        "Συχνά περιλαμβάνεται σε Combo Passes."
+        "περιλαμβάνεται σε Combo Passes."
       ],
       "tags": [
         "shrek",
@@ -1646,9 +1646,9 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "cafe": {
-        "name": "Dungeon Café",
-        "description": "themed café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=London+Dungeon+Cafe"
+        "name": "Maries Thai Cafe",
+        "description": "(Περίπου 10 λεπτά περπάτημα) Το Maries είναι θρυλικό στην περιοχή για τις πολύ χαμηλές του τιμές.Από καφέ, αγγλικό πρωινό και burger σε πολύ χαμηλές τιμές έως ταϋλανδέζικο φαγητό το βράδυ. ",
+        "map_url": "https://maps.app.goo.gl/WLbs8BY8rA49zp7M6"
       }
     }
   ]
