@@ -2735,6 +2735,80 @@ async function setupActivitiesStep() {
         `;
     }
 
+    // ==================== INFO BOXES (if available) ====================
+    if (cityData.infoBoxes && Array.isArray(cityData.infoBoxes)) {
+        cityData.infoBoxes.forEach((infoBox) => {
+            // Define color schemes for different box types
+            const colorSchemes = {
+                turquoise: {
+                    background: 'linear-gradient(135deg, #40E0D0 0%, #48D1CC 100%)',
+                    border: '#20B2AA',
+                    text: '#ffffff',
+                    linkBg: '#ffffff',
+                    linkText: '#20B2AA'
+                },
+                purple: {
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    border: '#5a67d8',
+                    text: '#ffffff',
+                    linkBg: '#ffffff',
+                    linkText: '#667eea'
+                },
+                blue: {
+                    background: 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)',
+                    border: '#1D4ED8',
+                    text: '#ffffff',
+                    linkBg: '#ffffff',
+                    linkText: '#2563EB'
+                },
+                green: {
+                    background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+                    border: '#047857',
+                    text: '#ffffff',
+                    linkBg: '#ffffff',
+                    linkText: '#059669'
+                },
+                orange: {
+                    background: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
+                    border: '#B45309',
+                    text: '#ffffff',
+                    linkBg: '#ffffff',
+                    linkText: '#D97706'
+                }
+            };
+
+            const colorScheme = colorSchemes[infoBox.color] || colorSchemes.turquoise;
+
+            html += `
+                <div class="info-box" style="grid-column: 1/-1; background: ${colorScheme.background}; color: ${colorScheme.text}; border: 2px solid ${colorScheme.border}; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <h3 style="margin: 0; font-size: 20px; font-weight: bold;">
+                            ${infoBox.title}
+                        </h3>
+                        <p style="margin: 0; font-size: 15px; line-height: 1.6; opacity: 0.95;">
+                            ${infoBox.body}
+                        </p>
+                        ${infoBox.links && infoBox.links.length > 0 ? `
+                            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 5px;">
+                                ${infoBox.links.map(link => `
+                                    <a href="${link.url}" target="_blank" rel="noopener noreferrer"
+                                       style="display: inline-block; padding: 8px 16px; background: ${colorScheme.linkBg}; color: ${colorScheme.linkText}; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; transition: transform 0.2s, box-shadow 0.2s;">
+                                        <i class="fas fa-external-link-alt"></i> ${link.text}
+                                    </a>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                        ${infoBox.closingLine ? `
+                            <p style="margin: 0; font-size: 15px; font-style: italic; opacity: 0.9; margin-top: 5px;">
+                                ${infoBox.closingLine}
+                            </p>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        });
+    }
+
     // ==================== SORT ACTIVITIES BY CATEGORY ====================
     const sortedActivities = [...state.currentCityActivities].sort((a, b) => {
         const catA = categorizeActivity(a);
