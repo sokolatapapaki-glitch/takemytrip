@@ -832,60 +832,6 @@
       }
     },
     {
-      "id": 16,
-      "name": "Greenwich Park",
-      "description": "Βασιλικό πάρκο με εκπληκτική θέα προς το Canary Wharf και το Royal Observatory.",
-      "category": "park",
-      "prices": {
-        "0": 0,
-        "1": 0,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 0,
-        "8": 0,
-        "9": 0,
-        "10": 0,
-        "11": 0,
-        "12": 0,
-        "13": 0,
-        "14": 0,
-        "15": 0,
-        "16": 0,
-        "17": 0,
-        "adult": 0
-      },
-      "location": {
-        "lat": 51.4769,
-        "lng": -0.0005
-      },
-      "restaurant": {
-        "name": "Pavillion Cafe",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Greenwich+Park+Pavillion+Cafe"
-      },
-      "website": "https://www.royalparks.org.uk/parks/greenwich-park",
-      "notes": [
-        "ΔΩΡΕΑΝ.",
-        "Έξω από το Royal Observatory (που έχει είσοδο)."
-      ],
-      "tags": [
-        "park",
-        "free",
-        "view",
-        "unesco"
-      ],
-      "duration_hours": 1.5,
-      "best_time": "afternoon",
-      "cafe": {
-        "name": "National Café",
-        "description": "gallery café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=National+Gallery+Cafe+London"
-      }
-    },
-    {
       "id": 17,
       "name": "Richmond Park",
       "description": "Το μεγαλύτερο Βασιλικό Πάρκο του Λονδίνου, γνωστό για τα ελεύθερα ελάφια.",
