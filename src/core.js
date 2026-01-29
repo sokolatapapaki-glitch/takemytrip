@@ -874,8 +874,11 @@ export async function setupActivitiesStep() {
     }
 
     // ==================== INFO BOXES (if available) ====================
+    console.log('🔍 Checking for infoBoxes:', cityData.infoBoxes);
     if (cityData.infoBoxes && Array.isArray(cityData.infoBoxes)) {
+        console.log('✅ Found infoBoxes, rendering:', cityData.infoBoxes.length);
         cityData.infoBoxes.forEach((infoBox) => {
+            console.log('📦 Rendering infoBox:', infoBox.title);
             // Define color schemes for different box types
             const colorSchemes = {
                 turquoise: {
@@ -945,6 +948,8 @@ export async function setupActivitiesStep() {
                 </div>
             `;
         });
+    } else {
+        console.log('⚠️ No infoBoxes found in cityData');
     }
 
     // ==================== SORT ACTIVITIES BY CATEGORY ====================
