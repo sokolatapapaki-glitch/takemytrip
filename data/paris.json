@@ -11,7 +11,7 @@
   },
   "cityPass": {
     "name": "Paris Museum Pass",
-    "description": "Free skip-the-line entry to 50+ museums and monuments including Louvre, Versailles, and Sainte-Chapelle",
+    "description": "Δωρεάν skip-the-line είσοδος σε 50+ μουσεία και μνημεία μεταξύ των οποίων το Λούβρο και οι Βερσαλλίες",
     "discountPercent": 25,
     "url": "https://www.parismuseumpass.fr/en"
   },
@@ -168,9 +168,9 @@
         "lng": 2.3376
       },
       "restaurant": {
-        "name": "Bistrot Benoit",
-        "description": "Παρισινό bistro εντός μουσείου",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Bistrot+Benoit+Louvre"
+        "name": "Happy Caffé",
+        "description": "Είναι ιδανικό για κάτι γρήγορο και φθηνό. Σερβίρει γλυκές και αλμυρές κρέπες, σάντουιτς με μπαγκέτα και καφέ",
+        "map_url": "https://maps.app.goo.gl/bRaugfscgaRyufdGA"
       },
       "website": "https://www.louvre.fr/en",
       "notes": [
@@ -190,9 +190,9 @@
       "best_time": "morning",
       "emoji": "🖼️",
       "cafe": {
-        "name": "Café Marly",
-        "description": "café με θέα στην πυραμίδα",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Marly+Louvre+Paris"
+         "name": "Happy Caffé",
+        "description": "Είναι ιδανικό για κάτι γρήγορο και φθηνό. Σερβίρει γλυκές και αλμυρές κρέπες, σάντουιτς με μπαγκέτα και καφέ",
+        "map_url": "https://maps.app.goo.gl/bRaugfscgaRyufdGA"
       }
     },
     {
@@ -255,8 +255,8 @@
     },
     {
       "id": 5,
-      "name": "Μουσείο Ορσέ",
-      "description": "Εντυπωσιακό μουσείο ιμπρεσιονιστικής τέχνης σε πρώην σιδηροδρομικό σταθμό",
+      "name": "Μουσείο Orsay",
+      "description": "Ένας από τους πιο εντυπωσιακούς χώρους τέχνης στον κόσμο με τη μεγαλύτερη συλλογή ιμπρεσιονιστών στον κόσμο. Κατάλληλο για παιδιά 6 ετών και άνω, ιδανικά από 9-10 ετών",
       "category": "museum",
       "prices": {
         "0": 0,
@@ -284,9 +284,9 @@
         "lng": 2.3266
       },
       "restaurant": {
-        "name": "Le Restaurant",
-        "description": "Belle-Epoque εστιατόριο εντός μουσείου",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Le+Restaurant+Musee+d+Orsay"
+        "name": "Les Antiquaires",
+        "description": "Ένα παραδοσιακό μπιστρό με εξαιρετικές κριτικές σε απόσταση 5 λεπτών",
+        "map_url": "https://maps.app.goo.gl/9Pyf2Bvz1o9b8YJs8"
       },
       "website": "https://www.musee-orsay.fr/en",
       "notes": [
@@ -306,15 +306,15 @@
       "best_time": "afternoon",
       "emoji": "🎨",
       "cafe": {
-        "name": "Café Campana",
-        "description": "café με θέα στον 5ο όροφο",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Campana+Musee+d+Orsay"
+        "name": "Café de l'Empire",
+        "description": "Μια εξαιρετική οικονομική επιλογή και για καφέ και για ελαφρύ γεύμα, σε πολύ κοντινή απόσταση. Κλασικό μπιστρό",
+        "map_url": "https://maps.app.goo.gl/HtZBgwSEmmq1G9jx8"
       }
     },
     {
       "id": 6,
       "name": "Ανάκτορα των Βερσαλλιών",
-      "description": "Το μεγαλοπρεπές ανάκτορο του Βασιλιά Ήλιου με τους θρυλικούς κήπους",
+      "description": "Το μεγαλοπρεπές ανάκτορο του Βασιλιά Ήλιου με τους θρυλικούς κήπους. Ιδανικό για άνω των 6-7 ετών. Για τα μικρότερα παιδιά Εστιάστε στους Κήπους και στο Petit Trianon, με το μικρό χωριό και τα ζωάκια (Hameau de la Reine).",
       "category": "palace",
       "prices": {
         "0": 0,
@@ -342,9 +342,9 @@
         "lng": 2.1204
       },
       "restaurant": {
-        "name": "Ore by Alain Ducasse",
-        "description": "εστιατόριο εντός ανακτόρου",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Ore+Alain+Ducasse+Versailles"
+        "name": "Aux Delices de Katty",
+        "description": "Πολύ οικονομικό, με υψηλή βαθμολογία και απόσταση 5-10 λεπτά απο την είσοδο",
+        "map_url": "https://maps.app.goo.gl/9z9chWTuujigyCyr6"
       },
       "website": "https://en.chateauversailles.fr/",
       "notes": [
@@ -365,7 +365,7 @@
       "emoji": "👑",
       "cafe": {
         "name": "Angelina",
-        "description": "tea room στο ανάκτορο",
+        "description": "Είναι το πιο διάσημο σημείο μέσα στο Παλάτι (1ος όροφος). Φημίζεται για τη συγκλονιστική ζεστή σοκολάτα "L'Africain" και το γλυκό Mont-Blanc.",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Angelina+Versailles"
       }
     },
@@ -487,8 +487,8 @@
     },
     {
       "id": 9,
-      "name": "Μουσείο Ροντέν",
-      "description": "Υπέροχο μουσείο με γλυπτά του Rodin σε μανουάλι με κήπο",
+      "name": "Μουσείο Rodin",
+      "description": "Ένα από τα πιο ατμοσφαιρικά μουσεία του Παρισιού, αφιερωμένο στον Rodin.Ξεχωρίζει για τον μεγάλο κήπο με τα διάσημα γλυπτά του, όπως ο Σκεπτόμενος και οι Πύλες της Κολάσεως. Ιδανικά από 6 ετών και πάνω",
       "category": "museum",
       "prices": {
         "0": 0,
@@ -516,9 +516,9 @@
         "lng": 2.3159
       },
       "restaurant": {
-        "name": "Café du Musée Rodin",
-        "description": "εστιατόριο στον κήπο του μουσείου",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+du+Musee+Rodin"
+        "name": "La villa Reine",
+        "description": "Με εξαιρετικές κριτικές (4.9/5) και καλή ισορροπία ποιότητας και τιμής για γεύμα ή δείπνο σε ένα πιο επίσημο αλλά όχι απλησίαστο περιβάλλον.",
+        "map_url": "https://maps.app.goo.gl/CxrXkHg3h47inkK58"
       },
       "website": "https://www.musee-rodin.fr/en",
       "notes": [
@@ -537,9 +537,9 @@
       "best_time": "afternoon",
       "emoji": "🗿",
       "cafe": {
-        "name": "Le Jardin de Varenne",
-        "description": "café κοντά στο μουσείο",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Le+Jardin+de+Varenne+Paris"
+        "name": "Boulangerie du Musée",
+        "description": "Ιδανικός φούρνος για γρήγορο και οικονομικό φαγητό: μπαγκέτες-σάντουιτς, κις, πίτσες, γλυκά και καφέ για το χέρι ή σε κοντινό παγκάκι.",
+        "map_url": "https://maps.app.goo.gl/jWKhKSFfWECjKbtB8"
       }
     },
     {
