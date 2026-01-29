@@ -213,9 +213,9 @@
         "lng": -0.4187
       },
       "restaurant": {
-        "name": "Studio Tour Cafe",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Studio+Tour+Cafe"
+        "name": "The Food Hall",
+        "description": "Μεγάλος χώρος με ξύλινα τραπέζια που θυμίζει τη Μεγάλη Αίθουσα. Βρίσκεται εντός του studio",
+        "map_url": "https://maps.app.goo.gl/GGC2hgxGfW2PqDqv7"
       },
       "website": "https://www.wbstudiotour.co.uk/",
       "notes": [
@@ -231,15 +231,15 @@
       "duration_hours": 3.5,
       "best_time": "any",
       "cafe": {
-        "name": "Shrek's Café",
-        "description": "themed café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Shreks+Adventure+Cafe+London"
+        "name": "Chocolate Frog Café",
+        "description": "Kέικ, παγωτά και γλυκά εμπνευσμένα από τον κόσμο του Harry Potter.",
+        "map_url": "https://maps.app.goo.gl/qPQ88bByU81rCgkr5"
       }
     },
     {
       "id": 5,
       "name": "ZSL London Zoo",
-      "description": "Ιστορικός ζωολογικός κήπος στο Ρίτζεντς Παρκ.",
+      "description": "Ένας από τους παλαιότερους και ιστορικότερους ζωολογικούς κήπους  μέσα στο πανέμορφο Regetn's Park.",
       "category": "zoo",
       "prices": {
         "0": 0,
@@ -267,9 +267,9 @@
         "lng": -0.1534
       },
       "restaurant": {
-        "name": "Βασικό Εστιατόριο",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=London+Zoo+Restaurants"
+        "name": "Regent's Bar & Kitchen",
+        "description": "Μέσα στον χώρο. Από πίτσες έως burgers και καφέ",
+        "map_url": "https://maps.app.goo.gl/ZdDTZy21aT7CVBSK9"
       },
       "restaurantType": "restaurant",
       "restaurantDistance": 0,
@@ -286,9 +286,9 @@
       "duration_hours": 4,
       "best_time": "morning",
       "cafe": {
-        "name": "Tower Café",
-        "description": "historic café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Tower+of+London+Cafe"
+        "name": "The Waterside Café",
+        "description": "Δίπλα στη λίμνη. Έχει καφέ, γλυκά αλλά και ελαφριά γεύματα με υπέροχη θέα στο νερό.",
+        "map_url": "https://maps.app.goo.gl/bjTNZBpFS4GMSaV97"
       }
     },
     {
@@ -1106,7 +1106,7 @@
     {
       "id": 22,
       "name": "Coram's Fields",
-      "description": "Μεγάλος χώρος παιχνιδιών και πρασίνου, προσβάσιμος μόνο σε ενήλικες που συνοδεύουν παιδιά.",
+      "description": "Παιδικές χαρές, φάρμες και παιχνίδια στο νερό..Ένας τεράστιος χώρος προσβάσιμος μόνο σε ενήλικες που συνοδεύουν παιδιά.",
       "category": "park",
       "prices": {
         "0": 0,
