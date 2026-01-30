@@ -777,7 +777,7 @@
       "name": "Jardin d'Acclimatation",
       "description": "Λούνα παρκ της πόλης με παιχνίδια, ζώα, τρενάκι, τραμπολίνα",
       "category": "themepark",
-      "prices": null,
+      "prices": 0,
       "location": {
         "lat": 48.8785,
         "lng": 2.2691
@@ -789,7 +789,7 @@
       },
       "website": "https://www.jardindacclimatation.fr/",
       "notes": [
-        "Dynamic pricing – must be fetched per date",
+        "Dynamic pricing – must be checked on official website, depends on child height",
         "3-12 ετών: ιδανική ηλικία",
         "Διάρκεια: 3.5 ώρες περίπου"
       ],
@@ -814,7 +814,35 @@
       "name": "Cité des Sciences et de l'Industrie",
       "description": "Διαδραστικό μουσείο επιστήμης με ζώνες για παιδιά (2-7 & 8-12 ετών)",
       "category": "science_museum",
-      "prices": null,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 4,
+        "3": 4,
+        "4": 4,
+        "5": 4,
+        "6": 12,
+        "7": 12,
+        "8": 12,
+        "9": 12,
+        "10": 12,
+        "11": 12,
+        "12": 12,
+        "13": 12,
+        "14": 12,
+        "15": 12,
+        "16": 12,
+        "17": 12,
+        "18": 12,
+        "19": 12,
+        "20": 12,
+        "21": 12,
+        "22": 12,
+        "23": 12,
+        "24": 12,
+        "25": 12,
+        "adult": 15
+      },
       "location": {
         "lat": 48.8959,
         "lng": 2.3876
@@ -826,7 +854,10 @@
       },
       "website": "https://www.cite-sciences.fr/en",
       "notes": [
-        "Prices must be fetched from official website",
+        "0-1 ετών: 0€",
+        "2-5 ετών: 4€",
+        "6-25 ετών: 12€",
+        "26+ ετών: 15€",
         "2-12 ετών: ιδανική ηλικία",
         "Διάρκεια: 4 ώρες περίπου"
       ],
@@ -888,9 +919,7 @@
       "name": "Κήποι του Λουξεμβούργου",
       "description": "Πάρκο με παιδική χαρά, βόλτες με πόνι, μικρά καραβάκια",
       "category": "park",
-      "prices": {
-        "all": 0
-      },
+      "prices": 0,
       "location": {
         "lat": 48.8462,
         "lng": 2.3372
@@ -927,9 +956,7 @@
       "name": "Κήποι των Τυιλερί",
       "description": "Κεντρικός κήπος με τραμπολίνα και καρουζέλ",
       "category": "park",
-      "prices": {
-        "all": 0
-      },
+      "prices": 0,
       "location": {
         "lat": 48.8634,
         "lng": 2.3275
@@ -966,7 +993,27 @@
       "name": "Κρουαζιέρα στον Σηκουάνα",
       "description": "Κρουαζιέρα 1 ώρας στον ποταμό Σηκουάνα",
       "category": "boat_tour",
-      "prices": null,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 7,
+        "5": 7,
+        "6": 7,
+        "7": 7,
+        "8": 7,
+        "9": 7,
+        "10": 7,
+        "11": 7,
+        "12": 7,
+        "13": 17,
+        "14": 17,
+        "15": 17,
+        "16": 17,
+        "17": 17,
+        "adult": 17
+      },
       "location": {
         "lat": 48.8606,
         "lng": 2.3376
@@ -978,7 +1025,9 @@
       },
       "website": "https://www.bateauxparisiens.com/",
       "notes": [
-        "Prices must be fetched from official website",
+        "0-3 ετών: 0€",
+        "4-12 ετών: 7€",
+        "13+ ετών: 17€",
         "Για όλες τις ηλικίες",
         "Διάρκεια: 1 ώρα"
       ],
@@ -1003,7 +1052,29 @@
       "name": "Μουσείο Κέρινων Ομοιωμάτων Grévin",
       "description": "Κέρινα ομοιώματα και διαδραστικές εμπειρίες",
       "category": "interactive_museum",
-      "prices": null,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 19.5,
+        "6": 19.5,
+        "7": 19.5,
+        "8": 19.5,
+        "9": 19.5,
+        "10": 19.5,
+        "11": 19.5,
+        "12": 19.5,
+        "13": 19.5,
+        "14": 19.5,
+        "15": 19.5,
+        "16": 19.5,
+        "17": 19.5,
+        "18": 19.5,
+        "19": 27,
+        "adult": 27
+      },
       "location": {
         "lat": 48.8719,
         "lng": 2.3422
@@ -1015,7 +1086,9 @@
       },
       "website": "https://www.grevin-paris.com/en",
       "notes": [
-        "Prices must be fetched from official website",
+        "5-18 ετών: 19.5€",
+        "19+ ετών: 27€",
+        "Many family discounts available, check official website",
         "7 ετών και άνω: ιδανική ηλικία",
         "Διάρκεια: 2 ώρες περίπου"
       ],
@@ -1040,7 +1113,27 @@
       "name": "Κατακόμβες του Παρισιού",
       "description": "Υπόγειες οστεοθήκες και σήραγγες",
       "category": "underground",
-      "prices": null,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 12,
+        "6": 12,
+        "7": 12,
+        "8": 12,
+        "9": 12,
+        "10": 12,
+        "11": 12,
+        "12": 12,
+        "13": 12,
+        "14": 12,
+        "15": 12,
+        "16": 12,
+        "17": 12,
+        "adult": 31
+      },
       "location": {
         "lat": 48.8338,
         "lng": 2.3324
@@ -1052,7 +1145,9 @@
       },
       "website": "https://www.catacombes.paris.fr/en",
       "notes": [
-        "Prices must be fetched from official website",
+        "0-4 ετών: 0€",
+        "5-17 ετών: 12€ (25€ if they want audioguide)",
+        "18+ ετών: 31€ (includes audioguide)",
         "10 ετών και άνω: ιδανική ηλικία",
         "Διάρκεια: 1.5 ώρες περίπου"
       ],
@@ -1077,7 +1172,27 @@
       "name": "Parc Astérix",
       "description": "Θεματικό πάρκο με roller coasters, παραστάσεις, νεροτσουλήθρες",
       "category": "themepark",
-      "prices": null,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 57,
+        "4": 57,
+        "5": 57,
+        "6": 57,
+        "7": 57,
+        "8": 57,
+        "9": 57,
+        "10": 57,
+        "11": 57,
+        "12": 65,
+        "13": 65,
+        "14": 65,
+        "15": 65,
+        "16": 65,
+        "17": 65,
+        "adult": 65
+      },
       "location": {
         "lat": 49.1359,
         "lng": 2.5721
@@ -1089,6 +1204,8 @@
       },
       "website": "https://www.parcasterix.fr/en",
       "notes": [
+        "3-11 ετών: 57€",
+        "12+ ετών: 65€",
         "Dynamic pricing – must be fetched per date",
         "7-16 ετών: ιδανική ηλικία",
         "Διάρκεια: 7 ώρες περίπου"
