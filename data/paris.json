@@ -372,7 +372,7 @@
     {
       "id": 7,
       "name": "Sainte-Chapelle",
-      "description": "Γοτθικό αριστούργημα με εκπληκτικά βιτρό παράθυρα",
+      "description": "Παρεκκλήσι με 15 τεράστια βιτρό με 1.100 βιβλικές σκηνές.Προτείνεται για όλες τις ηλικίες, ιδανικά με ήλιο, όμως έχει αυστηρό έλεγχο ασφαλείας (όπως στο αεροδρόμιο).",
       "category": "monument",
       "prices": {
         "0": 0,
@@ -400,9 +400,9 @@
         "lng": 2.345
       },
       "restaurant": {
-        "name": "Au Vieux Paris d'Arcole",
-        "description": "ιστορικό εστιατόριο κοντά στη Sainte-Chapelle",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Au+Vieux+Paris+d+Arcole"
+       "name": "Brasserie Les Deux Palais",
+        "description": "Παραδοσιακή παριζιάνικη μπρασερί με στυλ Belle Époque, κυριολεκτικά δίπλα σας (λιγότερο από 1 λεπτό με τα πόδια)",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Brasserie+Les+Deux+Palais+Paris"
       },
       "website": "https://www.sainte-chapelle.fr/en",
       "notes": [
@@ -423,9 +423,9 @@
       "best_time": "morning",
       "emoji": "⛪",
       "cafe": {
-        "name": "Café Saint-Régis",
-        "description": "παραδοσιακό Παρισινό café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Saint+Regis+Paris"
+        "name": "Le Soleil d'Or",
+        "description": "Μια εξαιρετική και πολύ κοντινή επιλογή (μόλις 1-2 λεπτά με τα πόδια). Είναι ένα κλασικό παριζιάνικο καφέ-εστιατόριο με πολύ καλή βαθμολογία (4.5)",
+        "map_url": "https://maps.app.goo.gl/8ySsS777EaWAj1ge7"
       }
     },
     {
