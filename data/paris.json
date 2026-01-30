@@ -49,9 +49,9 @@
         "lng": 2.7758
       },
       "restaurant": {
-        "name": "Disney Restaurant",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Disneyland+Restaurant+Paris"
+        "name": Cowboy Cookout Barbecue",
+        "description": "Κρέας σε μεγάλες μερίδες και καλές τιμές, σε έναν πολύ όμορφο χώρο που μοιάζει με αχυρώνα.",
+        "map_url": "https://maps.app.goo.gl/RkWZtmjwGL1r1z4s6"
       },
       "website": "https://www.disneylandparis.com/",
       "notes": [
@@ -574,7 +574,7 @@
       },
       "restaurant": {
         "name": "Brasserie Les Deux Palais",
-        "description": "κοντά στη Conciergerie",
+        "description": "Παραδοσιακή παριζιάνικη μπρασερί με στυλ Belle Époque, κυριολεκτικά δίπλα σας (λιγότερο από 1 λεπτό με τα πόδια)",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Brasserie+Les+Deux+Palais+Paris"
       },
       "website": "https://www.paris-conciergerie.fr/en",
@@ -595,9 +595,9 @@
       "best_time": "any",
       "emoji": "🏰",
       "cafe": {
-        "name": "Carette",
-        "description": "παραδοσιακό Παρισινό salon de thé",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Carette+Paris+Notre+Dame"
+        "name": "Le Soleil d'Or",
+        "description": "Μια εξαιρετική και πολύ κοντινή επιλογή (μόλις 1-2 λεπτά με τα πόδια). Είναι ένα κλασικό παριζιάνικο καφέ-εστιατόριο με πολύ καλή βαθμολογία (4.5)",
+        "map_url": "https://maps.app.goo.gl/8ySsS777EaWAj1ge7"
       }
     },
     {
@@ -717,7 +717,7 @@
     {
       "id": 13,
       "name": "Sacré-Cœur (Θόλος)",
-      "description": "Βασιλική στο Montmartre με εκπληκτική πανοραμική θέα του Παρισιού",
+      "description": "Η Sacré-Cœur είναι εμβληματική βασιλική στη Μονμάρτρη με πανοραμική θέα στο Παρίσι. Κατάλληλη για όλες τις ηλικίες. Προσοχή στα πολλά σκαλιά· προτίμησε το τελεφερίκ.",
       "category": "monument",
       "prices": {
         "0": 0,
@@ -745,9 +745,9 @@
         "lng": 2.3431
       },
       "restaurant": {
-        "name": "Le Consulat",
-        "description": "ιστορικό bistro στο Montmartre",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Le+Consulat+Montmartre+Paris"
+        "name": "Le Poulbot",
+        "description": "Μόλις 220 μέτρα από τη Βασιλική. Είναι ένα μικρό, παραδοσιακό γαλλικό στέκι",
+        "map_url": "https://maps.app.goo.gl/QZHb2fq28evj4UMJ9"
       },
       "website": "https://www.sacre-coeur-montmartre.com/en",
       "notes": [
