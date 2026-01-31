@@ -11,7 +11,7 @@
   },
   "cityPass": {
     "name": "Istanbul Museum Pass",
-    "description": "Free one-time access to 10+ museums including Topkapi Palace, skip-the-line entry, valid for 5 consecutive days",
+    "description": "Δωρεάν είσοδος σε 10+ μουσεία για 5 συνεχόμενες ημέρες",
     "discountPercent": 20,
     "url": "https://muze.gen.tr/MuseumPasses"
   },
@@ -63,14 +63,14 @@
       "best_time": "morning",
       "comboAvailable": true,
       "restaurant": {
-        "name": "Seven Hills Restaurant",
-        "description": "terrace με θέα στην Αγία Σοφία",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Seven+Hills+Restaurant+Istanbul+Sultanahmet"
+        "name": "Ziya Baba Türk Mutfağı Slow food kebap Dürüm wrap& Anatolian brekfast best food",
+        "description": "Μικρό, οικογενειακό εστιατόριο για ανατολίτικη κουζίνα, με εξαιρετικές τιμές",
+        "map_url": "https://maps.app.goo.gl/XFrqxNv2vJwkRH6G7"
       },
       "cafe": {
-        "name": "Hafız Mustafa",
+        "name": "Dervis Cafe 2",
         "description": "παραδοσιακά γλυκά & τούρκικος καφές",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Hafiz+Mustafa+Sultanahmet+Istanbul"
+        "map_url": "https://maps.app.goo.gl/tUC68FyGLFq4ou2U8ahmet+Istanbul"
       }
     },
     {
@@ -134,7 +134,7 @@
     {
       "id": 3,
       "name": "Βασιλική Κινστέρνα",
-      "description": "Υπόγεια δεξαμενή που τροφοδοτούσε με νερό όλη την Πόλη. Εντυπωσιακό μέρος, υπέροχη ακουστική, χρησιμοποιείται για συναυλίες. Μετρήστε τις κολόνες και ψάξτε να βρείτε τα κεφάλια της Μέδουσας.",
+      "description": "Υπόγεια δεξαμενή που τροφοδοτούσε με νερό όλη την Πόλη. Εντυπωσιακό μέρος, υπέροχη ακουστική. Ιδανικό για άνω των 7 ετών",
       "category": "attraction",
       "prices": {
         "0": 0,
@@ -163,7 +163,7 @@
         "lat": 41.0083,
         "lng": 28.9775
       },
-      "website": "https://yerebatansarnici.com/",
+      "website": "https://yerebatan.com/en/basilica-cistern/visit-info/",
       "notes": [
         "Όλοι άνω των 7 ετών: 30€ (09:00-18:30)",
         "49€ (19:30-22:00 - λόγω φωτισμού)",
@@ -179,14 +179,14 @@
       "best_time": "afternoon",
       "eveningPrice": 49,
       "restaurant": {
-        "name": "Serbethane Cafe",
-        "description": "Ottoman cafe κοντά στην Κινστέρνα",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Serbethane+Cafe+Istanbul"
+        "name": "Ziya Baba Türk Mutfağı Slow food kebap Dürüm wrap& Anatolian brekfast best food",
+        "description": "Εξειδικεύεται στο παραδοσιακό τουρκικό φαγητό.Έχει βαθμολογία 4.8 αστέρια.Δοκιμάστε Dürüm (τυλιχτά) και το κεμπάπ του. Πολύ καλές τιμές",
+        "map_url": "https://maps.app.goo.gl/pCGxWAfyykMcFUbv5"
       },
       "cafe": {
-        "name": "Medusa Café",
-        "description": "κοντά στην Κινστέρνα",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Basilica+Cistern+Cafe+Istanbul"
+        "name": "Dervis Cafe 2",
+        "description": "Μόλις 5-6 λεπτά με τα πόδια από την Κινστέρνα.Έχει έναν πολύ ήσυχο εσωτερικό κήπο και οι τιμές του για καφέ και τσάι είναι πολύ λογικές για το κέντρο του Sultanahmet.",
+        "map_url": "https://maps.app.goo.gl/tUC68FyGLFq4ou2U8"
       }
     },
     {
@@ -252,7 +252,7 @@
     {
       "id": 5,
       "name": "Αρχαιολογικό Μουσείο Κωνσταντινούπολης",
-      "description": "Όλη η ιστορία της Κωνσταντινούπολης και της Τουρκίας σε ένα μέρος. Φοβερό μουσείο με εντυπωσιακά εκθέματα και περιγραφές.",
+      "description": "Όλη η ιστορία της Κωνσταντινούπολης και της Τουρκίας σε ένα μέρος. Είναι συνδυασμός 3 μουσείων (Istanbul Archaeology Museum, Museum of the Ancient Orient, Tiled Kiosk Museum - έχει στην αυλή εκθέματα για παιδιά-.",
       "category": "museum",
       "prices": {
         "0": 0,
@@ -264,9 +264,9 @@
         "6": 0,
         "7": 0,
         "8": 0,
-        "9": 0,
-        "10": 0,
-        "11": 0,
+        "9": 15,
+        "10": 15,
+        "11": 15,
         "12": 15,
         "13": 15,
         "14": 15,
@@ -281,9 +281,9 @@
         "lat": 41.0112,
         "lng": 28.9819
       },
-      "website": "https://istanbularkeoloji.gov.tr/",
+      "website": "https://muze.gen.tr/muze-detay/arkeoloji",
       "notes": [
-        "Υπάρχει ασάφεια για ηλικίες. Φαίνεται πως όλοι οι άνω των 12 ετών πληρώνουν."
+        "15 ευρώ για 9 ετών και πάνω. "
       ],
       "tags": [
         "archaeology",
@@ -294,14 +294,14 @@
       "duration_hours": 2.5,
       "best_time": "afternoon",
       "restaurant": {
-        "name": "Tarihi Sultanahmet Köftecisi",
-        "description": "κοντά στο μουσείο",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Tarihi+Sultanahmet+Koftecisi+Istanbul"
+       "name": "Gülhane Şark Sofrası",
+        "description": "Αυθεντική τουρκική κουζίνα σε πολύ κοντινή απόσταση με τα πόδια από το μουσείο",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Gulhane+Sark+Sofrasi+Istanbul"
       },
       "cafe": {
-        "name": "Gülhane Şark Sofrası",
-        "description": "παραδοσιακό café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Gulhane+Sark+Sofrasi+Istanbul"
+        "name": "Coffeetopia Eminönü",
+        "description": "Σύγχρονο cafe, αγαπημένο στους ντόπιους που εκτιμούν το καλό καβούρδισμα.",
+        "map_url": "https://maps.app.goo.gl/DReX93frnxNTDmC59"
       }
     },
     {
@@ -479,7 +479,7 @@
     {
       "id": 9,
       "name": "Μουσείο Σύγχρονης Τέχνης (Istanbul Modern)",
-      "description": "Εντυπωσιακοί πίνακες και αισθητική σε έναν φουτουριστικό χώρο. Αν σου αρέσει η μοντέρνα τέχνη μην το χάσεις, πολλοί πάνε εκεί μόνο για το εστιατόριο και τη θέα.",
+      "description": "Εντυπωσιακοί πίνακες και αισθητική σε έναν φουτουριστικό χώρο. Αν σας αρέσει η μοντέρνα τέχνη μην το χάσετε, πολλοί πάνε επίσης μόνο για το εστιατόριο και τη θέα.",
       "category": "museum",
       "prices": {
         "0": 0,
@@ -522,12 +522,12 @@
       "duration_hours": 2,
       "best_time": "afternoon",
       "restaurant": {
-        "name": "Karaköy Lokantası",
-        "description": "παραδοσιακή κουζίνα κοντά στο μουσείο",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Karakoy+Lokantasi+Istanbul"
+        "name": "Karaköy Güllüoğlu Yönetim Binası",
+        "description": "Για κάτι γρήγορο, ποιοτικό και "στα όρθια" ή σε απλά τραπεζάκια είναι ιδανικό , σε πολυ καλές τιμές και σε απόσταση αναπνοής. ",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Karakoy+Gulluoglu+Istanbul"
       },
       "cafe": {
-        "name": "Karaköy Güllüoğlu",
+        "name": "Karaköy Güllüoğlu Yönetim Binası",
         "description": "baklava & coffee",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Karakoy+Gulluoglu+Istanbul"
       }
