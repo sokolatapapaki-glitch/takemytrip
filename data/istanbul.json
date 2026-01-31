@@ -366,36 +366,36 @@
       "description": "Αν θέλει κανείς να θαυμάσει τα εντυπωσιακά και τρομερά πλούσια σπίτια που είναι χτισμένα στα παράλια του Βοσπόρου τότε πρέπει να κάνει αυτήν την κρουαζιέρα. Περιλαμβάνει γεύμα και συνήθως το σόου των Περιστεφόμενων Δερβίσηδων.",
       "category": "cruise",
       "prices": {
-        "0": 0,
-        "1": 0,
-        "2": 0,
-        "3": 25,
-        "4": 25,
-        "5": 25,
-        "6": 25,
-        "7": 35,
-        "8": 35,
-        "9": 35,
-        "10": 35,
-        "11": 35,
-        "12": 35,
-        "13": 35,
-        "14": 35,
-        "15": 45,
-        "16": 45,
-        "17": 45,
-        "18": 50,
-        "19": 50,
-        "adult": 50
+        "0": 4,5,
+        "1": 4,5,
+        "2": 4,5,
+        "3": 4,5,
+        "4": 4,5,
+        "5": 4,5,
+        "6": 4,5,
+        "7": 4,5,
+        "8": 4,5,
+        "9": 4,5,
+        "10": 4,5,
+        "11": 4,5,
+        "12": 18,
+        "13": 18,
+        "14": 18,
+        "15": 18,
+        "16": 18,
+        "17": 18,
+        "18": 18,
+        "19": 18,
+        "adult": 18
       },
       "location": {
         "lat": 41.0265,
         "lng": 28.9745
       },
-      "website": "https://www.bosphorustour.com/",
+      "website": "https://sehirhatlari.istanbul/en/price-list/bosphorus-tours-78",
       "notes": [
-        "0-2 ετών: δωρεάν",
-        "3-6 ετών: έκπτωση 50%"
+        "Οι τιμές αφορούν διπλή διαδρομή στο long Tour με τα πλοία της γραμμής",
+        "Το καλοκαίρι υπάρχει και Moonlight tour. Μοναδική εμπειρία με φωτισμένα μνημεία, γέφυρες και παλάτια τη νύχτα."
       ],
       "tags": [
         "cruise",
@@ -411,20 +411,20 @@
         "σόου Δερβίσηδων"
       ],
       "restaurant": {
-        "name": "Mikla Restaurant",
-        "description": "rooftop με θέα στον Βόσπορο",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Mikla+Restaurant+Istanbul"
+        "name": "Lezzet-i Şark Antep Sofrası",
+        "description": "Είναι η απόλυτη επιλογή για αυθεντικό κεμπάπ και lahmacun σε πολύ καλές τιμές. Είναι πάντα γεμάτο με ντόπιους.",
+        "map_url": "https://maps.app.goo.gl/98KqRbeXWcYtPSwPA"
       },
       "cafe": {
-        "name": "Eminönü Pier Cafés",
-        "description": "riverside cafés",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Eminonu+Pier+Cafes+Istanbul"
+        "name": "Mimar Sinan Roof",
+        "description": "Αν έχετε λίγο παραπάνω χρόνο (περίπου 10 λεπτά περπάτημα), αυτό το καφέ έχει μια από τις ωραιότερες θέες στην Κωνσταντινούπολη από την ταράτσα του",
+        "map_url": "https://maps.app.goo.gl/jqXzLWy8CZ7FAztx5"
       }
     },
     {
       "id": 8,
       "name": "Κρουαζιέρα στα Πριγκηπονήσια",
-      "description": "Με το καραβάκι της γραμμής, γυρνάς από νησάκι σε νησάκι και κατεβαίνεις στην Πρίγκηπο όπου δεν κυκλοφορούν αμάξια και πας με την άμαξα μέχρι πάνω το μοναστήρι του Αγιά Γιώργη. Θα δεις ακόμα και πολλούς Τούρκους να το προσκυνάνε.",
+      "description": "Με το καραβάκι της γραμμής, γυρνάτε από νησάκι σε νησάκι και κατεβαίνετε στην Πρίγκηπο όπου δεν κυκλοφορούν αμάξια.",
       "category": "cruise",
       "prices": {
         "0": 0,
@@ -433,29 +433,29 @@
         "3": 0,
         "4": 0,
         "5": 0,
-        "6": 0,
-        "7": 15,
-        "8": 15,
-        "9": 15,
-        "10": 15,
-        "11": 15,
-        "12": 15,
-        "13": 15,
-        "14": 15,
-        "15": 18,
-        "16": 18,
-        "17": 18,
-        "18": 20,
-        "19": 20,
-        "adult": 20
+        "6": 4,
+        "7": 4,
+        "8": 4,
+        "9": 4,
+        "10": 4,
+        "11": 4,
+        "12": 4,
+        "13": 7,
+        "14": 7,
+        "15": 7,
+        "16": 7,
+        "17": 7,
+        "18": 7,
+        "19": 7,
+        "adult": 7
       },
       "location": {
         "lat": 40.8753,
         "lng": 29.0907
       },
-      "website": "https://www.sehirhatlari.istanbul/",
+      "website": "https://sehirhatlari.istanbul/en/ucret-tarifeleri?utm_source=chatgpt.com",
       "notes": [
-        "Για διπλή διαδρομή. Όλοι άνω των 7 ετών: 20€"
+        "Οι τιμές αφορούν διπλή διαδρομή στα πλοία της γραμμής"
       ],
       "tags": [
         "cruise",
@@ -466,14 +466,14 @@
       "duration_hours": 4,
       "best_time": "morning",
       "restaurant": {
-        "name": "Lunapark Cafe",
-        "description": "στα Πριγκηπονήσια",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Lunapark+Cafe+Buyukada+Istanbul"
+        "name": "Ada Mutfak",
+        "description": "Αυθεντική σπιτική κουζίνα σε πολύ καλές τιμές. Φημίζεται για το Mantı (μικρά ζυμαρικά με κιμά και γιαούρτι), τα ντολμαδάκια με βύσσινο και τους φρέσκους κολοκυθοκεφτέδες (mücver).",
+        "map_url": "https://maps.app.goo.gl/QwV3hLLnnpxB5QyY7"
       },
       "cafe": {
-        "name": "Moda Café",
-        "description": "island café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Moda+Buyukada+Cafe+Istanbul"
+        "name": "Büyükada Şekercisi Candy Island Cafe Patisserie",
+        "description": "Είναι διάσημο για τα φρέσκα λουκούμια του, τις χειροποίητες καραμέλες και τα παραδοσιακά τουρκικά γλυκά",
+        "map_url": "https://maps.app.goo.gl/rdTmg2uoCuAi4MWCA"
       }
     },
     {
