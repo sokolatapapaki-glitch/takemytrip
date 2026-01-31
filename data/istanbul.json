@@ -535,7 +535,7 @@
     {
       "id": 10,
       "name": "Ενυδρείο Κωνσταντινούπολης (Istanbul Aquarium)",
-      "description": "Πολύ εντυπωσιακό και προσεγμένο, σίγουρα αξίζει μία επίσκεψη. Υπάρχουν κι άλλα μικρότερα, βεβαιωθείτε ότι θα πάτε στο ενυδρείο της Κωνσταντινούπολης.",
+      "description": "Πολύ εντυπωσιακό και προσεγμένο, σίγουρα αξίζει μία επίσκεψη. Υπάρχουν κι άλλα μικρότερα, βεβαιωθείτε ότι θα πάτε στο ενυδρείο της Κωνσταντινούπολης.Ιδανικό για κάθε ηλικία",
       "category": "aquarium",
       "prices": {
         "0": 0,
@@ -564,7 +564,7 @@
         "lat": 40.9784,
         "lng": 28.8211
       },
-      "website": "https://www.istanbulaquarium.com/",
+      "website": "https://www.istanbulakvaryum.com/",
       "notes": [
         "0-2 ετών: δωρεάν",
         "2-11 ετών: 21€",
@@ -579,9 +579,9 @@
       "duration_hours": 2.5,
       "best_time": "any",
       "restaurant": {
-        "name": "Aqua Florya Mall",
-        "description": "εστιατόρια δίπλα στο ενυδρείο",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Aqua+Florya+Shopping+Mall+Restaurants+Istanbul"
+        "name": "Burger King Aqua Florya Mall",
+        "description": "Burger king εντός του mall",
+        "map_url": "https://maps.app.goo.gl/ejN4DRAqnY1myipP9"
       },
       "cafe": {
         "name": "Starbucks Aqua Florya",
