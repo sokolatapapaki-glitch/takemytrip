@@ -910,9 +910,9 @@
     "lng": 2.3372
   },
   "restaurant": {
-    "name": "Buvette des Marionnettes",
-    "description": "café στον κήπο",
-    "map_url": "https://www.google.com/maps/search/?api=1&query=Luxembourg+Gardens+Restaurant+Paris"
+    "name": "Le Coup de Torchon",
+    "description": "Ένα πολύ καλό εστιατόριο με υψηλή βαθμολογία (4.7) για γαλλική κουζίνα και πολύ καλές τιμές στα 450μ.",
+    "map_url": "https://maps.app.goo.gl/ZJDdM759fizp25Rv8"
   },
   "website": "https://www.senat.fr/visite/jardin/",
   "notes": [
@@ -931,9 +931,9 @@
   "best_time": "afternoon",
   "emoji": "🌳",
   "cafe": {
-    "name": "Pavillon de la Fontaine",
-    "description": "café στον κήπο",
-    "map_url": "https://www.google.com/maps/search/?api=1&query=Luxembourg+Gardens+Cafe+Paris"
+    "name": "Garden Café",
+    "description": "Σε πολύ κοντινή απόσταση, ένα ήσυχο cafe με καλές κριτικές και καλές τιμές",
+    "map_url": "https://maps.app.goo.gl/RBPNk7Cnx8DoWTTN7"
   }
 },
 {
