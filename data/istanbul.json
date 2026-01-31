@@ -866,6 +866,65 @@
         "description": "τσαγερί κοντά στα τείχη",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Mihrimah+Sultan+Camii+Cafe+Istanbul"
       }
+    },
+    {
+      "id": 16,
+      "name": "KidZania Istanbul",
+      "description": "Διαδραστικό θεματικό πάρκο όπου τα παιδιά παίζουν ρόλους σε επαγγέλματα μέσα σε μία μικρή πόλη.",
+      "category": "themepark",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 77.70,
+        "3": 77.70,
+        "4": 106.20,
+        "5": 106.20,
+        "6": 106.20,
+        "7": 77.70,
+        "8": 77.70,
+        "9": 77.70,
+        "10": 77.70,
+        "11": 77.70,
+        "12": 77.70,
+        "13": 77.70,
+        "14": 77.70,
+        "15": 28.50,
+        "16": 28.50,
+        "17": 28.50,
+        "18": 28.50,
+        "19": 28.50,
+        "adult": 28.50
+      },
+      "location": {
+        "lat": 41.0170,
+        "lng": 28.6396
+      },
+      "website": "https://istanbul.kidzania.com/",
+      "notes": [
+        "2-3 ετών μόνο με γονέα",
+        "4-6 ετών μόνο με γονέα",
+        "7-14 ετών μπορούν να μπουν χωρίς γονέα",
+        "Κάθε επιπλέον ενήλικας: 28,50€"
+      ],
+      "tags": [
+        "kidzania",
+        "children",
+        "roleplay",
+        "education",
+        "indoor"
+      ],
+      "duration_hours": 4,
+      "best_time": "any",
+      "restaurant": {
+        "name": "Forum Istanbul Food Court",
+        "description": "πολλές επιλογές εντός του εμπορικού",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Forum+Istanbul+Food+Court"
+      },
+      "cafe": {
+        "name": "Starbucks Forum Istanbul",
+        "description": "καφές εντός του mall",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Starbucks+Forum+Istanbul"
+      }
     }
   ],
   "passes": [
