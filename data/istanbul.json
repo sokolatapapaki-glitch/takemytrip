@@ -76,7 +76,7 @@
     {
       "id": 2,
       "name": "Μπλε Τζαμί (Σουλταν Αχμέτ)",
-      "description": "Το πιο διάσημο τζαμί με τα εντυπωσιακά βιτρό που δίνουν την αίσθηση ότι μπαίνει μπλε φως από τα παράθυρα. Χώρος λατρείας, οπωσδήποτε καλυμμένο σώμα και κεφάλι, βγάζετε παπούτσια πριν την είσοδο.",
+      "description": "Το πιο διάσημο τζαμί με τα εντυπωσιακά βιτρό σαν να μπαίνει μπλε φως από τα παράθυρα. Χώρος λατρείας (καλυμμένο σώμα και κεφάλι, βγάζετε παπούτσια πριν την είσοδο). Χρειάζεται ησυχία, μικρά παιδιά ίσως δυσκολευτούν",
       "category": "attraction",
       "prices": {
         "0": 0,
@@ -121,14 +121,14 @@
       "best_time": "any",
       "freeActivity": true,
       "restaurant": {
-        "name": "Sultanahmet Köftecisi",
-        "description": "παραδοσιακά κεφτεδάκια από το 1920",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Sultanahmet+Koftecisi+Istanbul"
+        "name": "Ziya Baba Türk Mutfağı Slow food kebap Dürüm wrap& Anatolian brekfast best food",
+        "description": "Ίσως η πιο αυθεντική και οικονομική επιλογή στην περιοχή. Φημίζεται για το σπιτικό φαγητό, τα κεμπάπ και το slow food στυλ του",
+        "map_url": "https://maps.app.goo.gl/3dhkoTTDK2F9cRQs7"
       },
       "cafe": {
-        "name": "Derviş Aile Çay Bahçesi",
-        "description": "τσαγερί με θέα στο τζαμί",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Tarihi+Sultanahmet+Koftecisi+Cafe+Istanbul"
+        "name": "The Rabbit Hole Coffee Sultanahmet",
+        "description": "Μια φανταστική επιλογή αν ψάχνετε ποιοτικό καφέ.",
+        "map_url": "https://maps.app.goo.gl/4SNFgv7j8XZovNUSA"
       }
     },
     {
@@ -307,7 +307,7 @@
     {
       "id": 6,
       "name": "Πύργος του Γαλατά",
-      "description": "Πύργος που δεσπόζει κοντά στη γέφυρα του Γαλατά, υπέροχη θέα από ψηλά. Προσοχή στην απότομη σκάλα.",
+      "description": "Πύργος που δεσπόζει κοντά στη γέφυρα του Γαλατά, υπέροχη θέα από ψηλά. Προσοχή στην απότομη σκάλα. Δεν προτείνεται για παιδιά κάτω των 6-7 ετών.",
       "category": "attraction",
       "prices": {
         "0": 0,
@@ -336,7 +336,7 @@
         "lat": 41.0255,
         "lng": 28.9742
       },
-      "website": "https://www.galatatower.net/",
+      "website": "https://galatakulesi.gov.tr/",
       "notes": [
         "Όλοι άνω των 7 ετών: 30€",
         "Κάτω των 7 ετών: δωρεάν"
@@ -350,14 +350,14 @@
       "duration_hours": 1,
       "best_time": "evening",
       "restaurant": {
-        "name": "Galata Tower Cafe",
-        "description": "στον πύργο με πανοραμική θέα",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Galata+Tower+Cafe+Restaurant+Istanbul"
+        "name": "Dürümzade",
+        "description": "Είναι από τα πιο οικονομικά και νόστιμα γεύματα που μπορείτε να φάτε στην περιοχή Beyoğlu.",
+        "map_url": "https://maps.app.goo.gl/8UieWSrNcqtDzas97"
       },
       "cafe": {
-        "name": "Anemon Galata Rooftop",
-        "description": "cafe με θέα",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Anemon+Galata+Rooftop+Istanbul"
+        "name": "Viyana Kahvesi Galata Tower",
+        "description": "Το πιο διάσημο καφέ ακριβώς δίπλα στον Πύργο, γνωστό για το San Sebastian Cheesecake με λιωμένη σοκολάτα.",
+        "map_url": "https://maps.app.goo.gl/GiKKDYNpByuXdry59"
       }
     },
     {
@@ -636,14 +636,14 @@
       "duration_hours": 2,
       "best_time": "afternoon",
       "restaurant": {
-        "name": "Sütis Cafe",
-        "description": "εντός του πάρκου",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Sutis+Miniaturk+Istanbul"
+        "name": "Maran Restaurant",
+        "description": "Μια πολύ καλή επιλογή (βαθμολογία 4.8) σε απόσταση αναπνοής από την είσοδο.",
+        "map_url": "https://maps.app.goo.gl/Lszi8g4HCz45XtP8A"
       },
       "cafe": {
-        "name": "Pierre Loti Café",
-        "description": "historic hilltop café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Miniaturk+Cafe+Pierre+Loti+Istanbul"
+          "name": "Maran Restaurant",
+        "description": "Μια πολύ καλή επιλογή (βαθμολογία 4.8) σε απόσταση αναπνοής από την είσοδο. Ιδανικό και για καφέ",
+        "map_url": "https://maps.app.goo.gl/Lszi8g4HCz45XtP8A"
       }
     },
     {
@@ -705,7 +705,7 @@
     {
       "id": 13,
       "name": "Πάρκο Γκιουλχανέ",
-      "description": "Η φύση σε όλο της το μεγαλείο. Δίπλα στο Τοπ Καπί.",
+      "description": "Η φύση σε όλο της το μεγαλείο. Δίπλα στο Τοπ Καπί.Έχει παιδικές χαρές και πολύ πράσινο",
       "category": "park",
       "prices": {
         "0": 0,
@@ -734,6 +734,7 @@
         "lat": 41.0128,
         "lng": 28.9811
       },
+      "website": "https://www.istanbul.gov.tr/istanbulun-koru-ve-parklari-gulhane-parki",
       "notes": [
         "ΔΩΡΕΑΝ ΓΙΑ ΟΛΟΥΣ"
       ],
@@ -747,20 +748,20 @@
       "best_time": "afternoon",
       "freeActivity": true,
       "restaurant": {
-        "name": "Set Üstü Başı Cafe",
-        "description": "παραδοσιακό τσαγερί στο πάρκο",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Set+Ust+Basi+Cafe+Istanbul"
+        "name": "TurguT Restaurant Gülhane",
+        "description": "Στα 2-3 λεπτά περπάτημα, φημίζεται για την εξαιρετική εξυπηρέτηση και τις τίμιες τιμές του. Έχει βαθμολογία 4.9.",
+        "map_url": "https://maps.app.goo.gl/gbvXL6DsoMJN7YvP9"
       },
       "cafe": {
-        "name": "Gülhane Park Tea Garden",
-        "description": "τσαγερί στο πάρκο",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Gulhane+Park+Tea+Garden+Istanbul"
+        "name": "EHLİ KEYF CAFE",
+        "description": "Βρίσκεται περίπου 550 μέτρα μακριά και έχει πολύ υψηλή βαθμολογία (4.9).",
+        "map_url": "https://maps.app.goo.gl/D9M6aw6ahq9piSL5A"
       }
     },
     {
       "id": 14,
       "name": "Πατριαρχείο",
-      "description": "Η βάση του οικουμενικού πατριαρχείου στην Κωνσταντινούπολη. Επισκεφθείτε το αν τύχει να είστε εκεί ειδικά την περίοδο του Πάσχα.",
+      "description": "Είναι το πνευματικό κέντρο της Ορθόδοξης Εκκλησίας. θα δείτε τον Πατριαρχικό Θρόνο, ιερά κειμήλια Αγίων και τη Στήλη της Φραγκελώσεως. Συνδυάστε με βόλτα στα στενά του Φαναρίου και Μπαλάτ με χρωματιστά σπίτια και τη Μεγάλη του Γένους Σχολή.",
       "category": "religious",
       "prices": {
         "0": 0,
@@ -789,8 +790,9 @@
         "lat": 41.0284,
         "lng": 28.9511
       },
+      "website": "https://ec-patr.org/oikoymeniko-patriarxeio/istoria/",
       "notes": [
-        "ΔΩΡΕΑΝ ΓΙΑ ΟΛΟΥΣ"
+        "ΔΩΡΕΑΝ ΓΙΑ ΟΛΟΥΣ -απαιτείται ευπρεπής ενδυμασία"
       ],
       "tags": [
         "religious",
@@ -802,14 +804,14 @@
       "best_time": "morning",
       "freeActivity": true,
       "restaurant": {
-        "name": "Fener Balat Cafes",
-        "description": "vintage cafes στη γειτονιά",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Fener+Balat+Cafes+Istanbul"
+        "name": "Forno Balat",
+        "description": "Eίναι μία από τις καλύτερες επιλογές στην περιοχή του Μπαλάτ και είναι πολύ κοντά στο Πατριαρχείο",
+        "map_url": "https://maps.app.goo.gl/EgUbuBkAXTA85rbR6"
       },
       "cafe": {
-        "name": "Fes Café",
-        "description": "colorful neighborhood café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Fener+Greek+Patriarchate+Cafe+Istanbul"
+        "name": "Cafe Naftalin K",
+        "description": "Eίναι ίσως το πιο διάσημο καφέ στο Φανάρι. Πολύ ιδιαίτερη διακόσμηση και πολλές γάτες. Απέχει περίπου 5 λεπτά από το Πατριαρχείο.",
+        "map_url": "https://maps.app.goo.gl/pe7Fk246rvZxD4fb9"
       }
     },
     {
