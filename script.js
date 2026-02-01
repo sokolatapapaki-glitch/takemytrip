@@ -82,16 +82,17 @@ const MapManager = {
         this.cleanup();
 
         try {
-            // 🔴 ΚΑΙΝΟΥΡΓΙΑ: Default options ΧΩΡΙΣ scroll wheel zoom
             const defaultOptions = {
                 zoomControl: true,        // ✅ + και - buttons
-                scrollWheelZoom: false,   // 🔴 ΑΠΕΝΕΡΓΟΠΟΙΗΜΕΝΟ
-                doubleClickZoom: false,   // 🔴 ΚΑΙ ΑΥΤΟ ΑΠΕΝΕΡΓΟΠΟΙΗΜΕΝΟ
+                scrollWheelZoom: true,    // ✅ Zoom με scroll mouse
+                doubleClickZoom: false,
                 touchZoom: true,          // ✅ Για κινητά
                 boxZoom: true,            // ✅ Με drag rectangle
                 keyboard: true,           // ✅ + και - από πληκτρολόγιο
                 dragging: true,           // ✅ Σέρνιμο χάρτη
-                attributionControl: true
+                attributionControl: true,
+                zoomDelta: 0.5,           // Finer zoom steps per +/- click
+                zoomSnap: 0.5             // Allow fractional zoom levels
             };
 
             // 🔴 ΚΑΙΝΟΥΡΓΙΑ: Συγχώνευση default + custom options
@@ -119,11 +120,10 @@ const MapManager = {
         }
     },
 
-    // 🔴 ΚΑΙΝΟΥΡΓΙΑ: Helper για να καλείται με τα νέα options
     initializeWithOptions(containerId, center, zoom = 13) {
         return this.initialize(containerId, center, zoom, {
-            scrollWheelZoom: false,    // Σίγουρα false
-            doubleClickZoom: false     // Σίγουρα false
+            scrollWheelZoom: true,
+            doubleClickZoom: false
         });
     },
 
@@ -3597,7 +3597,23 @@ function initializeMapInStep() {
 
         window.travelMap = map;
 
-        console.log('✅ Χάρτης δημιουργήθηκε ΧΩΡΙΣ scroll zoom');
+        // Reset A/B selection when clicking the map background (not a marker)
+        window.travelMap.on('click', function() {
+            if (window._markerClicked) {
+                window._markerClicked = false;
+                return;
+            }
+            if (selectedPointA || selectedPointB) {
+                if (window.routeResetTimer) {
+                    clearTimeout(window.routeResetTimer);
+                    window.routeResetTimer = null;
+                }
+                resetSelection();
+                showToast('🔄 Επιλογή ακυρώθηκε', 'info');
+            }
+        });
+
+        console.log('✅ Χάρτης φορτώθηκε με scroll zoom και click-to-reset');
 
         
         // Ενημέρωση status (μόνο για map readiness)
@@ -3784,16 +3800,24 @@ function clearMapPoints() {
         return;
     }
 
-       // Clear all activity markers using MarkerCache
+    // Remove labels attached to cached markers before clearing markers
+    MarkerCache.getAllMarkers().forEach(marker => {
+        if (marker.options && marker.options.label) {
+            window.travelMap.removeLayer(marker.options.label);
+        }
+    });
+
+    // Clear all activity markers using MarkerCache
     MarkerCache.clear();
 
     // Clear selectedMarkers array for backward compatibility
     window.selectedMarkers = [];
 
-    // ==== ΝΕΟ: ΔΙΑΓΡΑΦΗ ΟΛΩΝ ΤΩΝ LABELS ====
+    // Fallback: remove any remaining stray labels by checking icon className
     window.travelMap.eachLayer(layer => {
-        if (layer.options && 
-            layer.options.className === 'marker-label') {
+        if (layer.options && layer.options.icon &&
+            layer.options.icon.options &&
+            layer.options.icon.options.className === 'marker-label') {
             window.travelMap.removeLayer(layer);
         }
     });
@@ -5333,7 +5357,8 @@ marker.options.label = label;
     // Συνάρτηση που καλείται όταν κάνουμε κλικ
    const handleMarkerClick = function(e) {
     console.log(`📍 Κλικ στο: ${title}`, e.latlng);
-    
+    window._markerClicked = true;
+
     // Αν δεν έχουμε επιλέξει πρώτο σημείο
     if (!selectedPointA) {
         selectedPointA = {
