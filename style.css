@@ -823,6 +823,24 @@ body {
     flex-grow: 1;
 }
 
+.activity-card .activity-star {
+    font-size: 24px;
+    color: #ccc;
+    pointer-events: none;
+}
+
+.activity-card .activity-star.highlighted {
+    color: #F59E0B;
+}
+
+.activity-card .activity-star.highlighted::before {
+    content: '⭐';
+}
+
+.activity-card .activity-star:not(.highlighted)::before {
+    content: '☆';
+}
+
 .activity-card .activity-description {
     color: var(--gray);
     font-size: 14px;

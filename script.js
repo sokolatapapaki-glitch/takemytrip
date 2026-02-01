@@ -2888,7 +2888,7 @@ async function setupActivitiesStep() {
                         `<a href="${cityData.cityPass.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="city-pass-badge" style="text-decoration: none;">🎫 Pass</a>` :
                         '<span class="city-pass-badge">🎫 Pass</span>') : ''}
                 </div>
-                <div class="activity-star">${isSelected ? '⭐' : '☆'}</div>
+                <div class="activity-star ${isSelected ? 'highlighted' : ''}" style="pointer-events: none;"></div>
             </div>
 
             <!-- FREE PRICE LABEL (Horizontal) -->
@@ -3149,7 +3149,7 @@ function toggleActivitySelection(activityId) {
         
         const star = activityCard.querySelector('.activity-star');
         if (star) {
-            star.textContent = isNowSelected ? '⭐' : '☆';
+            star.classList.toggle('highlighted', isNowSelected);
         }
     }
     
@@ -4570,7 +4570,7 @@ function clearSelectedActivities() {
         document.querySelectorAll('.activity-card.selected').forEach(card => {
             card.classList.remove('selected');
             const star = card.querySelector('.activity-star');
-            if (star) star.textContent = '☆';
+            if (star) star.classList.remove('highlighted');
         });
         
         updateActivitiesTotal();
