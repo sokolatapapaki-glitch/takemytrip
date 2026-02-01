@@ -649,7 +649,7 @@
     {
       "id": 12,
       "name": "Vialand (Θεματικό Πάρκ)",
-      "description": "Ένα μεγάλο λούνα παρκ με τρενάκια, εστίαση, καφέ.",
+      "description": "Ένα μεγάλο λούνα παρκ με τρενάκια, εστίαση, καφέ.Κατάλληλο από 3 ετών και πάνω.",
       "category": "themepark",
       "prices": {
         "0": 0,
@@ -692,9 +692,9 @@
       "duration_hours": 5,
       "best_time": "any",
       "restaurant": {
-        "name": "Vialand Food Court",
-        "description": "πολλές επιλογές εντός του πάρκου",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Vialand+Food+Court+Istanbul"
+        "name": "address Dubai",
+        "description": "Κυρίως τούρκικη κουζίνα, ναργιλέ και καφέ. Είναι γνωστό για την ωραία του ατμόσφαιρα και τη διακόσμηση που θυμίζει κάτι από Ντουμπάι",
+        "map_url": "https://maps.app.goo.gl/8fDdXGVdFB57dYta7"
       },
       "cafe": {
         "name": "Starbucks Vialand",
@@ -872,7 +872,7 @@
     {
       "id": 16,
       "name": "KidZania Istanbul",
-      "description": "Διαδραστικό θεματικό πάρκο όπου τα παιδιά παίζουν ρόλους σε επαγγέλματα μέσα σε μία μικρή πόλη.",
+      "description": "Διαδραστικό θεματικό πάρκο όπου τα παιδιά παίζουν ρόλους σε επαγγέλματα μέσα σε μία μικρή πόλη. Κατάλληλο απο 3 ετών και ιδανικό από 6-7 ετών και πάνω",
       "category": "themepark",
       "prices": {
         "0": 0,
@@ -918,14 +918,14 @@
       "duration_hours": 4,
       "best_time": "any",
       "restaurant": {
-        "name": "Forum Istanbul Food Court",
-        "description": "πολλές επιλογές εντός του εμπορικού",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Forum+Istanbul+Food+Court"
+        "name": "Happy Moon’s Akasya Avm",
+        "description": "Γνωστό για τις πολύ μεγάλες μερίδες του και το ευρύ μενού, εντός του εμπορικού",
+        "map_url": "https://maps.app.goo.gl/Rs7NLb5iRfmUPv5y6"
       },
       "cafe": {
-        "name": "Starbucks Forum Istanbul",
-        "description": "καφές εντός του mall",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Starbucks+Forum+Istanbul"
+        "name": "Beyaz Fırın",
+        "description": "Είναι ίσως η καλύτερη επιλογή αν θέλετε κάτι πολύ κοντά",
+        "map_url": "https://maps.app.goo.gl/4XRQhPBRJ5HudZsS9"
       }
     }
   ],
