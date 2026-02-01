@@ -3814,9 +3814,9 @@ function clearMapPoints() {
     window.selectedMarkers = [];
 
     // Remove any remaining stray labels/markers by checking icon className.
-    // Covers activity labels ('marker-label') as well as custom personal-point
-    // markers ('custom-marker') and their labels ('custom-point-label'), which
-    // are added directly to the map and not tracked by MarkerCache.
+    // Collect first, then remove — mutating the layer collection during
+    // eachLayer iteration causes layers to be skipped.
+    const layersToRemove = [];
     window.travelMap.eachLayer(layer => {
         if (layer.options && layer.options.icon &&
             layer.options.icon.options) {
@@ -3824,10 +3824,11 @@ function clearMapPoints() {
             if (cls === 'marker-label' ||
                 cls === 'custom-marker' ||
                 cls === 'custom-point-label') {
-                window.travelMap.removeLayer(layer);
+                layersToRemove.push(layer);
             }
         }
     });
+    layersToRemove.forEach(layer => window.travelMap.removeLayer(layer));
 
     // Note: City marker is managed by MapManager and not affected by MarkerCache
 
@@ -4023,6 +4024,9 @@ function hideCustomPointStatus() {
 function addCustomPointToMap(point) {
     if (!window.travelMap || !point.location) return;
 
+    // Skip if this custom point is already on the map (tracked via MarkerCache)
+    if (MarkerCache.has(point.id)) return;
+
     // Create marker with custom icon
     const customIcon = L.divIcon({
         className: 'custom-marker',
@@ -4092,6 +4096,9 @@ function addCustomPointToMap(point) {
     
     // Σύνδεση label με το marker για cleanup
     marker.options.label = label;
+
+    // Track in MarkerCache so clearMapPoints() removes it properly
+    MarkerCache.addOrUpdate(point.id, marker);
     console.log(`📍 Added custom point to map: ${point.name}`);
 }
 
@@ -4184,6 +4191,8 @@ function showActivityMap() {
 
     // 1. Sync marker cache (remove only markers no longer needed)
     const currentActivityIds = new Set(state.selectedActivities.map(a => a.id));
+    // Include custom point IDs so sync does not remove their markers
+    (state.customPoints || []).forEach(p => currentActivityIds.add(p.id));
     MarkerCache.sync(currentActivityIds);
     
     // 2. Αφαίρεση τυχόν διαδρομών
@@ -6510,16 +6519,19 @@ function renderDayActivities(activities, day) {
     let html = '';
     activities.forEach(activity => {
         const fullActivity = state.currentCityActivities?.find(a => a.id === activity.id) || activity;
-        
+        // Custom point IDs are strings — quote them in event handlers;
+        // numeric activity IDs remain unquoted to preserve existing behaviour.
+        const idLiteral = typeof activity.id === 'string' ? `'${activity.id}'` : activity.id;
+
         html += `
-            <div class="program-activity-item" 
+            <div class="program-activity-item"
                  draggable="true"
                  data-activity-id="${activity.id}"
-                 ondragstart="handleProgramDragStart(event, ${activity.id})"
+                 ondragstart="handleProgramDragStart(event, ${idLiteral})"
                  style="position: relative;">
-                
+
                 <button class="program-activity-remove"
-                        onclick="removeActivityFromProgramDay(${day}, ${activity.id})"
+                        onclick="removeActivityFromProgramDay(${day}, ${idLiteral})"
                         title="Αφαίρεση">
                     ×
                 </button>
@@ -6583,7 +6595,7 @@ function renderAvailableActivities() {
     state.selectedActivities.forEach(activity => {
         const fullActivity = state.currentCityActivities?.find(a => a.id === activity.id) || activity;
         const isPlaced = placedActivities.has(activity.id);
-        
+
         html += `
             <div class="program-activity-item ${isPlaced ? 'placed' : ''}"
                  draggable="${!isPlaced}"
@@ -6591,7 +6603,7 @@ function renderAvailableActivities() {
                  ondragstart="handleProgramDragStart(event, ${activity.id})"
                  ondblclick="${!isPlaced ? `quickAddToSelectedDay(${activity.id})` : ''}"
                  style="opacity: ${isPlaced ? '0.5' : '1'}; cursor: ${isPlaced ? 'not-allowed' : 'grab'};">
-                
+
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
                     <div style="
                         width: 32px;
@@ -6608,14 +6620,14 @@ function renderAvailableActivities() {
                     </div>
                     <div style="font-weight: bold; font-size: 14px;">${activity.name}</div>
                 </div>
-                
+
                 <div style="font-size: 12px; color: #64748b;">
                     <i class="fas fa-clock"></i> ${fullActivity.duration_hours || '?'} ώρες
                     <span style="margin-left: 10px;">
                         <i class="fas fa-tag"></i> ${activity.price ? Number(activity.price).toFixed(2) + '€' : 'Δωρεάν'}
                     </span>
                 </div>
-                
+
                 ${isPlaced ? `
                     <div style="font-size: 11px; color: #10B981; margin-top: 5px;">
                         <i class="fas fa-check-circle"></i> Έχει τοποθετηθεί
@@ -6628,7 +6640,54 @@ function renderAvailableActivities() {
             </div>
         `;
     });
-    
+
+    // Render custom personal points in the same list so they can be
+    // dragged into day bins, scheduled, and deleted just like activities.
+    (state.customPoints || []).forEach(point => {
+        const isPlaced = placedActivities.has(point.id);
+
+        html += `
+            <div class="program-activity-item ${isPlaced ? 'placed' : ''}"
+                 draggable="${!isPlaced}"
+                 data-activity-id="${point.id}"
+                 ondragstart="handleProgramDragStart(event, '${point.id}')"
+                 ondblclick="${!isPlaced ? `quickAddToSelectedDay('${point.id}')` : ''}"
+                 style="opacity: ${isPlaced ? '0.5' : '1'}; cursor: ${isPlaced ? 'not-allowed' : 'grab'};">
+
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                    <div style="
+                        width: 32px;
+                        height: 32px;
+                        background: #F59E0B;
+                        color: white;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 14px;
+                    ">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div style="font-weight: bold; font-size: 14px;">${point.name}</div>
+                </div>
+
+                <div style="font-size: 12px; color: #64748b;">
+                    <i class="fas fa-map-marker-alt"></i> Προσωπικό σημείο
+                </div>
+
+                ${isPlaced ? `
+                    <div style="font-size: 11px; color: #10B981; margin-top: 5px;">
+                        <i class="fas fa-check-circle"></i> Έχει τοποθετηθεί
+                    </div>
+                ` : `
+                    <div style="font-size: 11px; color: #64748b; margin-top: 5px;">
+                        <i class="fas fa-mouse-pointer"></i> Διπλό κλικ για γρήγορη προσθήκη
+                    </div>
+                `}
+            </div>
+        `;
+    });
+
     container.innerHTML = html;
 }
 
@@ -6650,19 +6709,22 @@ function handleProgramDragLeave(event) {
 function handleProgramDrop(event) {
     event.preventDefault();
     event.currentTarget.classList.remove('drag-over');
-    
-    const activityId = parseInt(event.dataTransfer.getData('activityId'));
+
+    const rawId = event.dataTransfer.getData('activityId');
+    // Custom point IDs are strings (e.g. "custom-…"); activity IDs are numeric
+    const activityId = rawId.startsWith('custom-') ? rawId : parseInt(rawId);
     const dayElement = event.currentTarget.closest('[data-day]');
-    
+
     if (!activityId || !dayElement) return;
-    
+
     const day = parseInt(dayElement.dataset.day);
     addActivityToProgramDay(activityId, day);
 }
 
 // 6. Προσθήκη/Αφαίρεση δραστηριοτήτων
 function addActivityToProgramDay(activityId, day) {
-    const activity = state.selectedActivities.find(a => a.id === activityId);
+    const activity = state.selectedActivities.find(a => a.id === activityId)
+        || (state.customPoints && state.customPoints.find(a => a.id === activityId));
     if (!activity) return;
     
     // Αφαίρεση από άλλες μέρες (αν υπάρχει)
