@@ -192,7 +192,7 @@
     {
       "id": 4,
       "name": "Τοπ Καπί (Αυτοκρατορικό Παλάτι)",
-      "description": "Εντυπωσιακό παλάτι με πολλές αίθουσες θρόνων και χρυσών στολιδιών. Κλειστά τις Τρίτες.",
+      "description": "Ήταν η έδρα των Οθωμανών Σουλτάνων για 400+ χρόνια. Must: Χαρέμι, Θησαυροφυλάκιο με διαμάντι 86 καρατίων, Ιερά Κειμήλια (ράβδος Μωυσή, σπαθί Δαβίδ), Θέα από Τέταρτη Αυλή. Ανεκτό για παιδιά από 6 -7 ετών και πάνω. .",
       "category": "attraction",
       "prices": {
         "0": 0,
@@ -221,9 +221,9 @@
         "lat": 41.0116,
         "lng": 28.9834
       },
-      "website": "https://www.topkapisarayi.gov.tr/",
+      "website": "https://www.millisaraylar.gov.tr/Lokasyon/2/topkapi-sarayi",
       "notes": [
-        "Όλοι άνω των 7 ετών: 60€",
+        "Όλοι άνω των 7 ετών: 58-65€.Υπάρχουν πολλές επιλογές online, η τιμή είναι ενδεικτική",
         "Κάτω των 7 ετών: δωρεάν",
         "Κλειστό τις Τρίτες"
       ],
@@ -239,14 +239,14 @@
         "Τρίτη"
       ],
       "restaurant": {
-        "name": "Konyalı Restaurant",
-        "description": "εντός του παλατιού με θέα στον Βόσπορο",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Konyali+Restaurant+Topkapi+Istanbul"
+        "name": "Tarihi Sultanahmet Köftecisi Selim Usta",
+        "description": "Το πιο ιστορικό μαγαζί για κεφτεδάκια στην πλατεία Sultanahmet (5 λεπτά με τα πόδια). Πολύ οικονομικό και γρήγορο.",
+        "map_url": "https://maps.app.goo.gl/GXSrmTEnco6hC8Br8"
       },
       "cafe": {
-        "name": "Set Üstü Başı",
-        "description": "Ottoman τσαγερί",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Set+Ust+Basi+Topkapi+Istanbul"
+        "name": "Hafız Mustafa",
+        "description": "Είναι ένα από τα πιο ιστορικά ζαχαροπλαστεία (από το 1864). Δεν είναι απλώς ένας καφές, αλλά μια εμπειρία μέσα σε έναν χώρο γεμάτο αρώματα και παραδοσιακή διακόσμηση",
+        "map_url": "https://maps.app.goo.gl/dMuxHLkywogxhSx3A"
       }
     },
     {
