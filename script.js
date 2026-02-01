@@ -2863,7 +2863,7 @@ async function setupActivitiesStep() {
 
         html += `
             <div class="activity-card ${isSelected ? 'selected' : ''} ${activity.top ? 'top-activity' : ''}"
-                 onclick="toggleActivitySelection(${activity.id})"
+                 onclick="if(event.target.classList.contains('activity-star')) return; toggleActivitySelection(${activity.id})"
                 data-activity-id="${activity.id}" style="position: relative;">
     
     <!-- CHECKBOX ΠΡΟΣΤΗΚΗ -->
@@ -2888,7 +2888,7 @@ async function setupActivitiesStep() {
                         `<a href="${cityData.cityPass.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="city-pass-badge" style="text-decoration: none;">🎫 Pass</a>` :
                         '<span class="city-pass-badge">🎫 Pass</span>') : ''}
                 </div>
-                <div class="activity-star ${isSelected ? 'highlighted' : ''}" style="pointer-events: none;"></div>
+                <div class="activity-star ${isSelected ? 'highlighted' : ''}" style="pointer-events: none;" onclick="event.stopPropagation();"></div>
             </div>
 
             <!-- FREE PRICE LABEL (Horizontal) -->
