@@ -3813,12 +3813,19 @@ function clearMapPoints() {
     // Clear selectedMarkers array for backward compatibility
     window.selectedMarkers = [];
 
-    // Fallback: remove any remaining stray labels by checking icon className
+    // Remove any remaining stray labels/markers by checking icon className.
+    // Covers activity labels ('marker-label') as well as custom personal-point
+    // markers ('custom-marker') and their labels ('custom-point-label'), which
+    // are added directly to the map and not tracked by MarkerCache.
     window.travelMap.eachLayer(layer => {
         if (layer.options && layer.options.icon &&
-            layer.options.icon.options &&
-            layer.options.icon.options.className === 'marker-label') {
-            window.travelMap.removeLayer(layer);
+            layer.options.icon.options) {
+            const cls = layer.options.icon.options.className;
+            if (cls === 'marker-label' ||
+                cls === 'custom-marker' ||
+                cls === 'custom-point-label') {
+                window.travelMap.removeLayer(layer);
+            }
         }
     });
 
