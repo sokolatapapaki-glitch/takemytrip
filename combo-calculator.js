@@ -40,10 +40,18 @@ const selectedActivities = (state && state.selectedActivities && state.selectedA
     }
     
     console.log(`✅ Βρέθηκαν ${selectedActivities.length} επιλεγμένες δραστηριότητες`);
-    
-    // 3. ΥΠΟΛΟΓΙΣΜΟΣ ΣΥΝΟΛΙΚΟΥ ΚΟΣΤΟΥΣ ΟΛΩΝ ΤΩΝ ΕΠΙΛΕΓΜΕΝΩΝ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ
+
+    // 3. GET BASE TOTAL FROM STATE (same source as UI)
+    const baseTotal = state.selectedActivities.reduce((sum, activity) => sum + (activity.price || 0), 0);
+
+    console.log(`💰 baseTotal from state: ${baseTotal}€`);
+
+    if (baseTotal <= 0) {
+        alert("⚠️ Δεν υπάρχει έγκυρο συνολικό κόστος.");
+        return;
+    }
+
     const ageGroups = categorizeFamilyMembers();
-    const totalRegularCost = calculateComboRegularCost(selectedActivities, ageGroups);
     
     // 4. ΑΝΑΖΗΤΗΣΗ COMBO ΒΑΣΕΙ ΠΟΛΗΣ
     let availableCombos = [];
@@ -66,36 +74,41 @@ const selectedActivities = (state && state.selectedActivities && state.selectedA
     availableCombos = findGenericCombos(selectedActivities, ageGroups);
 }
     
-    // 5. ΥΠΟΛΟΓΙΣΜΟΣ ΚΑΛΥΤΕΡΟΥ COMBO
+    // 5. FILTER COMBOS: only keep where saving > 0 AND newTotal < baseTotal
+    const validCombos = availableCombos.filter(combo => {
+        const saving = combo.regularPrice - combo.comboPrice;
+        const newTotal = baseTotal - combo.regularPrice + combo.comboPrice;
+        return saving > 0 && newTotal < baseTotal;
+    });
+
+    // 6. FIND BEST COMBO
     let bestCombo = null;
     let bestSaving = 0;
-    
-    availableCombos.forEach(combo => {
-        const comboRegularCost = combo.regularPrice;
-        const comboSaving = comboRegularCost - combo.comboPrice;
-        
-        if (comboSaving > bestSaving) {
-            bestSaving = comboSaving;
+
+    validCombos.forEach(combo => {
+        const saving = combo.regularPrice - combo.comboPrice;
+        if (saving > bestSaving) {
+            bestSaving = saving;
             bestCombo = combo;
         }
     });
-    
-    // 6. ΥΠΟΛΟΓΙΣΜΟΣ ΤΕΛΙΚΟΥ ΚΟΣΤΟΥΣ
-    let finalTotalCost = totalRegularCost;
+
+    // 7. CALCULATE FINAL TOTAL: newTotal = baseTotal - combo.regularPrice + combo.comboPrice
+    let finalTotalCost = baseTotal;
     if (bestCombo && bestSaving > 0) {
-        finalTotalCost = totalRegularCost - bestSaving;
+        finalTotalCost = baseTotal - bestCombo.regularPrice + bestCombo.comboPrice;
     }
-    
-    // 7. ΕΜΦΑΝΙΣΗ ΑΠΟΤΕΛΕΣΜΑΤΩΝ
+
+    // 8. DISPLAY RESULTS
     const results = {
-        totalRegularCost: totalRegularCost,
+        totalRegularCost: baseTotal,
         bestCombo: bestCombo,
         bestSaving: bestSaving,
         finalTotalCost: finalTotalCost,
-        allCombos: availableCombos
+        allCombos: validCombos
     };
-    
-    displayComboResults(results, totalRegularCost);
+
+    displayComboResults(results, baseTotal);
 }
 
 // ==================== ΒΟΗΘΗΤΙΚΕΣ ΣΥΝΑΡΤΗΣΕΙΣ COMBO ====================
@@ -782,9 +795,11 @@ function displayComboResults(results, regularCost) {
         contentHTML += `<h3 style="color: #3f51b5;">🎯 Όλα τα Διαθέσιμα Combos:</h3>`;
         
         results.allCombos.forEach((combo, index) => {
-            const borderColor = combo.saving > 0 ? '#4caf50' : '#ff9800';
-            const bgColor = combo.saving > 0 ? '#f1f8e9' : '#fff3e0';
-            const totalWithThisCombo = regularCost - combo.saving;
+            const saving = combo.regularPrice - combo.comboPrice;
+            const borderColor = saving > 0 ? '#4caf50' : '#ff9800';
+            const bgColor = saving > 0 ? '#f1f8e9' : '#fff3e0';
+            // Formula: newTotal = baseTotal - combo.regularPrice + combo.comboPrice
+            const totalWithThisCombo = regularCost - combo.regularPrice + combo.comboPrice;
             
             contentHTML += `
                 <div style="background: ${bgColor}; padding: 15px; border-radius: 10px; border-left: 5px solid ${borderColor}; margin-bottom: 15px;">
@@ -802,11 +817,11 @@ function displayComboResults(results, regularCost) {
                         </div>
                     </div>
                     
-                    <div style="background: ${combo.saving > 0 ? '#e8f5e9' : '#ffebee'}; padding: 8px; border-radius: 6px; margin: 8px 0;">
+                    <div style="background: ${saving > 0 ? '#e8f5e9' : '#ffebee'}; padding: 8px; border-radius: 6px; margin: 8px 0;">
                         <div style="display: flex; justify-content: space-between;">
                             <span><strong>Εξοικονόμηση:</strong></span>
-                            <span style="color: ${combo.saving > 0 ? '#4caf50' : '#f44336'}; font-weight: bold;">
-                                ${combo.saving > 0 ? '💰 ' : '⚠️ '}${combo.saving.toFixed(2)}€
+                            <span style="color: ${saving > 0 ? '#4caf50' : '#f44336'}; font-weight: bold;">
+                                ${saving > 0 ? '💰 ' : '⚠️ '}${saving.toFixed(2)}€
                             </span>
                         </div>
                         <div style="display: flex; justify-content: space-between; font-size: 0.9em;">
