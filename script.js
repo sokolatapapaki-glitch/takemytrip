@@ -2863,7 +2863,7 @@ async function setupActivitiesStep() {
 
         html += `
             <div class="activity-card ${isSelected ? 'selected' : ''} ${activity.top ? 'top-activity' : ''}"
-                 onclick="if(event.target.classList.contains('activity-star')) return; toggleActivitySelection(${activity.id})"
+                 onclick="toggleActivitySelection(${activity.id})"
                 data-activity-id="${activity.id}" style="position: relative;">
     
     <!-- CHECKBOX ΠΡΟΣΤΗΚΗ -->
@@ -2888,7 +2888,6 @@ async function setupActivitiesStep() {
                         `<a href="${cityData.cityPass.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="city-pass-badge" style="text-decoration: none;">🎫 Pass</a>` :
                         '<span class="city-pass-badge">🎫 Pass</span>') : ''}
                 </div>
-                <div class="activity-star ${isSelected ? 'highlighted' : ''}" style="pointer-events: none;"></div>
             </div>
 
             <!-- FREE PRICE LABEL (Horizontal) -->
@@ -3146,11 +3145,6 @@ function toggleActivitySelection(activityId) {
     if (activityCard) {
         const isNowSelected = state.selectedActivities.some(a => a.id === activityId);
         activityCard.classList.toggle('selected', isNowSelected);
-        
-        const star = activityCard.querySelector('.activity-star');
-        if (star) {
-            star.classList.toggle('highlighted', isNowSelected);
-        }
     }
     
     updateActivitiesTotal();
@@ -4569,8 +4563,6 @@ function clearSelectedActivities() {
         
         document.querySelectorAll('.activity-card.selected').forEach(card => {
             card.classList.remove('selected');
-            const star = card.querySelector('.activity-star');
-            if (star) star.classList.remove('highlighted');
         });
         
         updateActivitiesTotal();
