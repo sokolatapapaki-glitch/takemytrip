@@ -41,8 +41,9 @@ const selectedActivities = (state && state.selectedActivities && state.selectedA
     
     console.log(`✅ Βρέθηκαν ${selectedActivities.length} επιλεγμένες δραστηριότητες`);
 
-    // 3. GET BASE TOTAL FROM STATE (same source as UI)
-    const baseTotal = state.selectedActivities.reduce((sum, activity) => sum + (activity.price || 0), 0);
+    // 3. GET BASE TOTAL FROM STATE (same source as UI, with proper rounding)
+    const baseTotal = state.selectedActivities
+        .reduce((sum, activity) => sum + parseFloat((activity.price || 0).toFixed(2)), 0);
 
     console.log(`💰 baseTotal from state: ${baseTotal}€`);
 
