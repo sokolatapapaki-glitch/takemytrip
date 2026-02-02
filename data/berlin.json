@@ -1009,9 +1009,9 @@
         "lng": 13.4478
       },
       "restaurant": {
-        "name": "Burgermeister",
-        "description": "Το πιο εμβληματικό burger του Βερολίνου, οικονομικό και γρήγορο, σε μικρή απόσταση με το μετρό ή περπάτημα.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Burgermeister"
+        "name": "Café Sibylle",
+        "description": "Είναι ένα ιστορικό καφέ-μουσείο του Βερολίνου. Σερβίρει καφέ, κέικ αλλά και ελαφρύ φαγητό (σούπες, σάντουιτς).",
+        "map_url": "https://maps.app.goo.gl/SKpdxHe318sXDECS8"
       },
       "website": "https://www.computerspielemuseum.de/",
       "notes": [],
