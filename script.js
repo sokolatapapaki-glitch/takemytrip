@@ -1224,7 +1224,20 @@ function setupDestinationStep() {
             mainAlreadyBtn.dataset.hasClickListener = 'true';
             console.log('✅ Listener added to main-already-btn');
         }
-        
+
+        // Mobile top CTA button - same handler
+        const mobileTopAlreadyBtn = document.querySelector('.mobile-top-already-btn');
+        if (mobileTopAlreadyBtn && !mobileTopAlreadyBtn.dataset.hasClickListener) {
+            mobileTopAlreadyBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('🚀 [Verified] Mobile top κουμπί ΕΧΩ ΗΔΗ ΒΡΕΙ πατήθηκε');
+                showManualDestinationModal();
+            });
+            mobileTopAlreadyBtn.dataset.hasClickListener = 'true';
+            console.log('✅ Listener added to mobile-top-already-btn');
+        }
+
         console.log('✅ Κουμπιά εγκαταστάθηκαν με ασφάλεια');
     }, 100);
 }
@@ -1232,18 +1245,24 @@ function setupDestinationStep() {
 // ==================== CLEANUP DESTINATION STEP ====================
 function cleanupDestinationStep() {
     console.log('🧹 Καθαρισμός destination step listeners...');
-    
+
     const mainSearchBtn = document.querySelector('.main-search-btn');
     const mainAlreadyBtn = document.querySelector('.main-already-btn');
-    
+    const mobileTopAlreadyBtn = document.querySelector('.mobile-top-already-btn');
+
     if (mainSearchBtn && mainSearchBtn.dataset.hasClickListener) {
         delete mainSearchBtn.dataset.hasClickListener;
         console.log('🧹 Cleared listener flag from main-search-btn');
     }
-    
+
     if (mainAlreadyBtn && mainAlreadyBtn.dataset.hasClickListener) {
         delete mainAlreadyBtn.dataset.hasClickListener;
         console.log('🧹 Cleared listener flag from main-already-btn');
+    }
+
+    if (mobileTopAlreadyBtn && mobileTopAlreadyBtn.dataset.hasClickListener) {
+        delete mobileTopAlreadyBtn.dataset.hasClickListener;
+        console.log('🧹 Cleared listener flag from mobile-top-already-btn');
     }
 }
 // ==================== STEP 2: FLIGHT ====================

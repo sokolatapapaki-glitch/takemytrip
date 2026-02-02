@@ -633,6 +633,11 @@ body {
     color: #856404;
 }
 
+/* ==================== MOBILE TOP CTA BUTTON (default: hidden) ==================== */
+.mobile-top-already-btn {
+    display: none;
+}
+
 /* ==================== DESTINATION CARDS ==================== */
 .destinations-grid {
     display: grid;
@@ -936,6 +941,16 @@ body {
 
     .main-content {
         padding: 70px 15px 25px;
+    }
+
+    /* Mobile Top CTA Button - show on mobile only */
+    .mobile-top-already-btn {
+        display: block !important;
+    }
+
+    /* Hide bottom CTA button on mobile */
+    .main-already-btn {
+        display: none !important;
     }
 
     .grid-2, .grid-3, .grid-4 {

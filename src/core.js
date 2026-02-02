@@ -717,6 +717,17 @@ export function setupDestinationStep() {
             });
         }
 
+        // Mobile top CTA button - same handler
+        const mobileTopAlreadyBtn = document.querySelector('.mobile-top-already-btn');
+        if (mobileTopAlreadyBtn) {
+            mobileTopAlreadyBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('🚀 Mobile top κουμπί ΕΧΩ ΗΔΗ ΒΡΕΙ πατήθηκε');
+                showManualDestinationModal();
+            });
+        }
+
         console.log('✅ Κουμπιά εγκαταστάθηκαν');
     }, 100);
 }
