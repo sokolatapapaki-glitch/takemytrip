@@ -14,7 +14,19 @@
       30,
       31
     ],
-    "url": "https://www.merlinannualpass.co.uk/"
+    "url": "https://www.merlinannualpass.co.uk/",
+    "additionalInfo": [
+      {
+        "name": "London Pass",
+        "url": "https://www.londonpass.com/en?utm_source=chatgpt.com",
+        "note": "Πληροφοριακά, δεν αντικαθιστά το Merlin Pass"
+      },
+      {
+        "name": "Go City London Pass",
+        "url": "https://gocity.com/en/london/passes/explorer?utm_source=chatgpt.com",
+        "note": "Πληροφοριακά, δεν αντικαθιστά το Merlin Pass"
+      }
+    ]
   },
   "infoBoxes": [
     {
