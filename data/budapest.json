@@ -392,9 +392,9 @@
         "lng": 19.065
       },
       "restaurant": {
-        "name": "VakVarjú Restaurant",
-        "description": "Πολύ δημοφιλές σε οικογένειες, διαθέτει παιδότοπο και πολύ φιλικό προσωπικό.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=VakVarjú+Restaurant"
+        "name": "Buda Gourmet Bistro",
+        "description": "H πιο κοντινή και ποιοτική λύση.",
+        "map_url": "https://maps.app.goo.gl/osFM8AsqyQwf5Ns88"
       },
       "website": "https://www.csopa.hu/en/home/",
       "notes": [
@@ -412,9 +412,9 @@
       "minAge": 3,
       "ageWarning": "Κατάλληλο για παιδιά από 3 ετών και πάνω",
       "cafe": {
-        "name": "Szamos Gourmet Ház",
-        "description": "Στην πλατεία Vörösmarty. Δοκιμάστε τα παραδοσιακά marzipan.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Szamos+Gourmet+Ház"
+        "name": "Milk Cafe",
+        "description": "Είναι ένα μοντέρνο, φωτεινό καφέ που προτιμούν πολλοί ντόπιοι για τον ποιοτικό του καφέ και τα σνακ του.",
+        "map_url": "https://maps.app.goo.gl/mgm2MgjXbPznxzu46"
       }
     },
     {
@@ -450,9 +450,9 @@
         "lng": 19.055
       },
       "restaurant": {
-        "name": "VakVarjú Restaurant",
-        "description": "Πολύ δημοφιλές σε οικογένειες, διαθέτει παιδότοπο και πολύ φιλικό προσωπικό.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=VakVarjú+Restaurant"
+        "name": "The Magic Budapest 2",
+        "description": "Έχει θέμα τη μαγεία (στυλ Χάρι Πότερ) και είναι πραγματικά εντυπωσιακό.",
+        "map_url": "https://maps.app.goo.gl/d41JCF7AmBWPMDcC6"
       },
       "website": "https://www.illuziokmuzeuma.hu/",
       "notes": [
@@ -471,9 +471,9 @@
       "familyPrice": 53,
       "familyDescription": "2 ενήλικες + 2 παιδιά (6-14 ετών)",
       "cafe": {
-        "name": "Szamos Gourmet Ház",
-        "description": "Στην πλατεία Vörösmarty. Δοκιμάστε τα παραδοσιακά marzipan.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Szamos+Gourmet+Ház"
+        "name": "Cafe Muse",
+        "description": "Είναι ένα πανέμορφο, μοντέρνο και πολύ φωτογενές καφέ με εξαιρετικά γλυκά και brunch. Ταιριάζει πολύ με την αισθητική του μουσείου.",
+        "map_url": "https://maps.app.goo.gl/LFjjSTdmEVE7RQ4NA"
       }
     },
     {
@@ -684,7 +684,7 @@
       },
      "restaurant": {
         "name": "Akvárium Klub",
-        "description": "Ακριβώς κάτω από την πισίνα/σιντριβάνι της πλατείας. Έχει μεγάλο εξωτερικό χώρο για να τρέξουν τα παιδιά.",
+        "description": "Ακριβώς κάτω από την πισίνα/σιντριβάνι της πλατείας. Έχει μεγάλο εξωτερικό χώρο για παιχνίδι",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Akvárium+Klub"
       },
       "website": "https://oriaskerek.com/en/",
@@ -700,9 +700,9 @@
       "best_time": "evening",
       "minAge": 0,
       "cafe": {
-        "name": "Szamos Café",
-        "description": "Στον επάνω όροφο έχει και μουσείο σοκολάτας! Τέλεια στάση μετά την ξενάγηση.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Szamos+Café"
+        "name": "Szamos Gourmet Ház",
+        "description": "Είναι ένας συνδυασμός καφέ, ζαχαροπλαστείου και σοκολατερί. Είναι διάσημο για τα παραδοσιακά ουγγρικά γλυκά",
+        "map_url": "https://maps.app.goo.gl/KRnwpmjV7Xfikx2y5"
       }
     },
     {
@@ -900,9 +900,9 @@
     "duration_hours": 1,
     "best_time": "sunset",
     "cafe": {
-  "name": "Walzer Café",
-  "description": "Ένα ζεστό και φιλικό προς οικογένειες καφέ στην καρδιά του Κάστρου. Ιδανικό για ξεκούραση σε μια ήσυχη και σπιτική ατμόσφαιρα.",
-  "map_url": "https://www.google.com/maps/search/?api=1&query=Walzer+Café+Budapest&query_place_id=ChIJF3WFNB_cQUcRJqKVqwLujsM"
+  "name": "Aranybástya",
+  "description": "Μια από τις πιο συγκλονιστικές πανοραμικές θέες της Βουδαπέστης και του Κοινοβουλίου",
+  "map_url": "https://maps.app.goo.gl/xa8KZjiNmFC7vQjY7"
 }
   },
   {
@@ -920,9 +920,9 @@
       "lng": 19.0785
     },
     "restaurant": {
-  "name": "Paprika Vendéglő",
-  "description": "Ίσως το καλύτερο παραδοσιακό εστιατόριο στην περιοχή του πάρκου. Πολύ δημοφιλές, απαιτείται κράτηση!",
-  "map_url": "https://maps.google.com/?cid=14202764795224194273&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+  "name": "Városliget Café",
+  "description": "Βρίσκεται ακριβώς πάνω στο παγοδρόμιο! Έχει υπέροχη θέα στο κάστρο Vajdahunyad, είναι πολύ ποιοτικό και προσφέρει κλασική ουγγρική κουζίνα",
+  "map_url": "https://maps.app.goo.gl/7s2Abx2ozCfMaLUW8"
     },
     "website": "https://mujegpalya.hu/en/",
     "notes": [
