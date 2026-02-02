@@ -1101,8 +1101,8 @@ function getDestinationStepHTML() {
             <h1 class="card-title"><i class="fas fa-map-marked-alt"></i> Επιλογή Προορισμού</h1>
             <p class="card-subtitle">Βρείτε την τέλεια πόλη για τις οικογενειακές σας διακοπές</p>
 
-            <!-- Mobile-only top button (calls same function as bottom button) -->
-            <button type="button" class="mobile-dest-top-btn" onclick="showManualDestinationModal()">
+            <!-- Mobile-only top button (handler cloned from desktop button) -->
+            <button type="button" class="mobile-dest-top-btn" id="mobile-dest-top-btn">
                 <i class="fas fa-map-marker-alt"></i> ΕΧΩ ΗΔΗ ΒΡΕΙ ΠΡΟΟΡΙΣΜΟ
             </button>
 
@@ -1229,7 +1229,20 @@ function setupDestinationStep() {
             mainAlreadyBtn.dataset.hasClickListener = 'true';
             console.log('✅ Listener added to main-already-btn');
         }
-        
+
+        // Mobile button: 1:1 proxy of desktop button
+        const mobileDestBtn = document.getElementById('mobile-dest-top-btn');
+        if (mainAlreadyBtn && mobileDestBtn && !mobileDestBtn.dataset.hasClickListener) {
+            mobileDestBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('📱 [Mobile] Proxy click to desktop button');
+                mainAlreadyBtn.click();
+            });
+            mobileDestBtn.dataset.hasClickListener = 'true';
+            console.log('✅ Mobile button proxied to desktop button');
+        }
+
         console.log('✅ Κουμπιά εγκαταστάθηκαν με ασφάλεια');
     }, 100);
 }
