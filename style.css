@@ -848,6 +848,12 @@ body {
 
 /* Σταματάμε εδώ. Μόνο αυτό για τώρα. */
 
+/* ==================== MOBILE CTA BUTTON ==================== */
+/* Hidden by default (desktop/tablet) */
+.mobile-top-already-btn {
+    display: none;
+}
+
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 1200px) {
     .app-container {
@@ -936,6 +942,14 @@ body {
 
     .main-content {
         padding: 70px 15px 25px;
+    }
+
+    /* Mobile CTA: hide bottom, show top */
+    .main-already-btn {
+        display: none !important;
+    }
+    .mobile-top-already-btn {
+        display: block !important;
     }
 
     .grid-2, .grid-3, .grid-4 {
