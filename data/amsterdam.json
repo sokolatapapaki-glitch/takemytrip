@@ -60,9 +60,9 @@
       "duration_hours": 3,
       "best_time": "any",
       "cafe": {
-        "name": "Roest",
-        "description": "industrial cafe κοντά στο NEMO",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Roest+Amsterdam"
+        "name": "OBA Café Oosterdok",
+        "description": "Βρίσκεται μέσα στην κεντρική βιβλιοθήκη, oba, με την καλύτερη θέα στην πόλη, καθώς είναι στον τελευταίο όροφο της βιβλιοθήκης.",
+        "map_url": "https://maps.app.goo.gl/LzZw5WvMtLEDRKfr6"
       }
     },
     {
@@ -115,9 +115,9 @@
       "duration_hours": 2.5,
       "best_time": "morning",
       "cafe": {
-        "name": "Groot Melkhuis",
-        "description": "Family-friendly καφέ μέσα στο Vondelpark με μεγάλη παιδική χαρά και εξωτερική βεράντα δίπλα στο νερό.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Groot+Melkhuis&query_place_id=ChIJgcR47OIJxkcR6JS-5U83nMA"
+        "name": "Cobra Café",
+        "description": "Με μεγάλη βεράντα και θέα στο μουσείο, στα 2-3 λεπτά απόσταση.",
+        "map_url": "https://maps.app.goo.gl/4dJWzpvYxczEtM6XA"
       }
     },
     {
@@ -646,7 +646,7 @@
       },
       "restaurant": {
         "name": "Pllek",
-        "description": "Ένα πολύ ιδιαίτερο εστιατόριο φτιαγμένο από containers με δική του αμμουδιά δίπλα στο νερό. Πολύ φιλικό για παιδιά, με χαλαρή ατμόσφαιρα και ωραία θέα.",
+        "description": "Επιλέξτε το αν η κρουαζιέρα φεύγει από NDSM-Werf (το πιο πιθανόν). Ένα πολύ ιδιαίτερο εστιατόριο φτιαγμένο από containers με δική του αμμουδιά δίπλα στο νερό. Πολύ φιλικό για παιδιά, με χαλαρή ατμόσφαιρα και ωραία θέα.",
         "map_url": "https://maps.google.com/?cid=18315978441786872412&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       },
       "website": "https://www.pannenkoekenboot.nl/",
@@ -665,7 +665,7 @@
       "best_time": "any",
      "cafe": {
         "name": "IJver Amsterdam",
-        "description": "Ένα ευρύχωρο, βιομηχανικού στυλ καφέ-εστιατόριο μέσα σε μια παλιά αποθήκη πλοίων, με μεγάλη εσωτερική και εξωτερική αυλή.",
+        "description": "Επιλέξτε το αν η κρουαζιέρα φεύγει από NDSM-Werf (το πιο πιθανόν).Ένα ευρύχωρο, βιομηχανικού στυλ καφέ-εστιατόριο μέσα σε μια παλιά αποθήκη πλοίων, με μεγάλη εσωτερική και εξωτερική αυλή.",
         "map_url": "https://maps.google.com/?cid=15616292713757750973&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       }
     }
