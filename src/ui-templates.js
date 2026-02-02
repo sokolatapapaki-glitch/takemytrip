@@ -25,6 +25,14 @@ export function getDestinationStepHTML() {
             <h1 class="card-title"><i class="fas fa-map-marked-alt"></i> Επιλογή Προορισμού</h1>
             <p class="card-subtitle">Βρείτε την τέλεια πόλη για τις οικογενειακές σας διακοπές</p>
 
+            <!-- MOBILE-ONLY TOP CTA - Visible only on mobile ≤768px -->
+            <div id="mobile-top-cta" class="mobile-only-cta" style="display: none;">
+                <button class="btn btn-primary mobile-already-btn" id="mobile-top-destination-btn"
+                        style="padding: 14px 25px; font-size: 16px; width: 100%; border-radius: 8px; margin-bottom: 20px;">
+                    <i class="fas fa-map-marker-alt"></i> ΕΧΩ ΗΔΗ ΒΡΕΙ ΠΡΟΟΡΙΣΜΟ
+                </button>
+            </div>
+
             <div class="grid grid-3">
                 <!-- ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΝΕΟ ΦΙΛΤΡΟ ΣΤΗ ΘΕΣΗ ΤΟΥ ΠΑΛΙΟΥ -->
                 <div class="form-group">
@@ -96,7 +104,8 @@ export function getDestinationStepHTML() {
             </div>
 
             <!-- Οι γρήγορες επιλογές, το κουμπί αναζήτησης και τα αποτελέσματα παραμένουν ΑΜΕΤΑΒΛΗΤΑ -->
-            <div id="main-buttons-container" style="text-align: center; margin: 30px 0;">
+            <!-- DESKTOP-ONLY BOTTOM CTA - Hidden on mobile ≤768px -->
+            <div id="main-buttons-container" class="desktop-only-cta" style="text-align: center; margin: 30px 0;">
     <button class="btn btn-primary main-already-btn"
             style="padding: 14px 25px; font-size: 16px; width: 90%; max-width: 300px; border-radius: 8px;">
         <i class="fas fa-map-marker-alt"></i> ΕΧΩ ΗΔΗ ΒΡΕΙ ΠΡΟΟΡΙΣΜΟ

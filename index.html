@@ -65,7 +65,38 @@
 </head>
 <body>
     <!-- MOBILE NAVIGATION -->
-    <div class="mobile-nav">
+    <div class="mobile-nav has-custom-toggle">
+        <!-- Custom ΒΗΜΑΤΑ Toggle for better discoverability -->
+        <div class="mobile-steps-toggle" style="display: none;">
+            <button class="mobile-steps-toggle-btn" id="mobile-steps-toggle-btn" type="button">
+                <i class="fas fa-list-ol"></i>
+                <span>ΒΗΜΑΤΑ</span>
+                <span class="toggle-arrow">▼</span>
+            </button>
+            <div class="mobile-steps-dropdown" id="mobile-steps-dropdown">
+                <div class="step-option active" data-step="destination">
+                    <span class="step-number">1</span>
+                    <span>Εύρεση Προορισμού</span>
+                </div>
+                <div class="step-option" data-step="flight">
+                    <span class="step-number">2</span>
+                    <span>Αεροπορικά</span>
+                </div>
+                <div class="step-option" data-step="hotel">
+                    <span class="step-number">3</span>
+                    <span>Ξενοδοχεία</span>
+                </div>
+                <div class="step-option" data-step="activities">
+                    <span class="step-number">4</span>
+                    <span>Δραστηριότητες</span>
+                </div>
+                <div class="step-option" data-step="map">
+                    <span class="step-number">5</span>
+                    <span>Διαδραστικός Χάρτης</span>
+                </div>
+            </div>
+        </div>
+        <!-- Native select (hidden on mobile when custom toggle is active) -->
         <select id="mobile-step-selector" style="width: 100%; font-size: 18px; padding: 12px; border-radius: 8px; margin: 10px 0; border: 2px solid #4F46E5;">
             <option value="destination">1. Εύρεση Προορισμού</option>
             <option value="flight">2. Αεροπορικά</option>

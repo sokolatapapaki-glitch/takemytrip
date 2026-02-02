@@ -1000,6 +1000,123 @@ body {
     label {
         padding: 8px 0;
     }
+
+    /* ==================== MOBILE-ONLY DESTINATION CTA ==================== */
+    /* Show mobile top CTA button on mobile */
+    .mobile-only-cta {
+        display: block !important;
+    }
+
+    /* Hide desktop/bottom CTA on mobile */
+    .desktop-only-cta {
+        display: none !important;
+    }
+
+    /* ==================== MOBILE STEPS TOGGLE (ΒΗΜΑΤΑ) ==================== */
+    .mobile-steps-toggle {
+        display: block !important;
+        position: relative;
+        margin-bottom: 15px;
+    }
+
+    .mobile-steps-toggle-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #4F46E5;
+        background: white;
+        border: 2px solid #4F46E5;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .mobile-steps-toggle-btn:hover,
+    .mobile-steps-toggle-btn:active {
+        background: #EEF2FF;
+    }
+
+    .mobile-steps-toggle-btn .toggle-arrow {
+        transition: transform 0.3s ease;
+    }
+
+    .mobile-steps-toggle-btn.open .toggle-arrow {
+        transform: rotate(180deg);
+    }
+
+    /* Mobile steps dropdown */
+    .mobile-steps-dropdown {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 2px solid #4F46E5;
+        border-top: none;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+        overflow: hidden;
+    }
+
+    .mobile-steps-dropdown.open {
+        display: block;
+    }
+
+    .mobile-steps-dropdown .step-option {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 16px;
+        font-size: 15px;
+        color: #1A202C;
+        border-bottom: 1px solid #E5E7EB;
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+
+    .mobile-steps-dropdown .step-option:last-child {
+        border-bottom: none;
+    }
+
+    .mobile-steps-dropdown .step-option:hover,
+    .mobile-steps-dropdown .step-option:active {
+        background: #EEF2FF;
+    }
+
+    .mobile-steps-dropdown .step-option.active {
+        background: #4F46E5;
+        color: white;
+    }
+
+    .mobile-steps-dropdown .step-option .step-number {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        font-size: 12px;
+        font-weight: 600;
+        background: #E5E7EB;
+        color: #1A202C;
+        border-radius: 50%;
+    }
+
+    .mobile-steps-dropdown .step-option.active .step-number {
+        background: white;
+        color: #4F46E5;
+    }
+
+    /* Hide native mobile selector when custom toggle is active */
+    .mobile-nav.has-custom-toggle #mobile-step-selector {
+        display: none;
+    }
 }
 
 @media (max-width: 480px) {

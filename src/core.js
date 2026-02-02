@@ -274,14 +274,96 @@ export function setupMobileNavigation() {
         });
     }
 
-    // Ενημέρωση τιμής όταν αλλάζει βήμα
-    const originalShowStep = showStep;
-    showStep = function(stepName) {
-        originalShowStep(stepName);
-        if (mobileSelector && mobileSelector.value !== stepName) {
-            mobileSelector.value = stepName;
+    // ==================== MOBILE ΒΗΜΑΤΑ TOGGLE SETUP ====================
+    setupMobileStepsToggle();
+}
+
+// ==================== MOBILE ΒΗΜΑΤΑ TOGGLE FUNCTIONALITY ====================
+export function setupMobileStepsToggle() {
+    const toggleBtn = document.getElementById('mobile-steps-toggle-btn');
+    const dropdown = document.getElementById('mobile-steps-dropdown');
+
+    if (!toggleBtn || !dropdown) {
+        console.log('⚠️ Mobile steps toggle elements not found');
+        return;
+    }
+
+    console.log('📱 Ρύθμιση ΒΗΜΑΤΑ toggle');
+
+    // Toggle dropdown on button click
+    toggleBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const isOpen = dropdown.classList.contains('open');
+
+        if (isOpen) {
+            closeMobileStepsDropdown();
+        } else {
+            openMobileStepsDropdown();
         }
-    };
+    });
+
+    // Handle step option clicks
+    const stepOptions = dropdown.querySelectorAll('.step-option');
+    stepOptions.forEach(option => {
+        option.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const stepName = this.getAttribute('data-step');
+            if (stepName) {
+                console.log('📱 Mobile ΒΗΜΑΤΑ επιλογή:', stepName);
+                showStep(stepName);
+                closeMobileStepsDropdown();
+            }
+        });
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!toggleBtn.contains(e.target) && !dropdown.contains(e.target)) {
+            closeMobileStepsDropdown();
+        }
+    });
+
+    console.log('✅ ΒΗΜΑΤΑ toggle εγκαταστάθηκε');
+}
+
+export function openMobileStepsDropdown() {
+    const toggleBtn = document.getElementById('mobile-steps-toggle-btn');
+    const dropdown = document.getElementById('mobile-steps-dropdown');
+
+    if (toggleBtn && dropdown) {
+        toggleBtn.classList.add('open');
+        dropdown.classList.add('open');
+    }
+}
+
+export function closeMobileStepsDropdown() {
+    const toggleBtn = document.getElementById('mobile-steps-toggle-btn');
+    const dropdown = document.getElementById('mobile-steps-dropdown');
+
+    if (toggleBtn && dropdown) {
+        toggleBtn.classList.remove('open');
+        dropdown.classList.remove('open');
+    }
+}
+
+export function updateMobileStepsToggleActive(stepName) {
+    const dropdown = document.getElementById('mobile-steps-dropdown');
+    if (!dropdown) return;
+
+    // Remove active class from all options
+    dropdown.querySelectorAll('.step-option').forEach(option => {
+        option.classList.remove('active');
+    });
+
+    // Add active class to current step
+    const activeOption = dropdown.querySelector(`.step-option[data-step="${stepName}"]`);
+    if (activeOption) {
+        activeOption.classList.add('active');
+    }
 }
 
 // ==================== LOAD SAVED DATA ====================
@@ -543,6 +625,10 @@ export function showStep(stepName) {
     if (mobileSelector) {
         mobileSelector.value = stepName;
     }
+
+    // Update the custom ΒΗΜΑΤΑ toggle active state on mobile
+    updateMobileStepsToggleActive(stepName);
+
     saveState();
 
     // Update sidebar completion indicators
@@ -715,6 +801,18 @@ export function setupDestinationStep() {
                 console.log('🚀 Κεντρικό κουμπί ΕΧΩ ΗΔΗ ΒΡΕΙ πατήθηκε');
                 showManualDestinationModal();
             });
+        }
+
+        // MOBILE-ONLY: Setup top CTA button handler
+        const mobileTopBtn = document.getElementById('mobile-top-destination-btn');
+        if (mobileTopBtn) {
+            mobileTopBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('📱 Mobile κουμπί ΕΧΩ ΗΔΗ ΒΡΕΙ πατήθηκε');
+                showManualDestinationModal();
+            });
+            console.log('✅ Mobile top CTA button handler εγκαταστάθηκε');
         }
 
         console.log('✅ Κουμπιά εγκαταστάθηκαν');

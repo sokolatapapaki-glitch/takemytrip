@@ -116,6 +116,10 @@ import {
 import {
     initApp,
     setupMobileNavigation,
+    setupMobileStepsToggle,
+    openMobileStepsDropdown,
+    closeMobileStepsDropdown,
+    updateMobileStepsToggleActive,
     loadSavedData,
     loadSavedDataNow,
     showSavedTripNotification,
@@ -229,6 +233,10 @@ window.loadStepContent = loadStepContent;
 // Core functions - Initialization
 window.initApp = initApp;
 window.setupMobileNavigation = setupMobileNavigation;
+window.setupMobileStepsToggle = setupMobileStepsToggle;
+window.openMobileStepsDropdown = openMobileStepsDropdown;
+window.closeMobileStepsDropdown = closeMobileStepsDropdown;
+window.updateMobileStepsToggleActive = updateMobileStepsToggleActive;
 window.loadSavedData = loadSavedData;
 window.loadSavedDataNow = loadSavedDataNow;
 window.showSavedTripNotification = showSavedTripNotification;
