@@ -1183,6 +1183,12 @@ body {
     border-radius: 8px 8px 0 0;
 }
 
+/* Checkbox must be above top-activity overlay */
+.activity-card-checkbox {
+    position: relative;
+    z-index: 10;
+}
+
 /* TOP Badge with Emojis */
 .top-emoji {
     font-size: 14px;

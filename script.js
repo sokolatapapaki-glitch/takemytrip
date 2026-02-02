@@ -7108,24 +7108,47 @@ function resetUserProgram() {
 }
 // ==================== ACTIVITY CHECKBOX HANDLER ====================
 function handleActivityCheckbox(event, activityId) {
-    event.stopPropagation(); // Σταμάτα την διάδοση του κλικ
-    
+    event.stopPropagation(); // Stop event from bubbling to card
+
     const checkbox = event.target;
     const isChecked = checkbox.checked;
-    
-    // Κάνει το ίδιο με το toggleActivitySelection
-    toggleActivitySelection(activityId);
-    
-    // Ενημέρωση του checkbox state (για να μείνει συγχρονισμένο)
+
+    // Get activity data
+    const activity = state.currentCityActivities?.find(a => a.id === activityId);
+    if (!activity) {
+        console.error(`Activity ${activityId} not found`);
+        return;
+    }
+
+    const existingIndex = state.selectedActivities.findIndex(a => a.id === activityId);
+    const familyCost = activity.prices ? calculateFamilyCost(activity.prices) : 0;
+
+    if (isChecked && existingIndex === -1) {
+        // Checkbox checked and activity not in list → ADD
+        state.selectedActivities.push({
+            id: activityId,
+            name: activity.name,
+            price: familyCost,
+            duration: activity.duration_hours,
+            category: activity.category
+        });
+        console.log(`➕ Checkbox added: ${activity.name} - ${familyCost}€`);
+    } else if (!isChecked && existingIndex > -1) {
+        // Checkbox unchecked and activity in list → REMOVE
+        state.selectedActivities.splice(existingIndex, 1);
+        console.log(`➖ Checkbox removed: ${activity.name}`);
+    }
+
+    // Update card visual state
     const activityCard = document.querySelector(`.activity-card[data-activity-id="${activityId}"]`);
     if (activityCard) {
-        const cardCheckbox = activityCard.querySelector('.activity-card-checkbox input');
-        if (cardCheckbox) {
-            cardCheckbox.checked = isChecked;
-        }
+        activityCard.classList.toggle('selected', isChecked);
     }
-    
-    console.log(`✅ Checkbox ${isChecked ? 'επιλέχθηκε' : 'αποεπιλέχθηκε'} για δραστηριότητα: ${activityId}`);
+
+    updateActivitiesTotal();
+    saveState();
+
+    console.log(`✅ Checkbox ${isChecked ? 'checked' : 'unchecked'} for activity: ${activityId}`);
 }
 window.showStep = showStep;
 window.filterDestinations = filterDestinations;
