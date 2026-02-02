@@ -157,7 +157,7 @@
       },
       "restaurant": {
         "name": "Figlmüller – Wollzeile",
-        "description": "διάσημο για τα  καλύτερα schnitzel της Βιέννης",
+        "description": "Αν καταλήξετε στο Hofburg πολύ κοντά είναι το Figlmüller, διάσημο για τα καλύτερα schnitzel της Βιέννης. Θέλει κράτηση πολυ καιρό πριν. Εναλλακτικά δείτε το Reinthaler's Beisl",
         "map_url": "https://maps.app.goo.gl/X9ienGyWdk3VkHMc7"
       },
       "website": "https://www.schoenbrunn.at/en/all-tickets/sisi-pass",
@@ -915,7 +915,7 @@
       },
       "restaurant": {
         "name": "Τurm Restaurant",
-        "description": "Εστιατόριο με υπέροχη θέα, μέσα στο παλάτι Schönbrunn, στον πύργο. Σύγχρονη αυστριακή κουζίνα με επίσημη ατμόσφαιρα.",
+        "description": "Εστιατόριο με υπέροχη θέα στον πύργο. Σύγχρονη αυστριακή κουζίνα με επίσημη ατμόσφαιρα.",
         "map_url": "https://maps.app.goo.gl/9dyEhjTh5Sb91HQy5"
       },
       "website": "https://www.donauturm.at/en/",
@@ -1074,9 +1074,9 @@
         "lng": 16.3675
       },
       "restaurant": {
-        "name": "Ribs of Vienna",
-        "description": "Το σήμα κατατεθέν τους είναι τα παϊδάκια που σερβίρονται με το μέτρο! Η κλασική μερίδα αποτελείται από τρεις σειρές σιγοψημένων παϊδακίων, συνολικού μήκους περίπου ενός μέτρου. Προσοχή, θέλει πολύ καιρό πριν κράτηση",
-        "map_url": "https://maps.app.goo.gl/ALZT47jqDKqZzZzs7"
+        "name": "Reinthaler's Beisl",
+        "description": "Παραδοσιακή βιεννέζικη κουζίνα, πολύ δημοφιλές για το σνίτσελ του. Είναι σχεδόν δίπλα στη σχολή.",
+        "map_url": "https://maps.app.goo.gl/wh2q3wDn2TRL4uJW8"
       },
       "website": "https://www.srs.at/en/",
       "notes": [
