@@ -445,9 +445,9 @@
       "duration_hours": 3,
       "best_time": "morning",
       "cafe": {
-       "name": "Café Gloriette",
-        "description": "υπέροχη θέα, μέσα στον χώρο",
-        "map_url": "https://maps.app.goo.gl/bvTHsxUrY8XodUrP8"
+       "name": "",
+        "description": "",
+        "map_url": ""
       }
     },
     {
