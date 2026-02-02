@@ -945,13 +945,21 @@ body {
 
     /* Show mobile top CTA, hide bottom CTA on mobile */
     .mobile-top-cta {
-        display: block;
+        display: block !important;
         text-align: center;
         margin: 20px 0;
     }
 
-    #main-buttons-container .main-already-btn {
+    .mobile-top-already-btn {
+        display: block !important;
+    }
+
+    .main-already-btn {
         display: none !important;
+    }
+
+    #mobile-step-selector {
+        display: block !important;
     }
 
     .grid-2, .grid-3, .grid-4 {
