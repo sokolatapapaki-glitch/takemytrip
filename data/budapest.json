@@ -11,7 +11,7 @@
   },
   "cityPass": {
   "name": "Budapest Card",
-  "description": "Δωρεάν απεριόριστες μετακινήσεις, δωρεάν είσοδος σε 20+ μουσεία και στα λουτρά Lukács.",
+  "description": "Δωρεάν απεριόριστες μετακινήσεις και δωρεάν είσοδος σε 20+ μουσεία και στα λουτρά Lukács.",
   "officialPrice24h": 33,
   "officialPrice72h": 63,
   "discountPercent": "10-50", 
