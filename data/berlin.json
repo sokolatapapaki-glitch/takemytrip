@@ -89,9 +89,9 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "cafe": {
-  "name": "Zeit für Brot",
-  "description": "Ένας εμβληματικός βιολογικός φούρνος στην καρδιά του Βερολίνου. Φημίζεται για τα ολόφρεσκα υλικά του και κυρίως για τα θρυλικά ρολά κανέλας και σοκολάτας (Schnecken), αποτελώντας αγαπημένο σημείο για μικρούς και μεγάλους.",
-  "map_url": "https://maps.google.com/?cid=81937325099938836&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
+  "name": "Father Carpenter",
+  "description": "Το καφέ στεγάζεται σε μια πολύ όμορφη εσωτερική αυλή, προσφέροντας μια ήσυχη "απόδραση" από τη φασαρία του κέντρου.",
+  "map_url": "https://maps.app.goo.gl/gaBEWjv1orwyBsrCA"
       }
     },
     {
@@ -289,8 +289,8 @@
         "adult": 19.5
       },
       "location": {
-        "lat": 52.5015,
-        "lng": 13.3371
+        "lat": 52.5096,
+        "lng": 13.3737
       },
       "restaurant": {
         "name": "Vapiano Potsdamer Platz",
@@ -364,9 +364,9 @@
       "duration_hours": 2,
       "best_time": "afternoon",
       "cafe": {
-  "name": "MarcAnn's",
-  "description": "Ένα πολύ βολικό καφέ-εστιατόριο ακριβώς απέναντι από το Μουσείο Φυσικής Ιστορίας. Έχει φρέσκα σάντουιτς, σαλάτες και ζεστά πιάτα σε ένα χαλαρό περιβάλλον, ιδανικό για ένα γρήγορο γεύμα.",
-  "map_url": "https://maps.google.com/?cid=16794391772855960528&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
+  "name": "EINSTEIN Unter den Linden",
+  "description": "Είναι κλασικό βερολινέζικο καφέ, πολύ ευρύχωρο για οικογένειες και ακριβώς πάνω στον δρόμο σας.",
+  "map_url": "https://maps.app.goo.gl/7Ev2rMimeqV6c9JSA"
       }
     },
     {
@@ -1025,9 +1025,9 @@
       "duration_hours": 2,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Kaffee 9",
-        "description": "Βρίσκεται μέσα στην Markthalle Neun, μια υπέροχη στεγασμένη αγορά με φαγητό και καφέ.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Kaffee+9"
+        "name": "Saaldeck Café & Bar",
+        "description": "Eίναι μια εξαιρετική επιλογή που βρίσκεται κυριολεκτικά δίπλα",
+        "map_url": "https://maps.app.goo.gl/4FGo4GdadH4QwGRK6"
       }
     }
   ]
