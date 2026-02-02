@@ -925,6 +925,11 @@ body {
     }
 }
 
+/* Mobile-only CTA button - hidden by default (desktop) */
+.mobile-top-cta {
+    display: none;
+}
+
 @media (max-width: 768px) {
     .mobile-nav {
         display: block;
@@ -936,6 +941,17 @@ body {
 
     .main-content {
         padding: 70px 15px 25px;
+    }
+
+    /* Show mobile top CTA, hide bottom CTA on mobile */
+    .mobile-top-cta {
+        display: block;
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    #main-buttons-container .main-already-btn {
+        display: none !important;
     }
 
     .grid-2, .grid-3, .grid-4 {

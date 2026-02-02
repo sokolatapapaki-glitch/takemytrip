@@ -25,6 +25,14 @@ export function getDestinationStepHTML() {
             <h1 class="card-title"><i class="fas fa-map-marked-alt"></i> Επιλογή Προορισμού</h1>
             <p class="card-subtitle">Βρείτε την τέλεια πόλη για τις οικογενειακές σας διακοπές</p>
 
+            <!-- Mobile-only CTA button (duplicate of bottom button) -->
+            <div class="mobile-top-cta">
+                <button class="btn btn-primary mobile-top-already-btn"
+                        style="padding: 14px 25px; font-size: 16px; width: 90%; max-width: 300px; border-radius: 8px;">
+                    <i class="fas fa-map-marker-alt"></i> ΕΧΩ ΗΔΗ ΒΡΕΙ ΠΡΟΟΡΙΣΜΟ
+                </button>
+            </div>
+
             <div class="grid grid-3">
                 <!-- ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΝΕΟ ΦΙΛΤΡΟ ΣΤΗ ΘΕΣΗ ΤΟΥ ΠΑΛΙΟΥ -->
                 <div class="form-group">
