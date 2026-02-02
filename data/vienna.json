@@ -445,9 +445,9 @@
       "duration_hours": 3,
       "best_time": "morning",
       "cafe": {
-        "name": "Café Albertina",
-        "description": "museum café",
-        "map_url": "https://maps.app.goo.gl/XRkfxBAACm4tCnNE6"
+       "name": "Café Gloriette",
+        "description": "υπέροχη θέα, μέσα στον χώρο",
+        "map_url": "https://maps.app.goo.gl/bvTHsxUrY8XodUrP8"
       }
     },
     {
@@ -500,9 +500,9 @@
       "duration_hours": 4,
       "best_time": "any",
       "cafe": {
-        "name": "Café in der Hofreitschule",
-        "description": "historic café",
-        "map_url": "https://maps.app.goo.gl/XRkfxBAACm4tCnNE6"
+        "name": "Café Gloriette",
+        "description": "υπέροχη θέα, μέσα στον χώρο",
+        "map_url": "https://maps.app.goo.gl/bvTHsxUrY8XodUrP8"
       }
     },
     {
