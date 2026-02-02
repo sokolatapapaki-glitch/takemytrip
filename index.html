@@ -66,13 +66,39 @@
 <body>
     <!-- MOBILE NAVIGATION -->
     <div class="mobile-nav">
-        <select id="mobile-step-selector" style="width: 100%; font-size: 18px; padding: 12px; border-radius: 8px; margin: 10px 0; border: 2px solid #4F46E5;">
+        <!-- Original select (hidden, used by existing showStep sync) -->
+        <select id="mobile-step-selector" class="mobile-step-select-hidden">
             <option value="destination">1. Εύρεση Προορισμού</option>
             <option value="flight">2. Αεροπορικά</option>
             <option value="hotel">3. Ξενοδοχεία</option>
             <option value="activities">4. Δραστηριότητες</option>
             <option value="map">5. Διαδραστικός Χάρτης</option>
         </select>
+
+        <!-- ΒΗΜΑΤΑ Wizard UI (wrapper only, forwards to showStep) -->
+        <div class="vimata-wizard">
+            <button type="button" class="vimata-trigger" onclick="toggleVimataDropdown()">
+                <span>ΒΗΜΑΤΑ</span>
+                <span class="vimata-arrow">▼</span>
+            </button>
+            <div class="vimata-dropdown" id="vimata-dropdown">
+                <div class="vimata-item" data-step="destination" onclick="selectVimataStep('destination')">
+                    <span class="vimata-num">1</span> Εύρεση Προορισμού
+                </div>
+                <div class="vimata-item" data-step="flight" onclick="selectVimataStep('flight')">
+                    <span class="vimata-num">2</span> Αεροπορικά
+                </div>
+                <div class="vimata-item" data-step="hotel" onclick="selectVimataStep('hotel')">
+                    <span class="vimata-num">3</span> Ξενοδοχεία
+                </div>
+                <div class="vimata-item" data-step="activities" onclick="selectVimataStep('activities')">
+                    <span class="vimata-num">4</span> Δραστηριότητες
+                </div>
+                <div class="vimata-item" data-step="map" onclick="selectVimataStep('map')">
+                    <span class="vimata-num">5</span> Διαδραστικός Χάρτης
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="app-container">

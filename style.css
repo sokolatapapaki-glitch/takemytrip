@@ -2353,8 +2353,153 @@ select:valid {
         height: 40px !important;
         font-size: 16px !important;
     }
-    
+
     .day-number-label {
         font-size: 11px !important;
+    }
+}
+
+/* ==================== ΒΗΜΑΤΑ MOBILE WIZARD ==================== */
+/* Hide original select, show only on desktop fallback */
+.mobile-step-select-hidden {
+    display: none !important;
+}
+
+/* Vimata wizard - hidden on desktop */
+.vimata-wizard {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .vimata-wizard {
+        display: block;
+        position: relative;
+        width: 100%;
+    }
+
+    .vimata-trigger {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 14px 18px;
+        background: linear-gradient(135deg, #4F46E5 0%, #6366F1 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 18px;
+        font-weight: 700;
+        font-family: inherit;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        letter-spacing: 2px;
+    }
+
+    .vimata-trigger:active {
+        transform: scale(0.98);
+    }
+
+    .vimata-arrow {
+        font-size: 14px;
+        transition: transform 0.2s ease;
+    }
+
+    .vimata-wizard.open .vimata-arrow {
+        transform: rotate(180deg);
+    }
+
+    .vimata-dropdown {
+        display: none;
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        right: 0;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        z-index: 1001;
+        overflow: hidden;
+    }
+
+    .vimata-wizard.open .vimata-dropdown {
+        display: block;
+    }
+
+    .vimata-item {
+        display: flex;
+        align-items: center;
+        padding: 14px 18px;
+        gap: 12px;
+        cursor: pointer;
+        border-bottom: 1px solid #E5E7EB;
+        font-size: 16px;
+        color: #1F2937;
+    }
+
+    .vimata-item:last-child {
+        border-bottom: none;
+    }
+
+    .vimata-item:active {
+        background: #E5E7EB;
+    }
+
+    .vimata-item.active {
+        background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%);
+    }
+
+    .vimata-item.active .vimata-num {
+        background: linear-gradient(135deg, #4F46E5 0%, #6366F1 100%);
+        color: white;
+    }
+
+    .vimata-num {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background: #E5E7EB;
+        color: #6B7280;
+        border-radius: 50%;
+        font-weight: 700;
+        font-size: 13px;
+        flex-shrink: 0;
+    }
+}
+
+/* ==================== MOBILE DESTINATION TOP BUTTON ==================== */
+.mobile-dest-top-btn {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .mobile-dest-top-btn {
+        display: block;
+        width: 100%;
+        padding: 16px 20px;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #4F46E5 0%, #6366F1 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 700;
+        font-family: inherit;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+    }
+
+    .mobile-dest-top-btn:active {
+        transform: scale(0.98);
+    }
+
+    .mobile-dest-top-btn i {
+        margin-right: 8px;
+    }
+
+    /* Hide bottom CTA on mobile */
+    #main-buttons-container {
+        display: none !important;
     }
 }

@@ -1100,7 +1100,12 @@ function getDestinationStepHTML() {
         <div class="card">
             <h1 class="card-title"><i class="fas fa-map-marked-alt"></i> Επιλογή Προορισμού</h1>
             <p class="card-subtitle">Βρείτε την τέλεια πόλη για τις οικογενειακές σας διακοπές</p>
-            
+
+            <!-- Mobile-only top button (calls same function as bottom button) -->
+            <button type="button" class="mobile-dest-top-btn" onclick="showManualDestinationModal()">
+                <i class="fas fa-map-marker-alt"></i> ΕΧΩ ΗΔΗ ΒΡΕΙ ΠΡΟΟΡΙΣΜΟ
+            </button>
+
             <div class="grid grid-3">
                 <!-- ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΝΕΟ ΦΙΛΤΡΟ ΣΤΗ ΘΕΣΗ ΤΟΥ ΠΑΛΙΟΥ -->
                 <div class="form-group">
@@ -7751,6 +7756,80 @@ function testNewClustering() {
           `🔄 Παλιά μέθοδος: ${oldGroups.length} ομάδες\n` +
           `🧠 Νέα μέθοδος: ${newClusters.length} ομάδες\n\n` +
           `📖 Άνοιξε την Console (F12) για λεπτομέρειες.`);
-    
+
     console.log('✅ === ΤΕΛΟΣ ΣΥΓΚΡΙΣΗΣ ===');
 }
+
+// ==================== ΒΗΜΑΤΑ MOBILE WIZARD (wrapper only) ====================
+// These functions ONLY forward to showStep() - no step logic modification
+
+function toggleVimataDropdown() {
+    const wizard = document.querySelector('.vimata-wizard');
+    if (wizard) {
+        wizard.classList.toggle('open');
+    }
+}
+
+function selectVimataStep(stepName) {
+    // Close dropdown
+    const wizard = document.querySelector('.vimata-wizard');
+    if (wizard) {
+        wizard.classList.remove('open');
+    }
+
+    // Update active state in dropdown
+    updateVimataActiveState(stepName);
+
+    // Forward to existing showStep (the ONLY step logic call)
+    showStep(stepName);
+}
+
+function updateVimataActiveState(stepName) {
+    document.querySelectorAll('.vimata-item').forEach(function(item) {
+        item.classList.remove('active');
+        if (item.dataset.step === stepName) {
+            item.classList.add('active');
+        }
+    });
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(e) {
+    const wizard = document.querySelector('.vimata-wizard');
+    if (wizard && !wizard.contains(e.target)) {
+        wizard.classList.remove('open');
+    }
+});
+
+// Sync vimata active state when page loads or step changes
+document.addEventListener('DOMContentLoaded', function() {
+    // Initial sync with current step
+    setTimeout(function() {
+        const select = document.getElementById('mobile-step-selector');
+        if (select && select.value) {
+            updateVimataActiveState(select.value);
+        }
+    }, 200);
+
+    // Watch for changes to the hidden select (set by showStep)
+    const select = document.getElementById('mobile-step-selector');
+    if (select) {
+        // Use MutationObserver to detect value changes
+        const observer = new MutationObserver(function() {
+            updateVimataActiveState(select.value);
+        });
+        observer.observe(select, { attributes: true, childList: true, subtree: true });
+
+        // Also listen for programmatic value changes
+        const descriptor = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, 'value');
+        Object.defineProperty(select, 'value', {
+            get: function() {
+                return descriptor.get.call(this);
+            },
+            set: function(val) {
+                descriptor.set.call(this, val);
+                updateVimataActiveState(val);
+            }
+        });
+    }
+});
