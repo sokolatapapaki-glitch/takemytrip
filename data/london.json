@@ -207,9 +207,9 @@
       "duration_hours": 2.5,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Madame Tussauds Café",
-        "description": "museum café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Madame+Tussauds+Cafe+London"
+        "name": "EL&N London",
+        "description": "Είναι ένα από τα πιο Instagrammable καφέ του Λονδίνου με έντονο ροζ χρώμα και λουλουδένια διακόσμηση.",
+        "map_url": "https://maps.app.goo.gl/2AZ6gCEvjfR6L4yb9"
       }
     },
     {
@@ -893,7 +893,7 @@
       },
       "restaurant": {
         "name": "Bill's Richmond Restaurant",
-        "description": "Από πρωινό, μεσημεριανό, τσάι έως δείπνο",
+        "description": "Από πρωινό, μεσημεριανό, τσάι έως δείπνο. Βρίσκεται πολύ κοντά στην πύλη εξόδου",
         "map_url": "https://maps.app.goo.gl/taWPqEqQjkpqTXk46"
       },
       "website": "https://www.royalparks.org.uk/parks/richmond-park",
