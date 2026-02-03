@@ -231,9 +231,9 @@
       "best_time": "any",
       "emoji": "🎭",
       "cafe": {
-        "name": "Art Cafe",
-        "description": "Μια πολύ όμορφη επιλογή στην περιοχή Malá Strana, αν θέλετε να συνδυάσετε τον καφέ σας με μια βόλτα προς τη γέφυρα του Καρόλου.",
-        "map_url": "https://maps.app.goo.gl/mjXe24umbWYXZsnw9"
+        "name": "Bakeshop",
+        "description": "Αν θέλετε κάτι με εκπληκτικά γλυκά και καφέ, απέχει περίπου 4 λεπτά (οδός Kozí). Είναι από τα πιο γνωστά στέκια στην περιοχή.",
+        "map_url": "https://maps.app.goo.gl/vbizJLFLWrrTGi9H7"
       }
     },
     {
@@ -489,9 +489,9 @@
         "lng": 14.4378
       },
       "restaurant": {
-        "name": "Mr.HotDoG",
-        "description": "Ένα πολύ δημοφιλές μέρος για hot dogs, sliders και εξαιρετικές τηγανητές πατάτες",
-        "map_url": "https://maps.app.goo.gl/paNSp1aNqF2NTwzFA"
+        "name": "Mon House Restaurant",
+        "description": "Είναι μια εξαιρετική επιλογή με πολύ υψηλή βαθμολογία. Ασιατικό εστιατόριο, με πολύ  καλές τιμές και μεγάλες μερίδες",
+        "map_url": "https://maps.app.goo.gl/ztPe7QX1rmHyQq9u5"
       },
       "website": "https://www.morsky-svet.cz/en/",
       "notes": [],
@@ -506,9 +506,9 @@
       "best_time": "any",
       "emoji": "🐠",
       "cafe": {
-        "name": "Dos Mundos Café",
-        "description": "Γνωστό για τον ποιοτικό καφέ του και το μοντέρνο στυλ του.",
-        "map_url": "https://maps.app.goo.gl/E4eVc2ovs4sNERov9"
+        "name": "KOLEKTOR",
+        "description": "Πολύ καλό καφέ, φρέσκα γλυκά, αλλά και επιλογές για ελαφρύ φαγητό (σάντουιτς, σούπες) ή ακόμα και μπύρα,κρασί αν το επισκεφθείτε αργότερα",
+        "map_url": "https://maps.app.goo.gl/u1n2Gvkix6GBPCXE8"
       }
     },
     {
@@ -544,9 +544,9 @@
     "lng": 14.4075
   },
   "restaurant": {
-    "name": "U Pivrnce",
-    "description": "Είναι διάσημο για τις χιουμοριστικές γελοιογραφίες που καλύπτουν όλους τους τοίχους (έργα του Τσέχου καλλιτέχνη Petr Urban). Είναι ένας χώρος χαλαρός, με πολύ κέφι και αυθεντική αίσθηση παλιάς παμπ.",
-    "map_url": "https://maps.app.goo.gl/t5ThCUGLd8wp8nBH9"
+    "name": "TURQUOISE-Mediterranean kitchen",
+    "description": "Μεσογειακά πιάτα με έμφαση στις γεύσεις της Τουρκίας και της Μέσης Ανατολής. Έχει πολύ καλές κριτικές για την ποιότητα και τις τιμές του",
+    "map_url": "https://maps.app.goo.gl/dL3v3AihR2PcZHNs6"
   },
   "website": "https://www.prague-boats.cz/en/",
   "notes": [],
@@ -561,9 +561,9 @@
   "best_time": "evening",
   "emoji": "🚢",
   "cafe": { 
-    "name": "Café Ebel",
-    "description": "Είναι γνωστό για τον καλό του καφέ και την ήσυχη, ζεστή ατμόσφαιρα. Είναι ιδανικό για ένα γρήγορο διάλειμμα.",
-    "map_url": "https://maps.app.goo.gl/J8Nk1ZFGt9ogj7JW8"
+    "name": "Mistral Cafe",
+    "description": "Είναι ένας κήπος μέσα στην πόλη, ιδανικός για να χαλαρώσετε μακριά από τη φασαρία του κέντρου",
+    "map_url": "https://maps.app.goo.gl/N8dvLPdDAsUkXupdA"
   }
 }
 ]
