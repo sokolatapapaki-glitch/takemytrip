@@ -238,7 +238,7 @@
     },
     {
       "id": 5,
-      "name": "MUNCYT (Μουσείο Επιστήμης & Τεχνολογίας)",
+      "name": "MUNCYT Alcobendas (Μουσείο Επιστήμης & Τεχνολογίας)",
       "description": "Πολύ διαδραστικό και εκπαιδευτικό, ιδανικό για οικογένειες με παιδιά. Καταλληλότερο για άνω των 5 ετών",
       "category": "museum",
       "prices": {
@@ -265,13 +265,13 @@
         "adult": 0
       },
       "location": {
-        "lat": 40.4531,
-        "lng": -3.6883
+        "lat": 40.5423,
+        "lng": -3.6385
       },
       "restaurant": {
         "name": "Restaurante Daily",
         "description": "Είναι μια εξαιρετική επιλογή για οικογένειες, ποιοτικό φαγητό σε λογικές τιμές",
-        "map_url": "https://maps.app.goo.gl/Hq7SsiCTivB81hCw6"
+        "map_url": "https://maps.app.goo.gl/Bj9pdToqAn5ACsfo7"
       },
       "website": "https://www.muncyt.es/",
       "notes": [],
@@ -286,9 +286,9 @@
       "best_time": "afternoon",
       "freeActivity": true,
       "cafe": {
-        "name": "Cafeteria Portomarin",
-        "description": "Ένα κλασικό καφέ με πολύ καλή βαθμολογία (4.7), που ανοίγει πολύ νωρίς το πρωί.",
-        "map_url": "https://maps.app.goo.gl/eam7Mp7GNfJoJCKt5"
+        "name": "Manolo Bakes",
+        "description": "Διάσημο για τα Manolitos (μικρά κρουασάν). Είναι η καλύτερη στάση για γλυκό και καφέ στην περιοχή.",
+        "map_url": "https://maps.app.goo.gl/nt7tdWHmkekfUQ1j6"
       }
     },
     {
@@ -813,8 +813,8 @@
         "adult": 22.9
       },
       "location": {
-        "lat": 40.102,
-        "lng": -3.245
+        "lat": 40.3089,
+        "lng": -4.2540
       },
       "restaurant": {
         "name": "Restaurante Amboseli",
