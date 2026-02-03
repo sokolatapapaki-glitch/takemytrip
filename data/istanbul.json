@@ -299,9 +299,9 @@
         "map_url": "https://www.google.com/maps/search/?api=1&query=Gulhane+Sark+Sofrasi+Istanbul"
       },
       "cafe": {
-        "name": "Coffeetopia Eminönü",
-        "description": "Σύγχρονο cafe, αγαπημένο στους ντόπιους που εκτιμούν το καλό καβούρδισμα.",
-        "map_url": "https://maps.app.goo.gl/DReX93frnxNTDmC59"
+        "name": "Gülhane Sur Cafe",
+        "description": "Είναι πολύ ήσυχο και ιδανικό για ένα γρήγορο τσάι (περίπου 3-5 λεπτά περπάτημα).",
+        "map_url": "https://maps.app.goo.gl/q2iY7NQMBERVVezt5"
       }
     },
     {
@@ -363,7 +363,7 @@
     {
       "id": 7,
       "name": "Κρουαζιέρα στον Βόσπορο",
-      "description": "Αν θέλει κανείς να θαυμάσει τα εντυπωσιακά και τρομερά πλούσια σπίτια που είναι χτισμένα στα παράλια του Βοσπόρου τότε πρέπει να κάνει αυτήν την κρουαζιέρα. Περιλαμβάνει γεύμα και συνήθως το σόου των Περιστεφόμενων Δερβίσηδων.",
+      "description": "Αν θέλει κανείς να θαυμάσει τα εντυπωσιακά και τρομερά πλούσια σπίτια που είναι χτισμένα στα παράλια του Βοσπόρου τότε πρέπει να κάνει αυτήν την κρουαζιέρα.",
       "category": "cruise",
       "prices": {
         "0": 4.5,
@@ -389,8 +389,8 @@
         "adult": 18
       },
       "location": {
-        "lat": 41.0265,
-        "lng": 28.9745
+        "lat": 41.018535,
+        "lng": 28.970730
       },
       "website": "https://sehirhatlari.istanbul/en/price-list/bosphorus-tours-78",
       "notes": [
@@ -424,7 +424,7 @@
     {
       "id": 8,
       "name": "Κρουαζιέρα στα Πριγκηπονήσια",
-      "description": "Με το καραβάκι της γραμμής, γυρνάτε από νησάκι σε νησάκι και κατεβαίνετε στην Πρίγκηπο όπου δεν κυκλοφορούν αμάξια.",
+      "description": "Με το καραβάκι της γραμμής, γυρνάτε από νησάκι σε νησάκι και κατεβαίνετε στην Πρίγκηπο όπου δεν κυκλοφορούν αμάξια.Τα περισσότερα αναχωρούν από το λιμάνι Kabataş,η πινέζα στον χάρτη αναφέρεται σε αυτό",
       "category": "cruise",
       "prices": {
         "0": 0,
@@ -450,8 +450,8 @@
         "adult": 7
       },
       "location": {
-        "lat": 40.8753,
-        "lng": 29.0907
+        "lat": 41.0334,
+        "lng": 28.9926
       },
       "website": "https://sehirhatlari.istanbul/en/ucret-tarifeleri?utm_source=chatgpt.com",
       "notes": [
@@ -815,61 +815,6 @@
       }
     },
     {
-      "id": 15,
-      "name": "Τείχη του Θεοδόσιου",
-      "description": "Μπορείς να τα δεις σε διάφορα σημεία της Πόλης. Διάσπαρτα σε πολλά μέρη της Πόλης.",
-      "category": "historical",
-      "prices": {
-        "0": 0,
-        "1": 0,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 0,
-        "8": 0,
-        "9": 0,
-        "10": 0,
-        "11": 0,
-        "12": 0,
-        "13": 0,
-        "14": 0,
-        "15": 0,
-        "16": 0,
-        "17": 0,
-        "18": 0,
-        "19": 0,
-        "adult": 0
-      },
-      "location": {
-        "lat": 41.0186,
-        "lng": 28.9247
-      },
-      "notes": [
-        "ΔΩΡΕΑΝ ΓΙΑ ΟΛΟΥΣ"
-      ],
-      "tags": [
-        "historical",
-        "free",
-        "walls",
-        "fortifications"
-      ],
-      "duration_hours": 1,
-      "best_time": "any",
-      "freeActivity": true,
-      "restaurant": {
-        "name": "Asitane Restaurant",
-        "description": "Ottoman κουζίνα κοντά στα τείχη",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Asitane+Restaurant+Chora+Istanbul"
-      },
-      "cafe": {
-        "name": "Edirnekapı Çay Bahçesi",
-        "description": "τσαγερί κοντά στα τείχη",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Mihrimah+Sultan+Camii+Cafe+Istanbul"
-      }
-    },
-    {
       "id": 16,
       "name": "KidZania Istanbul",
       "description": "Διαδραστικό θεματικό πάρκο όπου τα παιδιά παίζουν ρόλους σε επαγγέλματα μέσα σε μία μικρή πόλη. Κατάλληλο απο 3 ετών και ιδανικό από 6-7 ετών και πάνω",
@@ -898,8 +843,8 @@
         "adult": 28.50
       },
       "location": {
-        "lat": 41.0170,
-        "lng": 28.6396
+        "lat": 41.00198,
+        "lng": 29.05508
       },
       "website": "https://istanbul.kidzania.com/",
       "notes": [
@@ -933,7 +878,7 @@
     {
       "name": "Museum Pass Istanbul (5 Ημερών)",
       "desc": "Πρόσβαση σε 12+ μουσεία και αξιοθέατα για 5 συνεχόμενες ημέρες",
-      "price": 85,
+      "price": 105,
       "includes": [
         "Αγία Σοφία",
         "Τοπ Καπί",
