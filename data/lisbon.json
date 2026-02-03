@@ -157,9 +157,9 @@
         "lng": -9.216
       },
       "restaurant": {
-        "name": "Restaurante O Frade",
-        "description": "Ένα μικρό, μοντέρνο εστιατόριο (Michelin Bib Gourmand) που σερβίρει παραδοσιακές γεύσεις από την περιοχή Alentejo.",
-        "map_url": "https://maps.app.goo.gl/etun1SRJGbXjYQfW7"
+        "name": "Miolo",
+        "description": "Ένα από τα πιο δημοφιλή μέρη για brunch και ελαφρύ γεύμα στην περιοχή.",
+        "map_url": "https://maps.app.goo.gl/g188NfkinVY5PNNU9"
       },
       "website": "https://www.torrebelem.pt/en/",
       "notes": [],
@@ -173,9 +173,9 @@
       "duration_hours": 1,
       "best_time": "morning",
       "cafe": {
-        "name": "Pasteis de Belem",
-        "description": "διάσημα παστέλ νάτα",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Pasteis+de+Belem"
+        "name": "The Folks Belém",
+        "description": "Ένας υπέροχος χώρος για specialty coffee και brunch",
+        "map_url": "https://maps.app.goo.gl/7Q7thikZMEKxvyXY7"
       }
     },
     {
@@ -467,9 +467,9 @@
       "duration_hours": 6,
       "best_time": "any",
       "cafe": {
-        "name": "Saira Cafe",
-        "description": "Ένα από τα πιο αγαπημένα μέρη των ντόπιων με εξαιρετικό καφέ και πολύ φιλική ατμόσφαιρα.",
-        "map_url": "https://maps.app.goo.gl/WiFabfPsVkaDmfi6A"
+        "name": "Kafeine Cascais",
+        "description": "Βρίσκεται στη μαρίνα του Cascais, οπότε έχει το πλεονέκτημα της θέας στα σκάφη και της θαλασσινής αύρας.",
+        "map_url": "https://maps.app.goo.gl/xyAb6NKfDpNttw1aA"
       }
     },
     {
@@ -523,9 +523,9 @@
       "duration_hours": 2.5,
       "best_time": "morning",
       "cafe": {
-        "name": "Casa Piriquita",
-        "description": "Πρέπει να δοκιμάσετε: * Travesseiros: Σφολιάτα γεμιστή με κρέμα αμυγδάλου.\n* Queijadas de Sintra: Μικρά ταρτάκια με βάση το τυρί, κανέλα και ζάχαρη.",
-        "map_url": "https://maps.app.goo.gl/D4XuJ2XmR2KkhEaB9"
+        "name": "Sintra Terrace",
+        "description": "Θα πάτε για την εκπληκτική πανοραμική θέα από την ταράτσα του. Είναι ιδανικό για ένα ποτήρι κρασί ή έναν καφέ με θέα το τοπίο της Σίντρα",
+        "map_url": "https://maps.app.goo.gl/BrFchDePuodxS7iY6"
       }
     },
     {
@@ -561,9 +561,9 @@
         "lng": -9.3877
       },
       "restaurant": {
-        "name": "ATASKAQUI",
-        "description": "Ένα εξαιρετικό μέρος για tapas και πορτογαλικές γεύσεις στην περιοχή São Pedro.",
-        "map_url": "https://maps.app.goo.gl/bj7mwMKhbQ3Hiia38"
+        "name": "Parques de Sintra Cafeterias",
+        "description": "Λόγω τοποθεσίας του παλατιού, το εστιατόριο εντός είναι το πιο βολικό. Αναζητήστε την ταμπέλα Restaurant.",
+        "map_url": "https://maps.app.goo.gl/dxCp6grg3M41DJuy8"
       },
       "website": "https://bilheteira.parquesdesintra.pt/home/en",
       "notes": [
@@ -580,9 +580,9 @@
       "duration_hours": 3,
       "best_time": "morning",
       "cafe": {
-        "name": "Café Saudade",
-        "description": "Είναι ίσως η καλύτερη επιλογή για οικογένειες. Ένας μεγάλος, καλλιτεχνικός χώρος με άνετα τραπέζια, υπέροχα σπιτικά κέικ και scones.",
-        "map_url": "https://maps.app.goo.gl/cGgwgvSEBxQHNKky8"
+        "name": "Parques de Sintra Cafeterias",
+        "description": "Λόγω τοποθεσίας του παλατιού, η καφετέρια εντός είναι η πιο βολική. Αναζητήστε την ταμπέλα Terrace.",
+        "map_url": "https://maps.app.goo.gl/dxCp6grg3M41DJuy8"
       }
     }
   ]
