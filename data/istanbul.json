@@ -815,61 +815,6 @@
       }
     },
     {
-      "id": 15,
-      "name": "Τείχη του Θεοδόσιου",
-      "description": "Μπορείς να τα δεις σε διάφορα σημεία της Πόλης. Διάσπαρτα σε πολλά μέρη της Πόλης.",
-      "category": "historical",
-      "prices": {
-        "0": 0,
-        "1": 0,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 0,
-        "8": 0,
-        "9": 0,
-        "10": 0,
-        "11": 0,
-        "12": 0,
-        "13": 0,
-        "14": 0,
-        "15": 0,
-        "16": 0,
-        "17": 0,
-        "18": 0,
-        "19": 0,
-        "adult": 0
-      },
-      "location": {
-        "lat": 41.0186,
-        "lng": 28.9247
-      },
-      "notes": [
-        "ΔΩΡΕΑΝ ΓΙΑ ΟΛΟΥΣ"
-      ],
-      "tags": [
-        "historical",
-        "free",
-        "walls",
-        "fortifications"
-      ],
-      "duration_hours": 1,
-      "best_time": "any",
-      "freeActivity": true,
-      "restaurant": {
-        "name": "Asitane Restaurant",
-        "description": "Ottoman κουζίνα κοντά στα τείχη",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Asitane+Restaurant+Chora+Istanbul"
-      },
-      "cafe": {
-        "name": "Edirnekapı Çay Bahçesi",
-        "description": "τσαγερί κοντά στα τείχη",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Mihrimah+Sultan+Camii+Cafe+Istanbul"
-      }
-    },
-    {
       "id": 16,
       "name": "KidZania Istanbul",
       "description": "Διαδραστικό θεματικό πάρκο όπου τα παιδιά παίζουν ρόλους σε επαγγέλματα μέσα σε μία μικρή πόλη. Κατάλληλο απο 3 ετών και ιδανικό από 6-7 ετών και πάνω",
