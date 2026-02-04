@@ -375,10 +375,18 @@ export function calculateTotalSpent() {
 // ==================== FAMILY MANAGEMENT ====================
 
 export function updateFamilyMemberName(index, name) {
+    if (index < 0 || index >= state.familyMembers.length) {
+        console.warn(`⚠️ updateFamilyMemberName: index ${index} εκτός ορίων (${state.familyMembers.length} μέλη)`);
+        return;
+    }
     state.familyMembers[index].name = name;
 }
 
 export function updateFamilyMemberAge(index, age) {
+    if (index < 0 || index >= state.familyMembers.length) {
+        console.warn(`⚠️ updateFamilyMemberAge: index ${index} εκτός ορίων (${state.familyMembers.length} μέλη)`);
+        return;
+    }
     if (age === "" || isNaN(parseInt(age))) {
         state.familyMembers[index].age = "";
     } else {
