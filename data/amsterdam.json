@@ -97,9 +97,9 @@
         "lng": 4.8852
       },
       "restaurant": {
-        "name": "De Carrousel Pannenkoeken",
-        "description": "Το καλύτερο εστιατόριο για τηγανίτες (pancakes) σε έναν χώρο που μοιάζει με καρουζέλ, ακριβώς δίπλα στο Rijksmuseum.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=De+Carrousel+Pannenkoeken"
+        "name": "Brasserie Zuiderbad",
+        "description": "Είναι ένα απλό και φιλόξενο καφέ-εστιατόριο που εξυπηρετεί κυρίως ντόπιους. Οι τιμές του είναι πολύ προσιτές για την περιοχή",
+        "map_url": "https://maps.app.goo.gl/DpJYDnGAd9XTEfvD6"
       },
       "website": "https://www.rijksmuseum.nl/",
       "notes": [
@@ -313,7 +313,7 @@
       },
      "restaurant": {
         "name": "Lowlander Botanical Bar & Restaurant",
-        "description": "Ένα πανέμορφο εστιατόριο με βοτανικό κήπο στο εσωτερικό του. Προσφέρει φρέσκα πιάτα και έναν πολύ ευχάριστο, ανοιχτό χώρο που λατρεύουν οι οικογένειες.",
+        "description": "Ένα πανέμορφο εστιατόριο με βοτανικό κήπο στο εσωτερικό του. Με φρέσκα υλικά και έναν πολύ ευχάριστο, ανοιχτό χώρο.",
         "map_url": "https://maps.google.com/?cid=10492291773382815161&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       },
       "website": "https://www.wondrexperience.com/",
@@ -332,7 +332,7 @@
       "best_time": "any",
       "cafe": {
         "name": "SUBCULT",
-        "description": "Ένα εναλλακτικό και δημιουργικό καφέ-πολυχώρος ακριβώς δίπλα στο WONDR. Ιδανικό για καφέ και σνακ σε ένα χαλαρό και φιλικό περιβάλλον.",
+        "description": "Ένας εναλλακτικός και δημιουργικός πολυχώρος ακριβώς δίπλα στο WONDR. Ιδανικός για καφέ και σνακ σε ένα χαλαρό και φιλικό περιβάλλον.",
         "map_url": "https://maps.google.com/?cid=9577572624550529966&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       }
     },
@@ -369,7 +369,7 @@
       "restaurant": {
         "name": "THT (Tolhuistuin)",
         "description": "Ευρύχωρο εστιατόριο με ωραία θέα, ακριβώς δίπλα στο This is Holland",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=THT+(Tolhuistuin)"
+        "map_url": "https://maps.app.goo.gl/QsNhJAxSR76zLyYh7"
       },
       "combos": {
         "this_is_holland_madame_tussauds": {
@@ -581,9 +581,9 @@
         "lng": 4.8319
       },
       "restaurant": {
-        "name": "Boerderij Meerzicht",
+        "name": "Meerzicht Farm",
         "description": "φάρμα με χειροποίητα προϊόντα & παιδική χαρά",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Boerderij+Megan+Amsterdamse+Bos"
+        "map_url": "https://maps.app.goo.gl/1sTsFoMAH66LiQJD9"
       },
       "website": "https://www.amsterdamsebos.nl/",
       "notes": [
@@ -597,9 +597,9 @@
       "duration_hours": 3,
       "best_time": "any",
       "cafe": {
-        "name": "De Boshalte",
-        "description": "Ένα χαλαρό 'koffie tentje' στην είσοδο του δάσους, ιδανικό για καφέ, ζεστή σοκολάτα και ελαφριά σνακ.",
-        "map_url": "https://maps.google.com/?cid=16148306879835281686&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+        "name": "Meerzicht Farm",
+        "description": "φάρμα με χειροποίητα προϊόντα & παιδική χαρά",
+        "map_url": "https://maps.app.goo.gl/1sTsFoMAH66LiQJD9"
       }
     },
     {
