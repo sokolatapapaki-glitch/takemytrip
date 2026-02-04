@@ -209,6 +209,56 @@
         "description": "Το καλύτερο σημείο για ομελέτες και brunch, πολύ φιλικό για παιδιά και οικονομικό, 5 λεπτά από την πλατεία Dam.",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Omelegg+City+Center"
       },
+      "combos": {
+        "madame_tussauds_this_is_holland": {
+          "name": "Madame Tussauds + This is Holland",
+          "prices": {
+            "0": 0,
+            "1": 0,
+            "2": 32,
+            "3": 32,
+            "4": 32,
+            "5": 32,
+            "6": 32,
+            "7": 32,
+            "8": 32,
+            "9": 32,
+            "10": 32,
+            "11": 32,
+            "12": 32,
+            "13": 32,
+            "14": 32,
+            "15": 37,
+            "16": 37,
+            "17": 37,
+            "adult": 37
+          }
+        },
+        "madame_tussauds_canal_cruise": {
+          "name": "Madame Tussauds + Canal Cruise",
+          "prices": {
+            "0": 0,
+            "1": 0,
+            "2": 29.5,
+            "3": 29.5,
+            "4": 29.5,
+            "5": 29.5,
+            "6": 29.5,
+            "7": 29.5,
+            "8": 29.5,
+            "9": 29.5,
+            "10": 29.5,
+            "11": 29.5,
+            "12": 29.5,
+            "13": 29.5,
+            "14": 29.5,
+            "15": 37,
+            "16": 37,
+            "17": 37,
+            "adult": 37
+          }
+        }
+      },
       "website": "https://www.madametussauds.com/amsterdam/",
       "notes": [
         "0-1 ετών: δωρεάν",
@@ -320,6 +370,52 @@
         "name": "THT (Tolhuistuin)",
         "description": "Ευρύχωρο εστιατόριο με ωραία θέα, ακριβώς δίπλα στο This is Holland",
         "map_url": "https://www.google.com/maps/search/?api=1&query=THT+(Tolhuistuin)"
+      },
+      "combos": {
+        "this_is_holland_madame_tussauds": {
+          "name": "This is Holland + Madame Tussauds",
+          "prices": {
+            "0": 0,
+            "1": 0,
+            "2": 32,
+            "3": 32,
+            "4": 32,
+            "5": 32,
+            "6": 32,
+            "7": 32,
+            "8": 32,
+            "9": 32,
+            "10": 32,
+            "11": 32,
+            "12": 32,
+            "13": 32,
+            "14": 32,
+            "15": 37,
+            "16": 37,
+            "17": 37,
+            "adult": 37
+          }
+        },
+        "this_is_holland_pancake_cruise": {
+          "name": "This is Holland + Pancake Cruise",
+          "prices": {
+            "4": 35.5,
+            "5": 35.5,
+            "6": 35.5,
+            "7": 35.5,
+            "8": 35.5,
+            "9": 35.5,
+            "10": 35.5,
+            "11": 35.5,
+            "12": 35.5,
+            "13": 43.5,
+            "14": 43.5,
+            "15": 43.5,
+            "16": 43.5,
+            "17": 43.5,
+            "adult": 43.5
+          }
+        }
       },
       "website": "https://www.thisisholland.com/",
       "notes": [
