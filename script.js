@@ -4496,10 +4496,18 @@ function getActivityEmoji(category) {
 
 // ==================== FAMILY FUNCTIONS ====================
 function updateFamilyMemberName(index, name) {
+    if (index < 0 || index >= state.familyMembers.length) {
+        console.warn(`⚠️ updateFamilyMemberName: index ${index} εκτός ορίων (${state.familyMembers.length} μέλη)`);
+        return;
+    }
     state.familyMembers[index].name = name;
 }
 
 function updateFamilyMemberAge(index, age) {
+    if (index < 0 || index >= state.familyMembers.length) {
+        console.warn(`⚠️ updateFamilyMemberAge: index ${index} εκτός ορίων (${state.familyMembers.length} μέλη)`);
+        return;
+    }
     if (age === "" || isNaN(parseInt(age))) {
         state.familyMembers[index].age = "";
     } else {
@@ -4532,8 +4540,27 @@ function removeFamilyMember(index) {
 
 function updateFamilyMembers() {
     console.log('👨‍👩‍👧‍👦 Ενημέρωση οικογενειακών μελών...');
-    
-    // 1. Φίλτραρε κενά μέλη
+
+    // 1. Συγχρονισμός: Διάβασε τρέχουσες τιμές από τα DOM inputs πριν το φιλτράρισμα
+    const container = document.getElementById('family-members-container');
+    if (container) {
+        const memberDivs = container.querySelectorAll('.family-member');
+        memberDivs.forEach((div, index) => {
+            if (index < state.familyMembers.length) {
+                const ageInput = div.querySelector('input[type="number"]');
+                if (ageInput) {
+                    const val = ageInput.value;
+                    if (val === "" || isNaN(parseInt(val))) {
+                        state.familyMembers[index].age = "";
+                    } else {
+                        state.familyMembers[index].age = parseInt(val);
+                    }
+                }
+            }
+        });
+    }
+
+    // 2. Φίλτραρε κενά μέλη
     const originalLength = state.familyMembers.length;
     state.familyMembers = state.familyMembers.filter(member => {
         const hasValidName = member.name && member.name.trim() !== "";
@@ -4541,33 +4568,39 @@ function updateFamilyMembers() {
         const hasValidAge = !isNaN(ageNum) && ageNum >= 0 && ageNum <= 120;
         return hasValidName && hasValidAge;
     });
-    
-    // 2. Αποθήκευση
+
+    // 3. Ασφάλεια: Εξασφάλισε τουλάχιστον 1 μέλος
+    if (state.familyMembers.length === 0) {
+        state.familyMembers = [{ name: "Ενήλικας 1", age: "" }];
+        console.log('⚠️ Όλα τα μέλη ήταν κενά - επαναφορά σε 1 μέλος');
+    }
+
+    // 4. Αποθήκευση
     saveState();
-    
-    // 3. Ανανέωση τιμών επιλεγμένων δραστηριοτήτων
+
+    // 5. Ανανέωση τιμών επιλεγμένων δραστηριοτήτων
     state.selectedActivities.forEach(activity => {
-        const original = state.currentCityActivities.find(a => a.id === activity.id);
+        const original = (state.currentCityActivities || []).find(a => a.id === activity.id);
         if (original) {
             activity.price = calculateFamilyCost(original.prices);
         }
     });
-    
-    // 4. Ανανέωση εμφάνισης
+
+    // 6. Ανανέωση εμφάνισης
     updateActivitiesTotal();
-    
-    // 5. Επαναφόρτωση βήματος (αν είναι ανοιχτό)
-    if (state.currentStep === 'activities') {
-        setTimeout(() => {
-            setupActivitiesStep();
-        }, 100);
-    }
-    
-    // 6. Μήνυμα
+
+    // 7. Μήνυμα
     const removed = originalLength - state.familyMembers.length;
     alert(`✅ Ενημέρωση ολοκληρώθηκε!\n\n` +
           (removed > 0 ? `🧹 Αφαιρέθηκαν ${removed} κενά μέλη.\n\n` : '') +
           `👨‍👩‍👧‍👦 Τώρα έχετε ${state.familyMembers.length} έγκυρα μέλη.`);
+
+    // 8. ΚΡΙΤΙΚΟ: Πλήρης επαναφόρτωση βήματος για σωστό συγχρονισμό DOM ↔ state
+    // Χρησιμοποιούμε showStep αντί για setupActivitiesStep ώστε να ανανεωθεί
+    // και η ενότητα family-members-container (όχι μόνο τα activity cards)
+    if (state.currentStep === 'activities') {
+        showStep('activities');
+    }
 }
 
 function clearSelectedActivities() {
