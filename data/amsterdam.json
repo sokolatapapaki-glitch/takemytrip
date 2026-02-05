@@ -97,9 +97,9 @@
         "lng": 4.8852
       },
       "restaurant": {
-        "name": "De Carrousel Pannenkoeken",
-        "description": "Το καλύτερο εστιατόριο για τηγανίτες (pancakes) σε έναν χώρο που μοιάζει με καρουζέλ, ακριβώς δίπλα στο Rijksmuseum.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=De+Carrousel+Pannenkoeken"
+        "name": "Brasserie Zuiderbad",
+        "description": "Χορταστικό μενού σε λογικές τιμές, πολύ κοντά.",
+        "map_url": "https://maps.app.goo.gl/cK2JvehhkvjPpiXU7"
       },
       "website": "https://www.rijksmuseum.nl/",
       "notes": [
