@@ -2667,7 +2667,7 @@ async function setupActivitiesStep() {
         // ΒΗΜΑ: Φόρτωσε το JSON
         console.log(`📂 Προσπαθώ να φορτώσω: data/${state.selectedDestinationId}.json`);
         
-        const response = await fetch(`data/${state.selectedDestinationId}.json`);
+        const response = await fetch(`data/${state.selectedDestinationId}.json?t=${Date.now()}`);
         
         if (!response.ok) {
             throw new Error(`Δεν βρέθηκε το αρχείο (${response.status})`);
