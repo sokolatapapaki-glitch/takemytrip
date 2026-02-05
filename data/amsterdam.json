@@ -276,9 +276,9 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "cafe": {
-        "name": "Greenwoods",
-        "description": "English breakfast & coffee",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Greenwoods+Amsterdam"
+        "name": "De Drie Graefjes American Bakery - Vestiging Dam",
+        "description": "Είναι διάσημο σε όλο το Άμστερνταμ για το Red Velvet cake του και τις γενναιόδωρες μερίδες στα γλυκά.",
+        "map_url": "https://maps.app.goo.gl/Ji3KP49HYvhS7AVk8"
       }
     },
     {
@@ -312,9 +312,9 @@
         "lng": 4.8689
       },
      "restaurant": {
-        "name": "Lowlander Botanical Bar & Restaurant",
-        "description": "Ένα πανέμορφο εστιατόριο με βοτανικό κήπο στο εσωτερικό του. Προσφέρει φρέσκα πιάτα και έναν πολύ ευχάριστο, ανοιχτό χώρο που λατρεύουν οι οικογένειες.",
-        "map_url": "https://maps.google.com/?cid=10492291773382815161&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+        "name": "Fritto",
+        "description": "Ειδικεύεται σε κλασικό ολλανδικό snack bar στυλ, burgers, κροκέτες.",
+        "map_url": "https://maps.app.goo.gl/dpqr3fqNYs9Ei4Yy8"
       },
       "website": "https://www.wondrexperience.com/",
       "notes": [
@@ -686,9 +686,9 @@
         "lng": 4.9041
       },
       "restaurant": {
-        "name": "Omelegg City Center",
-        "description": "Το καλύτερο brunch με ομελέτες, πολύ κοντά στην αφετηρία της κρουαζιέρας",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Omelegg+City+Center"
+        "name": "Lunchcafé Waterloo",
+        "description": "Σερβίρει κλασικά σάντουιτς, ομελέτες και καφέ.",
+        "map_url": "https://maps.app.goo.gl/Myo38P9dCCWWJQpP6"
       },
       "website": "https://amsterdamcanalcruises.nl/",
       "notes": [
