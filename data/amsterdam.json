@@ -14,7 +14,7 @@
     {
       "id": 1,
       "name": "NEMO Science Museum",
-      "description": "Το κορυφαίο διαδραστικό μουσείο επιστημών. Μην ξεχάσετε την ταράτσα με τη θέα και τα παιχνίδια νερού.",
+      "description": "Το κορυφαίο διαδραστικό μουσείο επιστημών. Μην ξεχάσετε την ταράτσα με  θέα και τα παιχνίδια νερού.",
       "category": "museum",
       "prices": {
         "0": 0,
@@ -97,9 +97,9 @@
         "lng": 4.8852
       },
       "restaurant": {
-        "name": "Brasserie Zuiderbad",
-        "description": "Είναι ένα απλό και φιλόξενο καφέ-εστιατόριο που εξυπηρετεί κυρίως ντόπιους. Οι τιμές του είναι πολύ προσιτές για την περιοχή",
-        "map_url": "https://maps.app.goo.gl/DpJYDnGAd9XTEfvD6"
+        "name": "De Carrousel Pannenkoeken",
+        "description": "Το καλύτερο εστιατόριο για τηγανίτες (pancakes) σε έναν χώρο που μοιάζει με καρουζέλ, ακριβώς δίπλα στο Rijksmuseum.",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=De+Carrousel+Pannenkoeken"
       },
       "website": "https://www.rijksmuseum.nl/",
       "notes": [
@@ -276,9 +276,9 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "cafe": {
-        "name": "Greenwoods",
-        "description": "English breakfast & coffee",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Greenwoods+Amsterdam"
+        "name": "De Drie Graefjes American Bakery - Vestiging Dam",
+        "description": "Είναι διάσημο σε όλο το Άμστερνταμ για το Red Velvet cake του και τις γενναιόδωρες μερίδες στα γλυκά.",
+        "map_url": "https://maps.app.goo.gl/Ji3KP49HYvhS7AVk8"
       }
     },
     {
@@ -312,9 +312,9 @@
         "lng": 4.8689
       },
      "restaurant": {
-        "name": "Lowlander Botanical Bar & Restaurant",
-        "description": "Ένα πανέμορφο εστιατόριο με βοτανικό κήπο στο εσωτερικό του. Με φρέσκα υλικά και έναν πολύ ευχάριστο, ανοιχτό χώρο.",
-        "map_url": "https://maps.google.com/?cid=10492291773382815161&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+        "name": "Fritto",
+        "description": "Ειδικεύεται σε κλασικό ολλανδικό snack bar στυλ, burgers, κροκέτες.",
+        "map_url": "https://maps.app.goo.gl/dpqr3fqNYs9Ei4Yy8"
       },
       "website": "https://www.wondrexperience.com/",
       "notes": [
@@ -332,7 +332,7 @@
       "best_time": "any",
       "cafe": {
         "name": "SUBCULT",
-        "description": "Ένας εναλλακτικός και δημιουργικός πολυχώρος ακριβώς δίπλα στο WONDR. Ιδανικός για καφέ και σνακ σε ένα χαλαρό και φιλικό περιβάλλον.",
+        "description": "Ένα εναλλακτικό και δημιουργικό καφέ-πολυχώρος ακριβώς δίπλα στο WONDR. Ιδανικό για καφέ και σνακ σε ένα χαλαρό και φιλικό περιβάλλον.",
         "map_url": "https://maps.google.com/?cid=9577572624550529966&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       }
     },
@@ -369,7 +369,7 @@
       "restaurant": {
         "name": "THT (Tolhuistuin)",
         "description": "Ευρύχωρο εστιατόριο με ωραία θέα, ακριβώς δίπλα στο This is Holland",
-        "map_url": "https://maps.app.goo.gl/QsNhJAxSR76zLyYh7"
+        "map_url": "https://www.google.com/maps/search/?api=1&query=THT+(Tolhuistuin)"
       },
       "combos": {
         "this_is_holland_madame_tussauds": {
@@ -581,9 +581,9 @@
         "lng": 4.8319
       },
       "restaurant": {
-        "name": "Meerzicht Farm ή Goatfarm Ridammerhoeve",
-        "description": "φάρμες με χειροποίητα προϊόντα & παιδική χαρά",
-        "map_url": "https://maps.app.goo.gl/1sTsFoMAH66LiQJD9"
+        "name": "Boerderij Meerzicht",
+        "description": "φάρμα με χειροποίητα προϊόντα & παιδική χαρά",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Boerderij+Megan+Amsterdamse+Bos"
       },
       "website": "https://www.amsterdamsebos.nl/",
       "notes": [
@@ -597,9 +597,9 @@
       "duration_hours": 3,
       "best_time": "any",
       "cafe": {
-        "name": "Koffie tentje Amsterdamse bos",
-        "description": "Είναι ένα πολύ δημοφιλές σημείο για καφέ και γλυκό. Βρίσκεται κοντά στην κύρια είσοδο και είναι ιδανικό για μια γρήγορη στάση.",
-        "map_url": "https://maps.app.goo.gl/dt3gwYU3t8RbyLgX8"
+        "name": "De Boshalte",
+        "description": "Ένα χαλαρό 'koffie tentje' στην είσοδο του δάσους, ιδανικό για καφέ, ζεστή σοκολάτα και ελαφριά σνακ.",
+        "map_url": "https://maps.google.com/?cid=16148306879835281686&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       }
     },
     {
@@ -686,9 +686,9 @@
         "lng": 4.9041
       },
       "restaurant": {
-        "name": "Omelegg City Center",
-        "description": "Το καλύτερο brunch με ομελέτες, πολύ κοντά στην αφετηρία της κρουαζιέρας",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Omelegg+City+Center"
+        "name": "Lunchcafé Waterloo",
+        "description": "Σερβίρει κλασικά σάντουιτς, ομελέτες και καφέ.",
+        "map_url": "https://maps.app.goo.gl/Myo38P9dCCWWJQpP6"
       },
       "website": "https://amsterdamcanalcruises.nl/",
       "notes": [
