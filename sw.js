@@ -1,5 +1,5 @@
 // Service Worker για Οργανωτή Ταξιδιού
-const CACHE_NAME = 'travel-planner-v2';
+const CACHE_NAME = 'travel-planner-v3';
 const OFFLINE_URL = '/index.html';
 
 // Αρχεία για caching (ΒΑΣΙΚΑ)
@@ -45,7 +45,29 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Για άλλα requests (CSS, JS, JSON, κλπ)
+  // Για JSON αρχεία - πάντα από το δίκτυο πρώτα (network-first)
+  if (new URL(event.request.url).pathname.endsWith('.json')) {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          if (!response || response.status !== 200) {
+            return response;
+          }
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME)
+            .then(cache => {
+              cache.put(event.request, responseToCache);
+            });
+          return response;
+        })
+        .catch(() => {
+          return caches.match(event.request);
+        })
+    );
+    return;
+  }
+
+  // Για άλλα requests (CSS, JS, κλπ)
   event.respondWith(
     caches.match(event.request)
       .then(response => {
@@ -53,7 +75,7 @@ self.addEventListener('fetch', event => {
         if (response) {
           return response;
         }
-        
+
         // Διαφορετικά, κάνε fetch και πρόσθεσέ το στο cache
         return fetch(event.request)
           .then(response => {
@@ -61,14 +83,14 @@ self.addEventListener('fetch', event => {
             if (!response || response.status !== 200) {
               return response;
             }
-            
+
             // Clone το response για caching
             const responseToCache = response.clone();
             caches.open(CACHE_NAME)
               .then(cache => {
                 cache.put(event.request, responseToCache);
               });
-            
+
             return response;
           })
           .catch(error => {
