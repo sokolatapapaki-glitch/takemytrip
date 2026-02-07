@@ -59,14 +59,14 @@
       "best_time": "morning",
       "emoji": "🏘️",
       "restaurant": {
-        "name": "La Gil",
-        "description": "Παραδοσιακή ρουμάνικη κουζίνα, πολύ φιλικό για οικογένειες με μεγάλες μερίδες και καλές τιμές.",
-        "map_url": "https://goo.gl/maps/YkRfFUjwV3aNb2iV8"
+        "name": "Beraria H Herastrau",
+        "description": "Βρίσκεται ακριβώς δίπλα στη λίμνη Herastrau. Είναι τεράστιο, πολύ φιλικό για οικογένειες και έχει γρήγορο φαγητό (burgers, σνίτσελ).",
+        "map_url": "https://maps.app.goo.gl/QyPiYFVBLmtohmm3A"
       },
       "cafe": {
-        "name": "Tucano Coffee Madagascar",
-        "description": "Ένα ζεστό και πολύχρωμο καφέ με υπέροχα γλυκά και χαλαρή ατμόσφαιρα.",
-        "map_url": "https://goo.gl/maps/2kdcpyKksXQ9rFzb8"
+        "name": "City Grill Primăverii",
+        "description": "Ιδανικό για καφέ με θέα το πράσινο, ακριβώς στην έξοδο του μουσείου προς το πάρκο.",
+        "map_url": "https://maps.app.goo.gl/jx12cq43mcXAuL3D6"
       }
     },
     {
@@ -200,7 +200,7 @@
         "lat": 44.4275,
         "lng": 26.0877
       },
-      "website": "https://cfrp.ro/",
+      "website": "https://cic.cdep.ro/",
       "notes": [
         "0-6 ετών: δωρεάν",
         "7-18 ετών: 8€",
@@ -217,14 +217,14 @@
       "best_time": "morning",
       "emoji": "🏛️",
       "restaurant": {
-        "name": "Hanu' Berarilor Casa Elena Lupescu",
-        "description": "Στεγάζεται σε ένα ιστορικό κτίριο, προσφέρει εξαιρετικό φαγητό σε πολύ λογικές τιμές και έχει αυλή που βολεύει πολύ τα παιδιά.",
-        "map_url": "https://goo.gl/maps/pZZfyd3rESErP5gFA"
+        "name": "Stadio Unirii",
+        "description": "Παραμένει μια από τις πιο κοντινές και ποιοτικές επιλογές, καθώς απέχει μόλις 10-11 λεπτά με τα πόδια (περίπου 800 μέτρα) από την είσοδο του Παλατιού.",
+        "map_url": "https://maps.app.goo.gl/upFUY7zPGBo4XkSm8"
       },
       "cafe": {
-        "name": "5 to go",
-        "description": "Η πιο οικονομική και γρήγορη λύση για ποιοτικό καφέ \"στο χέρι\" ή για ένα σύντομο διάλειμμα.",
-        "map_url": "https://goo.gl/maps/vMMy4jKyKmkN3K1b8"
+        "name": "Tucano Coffee Bogota - Piața Kogălniceanu, București",
+        "description": "Το Tucano είναι ιδανικό αν προτιμάτε κάτι πιο casual στην περιοχή του πάρκου Izvor.",
+        "map_url": "https://maps.app.goo.gl/waojJShjCaURNS5a7"
       }
     },
     {
@@ -259,6 +259,7 @@
         "lat": 44.4305,
         "lng": 26.0838
       },
+      "website": "https://visitbucharest.today/izvor-park/",
       "notes": [
         "Δωρεάν είσοδος"
       ],
@@ -272,15 +273,14 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "emoji": "🛝",
-      "restaurant": {
-        "name": "Social 1",
-        "description": "Μοντέρνο εστιατόριο με \"comfort food\" επιλογές (burgers, pasta) που λατρεύουν τα παιδιά, σε μια πολύ όμορφη ατμόσφαιρα.",
-        "map_url": "https://goo.gl/maps/VEjv5VvS6jfQuLi29"
+       "name": "Stadio Unirii",
+        "description": "Παραμένει μια από τις πιο κοντινές και ποιοτικές επιλογές, καθώς απέχει μόλις 10-11 λεπτά με τα πόδια (περίπου 800 μέτρα) από την είσοδο του Παλατιού.",
+        "map_url": "https://maps.app.goo.gl/upFUY7zPGBo4XkSm8"
       },
       "cafe": {
-        "name": "Coffee 2 Go",
-        "description": "Μικρό, συνοικιακό καφέ με πολύ ευγενικό προσωπικό και προσιτές τιμές.",
-        "map_url": "https://goo.gl/maps/VXVe6dSwjL9Y5L1y6"
+        "name": "Tucano Coffee Bogota - Piața Kogălniceanu, București",
+        "description": "Το Tucano είναι ιδανικό αν προτιμάτε κάτι πιο casual στην περιοχή του πάρκου Izvor.",
+        "map_url": "https://maps.app.goo.gl/waojJShjCaURNS5a7"
       }
     },
     {
@@ -315,6 +315,7 @@
         "lat": 44.4268,
         "lng": 26.1025
       },
+      "website": "https://visitbucharest.today/downtown-bucharest-fountains/",
       "notes": [
         "Δωρεάν είσοδος"
       ],
@@ -388,12 +389,12 @@
       "restaurant": {
         "name": "Lacrimi și Sfinți",
         "description": "Δημιουργική ρουμάνικη κουζίνα με παραδοσιακά υλικά, σε έναν χώρο διακοσμημένο με ξύλινα γλυπτά που θα ενθουσιάσουν τα παιδιά.",
-        "map_url": "https://goo.gl/maps/54Rau6fZRe3NR5p6A"
+        "map_url": "https://maps.app.goo.gl/Xkd1dCr8PqzE8edk6"
       },
       "cafe": {
         "name": "Grand Cafe Van Gogh",
-        "description": "Ένα εμβληματικό καφέ με μεγάλους πίνακες και άνετα καθίσματα, ιδανικό για ένα χαλαρό απόγευμα στην Παλιά Πόλη.",
-        "map_url": "https://goo.gl/maps/w2CgoQvruq5H8dUQ8"
+        "description": "Ένα εμβληματικό καφέ με μεγάλους πίνακες του διάσημου ζωγράφου. Προσοχή, θέλει κράτηση αλλιώς έχει αναμονή.",
+        "map_url": "https://maps.app.goo.gl/TbnK7yfuoYsN2QUK9"
       }
     },
     {
@@ -428,6 +429,7 @@
         "lat": 44.4313,
         "lng": 26.0988
       },
+      "website": "https://www.tripadvisor.com/Attraction_Review-g294458-d523717-Reviews-Lipscani-Bucharest.html",
       "notes": [
         "Δωρεάν είσοδος"
       ],
@@ -442,13 +444,13 @@
       "best_time": "afternoon",
       "emoji": "🏘️",
       "restaurant": {
-        "name": "Hanu' lui Manuc",
-        "description": "Το παλαιότερο πανδοχείο της Ευρώπης. Έχει μια τεράστια εσωτερική αυλή που είναι ασφαλής για τα παιδιά και προσφέρει παραδοσιακό φαγητό σε καλές τιμές.",
-        "map_url": "https://goo.gl/maps/LV2SUL8ehzfif4no7"
+        "name": "City Grill Covaci",
+        "description": "Μια ποιοτική επιλογή αν θέλετε να κάνετε μια στάση στην καρδιά της παλιάς πόλης.",
+        "map_url": "https://maps.app.goo.gl/yhPBZLLk8qLpkxLH9"
       },
       "cafe": {
         "name": "Arcade Cafe",
-        "description": "Πολύ ζεστό περιβάλλον στον κεντρικό πεζόδρομο, ιδανικό για να ξεκουραστείτε από το περπάτημα.",
+        "description": "Πολύ ζεστό περιβάλλον στον κεντρικό πεζόδρομο.",
         "map_url": "https://goo.gl/maps/MmUxJqGVzB5f8qkTA"
       }
     },
@@ -484,6 +486,7 @@
         "lat": 44.4375,
         "lng": 26.0896
       },
+      "website": "https://visitbucharest.today/cismigiu-park/",
       "notes": [
         "Δωρεάν είσοδος"
       ],
@@ -498,14 +501,14 @@
       "best_time": "any",
       "emoji": "🌳",
       "restaurant": {
-        "name": "Pane & Pomodoro",
-        "description": "Αυθεντική ιταλική πίτσα με λεπτή ζύμη, πολύ γρήγορη εξυπηρέτηση και τιμές που δεν \"πονάνε\".",
-        "map_url": "https://goo.gl/maps/YpY9LpduDxT9CZZP6"
+        "name": "MOM Bucharest",
+        "description": "Μοντέρνο και προσιτό για την ποιότητά του",
+        "map_url": "https://maps.app.goo.gl/WhaPreayKvyPukoK7"
       },
       "cafe": {
-        "name": "Artichoke Coffee Shop",
-        "description": "Βρίσκεται ακριβώς δίπλα στην εκκλησία Kretzulescu, προσφέροντας υπέροχη θέα και πολύ ποιοτικό καφέ.",
-        "map_url": "https://goo.gl/maps/Pv9BqrzZZhLMy7p78"
+        "name": "Perfect Simplu Coffee shop Cismigiu",
+        "description": "Έχει την εντυπωσιακή βαθμολογία 4.9/5, κάτι που επιβεβαιώνει ότι είναι μια από τις κορυφαίες επιλογές στην περιοχή για ποιοτικό καφέ.",
+        "map_url": "https://maps.app.goo.gl/tzsebLESip2nrtvU9"
       }
     },
     {
@@ -646,6 +649,7 @@
         "lat": 44.4390,
         "lng": 26.0890
       },
+       "website": "https://astro-urseanu.ro/",
       "notes": [
         "0-7 ετών: δωρεάν",
         "8+ ετών: 4€"
@@ -693,6 +697,7 @@
         "lat": 44.4310,
         "lng": 26.0970
       },
+       "website": "https://visitbucharest.today/little-paris-museum/",
       "notes": [
         "0-18 ετών: 3€",
         "19+ ετών: 5€"
@@ -740,6 +745,7 @@
         "lat": 44.4076,
         "lng": 26.1044
       },
+      "website": "https://visitbucharest.today/oraselul-copiilor-park/",
       "notes": [
         "Δωρεάν είσοδος",
         "Κάθε παιχνίδι/βόλτα χρεώνεται ξεχωριστά (each ride is paid separately)"
@@ -797,6 +803,7 @@
         "lat": 44.4230,
         "lng": 26.0940
       },
+       "website": "https://visitbucharest.today/bucharest-digital-planetarium/",
       "notes": [
         "0-18 ετών: 8€",
         "19+ ετών: 12€"
@@ -844,6 +851,7 @@
         "lat": 44.4410,
         "lng": 26.0960
       },
+      "website": "https://www.tripadvisor.com.gr/Attraction_Review-g294458-d19772503-Reviews-Pasajul_Victoriei-Bucharest.html",
       "notes": [
         "Δωρεάν είσοδος"
       ],
@@ -890,6 +898,7 @@
         "lat": 44.4335,
         "lng": 26.0975
       },
+      "website": "https://visitbucharest.today/macca-villacrosse-passage/",
       "notes": [
         "Δωρεάν είσοδος"
       ],
@@ -903,15 +912,15 @@
       "duration_hours": 0.5,
       "best_time": "any",
       "emoji": "🏗️",
-      "restaurant": {
-        "name": "Aubergine Healthy Food",
-        "description": "Δημιουργική κουζίνα με πολλές υγιεινές επιλογές και πολύχρωμα πιάτα που αρέσουν στα παιδιά.",
-        "map_url": "https://goo.gl/maps/u62RB3UmS43zm4HD8"
+       "restaurant": {
+        "name": "City Grill Covaci",
+        "description": "Μια ποιοτική επιλογή αν θέλετε να κάνετε μια στάση στην καρδιά της παλιάς πόλης.",
+        "map_url": "https://maps.app.goo.gl/yhPBZLLk8qLpkxLH9"
       },
       "cafe": {
-        "name": "Blues Cafe",
-        "description": "Ένα κλασικό σημείο για να καθίσετε και να απολαύσετε την αρχιτεκτονική της στοάς.",
-        "map_url": "https://goo.gl/maps/2h4RFNFe8N3XJy9M9"
+        "name": "Arcade Cafe",
+        "description": "Πολύ ζεστό περιβάλλον στον κεντρικό πεζόδρομο.",
+        "map_url": "https://goo.gl/maps/MmUxJqGVzB5f8qkTA"
       }
     },
     {
