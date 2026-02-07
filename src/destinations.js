@@ -195,8 +195,8 @@ export async function filterDestinations() {
         {
             id: 'bucharest', name: 'Βουκουρέστι', emoji: '🏛️',
             hasJSON: true, distance: 1.5, cost: 'Οικονομικό',
-            country: 'Ρουμανία', vacationType: 'Πόλη',
-            themeParks: ['has-parks'], familyScore: 7, hasDisney: false,
+            country: 'Ρουμανία', vacationType: ['Βουνό', 'Φυσική'],
+            themeParks: [], familyScore: 7, hasDisney: false,
             strollerFriendly: true
         }
     ];
