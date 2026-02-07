@@ -191,6 +191,13 @@ export async function filterDestinations() {
             country: 'Ελβετία', vacationType: 'Βουνό',
             themeParks: [], familyScore: 5, hasDisney: false,
             strollerFriendly: true
+        },
+        {
+            id: 'bucharest', name: 'Βουκουρέστι', emoji: '🏛️',
+            hasJSON: true, distance: 1.5, cost: 'Οικονομικό',
+            country: 'Ρουμανία', vacationType: 'Πόλη',
+            themeParks: ['has-parks'], familyScore: 7, hasDisney: false,
+            strollerFriendly: true
         }
     ];
 
