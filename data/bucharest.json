@@ -57,7 +57,17 @@
       ],
       "duration_hours": 2.5,
       "best_time": "morning",
-      "emoji": "🏘️"
+      "emoji": "🏘️",
+      "restaurant": {
+        "name": "La Gil",
+        "description": "Παραδοσιακή ρουμάνικη κουζίνα, πολύ φιλικό για οικογένειες με μεγάλες μερίδες και καλές τιμές.",
+        "map_url": "https://goo.gl/maps/YkRfFUjwV3aNb2iV8"
+      },
+      "cafe": {
+        "name": "Tucano Coffee Madagascar",
+        "description": "Ένα ζεστό και πολύχρωμο καφέ με υπέροχα γλυκά και χαλαρή ατμόσφαιρα.",
+        "map_url": "https://goo.gl/maps/2kdcpyKksXQ9rFzb8"
+      }
     },
     {
       "id": 2,
@@ -205,7 +215,17 @@
       ],
       "duration_hours": 2,
       "best_time": "morning",
-      "emoji": "🏛️"
+      "emoji": "🏛️",
+      "restaurant": {
+        "name": "Hanu' Berarilor Casa Elena Lupescu",
+        "description": "Στεγάζεται σε ένα ιστορικό κτίριο, προσφέρει εξαιρετικό φαγητό σε πολύ λογικές τιμές και έχει αυλή που βολεύει πολύ τα παιδιά.",
+        "map_url": "https://goo.gl/maps/pZZfyd3rESErP5gFA"
+      },
+      "cafe": {
+        "name": "5 to go",
+        "description": "Η πιο οικονομική και γρήγορη λύση για ποιοτικό καφέ \"στο χέρι\" ή για ένα σύντομο διάλειμμα.",
+        "map_url": "https://goo.gl/maps/vMMy4jKyKmkN3K1b8"
+      }
     },
     {
       "id": 5,
@@ -251,7 +271,17 @@
       ],
       "duration_hours": 1.5,
       "best_time": "any",
-      "emoji": "🛝"
+      "emoji": "🛝",
+      "restaurant": {
+        "name": "Social 1",
+        "description": "Μοντέρνο εστιατόριο με \"comfort food\" επιλογές (burgers, pasta) που λατρεύουν τα παιδιά, σε μια πολύ όμορφη ατμόσφαιρα.",
+        "map_url": "https://goo.gl/maps/VEjv5VvS6jfQuLi29"
+      },
+      "cafe": {
+        "name": "Coffee 2 Go",
+        "description": "Μικρό, συνοικιακό καφέ με πολύ ευγενικό προσωπικό και προσιτές τιμές.",
+        "map_url": "https://goo.gl/maps/VXVe6dSwjL9Y5L1y6"
+      }
     },
     {
       "id": 6,
@@ -297,7 +327,17 @@
       ],
       "duration_hours": 1,
       "best_time": "evening",
-      "emoji": "⛲"
+      "emoji": "⛲",
+      "restaurant": {
+        "name": "Horoscop",
+        "description": "Πολύ γνωστό ιταλικό εστιατόριο στην πλατεία, με πίτσα και μακαρονάδες που είναι πάντα μια ασφαλής και οικονομική επιλογή για οικογένειες.",
+        "map_url": "https://goo.gl/maps/Ln9q84ykYz1PF6eW9"
+      },
+      "cafe": {
+        "name": "Manufaktura",
+        "description": "Συνδυάζει καλό καφέ και φρέσκα σάντουιτς σε έναν πολύ μοντέρνο χώρο.",
+        "map_url": "https://goo.gl/maps/NmNcJ29RY9YLKuvf7"
+      }
     },
     {
       "id": 7,
@@ -344,7 +384,17 @@
       ],
       "duration_hours": 1,
       "best_time": "any",
-      "emoji": "📚"
+      "emoji": "📚",
+      "restaurant": {
+        "name": "Lacrimi și Sfinți",
+        "description": "Δημιουργική ρουμάνικη κουζίνα με παραδοσιακά υλικά, σε έναν χώρο διακοσμημένο με ξύλινα γλυπτά που θα ενθουσιάσουν τα παιδιά.",
+        "map_url": "https://goo.gl/maps/54Rau6fZRe3NR5p6A"
+      },
+      "cafe": {
+        "name": "Grand Cafe Van Gogh",
+        "description": "Ένα εμβληματικό καφέ με μεγάλους πίνακες και άνετα καθίσματα, ιδανικό για ένα χαλαρό απόγευμα στην Παλιά Πόλη.",
+        "map_url": "https://goo.gl/maps/w2CgoQvruq5H8dUQ8"
+      }
     },
     {
       "id": 8,
@@ -390,7 +440,17 @@
       ],
       "duration_hours": 2,
       "best_time": "afternoon",
-      "emoji": "🏘️"
+      "emoji": "🏘️",
+      "restaurant": {
+        "name": "Hanu' lui Manuc",
+        "description": "Το παλαιότερο πανδοχείο της Ευρώπης. Έχει μια τεράστια εσωτερική αυλή που είναι ασφαλής για τα παιδιά και προσφέρει παραδοσιακό φαγητό σε καλές τιμές.",
+        "map_url": "https://goo.gl/maps/LV2SUL8ehzfif4no7"
+      },
+      "cafe": {
+        "name": "Arcade Cafe",
+        "description": "Πολύ ζεστό περιβάλλον στον κεντρικό πεζόδρομο, ιδανικό για να ξεκουραστείτε από το περπάτημα.",
+        "map_url": "https://goo.gl/maps/MmUxJqGVzB5f8qkTA"
+      }
     },
     {
       "id": 9,
@@ -436,7 +496,17 @@
       ],
       "duration_hours": 1.5,
       "best_time": "any",
-      "emoji": "🌳"
+      "emoji": "🌳",
+      "restaurant": {
+        "name": "Pane & Pomodoro",
+        "description": "Αυθεντική ιταλική πίτσα με λεπτή ζύμη, πολύ γρήγορη εξυπηρέτηση και τιμές που δεν \"πονάνε\".",
+        "map_url": "https://goo.gl/maps/YpY9LpduDxT9CZZP6"
+      },
+      "cafe": {
+        "name": "Artichoke Coffee Shop",
+        "description": "Βρίσκεται ακριβώς δίπλα στην εκκλησία Kretzulescu, προσφέροντας υπέροχη θέα και πολύ ποιοτικό καφέ.",
+        "map_url": "https://goo.gl/maps/Pv9BqrzZZhLMy7p78"
+      }
     },
     {
       "id": 10,
@@ -484,7 +554,17 @@
       ],
       "duration_hours": 2,
       "best_time": "any",
-      "emoji": "🦕"
+      "emoji": "🦕",
+      "restaurant": {
+        "name": "Saint Roastery",
+        "description": "Αν και φημίζεται για τον καφέ του, σερβίρει εξαιρετικό brunch και ελαφριά γεύματα σε πολύ καλές τιμές.",
+        "map_url": "https://goo.gl/maps/nUKLv1pfr9ZULdDn9"
+      },
+      "cafe": {
+        "name": "M60",
+        "description": "Ένας \"σκανδιναβικού\" τύπου χώρος, πολύ άνετος για οικογένειες, με μεγάλους πάγκους και ωραία ατμόσφαιρα.",
+        "map_url": "https://goo.gl/maps/WYPPj9oFfV1k2ToM6"
+      }
     },
     {
       "id": 11,
@@ -673,7 +753,17 @@
       ],
       "duration_hours": 2.5,
       "best_time": "afternoon",
-      "emoji": "🎠"
+      "emoji": "🎠",
+      "restaurant": {
+        "name": "Trattoria Monza",
+        "description": "Οικογενειακή ιταλική τρατορία με πολύ φιλικό προσωπικό και μεγάλες μερίδες ζυμαρικών.",
+        "map_url": "https://goo.gl/maps/jRcKDamdbEX2VfkV6"
+      },
+      "cafe": {
+        "name": "The Coffee Shop Tineretului",
+        "description": "Μια εξαιρετική στάση για καφέ και φρέσκα σνακ πριν ή μετά το παιχνίδι στο πάρκο.",
+        "map_url": "https://goo.gl/maps/4nnhf4XDHCz9gnG18"
+      }
     },
     {
       "id": 15,
@@ -812,7 +902,17 @@
       ],
       "duration_hours": 0.5,
       "best_time": "any",
-      "emoji": "🏗️"
+      "emoji": "🏗️",
+      "restaurant": {
+        "name": "Aubergine Healthy Food",
+        "description": "Δημιουργική κουζίνα με πολλές υγιεινές επιλογές και πολύχρωμα πιάτα που αρέσουν στα παιδιά.",
+        "map_url": "https://goo.gl/maps/u62RB3UmS43zm4HD8"
+      },
+      "cafe": {
+        "name": "Blues Cafe",
+        "description": "Ένα κλασικό σημείο για να καθίσετε και να απολαύσετε την αρχιτεκτονική της στοάς.",
+        "map_url": "https://goo.gl/maps/2h4RFNFe8N3XJy9M9"
+      }
     },
     {
       "id": 18,
