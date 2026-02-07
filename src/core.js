@@ -1632,6 +1632,7 @@ function createDestinationDropdown() {
     <option value="amsterdam">Άμστερνταμ (Ολλανδία)</option>
     <option value="vienna">Βιέννη (Αυστρία)</option>
     <option value="berlin">Βερολίνο (Γερμανία)</option>
+    <option value="bucharest">Βουκουρέστι (Ρουμανία)</option>
     <option value="budapest">Βουδαπέστη (Ουγγαρία)</option>
     <option value="istanbul">Κωνσταντινούπολη (Τουρκία)</option>
     <option value="lisbon">Λισαβόνα (Πορτογαλία)</option>
