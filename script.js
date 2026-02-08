@@ -4375,9 +4375,10 @@ function getCityCoordinates(cityId) {
         'venice': [45.4408, 12.3155],
         'warsaw': [52.2297, 21.0122],
         'krakow': [50.0647, 19.9450],
-        'zurich': [47.3769, 8.5417]
+        'zurich': [47.3769, 8.5417],
+        'bucharest': [44.4268, 26.1025]
     };
-    
+
     if (!coordinates[cityId]) {
         console.error(`❌ Δεν βρέθηκαν συντεταγμένες για πόλη: ${cityId}`);
         return null;
@@ -4682,6 +4683,7 @@ function createDestinationDropdown() {
     <option value="amsterdam">Άμστερνταμ (Ολλανδία)</option>
     <option value="vienna">Βιέννη (Αυστρία)</option>
     <option value="berlin">Βερολίνο (Γερμανία)</option>
+    <option value="bucharest">Βουκουρέστι (Ρουμανία)</option>
     <option value="budapest">Βουδαπέστη (Ουγγαρία)</option>
     <option value="istanbul">Κωνσταντινούπολη (Τουρκία)</option>
     <option value="lisbon">Λισαβόνα (Πορτογαλία)</option>
