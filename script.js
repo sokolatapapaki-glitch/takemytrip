@@ -2278,12 +2278,19 @@ async function filterDestinations() {
             themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
             strollerFriendly: false
         },
-        { 
+        {
             id: 'zurich', name: 'Ζυρίχη', emoji: '🏔️',
             hasJSON: false, distance: 2.5, cost: 'Ακριβό',
             country: 'Ελβετία', vacationType: 'Βουνό',
             themeParks: [], familyScore: 5, hasDisney: false,
             strollerFriendly: true
+        },
+        {
+            id: 'bucharest', name: 'Βουκουρέστι', emoji: '🏛️',
+            hasJSON: true, distance: 1.5, cost: 'Οικονομικό',
+            country: 'Ρουμανία', vacationType: ['Βουνό', 'Φυσική'],
+            themeParks: [], familyScore: 7, hasDisney: false,
+            strollerFriendly: false
         }
     ];
     
