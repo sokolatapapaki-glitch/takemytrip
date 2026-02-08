@@ -4046,79 +4046,34 @@ function addCustomPointToMap(point) {
     // Skip if this custom point is already on the map (tracked via MarkerCache)
     if (MarkerCache.has(point.id)) return;
 
-    // Create marker with custom icon
-    const customIcon = L.divIcon({
-        className: 'custom-marker',
-        html: '<div style="background: #F59E0B; color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3); font-size: 16px;"><i class="fas fa-star"></i></div>',
-        iconSize: [30, 30],
-        iconAnchor: [15, 15]
-    });
+    // Build coords and activity-compatible data so custom points use the
+    // exact same routing pipeline as Step 4 activity markers.
+    const coords = [point.location.lat, point.location.lng];
+    const activityData = {
+        id: point.id,
+        name: point.name,
+        description: 'Προσωπικό σημείο',
+        price: 0,
+        duration_hours: null,
+        category: point.type || 'custom',
+        location: {
+            lat: point.location.lat,
+            lng: point.location.lng
+        },
+        restaurant: null
+    };
 
-    const marker = L.marker([point.location.lat, point.location.lng], {
-        icon: customIcon
-    }).addTo(window.travelMap);
+    // Use the same marker creation function as Step 4 activity points.
+    // This gives the custom point the same click handler (handleMarkerClick),
+    // A/B selection, dashed red route line, route panel, and transport modes.
+    const marker = createMarkerWithConnectFunction(coords, point.name, activityData);
 
-    // Create popup
-    const popupContent = `
-        <div style="max-width: 250px; font-family: 'Roboto', sans-serif; padding: 8px;">
-            <h4 style="margin: 0 0 8px 0; color: #F59E0B; font-size: 16px; font-weight: 700;">
-                <i class="fas fa-star" style="margin-right: 8px;"></i>
-                ${point.name}
-            </h4>
-            <div style="font-size: 12px; color: #6B7280; background: #FEF3C7; padding: 6px; border-radius: 4px; margin: 8px 0;">
-                <i class="fas fa-info-circle" style="margin-right: 4px;"></i>
-                Προσωπικό σημείο
-            </div>
-            ${point.location.displayName ? `
-                <div style="font-size: 11px; color: #9CA3AF; margin-top: 6px;">
-                    ${point.location.displayName}
-                </div>
-            ` : ''}
-            <a href="https://www.google.com/maps/search/?api=1&query=${point.location.lat},${point.location.lng}"
-               target="_blank"
-               rel="noopener"
-               style="display: inline-flex; align-items: center; padding: 6px 10px; background: #F59E0B; color: white; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: 600; margin-top: 10px;">
-                <i class="fas fa-external-link-alt" style="margin-right: 6px;"></i>
-                Google Maps
-            </a>
-        </div>
-    `;
-
-    marker.bindPopup(popupContent);
-    // 🔴 ΑΛΛΑΓΗ 7: ΠΡΟΣΘΗΚΗ ΤΑΜΠΕΛΑΚΙΟΥ ΓΙΑ ΠΡΟΣΩΠΙΚΑ ΣΗΜΕΙΑ
-    const label = L.marker([point.location.lat, point.location.lng], {
-        icon: L.divIcon({
-            html: `
-                <div style="
-                    background: #F59E0B;
-                    color: white;
-                    padding: 4px 12px;
-                    border-radius: 12px;
-                    font-size: 11px;
-                    font-weight: 600;
-                    border: 1px solid white;
-                    white-space: nowrap;
-                    max-width: 150px;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-                    font-family: 'Roboto', sans-serif;
-                ">
-                    ${point.name.length > 25 ? point.name.substring(0, 25) + '...' : point.name}
-                </div>
-            `,
-            className: 'custom-point-label',
-            iconSize: [120, 28],
-            iconAnchor: [60, -18]
-        })
-    }).addTo(window.travelMap);
-    
-    // Σύνδεση label με το marker για cleanup
-    marker.options.label = label;
-
-    // Track in MarkerCache so clearMapPoints() removes it properly
-    MarkerCache.addOrUpdate(point.id, marker);
-    console.log(`📍 Added custom point to map: ${point.name}`);
+    if (marker) {
+        // Track in MarkerCache so clearMapPoints() removes it properly
+        MarkerCache.addOrUpdate(point.id, marker);
+        window.selectedMarkers.push(marker);  // Backward compatibility
+        console.log(`📍 Added custom point to map: ${point.name}`);
+    }
 }
 
 // ==================== ENHANCED MAP FUNCTIONS (FROM OLD MAP) ====================
