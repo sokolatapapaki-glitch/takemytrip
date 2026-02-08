@@ -331,14 +331,14 @@
       "best_time": "evening",
       "emoji": "⛲",
       "restaurant": {
-        "name": "Horoscop",
-        "description": "Πολύ γνωστό ιταλικό εστιατόριο στην πλατεία, με πίτσα και μακαρονάδες που είναι πάντα μια ασφαλής και οικονομική επιλογή για οικογένειες.",
-        "map_url": "https://goo.gl/maps/Ln9q84ykYz1PF6eW9"
+        "name": "Trattoria L'Oroscopo",
+        "description": "Πολύ γνωστό ιταλικό εστιατόριο στην πλατεία, με πίτσα και μακαρονάδες.",
+        "map_url": "https://maps.app.goo.gl/2ZegvqmCzucPqX7K7"
       },
       "cafe": {
-        "name": "Manufaktura",
-        "description": "Συνδυάζει καλό καφέ και φρέσκα σάντουιτς σε έναν πολύ μοντέρνο χώρο.",
-        "map_url": "https://goo.gl/maps/NmNcJ29RY9YLKuvf7"
+        "name": "Arcade Cafe",
+        "description": "Είναι ένας ζωντανός χώρος με ωραία ατμόσφαιρα και πολύ καλή βαθμολογία",
+        "map_url": "https://maps.app.goo.gl/jmHA9VHc4ob3Hpme8"
       }
     },
     {
@@ -450,9 +450,9 @@
         "map_url": "https://maps.app.goo.gl/yhPBZLLk8qLpkxLH9"
       },
       "cafe": {
-        "name": "Arcade Cafe",
-        "description": "Πολύ ζεστό περιβάλλον στον κεντρικό πεζόδρομο.",
-        "map_url": "https://goo.gl/maps/MmUxJqGVzB5f8qkTA"
+       "name": "Arcade Cafe",
+        "description": "Είναι ένας ζωντανός χώρος με ωραία ατμόσφαιρα και πολύ καλή βαθμολογία",
+        "map_url": "https://maps.app.goo.gl/jmHA9VHc4ob3Hpme8"
       }
     },
     {
@@ -970,8 +970,8 @@
       },
       "cafe": {
         "name": "Arcade Cafe",
-        "description": "Πολύ ζεστό περιβάλλον στον κεντρικό πεζόδρομο.",
-        "map_url": "https://goo.gl/maps/MmUxJqGVzB5f8qkTA"
+        "description": "Είναι ένας ζωντανός χώρος με ωραία ατμόσφαιρα και πολύ καλή βαθμολογία",
+        "map_url": "https://maps.app.goo.gl/jmHA9VHc4ob3Hpme8"
       }
     },
     {
