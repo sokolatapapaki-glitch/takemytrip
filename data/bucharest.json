@@ -561,12 +561,12 @@
       "restaurant": {
         "name": "Saint Roastery",
         "description": "Αν και φημίζεται για τον καφέ του, σερβίρει εξαιρετικό brunch και ελαφριά γεύματα σε πολύ καλές τιμές.",
-        "map_url": "https://goo.gl/maps/nUKLv1pfr9ZULdDn9"
+        "map_url": "https://maps.app.goo.gl/kLDQAaAXvcFiLNkv6"
       },
       "cafe": {
-        "name": "M60",
-        "description": "Ένας \"σκανδιναβικού\" τύπου χώρος, πολύ άνετος για οικογένειες, με μεγάλους πάγκους και ωραία ατμόσφαιρα.",
-        "map_url": "https://goo.gl/maps/WYPPj9oFfV1k2ToM6"
+        "name": "Saint Roastery",
+        "description": "Αν και φημίζεται για τον καφέ του, σερβίρει εξαιρετικό brunch και ελαφριά γεύματα σε πολύ καλές τιμές.",
+        "map_url": "https://maps.app.goo.gl/kLDQAaAXvcFiLNkv6"
       }
     },
     {
@@ -791,14 +791,14 @@
       "best_time": "afternoon",
       "emoji": "🎠",
       "restaurant": {
-        "name": "Trattoria Monza",
-        "description": "Οικογενειακή ιταλική τρατορία με πολύ φιλικό προσωπικό και μεγάλες μερίδες ζυμαρικών.",
-        "map_url": "https://goo.gl/maps/jRcKDamdbEX2VfkV6"
+        "name": "Botanic Restaurant",
+        "description": "Mια από τις πιο δημοφιλείς επιλογές μέσα στο πάρκο Tineretului (στην πλευρά του Orășelul Copiilor), κυρίως λόγω της προνομιακής του θέσης και της ιδιαίτερης αισθητικής του.",
+        "map_url": "https://maps.app.goo.gl/MDBS4UsRKDvXr1ah7"
       },
       "cafe": {
-        "name": "The Coffee Shop Tineretului",
-        "description": "Μια εξαιρετική στάση για καφέ και φρέσκα σνακ πριν ή μετά το παιχνίδι στο πάρκο.",
-        "map_url": "https://goo.gl/maps/4nnhf4XDHCz9gnG18"
+        "name": "Wine & Coffee Beans",
+        "description": "Πρόκειται για μια εξαιρετική επιλογή αν ψάχνετε κάτι ποιοτικό, καθώς έχει πολύ υψηλή βαθμολογία (4.8)",
+        "map_url": "https://maps.app.goo.gl/YRGPJyDpTYQNpr3a6"
       }
     },
     {
