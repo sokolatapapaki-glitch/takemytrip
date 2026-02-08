@@ -616,6 +616,16 @@
       "duration_hours": 1,
       "best_time": "any",
       "emoji": "🎵"
+      "restaurant": {
+        "name": "Casa Românească",
+        "description": "Είναι ένας χώρος με παραδοσιακή διακόσμηση για κλασικές ρουμανικές γεύσεις",
+        "map_url": "https://maps.app.goo.gl/X9kbTxcrmfFJvKam6"
+      },
+      "cafe": {
+        "name": "Cafe Athenee",
+        "description": "Είναι ένας από τους πιο ιστορικούς χώρους της πόλης, ιδανικός για να νιώσετε την ατμόσφαιρα του Μικρού Παρισιού.",
+        "map_url": "https://maps.app.goo.gl/zsgoPLaXoShECj46A"
+      }
     },
     {
       "id": 12,
@@ -664,6 +674,16 @@
       "duration_hours": 1.5,
       "best_time": "evening",
       "emoji": "🔭"
+      "restaurant": {
+        "name": "Trattoria Il Calcio Magheru",
+        "description": "Πρόκειται για ένα από τα πιο γνωστά εστιατόρια της αλυσίδας "Il Calcio" στο Βουκουρέστι με πολυ ωραίες πίτσες και ζυμαρικά",
+        "map_url": "https://maps.app.goo.gl/kucYDQCFqdH1RtjQA"
+      },
+      "cafe": {
+        "name": "Two by Two Espresso Bar",
+        "description": "Είναι ένας μικρός και προσεγμένος χώρος, ιδανικός για να απολαύσετε έναν ποιοτικό εσπρέσο πριν ή μετά την επίσκεψή σας στο Αστεροσκοπείο.",
+        "map_url": "https://maps.app.goo.gl/DGcaEpvwn1o1UErf8"
+      }
     },
     {
       "id": 13,
@@ -712,6 +732,16 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "emoji": "🗼"
+       "restaurant": {
+        "name": "Caru' cu bere",
+        "description": "Είναι ένας χώρος με εντυπωσιακή νεογοτθική αρχιτεκτονική, ξύλινες επενδύσεις και βιτρό, που προσφέρει μια αυθεντική εμπειρία του Βουκουρεστίου του 19ου αιώνα.",
+        "map_url": "https://maps.app.goo.gl/HozS72g3ZqUdLMj6A"
+      },
+      "cafe": {
+        "name": "Petit",
+        "description": "Ένα γοητευτικό καφέ με εξαιρετική ατμόσφαιρα που ταιριάζει απόλυτα με το θέμα του μουσείου.",
+        "map_url": "https://maps.app.goo.gl/WRBmfks4bdLuPzon6"
+      }
     },
     {
       "id": 14,
@@ -818,6 +848,16 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "emoji": "🪐"
+      "restaurant": {
+        "name": "Gattini Pasta 🍝(pasta fresca)",
+        "description": "Είναι το πιο κοντινό εστιατόριο, σε απόσταση περίπου 450-500 μέτρων (περίπου 6-7 λεπτά περπάτημα). Ειδικεύεται στα φρέσκα ζυμαρικά και έχει εξαιρετική βαθμολογία 4.7.",
+        "map_url": "https://maps.app.goo.gl/aysaxbxzG5jMsu9W7"
+      },
+      "cafe": {
+        "name": "Trofic Timpuri Noi",
+        "description": "Μόλις λίγα λεπτά με τα πόδια, προσφέρει ίσως τον καλύτερο εξειδικευμένο καφέ στην περιοχή και εξαιρετικό brunch",
+        "map_url": "https://maps.app.goo.gl/jjDxx8jTJFv1TZ5r8"
+      }
     },
     {
       "id": 16,
@@ -865,6 +905,16 @@
       "duration_hours": 0.5,
       "best_time": "any",
       "emoji": "🚶"
+      "restaurant": {
+        "name": "The Lobby",
+        "description": "Ένα πολύ κομψό εστιατόριο με εξαιρετική βαθμολογία (4.8), ιδανικό για ένα πιο προσεγμένο γεύμα ή δείπνο",
+        "map_url": "https://maps.app.goo.gl/j6K3UMAsyXUZYMy69"
+      },
+      "cafe": {
+        "name": "Artichoke",
+        "description": "Διαθέτει μια πολύ όμορφη, σκιερή βεράντα κάτω από τις στοές, ακριβώς δίπλα στην ιστορική εκκλησία Kretzulescu. Η αισθητική του είναι μινιμαλιστική και γεμάτη φυτά.",
+        "map_url": "https://maps.app.goo.gl/TrAtPyAMYWNy9NrC8"
+      }
     },
     {
       "id": 17,
@@ -974,6 +1024,16 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "emoji": "👁️"
+       "restaurant": {
+        "name": "Dristor Doner Kebap",
+        "description": "Ίσως το πιο διάσημο κεμπάπ στο Βουκουρέστι. Είναι πολύ χορταστικό, γρήγορο και οικονομικό.",
+        "map_url": "https://maps.app.goo.gl/cf2vzyMiHqhdUY337"
+      },
+      "cafe": {
+        "name": "Tucano Coffee Madagascar – AFI Park 4&5 București",
+        "description": "Είναι ένας πολύ ιδιαίτερος χώρος με ethnic διακόσμηση, γνωστός για τον ποιοτικό καφέ του και τα εξαιρετικά cheesecake.",
+        "map_url": "https://maps.app.goo.gl/caQPrDSWnUixYngn8"
+      }
     }
   ]
 }
