@@ -227,7 +227,7 @@
         "map_url": "https://maps.app.goo.gl/waojJShjCaURNS5a7"
       }
     },
-    {
+       {
       "id": 5,
       "name": "Izvor Park (παιδική χαρά)",
       "description": "Μεγάλο πάρκο με παιδική χαρά δίπλα στο Παλάτι του Κοινοβουλίου.",
@@ -273,7 +273,8 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "emoji": "🛝",
-       "name": "Stadio Unirii",
+      "restaurant": {
+        "name": "Stadio Unirii",
         "description": "Παραμένει μια από τις πιο κοντινές και ποιοτικές επιλογές, καθώς απέχει μόλις 10-11 λεπτά με τα πόδια (περίπου 800 μέτρα) από την είσοδο του Παλατιού.",
         "map_url": "https://maps.app.goo.gl/upFUY7zPGBo4XkSm8"
       },
