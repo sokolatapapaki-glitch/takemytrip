@@ -1,0 +1,1040 @@
+{
+  "city": "Βουκουρέστι",
+  "country": "Ρουμανία",
+  "currency": "EUR",
+  "emoji": "🏛️",
+  "pricing_model": "per_age",
+  "description": "Το Παρίσι της Ανατολής",
+  "location": {
+    "lat": 44.4268,
+    "lng": 26.1025
+  },
+  "activities": [
+    {
+      "id": 1,
+      "name": "Village Museum (Muzeul Satului)",
+      "description": "Ένα από τα μεγαλύτερα υπαίθρια μουσεία στην Ευρώπη, με αυθεντικά σπίτια και κτίρια από όλη τη Ρουμανία.",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 1.96,
+        "8": 1.96,
+        "9": 1.96,
+        "10": 1.96,
+        "11": 1.96,
+        "12": 1.96,
+        "13": 1.96,
+        "14": 1.96,
+        "15": 1.96,
+        "16": 1.96,
+        "17": 1.96,
+        "18": 1.96,
+        "19": 7.85,
+        "adult": 7.85
+      },
+      "location": {
+        "lat": 44.4726,
+        "lng": 26.0764
+      },
+      "website": "https://muzeul-satului.ro/",
+      "notes": [
+        "0-6 ετών: δωρεάν",
+        "7-18 ετών: 1,96€ (student discount with proof of enrollment)",
+        "19+ ετών: 7,85€"
+      ],
+      "tags": [
+        "museum",
+        "outdoor",
+        "culture",
+        "traditional",
+        "village"
+      ],
+      "duration_hours": 2.5,
+      "best_time": "morning",
+      "emoji": "🏘️",
+      "restaurant": {
+        "name": "Beraria H Herastrau",
+        "description": "Βρίσκεται ακριβώς δίπλα στη λίμνη Herastrau. Είναι τεράστιο, πολύ φιλικό για οικογένειες και έχει γρήγορο φαγητό (burgers, σνίτσελ).",
+        "map_url": "https://maps.app.goo.gl/QyPiYFVBLmtohmm3A"
+      },
+      "cafe": {
+        "name": "City Grill Primăverii",
+        "description": "Ιδανικό για καφέ με θέα το πράσινο, ακριβώς στην έξοδο του μουσείου προς το πάρκο.",
+        "map_url": "https://maps.app.goo.gl/jx12cq43mcXAuL3D6"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Edenland Park",
+      "description": "Πάρκο περιπέτειας με δραστηριότητες στη φύση για όλη την οικογένεια.",
+      "category": "park",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 5,
+        "5": 5,
+        "6": 5,
+        "7": 5,
+        "8": 5,
+        "9": 5,
+        "10": 5,
+        "11": 5,
+        "12": 5,
+        "13": 5,
+        "14": 5,
+        "15": 5,
+        "16": 5,
+        "17": 5,
+        "18": 5,
+        "19": 5,
+        "adult": 5
+      },
+      "location": {
+        "lat": 44.5891,
+        "lng": 25.8752
+      },
+      "website": "https://edenland.ro/",
+      "notes": [
+        "0-3 ετών: δωρεάν",
+        "4+ ετών: 5€",
+        "Οι δραστηριότητες εντός του πάρκου χρεώνονται ξεχωριστά"
+      ],
+      "tags": [
+        "park",
+        "adventure",
+        "outdoor",
+        "family",
+        "nature"
+      ],
+      "duration_hours": 4,
+      "best_time": "morning",
+      "emoji": "🌲"
+    },
+    {
+      "id": 3,
+      "name": "Therme Bucharest (4.5 ώρες)",
+      "description": "Ένα από τα μεγαλύτερα κέντρα spa στην Ευρώπη.",
+      "category": "experience",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 17,
+        "4": 17,
+        "5": 17,
+        "6": 17,
+        "7": 17,
+        "8": 17,
+        "9": 17,
+        "10": 17,
+        "11": 17,
+        "12": 17,
+        "13": 17,
+        "14": 17,
+        "15": 20,
+        "16": 20,
+        "17": 20,
+        "18": 20,
+        "19": 20,
+        "adult": 20
+      },
+      "location": {
+        "lat": 44.5225,
+        "lng": 26.1127
+      },
+      "website": "https://therme.ro/",
+      "notes": [
+        "0-2 ετών: δωρεάν",
+        "3-14 ετών: 17€",
+        "15+ ετών: 20€",
+        "Οι τιμές ισχύουν για καθημερινές εκτός αργιών, για τη ζώνη Galaxy. Άλλες ζώνες ή διάρκειες μπορεί να διαφέρουν, ελέγξτε την επίσημη ιστοσελίδα"
+      ],
+      "tags": [
+        "spa",
+        "waterpark",
+        "relaxation",
+        "family",
+        "thermal"
+      ],
+      "duration_hours": 4.5,
+      "best_time": "any",
+      "emoji": "♨️"
+    },
+    {
+      "id": 4,
+      "name": "Παλάτι του Κοινοβουλίου (Σπίτι του Λαού)",
+      "description": "Το δεύτερο μεγαλύτερο διοικητικό κτίριο στον κόσμο μετά το Πεντάγωνο.",
+      "category": "palace",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 8,
+        "8": 8,
+        "9": 8,
+        "10": 8,
+        "11": 8,
+        "12": 8,
+        "13": 8,
+        "14": 8,
+        "15": 8,
+        "16": 8,
+        "17": 8,
+        "18": 8,
+        "19": 17,
+        "adult": 17
+      },
+      "location": {
+        "lat": 44.4275,
+        "lng": 26.0877
+      },
+      "website": "https://cic.cdep.ro/",
+      "notes": [
+        "0-6 ετών: δωρεάν",
+        "7-18 ετών: 8€",
+        "19+ ετών: 17€"
+      ],
+      "tags": [
+        "palace",
+        "historic",
+        "architecture",
+        "landmark",
+        "top"
+      ],
+      "duration_hours": 2,
+      "best_time": "morning",
+      "emoji": "🏛️",
+      "restaurant": {
+        "name": "Stadio Unirii",
+        "description": "Παραμένει μια από τις πιο κοντινές και ποιοτικές επιλογές, καθώς απέχει μόλις 10-11 λεπτά με τα πόδια (περίπου 800 μέτρα) από την είσοδο του Παλατιού.",
+        "map_url": "https://maps.app.goo.gl/upFUY7zPGBo4XkSm8"
+      },
+      "cafe": {
+        "name": "Tucano Coffee Bogota - Piața Kogălniceanu, București",
+        "description": "Το Tucano είναι ιδανικό αν προτιμάτε κάτι πιο casual στην περιοχή του πάρκου Izvor.",
+        "map_url": "https://maps.app.goo.gl/waojJShjCaURNS5a7"
+      }
+    },
+       {
+      "id": 5,
+      "name": "Izvor Park (παιδική χαρά)",
+      "description": "Μεγάλο πάρκο με παιδική χαρά δίπλα στο Παλάτι του Κοινοβουλίου.",
+      "category": "park",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 44.4305,
+        "lng": 26.0838
+      },
+      "website": "https://visitbucharest.today/izvor-park/",
+      "notes": [
+        "Δωρεάν είσοδος"
+      ],
+      "tags": [
+        "park",
+        "playground",
+        "free",
+        "outdoor",
+        "family"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "any",
+      "emoji": "🛝",
+      "restaurant": {
+        "name": "Stadio Unirii",
+        "description": "Παραμένει μια από τις πιο κοντινές και ποιοτικές επιλογές, καθώς απέχει μόλις 10-11 λεπτά με τα πόδια (περίπου 800 μέτρα) από την είσοδο του Παλατιού.",
+        "map_url": "https://maps.app.goo.gl/upFUY7zPGBo4XkSm8"
+      },
+      "cafe": {
+        "name": "Tucano Coffee Bogota - Piața Kogălniceanu, București",
+        "description": "Το Tucano είναι ιδανικό αν προτιμάτε κάτι πιο casual στην περιοχή του πάρκου Izvor.",
+        "map_url": "https://maps.app.goo.gl/waojJShjCaURNS5a7"
+      }
+    },
+    {
+      "id": 6,
+      "name": "Σιντριβάνια της Piata Unirii (Symphony of Water)",
+      "description": "Εντυπωσιακό σιντριβάνι με φωτισμό και μουσική στην πλατεία Unirii.",
+      "category": "landmark",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 44.4268,
+        "lng": 26.1025
+      },
+      "website": "https://visitbucharest.today/downtown-bucharest-fountains/",
+      "notes": [
+        "Δωρεάν είσοδος"
+      ],
+      "tags": [
+        "landmark",
+        "fountain",
+        "free",
+        "evening",
+        "lights"
+      ],
+      "duration_hours": 1,
+      "best_time": "evening",
+      "emoji": "⛲",
+      "restaurant": {
+        "name": "Horoscop",
+        "description": "Πολύ γνωστό ιταλικό εστιατόριο στην πλατεία, με πίτσα και μακαρονάδες που είναι πάντα μια ασφαλής και οικονομική επιλογή για οικογένειες.",
+        "map_url": "https://goo.gl/maps/Ln9q84ykYz1PF6eW9"
+      },
+      "cafe": {
+        "name": "Manufaktura",
+        "description": "Συνδυάζει καλό καφέ και φρέσκα σάντουιτς σε έναν πολύ μοντέρνο χώρο.",
+        "map_url": "https://goo.gl/maps/NmNcJ29RY9YLKuvf7"
+      }
+    },
+    {
+      "id": 7,
+      "name": "Carturesti Carusel",
+      "description": "Ένα από τα πιο όμορφα βιβλιοπωλεία στον κόσμο, σε ανακαινισμένο ιστορικό κτίριο.",
+      "category": "landmark",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 44.4318,
+        "lng": 26.0996
+      },
+      "website": "https://carturesti.ro/",
+      "notes": [
+        "Δωρεάν είσοδος"
+      ],
+      "tags": [
+        "landmark",
+        "bookstore",
+        "free",
+        "architecture",
+        "culture"
+      ],
+      "duration_hours": 1,
+      "best_time": "any",
+      "emoji": "📚",
+      "restaurant": {
+        "name": "Lacrimi și Sfinți",
+        "description": "Δημιουργική ρουμάνικη κουζίνα με παραδοσιακά υλικά, σε έναν χώρο διακοσμημένο με ξύλινα γλυπτά που θα ενθουσιάσουν τα παιδιά.",
+        "map_url": "https://maps.app.goo.gl/Xkd1dCr8PqzE8edk6"
+      },
+      "cafe": {
+        "name": "Grand Cafe Van Gogh",
+        "description": "Ένα εμβληματικό καφέ με μεγάλους πίνακες του διάσημου ζωγράφου. Προσοχή, θέλει κράτηση αλλιώς έχει αναμονή.",
+        "map_url": "https://maps.app.goo.gl/TbnK7yfuoYsN2QUK9"
+      }
+    },
+    {
+      "id": 8,
+      "name": "Παλιά Πόλη Lipscani",
+      "description": "Η ιστορική συνοικία του Βουκουρεστίου με πεζόδρομους, καφέ και ζωντανή ατμόσφαιρα.",
+      "category": "landmark",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 44.4313,
+        "lng": 26.0988
+      },
+      "website": "https://www.tripadvisor.com/Attraction_Review-g294458-d523717-Reviews-Lipscani-Bucharest.html",
+      "notes": [
+        "Δωρεάν είσοδος"
+      ],
+      "tags": [
+        "landmark",
+        "old town",
+        "free",
+        "walking",
+        "nightlife"
+      ],
+      "duration_hours": 2,
+      "best_time": "afternoon",
+      "emoji": "🏘️",
+      "restaurant": {
+        "name": "City Grill Covaci",
+        "description": "Μια ποιοτική επιλογή αν θέλετε να κάνετε μια στάση στην καρδιά της παλιάς πόλης.",
+        "map_url": "https://maps.app.goo.gl/yhPBZLLk8qLpkxLH9"
+      },
+      "cafe": {
+        "name": "Arcade Cafe",
+        "description": "Πολύ ζεστό περιβάλλον στον κεντρικό πεζόδρομο.",
+        "map_url": "https://goo.gl/maps/MmUxJqGVzB5f8qkTA"
+      }
+    },
+    {
+      "id": 9,
+      "name": "Κήπος Cișmigiu",
+      "description": "Ο παλαιότερος και πιο γνωστός δημόσιος κήπος του Βουκουρεστίου.",
+      "category": "park",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 44.4375,
+        "lng": 26.0896
+      },
+      "website": "https://visitbucharest.today/cismigiu-park/",
+      "notes": [
+        "Δωρεάν είσοδος"
+      ],
+      "tags": [
+        "park",
+        "garden",
+        "free",
+        "relaxation",
+        "nature"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "any",
+      "emoji": "🌳",
+      "restaurant": {
+        "name": "MOM Bucharest",
+        "description": "Μοντέρνο και προσιτό για την ποιότητά του",
+        "map_url": "https://maps.app.goo.gl/WhaPreayKvyPukoK7"
+      },
+      "cafe": {
+        "name": "Perfect Simplu Coffee shop Cismigiu",
+        "description": "Έχει την εντυπωσιακή βαθμολογία 4.9/5, κάτι που επιβεβαιώνει ότι είναι μια από τις κορυφαίες επιλογές στην περιοχή για ποιοτικό καφέ.",
+        "map_url": "https://maps.app.goo.gl/tzsebLESip2nrtvU9"
+      }
+    },
+    {
+      "id": 10,
+      "name": "Μουσείο Φυσικής Ιστορίας Grigore Antipa",
+      "description": "Ένα από τα σημαντικότερα μουσεία φυσικής ιστορίας στη Νοτιοανατολική Ευρώπη.",
+      "category": "museum",
+      "prices": {
+        "0": 6.5,
+        "1": 6.5,
+        "2": 6.5,
+        "3": 6.5,
+        "4": 6.5,
+        "5": 6.5,
+        "6": 6.5,
+        "7": 6.5,
+        "8": 6.5,
+        "9": 6.5,
+        "10": 6.5,
+        "11": 6.5,
+        "12": 6.5,
+        "13": 6.5,
+        "14": 6.5,
+        "15": 6.5,
+        "16": 6.5,
+        "17": 6.5,
+        "18": 6.5,
+        "19": 6.5,
+        "adult": 6.5
+      },
+      "location": {
+        "lat": 44.4530,
+        "lng": 26.0785
+      },
+      "website": "https://www.antipa.ro/",
+      "notes": [
+        "6,5€ για όλους",
+        "Υπάρχει φοιτητικό εισιτήριο (student ticket available)"
+      ],
+      "tags": [
+        "museum",
+        "natural history",
+        "science",
+        "family",
+        "interactive"
+      ],
+      "duration_hours": 2,
+      "best_time": "any",
+      "emoji": "🦕",
+      "restaurant": {
+        "name": "Saint Roastery",
+        "description": "Αν και φημίζεται για τον καφέ του, σερβίρει εξαιρετικό brunch και ελαφριά γεύματα σε πολύ καλές τιμές.",
+        "map_url": "https://maps.app.goo.gl/kLDQAaAXvcFiLNkv6"
+      },
+      "cafe": {
+        "name": "Saint Roastery",
+        "description": "Αν και φημίζεται για τον καφέ του, σερβίρει εξαιρετικό brunch και ελαφριά γεύματα σε πολύ καλές τιμές.",
+        "map_url": "https://maps.app.goo.gl/kLDQAaAXvcFiLNkv6"
+      }
+    },
+    {
+      "id": 11,
+      "name": "Romanian Athenaeum (Ateneul Român)",
+      "description": "Εμβληματικό νεοκλασικό κτίριο και κύρια αίθουσα συναυλιών του Βουκουρεστίου.",
+      "category": "landmark",
+      "prices": {
+        "0": 3,
+        "1": 3,
+        "2": 3,
+        "3": 3,
+        "4": 3,
+        "5": 3,
+        "6": 3,
+        "7": 3,
+        "8": 3,
+        "9": 3,
+        "10": 3,
+        "11": 3,
+        "12": 3,
+        "13": 3,
+        "14": 3,
+        "15": 3,
+        "16": 3,
+        "17": 3,
+        "18": 3,
+        "19": 3,
+        "adult": 3
+      },
+      "location": {
+        "lat": 44.4413,
+        "lng": 26.0972
+      },
+      "website": "https://www.fge.org.ro/",
+      "notes": [
+        "3€ για όλους",
+        "Οι τιμές των συναυλιών διαφέρουν (concert prices differ)"
+      ],
+      "tags": [
+        "landmark",
+        "concert hall",
+        "architecture",
+        "culture",
+        "neoclassical"
+      ],
+      "duration_hours": 1,
+      "best_time": "any",
+      "emoji": "🎵",
+      "restaurant": {
+        "name": "Casa Românească",
+        "description": "Είναι ένας χώρος με παραδοσιακή διακόσμηση για κλασικές ρουμανικές γεύσεις",
+        "map_url": "https://maps.app.goo.gl/X9kbTxcrmfFJvKam6"
+      },
+      "cafe": {
+        "name": "Cafe Athenee",
+        "description": "Είναι ένας από τους πιο ιστορικούς χώρους της πόλης, ιδανικός για να νιώσετε την ατμόσφαιρα του Μικρού Παρισιού.",
+        "map_url": "https://maps.app.goo.gl/zsgoPLaXoShECj46A"
+      }
+    },
+    {
+      "id": 12,
+      "name": "Αστεροσκοπείο Admiral Vasile Urseanu",
+      "description": "Ιστορικό αστεροσκοπείο στο κέντρο του Βουκουρεστίου.",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 4,
+        "9": 4,
+        "10": 4,
+        "11": 4,
+        "12": 4,
+        "13": 4,
+        "14": 4,
+        "15": 4,
+        "16": 4,
+        "17": 4,
+        "18": 4,
+        "19": 4,
+        "adult": 4
+      },
+      "location": {
+        "lat": 44.4390,
+        "lng": 26.0890
+      },
+       "website": "https://astro-urseanu.ro/",
+      "notes": [
+        "0-7 ετών: δωρεάν",
+        "8+ ετών: 4€"
+      ],
+      "tags": [
+        "museum",
+        "astronomy",
+        "science",
+        "observatory",
+        "family"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "evening",
+      "emoji": "🔭",
+      "restaurant": {
+        "name": "Trattoria Il Calcio Magheru",
+        "description": "Πρόκειται για ένα από τα πιο γνωστά εστιατόρια της αλυσίδας Il Calcio στο Βουκουρέστι με πολυ ωραίες πίτσες και ζυμαρικά",
+        "map_url": "https://maps.app.goo.gl/kucYDQCFqdH1RtjQA"
+      },
+      "cafe": {
+        "name": "Two by Two Espresso Bar",
+        "description": "Είναι ένας μικρός και προσεγμένος χώρος, ιδανικός για να απολαύσετε έναν ποιοτικό εσπρέσο πριν ή μετά την επίσκεψή σας στο Αστεροσκοπείο.",
+        "map_url": "https://maps.app.goo.gl/DGcaEpvwn1o1UErf8"
+      }
+    },
+    {
+      "id": 13,
+      "name": "Muzeul Micul Paris",
+      "description": "Μουσείο αφιερωμένο στην ιστορία του Βουκουρεστίου ως «Μικρό Παρίσι» της Ανατολής.",
+      "category": "museum",
+      "prices": {
+        "0": 3,
+        "1": 3,
+        "2": 3,
+        "3": 3,
+        "4": 3,
+        "5": 3,
+        "6": 3,
+        "7": 3,
+        "8": 3,
+        "9": 3,
+        "10": 3,
+        "11": 3,
+        "12": 3,
+        "13": 3,
+        "14": 3,
+        "15": 3,
+        "16": 3,
+        "17": 3,
+        "18": 3,
+        "19": 5,
+        "adult": 5
+      },
+      "location": {
+        "lat": 44.4310,
+        "lng": 26.0970
+      },
+       "website": "https://visitbucharest.today/little-paris-museum/",
+      "notes": [
+        "0-18 ετών: 3€",
+        "19+ ετών: 5€"
+      ],
+      "tags": [
+        "museum",
+        "history",
+        "culture",
+        "city",
+        "heritage"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "any",
+      "emoji": "🗼",
+       "restaurant": {
+        "name": "Caru' cu bere",
+        "description": "Είναι ένας χώρος με εντυπωσιακή νεογοτθική αρχιτεκτονική, ξύλινες επενδύσεις και βιτρό, που προσφέρει μια αυθεντική εμπειρία του Βουκουρεστίου του 19ου αιώνα.",
+        "map_url": "https://maps.app.goo.gl/HozS72g3ZqUdLMj6A"
+      },
+      "cafe": {
+        "name": "Petit",
+        "description": "Ένα γοητευτικό καφέ με εξαιρετική ατμόσφαιρα που ταιριάζει απόλυτα με το θέμα του μουσείου.",
+        "map_url": "https://maps.app.goo.gl/WRBmfks4bdLuPzon6"
+      }
+    },
+    {
+      "id": 14,
+      "name": "Children's Town Bucharest – Orășelul Copiilor (Parcul Tineretului)",
+      "description": "Παιδικό πάρκο ψυχαγωγίας μέσα στο Parcul Tineretului.",
+      "category": "park",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 44.4076,
+        "lng": 26.1044
+      },
+      "website": "https://visitbucharest.today/oraselul-copiilor-park/",
+      "notes": [
+        "Δωρεάν είσοδος",
+        "Κάθε παιχνίδι/βόλτα χρεώνεται ξεχωριστά (each ride is paid separately)"
+      ],
+      "tags": [
+        "park",
+        "playground",
+        "free",
+        "rides",
+        "family"
+      ],
+      "duration_hours": 2.5,
+      "best_time": "afternoon",
+      "emoji": "🎠",
+      "restaurant": {
+        "name": "Botanic Restaurant",
+        "description": "Mια από τις πιο δημοφιλείς επιλογές μέσα στο πάρκο Tineretului (στην πλευρά του Orășelul Copiilor), κυρίως λόγω της προνομιακής του θέσης και της ιδιαίτερης αισθητικής του.",
+        "map_url": "https://maps.app.goo.gl/MDBS4UsRKDvXr1ah7"
+      },
+      "cafe": {
+        "name": "Wine & Coffee Beans",
+        "description": "Πρόκειται για μια εξαιρετική επιλογή αν ψάχνετε κάτι ποιοτικό, καθώς έχει πολύ υψηλή βαθμολογία (4.8)",
+        "map_url": "https://maps.app.goo.gl/YRGPJyDpTYQNpr3a6"
+      }
+    },
+    {
+      "id": 15,
+      "name": "Digital Planetarium",
+      "description": "Ψηφιακό πλανητάριο με εντυπωσιακές προβολές για το διάστημα και τον ουρανό.",
+      "category": "experience",
+      "prices": {
+        "0": 8,
+        "1": 8,
+        "2": 8,
+        "3": 8,
+        "4": 8,
+        "5": 8,
+        "6": 8,
+        "7": 8,
+        "8": 8,
+        "9": 8,
+        "10": 8,
+        "11": 8,
+        "12": 8,
+        "13": 8,
+        "14": 8,
+        "15": 8,
+        "16": 8,
+        "17": 8,
+        "18": 8,
+        "19": 12,
+        "adult": 12
+      },
+      "location": {
+        "lat": 44.4230,
+        "lng": 26.0940
+      },
+       "website": "https://visitbucharest.today/bucharest-digital-planetarium/",
+      "notes": [
+        "0-18 ετών: 8€",
+        "19+ ετών: 12€"
+      ],
+      "tags": [
+        "planetarium",
+        "science",
+        "space",
+        "digital",
+        "family"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "any",
+      "emoji": "🪐",
+      "restaurant": {
+        "name": "Gattini Pasta 🍝(pasta fresca)",
+        "description": "Είναι το πιο κοντινό εστιατόριο, σε απόσταση περίπου 450-500 μέτρων (περίπου 6-7 λεπτά περπάτημα). Ειδικεύεται στα φρέσκα ζυμαρικά και έχει εξαιρετική βαθμολογία 4.7.",
+        "map_url": "https://maps.app.goo.gl/aysaxbxzG5jMsu9W7"
+      },
+      "cafe": {
+        "name": "Trofic Timpuri Noi",
+        "description": "Μόλις λίγα λεπτά με τα πόδια, προσφέρει ίσως τον καλύτερο εξειδικευμένο καφέ στην περιοχή και εξαιρετικό brunch",
+        "map_url": "https://maps.app.goo.gl/jjDxx8jTJFv1TZ5r8"
+      }
+    },
+    {
+      "id": 16,
+      "name": "Pasajul Victoriei",
+      "description": "Ιστορική στοά στο κέντρο του Βουκουρεστίου με εντυπωσιακή αρχιτεκτονική.",
+      "category": "landmark",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 44.4410,
+        "lng": 26.0960
+      },
+      "website": "https://www.tripadvisor.com.gr/Attraction_Review-g294458-d19772503-Reviews-Pasajul_Victoriei-Bucharest.html",
+      "notes": [
+        "Δωρεάν είσοδος"
+      ],
+      "tags": [
+        "landmark",
+        "passage",
+        "free",
+        "architecture",
+        "historic"
+      ],
+      "duration_hours": 0.5,
+      "best_time": "any",
+      "emoji": "🚶",
+      "restaurant": {
+        "name": "The Lobby",
+        "description": "Ένα πολύ κομψό εστιατόριο με εξαιρετική βαθμολογία (4.8), ιδανικό για ένα πιο προσεγμένο γεύμα ή δείπνο",
+        "map_url": "https://maps.app.goo.gl/j6K3UMAsyXUZYMy69"
+      },
+      "cafe": {
+        "name": "Artichoke",
+        "description": "Διαθέτει μια πολύ όμορφη, σκιερή βεράντα κάτω από τις στοές, ακριβώς δίπλα στην ιστορική εκκλησία Kretzulescu. Η αισθητική του είναι μινιμαλιστική και γεμάτη φυτά.",
+        "map_url": "https://maps.app.goo.gl/TrAtPyAMYWNy9NrC8"
+      }
+    },
+    {
+      "id": 17,
+      "name": "Pasajul Macca-Vilacrosse",
+      "description": "Μοναδική στοά σε σχήμα πιρουνιού με κίτρινα τζάμια, γεμάτη καφέ και μπαρ.",
+      "category": "landmark",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 44.4335,
+        "lng": 26.0975
+      },
+      "website": "https://visitbucharest.today/macca-villacrosse-passage/",
+      "notes": [
+        "Δωρεάν είσοδος"
+      ],
+      "tags": [
+        "landmark",
+        "passage",
+        "free",
+        "architecture",
+        "cafe"
+      ],
+      "duration_hours": 0.5,
+      "best_time": "any",
+      "emoji": "🏛️",
+       "restaurant": {
+        "name": "City Grill Covaci",
+        "description": "Μια ποιοτική επιλογή αν θέλετε να κάνετε μια στάση στην καρδιά της παλιάς πόλης.",
+        "map_url": "https://maps.app.goo.gl/yhPBZLLk8qLpkxLH9"
+      },
+      "cafe": {
+        "name": "Arcade Cafe",
+        "description": "Πολύ ζεστό περιβάλλον στον κεντρικό πεζόδρομο.",
+        "map_url": "https://goo.gl/maps/MmUxJqGVzB5f8qkTA"
+      }
+    },
+    {
+      "id": 18,
+      "name": "Museum of Senses",
+      "description": "Διαδραστικό μουσείο αισθήσεων με οπτικές ψευδαισθήσεις και εκπλήξεις.",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 8,
+        "4": 8,
+        "5": 8,
+        "6": 8,
+        "7": 8,
+        "8": 8,
+        "9": 8,
+        "10": 8,
+        "11": 8,
+        "12": 8,
+        "13": 8,
+        "14": 8,
+        "15": 8,
+        "16": 11,
+        "17": 11,
+        "18": 11,
+        "19": 11,
+        "adult": 11
+      },
+      "location": {
+        "lat": 44.4308,
+        "lng": 26.0525
+      },
+      "website": "https://www.museumofsenses.ro/",
+      "notes": [
+        "0-2 ετών: δωρεάν",
+        "3-15 ετών: 8€",
+        "16+ ετών: 11€",
+        "Οικογενειακό εισιτήριο: 2 ενήλικες + 2 παιδιά ≤15 ετών: 32€",
+        "Οικογενειακό εισιτήριο: 2 ενήλικες + 1 παιδί ≤15 ετών: 28€",
+        "Οι τιμές ισχύουν για καθημερινές, τα Σαββατοκύριακα διαφέρουν, ελέγξτε την επίσημη ιστοσελίδα"
+      ],
+      "tags": [
+        "museum",
+        "interactive",
+        "senses",
+        "illusions",
+        "family"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "any",
+      "emoji": "👁️",
+       "restaurant": {
+        "name": "Dristor Doner Kebap",
+        "description": "Ίσως το πιο διάσημο κεμπάπ στο Βουκουρέστι. Είναι πολύ χορταστικό, γρήγορο και οικονομικό.",
+        "map_url": "https://maps.app.goo.gl/cf2vzyMiHqhdUY337"
+      },
+      "cafe": {
+        "name": "Tucano Coffee Madagascar – AFI Park 4&5 București",
+        "description": "Είναι ένας πολύ ιδιαίτερος χώρος με ethnic διακόσμηση, γνωστός για τον ποιοτικό καφέ του και τα εξαιρετικά cheesecake.",
+        "map_url": "https://maps.app.goo.gl/caQPrDSWnUixYngn8"
+      }
+    }
+  ]
+}
