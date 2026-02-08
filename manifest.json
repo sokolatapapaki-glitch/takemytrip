@@ -3,15 +3,6 @@
   "name": "Οικογενειακός Οργανωτής Ταξιδιού",
   "short_name": "TravelPlanner",
   "description": "Πλάνο ταξιδιού για οικογένειες με χάρτες και δραστηριότητες",
-  "start_url": "./",
-  "background_color": "#f0f8ff",
-  "theme_color": "#3eb489",
-  "display": "standalone",
-  "icons": [
-    {
-      "src": "https://cdn-icons-png.flaticon.com/512/2983/2983787.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    }
-  ]
+  "display": "browser",
+  "icons": []
 }
