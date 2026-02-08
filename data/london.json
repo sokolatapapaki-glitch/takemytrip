@@ -189,9 +189,9 @@
         "lng": -0.1764
       },
       "restaurant": {
-        "name": "Tangerine Cafe",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Tangerine+Cafe+Natural+History+Museum"
+        "name": "T. Rex Restaurant",
+        "description": "Βurgers, σαλάτες και πίτσες ψημένες σε πέτρινο φούρνο",
+        "map_url": "https://maps.app.goo.gl/Af3CuWWAh3Z4GXUh9"
       },
       "restaurantType": "cafe",
       "restaurantDistance": 0,
