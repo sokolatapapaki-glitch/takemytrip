@@ -116,7 +116,7 @@
       ],
       "duration_hours": 4,
       "best_time": "morning",
-      "emoji": "🌲"
+      "emoji": "🌲",
     },
     {
       "id": 3,
@@ -166,7 +166,7 @@
       ],
       "duration_hours": 4.5,
       "best_time": "any",
-      "emoji": "♨️"
+      "emoji": "♨️",
     },
     {
       "id": 4,
@@ -615,7 +615,7 @@
       ],
       "duration_hours": 1,
       "best_time": "any",
-      "emoji": "🎵"
+      "emoji": "🎵",
       "restaurant": {
         "name": "Casa Românească",
         "description": "Είναι ένας χώρος με παραδοσιακή διακόσμηση για κλασικές ρουμανικές γεύσεις",
@@ -673,10 +673,10 @@
       ],
       "duration_hours": 1.5,
       "best_time": "evening",
-      "emoji": "🔭"
+      "emoji": "🔭",
       "restaurant": {
         "name": "Trattoria Il Calcio Magheru",
-        "description": "Πρόκειται για ένα από τα πιο γνωστά εστιατόρια της αλυσίδας "Il Calcio" στο Βουκουρέστι με πολυ ωραίες πίτσες και ζυμαρικά",
+        "description": "Πρόκειται για ένα από τα πιο γνωστά εστιατόρια της αλυσίδας Il Calcio στο Βουκουρέστι με πολυ ωραίες πίτσες και ζυμαρικά",
         "map_url": "https://maps.app.goo.gl/kucYDQCFqdH1RtjQA"
       },
       "cafe": {
@@ -731,7 +731,7 @@
       ],
       "duration_hours": 1.5,
       "best_time": "any",
-      "emoji": "🗼"
+      "emoji": "🗼",
        "restaurant": {
         "name": "Caru' cu bere",
         "description": "Είναι ένας χώρος με εντυπωσιακή νεογοτθική αρχιτεκτονική, ξύλινες επενδύσεις και βιτρό, που προσφέρει μια αυθεντική εμπειρία του Βουκουρεστίου του 19ου αιώνα.",
@@ -847,7 +847,7 @@
       ],
       "duration_hours": 1.5,
       "best_time": "any",
-      "emoji": "🪐"
+      "emoji": "🪐",
       "restaurant": {
         "name": "Gattini Pasta 🍝(pasta fresca)",
         "description": "Είναι το πιο κοντινό εστιατόριο, σε απόσταση περίπου 450-500 μέτρων (περίπου 6-7 λεπτά περπάτημα). Ειδικεύεται στα φρέσκα ζυμαρικά και έχει εξαιρετική βαθμολογία 4.7.",
@@ -904,7 +904,7 @@
       ],
       "duration_hours": 0.5,
       "best_time": "any",
-      "emoji": "🚶"
+      "emoji": "🚶",
       "restaurant": {
         "name": "The Lobby",
         "description": "Ένα πολύ κομψό εστιατόριο με εξαιρετική βαθμολογία (4.8), ιδανικό για ένα πιο προσεγμένο γεύμα ή δείπνο",
@@ -1023,7 +1023,7 @@
       ],
       "duration_hours": 1.5,
       "best_time": "any",
-      "emoji": "👁️"
+      "emoji": "👁️",
        "restaurant": {
         "name": "Dristor Doner Kebap",
         "description": "Ίσως το πιο διάσημο κεμπάπ στο Βουκουρέστι. Είναι πολύ χορταστικό, γρήγορο και οικονομικό.",
