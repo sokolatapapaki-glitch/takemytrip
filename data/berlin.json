@@ -74,9 +74,11 @@
         "lng": 13.3878
       },
       "restaurant": {
-  "name": "CURRY61 - Alexanderplatz",
-  "description": "Ένα από τα πιο δημοφιλή σημεία στο Βερολίνο για να δοκιμάσετε αυθεντικό currywurst. Γρήγορο, οικονομικό και πάντα φρέσκο, ακριβώς στην καρδιά της πόλης.",
-  "map_url": "https://maps.google.com/?cid=4800159821494451892&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
+        "name": "CURRY61 - Alexanderplatz",
+        "description": "Ένα από τα πιο δημοφιλή σημεία στο Βερολίνο για να δοκιμάσετε αυθεντικό currywurst. Γρήγορο, οικονομικό και πάντα φρέσκο, ακριβώς στην καρδιά της πόλης.",
+        "map_url": "https://maps.google.com/?cid=4800159821494451892&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl",
+        "lat": 52.521014,
+        "lng": 13.388002
       },
       "website": "https://www.illuseum-berlin.de/",
       "notes": [],
@@ -89,9 +91,11 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "cafe": {
-  "name": "Café Cinema",
-  "description": "Ένα μποέμικο και ιστορικό στέκι με ιδιαίτερη ατμόσφαιρα, φωτιστικά σκηνής και μια αυλή γεμάτη γκράφιτι.",
-  "map_url": "https://maps.app.goo.gl/w1Pe9kMNXddZoSBAA"
+        "name": "Café Cinema",
+        "description": "Ένα μποέμικο και ιστορικό στέκι με ιδιαίτερη ατμόσφαιρα, φωτιστικά σκηνής και μια αυλή γεμάτη γκράφιτι.",
+        "map_url": "https://maps.app.goo.gl/w1Pe9kMNXddZoSBAA",
+        "lat": 52.520803,
+        "lng": 13.387456
       }
     },
     {
@@ -128,9 +132,11 @@
         "lng": 13.3779
       },
       "restaurant": {
-  "name": "Tor Eins",
-  "description": "Είναι ένα κομψό και πολύχρωμο καφέ-εστιατόριο, ιδανικό για πρωινό, brunch ή απογευματινά σνακ.",
-  "map_url": "https://maps.app.goo.gl/9edspiejX1rVmYYt9"
+        "name": "Tor Eins",
+        "description": "Είναι ένα κομψό και πολύχρωμο καφέ-εστιατόριο, ιδανικό για πρωινό, brunch ή απογευματινά σνακ.",
+        "map_url": "https://maps.app.goo.gl/9edspiejX1rVmYYt9",
+        "lat": 52.498325,
+        "lng": 13.378219
       },
       "website": "https://technikmuseum.berlin/en/",
       "notes": [],
@@ -145,8 +151,10 @@
       "best_time": "afternoon",
       "cafe": {
         "name": "Anhalt",
-  "description": "Το κεντρικό καφέ-εστιατόριο εντός του Γερμανικού Τεχνικού Μουσείου.",
-  "map_url": "https://maps.google.com/?cid=9325083312355965361&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
+        "description": "Το κεντρικό καφέ-εστιατόριο εντός του Γερμανικού Τεχνικού Μουσείου.",
+        "map_url": "https://maps.google.com/?cid=9325083312355965361&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl",
+        "lat": 52.498577,
+        "lng": 13.377924
       }
     },
     {
@@ -185,7 +193,9 @@
       "restaurant": {
         "name": "Georgbraeu",
         "description": "Πρόκειται για μια παραδοσιακή γερμανική μπυραρία και εστιατόριο που βρίσκεται δίπλα στο ποτάμι (Spree).",
-        "map_url": "https://maps.app.goo.gl/HQkgsAkSs2DLPBYw7"
+        "map_url": "https://maps.app.goo.gl/HQkgsAkSs2DLPBYw7",
+        "lat": 52.519320,
+        "lng": 13.401867
       },
       "website": "https://www.ddr-museum.de/en",
       "notes": [],
@@ -200,8 +210,10 @@
       "best_time": "afternoon",
       "cafe": {
         "name": "Domcafé im Berliner Dom",
-  "description": "Ένα μικρό καφέ με self-service μέσα στον Καθεδρικό Ναό του Βερολίνου. Ιδανικό για καφέ, κέικ και σνακ, με μια υπέροχη βεράντα με θέα στον ποταμό Spree.",
-  "map_url": "https://maps.google.com/?cid=2100599542758113360&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
+        "description": "Ένα μικρό καφέ με self-service μέσα στον Καθεδρικό Ναό του Βερολίνου. Ιδανικό για καφέ, κέικ και σνακ, με μια υπέροχη βεράντα με θέα στον ποταμό Spree.",
+        "map_url": "https://maps.google.com/?cid=2100599542758113360&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl",
+        "lat": 52.518917,
+        "lng": 13.401047
       }
     },
     {
@@ -237,10 +249,12 @@
         "lat": 52.5302,
         "lng": 13.3793
       },
-     "restaurant": {
-  "name": "Peter Pane Burgers (Invalidenstraße)",
-  "description": "Μόλις λίγα βήματα από το Μουσείο Φυσικής Ιστορίας, αυτό το burger grill έχει μαγική ατμόσφαιρα και ένα από τα καλύτερα παιδικά μενού στην πόλη. Ιδανικό για οικογένειες.",
-  "map_url": "https://maps.google.com/?cid=13631570730947945921&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+      "restaurant": {
+        "name": "Peter Pane Burgers (Invalidenstraße)",
+        "description": "Μόλις λίγα βήματα από το Μουσείο Φυσικής Ιστορίας, αυτό το burger grill έχει μαγική ατμόσφαιρα και ένα από τα καλύτερα παιδικά μενού στην πόλη. Ιδανικό για οικογένειες.",
+        "map_url": "https://maps.google.com/?cid=13631570730947945921&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlαρχηΤεξτ",
+        "lat": 52.530127,
+        "lng": 13.378432
       },
       "website": "https://www.museumfuernaturkunde.berlin/en",
       "notes": [],
@@ -254,10 +268,12 @@
       "duration_hours": 2.5,
       "best_time": "morning",
       "cafe": {
-  "name": "19grams Chaussee",
-  "description": "Είναι ένα από τα καλύτερα coffee shops στην περιοχή, με πολύ υψηλή βαθμολογία (4.5).",
-  "map_url": "https://maps.app.goo.gl/dpDP4MwcZxvoApjH8"
-}
+        "name": "19grams Chaussee",
+        "description": "Είναι ένα από τα καλύτερα coffee shops στην περιοχή, με πολύ υψηλή βαθμολογία (4.5).",
+        "map_url": "https://maps.app.goo.gl/dpDP4MwcZxvoApjH8",
+        "lat": 52.530265,
+        "lng": 13.379230
+      }
     },
     {
       "id": 5,
@@ -295,7 +311,9 @@
       "restaurant": {
         "name": "Vapiano Potsdamer Platz",
         "description": "Η πιο ασφαλής λύση για παιδιά (μακαρονάδες/πίτσα) με γρήγορη εξυπηρέτηση και καλές τιμές.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Vapiano+Potsdamer+Platz"
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Vapiano+Potsdamer+Platz",
+        "lat": 52.509282,
+        "lng": 13.375182
       },
       "website": "https://www.legolanddiscoverycentre.de/berlin/",
       "notes": [],
@@ -311,7 +329,9 @@
       "cafe": {
         "name": "Lindenbräu am Sony Center",
         "description": "Εντυπωσιακό σημείο κάτω από τον θόλο του Sony Center, ιδανικό για καφέ ή σνακ.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Lindenbräu+am+Sony+Center"
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Lindenbräu+am+Sony+Center",
+        "lat": 52.510325,
+        "lng": 13.373251
       }
     },
     {
@@ -348,9 +368,11 @@
         "lng": 13.3812
       },
       "restaurant": {
-  "name": "Ständige Vertretung",
-  "description": "Είναι μια παραδοσιακή γερμανική ταβέρνα, πολύ γνωστή για την ατμόσφαιρά της και τις τοπικές σπεσιαλιτέ.",
-  "map_url": "https://maps.app.goo.gl/n2xQ8zEUpZu1yLE27"
+        "name": "Ständige Vertretung",
+        "description": "Είναι μια παραδοσιακή γερμανική ταβέρνα, πολύ γνωστή για την ατμόσφαιρά της και τις τοπικές σπεσιαλιτέ.",
+        "map_url": "https://maps.app.goo.gl/n2xQ8zEUpZu1yLE27",
+        "lat": 52.517556,
+        "lng": 13.381208
       },
       "website": "https://www.madametussauds.com/berlin/en/",
       "notes": [],
@@ -364,9 +386,11 @@
       "duration_hours": 2,
       "best_time": "afternoon",
       "cafe": {
-  "name": "EINSTEIN Unter den Linden",
-  "description": "Είναι κλασικό βερολινέζικο καφέ, πολύ ευρύχωρο για οικογένειες και ακριβώς πάνω στον δρόμο σας.",
-  "map_url": "https://maps.app.goo.gl/7Ev2rMimeqV6c9JSA"
+        "name": "EINSTEIN Unter den Linden",
+        "description": "Είναι κλασικό βερολινέζικο καφέ, πολύ ευρύχωρο για οικογένειες και ακριβώς πάνω στον δρόμο σας.",
+        "map_url": "https://maps.app.goo.gl/7Ev2rMimeqV6c9JSA",
+        "lat": 52.517107,
+        "lng": 13.390232
       }
     },
     {
@@ -403,9 +427,11 @@
         "lng": 13.3952
       },
       "restaurant": {
-  "name": "Umami Mitte",
-  "description": "Παραδοσιακές ασιατικές συνταγές με μοντέρνα πινελιά σε έναν πολύ ζεστό χώρο και βαθμολογία 4.9",
-  "map_url": "https://maps.app.goo.gl/M5hkryaDpvSuvUQh7"
+        "name": "Umami Mitte",
+        "description": "Παραδοσιακές ασιατικές συνταγές με μοντέρνα πινελιά σε έναν πολύ ζεστό χώρο και βαθμολογία 4.9",
+        "map_url": "https://maps.app.goo.gl/M5hkryaDpvSuvUQh7",
+        "lat": 52.503108,
+        "lng": 13.395659
       },
       "website": "https://www.jmberlin.de/en/anoha",
       "notes": [],
@@ -418,11 +444,13 @@
       ],
       "duration_hours": 1.5,
       "best_time": "afternoon",
-     "cafe": {
-  "name": "Café Nea",
-  "description": "Ένα πολύ κοντινό και εξαιρετικά βαθμολογημένο καφέ ακριβώς δίπλα στο ANOHA και το Εβραϊκό Μουσείο.",
-  "map_url": "https://maps.google.com/?cid=12815854450517571719&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
-}
+      "cafe": {
+        "name": "Café Nea",
+        "description": "Ένα πολύ κοντινό και εξαιρετικά βαθμολογημένο καφέ ακριβώς δίπλα στο ANOHA και το Εβραϊκό Μουσείο.",
+        "map_url": "https://maps.google.com/?cid=12815854450517571719&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlSearcηΤεξτ",
+        "lat": 52.502109,
+        "lng": 13.394861
+      }
     },
     {
       "id": 8,
@@ -457,10 +485,12 @@
         "lat": 52.5432,
         "lng": 13.4221
       },
-    "restaurant": {
-  "name": "Restaurant Al Rabuah",
-  "description": "αραβική κουζίνα και εξαιρετική βαθμολογία (4.7).",
-  "map_url": "https://maps.app.goo.gl/YV7sdfUWUdudK3er5"
+      "restaurant": {
+        "name": "Restaurant Al Rabuah",
+        "description": "αραβική κουζίνα και εξαιρετική βαθμολογία (4.7).",
+        "map_url": "https://maps.app.goo.gl/YV7sdfUWUdudK3er5",
+        "lat": 52.544030,
+        "lng": 13.422464
       },
       "website": "https://www.labyrinth-kindermuseum.de/en",
       "notes": [],
@@ -474,10 +504,12 @@
       "duration_hours": 2,
       "best_time": "afternoon",
       "cafe": {
-   "name": "Labyrinth Kindermuseum Berlin",
-  "description": "Καφέ εντός του μουσείου",
-  "map_url": "https://maps.app.goo.gl/fgXzeUt88iETyLsS9"
-}
+        "name": "Labyrinth Kindermuseum Berlin",
+        "description": "Καφέ εντός του μουσείου",
+        "map_url": "https://maps.app.goo.gl/fgXzeUt88iETyLsS9",
+        "lat": 52.543160,
+        "lng": 13.422081
+      }
     },
     {
       "id": 9,
@@ -513,9 +545,11 @@
         "lng": 13.4178
       },
       "restaurant": {
-  "name": "häppies",
-  "description": "Ένας μικρός και δημιουργικός χώρος μόλις 2 λεπτά από το MACHmit! Μουσείο. Σερβίρει φανταστικά χειροποίητα ψωμάκια ατμού με γλυκές και αλμυρές γεμίσεις που τα παιδιά λατρεύουν. Πολύ φιλική ατμόσφαιρα.",
-  "map_url": "https://maps.google.com/?cid=483150101630883326&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+        "name": "häppies",
+        "description": "Ένας μικρός και δημιουργικός χώρος μόλις 2 λεπτά από το MACHmit! Μουσείο. Σερβίρει φανταστικά χειροποίητα ψωμάκια ατμού με γλυκές και αλμυρές γεμίσεις που τα παιδιά λατρεύουν. Πολύ φιλική ατμόσφαιρα.",
+        "map_url": "https://maps.google.com/?cid=483150101630883326&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlSearcηΤεξτ",
+        "lat": 52.540221,
+        "lng": 13.418004
       },
       "website": "https://www.machmitmuseum.de/en/",
       "notes": [],
@@ -528,506 +562,12 @@
       ],
       "duration_hours": 2,
       "best_time": "afternoon",
-     "cafe": {
-  "name": "Kindercafé Spielzimmer",
-  "description": "Ένα χαρούμενο καφέ με εσωτερικό παιδότοπο, ιδανικό για οικογένειες. Με μενού φιλικό προς τα παιδιά και έναν ασφαλή χώρο παιχνιδιού!.",
-  "map_url": "https://maps.google.com/?cid=288468161165856801&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
-}
-    },
-    {
-      "id": 10,
-      "name": "Zoologischer Garten Berlin",
-      "description": "Ο παλαιότερος ζωολογικός κήπος της Γερμανίας με μεγάλη ποικιλία ζώων. Ιδανικό για κάθε ηλικία",
-      "category": "zoo",
-      "top": true,
-      "prices": {
-        "0": 0,
-        "1": 0,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 7,
-        "6": 7,
-        "7": 7,
-        "8": 7,
-        "9": 7,
-        "10": 7,
-        "11": 7,
-        "12": 7,
-        "13": 7,
-        "14": 7,
-        "15": 15.5,
-        "16": 15.5,
-        "17": 15.5,
-        "18": 15.5,
-        "19": 15.5,
-        "adult": 15.5
-      },
-      "location": {
-        "lat": 52.5075,
-        "lng": 13.3375
-      },
-      "restaurant": {
-        "name": "Block House am Zoo",
-        "description": "Πολύ ποιοτικό steak house με ειδικό παιδικό μενού, ακριβώς απέναντι από τον σταθμό του Zoo.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Block+House+am+Zoo"
-      },
-      "website": "https://www.zoo-berlin.de/en",
-      "notes": [],
-      "tags": [
-        "zoo",
-        "animals",
-        "oldest",
-        "germany",
-        "family"
-      ],
-      "duration_hours": 4,
-      "best_time": "morning",
       "cafe": {
-  "name": "Monkey Bar",
-  "description": "Βρίσκεται στον 10ο όροφο του ξενοδοχείου 25hours Hotel και έχει πανοραμική θέα στον Ζωολογικό Κήπο (μπορείς να δεις μέχρι και τους πιθήκους από ψηλά)",
-  "map_url": "https://maps.app.goo.gl/TWecruy3WTiYLWnu7"
-      }
-    },
-    {
-      "id": 11,
-      "name": "Zoologischer Garten + Aquarium Berlin. ",
-      "description": "Συνδυαστικό εισιτήριο ζωολογικού κήπου και ενυδρείου.Ιδανική δραστηριότητα για κάθε ηλικία.",
-      "category": "zoo",
-      "top": false,
-      "prices": {
-        "0": 0,
-        "1": 0,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 10.5,
-        "6": 10.5,
-        "7": 10.5,
-        "8": 10.5,
-        "9": 10.5,
-        "10": 10.5,
-        "11": 10.5,
-        "12": 10.5,
-        "13": 10.5,
-        "14": 10.5,
-        "15": 23.5,
-        "16": 23.5,
-        "17": 23.5,
-        "18": 23.5,
-        "19": 23.5,
-        "adult": 23.5
-      },
-      "location": {
-        "lat": 52.5075,
-        "lng": 13.3375
-      },
-      "restaurant": {
-        "name": "Block House am Zoo",
-        "description": "Πολύ ποιοτικό steak house με ειδικό παιδικό μενού, ακριβώς απέναντι από τον σταθμό του Zoo.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Block+House+am+Zoo"
-      },
-      "website": "https://www.aquarium-berlin.de/en",
-      "notes": [],
-      "tags": [
-        "zoo",
-        "aquarium",
-        "combo",
-        "animals",
-        "marine"
-      ],
-      "duration_hours": 5,
-      "best_time": "any",
-      "cafe": {
-   "name": "Monkey Bar",
-  "description": "Βρίσκεται στον 10ο όροφο του ξενοδοχείου 25hours Hotel και έχει πανοραμική θέα στον Ζωολογικό Κήπο (μπορείς να δεις μέχρι και τους πιθήκους από ψηλά)",
-  "map_url": "https://maps.app.goo.gl/TWecruy3WTiYLWnu7"
-      }
-    },
-    {
-      "id": 12,
-      "name": "Tiergarten",
-      "description": "Το τεράστιο κεντρικό πάρκο του Βερολίνου. Ιδανικό για κάθε ηλικία.",
-      "category": "park",
-      "top": false,
-      "prices": {
-        "0": 0,
-        "1": 0,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 0,
-        "8": 0,
-        "9": 0,
-        "10": 0,
-        "11": 0,
-        "12": 0,
-        "13": 0,
-        "14": 0,
-        "15": 0,
-        "16": 0,
-        "17": 0,
-        "18": 0,
-        "19": 0,
-        "adult": 0
-      },
-      "location": {
-        "lat": 52.5145,
-        "lng": 13.3501
-      },
-      "restaurant": {
-        "name": "Café am Neuen See",
-        "description": "Ένα από τα πιο εμβληματικά μέρη στο Tiergarten. Είναι ένας συνδυασμός εστιατορίου και υπαίθριας μπυραρίας (biergarten) ακριβώς δίπλα στη λίμνη. Προσφέρει τοπικά και εποχικά πιάτα σε έναν πολύ όμορφο και ρουστίκ χώρο",
-        "map_url": "https://maps.app.goo.gl/VQ8DnLDJAojm3zBR6"
-      },
-      "website": "https://www.tripadvisor.com.gr/Attraction_Review-g187323-d191290-Reviews-Tiergarten-Berlin.html",
-      "notes": [],
-      "tags": [
-        "park",
-        "free",
-        "central",
-        "green",
-        "nature"
-      ],
-      "duration_hours": 2,
-      "best_time": "afternoon",
-      "cafe": {
-        "name": "Cafe am Neuen See (Biergarten)",
-        "description": "Ένα από τα ωραιότερα σημεία στο πάρκο.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+am+Neuen+See+Berlin"
-      }
-    },
-    {
-      "id": 13,
-      "name": "Garten der Welt",
-      "description": "Εντυπωσιακό πάρκο με θεματικούς κήπους (Ιαπωνικό, Κορεάτικο, Μπαλινέζικο, Ιταλικό Αναγεννησιακό κ.α) και τελεφερίκ. Ιδανικό για κάθε ηλικία.",
-      "category": "park",
-      "top": false,
-      "prices": {
-        "0": 0,
-        "1": 0,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 4,
-        "7": 4,
-        "8": 4,
-        "9": 4,
-        "10": 4,
-        "11": 4,
-        "12": 4,
-        "13": 4,
-        "14": 4,
-        "15": 4,
-        "16": 4,
-        "17": 4,
-        "18": 9,
-        "19": 9,
-        "adult": 9
-      },
-      "location": {
-        "lat": 52.5408,
-        "lng": 13.5775
-      },
-      "restaurant": {
-  "name": "Ristorante i Fratelli",
-  "description": "Κλασική ιταλική κουζίνα",
-  "map_url": "https://maps.app.goo.gl/1yRwCn1jgKz3iSyY7"
-
-      },
-      "website": "https://www.gaertenderwelt.de/",
-      "notes": [],
-      "tags": [
-        "park",
-        "gardens",
-        "thematic",
-        "cable car",
-        "nature"
-      ],
-      "duration_hours": 3,
-      "best_time": "afternoon",
-      "cafe": {
-  "name": "Giardino Verde",
-  "description": "Είναι η πιο βολική επιλογή για καφέ και φαγητό στην περιοχή, και είναι ανοιχτό καθημερινά.",
-  "map_url": "https://maps.app.goo.gl/zd4w2ygUy9KcVse97"
-}
-    },
-    {
-      "id": 14,
-      "name": "FEZ Berlin",
-      "description": "Μεγάλο κέντρο αναψυχής για παιδιά με εργαστήρια, θέατρο,  παιδικό μουσείο, εσωτερικά παιχνίδια. Ιδανικό από 3 ετών και πάνω αλλά με εσωτερικό παιδότοπο και για μικρά απο΄0 ετών!",
-      "category": "attraction",
-      "top": false,
-      "prices": {
-        "0": 0,
-        "1": 0,
-        "2": 0,
-        "3": 5,
-        "4": 5,
-        "5": 5,
-        "6": 5,
-        "7": 5,
-        "8": 5,
-        "9": 5,
-        "10": 5,
-        "11": 5,
-        "12": 5,
-        "13": 5,
-        "14": 5,
-        "15": 5,
-        "16": 5,
-        "17": 5,
-        "18": 5,
-        "19": 5,
-        "adult": 5
-      },
-      "location": {
-        "lat": 52.4456,
-        "lng": 13.5364
-      },
-     "restaurant": {
-  "name": "Finnhütten am Badesee",
-  "description": "Ένα πολύ όμορφο σημείο για φαγητό δίπλα στη λίμνη του πάρκου Wuhlheide, σε απόσταση αναπνοής από το FEZ, είναι όμως ανοιχτό μόνο Σάββατο και Κυριακή.",
-  "map_url": "https://maps.google.com/?cid=2182352800642869254&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
-      },
-      "website": "https://fez-berlin.de/en/",
-      "notes": [],
-      "tags": [
-        "children",
-        "recreation",
-        "workshops",
-        "theater",
-        "family"
-      ],
-      "duration_hours": 4,
-      "best_time": "any",
-      "cafe": {
-        "name": "FEZ Kiosk",
-        "description": "Κιόσκι μέσα στον χώρο",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=FEZ+Kiosk+Berlin"
-      }
-    },
-    {
-      "id": 15,
-      "name": "Fernsehturm + VR",
-      "description": "Πύργος Τηλεόρασης με πανοραμική θέα και VR. Kατάλληλο για κάθε ηλικία",
-      "category": "attraction",
-      "top": true,
-      "prices": {
-        "0": 0,
-        "1": 0,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 26.5,
-        "6": 26.5,
-        "7": 26.5,
-        "8": 26.5,
-        "9": 26.5,
-        "10": 26.5,
-        "11": 26.5,
-        "12": 26.5,
-        "13": 26.5,
-        "14": 26.5,
-        "15": 36.5,
-        "16": 36.5,
-        "17": 36.5,
-        "18": 36.5,
-        "19": 36.5,
-        "adult": 36.5
-      },
-      "location": {
-        "lat": 52.5208,
-        "lng": 13.4094
-      },
-      "restaurant": {
-        "name": "Sphere Restaurant",
-        "description": "το διάσημο περιστρεφόμενο εστιατόριο στα 207 μέτρα πάνω από τη γη",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Sphere+Restaurant+Berlin"
-      },
-      "website": "https://tv-turm.de/en/",
-      "notes": [],
-      "tags": [
-        "tower",
-        "view",
-        "panorama",
-        "vr",
-        "television"
-      ],
-      "duration_hours": 1.5,
-      "best_time": "evening",
-      "cafe": {
-  "name": "ALEX Berlin am Alex",
-  "description": "Ένα ευρύχωρο καφέ-εστιατόριο στη βάση του Πύργου της Τηλεόρασης. Ιδανικό για οικογένειες λόγω του μεγάλου καταλόγου και της χαλαρής ατμόσφαιρας. Έχει τα πάντα, από σνακ μέχρι πλήρη γεύματα.",
-  "map_url": "https://maps.google.com/?cid=10721610518833991441&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
-      }
-    },
-    {
-      "id": 16,
-      "name": "Κρουαζιέρα στον ποταμό Spree",
-      "description": "Χαλαρωτικός τρόπος να δείτε τα αξιοθέατα της πόλης.Κατάλληλη για κάθε ηλικία",
-      "category": "cruise",
-      "top": false,
-      "prices": {
-        "0": 0,
-        "1": 0,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 12.5,
-        "8": 12.5,
-        "9": 12.5,
-        "10": 12.5,
-        "11": 12.5,
-        "12": 12.5,
-        "13": 12.5,
-        "14": 12.5,
-        "15": 16.5,
-        "16": 16.5,
-        "17": 16.5,
-        "18": 22,
-        "19": 22,
-        "adult": 22
-      },
-      "location": {
-        "lat": 52.5163,
-        "lng": 13.4025
-      },
-     "restaurant": {
-  "name": "Ephraims",
-  "description": "Ένα παραδοσιακό και φιλόξενο εστιατόριο στην ιστορική συνοικία Nikolaiviertel, ακριβώς πάνω στην όχθη του Spree. Ιδανικό για οικογένειες, με υπέροχη βεράντα δίπλα στο νερό και κλασικές γερμανικές γεύσεις.",
-  "map_url": "https://maps.app.goo.gl/NqdYVV2zsjtVJgEe7"
-      },
-      "website": "https://www.visitberlin.de/en/tickets-boat-tours-river-cruises-berlin",
-      "notes": [],
-      "tags": [
-        "cruise",
-        "river",
-        "spree",
-        "sightseeing",
-        "relaxing"
-      ],
-      "duration_hours": 2,
-      "best_time": "afternoon",
-      "cafe": {
-  "name": "Zimt & Zucker",
-  "description": "Ένα πανέμορφο, vintage καφέ δίπλα στον ποταμό Spree. Φημίζεται για το σπιτικό του brunch και τα παραδοσιακά γλυκά του. Είναι εξαιρετικά φιλικό προς τις οικογένειες, προσφέροντας έναν ζεστό χώρο για ξεκούραση μετά την κρουαζιέρα.",
-  "map_url": "https://maps.google.com/?cid=12407621192773975392&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
-}
-    },
-    {
-      "id": 17,
-      "name": "Extavium Potsdam (nano)",
-      "description": "Επιστημονικό κέντρο με πειράματα, ιδανικό για παιδιά 4–12 ετών.",
-      "category": "museum",
-      "top": false,
-      "prices": {
-        "0": 0,
-        "1": 0,
-        "2": 0,
-        "3": 14,
-        "4": 14,
-        "5": 14,
-        "6": 14,
-        "7": 14,
-        "8": 14,
-        "9": 14,
-        "10": 14,
-        "11": 14,
-        "12": 14,
-        "13": 14,
-        "14": 14,
-        "15": 14,
-        "16": 14,
-        "17": 14,
-        "18": 14,
-        "19": 14,
-        "adult": 14
-      },
-      "location": {
-        "lat": 52.4009,
-        "lng": 13.0592
-      },
-     "restaurant": {
-  "name": "Mami Dang",
-  "description": "Είναι μια εξαιρετική επιλογή αν θέλετε κάτι πολύ κοντά, οικονομικό και με καλή ποιότητα.",
-  "map_url": "https://maps.app.goo.gl/g4wGTAPw5hA2HcdT7"
-      },
-      "website": "https://www.extavium.de/en/",
-      "notes": [],
-      "tags": [
-        "science",
-        "experiments",
-        "children",
-        "hands-on",
-        "potsdam"
-      ],
-      "duration_hours": 2.5,
-      "best_time": "afternoon",
-      "cafe": {
-  "name": "Kaiserwetter",
-  "description": "Είναι μια πολύ βολική επιλογή αν θέλετε να μείνετε κοντά στο κέντρο και να απολαύσετε έναν ποιοτικό καφέ σε έναν από τους πιο γραφικούς δρόμους του Πότσνταμ.",
-  "map_url": "https://maps.app.goo.gl/wv5AUK1JeKznpR6EA"
-}
-    },
-    {
-      "id": 18,
-      "name": "Computerspielemuseum",
-      "description": "Μουσείο βιντεοπαιχνιδιών με interactive εκθέματα. Κατάλληλο για κάθε ηλικία, με πιο έντονο όμως ενδιαφέρον από λίγο μεγαλύτερα παιδιά. ",
-      "category": "museum",
-      "top": false,
-      "prices": {
-        "0": 0,
-        "1": 0,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 7,
-        "7": 7,
-        "8": 7,
-        "9": 7,
-        "10": 7,
-        "11": 7,
-        "12": 7,
-        "13": 7,
-        "14": 7,
-        "15": 11,
-        "16": 11,
-        "17": 11,
-        "18": 11,
-        "19": 11,
-        "adult": 11
-      },
-      "location": {
-        "lat": 52.5111,
-        "lng": 13.4478
-      },
-      "restaurant": {
-        "name": "Café Sibylle",
-        "description": "Είναι ένα ιστορικό καφέ-μουσείο του Βερολίνου. Σερβίρει καφέ, κέικ αλλά και ελαφρύ φαγητό (σούπες, σάντουιτς).",
-        "map_url": "https://maps.app.goo.gl/SKpdxHe318sXDECS8"
-      },
-      "website": "https://www.computerspielemuseum.de/",
-      "notes": [],
-      "tags": [
-        "video games",
-        "computers",
-        "interactive",
-        "museum",
-        "gaming"
-      ],
-      "duration_hours": 2,
-      "best_time": "afternoon",
-      "cafe": {
-        "name": "Saaldeck Café & Bar",
-        "description": "Eίναι μια εξαιρετική επιλογή που βρίσκεται κυριολεκτικά δίπλα",
-        "map_url": "https://maps.app.goo.gl/4FGo4GdadH4QwGRK6"
+        "name": "Kindercafé Spielzimmer",
+        "description": "Ένα χαρούμενο καφέ με εσωτερικό παιδότοπο, ιδανικό για οικογένειες. Με μενού φιλικό προς τα παιδιά και έναν ασφαλή χώρο παιχνιδιού!.",
+        "map_url": "https://maps.google.com/?cid=288468161165856801&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlSearcηΤεξτ",
+        "lat": 52.540657,
+        "lng": 13.418454
       }
     }
   ]
