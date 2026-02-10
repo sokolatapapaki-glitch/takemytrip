@@ -19,7 +19,7 @@
     {
       "id": 1,
       "name": "Palace Ticket - Schönbrunn Palace",
-      "description": "Βασικό εισιτήριο για τα κρατικά/ιδιωτικά διαμερίσματα με audio-guide. Timed entry.",
+      "description": "Βασικό εισιτήριο για τα κρατικά/ιδιωτικά διαμερίσματα του διασημου ανακτόρου των Αψβούργων. Με audio-guide.",
       "category": "attraction",
       "prices": {
         "0": 0,
@@ -73,8 +73,8 @@
     },
     {
       "id": 2,
-      "name": "State Apartments / Guided Tour Maria Theresia",
-      "description": "Σύντομη ξενάγηση ή θεματική ξενάγηση μεγαλύτερης διάρκειας.",
+      "name": "State Apartments",
+      "description": "Σύντομη ξενάγηση στα διαμερίσματα του διάσημου ανακτόρου των Αψβούργων ",
       "category": "attraction",
       "prices": {
         "0": 0,
@@ -92,12 +92,12 @@
         "12": 19,
         "13": 19,
         "14": 19,
-        "15": 29,
-        "16": 29,
-        "17": 29,
-        "18": 39,
-        "19": 39,
-        "adult": 39
+        "15": 19,
+        "16": 19,
+        "17": 19,
+        "18": 19,
+        "19": 28,
+        "adult": 28
       },
       "location": {
         "lat": 48.1846,
@@ -126,7 +126,7 @@
     {
       "id": 3,
       "name": "Sisi Pass (3 αυτοκρατορικά αξιοθέατα)",
-      "description": "Schönbrunn Palace + Sisi Museum (Hofburg) + Vienna Furniture Museum. Χωρίς timeslot για μουσεία.",
+      "description": "Schönbrunn Palace + Sisi Museum (Hofburg) + Vienna Furniture Museum.",
       "category": "attraction",
       "prices": {
         "0": 0,
@@ -181,7 +181,7 @@
     {
       "id": 4,
       "name": "Winter Pass (χειμερινή περίοδος)",
-      "description": "Palace Ticket + Zoo + Desert House + Palm House. Ισχύει 3 Nov 2025–26 Mar 2026.",
+      "description": "Palace Ticket + Zoo + Desert House + Palm House. Ισχύει Νοέμβριο με Μάρτιο.",
       "category": "attraction",
       "prices": {
         "0": 0,
@@ -346,7 +346,7 @@
     {
       "id": 7,
       "name": "Children's Museum (Kindermuseum)",
-      "description": "Διαδραστικό μουσείο για παιδιά 3-18 ετών με συνδυαστικά εισιτήρια.",
+      "description": "Διαδραστικό μουσείο για παιδιά 3-12 ετών.",
       "category": "museum",
       "prices": {
         "0": 0,
@@ -561,7 +561,7 @@
     {
       "id": 11,
       "name": "Time Travel Vienna",
-      "description": "Διαδραστικό ταξίδι 2000 χρόνων ιστορίας της Βιέννης.",
+      "description": "Διαδραστικό ταξίδι 2000 χρόνων της ιστορίας της Βιέννης με 5D εμπειρία. Ιδανικό για παιδιά άνω των 5-6 ετών. Οι μικρότερες ηλικίες ίσως τρομάξουν ελαφρώς με τα εφέ (κίνηση, σκοτάδι, θόρυβοι) στο σινεμά 5D.",
       "category": "attraction",
       "prices": {
         "0": 0,
@@ -614,7 +614,7 @@
     {
       "id": 12,
       "name": "Sisi's Amazing Journey (VR Experience)",
-      "description": "VR εμπειρία για τη ζωή της αυτοκράτειρας Σίσσι.",
+      "description": "VR εμπειρία για τη ζωή της αυτοκράτειρας Σίσσι, ταξίδι πάνω σε βάρκα μαζί της! Κατάλληλο για όλες τις ηλικίες αρκεί να μπορούν να φορέσουν την μάσκα 5D.",
       "category": "attraction",
       "prices": {
         "0": 0,
@@ -723,7 +723,7 @@
     {
       "id": 14,
       "name": "Museum der Illusionen (Μουσείο Ψευδαισθήσεων)",
-      "description": "Οπτικές ψευδαισθήσεις και διαδραστικά εκθέματα.",
+      "description": "Ένα μουσείο γεμάτο οπτικές ψευδαισθήσεις και διαδραστικά εκθέματα. Κατάλληλο για όλες τις ηλικίες",
       "category": "museum",
       "prices": {
         "0": 0,
@@ -754,7 +754,7 @@
       },
       "restaurant": {
         "name": "Joyce Café Restaurant",
-        "description": "Μοντέρνο, κομψό καφέ-εστιατόριο με αμερικανική/διεθνή κουζίνα, δημοφιλές για branch και ημερήσιο μενού",
+        "description": "Μοντέρνο καφέ-εστιατόριο με αμερικανική/διεθνή κουζίνα, δημοφιλές για branch.",
         "map_url": "https://maps.app.goo.gl/1f7tECnDJmNJZ5HP8"
       },
       "website": "https://www.museumderillusionen.at/wien/",
@@ -769,14 +769,14 @@
       "best_time": "any",
       "cafe": {
         "name": "Café Central",
-        "description": "H πιο διάσημh ιστορική καφετέρια της Βιέννης, με υπέροχη νεογοτθική αίθουσα. Τόπος συνάντησης διανοουμένων και καλλιτεχνών",
+        "description": "H πιο διάσημh ιστορική καφετέρια της Βιέννης, με υπέροχη νεογοτθική αίθουσα.",
         "map_url": "https://maps.app.goo.gl/x37tEi7C843zCohk9"
       }
     },
     {
       "id": 15,
       "name": "Vienna State Opera Tour",
-      "description": "Ξενάγηση στο ιστορικό κτήριο της όπερας.",
+      "description": "Ξενάγηση στο ιστορικό και εμβληματκό κτήριο της όπερας με την υπέροχη σκάλα και τα πολυτελή φουαγιέ. Θα μάθετε επίσης και μυστικά για το πώς στήνεται μια παράσταση.",
       "category": "attraction",
       "prices": {
         "0": 0,
@@ -829,7 +829,7 @@
     {
       "id": 16,
       "name": "Belvedere Palace",
-      "description": "Αυτοκρατορικό παλάτι με μόνιμη συλλογή τέχνης.",
+      "description": "Είναι ένα εντυπωσιακό μπαρόκ συγκρότημα με δύο παλάτια (Άνω και Κάτω Μπελβεντέρε) που συνδέονται με πανέμορφους κήπους. Σήμερα λειτουργεί ως μουσείο τέχνης και φιλοξενεί τον διάσημο πίνακα Το Φιλί του Γκούσταβ Κλιμτ.",
       "category": "museum",
       "prices": {
         "0": 0,
@@ -915,7 +915,7 @@
       },
       "restaurant": {
         "name": "Τurm Restaurant",
-        "description": "Εστιατόριο με υπέροχη θέα στον πύργο. Σύγχρονη αυστριακή κουζίνα με επίσημη ατμόσφαιρα.",
+        "description": "Εστιατόριο με υπέροχη θέα στον πύργο. Σύγχρονη αυστριακή κουζίνα με επίσημη ατμόσφαιρα. Ακριβό στις τιμές λόγω της θέας και της ταυτόχρονης περιστροφής",
         "map_url": "https://maps.app.goo.gl/9dyEhjTh5Sb91HQy5"
       },
       "website": "https://www.donauturm.at/en/",
@@ -991,7 +991,7 @@
     {
       "id": 19,
       "name": "St. Stephen's Cathedral Crypt",
-      "description": "Επίσκεψη στην κρύπτη του διάσημου καθεδρικού ναού.",
+      "description": "Μια υπόγεια διαδρομή που αποκαλύπτει τους τάφους των Αψβούργων και ομαδικούς χώρους ταφής από την εποχή της πανούκλας. Είναι μια ατμοσφαιρική αλλά σκοτεινή εμπειρία στην καρδιά της Βιέννης.Ηλικία: Κατάλληλο για 12+ ετών.",
       "category": "attraction",
       "prices": {
         "0": 0,
