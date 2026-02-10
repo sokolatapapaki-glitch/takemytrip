@@ -89,9 +89,9 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "cafe": {
-  "name": "Zeit für Brot",
-  "description": "Πολύ κοντά, φημίζεται για τα ρολά κανέλας",
-  "map_url": "https://maps.app.goo.gl/9qNkGxAufyFvqwrz8"
+  "name": "Café Cinema",
+  "description": "Ένα μποέμικο και ιστορικό στέκι με ιδιαίτερη ατμόσφαιρα, φωτιστικά σκηνής και μια αυλή γεμάτη γκράφιτι.",
+  "map_url": "https://maps.app.goo.gl/w1Pe9kMNXddZoSBAA"
       }
     },
     {
@@ -348,9 +348,9 @@
         "lng": 13.3812
       },
       "restaurant": {
-  "name": "Restaurant Maximilians",
-  "description": "Μια αυθεντική βαυαρική εμπειρία στην καρδιά του Βερολίνου. Μεγάλες μερίδες, παραδοσιακό σνίτσελ και πολύ φιλική ατμόσφαιρα για οικογένειες.",
-  "map_url": "https://maps.google.com/?cid=17181815897205505261&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+  "name": "Ständige Vertretung",
+  "description": "Είναι μια παραδοσιακή γερμανική ταβέρνα, πολύ γνωστή για την ατμόσφαιρά της και τις τοπικές σπεσιαλιτέ.",
+  "map_url": "https://maps.app.goo.gl/n2xQ8zEUpZu1yLE27"
       },
       "website": "https://www.madametussauds.com/berlin/en/",
       "notes": [],
@@ -458,9 +458,9 @@
         "lng": 13.4221
       },
     "restaurant": {
-  "name": "MARS | Küche & Bar",
-  "description": "Σερβίρει προσεγμένο μεσημεριανό, brunch τα Σαββατοκύριακα και ελαφριά πιάτα το βράδυ, χρησιμοποιώντας τοπικά προϊόντα.",
-  "map_url": "https://maps.app.goo.gl/PdWnA7DY15htLt9aA"
+  "name": "Restaurant Al Rabuah",
+  "description": "αραβική κουζίνα και εξαιρετική βαθμολογία (4.7).",
+  "map_url": "https://maps.app.goo.gl/YV7sdfUWUdudK3er5"
       },
       "website": "https://www.labyrinth-kindermuseum.de/en",
       "notes": [],
@@ -474,9 +474,9 @@
       "duration_hours": 2,
       "best_time": "afternoon",
       "cafe": {
-   "name": "MARS | Küche & Bar",
-  "description": "Σερβίρει προσεγμένο μεσημεριανό, brunch τα Σαββατοκύριακα και ελαφριά πιάτα το βράδυ, χρησιμοποιώντας τοπικά προϊόντα.",
-  "map_url": "https://maps.app.goo.gl/PdWnA7DY15htLt9aA"
+   "name": "Labyrinth Kindermuseum Berlin",
+  "description": "Καφέ εντός του μουσείου",
+  "map_url": "https://maps.app.goo.gl/fgXzeUt88iETyLsS9"
 }
     },
     {
@@ -678,9 +678,9 @@
         "lng": 13.3501
       },
       "restaurant": {
-        "name": "Tiergarten Quelle",
-        "description": "Αυθεντική γερμανική ταβέρνα κάτω από τις γραμμές του τρένου. Τεράστιες μερίδες, οικονομικές τιμές και πολύ φιλικό για οικογένειες.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Tiergarten+Quelle+Berlin"
+        "name": "Café am Neuen See",
+        "description": "Ένα από τα πιο εμβληματικά μέρη στο Tiergarten. Είναι ένας συνδυασμός εστιατορίου και υπαίθριας μπυραρίας (biergarten) ακριβώς δίπλα στη λίμνη. Προσφέρει τοπικά και εποχικά πιάτα σε έναν πολύ όμορφο και ρουστίκ χώρο",
+        "map_url": "https://maps.app.goo.gl/VQ8DnLDJAojm3zBR6"
       },
       "website": "https://www.tripadvisor.com.gr/Attraction_Review-g187323-d191290-Reviews-Tiergarten-Berlin.html",
       "notes": [],
@@ -750,9 +750,9 @@
       "duration_hours": 3,
       "best_time": "afternoon",
       "cafe": {
-  "name": "Café Krümelkeks",
-  "description": "Ένα εξαιρετικά φιλόξενο και οικογενειακό καφέ κοντά στους Gärten der Welt. Με βαθμολογία 4.3, ξεχωρίζει για τα σπιτικά του κέικ και τη φιλική εξυπηρέτηση, αποτελώντας ένα κρυμμένο διαμάντι της περιοχής.",
-  "map_url": "https://maps.google.com/?cid=12302034046578710587&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+  "name": "Giardino Verde",
+  "description": "Είναι η πιο βολική επιλογή για καφέ και φαγητό στην περιοχή, και είναι ανοιχτό καθημερινά.",
+  "map_url": "https://maps.app.goo.gl/zd4w2ygUy9KcVse97"
 }
     },
     {
@@ -790,7 +790,7 @@
       },
      "restaurant": {
   "name": "Finnhütten am Badesee",
-  "description": "Ένα πολύ όμορφο σημείο για φαγητό δίπλα στη λίμνη του πάρκου Wuhlheide, σε απόσταση αναπνοής από το FEZ. Ιδανικό για οικογένειες που θέλουν να συνδυάσουν το γεύμα τους με τη φύση σε ένα χαλαρό περιβάλλον.",
+  "description": "Ένα πολύ όμορφο σημείο για φαγητό δίπλα στη λίμνη του πάρκου Wuhlheide, σε απόσταση αναπνοής από το FEZ, είναι όμως ανοιχτό μόνο Σάββατο και Κυριακή.",
   "map_url": "https://maps.google.com/?cid=2182352800642869254&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       },
       "website": "https://fez-berlin.de/en/",
@@ -922,7 +922,7 @@
     },
     {
       "id": 17,
-      "name": "Extavium Potsdam",
+      "name": "Extavium Potsdam (nano)",
       "description": "Επιστημονικό κέντρο με πειράματα, ιδανικό για παιδιά 4–12 ετών.",
       "category": "museum",
       "top": false,
@@ -954,9 +954,9 @@
         "lng": 13.0592
       },
      "restaurant": {
-  "name": "Tomasa Potsdam",
-  "description": "Ένα εξαιρετικά φιλόξενο εστιατόριο για οικογένειες που στεγάζεται σε μια πανέμορφη βίλα στο Πότσνταμ. Έχει μεγάλη ποικιλία πιάτων, από πλούσιο πρωινό μέχρι πλήρη γεύματα, με ειδική φροντίδα για τους μικρούς επισκέπτες.",
-  "map_url": "https://maps.google.com/?cid=15538222622203312622&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
+  "name": "Mami Dang",
+  "description": "Είναι μια εξαιρετική επιλογή αν θέλετε κάτι πολύ κοντά, οικονομικό και με καλή ποιότητα.",
+  "map_url": "https://maps.app.goo.gl/g4wGTAPw5hA2HcdT7"
       },
       "website": "https://www.extavium.de/en/",
       "notes": [],
@@ -970,9 +970,9 @@
       "duration_hours": 2.5,
       "best_time": "afternoon",
       "cafe": {
-  "name": "Café Miss Green Bean",
-  "description": "Ένα ζεστό και φιλόξενο καφέ στο Πότσνταμ, ιδανικό για οικογένειες. Έχει μεγάλη ποικιλία από υγιεινά σνακ, φρέσκους χυμούς και νόστιμα γλυκά σε έναν φωτεινό χώρο.",
-  "map_url": "https://maps.google.com/?cid=9027542363738271767&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+  "name": "Kaiserwetter",
+  "description": "Είναι μια πολύ βολική επιλογή αν θέλετε να μείνετε κοντά στο κέντρο και να απολαύσετε έναν ποιοτικό καφέ σε έναν από τους πιο γραφικούς δρόμους του Πότσνταμ.",
+  "map_url": "https://maps.app.goo.gl/wv5AUK1JeKznpR6EA"
 }
     },
     {
