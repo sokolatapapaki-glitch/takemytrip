@@ -89,9 +89,9 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "cafe": {
-  "name": "Father Carpenter",
-  "description": "Το καφέ στεγάζεται σε μια πολύ όμορφη εσωτερική αυλή, προσφέροντας μια ήσυχη απόδραση από τη φασαρία του κέντρου.",
-  "map_url": "https://maps.app.goo.gl/gaBEWjv1orwyBsrCA"
+  "name": "The Greens - Coffee & Plants",
+  "description": "Πρόκειται για έναν πανέμορφο και ρουστίκ χώρο που συνδυάζει την αγάπη για τον καφέ με τα φυτά, καθώς στον χώρο πωλούνται και φυτά.",
+  "map_url": "https://maps.app.goo.gl/4hyu9cEY3Gz4UEKK8"
       }
     },
     {
@@ -128,9 +128,9 @@
         "lng": 13.3779
       },
       "restaurant": {
-  "name": "Taverna Athene",
-  "description": "Οικογενειακή ελληνική ταβέρνα με αυθεντικές γεύσεις, εξαιρετικό γύρο και σπιτικό μουσακά. Πολύ ζεστό περιβάλλον και φιλικό για οικογένειες.",
-  "map_url": "https://maps.google.com/?cid=16066708612539055735&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
+  "name": "Tor Eins",
+  "description": "Είναι ένα κομψό και πολύχρωμο καφέ-εστιατόριο, ιδανικό για πρωινό, brunch ή απογευματινά σνακ.",
+  "map_url": "https://maps.app.goo.gl/9edspiejX1rVmYYt9"
       },
       "website": "https://technikmuseum.berlin/en/",
       "notes": [],
@@ -183,9 +183,9 @@
         "lng": 13.4025
       },
       "restaurant": {
-        "name": "Hofbräu Wirtshaus Berlin",
-        "description": "Τεράστιο εστιατόριο με βαυαρική ατμόσφαιρα, πολύ φιλικό για παιδιά και μεγάλες παρέες.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Hofbräu+Wirtshaus+Berlin"
+        "name": "Georgbraeu",
+        "description": "Πρόκειται για μια παραδοσιακή γερμανική μπυραρία και εστιατόριο που βρίσκεται δίπλα στο ποτάμι (Spree).",
+        "map_url": "https://maps.app.goo.gl/HQkgsAkSs2DLPBYw7"
       },
       "website": "https://www.ddr-museum.de/en",
       "notes": [],
@@ -254,9 +254,9 @@
       "duration_hours": 2.5,
       "best_time": "morning",
       "cafe": {
-  "name": "Black Coffee",
-  "description": "Ένα τοπικό αγαπημένο καφέ με εξαιρετική βαθμολογία 4.6. Ξεχωρίζει για τον ποιοτικό καφέ και τη ζεστή του ατμόσφαιρα, αποτελώντας την τέλεια εναλλακτική για όσους θέλουν να ξεφύγουν από τα πολυσύχναστα καφέ των μουσείων.",
-  "map_url": "https://maps.google.com/?cid=7621170224383256618&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
+  "name": "19grams Chaussee",
+  "description": "Είναι ένα από τα καλύτερα coffee shops στην περιοχή, με πολύ υψηλή βαθμολογία (4.5).",
+  "map_url": "https://maps.app.goo.gl/dpDP4MwcZxvoApjH8"
 }
     },
     {
@@ -591,8 +591,8 @@
     },
     {
       "id": 11,
-      "name": "Zoologischer Garten + Aquarium Berlin. Ιδανικό για κάθε ηλικία.",
-      "description": "Συνδυαστικό εισιτήριο ζωολογικού κήπου και ενυδρείου.",
+      "name": "Zoologischer Garten + Aquarium Berlin. ",
+      "description": "Συνδυαστικό εισιτήριο ζωολογικού κήπου και ενυδρείου.Ιδανική δραστηριότητα για κάθε ηλικία.",
       "category": "zoo",
       "top": false,
       "prices": {
