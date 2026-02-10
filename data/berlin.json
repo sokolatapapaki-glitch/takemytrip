@@ -89,9 +89,9 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "cafe": {
-  "name": "The Greens - Coffee & Plants",
-  "description": "Πρόκειται για έναν πανέμορφο και ρουστίκ χώρο που συνδυάζει την αγάπη για τον καφέ με τα φυτά, καθώς στον χώρο πωλούνται και φυτά.",
-  "map_url": "https://maps.app.goo.gl/4hyu9cEY3Gz4UEKK8"
+  "name": "Zeit für Brot",
+  "description": "Πολύ κοντά, φημίζεται για τα ρολά κανέλας",
+  "map_url": "https://maps.app.goo.gl/9qNkGxAufyFvqwrz8"
       }
     },
     {
@@ -474,9 +474,9 @@
       "duration_hours": 2,
       "best_time": "afternoon",
       "cafe": {
-  "name": "Rosa Parks Café",
-  "description": "Ένα ζεστό και φιλόξενο καφέ στο Wedding, πολύ κοντά στο Labyrinth Kindermuseum. Φημίζεται για την κοινωνική του ατμόσφαιρα, τα σπιτικά κέικ και την πολυπολιτισμική του αύρα, αποτελώντας ένα αγαπημένο σημείο ξεκούρασης για την τοπική κοινότητα και τις οικογένειες.",
-  "map_url": "https://maps.google.com/?cid=9972998877331073287&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
+   "name": "MARS | Küche & Bar",
+  "description": "Σερβίρει προσεγμένο μεσημεριανό, brunch τα Σαββατοκύριακα και ελαφριά πιάτα το βράδυ, χρησιμοποιώντας τοπικά προϊόντα.",
+  "map_url": "https://maps.app.goo.gl/PdWnA7DY15htLt9aA"
 }
     },
     {
