@@ -403,9 +403,9 @@
         "lng": 13.3952
       },
       "restaurant": {
-  "name": "Beba",
-  "description": "Ένα πανέμορφο και φωτεινό εστιατόριο μέσα στο Gropius Bau, ακριβώς δίπλα στο ANOHA.",
-  "map_url": "https://maps.google.com/?cid=12401276775817053555&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
+  "name": "Umami Mitte",
+  "description": "Παραδοσιακές ασιατικές συνταγές με μοντέρνα πινελιά σε έναν πολύ ζεστό χώρο και βαθμολογία 4.9",
+  "map_url": "https://maps.app.goo.gl/M5hkryaDpvSuvUQh7"
       },
       "website": "https://www.jmberlin.de/en/anoha",
       "notes": [],
@@ -458,9 +458,9 @@
         "lng": 13.4221
       },
     "restaurant": {
-  "name": "Paros",
-  "description": "Μια αυθεντική ελληνική ταβέρνα ακριβώς δίπλα στο Labyrinth Kindermuseum. Φημίζεται για τη ζεστή φιλοξενία, τις γενναιόδωρες μερίδες και το φιλικό περιβάλλον για παιδιά, προσφέροντας κλασικές ελληνικές γεύσεις.",
-  "map_url": "https://maps.app.goo.gl/Vapiano9"
+  "name": "MARS | Küche & Bar",
+  "description": "Σερβίρει προσεγμένο μεσημεριανό, brunch τα Σαββατοκύριακα και ελαφριά πιάτα το βράδυ, χρησιμοποιώντας τοπικά προϊόντα.",
+  "map_url": "https://maps.app.goo.gl/PdWnA7DY15htLt9aA"
       },
       "website": "https://www.labyrinth-kindermuseum.de/en",
       "notes": [],
@@ -584,9 +584,9 @@
       "duration_hours": 4,
       "best_time": "morning",
       "cafe": {
-  "name": "What do you fancy love?",
-  "description": "Ένα από τα πιο δημοφιλή και στιλάτα καφέ στο Charlottenburg. Φημίζεται για τα φρέσκα bagels, τους υγιεινούς χυμούς και την ιδιαίτερη διακόσμηση με φωτογραφίες, αποτελώντας αγαπημένο σημείο για πρωινό ή σνακ κοντά στον Ζωολογικό Κήπο.",
-  "map_url": "https://maps.google.com/?cid=15724724136414435716&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
+  "name": "Monkey Bar",
+  "description": "Βρίσκεται στον 10ο όροφο του ξενοδοχείου 25hours Hotel και έχει πανοραμική θέα στον Ζωολογικό Κήπο (μπορείς να δεις μέχρι και τους πιθήκους από ψηλά)",
+  "map_url": "https://maps.app.goo.gl/TWecruy3WTiYLWnu7"
       }
     },
     {
@@ -639,9 +639,9 @@
       "duration_hours": 5,
       "best_time": "any",
       "cafe": {
-  "name": "What do you fancy love?",
-  "description": "Ένα από τα πιο δημοφιλή και στιλάτα καφέ στο Charlottenburg. Φημίζεται για τα φρέσκα bagels, τους υγιεινούς χυμούς και την ιδιαίτερη διακόσμηση με φωτογραφίες, αποτελώντας αγαπημένο σημείο για πρωινό ή σνακ κοντά στον Ζωολογικό Κήπο.",
-  "map_url": "https://maps.google.com/?cid=15724724136414435716&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
+   "name": "Monkey Bar",
+  "description": "Βρίσκεται στον 10ο όροφο του ξενοδοχείου 25hours Hotel και έχει πανοραμική θέα στον Ζωολογικό Κήπο (μπορείς να δεις μέχρι και τους πιθήκους από ψηλά)",
+  "map_url": "https://maps.app.goo.gl/TWecruy3WTiYLWnu7"
       }
     },
     {
@@ -733,9 +733,9 @@
         "lng": 13.5775
       },
       "restaurant": {
-  "name": "Gasthaus \"Zur Erholung\"",
-  "description": "Ένα αυθεντικό γερμανικό εστιατόριο με παραδοσιακή ατμόσφαιρα. Είναι γνωστό για την ποιότητα του φαγητού του και τη ζεστή του φιλοξενία, αποτελώντας μια εξαιρετική επιλογή για όσους θέλουν να δοκιμάσουν κλασικές τοπικές γεύσεις.",
-  "map_url": "https://maps.google.com/?cid=2591061285164740044&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
+  "name": "Ristorante i Fratelli",
+  "description": "Κλασική ιταλική κουζίνα",
+  "map_url": "https://maps.app.goo.gl/1yRwCn1jgKz3iSyY7"
 
       },
       "website": "https://www.gaertenderwelt.de/",
@@ -901,7 +901,7 @@
      "restaurant": {
   "name": "Ephraims",
   "description": "Ένα παραδοσιακό και φιλόξενο εστιατόριο στην ιστορική συνοικία Nikolaiviertel, ακριβώς πάνω στην όχθη του Spree. Ιδανικό για οικογένειες, με υπέροχη βεράντα δίπλα στο νερό και κλασικές γερμανικές γεύσεις.",
-  "map_url": "https://maps.google.com/?cid=14179012372150099080&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+  "map_url": "https://maps.app.goo.gl/NqdYVV2zsjtVJgEe7"
       },
       "website": "https://www.visitberlin.de/en/tickets-boat-tours-river-cruises-berlin",
       "notes": [],
