@@ -153,9 +153,9 @@
       "duration_hours": 3,
       "best_time": "morning",
       "cafe": {
-        "name": "White Mulberries",
-        "description": "Φημίζεται για τον ποιοτικό καφέ του, τα φρέσκα σάντουιτς, τις πίτες και τα εξαιρετικά γλυκά του (δοκιμάστε οπωσδήποτε το banana bread)",
-        "map_url": "https://maps.app.goo.gl/VrTDBRqxuAQtXqVK7"
+        "name": "De Vine",
+        "description": "Μια παραδοσιακή και οικονομική επιλογή. Είναι ένα κλασικό cafe, σερβίρει πρωινό και μεσημεριανό. Έχει εξαιρετική βαθμολογία (5/5) για την ποιότητα και την εξυπηρέτησή του.",
+        "map_url": "https://maps.app.goo.gl/RciY8yLATMv3detB9"
       }
     },
     {
@@ -190,7 +190,7 @@
       },
       "restaurant": {
         "name": "T. Rex Restaurant",
-        "description": "Βurgers, σαλάτες και πίτσες ψημένες σε πέτρινο φούρνο",
+        "description": "Βurgers, σαλάτες και πίτσες ψημένες σε πέτρινο φούρνο. Εντός του Μουσείου",
         "map_url": "https://maps.app.goo.gl/Af3CuWWAh3Z4GXUh9"
       },
       "restaurantType": "cafe",
