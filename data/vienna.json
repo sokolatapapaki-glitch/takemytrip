@@ -181,7 +181,7 @@
     {
       "id": 4,
       "name": "Winter Pass (χειμερινή περίοδος)",
-      "description": "Palace Ticket + Zoo + Desert House + Palm House. Ισχύει Νοέμβριο με Μάρτιο.",
+      "description": "Palace Ticket + Zoo + Desert House + Palm House Schönbrunn. Ισχύει Νοέμβριο με Μάρτιο.",
       "category": "attraction",
       "prices": {
         "0": 0,
@@ -236,7 +236,7 @@
     {
       "id": 5,
       "name": "Classic Pass (καλοκαιρινή περίοδος)",
-      "description": "Palace Ticket + Privy Garden + Maze & Labyrinth + Orangery Garden + Gloriette terrace.",
+      "description": "Palace Ticket + Privy Garden + Maze & Labyrinth + Orangery Garden + Gloriette terrace.Καλύπτει μεγάλο μέρος του Schönbrunn.",
       "category": "attraction",
       "prices": {
         "0": 0,
@@ -322,7 +322,7 @@
       },
       "restaurant": {
         "name": "Tyrolean Garden Inn",
-        "description": "Πρόκειται για ένα παραδοσιακό αυστριακό εστιατόριο που μοιάζει με ορεινό καταφύγιο των Άλπεων, παρόλο που βρίσκεται μέσα στην πόλη.",
+        "description": "Πρόκειται για ένα παραδοσιακό αυστριακό εστιατόριο που μοιάζει με ορεινό καταφύγιο των Άλπεων, παρόλο που βρίσκεται μέσα στην πόλη. Είναι δίπλα από το zoo",
         "map_url": "https://maps.app.goo.gl/29hDDm92VGo4v6uj7"
       },
       "website": "https://www.schoenbrunn.at/en/all-tickets/classic-pass-plus",
@@ -391,9 +391,9 @@
       "duration_hours": 1.5,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Gerstner K. u. K. Hofzuckerbäcker",
-        "description": "Βρίσκεται ακριβώς δίπλα στην κύρια είσοδο του παλατιού. Είναι ένα ιστορικό καφενείο με αυθεντική βιεννέζικη εμπειρία.",
-        "map_url": "https://maps.app.goo.gl/Z8KdxpmKJDpmstSn7"
+        "name": "Schlosscafé Schönbrunn",
+        "description": "Είναι εξαιρετικά κοντά, περίπου 2-3 λεπτά με τα πόδια.",
+        "map_url": "https://maps.app.goo.gl/Vjvmjk2ie1Yyf5ZH6"
       }
     },
     {
@@ -452,7 +452,7 @@
     },
     {
       "id": 9,
-      "name": "Zoo + Palm House + Desert House Combo",
+      "name": "Zoo + Palm House + Desert House Combo Schönbrunn",
       "description": "Συνδυαστικό εισιτήριο για μία επίσκεψη σε κάθε αξιοθέατο.",
       "category": "zoo",
       "prices": {
@@ -937,7 +937,7 @@
     {
       "id": 18,
       "name": "Mozarthaus Vienna",
-      "description": "Το σπίτι όπου έζησε ο Mozart, τώρα μουσείο.",
+      "description": "Είναι το αυθεντικό διαμέρισμα όπου έζησε ο Μότσαρτ.Αξίζει για παιδιά άνω των 6 ετών κυρίως χάρη στην εξαιρετική παιδική ακουστική ξενάγηση, αν και είναι λιγότερο διαδραστικό σε σχέση με άλλα μουσικά μουσεία της Βιέννης.",
       "category": "museum",
       "prices": {
         "0": 0,
