@@ -119,9 +119,9 @@
       "duration_hours": 2.5,
       "best_time": "afternoon",
       "cafe": {
-        "name": "A Padaria Portuguesa",
-        "description": "δημοφιλής πορτογαλική αλυσίδα, γνωστή για την καλή ποιότητα και τις λογικές τιμές της",
-        "map_url": "https://maps.app.goo.gl/f7jZqZ8Ndhq2GCMX7"
+        "name": "The Coffee",
+        "description": "Είναι η καλύτερη επιλογή για brunch και ποιοτικό καφέ.",
+        "map_url": "https://maps.app.goo.gl/yJ6HsGLinCtBvunTA"
       }
     },
     {
@@ -161,7 +161,7 @@
         "description": "Ένα από τα πιο δημοφιλή μέρη για brunch και ελαφρύ γεύμα στην περιοχή.",
         "map_url": "https://maps.app.goo.gl/g188NfkinVY5PNNU9"
       },
-      "website": "https://www.torrebelem.pt/en/",
+      "website": "https://www.museusemonumentos.pt/pt/museus-e-monumentos/torre-de-belem",
       "notes": [],
       "tags": [
         "tower",
@@ -215,7 +215,7 @@
         "description": "Ένα από τα κορυφαία εστιατόρια της περιοχής με βαθμολογία 4.7, γνωστό για τα θαλασσινά και τα ψάρια του",
         "map_url": "https://maps.app.goo.gl/9u91arxvTrCeqzCD7"
       },
-      "website": "https://www.mosteirojeronimos.pt/en/",
+      "website": "https://www.museusemonumentos.pt/pt/museus-e-monumentos/mosteiro-dos-jeronimos-e-capela-de-sao-jeronimo",
       "notes": [],
       "tags": [
         "monastery",
@@ -343,9 +343,9 @@
       "duration_hours": 1.5,
       "best_time": "afternoon",
       "cafe": {
-        "name": "PUT IT ON LISBON",
-        "description": "Πολύ κοντά, με εξαιρετικό καφέ και μοντέρνα ατμόσφαιρα",
-        "map_url": "https://maps.app.goo.gl/sXMTyTN87kZ4rc9v5"
+        "name": "Liberty: brunch, coffee & books",
+        "description": "Μια υπέροχη επιλογή μόλις 2-3 λεπτά μακριά (200 μέτρα). Συνδυάζει καφέ, brunch και βιβλία σε έναν πολύ ζεστό χώρο. Έχει εξαιρετική βαθμολογία 4.9/5.",
+        "map_url": "https://maps.app.goo.gl/kPAXo6i8R4BKrTYC7"
       }
     },
     {
