@@ -51,9 +51,9 @@
         "lng": 19.0396
       },
       "restaurant": {
-        "name": "21 Hungarian Kitchen",
-        "description": "Μοντέρνα ουγγρική κουζίνα στο λόφο του Κάστρου, πολύ φιλόξενο για οικογένειες.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=21+Hungarian+Kitchen"
+        "name": "Royal Guard Cafe",
+        "description": "Ένα από τα πιο ατμοσφαιρικά και ιστορικά καφέ-εστιατόρια στη Βουδαπέστη ",
+        "map_url": "https://maps.app.goo.gl/wfttCrFrvAGyk8Cz5"
       },
       "website": "https://budacastlebudapest.com/",
       "notes": [
@@ -71,9 +71,9 @@
       "freeActivity": true,
       "freeExterior": true,
       "cafe": {
-        "name": "Ruszwurm Cukrászda",
-        "description": "Το παλαιότερο ζαχαροπλαστείο της πόλης (από το 1827). Πρέπει να δοκιμάσετε την κρέμα Ruszwurm!",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Ruszwurm+Cukrászda"
+       "name": "Royal Guard Cafe",
+        "description": "Ένα από τα πιο ατμοσφαιρικά και ιστορικά καφέ-εστιατόρια στη Βουδαπέστη ",
+        "map_url": "https://maps.app.goo.gl/wfttCrFrvAGyk8Cz5"
       }
     },
     {
@@ -109,9 +109,9 @@
         "lng": 19.0398
       },
       "restaurant": {
-        "name": "21 Hungarian Kitchen",
-        "description": "Μοντέρνα ουγγρική κουζίνα στο λόφο του Κάστρου, πολύ φιλόξενο για οικογένειες.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=21+Hungarian+Kitchen"
+        "name": "Royal Guard Cafe",
+        "description": "Ένα από τα πιο ατμοσφαιρικά και ιστορικά καφέ-εστιατόρια στη Βουδαπέστη ",
+        "map_url": "https://maps.app.goo.gl/wfttCrFrvAGyk8Cz5"
       },
       "website": "https://budacastlebudapest.com/",
       "notes": [
@@ -129,9 +129,9 @@
       "minAge": 12,
       "ageWarning": "Δεν επιτρέπονται παιδιά κάτω των 12 ετών",
       "cafe": {
-        "name": "Ruszwurm Cukrászda",
-        "description": "Το παλαιότερο ζαχαροπλαστείο της πόλης (από το 1827). Πρέπει να δοκιμάσετε την κρέμα Ruszwurm!",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Ruszwurm+Cukrászda"
+        "name": "Royal Guard Cafe",
+        "description": "Ένα από τα πιο ατμοσφαιρικά και ιστορικά καφέ-εστιατόρια στη Βουδαπέστη ",
+        "map_url": "https://maps.app.goo.gl/wfttCrFrvAGyk8Cz5"
       }
     },
     {
@@ -167,9 +167,9 @@
         "lng": 19.0395
       },
       "restaurant": {
-        "name": "21 Hungarian Kitchen",
-        "description": "Μοντέρνα ουγγρική κουζίνα στο λόφο του Κάστρου, πολύ φιλόξενο για οικογένειες.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=21+Hungarian+Kitchen"
+       "name": "Royal Guard Cafe",
+        "description": "Ένα από τα πιο ατμοσφαιρικά και ιστορικά καφέ-εστιατόρια στη Βουδαπέστη ",
+        "map_url": "https://maps.app.goo.gl/wfttCrFrvAGyk8Cz5"
       },
       "website": "https://labirintus.eu/",
       "notes": [],
@@ -184,9 +184,9 @@
       "best_time": "afternoon",
       "minAge": 0,
       "cafe": {
-  "name": "Walzer Café",
-  "description": "Ένα ζεστό και φιλικό προς οικογένειες καφέ στην καρδιά του Κάστρου. Ιδανικό για ξεκούραση σε μια ήσυχη και σπιτική ατμόσφαιρα.",
-  "map_url": "https://www.google.com/maps/search/?api=1&query=Walzer+Café+Budapest&query_place_id=ChIJF3WFNB_cQUcRJqKVqwLujsM"
+  "name": "Royal Guard Cafe",
+        "description": "Ένα από τα πιο ατμοσφαιρικά και ιστορικά καφέ-εστιατόρια στη Βουδαπέστη ",
+        "map_url": "https://maps.app.goo.gl/wfttCrFrvAGyk8Cz5"
 }
     },
     {
@@ -240,7 +240,7 @@
       "cafe": {
         "name": "Szamos Café",
         "description": "Στον επάνω όροφο έχει και μουσείο σοκολάτας! Τέλεια στάση μετά την ξενάγηση.",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Szamos+Café"
+        "map_url": "https://maps.app.goo.gl/yUdCkZcnStzYbHCY8"
       }
     },
     {
@@ -393,7 +393,7 @@
       },
       "restaurant": {
         "name": "Buda Gourmet Bistro",
-        "description": "H πιο κοντινή και ποιοτική λύση.",
+        "description": "H πιο κοντινή και ποιοτική λύση, με τα μέσα μεταφοράς όμως. Η περιοχή δεν έχει κοντινά εστιατόρια με τα πόδια",
         "map_url": "https://maps.app.goo.gl/osFM8AsqyQwf5Ns88"
       },
       "website": "https://www.csopa.hu/en/home/",
@@ -450,9 +450,9 @@
         "lng": 19.055
       },
       "restaurant": {
-        "name": "The Magic Budapest 2",
+        "name": "The MAGIC Budapest",
         "description": "Έχει θέμα τη μαγεία (στυλ Χάρι Πότερ) και είναι πραγματικά εντυπωσιακό.",
-        "map_url": "https://maps.app.goo.gl/d41JCF7AmBWPMDcC6"
+        "map_url": "https://maps.app.goo.gl/ak5mxiLJfntJAvtB6"
       },
       "website": "https://www.illuziokmuzeuma.hu/",
       "notes": [
@@ -646,7 +646,7 @@
       "ageWarning": "⚠️ Ακατάλληλο για παιδιά κάτω των 14 ετών.",
       "cafe": {
         "name": "Gundel Patisserie",
-        "description": "Ιστορικό σημείο. Αν δεν θέλετε πλήρες γεύμα, πάρτε μια αυθεντική κρέπα Gundel στο χέρι.",
+        "description": "Ιστορικό σημείο με υψηλό κόστος. Αν δεν θέλετε πλήρες γεύμα, πάρτε μια αυθεντική κρέπα Gundel στο χέρι.",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Gundel+Patisserie"
       }
     },
@@ -849,7 +849,7 @@
   "description": "Ένα πανέμορφο εστιατόριο μέσα στο πράσινο του Νησιού της Μαργαρίτας.",
   "map_url": "https://maps.google.com/?cid=14767016708618972955&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       },
-      "website": "https://www.themagic2.hu/",
+      "website": "https://www.budapest.net/margaret-island",
       "notes": [
         "ΔΩΡΕΑΝ ΓΙΑ ΟΛΟΥΣ"
       ],
