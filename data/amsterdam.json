@@ -169,9 +169,9 @@
       "duration_hours": 2,
       "best_time": "afternoon",
       "cafe": {
-        "name": "Moods Coffee & Brunch",
-        "description": "Πολύ προσεγμένο καφέ με εξαιρετικό brunch και φιλική εξυπηρέτηση, λίγα λεπτά από το μουσείο.",
-        "map_url": "https://maps.google.com/?cid=6518910348384035671&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+        "name": "Kiosk Rembrandt Van Gogh",
+        "description": "Το κοντινότερο και πιο πρακτικό καφέ ακριβώς δίπλα στο Μουσείο Βαν Γκογκ (ανάμεσα σε αυτό και το Rijksmuseum) είναι το Kiosk Rembrandt Van Gogh.",
+        "map_url": "https://maps.app.goo.gl/y717wfYgbYe244Bf6"
       }
     },
     {
@@ -369,7 +369,7 @@
       "restaurant": {
         "name": "THT (Tolhuistuin)",
         "description": "Ευρύχωρο εστιατόριο με ωραία θέα, ακριβώς δίπλα στο This is Holland",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=THT+(Tolhuistuin)"
+        "map_url": "https://maps.app.goo.gl/tHGtyaRrJjEZW25M6"
       },
       "combos": {
         "this_is_holland_madame_tussauds": {
@@ -546,7 +546,7 @@
       "best_time": "afternoon",
       "cafe": {
         "name": "Blauwe Theehuis",
-        "description": "iconic cafe στο Vondelpark",
+        "description": "Είναι ένας εμβληματικός χώρος, που θυμίζει ιπτάμενο δίσκο και φημίζεται για τη χαλαρή του ατμόσφαιρα",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Blauwe+Theehuis+Vondelpark"
       }
     },
@@ -581,7 +581,7 @@
         "lng": 4.8319
       },
       "restaurant": {
-        "name": "Boerderij Meerzicht",
+        "name": "Goatfarm Ridammerhoeve",
         "description": "φάρμα με χειροποίητα προϊόντα & παιδική χαρά",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Boerderij+Megan+Amsterdamse+Bos"
       },
@@ -597,8 +597,8 @@
       "duration_hours": 3,
       "best_time": "any",
       "cafe": {
-        "name": "De Boshalte",
-        "description": "Ένα χαλαρό 'koffie tentje' στην είσοδο του δάσους, ιδανικό για καφέ, ζεστή σοκολάτα και ελαφριά σνακ.",
+        "name": "Koffie tentje Amsterdamse bos",
+        "description": "Στην είσοδο του δάσους, ιδανικό για καφέ, ζεστή σοκολάτα και ελαφριά σνακ.",
         "map_url": "https://maps.google.com/?cid=16148306879835281686&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
       }
     },
