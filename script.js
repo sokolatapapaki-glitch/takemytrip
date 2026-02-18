@@ -2916,9 +2916,9 @@ async function setupActivitiesStep() {
             </div>
 
             <!-- FREE PRICE LABEL (Horizontal) -->
-            ${!isPlayground && (isFreeForAll || freeAgeRange) ? `
-                <div class="free-price-label ${freeAgeRange ? 'free-price-label-conditional' : ''}">
-                    ${isFreeForAll ? 'ΔΩΡΕΑΝ' : freeAgeRange}
+            ${!isPlayground && isFreeForAll ? `
+                <div class="free-price-label">
+                    ΔΩΡΕΑΝ
                 </div>
             ` : ''}
 
