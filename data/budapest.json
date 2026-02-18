@@ -388,13 +388,13 @@
         "adult": 10
       },
       "location": {
-        "lat": 47.4975,
-        "lng": 19.065
+        "lat": 47.585785,
+        "lng": 19.048947
       },
       "restaurant": {
-        "name": "Buda Gourmet Bistro",
-        "description": "H πιο κοντινή και ποιοτική λύση, με τα μέσα μεταφοράς όμως. Η περιοχή δεν έχει κοντινά εστιατόρια με τα πόδια",
-        "map_url": "https://maps.app.goo.gl/osFM8AsqyQwf5Ns88"
+        "name": "Kínai büfé -Asian restaurant",
+        "description": "Aν ψάχνετε για κάτι γρήγορο και κοντινό για φαγητό πριν ή μετά την επίσκεψή σας στο κέντρο επιστημών.",
+        "map_url": "https://maps.app.goo.gl/24Qb3yeySSDaNBij7"
       },
       "website": "https://www.csopa.hu/en/home/",
       "notes": [
@@ -412,9 +412,9 @@
       "minAge": 3,
       "ageWarning": "Κατάλληλο για παιδιά από 3 ετών και πάνω",
       "cafe": {
-        "name": "Milk Cafe",
-        "description": "Είναι ένα μοντέρνο, φωτεινό καφέ που προτιμούν πολλοί ντόπιοι για τον ποιοτικό του καφέ και τα σνακ του.",
-        "map_url": "https://maps.app.goo.gl/mgm2MgjXbPznxzu46"
+        "name": "Csillaghegyi Stop & Bakery Tejbisztró",
+        "description": "Φούρνος σε πολύ κοντινή απόσταση",
+        "map_url": "https://maps.app.goo.gl/oSQbeah4RdTwATJGA"
       }
     },
     {
