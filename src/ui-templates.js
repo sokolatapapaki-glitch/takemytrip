@@ -152,10 +152,10 @@ export function getFlightStepHTML() {
                     </a>
                 </div>
 
-                <!-- ΚΟΥΜΠΙ ΣΥΝΕΧΕΙΑΣ (ΠΙΟ ΠΑΝΩ ΤΩΡΑ) -->
-                <button class="btn btn-primary" onclick="showStep('hotel')"
+                <!-- ΚΟΥΜΠΙ ΕΠΙΣΤΡΟΦΗΣ -->
+                <button class="btn btn-outline" onclick="showStep('hotel')"
                         style="padding: 14px 40px; font-size: 16px; border-radius: 8px;">
-                    <i class="fas fa-arrow-right"></i> Συνέχεια στα Ξενοδοχεία
+                    <i class="fas fa-arrow-left"></i> Επιστροφή στα Ξενοδοχεία
                 </button>
             </div>
         </div>
@@ -344,9 +344,13 @@ export function getHotelStepHTML() {
 
             <!-- ΣΥΝΕΧΕΙΑ -->
             <div style="text-align: center; margin-top: 15px;">
-                <button class="btn btn-primary" onclick="showStep('activities')"
+                <button class="btn btn-primary" onclick="showStep('flight')"
+                        style="padding: 10px 25px; font-size: 14px; border-radius: 8px; margin-right: 10px;">
+                    <i class="fas fa-arrow-right"></i> Συνέχεια στα Αεροπορικά
+                </button>
+                <button class="btn btn-outline" onclick="showStep('map')"
                         style="padding: 10px 25px; font-size: 14px; border-radius: 8px;">
-                    <i class="fas fa-arrow-right"></i> Συνέχεια στις Δραστηριότητες
+                    <i class="fas fa-arrow-left"></i> Επιστροφή στον Χάρτη
                 </button>
             </div>
         </div>
@@ -528,10 +532,13 @@ export function getActivitiesStepHTML() {
                     <p style="opacity: 0.9;">Για ${window.state?.familyMembers.length} άτομα</p>
                 </div>
 
-                <!-- Next Button -->
+                <!-- Next/Back Buttons -->
                 <div style="text-align: center; margin-top: 40px;">
-                    <button class="btn btn-primary" onclick="showStep('summary')" style="padding: 18px 50px; font-size: 18px;">
+                    <button class="btn btn-primary" onclick="showStep('summary')" style="padding: 18px 50px; font-size: 18px; margin-right: 15px;">
                         <i class="fas fa-arrow-right"></i> Συνέχεια στο Πρόγραμμα
+                    </button>
+                    <button class="btn btn-outline" onclick="showStep('destination')" style="padding: 18px 30px; font-size: 18px;">
+                        <i class="fas fa-arrow-left"></i> Επιστροφή στον Προορισμό
                     </button>
                 </div>
             `}
@@ -703,7 +710,7 @@ export function getMapStepHTML() {
                 <!-- Αν δεν υπάρχει πρόγραμμα, εμφάνισε απλή πληροφορία -->
                 <div class="alert alert-info" style="margin-bottom: 20px;">
                     <i class="fas fa-info-circle"></i>
-                    <strong>Πληροφορία:</strong> Δεν έχετε δημιουργήσει πρόγραμμα στο βήμα 5.
+                    <strong>Πληροφορία:</strong> Δεν έχετε δημιουργήσει γεωγραφικό πρόγραμμα.
                     Θα δείτε όλες τις δραστηριότητες μαζί στον χάρτη.
                 </div>
                 `}
@@ -822,8 +829,11 @@ export function getMapStepHTML() {
     </div>
 </div>
 
-                <!-- ΕΠΙΣΤΡΟΦΗ -->
+                <!-- ΕΠΙΣΤΡΟΦΗ / ΣΥΝΕΧΕΙΑ -->
                 <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn btn-primary" onclick="showStep('hotel')" style="margin-right: 10px;">
+                        <i class="fas fa-arrow-right"></i> Συνέχεια στα Ξενοδοχεία
+                    </button>
                     <button class="btn btn-outline" onclick="showStep('summary')">
                         <i class="fas fa-arrow-left"></i> Επιστροφή στο Πρόγραμμα
                     </button>

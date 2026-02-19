@@ -265,7 +265,7 @@ export function setupMobileNavigation() {
 
     // Βεβαιώσου ότι το dropdown έχει όλες τις επιλογές
     if (mobileSelector.options.length === 0) {
-        const steps = ['destination', 'flight', 'hotel', 'activities', 'summary', 'map'];
+        const steps = ['destination', 'activities', 'map', 'hotel', 'flight'];
         steps.forEach(step => {
             const option = document.createElement('option');
             option.value = step;
@@ -1534,10 +1534,10 @@ export function saveManualDestination() {
     }
 
     // 🔴 ΑΛΛΑΓΗ: ΔΕΝ ΠΑΙΡΝΟΥΜΕ ΗΜΕΡΕΣ ΑΠΟ INPUT
-    // Απλά θέτουμε 0 ώστε να επιλέξει ο χρήστης στο βήμα 5
+    // Απλά θέτουμε 0 ώστε να επιλέξει ο χρήστης στο βήμα "Πρόγραμμα"
     window.state.selectedDestination = cityName;
     window.state.selectedDestinationId = cityId;
-    window.state.selectedDays = 0; // <-- ΒΑΖΟΥΜΕ 0, Ο ΧΡΗΣΤΗΣ ΘΑ ΤΙΣ ΕΠΙΛΕΞΕΙ ΣΤΟ ΒΗΜΑ 5
+    window.state.selectedDays = 0; // <-- ΒΑΖΟΥΜΕ 0, Ο ΧΡΗΣΤΗΣ ΘΑ ΤΙΣ ΕΠΙΛΕΞΕΙ ΣΤΟ ΒΗΜΑ ΠΡΟΓΡΑΜΜΑ
 
     // 🔴 ΚΑΘΑΡΙΣΜΟΣ ΔΕΔΟΜΕΝΩΝ ΠΡΟΗΓΟΥΜΕΝΗΣ ΠΟΛΗΣ
     window.state.selectedActivities = [];
@@ -1568,12 +1568,12 @@ export function saveManualDestination() {
 
     closeManualDestinationModal();
 
-    alert(`✅ Επιλέξατε: ${cityName}\n\nΣυνέχεια στις πτήσεις. Μπορείτε να ορίσετε τις μέρες στο βήμα "Πρόγραμμα".`);
+    alert(`✅ Επιλέξατε: ${cityName}\n\nΣυνέχεια στις δραστηριότητες. Μπορείτε να ορίσετε τις μέρες στο βήμα "Πρόγραμμα".`);
 
     saveState();
 
     setTimeout(() => {
-        showStep('flight');
+        showStep('activities');
     }, 1000);
 }
 

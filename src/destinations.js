@@ -379,9 +379,9 @@ export function selectDestination(destinationName, destinationId) {
         <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
             <div style="font-size: 48px; margin-bottom: 20px;">✅</div>
             <h2>Επιλέξατε: ${destinationName}</h2>
-            <p style="margin: 20px 0;">Προχωρήστε στο επόμενο βήμα για πτήσεις</p>
-            <button class="btn btn-primary" onclick="showStep('flight')">
-                <i class="fas fa-arrow-right"></i> Συνέχεια στις Πτήσεις
+            <p style="margin: 20px 0;">Προχωρήστε στο επόμενο βήμα για δραστηριότητες</p>
+            <button class="btn btn-primary" onclick="showStep('activities')">
+                <i class="fas fa-arrow-right"></i> Συνέχεια στις Δραστηριότητες
             </button>
         </div>
     `;

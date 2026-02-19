@@ -87,10 +87,10 @@
         <!-- Original select (hidden, used by existing showStep sync) -->
         <select id="mobile-step-selector" class="mobile-step-select-hidden">
             <option value="destination">1. Εύρεση Προορισμού</option>
-            <option value="flight">2. Αεροπορικά</option>
-            <option value="hotel">3. Ξενοδοχεία</option>
-            <option value="activities">4. Δραστηριότητες</option>
-            <option value="map">5. Διαδραστικός Χάρτης</option>
+            <option value="activities">2. Δραστηριότητες</option>
+            <option value="map">3. Διαδραστικός Χάρτης</option>
+            <option value="hotel">4. Ξενοδοχεία</option>
+            <option value="flight">5. Αεροπορικά</option>
         </select>
 
         <!-- ΒΗΜΑΤΑ Wizard UI (wrapper only, forwards to showStep) -->
@@ -103,17 +103,17 @@
                 <div class="vimata-item" data-step="destination" onclick="selectVimataStep('destination')">
                     <span class="vimata-num">1</span> Εύρεση Προορισμού
                 </div>
-                <div class="vimata-item" data-step="flight" onclick="selectVimataStep('flight')">
-                    <span class="vimata-num">2</span> Αεροπορικά
-                </div>
-                <div class="vimata-item" data-step="hotel" onclick="selectVimataStep('hotel')">
-                    <span class="vimata-num">3</span> Ξενοδοχεία
-                </div>
                 <div class="vimata-item" data-step="activities" onclick="selectVimataStep('activities')">
-                    <span class="vimata-num">4</span> Δραστηριότητες
+                    <span class="vimata-num">2</span> Δραστηριότητες
                 </div>
                 <div class="vimata-item" data-step="map" onclick="selectVimataStep('map')">
-                    <span class="vimata-num">5</span> Διαδραστικός Χάρτης
+                    <span class="vimata-num">3</span> Διαδραστικός Χάρτης
+                </div>
+                <div class="vimata-item" data-step="hotel" onclick="selectVimataStep('hotel')">
+                    <span class="vimata-num">4</span> Ξενοδοχεία
+                </div>
+                <div class="vimata-item" data-step="flight" onclick="selectVimataStep('flight')">
+                    <span class="vimata-num">5</span> Αεροπορικά
                 </div>
             </div>
         </div>
@@ -135,37 +135,36 @@
                         <p>Βρες την τέλεια πόλη για την οικογένειά σου</p>
                     </div>
                 </div>
-                
-                <div class="step" data-step="flight">
-                    <div class="step-icon">2</div>
-                    <div class="step-content">
-                        <h3>Αεροπορικά</h3>
-                        <p>Αναζήτηση & κράτηση πτήσεων</p>
-                    </div>
-                </div>
-                
-                <div class="step" data-step="hotel">
-                    <div class="step-icon">3</div>
-                    <div class="step-content">
-                        <h3>Ξενοδοχεία</h3>
-                        <p>Διαμονή & οικογενειακά δωμάτια</p>
-                    </div>
-                </div>
-                
+
                 <div class="step" data-step="activities">
-                    <div class="step-icon">4</div>
+                    <div class="step-icon">2</div>
                     <div class="step-content">
                         <h3>Δραστηριότητες</h3>
                         <p>Αξιοθέατα & ψυχαγωγία για όλους</p>
                     </div>
                 </div>
-                
-                               
+
                 <div class="step" data-step="map">
-                    <div class="step-icon">5</div>
+                    <div class="step-icon">3</div>
                     <div class="step-content">
                         <h3>Διαδραστικός Χάρτης</h3>
                         <p>Προβολή σημείων & δρομολόγια</p>
+                    </div>
+                </div>
+
+                <div class="step" data-step="hotel">
+                    <div class="step-icon">4</div>
+                    <div class="step-content">
+                        <h3>Ξενοδοχεία</h3>
+                        <p>Διαμονή & οικογενειακά δωμάτια</p>
+                    </div>
+                </div>
+
+                <div class="step" data-step="flight">
+                    <div class="step-icon">5</div>
+                    <div class="step-content">
+                        <h3>Αεροπορικά</h3>
+                        <p>Αναζήτηση & κράτηση πτήσεων</p>
                     </div>
                 </div>
             </div>
