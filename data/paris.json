@@ -461,7 +461,7 @@
       "restaurant": {
         "name": "JOZI BRUNCH Pantheon",
         "description": "Ένα πολύ ζεστό και πολύχρωμο καφέ, ιδανικό για πρωινό ή brunch. Σερβίρουν χειροποίητο καφέ, pancakes και τοστ με αβοκάντο.",
-        "map_url": "https://maps.app.goo.gl/Mi88qwTToBmVNdPq9"
+        "map_url": "https://maps.app.goo.gl/oLHFyLJCoenFJkbv6"
       },
       "website": "https://www.paris-pantheon.fr/en",
       "notes": [
@@ -979,7 +979,7 @@
 {
   "id": 19,
   "name": "Κρουαζιέρα στον Σηκουάνα",
-  "description": "Η εταιρία Vedettes du Pont Neuf με 6.500 κριτικές και βαθμολογία 4,4 είναι η πιο συμφέρουσα επιλογή. Το μικρότερο σκάφος και ο ζωντανός ξεναγός δημιουργούν ατμοσφαιρική εμπειρία",
+  "description": "Η εταιρία Vedettes du Pont Neuf με 6.500 κριτικές και βαθμολογία 4,4 είναι η πιο συμφέρουσα επιλογή. Το μικρότερο σκάφος και η ζωντανή ξενάγηση δημιουργούν ατμοσφαιρική εμπειρία",
   "category": "boat_tour",
   "prices": {
     "0": 0, "1": 0, "2": 0, "3": 0, "4": 7, "5": 7, "6": 7, "7": 7, "8": 7, "9": 7,
