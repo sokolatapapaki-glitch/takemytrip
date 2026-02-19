@@ -379,9 +379,9 @@
         "lng": -3.6853
       },
       "restaurant": {
-        "name": "Divino Tinto",
-        "description": "Για πολύ καλό φαγητό,αγαπημένο στην περιοχή",
-        "map_url": "https://maps.app.goo.gl/66Ubk515CQ4iA4Fa6"
+        "name": "Cafetería Restaurante IN TIME",
+        "description": "καφέ-εστιατόριο για πιο χαλαρό γεύμα σε πολύ λογικές τιμές",
+        "map_url": "https://maps.app.goo.gl/MjD9CuRRGTmVEZRW8"
       },
       "website": "https://planetmad.es/",
       "notes": [],
@@ -394,9 +394,9 @@
       "duration_hours": 1.5,
       "best_time": "any",
       "cafe": {
-        "name": "Drømme Kaffe House - Café de especialidad",
-        "description": "Είναι ιδανικό για ποιοτικό καφέ και ένα ωραίο σνακ σε ένα μοντέρνο περιβάλλον",
-        "map_url": "https://maps.app.goo.gl/hTYPW5ffirxKundF9"
+        "name": "Cafetería Restaurante IN TIME",
+        "description": "καφέ-εστιατόριο για πιο χαλαρό γεύμα σε πολύ λογικές τιμές",
+        "map_url": "https://maps.app.goo.gl/MjD9CuRRGTmVEZRW8"
       }
     },
     {
@@ -540,9 +540,9 @@
         "lng": -3.7584
       },
       "restaurant": {
-        "name": "Restaurante Zoo Madrid",
-        "description": "",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Restaurante+Zoo+Madrid"
+        "name": "El Urogallo I Restaurante Casa de Campo",
+        "description": "Κλασικό εστιατόριο στη Casa de Campo με μερίδες από περίπου 10 € στα ορεκτικά, ουσιαστικά παραδοσιακές ισπανικές γεύσεις και μεγάλη μερίδα φαγητού.",
+        "map_url": "https://maps.app.goo.gl/zpuA3oQ21ke7w2by7"
       },
       "website": "https://www.zoomadrid.com/",
       "notes": [
@@ -558,9 +558,9 @@
       "duration_hours": 4,
       "best_time": "morning",
       "cafe": {
-        "name": "Casa de Campo Café",
-        "description": "park café",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Casa+de+Campo+Cafe+Madrid"
+        "name": "Café del Lago",
+        "description": "Καφέ - εστιατόριο με θέα στη λίμνη",
+        "map_url": "https://maps.app.goo.gl/XHZcwVk3rS7ppynb7"
       }
     },
     {
@@ -731,7 +731,7 @@
     {
       "id": 14,
       "name": "Parque Warner Madrid",
-      "description": "Θεματικό πάρκο με χαρακτήρες Warner Bros. Βρίσκεται εκτός πόλης (~25χλμ).Κατάλληλο απο 3 ετών και πάνω, υπάρχει ειδική ζώνη για τα μικρά.",
+      "description": "Θεματικό πάρκο με χαρακτήρες Warner Bros. Βρίσκεται εκτός πόλης (~25χλμ).Κατάλληλο απο 3 ετών και πάνω, υπάρχει ειδική ζώνη για τα μικρά. Ανοιχτό από Μάρτιο έως αρχές Ιανουαρίου",
       "category": "themepark",
       "prices": {
         "0": 0,
@@ -761,9 +761,9 @@
         "lng": -3.5931
       },
       "restaurant": {
-        "name": "El Rancho",
-        "description": "Eντός του πάρκου με αμερικανικό στυλ φαγητού (κυρίως κρέατα και grill)",
-        "map_url": "https://maps.app.goo.gl/j9u1AJSs8hz9urDX8"
+        "name": "Hollywood Hot Dogs",
+        "description": "Eντός του πάρκου.",
+        "map_url": "https://maps.app.goo.gl/BkSbwcKyeYThg6nf8"
       },
       "website": "https://www.parquewarner.com/",
       "notes": [
@@ -873,9 +873,9 @@
         "lng": -3.6883
       },
       "restaurant": {
-        "name": "Tony Roma's",
-        "description": "Eίναι μια κλασική επιλογή για όσους αγαπούν το αμερικάνικο BBQ. Πιο οικονομική λύση από τα εστιατόρια εντός του γηπέδου",
-        "map_url": "https://maps.app.goo.gl/EdnSqbr1gVtA9hk46"
+        "name": "Bar La Huella",
+        "description": "Μεσογειακή κουζίνα.Πιο οικονομική λύση από τα εστιατόρια εντός του γηπέδου",
+        "map_url": "https://maps.app.goo.gl/X4uJV82nfWamuLJa9"
       },
       "website": "https://www.realmadrid.com/",
       "notes": [
@@ -1169,9 +1169,9 @@
       "best_time": "any",
       "currentlyClosed": true,
       "cafe": {
-        "name": "Starbucks",
-        "description": "Απέχει μόλις 4-5 λεπτά με τα πόδια (περίπου 350 μέτρα) από το Casa Mingo. το προτεινόμενο για φαγητό",
-        "map_url": "https://maps.app.goo.gl/kbLr3GZybNH73PFR8"
+        "name": "Cafetería Teleférico",
+        "description": "Αν πάρετε το τελεφερίκ στον σταθμό άφιξης (Casa de Campo) αυτή η καφετέρια έχει την καλύτερη πανοραμική θέα της Μαδρίτης.",
+        "map_url": "https://maps.app.goo.gl/DuAiQdUDtMaW7ETH9"
       }
     }
   ]
