@@ -65,12 +65,12 @@
       "restaurant": {
         "name": "Ziya Baba Türk Mutfağı Slow food kebap Dürüm wrap& Anatolian brekfast best food",
         "description": "Μικρό, οικογενειακό εστιατόριο για ανατολίτικη κουζίνα, με εξαιρετικές τιμές",
-        "map_url": "https://maps.app.goo.gl/XFrqxNv2vJwkRH6G7"
+        "map_url": "https://maps.app.goo.gl/E8scPrWF9XzKGg1x7"
       },
       "cafe": {
-        "name": "Dervis Cafe 2",
-        "description": "παραδοσιακά γλυκά & τούρκικος καφές",
-        "map_url": "https://maps.app.goo.gl/tUC68FyGLFq4ou2U8ahmet+Istanbul"
+        "name": "Kahverengi Roastery Sultanahmet",
+        "description": "Αν ψάχνετε για πραγματικά καλό καφέ φρεσκοκαβουρδισμένο, αυτό είναι το ιδανικό σημείο.",
+        "map_url": "https://maps.app.goo.gl/PTuheQSgRyiWTMwy5"
       }
     },
     {
@@ -179,14 +179,14 @@
       "best_time": "afternoon",
       "eveningPrice": 49,
       "restaurant": {
-        "name": "Ziya Baba Türk Mutfağı Slow food kebap Dürüm wrap& Anatolian brekfast best food",
-        "description": "Εξειδικεύεται στο παραδοσιακό τουρκικό φαγητό.Έχει βαθμολογία 4.8 αστέρια.Δοκιμάστε Dürüm (τυλιχτά) και το κεμπάπ του. Πολύ καλές τιμές",
-        "map_url": "https://maps.app.goo.gl/pCGxWAfyykMcFUbv5"
+        "name": "Santa Basilica Cafe & Restaurant",
+        "description": "Ένας πολύ ζεστός χώρος με παραδοσιακές γεύσεις και πολύ υψηλή βαθμολογία. Βρίσκεται σε ένα από τα γραφικά στενά γύρω από το μνημείο.",
+        "map_url": "https://maps.app.goo.gl/FKoDfr781kVqL3U87"
       },
       "cafe": {
-        "name": "Dervis Cafe 2",
-        "description": "Μόλις 5-6 λεπτά με τα πόδια από την Κινστέρνα.Έχει έναν πολύ ήσυχο εσωτερικό κήπο και οι τιμές του για καφέ και τσάι είναι πολύ λογικές για το κέντρο του Sultanahmet.",
-        "map_url": "https://maps.app.goo.gl/tUC68FyGLFq4ou2U8"
+        "name": "NO:12 Coffee Sultanahmet",
+        "description": "Ένα από τα πιο κοντινά καφέ με εξαιρετικό specialty καφέ. Είναι μικρό, μοντέρνο και πολύ προσεγμένο.",
+        "map_url": "https://maps.app.goo.gl/vpmmFhARGhQbrBPw8"
       }
     },
     {
@@ -523,19 +523,19 @@
       "best_time": "afternoon",
       "restaurant": {
         "name": "Karaköy Güllüoğlu Yönetim Binası",
-        "description": "Για κάτι γρήγορο, ποιοτικό και στα όρθια ή σε απλά τραπεζάκια είναι ιδανικό , σε πολυ καλές τιμές και σε απόσταση αναπνοής. ",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Karakoy+Gulluoglu+Istanbul"
+        "description": "Για κάτι γρήγορο, ποιοτικό και στο χέρι ή σε απλά τραπεζάκια είναι ιδανικό , σε πολυ καλές τιμές και σε απόσταση αναπνοής. ",
+        "map_url": "https://maps.app.goo.gl/ipPM5NB8STdP2DPs6"
       },
       "cafe": {
         "name": "Karaköy Güllüoğlu Yönetim Binası",
-        "description": "baklava & coffee",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=Karakoy+Gulluoglu+Istanbul"
+        "description": "Για κάτι γρήγορο, ποιοτικό και στο χέρι ή σε απλά τραπεζάκια είναι ιδανικό , σε πολυ καλές τιμές και σε απόσταση αναπνοής.",
+        "map_url": "https://maps.app.goo.gl/ipPM5NB8STdP2DPs6"
       }
     },
     {
       "id": 10,
       "name": "Ενυδρείο Κωνσταντινούπολης (Istanbul Aquarium)",
-      "description": "Πολύ εντυπωσιακό και προσεγμένο, σίγουρα αξίζει μία επίσκεψη. Υπάρχουν κι άλλα μικρότερα, βεβαιωθείτε ότι θα πάτε στο ενυδρείο της Κωνσταντινούπολης.Ιδανικό για κάθε ηλικία",
+      "description": "Θεωρείται ένα από τα καλύτερα θεματικά ενυδρεία στον κόσμο Υπάρχουν κι άλλα μικρότερα, βεβαιωθείτε ότι θα πάτε στο σωστό. Είναι λίγο έξω από την πόλη. Ιδανικό για κάθε ηλικία",
       "category": "aquarium",
       "prices": {
         "0": 0,
@@ -637,12 +637,12 @@
       "best_time": "afternoon",
       "restaurant": {
         "name": "Maran Restaurant",
-        "description": "Μια πολύ καλή επιλογή (βαθμολογία 4.8) σε απόσταση αναπνοής από την είσοδο.",
+        "description": "Μια πολύ καλή επιλογή (βαθμολογία 4.8).",
         "map_url": "https://maps.app.goo.gl/Lszi8g4HCz45XtP8A"
       },
       "cafe": {
           "name": "Maran Restaurant",
-        "description": "Μια πολύ καλή επιλογή (βαθμολογία 4.8) σε απόσταση αναπνοής από την είσοδο. Ιδανικό και για καφέ",
+        "description": "Μια πολύ καλή επιλογή (βαθμολογία 4.8). Ιδανικό και για καφέ",
         "map_url": "https://maps.app.goo.gl/Lszi8g4HCz45XtP8A"
       }
     },
@@ -748,9 +748,9 @@
       "best_time": "afternoon",
       "freeActivity": true,
       "restaurant": {
-        "name": "TurguT Restaurant Gülhane",
-        "description": "Στα 2-3 λεπτά περπάτημα, φημίζεται για την εξαιρετική εξυπηρέτηση και τις τίμιες τιμές του. Έχει βαθμολογία 4.9.",
-        "map_url": "https://maps.app.goo.gl/gbvXL6DsoMJN7YvP9"
+        "name": "Gülhane Şark Sofrası",
+        "description": "Βρίσκεται ακριβώς στην έξοδο του πάρκου Gülhane και είναι μια πολύ καλή λύση για παραδοσιακό φαγητό σε λογικές τιμές.",
+        "map_url": "https://maps.app.goo.gl/riCLHviec7pJvR6B6"
       },
       "cafe": {
         "name": "EHLİ KEYF CAFE",
