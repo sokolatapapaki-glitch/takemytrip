@@ -269,9 +269,9 @@
         "lng": -3.6385
       },
       "restaurant": {
-        "name": "Restaurante Daily",
-        "description": "Είναι μια εξαιρετική επιλογή για οικογένειες, ποιοτικό φαγητό σε λογικές τιμές",
-        "map_url": "https://maps.app.goo.gl/Bj9pdToqAn5ACsfo7"
+        "name": "Bar Restaurante Geospain",
+        "description": "Από τις καλύτερες επιλογές στην περιοχή με βαθμολογία (4.9/5).Γνωστό για το καλό του menú del día (μενού ημέρας), ο πιο οικονομικός τρόπος για να φάτε στην Ισπανία.",
+        "map_url": "https://maps.app.goo.gl/uYKRhHjQrBgfE8tT6"
       },
       "website": "https://www.muncyt.es/",
       "notes": [],
@@ -286,9 +286,9 @@
       "best_time": "afternoon",
       "freeActivity": true,
       "cafe": {
-        "name": "Manolo Bakes",
-        "description": "Διάσημο για τα Manolitos (μικρά κρουασάν). Είναι η καλύτερη στάση για γλυκό και καφέ στην περιοχή.",
-        "map_url": "https://maps.app.goo.gl/nt7tdWHmkekfUQ1j6"
+        "name": "La Especial Moraleja churrería & cafetería",
+        "description": "Αυτή είναι ίσως η καλύτερη επιλογή αν θέλετε κάτι αυθεντικό. Είναι γνωστό για τα churros και τους λουκουμάδες του (porras), μια κλασική ισπανική εμπειρία.",
+        "map_url": "https://maps.app.goo.gl/Tw6CuH82qVkJhEV9A"
       }
     },
     {
@@ -432,9 +432,9 @@
         "lng": -3.6902
       },
       "restaurant": {
-        "name": "VIPS",
-        "description": "Είναι η κλασική οικογενειακή επιλογή στην Ισπανία. Είναι εξαιρετικά προετοιμασμένοι για παιδιά, έχουν πάντα παιδικά καθίσματα, ειδικό μενού για μικρούς και πολύ χώρο για καρότσια.",
-        "map_url": "https://maps.app.goo.gl/PXJRjkWuAX7Ywyvj9"
+        "name": "Escuela de Ingenieros Industriales",
+        "description": "Ακριβώς δίπλα στο μουσείο βρίσκεται η Escuela de Ingenieros Industriales (Πολυτεχνική Σχολή). Η καφετέρια της σχολής είναι ανοιχτή στο κοινό και είναι το πιο οικονομικό σημείο στην περιοχή για φαγητό ή καφέ, σε απόσταση μόλις 1 λεπτού",
+        "map_url": "https://maps.app.goo.gl/3poNS8QhV7Hm8dzx5"
       },
       "website": "https://www.mncn.csic.es/",
       "notes": [],
@@ -448,9 +448,9 @@
       "duration_hours": 2.5,
       "best_time": "afternoon",
       "cafe": {
-        "name": "La Deseada Specialty Coffee",
-        "description": "Ένα από τα καλύτερα μέρη στην περιοχή. Είναι μικρό και cozy, με πολύ ποιοτικό καφέ και ωραία σνακ.",
-        "map_url": "https://maps.app.goo.gl/5wwtSK3NrzREySCf8"
+       "name": "Escuela de Ingenieros Industriales",
+        "description": "Ακριβώς δίπλα στο μουσείο βρίσκεται η Escuela de Ingenieros Industriales (Πολυτεχνική Σχολή). Η καφετέρια της σχολής είναι ανοιχτή στο κοινό και είναι το πιο οικονομικό σημείο στην περιοχή για φαγητό ή καφέ, σε απόσταση μόλις 1 λεπτού",
+        "map_url": "https://maps.app.goo.gl/3poNS8QhV7Hm8dzx5"
       }
     },
     {
@@ -622,7 +622,7 @@
     {
       "id": 12,
       "name": "Atlantis Aquarium (Ενυδρείο)",
-      "description": "Ενυδρείο στο εμπορικό X-Madrid.Κατάλληλο για κάθε ηλικία",
+      "description": "Ενυδρείο στο εμπορικό Xanadu.Κατάλληλο για κάθε ηλικία",
       "category": "aquarium",
       "prices": {
         "0": 0,
@@ -648,13 +648,13 @@
         "adult": 9.9
       },
       "location": {
-        "lat": 40.3444,
-        "lng": -3.8375
+        "lat": 40.299534,
+        "lng": -3.923605
       },
       "restaurant": {
-        "name": "Food Court X-Madrid",
-        "description": "εντός του εμπορικού κέντρου ,  πολλές επιλογές",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=X-Madrid+food+court"
+        "name": "Ginos",
+        "description": "εντός του εμπορικού κέντρου ,  ιταλικές γεύσεις",
+        "map_url": "https://maps.app.goo.gl/yXLp2qmyYYc49dbq6"
       },
       "website": "https://atlantisaquarium-madrid.es/",
       "notes": [],
@@ -668,9 +668,9 @@
       "duration_hours": 2,
       "best_time": "any",
       "cafe": {
-         "name": "Food Court X-Madrid",
-        "description": "εντός του εμπορικού κέντρου ,πολλές επιλογές",
-        "map_url": "https://www.google.com/maps/search/?api=1&query=X-Madrid+food+court"
+         "name": "Manolo Bakes",
+        "description": "Είναι ίσως το πιο δημοφιλές σημείο για καφέ αυτή τη στιγμή στην Ισπανία, γνωστό για τα περίφημα Manolitos (μικρά κρουασάν).",
+        "map_url": "https://maps.app.goo.gl/59popRfFrZw3swze6"
       }
     },
     {
@@ -987,7 +987,7 @@
         "description": "Πρόκειται για μια πολύ δημοφιλή αλυσίδα στην Ισπανία, η οποία αποτελεί την ιδανική λύση για κοντά και οικονομικά.",
         "map_url": "https://maps.app.goo.gl/LdqdN6FXoyPziPSa7"
       },
-      "website": "https://sweetspace.es/",
+      "website": "https://www.sweetspace.com/",
       "notes": [
         "👨‍👩‍👧‍👦 Οικογενειακό πακέτο (2+2): 40€"
       ],
