@@ -35,6 +35,10 @@ export const STEP_ORDER = [
 // Steps that appear in the sidebar / mobile nav (summary is hidden)
 export const VISIBLE_STEPS = STEP_ORDER.filter(s => s !== 'summary');
 
+// Module-level tracking of the active step.
+// Updated by showStep() — no dependency on window.state.
+let currentStep = 'destination';
+
 /**
  * Return the step that comes AFTER stepName in STEP_ORDER, or null if last.
  */
@@ -54,20 +58,22 @@ export function getPrevStep(stepName) {
 }
 
 /**
- * Navigate to the next step based on window.state.currentStep.
+ * Navigate to the next step.
+ * Reads the module-level currentStep variable — no dependency on window.state.
  * Called from HTML onclick handlers: goToNextStep()
  */
 export function goToNextStep() {
-    const next = getNextStep(window.state.currentStep);
+    const next = getNextStep(currentStep);
     if (next) showStep(next);
 }
 
 /**
- * Navigate to the previous step based on window.state.currentStep.
+ * Navigate to the previous step.
+ * Reads the module-level currentStep variable — no dependency on window.state.
  * Called from HTML onclick handlers: goPrevStep()
  */
 export function goPrevStep() {
-    const prev = getPrevStep(window.state.currentStep);
+    const prev = getPrevStep(currentStep);
     if (prev) showStep(prev);
 }
 
@@ -581,13 +587,15 @@ export function setupStepNavigation() {
 export function showStep(stepName) {
     console.log(`📱 Εμφάνιση βήματος: ${stepName}`);
 
-    // Safety check: ensure state exists
-    if (!window.state) {
-        console.error('❌ State not initialized in showStep!');
-        return;
+    // Always update the module-level variable — this is the authoritative source
+    // used by goToNextStep() and goPrevStep(). No dependency on window.state.
+    currentStep = stepName;
+
+    // Mirror into window.state if it exists (for other parts of the app that read it)
+    if (window.state) {
+        window.state.currentStep = stepName;
     }
 
-    window.state.currentStep = stepName;
     updateStepUI(stepName);
     loadStepContent(stepName);
     const mobileSelector = document.getElementById('mobile-step-selector');
