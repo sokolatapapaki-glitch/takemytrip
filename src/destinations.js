@@ -380,7 +380,7 @@ export function selectDestination(destinationName, destinationId) {
             <div style="font-size: 48px; margin-bottom: 20px;">✅</div>
             <h2>Επιλέξατε: ${destinationName}</h2>
             <p style="margin: 20px 0;">Προχωρήστε στο επόμενο βήμα για δραστηριότητες</p>
-            <button class="btn btn-primary" onclick="showStep('activities')">
+            <button class="btn btn-primary" onclick="goToNextStep()">
                 <i class="fas fa-arrow-right"></i> Συνέχεια στις Δραστηριότητες
             </button>
         </div>

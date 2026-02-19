@@ -20,6 +20,57 @@ import {
 } from './destinations.js';
 import { getCityCoordinates } from './data.js';
 
+// ==================== CENTRAL STEP ENGINE ====================
+// Single source of truth for the step order.
+// summary is listed here as the hidden intermediate step between activities and map.
+export const STEP_ORDER = [
+    'destination',
+    'activities',
+    'summary',
+    'map',
+    'hotel',
+    'flight'
+];
+
+// Steps that appear in the sidebar / mobile nav (summary is hidden)
+export const VISIBLE_STEPS = STEP_ORDER.filter(s => s !== 'summary');
+
+/**
+ * Return the step that comes AFTER stepName in STEP_ORDER, or null if last.
+ */
+export function getNextStep(stepName) {
+    const idx = STEP_ORDER.indexOf(stepName);
+    if (idx === -1 || idx === STEP_ORDER.length - 1) return null;
+    return STEP_ORDER[idx + 1];
+}
+
+/**
+ * Return the step that comes BEFORE stepName in STEP_ORDER, or null if first.
+ */
+export function getPrevStep(stepName) {
+    const idx = STEP_ORDER.indexOf(stepName);
+    if (idx <= 0) return null;
+    return STEP_ORDER[idx - 1];
+}
+
+/**
+ * Navigate to the next step based on window.state.currentStep.
+ * Called from HTML onclick handlers: goToNextStep()
+ */
+export function goToNextStep() {
+    const next = getNextStep(window.state.currentStep);
+    if (next) showStep(next);
+}
+
+/**
+ * Navigate to the previous step based on window.state.currentStep.
+ * Called from HTML onclick handlers: goPrevStep()
+ */
+export function goPrevStep() {
+    const prev = getPrevStep(window.state.currentStep);
+    if (prev) showStep(prev);
+}
+
 // ==================== STATE VALIDATOR ====================
 const StateValidator = {
     validateFamilyMember(member) {
@@ -265,7 +316,7 @@ export function setupMobileNavigation() {
 
     // Βεβαιώσου ότι το dropdown έχει όλες τις επιλογές
     if (mobileSelector.options.length === 0) {
-        const steps = ['destination', 'activities', 'map', 'hotel', 'flight'];
+        const steps = VISIBLE_STEPS;
         steps.forEach(step => {
             const option = document.createElement('option');
             option.value = step;
@@ -1573,7 +1624,7 @@ export function saveManualDestination() {
     saveState();
 
     setTimeout(() => {
-        showStep('activities');
+        showStep(getNextStep('destination'));
     }, 1000);
 }
 

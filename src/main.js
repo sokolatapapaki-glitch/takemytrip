@@ -114,6 +114,12 @@ import {
 
 // Core navigation and initialization
 import {
+    STEP_ORDER,
+    VISIBLE_STEPS,
+    getNextStep,
+    getPrevStep,
+    goToNextStep,
+    goPrevStep,
     initApp,
     setupMobileNavigation,
     loadSavedData,
@@ -220,6 +226,14 @@ window.resetFilters = resetFilters;
 window.showPopularDestinations = showPopularDestinations;
 window.showBudgetDestinations = showBudgetDestinations;
 window.showFamilyDestinations = showFamilyDestinations;
+
+// Step engine - central step order and dynamic navigation
+window.STEP_ORDER = STEP_ORDER;
+window.VISIBLE_STEPS = VISIBLE_STEPS;
+window.getNextStep = getNextStep;
+window.getPrevStep = getPrevStep;
+window.goToNextStep = goToNextStep;
+window.goPrevStep = goPrevStep;
 
 // Core functions - Navigation
 window.showStep = showStep;
