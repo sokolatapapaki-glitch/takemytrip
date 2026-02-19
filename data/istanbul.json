@@ -350,9 +350,9 @@
       "duration_hours": 1,
       "best_time": "evening",
       "restaurant": {
-        "name": "Dürümzade",
-        "description": "Είναι από τα πιο οικονομικά και νόστιμα γεύματα που μπορείτε να φάτε στην περιοχή Beyoğlu.",
-        "map_url": "https://maps.app.goo.gl/8UieWSrNcqtDzas97"
+        "name": "Galata Kitchen",
+        "description": "Ίσως η καλύτερη value for money επιλογή στην περιοχή. Σερβίρει σπιτικό, παραδοσιακό τούρκικο φαγητό",
+        "map_url": "https://maps.app.goo.gl/BiZ12fUUCSmkCPmv5"
       },
       "cafe": {
         "name": "Viyana Kahvesi Galata Tower",
@@ -649,7 +649,7 @@
     {
       "id": 12,
       "name": "Vialand (Θεματικό Πάρκ)",
-      "description": "Ένα μεγάλο λούνα παρκ με τρενάκια, εστίαση, καφέ.Κατάλληλο από 3 ετών και πάνω.",
+      "description": "Ένα μεγάλο λούνα παρκ με τρενάκια, εστίαση, καφέ.Κατάλληλο από 3 ετών και πάνω. Προσοχή, λειτουργεί από Μάρτιο έως Οκτώβριο και κλείνει κατά τους χειμερινούς μήνες",
       "category": "themepark",
       "prices": {
         "0": 0,
