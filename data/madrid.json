@@ -596,9 +596,9 @@
         "lng": -3.6026
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Restaurante Trasgu",
+        "description": "Αν δεν θέλετε να φάτε σε εστιατόριο εντός του Faunia, είναι ένα πιο προσεγμένο εστιατόριο με πολύ ωραίο περιβάλλον, ιδανικό αν θέλετε κάτι πιο κάθιστο και ποιοτικό. (4.3/5)",
+        "map_url": "https://maps.app.goo.gl/ZeBvSYuKifxwY9je7"
       },
       "website": "https://www.faunia.es/",
       "notes": [
@@ -614,9 +614,9 @@
       "duration_hours": 4,
       "best_time": "any",
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Starbucks",
+        "description": "Starbucks που βρίσκεται στο εμπορικό κέντρο Alegra, ακριβώς δίπλα στο Micropolix",
+        "map_url": "https://maps.app.goo.gl/AGSyKaGz9YeFMkUx7"
       }
     },
     {
@@ -706,9 +706,9 @@
         "lng": -3.7572
       },
       "restaurant": {
-        "name": "Mercado de San Isidro",
-        "description": "εντός του πάρκου",
-        "map_url": "https://maps.app.goo.gl/mjASDbthz6reV6Tk7"
+        "name": "El Urogallo I Restaurante Casa de Campo",
+        "description": "Ένα από τα πιο γνωστά εστιατόρια της περιοχής με πολύ καλά κρεατικά και tapas. Λίγο έξω απο το πάρκο",
+        "map_url": "https://maps.app.goo.gl/VVs3firGNaSVHkK2A"
       },
       "website": "https://www.parquedeatracciones.es/",
       "notes": [
