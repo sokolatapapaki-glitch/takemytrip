@@ -89,8 +89,6 @@
             <option value="destination">1. Εύρεση Προορισμού</option>
             <option value="activities">2. Δραστηριότητες</option>
             <option value="map">3. Διαδραστικός Χάρτης</option>
-            <option value="hotel">4. Ξενοδοχεία</option>
-            <option value="flight">5. Αεροπορικά</option>
         </select>
 
         <!-- ΒΗΜΑΤΑ Wizard UI (wrapper only, forwards to showStep) -->
@@ -108,12 +106,6 @@
                 </div>
                 <div class="vimata-item" data-step="map" onclick="selectVimataStep('map')">
                     <span class="vimata-num">3</span> Διαδραστικός Χάρτης
-                </div>
-                <div class="vimata-item" data-step="hotel" onclick="selectVimataStep('hotel')">
-                    <span class="vimata-num">4</span> Ξενοδοχεία
-                </div>
-                <div class="vimata-item" data-step="flight" onclick="selectVimataStep('flight')">
-                    <span class="vimata-num">5</span> Αεροπορικά
                 </div>
             </div>
         </div>
@@ -152,21 +144,6 @@
                     </div>
                 </div>
 
-                <div class="step" data-step="hotel">
-                    <div class="step-icon">4</div>
-                    <div class="step-content">
-                        <h3>Ξενοδοχεία</h3>
-                        <p>Διαμονή & οικογενειακά δωμάτια</p>
-                    </div>
-                </div>
-
-                <div class="step" data-step="flight">
-                    <div class="step-icon">5</div>
-                    <div class="step-content">
-                        <h3>Αεροπορικά</h3>
-                        <p>Αναζήτηση & κράτηση πτήσεων</p>
-                    </div>
-                </div>
             </div>
             
             <div class="sidebar-footer">

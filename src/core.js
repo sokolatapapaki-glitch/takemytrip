@@ -6,8 +6,6 @@ import { saveState, showToast, showSavedTripModal, closeSavedTripModal } from '.
 import {
     getStepName,
     getDestinationStepHTML,
-    getFlightStepHTML,
-    getHotelStepHTML,
     getActivitiesStepHTML,
     getSummaryStepHTML,
     getMapStepHTML
@@ -27,9 +25,7 @@ export const STEP_ORDER = [
     'destination',
     'activities',
     'summary',
-    'map',
-    'hotel',
-    'flight'
+    'map'
 ];
 
 // Steps that appear in the sidebar / mobile nav (summary is hidden)
@@ -517,11 +513,6 @@ export function updateSidebarCompletionIndicators() {
             case 'destination':
                 isCompleted = window.state.selectedDestination && window.state.selectedDays > 0;
                 break;
-            case 'flight':
-            case 'hotel':
-                // These are optional external links, always show as available
-                isCompleted = false;
-                break;
             case 'activities':
                 isCompleted = window.state.selectedActivities.length > 0;
                 break;
@@ -644,13 +635,7 @@ export function loadStepContent(stepName) {
             stepContent.innerHTML = getDestinationStepHTML();
             setupDestinationStep();
             break;
-        case 'flight':
-            stepContent.innerHTML = getFlightStepHTML();
-            break;
-        case 'hotel':
-            stepContent.innerHTML = getHotelStepHTML();
-            break;
-       case 'activities':
+        case 'activities':
     stepContent.innerHTML = getActivitiesStepHTML();
     setupActivitiesStep();
     break;
