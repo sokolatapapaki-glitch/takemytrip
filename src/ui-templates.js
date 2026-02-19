@@ -114,7 +114,7 @@ export function getDestinationStepHTML() {
     `;
 }
 
-// ==================== STEP 2: FLIGHT ====================
+// ==================== STEP 5: FLIGHT ====================
 export function getFlightStepHTML() {
     return `
         <div class="card">
@@ -162,7 +162,7 @@ export function getFlightStepHTML() {
     `;
 }
 
-// ==================== STEP 3: HOTEL ====================
+// ==================== STEP 4: HOTEL ====================
 export function getHotelStepHTML() {
     return `
         <div class="card">
@@ -357,7 +357,7 @@ export function getHotelStepHTML() {
     `;
 }
 
-// ==================== STEP 4: ACTIVITIES ====================
+// ==================== STEP 2: ACTIVITIES ====================
 export function getActivitiesStepHTML() {
     return `
         <div class="card">
@@ -546,7 +546,7 @@ export function getActivitiesStepHTML() {
     `;
 }
 
-// ==================== STEP 5: SUMMARY ====================
+// ==================== HIDDEN STEP: SUMMARY / PROGRAM ====================
 export function getSummaryStepHTML() {
     return `
         <div class="card">
@@ -643,7 +643,7 @@ export function getSummaryStepHTML() {
     `;
 }
 
-// ==================== STEP 6: MAP (FIXED) ====================
+// ==================== STEP 3: MAP ====================
 export function getMapStepHTML() {
     return `
         <div class="card">

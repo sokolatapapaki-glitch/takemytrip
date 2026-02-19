@@ -1162,7 +1162,7 @@ export async function setupActivitiesStep() {
     }
 }
 
-// ==================== STEP 5: SETUP SUMMARY ====================
+// ==================== SETUP SUMMARY (HIDDEN STEP: PROGRAM) ====================
 export function setupSummaryStep() {
     console.log('📋 Ρύθμιση summary βήματος');
 
