@@ -1134,7 +1134,11 @@
         "lat": 47.5143,
         "lng": 19.0802
       },
-      "restaurant": null,
+       "restaurant": {
+  "name": "Paprika Vendéglő",
+  "description": "Είναι ένα πολύ παραδοσιακό ουγγρικό εστιατόριο φιλικό προς τις οικογένειες και οι τιμές του θεωρούνται λογικές.  Επειδή είναι εξαιρετικά δημοφιλές θέλει τηλεφωνική κράτηση αλλά αξίζει! ",
+  "map_url": "https://maps.app.goo.gl/UzrG3yuL2ZkdzENe6"
+    },
       "website": "https://www.tripadvisor.com.gr/Attraction_Review-g274887-d23793047-Reviews-Varosligeti_Nagyjatszoter_The_Main_Playground-Budapest_Central_Hungary.html",
       "notes": [
         "ΔΩΡΕΑΝ ΓΙΑ ΟΛΟΥΣ"
@@ -1145,7 +1149,11 @@
       "freeActivity": true,
       "activityType": "playground",
       "minAge": null,
-      "cafe": null
+      "cafe": {
+        "name": "Léghajó Kert",
+        "description": "Καφέ, αναψυκτικά, σνακ και απλά γεύματα σε λογικές τιμές. Το όνομά του παραπέμπει στο μεγάλο αερόστατο της παιδικής χαράς.",
+        "map_url": "https://maps.app.goo.gl/xxcyomGzi1XPdH9Y6"
+          }
     },
     {
       "id": 29,
@@ -1161,7 +1169,11 @@
         "lat": 47.4864,
         "lng": 19.0407
       },
-      "restaurant": null,
+       "restaurant": {
+  "name": "Bartók - Reggel, Délben, Este",
+  "description": "Είναι ένα πολύ ζωντανό και μοντέρνο café-bistro που λειτουργεί από το πρωί μέχρι το βράδυ.",
+  "map_url": "https://maps.app.goo.gl/VLJEBdfzzCBA6pFS9"
+    },
       "website": "https://welovebudapest.com/en/venue/gellert-hill-slide-park/",
       "notes": [
         "ΔΩΡΕΑΝ ΓΙΑ ΟΛΟΥΣ"
@@ -1172,7 +1184,11 @@
       "freeActivity": true,
       "activityType": "playground",
       "minAge": null,
-      "cafe": null
+      "cafe": {
+        "name": "Bartók - Reggel, Délben, Este",
+  "description": "Είναι ένα πολύ ζωντανό και μοντέρνο café-bistro που λειτουργεί από το πρωί μέχρι το βράδυ.",
+  "map_url": "https://maps.app.goo.gl/VLJEBdfzzCBA6pFS9"
+          }
     },
     {
       "id": 30,
@@ -1188,7 +1204,11 @@
         "lat": 47.4988,
         "lng": 19.0534
       },
-      "restaurant": null,
+       "restaurant": {
+  "name": "Franziska - Buda",
+  "description": "Καταπληκτικό καφέ, υγιεινά bowls, pancakes, σάντουιτς και φανταστικά γλυκά.",
+  "map_url": "https://maps.app.goo.gl/iznowPuqdF9iwdwy7"
+    },
       "website": "https://welovebudapest.com/en/venue/rumini-playground/",
       "notes": [
         "ΔΩΡΕΑΝ ΓΙΑ ΟΛΟΥΣ"
@@ -1199,7 +1219,11 @@
       "freeActivity": true,
       "activityType": "playground",
       "minAge": null,
-      "cafe": null
+      "cafe": {
+        "name": "Franziska - Buda",
+  "description": "Καταπληκτικό καφέ, υγιεινά bowls, pancakes, σάντουιτς και φανταστικά γλυκά.",
+  "map_url": "https://maps.app.goo.gl/iznowPuqdF9iwdwy7"
+          }
     },
     {
       "id": 31,
@@ -1215,7 +1239,11 @@
         "lat": 47.4862,
         "lng": 19.0415
       },
-      "restaurant": null,
+       "restaurant": {
+  "name": "Búsuló Juhász",
+  "description": "Είναι η πιο κοντινή επιλογή στην παιδική χαρά με τα μολύβια όμως με πιο ακριβές τιμές. Για κάτι πιο οικονομικό μπορείτε να επισκεφτείτε το Bartók - Reggel, Délben, Este",
+  "map_url": "https://maps.app.goo.gl/KnTXP9mcrFMuw8CY8"
+    },
       "website": "https://welovebudapest.com/en/venue/cerka-firka-playground/",
       "notes": [
         "ΔΩΡΕΑΝ ΓΙΑ ΟΛΟΥΣ"
