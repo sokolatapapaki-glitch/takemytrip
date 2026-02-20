@@ -478,7 +478,7 @@
     },
     {
       "id": 9,
-      "name": "Daytime Sightseeing Cruise (1 ώρα)",
+      "name": "Daytime Sightseeing Cruise ",
       "description": "Γρήγορη και οικονομική βόλτα στον Δούναβη (~1 ώρα). Χωρίς φαγητό/ποτό.",
       "category": "cruise",
       "prices": {
@@ -534,7 +534,7 @@
     },
     {
       "id": 10,
-      "name": "Evening / Sunset Cocktail Cruise (1-1.5 ώρες)",
+      "name": "Evening / Sunset Cocktail Cruise ",
       "description": "Κρουαζιέρα με ποτό/ποτά, νυχτερινή θέα της πόλης, ρομαντική ατμόσφαιρα.",
       "category": "cruise",
       "prices": {
