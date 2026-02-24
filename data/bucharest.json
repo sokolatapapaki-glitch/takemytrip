@@ -1086,7 +1086,17 @@
       ],
       "duration_hours": 3.5,
       "best_time": "any",
-      "emoji": "🏙️"
+      "emoji": "🏙️",
+      "restaurant": {
+        "name": "City Grill Covaci",
+        "description": "Είναι από τις πιο value for money αλυσίδες. Θα φάτε καλά χωρίς να νιώσετε ότι πληρώνετε τουριστικό καπέλο.",
+        "map_url": "https://maps.app.goo.gl/4b4hiYNMeiQHvgiX8"
+      },
+      "cafe": {
+        "name": "Saint Roastery Baneasa",
+        "description": "Είναι specialty coffee shop με απίστευτη ποιότητα. Αν είστε «λάτρεις» του καλού καφέ, αυτό είναι το μέρος σας.",
+        "map_url": "https://maps.app.goo.gl/GzoDZBRoUVn2eGEq8"
+      }
     }
   ]
 }
