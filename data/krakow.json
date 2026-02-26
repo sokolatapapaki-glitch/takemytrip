@@ -19,9 +19,60 @@
   "activities": [
     {
       "id": 1,
+      "name": "Wawel Dragon / Castle",
+      "description": "",
+      "category": "castle",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 12,
+        "9": 12,
+        "10": 12,
+        "11": 12,
+        "12": 12,
+        "13": 12,
+        "14": 12,
+        "15": 12,
+        "16": 12,
+        "17": 12,
+        "adult": 12
+      },
+      "location": {
+        "lat": 50.0540,
+        "lng": 19.9356
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [
+        "0-7 ετών: δωρεάν",
+        "8+ ετών: 12€ (audio guided tour, 1ος & 2ος όροφος)",
+        "υπάρχουν πολλαπλές εκθέσεις και επιλογές εισιτηρίων, καθώς και οικογενειακές εκπτώσεις – προτείνεται έλεγχος στο site"
+      ],
+      "tags": [],
+      "duration_hours": 2,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 2,
       "name": "Wieliczka Salt Mine",
       "description": "",
-      "category": "",
+      "category": "attraction",
       "top": false,
       "prices": {
         "0": 0,
@@ -63,7 +114,7 @@
         "Οικογενειακό (2 ενήλικες + 2 παιδιά ≤18 ετών): 101€"
       ],
       "tags": [],
-      "duration_hours": 0,
+      "duration_hours": 3.5,
       "best_time": "",
       "familyTicket": true,
       "familyPrice": 101,
@@ -75,35 +126,18 @@
       }
     },
     {
-      "id": 2,
-      "name": "Wawel Dragon / Castle",
+      "id": 3,
+      "name": "Underground Rynek Museum",
       "description": "",
-      "category": "",
+      "category": "museum",
       "top": false,
       "prices": {
-        "0": 0,
-        "1": 0,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 0,
-        "8": 12,
-        "9": 12,
-        "10": 12,
-        "11": 12,
-        "12": 12,
-        "13": 12,
-        "14": 12,
-        "15": 12,
-        "16": 12,
-        "17": 12,
-        "adult": 12
+        "0": 10,
+        "adult": 10
       },
       "location": {
-        "lat": 50.0540,
-        "lng": 19.9356
+        "lat": 50.0617,
+        "lng": 19.9372
       },
       "restaurant": {
         "name": "",
@@ -112,13 +146,16 @@
       },
       "website": "",
       "notes": [
-        "0-7 ετών: δωρεάν",
-        "8+ ετών: 12€ (audio guided tour, 1ος & 2ος όροφος)",
-        "υπάρχουν πολλαπλές εκθέσεις και επιλογές εισιτηρίων, καθώς και οικογενειακές εκπτώσεις – προτείνεται έλεγχος στο site"
+        "10€",
+        "Οικογενειακό εισιτήριο: 20€",
+        "συνιστάται έλεγχος στο site για λεπτομέρειες ηλικιών και εκπτώσεων"
       ],
       "tags": [],
-      "duration_hours": 0,
+      "duration_hours": 1.5,
       "best_time": "",
+      "familyTicket": true,
+      "familyPrice": 20,
+      "familyDescription": "Οικογενειακό εισιτήριο: 20€",
       "cafe": {
         "name": "",
         "description": "",
@@ -126,10 +163,10 @@
       }
     },
     {
-      "id": 3,
+      "id": 4,
       "name": "Museum of Illusions",
       "description": "",
-      "category": "",
+      "category": "museum",
       "top": false,
       "prices": {
         "0": 0,
@@ -169,7 +206,7 @@
         "14+ ετών: 14€"
       ],
       "tags": [],
-      "duration_hours": 0,
+      "duration_hours": 1.5,
       "best_time": "",
       "cafe": {
         "name": "",
@@ -178,10 +215,10 @@
       }
     },
     {
-      "id": 4,
+      "id": 5,
       "name": "Krakow Pinball Museum",
       "description": "",
-      "category": "",
+      "category": "museum",
       "top": false,
       "prices": {
         "0": 14,
@@ -219,7 +256,7 @@
         "18+ ετών: 16.5€"
       ],
       "tags": [],
-      "duration_hours": 0,
+      "duration_hours": 2,
       "best_time": "",
       "cafe": {
         "name": "",
@@ -228,10 +265,115 @@
       }
     },
     {
-      "id": 5,
+      "id": 6,
+      "name": "History Land",
+      "description": "",
+      "category": "attraction",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 8.5,
+        "5": 8.5,
+        "6": 8.5,
+        "7": 8.5,
+        "8": 8.5,
+        "9": 8.5,
+        "10": 8.5,
+        "11": 8.5,
+        "12": 8.5,
+        "13": 8.5,
+        "14": 8.5,
+        "15": 8.5,
+        "16": 8.5,
+        "17": 8.5,
+        "adult": 10.5
+      },
+      "location": {
+        "lat": 50.0647,
+        "lng": 19.9450
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [
+        "0-3 ετών: δωρεάν",
+        "4-17 ετών: 8.5€",
+        "18+ ετών: 10.5€",
+        "Οικογενειακό (2 ενήλικες + έως 2 παιδιά ≤17 ετών): 30€"
+      ],
+      "tags": [],
+      "duration_hours": 1.5,
+      "best_time": "",
+      "familyTicket": true,
+      "familyPrice": 30,
+      "familyDescription": "2 ενήλικες + έως 2 παιδιά (≤17 ετών): 30€",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 7,
+      "name": "Auschwitz",
+      "description": "",
+      "category": "monument",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 35,
+        "15": 35,
+        "16": 35,
+        "17": 35,
+        "adult": 35
+      },
+      "location": {
+        "lat": 50.0271,
+        "lng": 19.2036
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [
+        "14+ ετών: 35€",
+        "δεν συνιστάται για ηλικίες κάτω των 14 ετών"
+      ],
+      "tags": [],
+      "duration_hours": 5,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 8,
       "name": "Aquapark",
       "description": "",
-      "category": "",
+      "category": "attraction",
       "top": false,
       "prices": {
         "0": 23.5,
@@ -270,7 +412,7 @@
         "υπάρχουν διαφορετικοί συνδυασμοί εισιτηρίων – προτείνεται έλεγχος στο site"
       ],
       "tags": [],
-      "duration_hours": 0,
+      "duration_hours": 4,
       "best_time": "",
       "cafe": {
         "name": "",
@@ -279,10 +421,10 @@
       }
     },
     {
-      "id": 6,
+      "id": 9,
       "name": "Go Jump",
       "description": "",
-      "category": "",
+      "category": "activity",
       "top": false,
       "prices": {
         "0": 28,
@@ -320,7 +462,7 @@
         "υπάρχουν διαφορετικοί συνδυασμοί εισιτηρίων – προτείνεται έλεγχος στο site"
       ],
       "tags": [],
-      "duration_hours": 0,
+      "duration_hours": 2,
       "best_time": "",
       "cafe": {
         "name": "",
@@ -329,10 +471,10 @@
       }
     },
     {
-      "id": 7,
+      "id": 10,
       "name": "Jordan Park",
       "description": "",
-      "category": "",
+      "category": "park",
       "top": false,
       "prices": {
         "0": 0,
@@ -352,126 +494,7 @@
         "δωρεάν είσοδος"
       ],
       "tags": [],
-      "duration_hours": 0,
-      "best_time": "",
-      "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
-      }
-    },
-    {
-      "id": 8,
-      "name": "Underground Rynek Museum",
-      "description": "",
-      "category": "",
-      "top": false,
-      "prices": {
-        "0": 10,
-        "adult": 10
-      },
-      "location": {
-        "lat": 50.0617,
-        "lng": 19.9372
-      },
-      "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
-      },
-      "website": "",
-      "notes": [
-        "10€",
-        "Οικογενειακό εισιτήριο: 20€",
-        "συνιστάται έλεγχος στο site για λεπτομέρειες ηλικιών και εκπτώσεων"
-      ],
-      "tags": [],
-      "duration_hours": 0,
-      "best_time": "",
-      "familyTicket": true,
-      "familyPrice": 20,
-      "familyDescription": "Οικογενειακό εισιτήριο: 20€",
-      "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
-      }
-    },
-    {
-      "id": 9,
-      "name": "Auschwitz",
-      "description": "",
-      "category": "",
-      "top": false,
-      "prices": {
-        "0": 0,
-        "1": 0,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 0,
-        "8": 0,
-        "9": 0,
-        "10": 0,
-        "11": 0,
-        "12": 0,
-        "13": 0,
-        "14": 35,
-        "15": 35,
-        "16": 35,
-        "17": 35,
-        "adult": 35
-      },
-      "location": {
-        "lat": 50.0271,
-        "lng": 19.2036
-      },
-      "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
-      },
-      "website": "",
-      "notes": [
-        "14+ ετών: 35€",
-        "δεν συνιστάται για ηλικίες κάτω των 14 ετών"
-      ],
-      "tags": [],
-      "duration_hours": 0,
-      "best_time": "",
-      "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
-      }
-    },
-    {
-      "id": 10,
-      "name": "Zakopane",
-      "description": "",
-      "category": "",
-      "top": false,
-      "prices": {
-        "0": 0,
-        "adult": 0
-      },
-      "location": {
-        "lat": 49.2992,
-        "lng": 19.9496
-      },
-      "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
-      },
-      "website": "",
-      "notes": [
-        "δωρεάν"
-      ],
-      "tags": [],
-      "duration_hours": 0,
+      "duration_hours": 2,
       "best_time": "",
       "cafe": {
         "name": "",
@@ -483,7 +506,7 @@
       "id": 11,
       "name": "Stanislaw Lems Garden",
       "description": "",
-      "category": "",
+      "category": "park",
       "top": false,
       "prices": {
         "0": 0,
@@ -524,7 +547,7 @@
         "λειτουργία εποχική – συνιστάται έλεγχος διαθεσιμότητας"
       ],
       "tags": [],
-      "duration_hours": 0,
+      "duration_hours": 2.5,
       "best_time": "",
       "familyTicket": true,
       "familyPrice": 14,
@@ -537,9 +560,41 @@
     },
     {
       "id": 12,
+      "name": "Zakopane",
+      "description": "",
+      "category": "attraction",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 49.2992,
+        "lng": 19.9496
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [
+        "δωρεάν"
+      ],
+      "tags": [],
+      "duration_hours": 6,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 13,
       "name": "Energylandia",
       "description": "",
-      "category": "",
+      "category": "attraction",
       "top": false,
       "prices": {
         "0": 0,
@@ -579,63 +634,8 @@
         "οι τιμές διαφέρουν ανά σεζόν, υπάρχει έκπτωση για ύψος κάτω του 1,40μ., και δωρεάν είσοδος στα γενέθλια έως 18 ετών"
       ],
       "tags": [],
-      "duration_hours": 0,
+      "duration_hours": 7,
       "best_time": "",
-      "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
-      }
-    },
-    {
-      "id": 13,
-      "name": "History Land",
-      "description": "",
-      "category": "",
-      "top": false,
-      "prices": {
-        "0": 0,
-        "1": 0,
-        "2": 0,
-        "3": 0,
-        "4": 8.5,
-        "5": 8.5,
-        "6": 8.5,
-        "7": 8.5,
-        "8": 8.5,
-        "9": 8.5,
-        "10": 8.5,
-        "11": 8.5,
-        "12": 8.5,
-        "13": 8.5,
-        "14": 8.5,
-        "15": 8.5,
-        "16": 8.5,
-        "17": 8.5,
-        "adult": 10.5
-      },
-      "location": {
-        "lat": 50.0647,
-        "lng": 19.9450
-      },
-      "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
-      },
-      "website": "",
-      "notes": [
-        "0-3 ετών: δωρεάν",
-        "4-17 ετών: 8.5€",
-        "18+ ετών: 10.5€",
-        "Οικογενειακό (2 ενήλικες + έως 2 παιδιά ≤17 ετών): 30€"
-      ],
-      "tags": [],
-      "duration_hours": 0,
-      "best_time": "",
-      "familyTicket": true,
-      "familyPrice": 30,
-      "familyDescription": "2 ενήλικες + έως 2 παιδιά (≤17 ετών): 30€",
       "cafe": {
         "name": "",
         "description": "",
