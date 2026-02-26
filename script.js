@@ -2208,14 +2208,21 @@ async function filterDestinations() {
             themeParks: [], familyScore: 6, hasDisney: false,
             strollerFriendly: false
         },
-        { 
+        {
             id: 'istanbul', name: 'Κωνσταντινούπολη', emoji: '🕌',
             hasJSON: true, distance: 1.5, cost: 'Οικονομικό',
             country: 'Τουρκία', vacationType: 'Πολιτισμός',
             themeParks: [], familyScore: 7, hasDisney: false,
             strollerFriendly: false
         },
-        { 
+        {
+            id: 'krakow', name: 'Κρακοβία', emoji: '🐉',
+            hasJSON: true, distance: 2.0, cost: 'Οικονομικό',
+            country: 'Πολωνία', vacationType: ['Πολιτισμός', 'Βουνό'],
+            themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
+            strollerFriendly: false
+        },
+        {
             id: 'brussels', name: 'Βρυξέλλες', emoji: '🍫',
             hasJSON: false, distance: 3.0, cost: 'Μέτριο',
             country: 'Βέλγιο', vacationType: 'Πόλη',
@@ -2264,19 +2271,12 @@ async function filterDestinations() {
             themeParks: [], familyScore: 4, hasDisney: false,
             strollerFriendly: false
         },
-        { 
+        {
             id: 'warsaw', name: 'Βαρσοβία', emoji: '🦅',
             hasJSON: false, distance: 2.5, cost: 'Οικονομικό',
             country: 'Πολωνία', vacationType: 'Πόλη',
             themeParks: [], familyScore: 5, hasDisney: false,
             strollerFriendly: true
-        },
-        { 
-            id: 'krakow', name: 'Κρακοβία', emoji: '🐉',
-            hasJSON: true, distance: 2.0, cost: 'Οικονομικό',
-            country: 'Πολωνία', vacationType: ['Πολιτισμός', 'Βουνό'],  // <<< ΝΕΑ ΓΡΑΜΜΗ
-            themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
-            strollerFriendly: false
         },
         {
             id: 'zurich', name: 'Ζυρίχη', emoji: '🏔️',
