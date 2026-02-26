@@ -1,0 +1,399 @@
+{
+  "city": "Krakow",
+  "country": "Poland",
+  "currency": "EUR",
+  "emoji": "🇵🇱",
+  "pricing_model": "per_age",
+  "description": "",
+  "location": {
+    "lat": 50.0647,
+    "lng": 19.9450
+  },
+  "cityPass": {
+    "name": "",
+    "description": "",
+    "discountPercent": 0,
+    "url": ""
+  },
+  "passes": [],
+  "activities": [
+    {
+      "id": 1,
+      "name": "Wieliczka Salt Mine",
+      "description": "",
+      "category": "",
+      "top": false,
+      "prices": {},
+      "location": {
+        "lat": 49.9833,
+        "lng": 20.0553
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 2,
+      "name": "Wawel Dragon / Castle",
+      "description": "",
+      "category": "",
+      "top": false,
+      "prices": {},
+      "location": {
+        "lat": 50.0540,
+        "lng": 19.9356
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 3,
+      "name": "Museum of Illusions",
+      "description": "",
+      "category": "",
+      "top": false,
+      "prices": {},
+      "location": {
+        "lat": 50.0614,
+        "lng": 19.9372
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 4,
+      "name": "Krakow Pinball Museum",
+      "description": "",
+      "category": "",
+      "top": false,
+      "prices": {},
+      "location": {
+        "lat": 50.0600,
+        "lng": 19.9369
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 5,
+      "name": "Aquapark",
+      "description": "",
+      "category": "",
+      "top": false,
+      "prices": {},
+      "location": {
+        "lat": 50.0897,
+        "lng": 19.9742
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 6,
+      "name": "Go Jump",
+      "description": "",
+      "category": "",
+      "top": false,
+      "prices": {},
+      "location": {
+        "lat": 50.0647,
+        "lng": 19.9450
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 7,
+      "name": "Jordan Park",
+      "description": "",
+      "category": "",
+      "top": false,
+      "prices": {},
+      "location": {
+        "lat": 50.0583,
+        "lng": 19.9283
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 8,
+      "name": "Underground Rynek Museum",
+      "description": "",
+      "category": "",
+      "top": false,
+      "prices": {},
+      "location": {
+        "lat": 50.0617,
+        "lng": 19.9372
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 9,
+      "name": "Auschwitz",
+      "description": "",
+      "category": "",
+      "top": false,
+      "prices": {},
+      "location": {
+        "lat": 50.0271,
+        "lng": 19.2036
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 10,
+      "name": "Zakopane",
+      "description": "",
+      "category": "",
+      "top": false,
+      "prices": {},
+      "location": {
+        "lat": 49.2992,
+        "lng": 19.9496
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 11,
+      "name": "Stanislaw Lems Garden",
+      "description": "",
+      "category": "",
+      "top": false,
+      "prices": {},
+      "location": {
+        "lat": 50.0647,
+        "lng": 19.9450
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 12,
+      "name": "Energylandia",
+      "description": "",
+      "category": "",
+      "top": false,
+      "prices": {},
+      "location": {
+        "lat": 49.9797,
+        "lng": 19.1978
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 13,
+      "name": "History Land",
+      "description": "",
+      "category": "",
+      "top": false,
+      "prices": {},
+      "location": {
+        "lat": 50.0647,
+        "lng": 19.9450
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 14,
+      "name": "Krakow Zoo",
+      "description": "",
+      "category": "",
+      "top": false,
+      "prices": {},
+      "location": {
+        "lat": 50.0731,
+        "lng": 19.8942
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    }
+  ]
+}
