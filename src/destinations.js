@@ -180,7 +180,7 @@ export async function filterDestinations() {
         },
         {
             id: 'krakow', name: 'Κρακοβία', emoji: '🐉',
-            hasJSON: false, distance: 2.0, cost: 'Οικονομικό',
+            hasJSON: true, distance: 2.0, cost: 'Οικονομικό',
             country: 'Πολωνία', vacationType: ['Πολιτισμός', 'Βουνό'],
             themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
             strollerFriendly: false
