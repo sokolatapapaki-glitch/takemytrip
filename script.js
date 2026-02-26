@@ -4647,6 +4647,7 @@ function createDestinationDropdown() {
     <option value="berlin">Βερολίνο (Γερμανία)</option>
     <option value="bucharest">Βουκουρέστι (Ρουμανία)</option>
     <option value="budapest">Βουδαπέστη (Ουγγαρία)</option>
+    <option value="krakow">Κρακοβία (Πολωνία)</option>
     <option value="istanbul">Κωνσταντινούπολη (Τουρκία)</option>
     <option value="lisbon">Λισαβόνα (Πορτογαλία)</option>
     <option value="london">Λονδίνο (ΗΒ)</option>
@@ -4663,7 +4664,6 @@ function createDestinationDropdown() {
     <option value="edinburgh">Εδιμβούργο (Σκωτία)</option>
     <option value="zurich">Ζυρίχη (Ελβετία)</option>
     <option value="copenhagen">Κοπεγχάγη (Δανία)</option>
-    <option value="krakow">Κρακοβία (Πολωνία)</option>
     <option value="munich">Μόναχο (Γερμανία)</option>
     <option value="rome">Ρώμη (Ιταλία)</option>
     <option value="florence">Φλωρεντία (Ιταλία)</option>
