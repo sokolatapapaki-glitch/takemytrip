@@ -20,7 +20,7 @@
     {
       "id": 1,
       "name": "Wawel Castle",
-      "description": "",
+      "description": "Το ιστορικό και πνευματικό κέντρο της Πολωνίας, όπου για αιώνες στέφονταν και θάβονταν οι Πολωνοί βασιλιάδες.Είναι ένα εντυπωσιακό οχυρό με σήμα κατατεθέν τον Δράκο του Wawel που βγάζει αληθινή φωτιά στην είσοδο της σπηλιάς του",
       "category": "castle",
       "top": false,
       "prices": {
@@ -49,9 +49,9 @@
         "lng": 19.9356
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Pod Wawelem Kompania Kuflowa",
+        "description": "Διάσημο για τις τεράστιες, οικονομικές μερίδες του και με ειδικό οικογενειακό δωμάτιο με παιχνίδια."
+        "map_url": "https://maps.app.goo.gl/pejkjVfJkEgyxe8u9"
       },
       "website": "",
       "notes": [
@@ -63,9 +63,9 @@
       "duration_hours": 2,
       "best_time": "",
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Mleczarnia Ogródek (Mlekowóz)",
+        "description": "Είναι ένα από τα πιο ατμοσφαιρικά καφέ στην εβραϊκή συνοικία (Kazimierz), σε πολύ κοντινή απόσταση με τα πόδια από το κάστρο.",
+        "map_url": "https://maps.app.goo.gl/Mkg7PP7nzFa5ZZnM7"
       }
     },
     {
@@ -217,7 +217,7 @@
     {
       "id": 5,
       "name": "Krakow Pinball Museum",
-      "description": "",
+      "description": "Σε ένα ιστορικό κελάρι του 15ου αιώνα, πολύ κοντά στο κάστρο Wawel αυτός ο χώρος έχει πάνω από 60 αναπαλαιωμένα φλιπεράκια (από τη δεκαετία του '50 μέχρι σήμερα) και περίπου 35 arcade παιχνίδια (όπως Pac-Man και Mortal Kombat), τα οποία μπορείτε να παίξετε απεριόριστα με το εισιτήριο εισόδου.",
       "category": "museum",
       "top": false,
       "prices": {
@@ -246,9 +246,9 @@
         "lng": 19.9369
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Pod Wawelem Kompania Kuflowa",
+        "description": "Διάσημο για τις τεράστιες, οικονομικές μερίδες του και με ειδικό οικογενειακό δωμάτιο με παιχνίδια.",
+        "map_url": "https://maps.app.goo.gl/ZjhXuGK7FPi1DaNg6"
       },
       "website": "",
       "notes": [
@@ -259,15 +259,15 @@
       "duration_hours": 2,
       "best_time": "",
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Mleczarnia Ogródek (Mlekowóz)",
+        "description": "Είναι ένα από τα πιο ατμοσφαιρικά καφέ στην εβραϊκή συνοικία (Kazimierz), σε πολύ κοντινή απόσταση με τα πόδια από το κάστρο.",
+        "map_url": "https://maps.app.goo.gl/Mkg7PP7nzFa5ZZnM7"
       }
     },
     {
       "id": 6,
       "name": "History Land",
-      "description": "",
+      "description": "Είναι ένας χώρος όπου η ιστορία της Πολωνίας αναπαρίσταται μέσα από τεράστιες μακέτες φτιαγμένες εξ ολοκλήρου από εκατομμύρια τουβλάκια LEGO, συνδυάζοντας διαδραστικά εφέ, φώτα και προβολές.",
       "category": "attraction",
       "top": false,
       "prices": {
@@ -300,7 +300,7 @@
         "description": "",
         "map_url": ""
       },
-      "website": "",
+      "website": "https://historyland.pl/en/",
       "notes": [
         "0-3 ετών: δωρεάν",
         "4-17 ετών: 8.5€",
@@ -322,7 +322,7 @@
     {
       "id": 7,
       "name": "Auschwitz",
-      "description": "",
+      "description": "Είναι ο πιο συγκλονιστικός τόπος μνήμης στον κόσμο, χωρισμένος σε δύο μέρη: το Άουσβιτς Ι με τους πέτρινους στρατώνες και τα προσωπικά αντικείμενα των θυμάτων, και το αχανές Μπίρκεναου με τις ράγες του τρένου και τα ερείπια των κρεματορίων",
       "category": "monument",
       "top": false,
       "prices": {
@@ -351,11 +351,11 @@
         "lng": 19.2036
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Restauracja NaNovo | restauracja Oświęcim",
+        "description": " Πολωνική και ευρωπαϊκή κουζίνα σε έναν μοντέρνο χώρο στα 700 μέτρα από την κύρια είσοδο του Μουσείου. ",
+        "map_url": "https://maps.app.goo.gl/EDJpYhE3AMhpiJ2M6"
       },
-      "website": "",
+      "website": "https://www.auschwitz.org/en/visiting/",
       "notes": [
         "14+ ετών: 35€",
         "δεν συνιστάται για ηλικίες κάτω των 14 ετών"
@@ -365,14 +365,14 @@
       "best_time": "",
       "cafe": {
         "name": "",
-        "description": "",
+        "description": "Η πιο κοντινή επιλογή είναι το καφέ εντός του Μουσείου",
         "map_url": ""
       }
     },
     {
       "id": 8,
       "name": "Aquapark",
-      "description": "",
+      "description": "Ένα από τα μεγαλύτερα κλειστά υδροπάρκα στην Πολωνία. Έχει extreme και φυσιολογικές νερτσουλήθρες αλλά και αν δεν ψάχνετε για αδρεναλίνη, έχει μεγάλα Jacuzzi (πάνω από 8!), πισίνα με κύματα, "ποτάμι" που σε παρασύρει και υδρομασάζ.",
       "category": "attraction",
       "top": false,
       "prices": {
@@ -405,7 +405,7 @@
         "description": "",
         "map_url": ""
       },
-      "website": "",
+      "website": "https://www.parkwodny.pl/?utm_source=googlemaps&utm_medium=organic",
       "notes": [
         "0-7 ετών: 23.5€ (ημερήσιο εισιτήριο)",
         "8+ ετών: 25€ (ημερήσιο εισιτήριο)",
