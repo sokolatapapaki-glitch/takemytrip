@@ -397,9 +397,9 @@
         "lng": 19.9450
       },
       "restaurant": {
-        "name": "",
-        "description": "Εντός του χώρου",
-        "map_url": ""
+        "name": "PierreOgarnia",
+        "description": "Φημίζεται για το καλό και ποιοτικό φαγητό του, με επιλογές που θυμίζουν σπιτική κουζίνα",
+        "map_url": "https://maps.app.goo.gl/ZgRiYKkfagE65rv99"
       },
       "website": "https://krakow.sikorki.gojump.pl/",
       "notes": [
