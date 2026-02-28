@@ -448,7 +448,7 @@
         "adult": 28
       },
       "location": {
-        "lat": 50.0647,
+        "lat": 50.0776,
         "lng": 19.9450
       },
       "restaurant": {
@@ -530,8 +530,8 @@
         "adult": 5
       },
       "location": {
-        "lat": 50.0647,
-        "lng": 19.9450
+        "lat": 50.0703,
+        "lng": 19.9985
       },
       "restaurant": {
         "name": "",
