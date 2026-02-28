@@ -401,9 +401,9 @@
         "lng": 19.9742
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Restauracja Rodzinna Siesta",
+        "description": "Bρίσκεται μέσα στο κτίριο του Aquapark και έχει από πίτσες και ζυμαρικά μέχρι παραδοσιακά πολωνικά πιάτα",
+        "map_url": "https://maps.app.goo.gl/tupyp26CXR2ZpGce8"
       },
       "website": "https://www.parkwodny.pl/?utm_source=googlemaps&utm_medium=organic",
       "notes": [
@@ -415,7 +415,7 @@
       "duration_hours": 4,
       "best_time": "",
       "cafe": {
-        "name": "",
+        "name": "Park Wodny Coffee Bar - εντός του χώρου",
         "description": "",
         "map_url": ""
       }
@@ -423,7 +423,7 @@
     {
       "id": 9,
       "name": "Go Jump",
-      "description": "",
+      "description": "Τεράστιες εκτάσεις με τραμπολίνο, αερόσακοι για άλματα (giant airbags), γήπεδα dodgeball, μπασκέτες για καρφώματα και ειδικές διαδρομές τύπου Ninja Warrior.",
       "category": "activity",
       "top": false,
       "prices": {
@@ -456,7 +456,7 @@
         "description": "",
         "map_url": ""
       },
-      "website": "",
+      "website": "https://krakow.sikorki.gojump.pl/",
       "notes": [
         "28€ (ημερήσιο εισιτήριο)",
         "υπάρχουν διαφορετικοί συνδυασμοί εισιτηρίων – προτείνεται έλεγχος στο site"
@@ -473,7 +473,7 @@
     {
       "id": 10,
       "name": "Jordan Park",
-      "description": "",
+      "description": "'Ενας  παράδεισος για δραστηριότητες στην πόλη. Έχει παιδικές χαρές χωρισμένες ανά ηλικία, γήπεδα μπάσκετ, ποδοσφαίρου, βόλεϊ, πίστα για skateboard, ακόμα και τοίχο αναρρίχησης.",
       "category": "park",
       "top": false,
       "prices": {
@@ -485,9 +485,9 @@
         "lng": 19.9283
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Da Grasso",
+        "description": "Μεγάλη ποικιλία από πίτσες, ζυμαρικά, burger και σαλάτες σε πολύ καλές τιμές. Είναι μια κλασική επιλογή για ένα γρήγορο και χορταστικό γεύμα.",
+        "map_url": "https://maps.app.goo.gl/hw6QMbJAa5rZXfsv6"
       },
       "website": "",
       "notes": [
@@ -497,15 +497,15 @@
       "duration_hours": 2,
       "best_time": "",
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Organic Coffee",
+        "description": "Σερβίρουν βιολογικό καφέ, χυμούς και ελαφριά σνακ.",
+        "map_url": "https://maps.app.goo.gl/HtjCfafhgsxw7ijr5"
       }
     },
     {
       "id": 11,
       "name": "Stanislaw Lems Garden",
-      "description": "",
+      "description": "Με πάνω από 100 διαδραστικές εγκαταστάσεις που εξηγούν νόμους της φυσικής, της οπτικής και της ακουστικής. Μπορείτε να πειραματιστείτε με τεράστια κάτοπτρα, ηχητικά τηλέφωνα, λαβύρινθους και μηχανές που δημιουργούν δίνες.",
       "category": "park",
       "top": false,
       "prices": {
@@ -535,10 +535,10 @@
       },
       "restaurant": {
         "name": "",
-        "description": "",
+        "description": "Εντός του χώρου",
         "map_url": ""
       },
-      "website": "",
+      "website": "https://krakowgardens.com/the-stanislaw-lem-science-garden/",
       "notes": [
         "Ανοιχτό: Απρίλιος–Οκτώβριος",
         "0-4 ετών: δωρεάν",
@@ -554,14 +554,14 @@
       "familyDescription": "2 ενήλικες + 2 παιδιά: 14€",
       "cafe": {
         "name": "",
-        "description": "",
+        "description": "Εντός του χώρου",
         "map_url": ""
       }
     },
     {
       "id": 12,
       "name": "Zakopane",
-      "description": "",
+      "description": "Η χειμερινή πρωτεύουσα της Πολωνίας. Άγρια φύση &  πολύ ιδιαίτερη τοπική κουλτούρα. Ανεβείτε με το τελεφερίκ  στο Gubalowka για υπέροχη θέα των Τάτρα και κατεβείτε με την τσουλήθρα βαρύτητας. Μην ξεχάσετε να δοκιμάσετε Oscypek (καπνιστό τυρί). Μην παραλείψετε μια εκδρομή στην Morski Oko την πιο διάσημη λίμνη των Τάτρα και μια επίσκεψη στα θερμά λουτρά της περιοχής (π.χ. Chochołowskie Termy που είναι τα μεγαλύτερα)",
       "category": "attraction",
       "top": false,
       "prices": {
@@ -573,11 +573,11 @@
         "lng": 19.9496
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Gazdowo Kuźnia",
+        "description": "Ένα από τα πιο εμβληματικά εστιατόρια στον κεντρικό πεζόδρομο. Σε ένα από τα παλαιότερα κτίρια της πόλης, με αυθεντική πολωνική κουζίνα. Είναι γνωστό για τις γενναιόδωρες μερίδες του.",
+        "map_url": "https://maps.app.goo.gl/F7f9mJjeFWqx4AS88"
       },
-      "website": "",
+      "website": "https://www.zakopane.pl/en/tourist-area",
       "notes": [
         "δωρεάν"
       ],
@@ -585,15 +585,15 @@
       "duration_hours": 6,
       "best_time": "",
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "STRH Bistro Art Cafe",
+        "description": "Είναι το απόλυτο must. Βρίσκεται στον τελευταίο όροφο, έχει μοντέρνο στυλ και μεγάλες τζαμαρίες που βλέπουν απευθείας στα βουνά.",
+        "map_url": "https://maps.app.goo.gl/n1pBDMSCnnK1dAgA6"
       }
     },
     {
       "id": 13,
       "name": "Energylandia",
-      "description": "",
+      "description": "Η Energylandia είναι το μεγαλύτερο λούνα παρκ της Πολωνίας (και ένα από τα μεγαλύτερα στην Ευρώπη) και βρίσκεται στο Zator, περίπου μια ώρα από την Κρακοβία.",
       "category": "attraction",
       "top": false,
       "prices": {
@@ -622,11 +622,11 @@
         "lng": 19.1978
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Scandinavia Restaurant",
+        "description": "Είναι από τα πιο γνωστά και βρίσκεται ανάμεσα στην παιδική και την οικογενειακή ζώνη. Αν θέλετε κάτι παραπάνω από fast food, εδώ θα βρείτε σούπες, παραδοσιακά πολωνικά πιάτα, σαλάτες και ζυμαρικά.",
+        "map_url": "https://maps.app.goo.gl/n3yWD8BzLnQ94BBq9"
       },
-      "website": "",
+      "website": "https://energylandia.pl/en/",
       "notes": [
         "λειτουργεί εποχικά (κλειστό Νοέμβριο–αρχές Απριλίου με εξαιρέσεις)",
         "0-3 ετών: δωρεάν",
@@ -637,9 +637,9 @@
       "duration_hours": 7,
       "best_time": "",
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Crazy Bubble",
+        "description": "Μεγάλη ποικιλία από Bubble Tea, με πολλές επιλογές σε γεύσεις τσαγιού, σιροπιών και των χαρακτηριστικών berries που σκάνε στο στόμα. Είναι πολύ δημοφιλές για ένα γρήγορο και γλυκό διάλειμμα.",
+        "map_url": "https://maps.app.goo.gl/ac2JZcAvsAgQ9MHF6"
       }
     }
   ]
