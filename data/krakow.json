@@ -479,8 +479,8 @@
         "lng": 19.9985
       },
       "restaurant": {
-        "name": "",
-        "description": "Εντός του χώρου",
+        "name": "Εντός του χώρου",
+        "description": "",
         "map_url": ""
       },
       "website": "https://krakowgardens.com/the-stanislaw-lem-science-garden/",
@@ -498,8 +498,8 @@
       "familyPrice": 14,
       "familyDescription": "2 ενήλικες + 2 παιδιά: 14€",
       "cafe": {
-        "name": "",
-        "description": "Εντός του χώρου",
+        "name": "Εντός του χώρου",
+        "description": "",
         "map_url": ""
       }
     },
