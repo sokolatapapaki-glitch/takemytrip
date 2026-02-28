@@ -398,7 +398,7 @@
       },
       "restaurant": {
         "name": "",
-        "description": "",
+        "description": "Εντός του χώρου",
         "map_url": ""
       },
       "website": "https://krakow.sikorki.gojump.pl/",
@@ -411,7 +411,7 @@
       "best_time": "",
       "cafe": {
         "name": "",
-        "description": "",
+        "description": "Εντός του χώρου",
         "map_url": ""
       }
     },
