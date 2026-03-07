@@ -1,0 +1,765 @@
+{
+  "city": "Warsaw",
+  "country": "Poland",
+  "currency": "EUR",
+  "emoji": "🇵🇱",
+  "pricing_model": "per_age",
+  "description": "",
+  "location": {
+    "lat": 52.2297,
+    "lng": 21.0122
+  },
+  "cityPass": {
+    "name": "",
+    "description": "",
+    "discountPercent": 0,
+    "url": ""
+  },
+  "passes": [],
+  "activities": [
+    {
+      "id": 1,
+      "name": "Copernicus Science Centre",
+      "description": "",
+      "category": "science_museum",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 52.2419,
+        "lng": 21.0283
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 2,
+      "name": "Smart Kids Planet",
+      "description": "",
+      "category": "activity",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 3,
+      "name": "Łazienki Park",
+      "description": "",
+      "category": "park",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 52.2149,
+        "lng": 21.0353
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 4,
+      "name": "Warsaw Zoo",
+      "description": "",
+      "category": "zoo",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 52.2559,
+        "lng": 21.0439
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 5,
+      "name": "Old Town",
+      "description": "",
+      "category": "landmark",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 52.2497,
+        "lng": 21.0122
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 6,
+      "name": "Castle Square",
+      "description": "",
+      "category": "landmark",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 52.2477,
+        "lng": 21.0139
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 7,
+      "name": "Museum of Illusions",
+      "description": "",
+      "category": "museum",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 8,
+      "name": "Railway Museum (Stacja Muzeum)",
+      "description": "",
+      "category": "museum",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 52.2217,
+        "lng": 21.0025
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 9,
+      "name": "Vistula River Cruise",
+      "description": "",
+      "category": "boat_tour",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 52.2419,
+        "lng": 21.0261
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 10,
+      "name": "Palace of Culture and Science – Observation Deck",
+      "description": "",
+      "category": "viewpoint",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 52.2317,
+        "lng": 21.0061
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 11,
+      "name": "Suntago Waterpark",
+      "description": "",
+      "category": "attraction",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 52.1000,
+        "lng": 20.8167
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 12,
+      "name": "Museum of Dollhouses, Games and Toys",
+      "description": "",
+      "category": "museum",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 13,
+      "name": "Wedel Chocolate Factory",
+      "description": "",
+      "category": "attraction",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 14,
+      "name": "Saxon Garden",
+      "description": "",
+      "category": "park",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 52.2422,
+        "lng": 21.0056
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 15,
+      "name": "Krasiński Garden",
+      "description": "",
+      "category": "park",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 52.2497,
+        "lng": 21.0036
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 16,
+      "name": "Royal Castle",
+      "description": "",
+      "category": "castle",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 52.2477,
+        "lng": 21.0142
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 17,
+      "name": "Fikołki Indoor Playground",
+      "description": "",
+      "category": "activity",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 18,
+      "name": "Multimedia Fountain Park",
+      "description": "",
+      "category": "attraction",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 52.2408,
+        "lng": 21.0253
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [],
+      "duration_hours": 0,
+      "best_time": "",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    }
+  ]
+}
