@@ -678,8 +678,8 @@
         "lng": 13.3501
       },
       "restaurant": {
-        "name": "Café am Neuen See",
-        "description": "Ένα από τα πιο εμβληματικά μέρη στο Tiergarten. Είναι ένας συνδυασμός εστιατορίου και υπαίθριας μπυραρίας (biergarten) ακριβώς δίπλα στη λίμνη. Προσφέρει τοπικά και εποχικά πιάτα σε έναν πολύ όμορφο και ρουστίκ χώρο",
+        "name": "Café am Neuen See (Biergarten",
+        "description": "Ένα από τα πιο εμβληματικά μέρη στο Tiergarten. Είναι ένας συνδυασμός εστιατορίου και υπαίθριας μπυραρίας (biergarten) ακριβώς δίπλα στη λίμνη.",
         "map_url": "https://maps.app.goo.gl/VQ8DnLDJAojm3zBR6"
       },
       "website": "https://www.tripadvisor.com.gr/Attraction_Review-g187323-d191290-Reviews-Tiergarten-Berlin.html",
@@ -695,7 +695,7 @@
       "best_time": "afternoon",
       "cafe": {
         "name": "Cafe am Neuen See (Biergarten)",
-        "description": "Ένα από τα ωραιότερα σημεία στο πάρκο.",
+        "description": "Ένα από τα πιο εμβληματικά μέρη στο Tiergarten. Είναι ένας συνδυασμός εστιατορίου και υπαίθριας μπυραρίας (biergarten) ακριβώς δίπλα στη λίμνη.",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+am+Neuen+See+Berlin"
       }
     },
