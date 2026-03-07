@@ -10,10 +10,10 @@
     "lng": 21.0122
   },
   "cityPass": {
-    "name": "",
-    "description": "",
+    "name": "Warsaw Pass",
+    "description": "Το Warsaw Pass προσφέρει δωρεάν είσοδο σε επιλεγμένα μουσεία και αξιοθέατα για 24, 48 ή 72 ώρες. Ιδανικό για οικογένειες, καθώς επιτρέπει πρόσβαση χωρίς επιπλέον εισιτήρια στα συμμετέχοντα σημεία.",
     "discountPercent": 0,
-    "url": ""
+    "url": "https://shop.warsawpass.com"
   },
   "passes": [],
   "activities": [
