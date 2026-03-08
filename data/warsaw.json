@@ -20,7 +20,7 @@
     {
       "id": 1,
       "name": "Copernicus Science Centre",
-      "description": "",
+      "description": "Κορυφαίος διαδραστικός χώρος όπου η επιστήμη γίνεται παιχνίδι μέσα από εκατοντάδες πειράματα για μια μοναδική εμπειρία ανακάλυψης.  Αν και το κέντρο απευθύνεται σε όλους, η ιδανική ηλικία είναι από 5-6 ετών και πάνω.",
       "category": "science_museum",
       "top": false,
       "prices": {
@@ -49,11 +49,11 @@
         "lng": 21.0283
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Food Hall Elektrownia Powiśle",
+        "description": "Είναι ένας εντυπωσιακός ανακαινισμένος σταθμός παραγωγής ενέργειας με τεράστια ποικιλία (από pizza μέχρι ασιατικό) και καφέ, ενώ ο χώρος είναι πολύ ευρύχωρος για καρότσια. ",
+        "map_url": "https://maps.app.goo.gl/QU4diswyZTYx4mun8"
       },
-      "website": "",
+      "website": "https://www.kopernik.org.pl/",
       "notes": [
         "0-2 ετών: δωρεάν",
         "3-17 ετών: 5,85€ reduced",
@@ -64,9 +64,9 @@
       "duration_hours": 0,
       "best_time": "",
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+         "name": "Food Hall Elektrownia Powiśle",
+        "description": "Είναι ένας εντυπωσιακός ανακαινισμένος σταθμός παραγωγής ενέργειας με τεράστια ποικιλία (από pizza μέχρι ασιατικό), και καφέ, ενώ ο χώρος είναι πολύ ευρύχωρος για καρότσια. ",
+        "map_url": "https://maps.app.goo.gl/QU4diswyZTYx4mun8"
       }
     },
     {
@@ -101,11 +101,11 @@
         "lng": 0
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "FOOD TOWN w Fabryce Norblina - Restauracja - Street food - Bar - Eventy",
+        "description": "Πρόκειται για έναν τεράστιο, στεγασμένο πολυχώρο εστίασης με πάνω από 20 διαφορετικούς πάγκους φαγητού και καφετέριες.",
+        "map_url": "https://maps.app.goo.gl/NaAfKRYY6eMAFrKCA"
       },
-      "website": "",
+      "website": "https://smartkidsplanet.pl/",
       "notes": [
         "ολοήμερο εισιτήριο",
         "ο ενήλικας πληρώνει συνοδευτικό εισιτήριο",
@@ -115,15 +115,15 @@
       "duration_hours": 0,
       "best_time": "",
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+       "name": "FOOD TOWN w Fabryce Norblina - Restauracja - Street food - Bar - Eventy",
+        "description": "Πρόκειται για έναν τεράστιο, στεγασμένο πολυχώρο εστίασης με πάνω από 20 διαφορετικούς πάγκους φαγητού και καφετέριες.",
+        "map_url": "https://maps.app.goo.gl/NaAfKRYY6eMAFrKCA"
       }
     },
     {
       "id": 3,
       "name": "Łazienki Park",
-      "description": "",
+      "description": "Το Πάρκο Łazienki (Βασιλικοί Κήποι) είναι το μεγαλύτερο και ομορφότερο πάρκο της Βαρσοβίας, ένας ιστορικός χώρος που συνδυάζει κλασική αρχιτεκτονική, όπως το εμβληματικό Παλάτι στο Νησί, με καταπράσινους κήπους, μια υπέροχη παιδική χαρά, λίμνες και ελεύθερα παγώνια, σκιουράκια και αλεπούδες. Tο καλοκαίρι φιλοξενεί τις περίφημες δωρεάν συναυλίες Σοπέν.",
       "category": "park",
       "top": false,
       "prices": {
@@ -135,11 +135,11 @@
         "lng": 21.0353
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Bar Mleczny Prasowy",
+        "description": "Ένα ιστορικό milk bar (οικογενειακά πολωνικά εστιατόρια) με σπιτικό πολωνικό φαγητό σε εξαιρετικά χαμηλές τιμές. Είναι πολύ δημοφιλές σε οικογένειες για πιάτα όπως pierogi (γεμιστά ζυμαρικά), σούπες (tomato ή zurek) και σνίτσελ.",
+        "map_url": "https://maps.app.goo.gl/vr61JrZYuGKZjxfRA"
       },
-      "website": "",
+      "website": "https://www.tripadvisor.com.gr/Attraction_Review-g274856-d284409-Reviews-Lazienki_Krolewskie_w_Warszawie-Warsaw_Mazovia_Province_Central_Poland.html",
       "notes": [
         "δωρεάν είσοδος"
       ],
@@ -147,15 +147,15 @@
       "duration_hours": 0,
       "best_time": "",
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Green Caffè Nero",
+        "description": "Μια αξιόπιστη αλυσίδα με ζεστή ατμόσφαιρα και αναπαυτικούς καναπέδες, ποιοτικό καφέ, μεγάλες μπαγκέτες και φρέσκα κέικ σε λογικές τιμές.",
+        "map_url": "https://maps.app.goo.gl/aZfwoBDTic2x4eme6"
       }
     },
     {
       "id": 4,
       "name": "Warsaw Zoo",
-      "description": "",
+      "description": "Ένας ιστορικός και καταπράσινος χώρος στις όχθες του ποταμού Βιστούλα, που φιλοξενεί πάνω από 12.000 ζώα από 500 είδη. Είναι παγκοσμίως γνωστός όχι μόνο για την ποικιλία των ζώων του, όπως ελέφαντες, καμηλοπαρδάλεις και ρινόκερους, αλλά και για τη συγκινητική ιστορία της Βίλας Ζαμπίνσκι, όπου οι ιδιοκτήτες του κήπου έσωσαν εκατοντάδες Εβραίους κατά τη διάρκεια του Β' Παγκοσμίου Πολέμου.",
       "category": "zoo",
       "top": false,
       "prices": {
@@ -184,11 +184,11 @@
         "lng": 21.0439
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "TEMBO",
+        "description": "Βρίσκεται στον πρώτο όροφο του κτιρίου των ελεφάντων. Είναι η πιο βολική επιλογή αν δεν θέλετε να βγείτε από τον κήπο, με ζεστά γεύματα σε λογικές τιμές, και τα έσοδα να διατίθενται για τη φροντίδα των ζώων.",
+        "map_url": "https://maps.app.goo.gl/ZwodXeWq9An8KUDf7"
       },
-      "website": "",
+      "website": "https://zoo.waw.pl/",
       "notes": [],
       "tags": [],
       "duration_hours": 0,
@@ -202,7 +202,7 @@
     {
       "id": 5,
       "name": "Old Town",
-      "description": "",
+      "description": "Η Παλιά Πόλη (Stare Miasto) της Βαρσοβίας είναι το ιστορικό κέντρο και η ψυχή της πόλης. Αν και ισοπεδώθηκε σχεδόν ολοκληρωτικά κατά τον Β' Παγκόσμιο Πόλεμο, ανακατασκευάστηκε με τέτοια ακρίβεια που σήμερα αποτελεί Μνημείο Παγκόσμιας Κληρονομιάς της UNESCO. Με τα πλακόστρωτα σοκάκια της, την επιβλητική πλατεία της Αγοράς (Rynek) και τα πολύχρωμα σπίτια, προσφέρει μια παραμυθένια ατμόσφαιρα που μαγεύει μικρούς και μεγάλους.",
       "category": "landmark",
       "top": false,
       "prices": {
@@ -214,25 +214,25 @@
         "lng": 21.0122
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Podwale 25 Kompania Piwna",
+        "description": "Βρίσκεται ακριβώς δίπλα στα τείχη της Παλιάς Πόλης. Είναι ένα από τα πιο δημοφιλή μέρη για οικογένειες, με τεράστιες μερίδες παραδοσιακού πολωνικού φαγητού σε πολύ καλές τιμές",
+        "map_url": "https://maps.app.goo.gl/fBkbDM8Vy5BEArXg9"
       },
-      "website": "",
+      "website": "https://www.warsawguide.com/old-town-in-warsaw/",
       "notes": [],
       "tags": [],
       "duration_hours": 0,
       "best_time": "",
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Shabby Coffee • Wine • Books",
+        "description": "Ένα πανέμορφο και ζεστό καφέ σε έναν από τους πιο γραφικούς δρόμους της Παλιάς Πόλης.",
+        "map_url": "https://maps.app.goo.gl/jf1JVJRTHrjVmB289"
       }
     },
     {
       "id": 6,
       "name": "Castle Square",
-      "description": "",
+      "description": "Η Castle Square (Plac Zamkowy) είναι την καρδιά της ιστορικής Βαρσοβίας και το κύριο σημείο εισόδου στην Παλιά Πόλη, Μνημείο Παγκόσμιας Κληρονομιάς της UNESCO. Στο κέντρο της  η εμβληματική Στήλη του Σιγισμούνδου, το παλαιότερο κοσμικό μνημείο της πόλης, ενώ η ανατολική πλευρά της οριοθετείται από το επιβλητικό Βασιλικό Κάστρο, την ιστορική έδρα των Πολωνών μοναρχών. Παρά την ολοκληρωτική καταστροφή της κατά τον Β' Παγκόσμιο Πόλεμο, η πλατεία ανακατασκευάστηκε με απόλυτη πιστότητα.",
       "category": "landmark",
       "top": false,
       "prices": {
@@ -244,25 +244,25 @@
         "lng": 21.0139
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "GOŚCINIEC Polskie Pierogi",
+        "description": "Ένα από τα πιο δημοφιλή μέρη για να δοκιμάσετε τα περίφημα πολωνικά pierogi. Είναι ιδανικό για οικογένειες με πολύ καλές τιμές ακριβώς δίπλα στην πλατεία.",
+        "map_url": "https://maps.app.goo.gl/ssbCLervmvHhBrnR9"
       },
-      "website": "",
+      "website": "https://warsawinsider.pl/the-story-of-warsaws-castle-square/",
       "notes": [],
       "tags": [],
       "duration_hours": 0,
       "best_time": "",
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Miodowa Cafe",
+        "description": "Βρίσκεται πολύ κοντά στο Βασιλικό Κάστρο, με εξαιρετικά γλυκά και ποιοτικό καφέ σε έναν πολύ ωραίο χώρο.",
+        "map_url": "https://maps.app.goo.gl/8CWhW2j8YuaC26qNA"
       }
     },
     {
       "id": 7,
       "name": "Museum of Illusions",
-      "description": "",
+      "description": "Ένας διαδραστικός χώρος που προκαλεί τις αισθήσεις και τη λογική, μια διασκεδαστική εμπειρία για όλες τις ηλικίες μέσα από οπτικές απάτες, καθρέφτες και δωμάτια που στρεβλώνουν την πραγματικότητα.",
       "category": "museum",
       "top": false,
       "prices": {
@@ -292,11 +292,11 @@
         "lng": 0
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Bazyliszek Restaurant",
+        "description": "Πρόκειται για έναν μεγάλο και πολυσύχναστο χώρο που στεγάζεται σε ένα ιστορικό κτίριο με εντυπωσιακό θολωτό υπόγειο και κλασική ξύλινη επένδυση. Έχει εξαιρετικές κριτικές και λογικές τιμές",
+        "map_url": "https://maps.app.goo.gl/WeyV2cXwgobWkuWNA"
       },
-      "website": "",
+      "website": "https://swiatiluzji.pl/",
       "notes": [
         "family tickets υπερισχύουν των individual tickets",
         "υπολογισμός κόστους βάσει οικογενειακού πακέτου",
@@ -308,15 +308,15 @@
       "duration_hours": 0,
       "best_time": "",
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Kawiarnia Same Fusy",
+        "description": "Διάσημο για τη ζεστή του ατμόσφαιρα και τη μεγάλη ποικιλία σε ροφήματα, όντας σε απόσταση αναπνοής από το Museum of Illusions.",
+        "map_url": "https://maps.app.goo.gl/qGiFkMAr1KZwPwvH7"
       }
     },
     {
       "id": 8,
       "name": "Railway Museum (Stacja Muzeum)",
-      "description": "",
+      "description": "Βρίσκεται στον παλιό σιδηροδρομικό σταθμό και περιλαμβάνει πάνω από 50 ιστορικές ατμομηχανές και βαγόνια σε εξωτερικό χώρο, καθώς και μακέτες στο εσωτερικό. Είναι ιδανικό για παιδιά 3 έως 12 ετών που θέλουν να δουν από κοντά τεράστια τρένα, αλλά και για ενήλικες που αγαπούν τη βιομηχανική ιστορία. Κάθε Δευτέρα η είσοδος είναι δωρεάν",
       "category": "museum",
       "top": false,
       "prices": {
@@ -345,11 +345,11 @@
         "lng": 21.0025
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Bistrot Flâné",
+        "description": "Το πιο κοντινό εστιατόριο που λειτουργεί και ως καφέ,είναι το Bistrot Flâné, το οποίο απέχει μόλις λίγα λεπτά με τα πόδια, με πολύ υψηλή βαθμολογία (5 αστέρια) και λογικές τιμές",
+        "map_url": "https://maps.app.goo.gl/gDdBYt3BmrY1ZDrL6"
       },
-      "website": "",
+      "website": "https://stacjamuzeum.pl/",
       "notes": [
         "8+ ετών 5,85€"
       ],
@@ -357,15 +357,15 @@
       "duration_hours": 0,
       "best_time": "",
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Bistrot Flâné",
+        "description": "Το πιο κοντινό εστιατόριο που λειτουργεί και ως καφέ,είναι το Bistrot Flâné, το οποίο απέχει μόλις λίγα λεπτά με τα πόδια, με πολύ υψηλή βαθμολογία (5 αστέρια) και λογικές τιμές",
+        "map_url": "https://maps.app.goo.gl/gDdBYt3BmrY1ZDrL6"
       }
     },
     {
       "id": 9,
       "name": "Vistula River Cruise",
-      "description": "",
+      "description": "Μια κρουαζιέρα στον ποταμό Βιστούλα δίνει την καλύτερη πανοραμική θέα της Βαρσοβίας, επιτρέποντάς σας να δείτε την αντίθεση ανάμεσα στην ιστορική Παλιά Πόλη και τους μοντέρνους ουρανοξύστες από το νερό. Τα πλοιάρια ξεκινούν συνήθως από τις όχθες κοντά στο Επιστημονικό Κέντρο Κοπέρνικος και η διαδρομή διαρκεί περίπου 45-60 λεπτά, περνώντας κάτω από τις γέφυρες της πόλης και δίπλα από τις αμμουδερές παραλίες του ποταμού. ",
       "category": "boat_tour",
       "top": false,
       "prices": {
@@ -390,15 +390,15 @@
         "adult": 18
       },
       "location": {
-        "lat": 52.2419,
-        "lng": 21.0261
+        "lat": 52.242372,
+        "lng": 21.029600
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Food Hall Elektrownia Powiśle",
+        "description": "Αν περπατήσετε 5 λεπτά μακριά από το ποτάμι, θα βρείτε αυτόν τον αναπαλαιωμένο σταθμό ενέργειας που πλέον λειτουργεί ως food hall με δεκάδες οικονομικές και ποιοτικές επιλογές για κάθε γούστο σε φαγητό και καφέ.",
+        "map_url": "https://maps.app.goo.gl/acazzbbQiZTvfzsRA"
       },
-      "website": "",
+      "website": "https://po-wisle.pl/en/tickets-and-timetable/?doing_wp_cron=1772950916.8728699684143066406250",
       "notes": [
         "κρουαζιέρα αναψυχής"
       ],
@@ -406,15 +406,15 @@
       "duration_hours": 0,
       "best_time": "",
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Food Hall Elektrownia Powiśle",
+        "description": "Αν περπατήσετε 5 λεπτά μακριά από το ποτάμι, θα βρείτε αυτόν τον αναπαλαιωμένο σταθμό ενέργειας που πλέον λειτουργεί ως food hall με δεκάδες οικονομικές και ποιοτικές επιλογές για κάθε γούστο σε φαγητό και καφέ.",
+        "map_url": "https://maps.app.goo.gl/acazzbbQiZTvfzsRA"
       }
     },
     {
       "id": 10,
       "name": "Palace of Culture and Science – Observation Deck",
-      "description": "",
+      "description": "Χτίστηκε το 1955 ως δώρο της Σοβιετικής Ένωσης προς την Πολωνία, κορυφαίο δείγμα σοσιαλιστικής αρχιτεκτονικής στην πόλη. Αν και ξεκίνησε ως σύμβολο πολιτικής επιβολής, σήμερα είναι ένας ζωντανός πολιτιστικός κόμβος που στεγάζει θέατρα, μουσεία, κινηματογράφους και γραφεία. Είναι δημοφιλής προορισμός χάρη στην ταράτσα του 30ού ορόφου,για την καλύτερη θέα σε όλη τη Βαρσοβία",
       "category": "viewpoint",
       "top": false,
       "prices": {
@@ -448,7 +448,7 @@
         "description": "",
         "map_url": ""
       },
-      "website": "",
+      "website": "https://pkin.pl/en/home/",
       "notes": [
         "3-18 reduced",
         "observation deck ticket"
