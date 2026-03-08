@@ -444,9 +444,9 @@
         "lng": 21.0061
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Restauracja Słoik",
+        "description": "Αν αναζητάτε ένα πλήρες και οικονομικό γεύμα",
+        "map_url": "https://maps.app.goo.gl/McY3BHf42TtXUkbHA"
       },
       "website": "https://pkin.pl/en/home/",
       "notes": [
@@ -457,15 +457,15 @@
       "duration_hours": 0,
       "best_time": "",
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Green Caffè Nero",
+        "description": "Βρίσκεται στην είσοδο του κτιρίου και είναι εξαιρετική επιλογή για οικογένειες, με άνετους καναπέδες, σάντουιτς και γλυκά.",
+        "map_url": "https://maps.app.goo.gl/sD2AC28N8Qsqdh6R6"
       }
     },
     {
       "id": 11,
       "name": "Suntago Waterpark",
-      "description": "",
+      "description": "Το μεγαλύτερο στεγασμένο υδάτινο πάρκο της Ευρώπης, μια τροπική απόδραση για όλο το χρόνο με δεκάδες νεροτσουλήθρες, ιαματικές πηγές, πισίνες με κύματα και έναν εντυπωσιακό κήπο με φοίνικες.",
       "category": "attraction",
       "top": false,
       "prices": {
@@ -494,11 +494,11 @@
         "lng": 20.8167
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Restauracja Wakacyjna Wioska Ngô Wręcza",
+        "description": "Αν θέλετε φαγητό εκτός του πάρκου αυτό το εστιατόριο έχει καλές τιμές και βρίσκεται πολύ κοντά.",
+        "map_url": "https://maps.app.goo.gl/6HwCRPKaEGAry89KA"
       },
-      "website": "",
+      "website": "https://parkofpoland.com/en/",
       "notes": [
         "τιμές μεταβάλλονται ανά ηλικία, ύψος, zones και booking",
         "δείτε επίσημο site"
@@ -507,15 +507,15 @@
       "duration_hours": 0,
       "best_time": "",
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Εντός του πάρκου",
+        "description": "Καφέ εντός του υδάτινου πάρκου",
+        "map_url": "https://maps.app.goo.gl/yeS3PCyZa3Jbu36E9"
       }
     },
     {
       "id": 12,
       "name": "Museum of Dollhouses, Games and Toys",
-      "description": "",
+      "description": "Ένας μαγευτικός προορισμός που στεγάζει μια μοναδική συλλογή από εκατοντάδες ιστορικά κουκλόσπιτα, σχολεία, καταστήματα και νοσοκομεία σε μικρογραφία. Κατάλληλο για μικρά παιδιά",
       "category": "museum",
       "top": false,
       "prices": {
@@ -544,11 +544,11 @@
         "lng": 0
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Gospoda Kwiaty Polskie restauracja Stare Miasto Warszawa kuchnia polska",
+        "description": "Παραδοσιακή πολωνική κουζίνα σε έναν ρουστίκ χώρο που θυμίζει σπίτι",
+        "map_url": "https://maps.app.goo.gl/VD2xbeZrEaksD9x5A"
       },
-      "website": "",
+      "website": "https://www.muzeumdomkow.pl/",
       "notes": [
         "δωρεάν κάτω από 100cm",
         "για planner: 0-3 δωρεάν, 4-17 reduced"
@@ -557,15 +557,15 @@
       "duration_hours": 0,
       "best_time": "",
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Różany Zakątek",
+        "description": "Ένας πανέμορφος και ήσυχος κήπος στην καρδιά της Παλιάς Πόλης με εξαιρετική βαθμολογία.",
+        "map_url": "https://maps.app.goo.gl/ERJt9J5CQgUguWpz9"
       }
     },
     {
       "id": 13,
-      "name": "Wedel Chocolate Factory",
-      "description": "",
+      "name": "Muzeum Fabryka Czekolady E.Wedel",
+      "description": "Ένας απόλυτα διαδραστικός και γευστικός προορισμός, όπου οι επισκέπτες μαθαίνουν τα μυστικά της σοκολάτας μέσα από όλες τις αισθήσεις, ιδανικός για παιδιά από 4 ετών και άνω αλλά και για ενήλικες που αγαπούν τις γλυκές εμπειρίες.",
       "category": "attraction",
       "top": false,
       "prices": {
@@ -594,11 +594,11 @@
         "lng": 0
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Taverna Patris",
+        "description": "Η Taverna Patris είναι μια γνωστή και αγαπημένη ελληνική ταβέρνα στην περιοχή Praga της Βαρσοβίας με πολύ καλή βαθμολογία",
+        "map_url": "https://maps.app.goo.gl/fGtZZeNXAbzaCewQ6"
       },
-      "website": "",
+      "website": "https://fabrykaczekolady.pl/",
       "notes": [
         "αφορά guided tour",
         "workshops έχουν ξεχωριστή τιμολόγηση"
@@ -607,15 +607,15 @@
       "duration_hours": 0,
       "best_time": "",
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Pijalnia Czekolady E. Wedel",
+        "description": "Εντός του χώρου",
+        "map_url": "https://maps.app.goo.gl/7KAHW4ZtGApYoCGL9"
       }
     },
     {
       "id": 14,
       "name": "Saxon Garden",
-      "description": "",
+      "description": "Το παλαιότερο δημόσιο πάρκο της Βαρσοβίας, ένας πανέμορφος χώρος από τον 18ο αιώνα που φιλοξενεί το Μνημείο του Άγνωστου Στρατιώτη, εντυπωσιακά σιντριβάνια, κλασικά αγάλματα, και παιδική χαρά.",
       "category": "park",
       "top": false,
       "prices": {
@@ -627,11 +627,11 @@
         "lng": 21.0056
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "W OGRODZIE",
+        "description": "Εξαιρετικό φαγητό σε ένα περιβάλλον που παραμένει πιστό στην ατμόσφαιρα του κήπου.",
+        "map_url": "https://maps.app.goo.gl/aNzMViG7K1yH6J9Q9"
       },
-      "website": "",
+      "website": "https://kidsinthecity.pl/listing/the-saxon-garden-ogrod-saski/",
       "notes": [
         "δωρεάν είσοδος"
       ],
@@ -639,9 +639,9 @@
       "duration_hours": 0,
       "best_time": "",
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Bike Cafe Ogród Saski",
+        "description": "Μια γρήγορη και ευχάριστη στάση για καφέ μέσα στο πάρκο.",
+        "map_url": "https://maps.app.goo.gl/gt827Dock9WnRoGLA"
       }
     },
     {
@@ -679,7 +679,7 @@
     {
       "id": 16,
       "name": "Royal Castle",
-      "description": "",
+      "description": "Ένα εμβληματικό σύμβολο της πολωνικής ιστορίας και αρχιτεκτονικής, το οποίο ανακατασκευάστηκε με εντυπωσιακή λεπτομέρεια μετά την καταστροφή του στον Β' Παγκόσμιο Πόλεμο. Σήμερα λειτουργεί ως μουσείο, φιλοξενώντας τα βασιλικά διαμερίσματα, πολύτιμες συλλογές έργων τέχνης και την αίθουσα του θρόνου",
       "category": "castle",
       "top": false,
       "prices": {
@@ -708,11 +708,11 @@
         "lng": 21.0142
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Gospoda pod Zygmuntem",
+        "description": "Ένα παραδοσιακό εστιατόριο με ζεστή ατμόσφαιρα και αυθεντική πολωνική κουζίνα.",
+        "map_url": "https://maps.app.goo.gl/3SzA99qFQT921PXH8"
       },
-      "website": "",
+      "website": "https://www.zamek-krolewski.pl/",
       "notes": [
         "Royal Apartments & Parliament ticket",
         "ξεχωριστό από βασική είσοδο"
