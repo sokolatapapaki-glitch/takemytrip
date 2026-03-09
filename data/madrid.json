@@ -1065,7 +1065,7 @@
     {
       "id": 20,
       "name": "Urban Planet Las Rejas ",
-      "description": "ένα σύγχρονο δίκτυο κλειστών πάρκων με τραμπολίνο. Κατάλληλο για άνω των 5 ετών",
+      "description": "Ένα σύγχρονο δίκτυο κλειστών πάρκων με τραμπολίνο. Κατάλληλο για άνω των 5 ετών",
       "category": "sports",
       "prices": {
         "0": 12,
@@ -1121,7 +1121,7 @@
     {
       "id": 21,
       "name": "Teleférico de Madrid",
-      "description": "Τελεφερίκ με θέα την πόλη. ⚠️ ΠΡΟΣΩΡΙΝΑ ΚΛΕΙΣΤΟ. Κατάλληλο για κάθε ηλικία",
+      "description": "Τελεφερίκ με θέα την πόλη. ⚠️ ΠΡΟΣΩΡΙΝΑ ΚΛΕΙΣΤΟ - ενημερωθείτε από το επίσημο site. Κατάλληλο για κάθε ηλικία",
       "category": "attraction",
       "prices": {
         "0": 0,
@@ -1152,7 +1152,7 @@
       },
       "restaurant": {
         "name": "Casa Mingo",
-        "description": "παραδοσιακό",
+        "description": "Παραδοσιακό ισπανικό εστιατόριο",
         "map_url": "https://www.google.com/maps/search/?api=1&query=Casa+Mingo+Madrid"
       },
       "website": "https://teleferico.emtmadrid.es/",
