@@ -180,7 +180,7 @@ export async function filterDestinations() {
         },
         {
             id: 'warsaw', name: 'Βαρσοβία', emoji: '🦅',
-            hasJSON: false, distance: 2.5, cost: 'Οικονομικό',
+            hasJSON: true, distance: 2.5, cost: 'Οικονομικό',
             country: 'Πολωνία', vacationType: 'Πόλη',
             themeParks: [], familyScore: 5, hasDisney: false,
             strollerFriendly: true

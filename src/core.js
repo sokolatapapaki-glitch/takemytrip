@@ -1518,7 +1518,7 @@ export function saveManualDestination() {
     const cityId = citySelect.value;
 
     const citiesWithoutJSON = ['rome', 'barcelona', 'brussels', 'copenhagen', 'dublin',
-                              'edinburgh', 'florence', 'munich', 'venice', 'warsaw', 'zurich'];
+                              'edinburgh', 'florence', 'munich', 'venice', 'zurich'];
 
     if (citiesWithoutJSON.includes(cityId)) {
         const confirmContinue = confirm(
@@ -1630,6 +1630,7 @@ function createDestinationDropdown() {
                 <option value="">-- Επιλέξτε πόλη --</option>
                <optgroup label="✅ Πλήρης Υποστήριξη">
     <option value="amsterdam">Άμστερνταμ (Ολλανδία)</option>
+    <option value="warsaw">Βαρσοβία (Πολωνία)</option>
     <option value="vienna">Βιέννη (Αυστρία)</option>
     <option value="berlin">Βερολίνο (Γερμανία)</option>
     <option value="bucharest">Βουκουρέστι (Ρουμανία)</option>
@@ -1643,7 +1644,6 @@ function createDestinationDropdown() {
 </optgroup>
 <optgroup label="🛠️ Σύντομα Διαθέσιμες">
     <option value="barcelona">Βαρκελώνη (Ισπανία)</option>
-    <option value="warsaw">Βαρσοβία (Πολωνία)</option>
     <option value="brussels">Βρυξέλλες (Βέλγιο)</option>
     <option value="venice">Βενετία (Ιταλία)</option>
     <option value="dublin">Δουβλίνο (Ιρλανδία)</option>
