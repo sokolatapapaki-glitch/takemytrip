@@ -1,0 +1,1086 @@
+{
+  "city": "Barcelona",
+  "country": "Spain",
+  "currency": "EUR",
+  "emoji": "🇪🇸",
+  "pricing_model": "per_age",
+  "description": "",
+  "location": {
+    "lat": 41.3851,
+    "lng": 2.1734
+  },
+  "cityPass": {
+    "name": "Barcelona Card",
+    "description": "",
+    "discountPercent": 0,
+    "url": ""
+  },
+  "passes": [
+    {
+      "name": "Barcelona Card",
+      "description": "",
+      "prices": {
+        "adult_2day": 0,
+        "adult_3day": 0,
+        "adult_4day": 0,
+        "adult_5day": 0,
+        "child_4_12_2day": 0,
+        "child_4_12_3day": 0,
+        "child_4_12_4day": 0,
+        "child_4_12_5day": 0
+      },
+      "website": ""
+    }
+  ],
+  "activities": [
+    {
+      "id": 1,
+      "name": "Sagrada Família",
+      "description": "",
+      "category": "monument",
+      "top": true,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.4036,
+        "lng": 2.1744
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.sagradafamilia.org/",
+      "notes": [],
+      "tags": [
+        "monument",
+        "gaudi",
+        "church",
+        "architecture",
+        "iconic"
+      ],
+      "duration_hours": 2,
+      "best_time": "morning",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 2,
+      "name": "Park Güell",
+      "description": "",
+      "category": "park",
+      "top": true,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.4145,
+        "lng": 2.1527
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://parkguell.barcelona/",
+      "notes": [],
+      "tags": [
+        "park",
+        "gaudi",
+        "architecture",
+        "views",
+        "iconic"
+      ],
+      "duration_hours": 2,
+      "best_time": "morning",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 3,
+      "name": "Casa Batlló",
+      "description": "",
+      "category": "monument",
+      "top": true,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.3916,
+        "lng": 2.165
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.casabatllo.es/",
+      "notes": [],
+      "tags": [
+        "gaudi",
+        "architecture",
+        "monument",
+        "passeig de gracia",
+        "iconic"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "morning",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 4,
+      "name": "Casa Milà (La Pedrera)",
+      "description": "",
+      "category": "monument",
+      "top": true,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.3954,
+        "lng": 2.1619
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.lapedrera.com/",
+      "notes": [],
+      "tags": [
+        "gaudi",
+        "architecture",
+        "monument",
+        "passeig de gracia",
+        "rooftop"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "morning",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 5,
+      "name": "Picasso Museum",
+      "description": "",
+      "category": "museum",
+      "top": true,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.3851,
+        "lng": 2.1808
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.museupicasso.bcn.cat/",
+      "notes": [],
+      "tags": [
+        "museum",
+        "art",
+        "picasso",
+        "el born",
+        "culture"
+      ],
+      "duration_hours": 2,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 6,
+      "name": "Gaudí Experience",
+      "description": "",
+      "category": "museum",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.4138,
+        "lng": 2.1524
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://gaudiexperiencia.com/",
+      "notes": [],
+      "tags": [
+        "gaudi",
+        "museum",
+        "interactive",
+        "4d",
+        "park guell"
+      ],
+      "duration_hours": 1,
+      "best_time": "any",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 7,
+      "name": "Montjuïc Castle (Castell de Montjuïc)",
+      "description": "",
+      "category": "castle",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.3638,
+        "lng": 2.1659
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://ajuntament.barcelona.cat/castelldemontjuic/en/",
+      "notes": [],
+      "tags": [
+        "castle",
+        "montjuic",
+        "history",
+        "views",
+        "fortress"
+      ],
+      "duration_hours": 2,
+      "best_time": "morning",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 8,
+      "name": "Hospital de Sant Pau",
+      "description": "",
+      "category": "monument",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.4134,
+        "lng": 2.1735
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.santpaubarcelona.org/",
+      "notes": [],
+      "tags": [
+        "architecture",
+        "modernisme",
+        "monument",
+        "unesco",
+        "historic"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "morning",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 9,
+      "name": "Camp Nou (Barça Stadium Tour)",
+      "description": "",
+      "category": "stadium",
+      "top": true,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.3809,
+        "lng": 2.1228
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.fcbarcelona.com/en/tickets/camp-nou-experience",
+      "notes": [],
+      "tags": [
+        "stadium",
+        "football",
+        "barcelona fc",
+        "tour",
+        "sports"
+      ],
+      "duration_hours": 2,
+      "best_time": "any",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 10,
+      "name": "L'Aquàrium de Barcelona",
+      "description": "",
+      "category": "aquarium",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.3762,
+        "lng": 2.1842
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.aquariumbcn.com/",
+      "notes": [],
+      "tags": [
+        "aquarium",
+        "marine",
+        "fish",
+        "sharks",
+        "family"
+      ],
+      "duration_hours": 2,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 11,
+      "name": "CosmoCaixa",
+      "description": "",
+      "category": "museum",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.4119,
+        "lng": 2.1317
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://cosmocaixa.org/",
+      "notes": [],
+      "tags": [
+        "museum",
+        "science",
+        "interactive",
+        "educational",
+        "family"
+      ],
+      "duration_hours": 3,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 12,
+      "name": "Tibidabo Amusement Park",
+      "description": "",
+      "category": "themepark",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.4219,
+        "lng": 2.1185
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.tibidabo.cat/",
+      "notes": [],
+      "tags": [
+        "theme park",
+        "rides",
+        "views",
+        "tibidabo",
+        "family"
+      ],
+      "duration_hours": 4,
+      "best_time": "any",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 13,
+      "name": "PortAventura World",
+      "description": "",
+      "category": "themepark",
+      "top": true,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.0864,
+        "lng": 1.1556
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.portaventuraworld.com/",
+      "notes": [],
+      "tags": [
+        "theme park",
+        "rides",
+        "outside city",
+        "rollercoaster",
+        "family"
+      ],
+      "duration_hours": 8,
+      "best_time": "any",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 14,
+      "name": "Parc de la Ciutadella",
+      "description": "",
+      "category": "park",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.388,
+        "lng": 2.1861
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [
+        "park",
+        "free",
+        "nature",
+        "lake",
+        "family"
+      ],
+      "duration_hours": 2,
+      "best_time": "afternoon",
+      "freeActivity": true,
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 15,
+      "name": "Barceloneta & Poblenou Beaches",
+      "description": "",
+      "category": "beach",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.3797,
+        "lng": 2.1927
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [
+        "beach",
+        "free",
+        "sea",
+        "outdoor",
+        "summer"
+      ],
+      "duration_hours": 3,
+      "best_time": "morning",
+      "freeActivity": true,
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 16,
+      "name": "Magic Fountain (Font Màgica)",
+      "description": "",
+      "category": "attraction",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.3713,
+        "lng": 2.1517
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://ajuntament.barcelona.cat/en/",
+      "notes": [],
+      "tags": [
+        "fountain",
+        "free",
+        "light show",
+        "montjuic",
+        "evening"
+      ],
+      "duration_hours": 1,
+      "best_time": "evening",
+      "freeActivity": true,
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 17,
+      "name": "Ciutat Vella / Barri Gòtic Exploration",
+      "description": "",
+      "category": "area",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.3829,
+        "lng": 2.1775
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [
+        "area",
+        "free",
+        "historic",
+        "gothic",
+        "walk"
+      ],
+      "duration_hours": 2.5,
+      "best_time": "afternoon",
+      "freeActivity": true,
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 18,
+      "name": "Museu Blau (Natural History Museum)",
+      "description": "",
+      "category": "museum",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.3708,
+        "lng": 2.1978
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://museuciencies.cat/",
+      "notes": [],
+      "tags": [
+        "museum",
+        "natural history",
+        "science",
+        "dinosaurs",
+        "educational"
+      ],
+      "duration_hours": 2.5,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 19,
+      "name": "Museu dels Gegants (Giants Museum)",
+      "description": "",
+      "category": "museum",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.3832,
+        "lng": 2.1751
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": [
+        "museum",
+        "giants",
+        "culture",
+        "folklore",
+        "catalan"
+      ],
+      "duration_hours": 1,
+      "best_time": "any",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    }
+  ]
+}
