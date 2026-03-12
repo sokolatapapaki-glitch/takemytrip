@@ -4197,7 +4197,8 @@ function showActivityMap() {
         let markerTitle = activity.name;
         let activityData = fullActivity || activity;
         
-        if (fullActivity && fullActivity.location) {
+        if (fullActivity && fullActivity.location &&
+            (fullActivity.location.lat !== 0 || fullActivity.location.lng !== 0)) {
             // Έχει location στο JSON
             coords = [fullActivity.location.lat, fullActivity.location.lng];
             console.log(`📍 Βρήκα location για ${activity.name}:`, coords);
@@ -5997,7 +5998,8 @@ function applyDayFilter() {
                 
                 let coords;
                 
-                if (fullActivity.location) {
+                if (fullActivity.location &&
+                    (fullActivity.location.lat !== 0 || fullActivity.location.lng !== 0)) {
                     coords = [fullActivity.location.lat, fullActivity.location.lng];
                 } else {
                     // Χωρίς location - τυχαία συντεταγμένες κοντά στο κέντρο

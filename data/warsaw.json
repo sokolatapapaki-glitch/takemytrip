@@ -97,8 +97,8 @@
         "adult": 3.5
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 52.2323,
+        "lng": 20.9908
       },
       "restaurant": {
         "name": "FOOD TOWN w Fabryce Norblina - Restauracja - Street food - Bar - Eventy",
@@ -325,8 +325,8 @@
         "adult": 9.8
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 52.2497,
+        "lng": 21.0120
       },
       "restaurant": {
         "name": "Bazyliszek Restaurant",
@@ -559,8 +559,8 @@
         "adult": 9.8
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 52.2512,
+        "lng": 21.0122
       },
       "restaurant": {
         "name": "Gospoda Kwiaty Polskie restauracja Stare Miasto Warszawa kuchnia polska",
@@ -609,8 +609,8 @@
         "adult": 16
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 52.2435,
+        "lng": 21.0590
       },
       "restaurant": {
         "name": "Taverna Patris",
@@ -809,8 +809,8 @@
         "adult": 27
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 52.1493,
+        "lng": 21.2583
       },
       "restaurant": {
         "name": "Εντός του πάρκου",
@@ -909,8 +909,8 @@
         "adult": 10.2
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 52.1959,
+        "lng": 20.9258
       },
       "restaurant": {
         "name": "Veneto Restauracja Warszawa - Kuchnia Włoska: Pasta & Pizza",
