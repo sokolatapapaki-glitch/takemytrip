@@ -4198,6 +4198,8 @@ function showActivityMap() {
         let activityData = fullActivity || activity;
         
         if (fullActivity && fullActivity.location &&
+            Number.isFinite(fullActivity.location.lat) &&
+            Number.isFinite(fullActivity.location.lng) &&
             (fullActivity.location.lat !== 0 || fullActivity.location.lng !== 0)) {
             // Έχει location στο JSON
             coords = [fullActivity.location.lat, fullActivity.location.lng];
@@ -5999,6 +6001,8 @@ function applyDayFilter() {
                 let coords;
                 
                 if (fullActivity.location &&
+                    Number.isFinite(fullActivity.location.lat) &&
+                    Number.isFinite(fullActivity.location.lng) &&
                     (fullActivity.location.lat !== 0 || fullActivity.location.lng !== 0)) {
                     coords = [fullActivity.location.lat, fullActivity.location.lng];
                 } else {
