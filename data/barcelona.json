@@ -366,7 +366,7 @@
     {
       "id": 7,
       "name": "Montjuïc Castle (Castell de Montjuïc)",
-      "description": "",
+      "description": "Το Κάστρο του Montjuïc είναι ένα παλιό φρούριο στην κορυφή του λόφου που στέκει εκεί για αιώνες, έχοντας περάσει από περιόδους πολέμων και χρήσης ως φυλακή. Σήμερα, η κύρια αξία του είναι η εκπληκτική θέα που χαρίζει, αφού από τα τείχη του μπορείτε να δείτε όλη τη Βαρκελώνη και το λιμάνι να απλώνονται μπροστά σας. Είναι ένας χώρος με επιβλητική αρχιτεκτονική, μεγάλα κανόνια και όμορφους κήπους στην τάφρο του",
       "category": "castle",
       "top": false,
       "prices": {
@@ -397,9 +397,9 @@
         "lng": 2.1659
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Petit Montjuïc",
+        "description": "Είναι ιδανικό αν ψάχνετε κάτι αυθεντικό και λιτό, μακριά από τα πολύ τουριστικά σημεία. Έχει πολύ καλές κριτικές για τις τιμές του σε σχέση με την ποιότητα που έχει",
+        "map_url": "https://maps.app.goo.gl/kryoj12WYtPxsbNHA"
       },
       "website": "https://ajuntament.barcelona.cat/castelldemontjuic/en/",
       "notes": [],
@@ -413,9 +413,9 @@
       "duration_hours": 2,
       "best_time": "morning",
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Bar Paperines",
+        "description": "Είναι ιδανικό για καφέ, χυμούς, αναψυκτικά και ελαφριά γεύματα όπως σάντουιτς (bocadillos), τάπας ή μια γρήγορη πίτσα.",
+        "map_url": "https://maps.app.goo.gl/69xEnfU34uLAdCcJ8"
       }
     },
     {
