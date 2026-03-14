@@ -232,9 +232,9 @@
         "lng": 2.1619
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Babula Bar 1937",
+        "description": "Είναι μια πολύ καλή επιλογή αν θέλετε κάτι λίγο πιο ιδιαίτερο και στυλάτο, με καλές τιμές.",
+        "map_url": "https://maps.app.goo.gl/PxsHV7dQ5Vc61yr98"
       },
       "website": "https://www.lapedrera.com/",
       "notes": [],
@@ -256,7 +256,7 @@
     {
       "id": 5,
       "name": "Picasso Museum",
-      "description": "",
+      "description": "Το Μουσείο Πικάσο στεγάζεται σε πέντε εντυπωσιακά μεσαιωνικά παλάτια και είναι ο καλύτερος χώρος για να κατανοήσετε τα νεανικά χρόνια και τη διαμόρφωση του μεγάλου καλλιτέχνη. Η συλλογή του περιλαμβάνει πάνω από 4.000 έργα, εστιάζοντας κυρίως στην περίοδο που ο Πικάσο ζούσε στη Βαρκελώνη.",
       "category": "museum",
       "top": true,
       "prices": {
@@ -303,10 +303,10 @@
       "duration_hours": 2,
       "best_time": "afternoon",
       "cafe": {
-        "name": "",
+        "name": "Patisserie Hofmann",
         "description": "",
-        "map_url": ""
-      }
+        "map_url": "https://maps.app.goo.gl/nBBrGkufrMLNtKnJ9"
+        }
     },
     {
       "id": 6,
