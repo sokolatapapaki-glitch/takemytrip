@@ -476,7 +476,7 @@
     {
       "id": 9,
       "name": "Camp Nou (Barça Stadium Tour)",
-      "description": "",
+      "description": "Το Camp Nou Experience είναι η απόλυτη στάση για κάθε φίλο του ποδοσφαίρου, μια πλήρης περιήγηση στις εγκαταστάσεις της Μπαρτσελόνα. ΠΡΟΣΟΧΗ: γίνονται εργασίες ανακαίνισης, ενημερωθείτε από το επίσημο site.",
       "category": "stadium",
       "top": true,
       "prices": {
@@ -507,9 +507,9 @@
         "lng": 2.1228
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "La nueva Marquesa",
+        "description": "Μια οικογενειακή επιχείρηση με παραδοσιακή καταλανική κουζίνα. Είναι ένα πολύ ζεστό μέρος, γνωστό για τα μαγειρευτά του και τα πιάτα ημέρας, για μια αυθεντική γεύση της Βαρκελώνης σε καλή σχέση ποιότητας-τιμής.",
+        "map_url": "https://maps.app.goo.gl/7nrtE4Qanp6AFkJf7"
       },
       "website": "https://www.fcbarcelona.com/en/tickets/camp-nou-experience",
       "notes": [],
