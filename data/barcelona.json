@@ -421,7 +421,7 @@
     {
       "id": 8,
       "name": "Hospital de Sant Pau",
-      "description": "",
+      "description": "Το μεγαλύτερο συγκρότημα μοντερνιστικής αρχιτεκτονικής στον κόσμο και μνημείο της UNESCO. Σχεδιάστηκε από τον Lluís Domènech i Montaner ως μια πόλη-νοσοκομείο με ολάνθιστους κήπους και πολύχρωμα μωσαϊκά, βασισμένο στην πρωτοποριακή ιδέα ότι η ομορφιά και το φως βοηθούν στη θεραπεία των ασθενών. Σήμερα, μπορείτε να περιηγηθείτε στα εντυπωσιακά του κτίρια και να δείτε από κοντά πώς η υψηλή τέχνη συνδυάστηκε με την ιατρική φροντίδα σε έναν χώρο που λειτούργησε ως νοσοκομείο για έναν αιώνα.",
       "category": "monument",
       "top": false,
       "prices": {
@@ -452,9 +452,9 @@
         "lng": 2.1735
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "DABüTiS",
+        "description": "Ισπανική κουζίνα και τάπας. Είναι γνωστό για την καλή σχέση ποιότητας-τιμής και την ανθρώπινη εξυπηρέτηση",
+        "map_url": "https://maps.app.goo.gl/C7kBXD9HyPEqQvSN8"
       },
       "website": "https://www.santpaubarcelona.org/",
       "notes": [],
@@ -468,9 +468,9 @@
       "duration_hours": 1.5,
       "best_time": "morning",
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Padel Bar Cafeteria",
+        "description": "Το Padel Bar Cafeteria είναι ένας απλός χώρος δίπλα στο νοσοκομείο Sant Pau, που λειτουργεί ως σημείο συνάντησης για τους παίκτες του αθλήματος padel αλλά και για τους περιοίκους.",
+        "map_url": "https://maps.app.goo.gl/frhD8QzxVwKY8wkJ9"
       }
     },
     {
