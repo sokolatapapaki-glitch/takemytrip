@@ -696,7 +696,7 @@
     {
       "id": 13,
       "name": "PortAventura World",
-      "description": "",
+      "description": "Βρίσκεται κοντά στην Ταραγόνα και περίπου μία ώρα από τη Βαρκελώνη, και είναι ένα από τα μεγαλύτερα θεματικά θέρετρα της Ευρώπης (έχει και υδάτινο πάρκο ,το Caribe Aquatic Park). Εκεί θα βρείτε μερικά από τα πιο ψηλά και γρήγορα τρενάκια στον κόσμο αλλά και ειδικά διαμορφωμένες περιοχές για μικρότερα παιδιά. ",
       "category": "themepark",
       "top": true,
       "prices": {
@@ -727,7 +727,7 @@
         "lng": 1.1556
       },
       "restaurant": {
-        "name": "",
+        "name": "Εντός του πάρκου",
         "description": "",
         "map_url": ""
       },
@@ -743,7 +743,7 @@
       "duration_hours": 8,
       "best_time": "any",
       "cafe": {
-        "name": "",
+        "name": "Εντός του πάρκου",
         "description": "",
         "map_url": ""
       }
@@ -751,7 +751,7 @@
     {
       "id": 14,
       "name": "Parc de la Ciutadella",
-      "description": "",
+      "description": "Το πιο γνωστό πάρκο της Βαρκελώνης, ακριβώς δίπλα στην παλιά πόλη. Με μια πανέμορφη λίμνη για βαρκάδα, ένα τεράστιο σιντριβάνι που μοιάζει με καταρράκτη,  το Κοινοβούλιο της Καταλονίας και ζωολογικό κήπο. Είναι πολύ κοντά στην Αψίδα του Θριάμβου και στη θάλασσα, οπότε βολεύει να τα συνδυάσετε. ",
       "category": "park",
       "top": false,
       "prices": {
@@ -782,9 +782,9 @@
         "lng": 2.1861
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Via Margutta",
+        "description": "Εδώ θα βρείτε πίτσες και μακαρονάδες σε πολύ καλές τιμές.",
+        "map_url": "https://maps.app.goo.gl/2TxKqPDV6fvpLfUN9"
       },
       "website": "",
       "notes": [],
@@ -799,15 +799,15 @@
       "best_time": "afternoon",
       "freeActivity": true,
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Tranqui Brunch",
+        "description": "Πολύ κοντά, με εξαιρετικό καφέ και ωραίες επιλογές για brunch αν πεινάσετε.",
+        "map_url": "https://maps.app.goo.gl/76jPqph4hnhgMEq18"
       }
     },
     {
       "id": 15,
-      "name": "Barceloneta & Poblenou Beaches",
-      "description": "",
+      "name": "Poblenou Beaches",
+      "description": "Οι παραλίες του Poblenou, όπως η Bogatell και η Nova Icaria είναι πλατιές, έχουν λιγότερη φασαρία από την Barceloneta, υπέροχες παιδικές χαρές και είναι οι αγαπημένες των Ισπανών. Όλη αυτή η παραλιακή διαδρομή συνδέεται με έναν μεγάλο πεζόδρομο που είναι οτι πρέπει για ποδήλατο ή περπάτημα με θέα τη θάλασσα.",
       "category": "beach",
       "top": false,
       "prices": {
@@ -838,9 +838,9 @@
         "lng": 2.1927
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Xiroi",
+        "description": "Βρίσκεται ακριβώς πάνω στην παραλία Nova Icaria και ειναι σουπερ και για καφέ και για φαγητό.",
+        "map_url": "https://maps.app.goo.gl/Mfrre3tGbE5RiWBC8"
       },
       "website": "",
       "notes": [],
@@ -855,15 +855,15 @@
       "best_time": "morning",
       "freeActivity": true,
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+         "name": "Xiroi",
+        "description": "Βρίσκεται ακριβώς πάνω στην παραλία Nova Icaria και ειναι σουπερ και για καφέ και για φαγητό.",
+        "map_url": "https://maps.app.goo.gl/Mfrre3tGbE5RiWBC8"
       }
     },
     {
       "id": 16,
       "name": "Magic Fountain (Font Màgica)",
-      "description": "",
+      "description": "Στους πρόποδες του λόφου Montjuïc, ακριβώς κάτω από το Εθνικό Μουσείο Τέχνης της Καταλονίας, είναι ένα από τα πιο εντυπωσιακά θεάματα της Βαρκελώνης. Ένας συνδυασμός από νερό, φώτα και μουσική με πανέμορφες χορογραφίες. Η πρόσβαση είναι πολύ εύκολη από την Plaça d'Espanya και η εμπειρία είναι μοναδική, αρκεί να ελέγξετε από πριν τις ώρες λειτουργίας γιατί αλλάζουν ανάλογα με την εποχή ή τους περιορισμούς νερού.",
       "category": "attraction",
       "top": false,
       "prices": {
@@ -894,9 +894,9 @@
         "lng": 2.1517
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Burger Fest",
+        "description": "Στην Plaça d'Espanya, μια πολύ καλή και γρήγορη λύση. Είναι ένα μέρος που επικεντρώνεται στα μπέργκερ. ",
+        "map_url": "https://maps.app.goo.gl/Z7CYTAimHDjzE15C7"
       },
       "website": "https://ajuntament.barcelona.cat/en/",
       "notes": [],
@@ -911,9 +911,9 @@
       "best_time": "evening",
       "freeActivity": true,
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Arenas de Barcelona",
+        "description": "Είναι το εμπορικό κέντρο στην Plaça d'Espanya (περίπου 5-7 λεπτά περπάτημα). Στον τελευταίο όροφο έχει πολλές επιλογές για φαγητό και καφέ με φοβερή θέα σε όλη την περιοχή.",
+        "map_url": "https://maps.app.goo.gl/KWZj53Mnfg2yq89s5"
       }
     },
     {
