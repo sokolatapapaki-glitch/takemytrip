@@ -919,7 +919,7 @@
     {
       "id": 17,
       "name": "Ciutat Vella / Barri Gòtic Exploration",
-      "description": "",
+      "description": "Η παλιά πόλη της Βαρκελώνης με το Barri Gòtic να αποτελεί το πιο ατμοσφαιρικό της κομμάτι, γεμάτο με στενά δρομάκια που σε μεταφέρουν σε άλλες εποχές. Εκεί θα βρείτε τον επιβλητικό Καθεδρικό Ναό, κρυμμένες πλατείες όπως την Plaça Sant Felip Neri και ιστορικά κτίρια που στέκονται εκεί εδώ και αιώνες, αλλά και ζωή,  μικρά μαγαζάκια, μπαρ για τάπας και καλλιτέχνες του δρόμου. ",
       "category": "area",
       "top": false,
       "prices": {
@@ -950,9 +950,9 @@
         "lng": 2.1775
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Colom Restaurant",
+        "description": "Ένα πολύ κλασικό και ζεστό εστιατόριο, με εντυπωσιακό αριθμό καλών κριτικών, ιδανικό για να δοκιμάσετε παέγια και παραδοσιακά τάπας σε καλές τιμές.",
+        "map_url": "https://maps.app.goo.gl/ZZAqiouVYWntMupK8"
       },
       "website": "",
       "notes": [],
@@ -967,15 +967,15 @@
       "best_time": "afternoon",
       "freeActivity": true,
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Mesón del Cafè 1909",
+        "description": "Αν θέλετε κάτι αυθεντικό και ιστορικό, αυτό το μικρό καφέ λειτουργεί πάνω από έναν αιώνα.",
+        "map_url": "https://maps.app.goo.gl/6nWcgB22C746sint9"
       }
     },
     {
       "id": 18,
       "name": "Museu Blau (Natural History Museum)",
-      "description": "",
+      "description": " Μέσα από τη μόνιμη έκθεση Planet Life, θα ανακαλύψετε την ιστορία της Γης και την εξέλιξη της ζωής με τη βοήθεια εντυπωσιακών απολιθωμάτων, πετρωμάτων και ζώων, ενώ ο ειδικά διαμορφωμένος χώρος Science Nest επιτρέπει στα παιδιά κάτω των 6 ετών να εξερευνήσουν τη φύση μέσα από το παιχνίδι και τις αισθήσεις τους. Είναι ένας διαδραστικός χώρος που συνδυάζει τη γνώση με την ψυχαγωγία.",
       "category": "museum",
       "top": false,
       "prices": {
@@ -1006,9 +1006,9 @@
         "lng": 2.1978
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Hamburgueseria Goiko",
+        "description": "Φημίζεται για τα πληθωρικά και πολύ νόστιμα μπέργκερ του, τα οποία έχουν φανατικούς θαυμαστές",
+        "map_url": "https://maps.app.goo.gl/VMdnSEPqhALzd7PH6"
       },
       "website": "https://museuciencies.cat/",
       "notes": [],
@@ -1022,15 +1022,15 @@
       "duration_hours": 2.5,
       "best_time": "afternoon",
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Pangea Café",
+        "description": "Κοντινή επιλογή με καλές τιμές και κριτικές.",
+        "map_url": "https://maps.app.goo.gl/vN2ghm374AtAPyyf6"
       }
     },
     {
       "id": 19,
       "name": "Museu dels Gegants (Giants Museum)",
-      "description": "",
+      "description": "Οι  τεράστιες παραδοσιακές φιγούρες της Βαρκελώνης, οι Gegants, οι οποίοι αποτελούν αναπόσπαστο κομμάτι των τοπικών γιορτών. Επιβλητικοί γίγαντες, δράκοι και τα άλλα μυθικά πλάσματα που χρησιμοποιούνται στις παρελάσεις. Η είσοδος είναι  δωρεάν, ",
       "category": "museum",
       "top": false,
       "prices": {
