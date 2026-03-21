@@ -2040,7 +2040,7 @@ function saveManualDestination() {
     const cityName = citySelect.options[citySelect.selectedIndex].text;
     const cityId = citySelect.value;
     
-    const citiesWithoutJSON = ['rome', 'barcelona', 'brussels', 'copenhagen', 'dublin',
+    const citiesWithoutJSON = ['rome', 'brussels', 'copenhagen', 'dublin',
                               'edinburgh', 'florence', 'munich', 'venice', 'zurich'];
     
     if (citiesWithoutJSON.includes(cityId)) {
@@ -2189,7 +2189,7 @@ async function filterDestinations() {
         },
         { 
             id: 'barcelona', name: 'Βαρκελώνη', emoji: '🏖️',
-            hasJSON: false, distance: 3.0, cost: 'Μέτριο',
+            hasJSON: true, distance: 3.0, cost: 'Μέτριο',
             country: 'Ισπανία', vacationType: 'Θάλασσα',
             themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
             strollerFriendly: false
@@ -4657,10 +4657,10 @@ function createDestinationDropdown() {
     <option value="london">Λονδίνο (ΗΒ)</option>
     <option value="madrid">Μαδρίτη (Ισπανία)</option>
     <option value="paris">Παρίσι (Γαλλία)</option>
+    <option value="barcelona">Βαρκελώνη (Ισπανία)</option>
     <option value="prague">Πράγα (Τσεχία)</option>
 </optgroup>
 <optgroup label="🛠️ Σύντομα Διαθέσιμες">
-    <option value="barcelona">Βαρκελώνη (Ισπανία)</option>
     <option value="brussels">Βρυξέλλες (Βέλγιο)</option>
     <option value="venice">Βενετία (Ιταλία)</option>
     <option value="dublin">Δουβλίνο (Ιρλανδία)</option>
