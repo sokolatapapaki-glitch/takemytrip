@@ -11,9 +11,9 @@
   },
   "cityPass": {
     "name": "Barcelona Card",
-    "description": "",
-    "discountPercent": 0,
-    "url": ""
+    "description": "Η Barcelona Card δίνει απεριόριστη μετακίνηση με ΜΜΜ, δωρεάν είσοδο σε πολλά μουσεία και εκπτώσεις σε αξιοθέατα, tours και εστίαση, για 72–120 ώρες, με μειωμένες τιμές για παιδιά.",
+    "discountPercent": 40,
+    "url": "https://www.barcelonacard.info/en/?gad_source=1&gad_campaignid=22385653895&gbraid=0AAAAApaIoHJ-y1VSTfyBaaQMB6uK3wZ4A&gclid=CjwKCAjwg_nNBhAGEiwAiYPYAxt31JNIbmsmgDQdQrizY_wRC9nD_pa0EirFC_bRgE6HDIv7tNUTjhoCyyIQAvD_BwE"
   },
   "passes": [
     {
