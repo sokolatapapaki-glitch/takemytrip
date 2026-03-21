@@ -96,7 +96,7 @@ export async function filterDestinations() {
         },
         {
             id: 'barcelona', name: 'Βαρκελώνη', emoji: '🏖️',
-            hasJSON: false, distance: 3.0, cost: 'Μέτριο',
+            hasJSON: true, distance: 3.0, cost: 'Μέτριο',
             country: 'Ισπανία', vacationType: 'Θάλασσα',
             themeParks: ['has-parks'], familyScore: 8, hasDisney: false,
             strollerFriendly: false
