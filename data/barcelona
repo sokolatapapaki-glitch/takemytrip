@@ -1,0 +1,1086 @@
+{
+  "city": "Barcelona",
+  "country": "Spain",
+  "currency": "EUR",
+  "emoji": "🇪🇸",
+  "pricing_model": "per_age",
+  "description": "",
+  "location": {
+    "lat": 41.3851,
+    "lng": 2.1734
+  },
+  "cityPass": {
+    "name": "Barcelona Card",
+    "description": "",
+    "discountPercent": 0,
+    "url": ""
+  },
+  "passes": [
+    {
+      "name": "Barcelona Card",
+      "description": "",
+      "prices": {
+        "adult_2day": 0,
+        "adult_3day": 0,
+        "adult_4day": 0,
+        "adult_5day": 0,
+        "child_4_12_2day": 0,
+        "child_4_12_3day": 0,
+        "child_4_12_4day": 0,
+        "child_4_12_5day": 0
+      },
+      "website": ""
+    }
+  ],
+  "activities": [
+    {
+      "id": 1,
+      "name": "Sagrada Família",
+      "description": "Ένας μοναδικός ναός από τον Gaudí, υπό κατασκευή εδώ και πάνω από 140 χρόνια. Με κολόνες που μοιάζουν με δέντρα και προσόψεις γεμάτες λεπτομέρειες. Είναι ένα έργο τέχνης παγκόσμιας κληρονομιάς.",
+      "category": "monument",
+      "top": true,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.4036,
+        "lng": 2.1744
+      },
+      "restaurant": {
+        "name": "The famous Bar restaurant",
+        "description": "Είναι ένα σημείο που προτιμούν οι ντόπιοι, κάτι που εγγυάται καλή ποιότητα χωρίς τις υπερβολικές τιμές των τουριστικών μαγαζιών ακριβώς μπροστά στον ναό.",
+        "map_url": "https://maps.app.goo.gl/jhPepqcP9DrtMFuZ9"
+      },
+      "website": "https://www.sagradafamilia.org/",
+      "notes": [],
+      "tags": [
+        "monument",
+        "gaudi",
+        "church",
+        "architecture",
+        "iconic"
+      ],
+      "duration_hours": 2,
+      "best_time": "morning",
+      "cafe": {
+        "name": "Hasta Los Andares | Sagrada Família",
+        "description": "Είναι γνωστό για τα εξαιρετικά αλλαντικά του (ειδικά το jamón) και τα τοπικά τυριά, τα οποία σερβίρονται σε πλατό ή σε σάντουιτς αλλά και τα γλυκά του.",
+        "map_url": "https://maps.app.goo.gl/mdzSzbezauMBYdBC8"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Park Güell",
+      "description": "Ένα από τα πιο εντυπωσιακά έργα του Antoni Gaudí, ένα δημόσιο πάρκο που μοιάζει με σκηνικό παραμυθιού. Στον λόφο El Carmel, αυτό το πάρκο είναι διάσημο για τη χρήση της τεχνικής trencadís, όπου πολύχρωμα σπασμένα πλακάκια σχηματίζουν μοναδικά μωσαϊκά, με πιο γνωστά τη σαλαμάνδρα στην είσοδο και το τεράστιο κυματιστό παγκάκι στην κεντρική πλατεία. Επιπλέον έχει μια από τις πιο όμορφες πανοραμικές θέες της Βαρκελώνης μέχρι τη θάλασσα.",
+      "category": "park",
+      "top": true,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.4145,
+        "lng": 2.1527
+      },
+      "restaurant": {
+        "name": "Las Delicias",
+        "description": "Είναι διάσημο για τις patatas bravas του, τις οποίες πολλοί θεωρούν από τις καλύτερες στην πόλη, και τις μεγάλες μερίδες από τάπας.",
+        "map_url": "https://maps.app.goo.gl/RgYwJHspvhXAQ46E8"
+      },
+      "website": "https://parkguell.barcelona/",
+      "notes": [],
+      "tags": [
+        "park",
+        "gaudi",
+        "architecture",
+        "views",
+        "iconic"
+      ],
+      "duration_hours": 2,
+      "best_time": "morning",
+      "cafe": {
+        "name": "Güelly sandwichpark",
+        "description": "Πολύ βολικό σημείο για έναν γρήγορο καφέ, σάντουιτς, φρέσκους χυμούς ή γλυκά (όπως churros) πριν ή μετά την είσοδο στο πάρκο.",
+        "map_url": "https://maps.app.goo.gl/Ydm1EKBEyUeemsUS7"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Casa Batlló",
+      "description": "Ένα από τα πιο ευφάνταστα δημιουργήματα του Gaudí . Η πρόσοψή του είναι καλυμμένη με χρωματιστά μωσαϊκά που θυμίζουν τα λέπια ενός δράκου, τα μπαλκόνια μοιάζουν με μάσκες ή οστά, ενώ μέσα δεν υπάρχουν ευθείες ενώ στην ταράτσα έχει πολύχρωμες καμινάδες που αναπαριστούν μια μάχη.",
+      "category": "monument",
+      "top": true,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.3916,
+        "lng": 2.165
+      },
+      "restaurant": {
+        "name": "Circolo Popolare Barcelona",
+        "description": "Το εσωτερικό του θυμίζει Σικελία της δεκαετίας του '60, με χιλιάδες φωτισμένα μπουκάλια στους τοίχους και φυτά στην οροφή. Φημίζονται για τη χειροποίητη μακαρονάδα καρμπονάρα που σερβίρεται μέσα σε ολόκληρο κεφάλι τυριού, τις πίτσες τους και τα τεράστια γλυκά, όπως η περίφημη τάρτα λεμόνι με μαρέγκα.",
+        "map_url": "https://maps.app.goo.gl/m2nyzeKis3f7ZaoU6"
+      },
+      "website": "https://www.casabatllo.es/",
+      "notes": [],
+      "tags": [
+        "gaudi",
+        "architecture",
+        "monument",
+        "passeig de gracia",
+        "iconic"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "morning",
+      "cafe": {
+        "name": "Faborit Casa Amatller Barcelona",
+        "description": "Βρίσκεται ακριβώς δίπλα στο Casa Batlló, μέσα στο πανέμορφο γειτονικό μοντερνιστικό κτίριο. Είναι ιδανικό για έναν καφέ ή την περίφημη ζεστή σοκολάτα τους",
+        "map_url": "https://maps.app.goo.gl/MFqqw9xQH7zjEDwT8"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Casa Milà (La Pedrera)",
+      "description": "Από τα πιο πρωτοποριακά έργα του  Gaudí, με κυματιστή πέτρινη πρόσοψή και περίτεχνα σιδερένια κάγκελα. Μοιάζει με ζωντανό οργανισμό φτιαγμένο σε βράχο,κολώνες και αψίδες που επιτρέπουν να φωτίζεται από φυσικό φως. Στην ταράτσα οι καμινάδες και οι αεραγωγοί έχουν μεταμορφωθεί σε γλυπτά που θυμίζουν πολεμιστές.",
+      "category": "monument",
+      "top": true,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.3954,
+        "lng": 2.1619
+      },
+      "restaurant": {
+        "name": "Babula Bar 1937",
+        "description": "Είναι μια πολύ καλή επιλογή αν θέλετε κάτι λίγο πιο ιδιαίτερο και στυλάτο, με καλές τιμές.",
+        "map_url": "https://maps.app.goo.gl/PxsHV7dQ5Vc61yr98"
+      },
+      "website": "https://www.lapedrera.com/",
+      "notes": [],
+      "tags": [
+        "gaudi",
+        "architecture",
+        "monument",
+        "passeig de gracia",
+        "rooftop"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "morning",
+      "cafe": {
+        "name": "Faborit Casa Amatller Barcelona",
+        "description": "Απέχει 5 λεπτά με τα πόδια (κοντά στο Casa Batlló), είναι μια εξαιρετική λύση για καλό καφέ και υγιεινά σάντουιτς σε έναν ιστορικό χώρο.",
+        "map_url": "https://maps.app.goo.gl/Nu6iCeTiLP11WcoG6"
+      }
+    },
+    {
+      "id": 5,
+      "name": "Picasso Museum",
+      "description": "Η συλλογή του περιλαμβάνει πάνω από 4.000 έργα, εστιάζοντας κυρίως στην περίοδο που ο Πικάσο ζούσε στη Βαρκελώνη.",
+      "category": "museum",
+      "top": true,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.3851,
+        "lng": 2.1808
+      },
+      "restaurant": {
+        "name": "Story",
+        "description": "Ειδικεύεται στα κλασικά τάπας και στα αλλαντικά υψηλής ποιότητας, αλλά και πιο χορταστικές επιλογές όπως ρύζι με θαλασσινά ή ψητά κρέατα.",
+        "map_url": "https://maps.app.goo.gl/9wMhrmHhi6p8mPsR9"
+      },
+      "website": "https://museupicassobcn.cat/",
+      "notes": [],
+      "tags": [
+        "museum",
+        "art",
+        "picasso",
+        "el born",
+        "culture"
+      ],
+      "duration_hours": 2,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "Patisserie Hofmann",
+        "description": "Ένας θρύλος της Βαρκελώνης, πολύ κοντά στο Μουσείο Πικάσο. Δεν πρόκειται για ένα απλό ζαχαροπλαστείο, αλλά για έναν χώρο που έχει βραβευτεί επανειλημμένα για τα δημιουργήματά του.Είναι διάσημη κυρίως για το κρουασάν με γέμιση μασκαρπόνε, το οποίο πολλοί θεωρούν το καλύτερο στον κόσμο. ",
+        "map_url": "https://maps.app.goo.gl/nBBrGkufrMLNtKnJ9"
+        }
+    },
+    {
+      "id": 6,
+      "name": "Gaudí Experience",
+      "description": "Ένας διαδραστικός χώρος που χρησιμοποιεί την τεχνολογία για να φέρει όλους μας πιο κοντά στον κόσμο του μεγάλου αρχιτέκτονα. Το κύριο χαρακτηριστικό του είναι μια προβολή 4D με κινούμενα καθίσματα και ειδικά εφέ, η οποία εξηγεί με παραστατικό τρόπο πώς τα στοιχεία της φύσης μεταμορφώθηκαν στα εμβληματικά κτίρια που βλέπουμε σήμερα στην πόλη.",
+      "category": "museum",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.4138,
+        "lng": 2.1524
+      },
+      "restaurant": {
+        "name": "Bar Restaurant Casi",
+        "description": "Mικρό οικογενειακό εστιατόριο, στην περιοχή. Με σπιτικό φαγητό σε πολύ χαμηλές τιμές.",
+        "map_url": "https://maps.app.goo.gl/hdMhXhoRTzL5hZDf7"
+      },
+      "website": "https://gaudiexperiencia.com/",
+      "notes": [],
+      "tags": [
+        "gaudi",
+        "museum",
+        "interactive",
+        "4d",
+        "park guell"
+      ],
+      "duration_hours": 1,
+      "best_time": "any",
+      "cafe": {
+        "name": "Güelly sandwichpark",
+        "description": "Μια εξαιρετική λύση για κάτι γρήγορο, ποιοτικό και οικονομικό. Φημίζεται για τα σάντουιτς, τους φυσικούς χυμούς και τα churros του.",
+        "map_url": "https://maps.app.goo.gl/wfuUK9A5bEjzG52d6"
+      }
+    },
+    {
+      "id": 7,
+      "name": "Montjuïc Castle (Castell de Montjuïc)",
+      "description": "Το Κάστρο του Montjuïc είναι ένα παλιό φρούριο στην κορυφή του λόφου που βρίσκεται εκεί για αιώνες, έχοντας περάσει από περιόδους πολέμων και χρήσης ως φυλακή. Σήμερα, η κύρια αξία του είναι η εκπληκτική θέα που χαρίζει, αφού από τα τείχη του μπορείτε να δείτε όλη τη Βαρκελώνη και το λιμάνι να απλώνονται μπροστά σας. Είναι ένας χώρος με επιβλητική αρχιτεκτονική, μεγάλα κανόνια και όμορφους κήπους στην τάφρο του",
+      "category": "castle",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.3638,
+        "lng": 2.1659
+      },
+      "restaurant": {
+        "name": "Petit Montjuïc",
+        "description": "Είναι ιδανικό αν ψάχνετε κάτι αυθεντικό και απλό, μακριά από τα πολύ τουριστικά σημεία. Έχει πολύ καλές κριτικές για τις τιμές του σε σχέση με την ποιότητα που έχει",
+        "map_url": "https://maps.app.goo.gl/kryoj12WYtPxsbNHA"
+      },
+      "website": "https://ajuntament.barcelona.cat/castelldemontjuic/en/",
+      "notes": [],
+      "tags": [
+        "castle",
+        "montjuic",
+        "history",
+        "views",
+        "fortress"
+      ],
+      "duration_hours": 2,
+      "best_time": "morning",
+      "cafe": {
+        "name": "Bar Paperines",
+        "description": "Είναι ιδανικό για καφέ, χυμούς, αναψυκτικά και ελαφριά γεύματα όπως σάντουιτς (bocadillos), τάπας ή μια γρήγορη πίτσα.",
+        "map_url": "https://maps.app.goo.gl/69xEnfU34uLAdCcJ8"
+      }
+    },
+    {
+      "id": 8,
+      "name": "Hospital de Sant Pau",
+      "description": "Το μεγαλύτερο συγκρότημα μοντερνιστικής αρχιτεκτονικής στον κόσμο και μνημείο της UNESCO. Σχεδιάστηκε από τον Lluís Domènech i Montaner ως μια πόλη-νοσοκομείο με ολάνθιστους κήπους και πολύχρωμα μωσαϊκά, βασισμένο στην πρωτοποριακή ιδέα ότι η ομορφιά και το φως βοηθούν στη θεραπεία των ασθενών. Σήμερα, μπορείτε να περιηγηθείτε στα εντυπωσιακά του κτίρια και να δείτε από κοντά πώς η υψηλή τέχνη συνδυάστηκε με την ιατρική φροντίδα σε έναν χώρο που λειτούργησε ως νοσοκομείο για έναν αιώνα.",
+      "category": "monument",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.4134,
+        "lng": 2.1735
+      },
+      "restaurant": {
+        "name": "DABüTiS",
+        "description": "Ισπανική κουζίνα και τάπας. Είναι γνωστό για την καλή σχέση ποιότητας-τιμής και την ανθρώπινη εξυπηρέτηση",
+        "map_url": "https://maps.app.goo.gl/C7kBXD9HyPEqQvSN8"
+      },
+      "website": "https://www.santpaubarcelona.org/",
+      "notes": [],
+      "tags": [
+        "architecture",
+        "modernisme",
+        "monument",
+        "unesco",
+        "historic"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "morning",
+      "cafe": {
+        "name": "Padel Bar Cafeteria",
+        "description": "Το Padel Bar Cafeteria είναι ένας απλός χώρος δίπλα στο νοσοκομείο Sant Pau, που λειτουργεί ως σημείο συνάντησης για τους παίκτες του αθλήματος padel αλλά και για τους περιοίκους.",
+        "map_url": "https://maps.app.goo.gl/frhD8QzxVwKY8wkJ9"
+      }
+    },
+    {
+      "id": 9,
+      "name": "Camp Nou (Barça Stadium Tour)",
+      "description": "Το Camp Nou Experience είναι η απόλυτη στάση για κάθε φίλο του ποδοσφαίρου, μια πλήρης περιήγηση στις εγκαταστάσεις της Μπαρτσελόνα. ΠΡΟΣΟΧΗ: γίνονται εργασίες ανακαίνισης, ενημερωθείτε από το επίσημο site.",
+      "category": "stadium",
+      "top": true,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.3809,
+        "lng": 2.1228
+      },
+      "restaurant": {
+        "name": "La nueva Marquesa",
+        "description": "Μια οικογενειακή επιχείρηση με παραδοσιακή καταλανική κουζίνα. Πολύ καλή σχέση ποιότητας-τιμής.",
+        "map_url": "https://maps.app.goo.gl/7nrtE4Qanp6AFkJf7"
+      },
+      "website": "https://www.fcbarcelona.com/en/tickets/camp-nou-experience",
+      "notes": [],
+      "tags": [
+        "stadium",
+        "football",
+        "barcelona fc",
+        "tour",
+        "sports"
+      ],
+      "duration_hours": 2,
+      "best_time": "any",
+      "cafe": {
+        "name": "Gastrobar Cal Blay | Spotify Camp Nou",
+        "description": "Εντός του χώρου",
+        "map_url": "https://maps.app.goo.gl/fhPgP7YnJHFuG7pW9"
+      }
+    },
+    {
+      "id": 10,
+      "name": "L'Aquàrium de Barcelona",
+      "description": "Το σημαντικότερο θαλάσσιο πάρκο της Μεσογείου, με πάνω από 11.000 ζώα .Ένα τεράστιο Ωκεανοφυλάκιο,  ένας γυάλινός διάδρομος 80 μέτρων επιτρέπει στους επισκέπτες να περπατήσουν κυριολεκτικά ανάμεσα σε καρχαρίες, σαλάχια και άλλα μεγάλα ψάρια που κολυμπούν ακριβώς πάνω από το κεφάλι τους. ",
+      "category": "aquarium",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.3762,
+        "lng": 2.1842
+      },
+      "restaurant": {
+        "name": "Mirandoalmar",
+        "description": "Βρίσκεται στο εμπορικό κέντρο Maremagnum, ακριβώς δίπλα στο ενυδρείο. Είναι ένα  εστιατόριο με μεσογειακές γεύσεις και θαλασσινά, με  υπέροχη θέα στο λιμάνι και πολύ καλές κριτικές για την ποιότητά του.",
+        "map_url": "https://maps.app.goo.gl/tVP3pxTjfnkYjCZZA"
+      },
+      "website": "https://www.aquariumbcn.com/",
+      "notes": [],
+      "tags": [
+        "aquarium",
+        "marine",
+        "fish",
+        "sharks",
+        "family"
+      ],
+      "duration_hours": 2,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "Sweet Terrassa",
+        "description": "Ιδανικά κοντά, με υπέροχα γλυκά και θέα πάνω στο λιμάνι",
+        "map_url": "https://maps.app.goo.gl/91AWaEbjCcunpVWR7"
+      }
+    },
+    {
+      "id": 11,
+      "name": "CosmoCaixa",
+      "description": "Ένα από τα πιο συναρπαστικά διαδραστικά μουσεία επιστημών στην Ευρώπη,   σε ένα εντυπωσιακό κτίριο.  Στις τεράστιες εγκαταστάσεις του,θα δείτε το Πλημμυρισμένο Δάσος (ένα ζωντανό οικοσύστημα του Αμαζονίου με δέντρα, ζώα και βροχή), την Αίθουσα του Σύμπαντος και το εντυπωσιακό Πλανητάριο, συμμετέχοντας σε εκατοντάδες πειράματα. ",
+      "category": "museum",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.4119,
+        "lng": 2.1317
+      },
+      "restaurant": {
+        "name": "Cafè-restaurant CosmoCaixa",
+        "description": "Βρίσκεται μέσα στο μουσείο και είναι η πιο βολική λύση για οικογένειες. Έχει μια υπέροχη βεράντα,  τιμές  λογικές και περιβάλλον απόλυτα φιλικό προς τα παιδιά.",
+        "map_url": "https://maps.app.goo.gl/mYanvUq6JEjPB1RB7"
+      },
+      "website": "https://cosmocaixa.org/",
+      "notes": [],
+      "tags": [
+        "museum",
+        "science",
+        "interactive",
+        "educational",
+        "family"
+      ],
+      "duration_hours": 3,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "Cafè-restaurant CosmoCaixa",
+        "description": "Βρίσκεται μέσα στο μουσείο και είναι η πιο βολική λύση για οικογένειες. Έχει μια υπέροχη βεράντα,  τιμές  λογικές και περιβάλλον απόλυτα φιλικό προς τα παιδιά.",
+        "map_url": "https://maps.app.goo.gl/mYanvUq6JEjPB1RB7"
+      }
+    },
+    {
+      "id": 12,
+      "name": "Tibidabo Amusement Park",
+      "description": "Ένα από τα πιο ιστορικά και γοητευτικά λούνα παρκ στον κόσμο, καθώς λειτουργεί από το 1901 . Συνδυάζει με μοναδικό τρόπο την κλασική ατμόσφαιρα των παλιών παιχνιδιών, με σύγχρονες εγκαταστάσεις.  Η τοποθεσία του μέσα στο φυσικό περιβάλλον και την υπέροχη θέα το κάνουν μοναδική απόδραση από τον θόρυβο της πόλης.Κατάλληλο απο 2 ετών (πολλά παιχνίδια για μικρά παιδιά) μέχρι και ενήλικες. ",
+      "category": "themepark",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.4219,
+        "lng": 2.1185
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.tibidabo.cat/",
+      "notes": [],
+      "tags": [
+        "theme park",
+        "rides",
+        "views",
+        "tibidabo",
+        "family"
+      ],
+      "duration_hours": 4,
+      "best_time": "any",
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 13,
+      "name": "PortAventura World",
+      "description": "Βρίσκεται κοντά στην Ταραγόνα και περίπου μία ώρα από τη Βαρκελώνη, και είναι ένα από τα μεγαλύτερα θεματικά θέρετρα της Ευρώπης (έχει και υδάτινο πάρκο ,το Caribe Aquatic Park). Εκεί θα βρείτε μερικά από τα πιο ψηλά και γρήγορα τρενάκια στον κόσμο αλλά και ειδικά διαμορφωμένες περιοχές για μικρότερα παιδιά. ",
+      "category": "themepark",
+      "top": true,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.0864,
+        "lng": 1.1556
+      },
+      "restaurant": {
+        "name": "Εντός του πάρκου",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.portaventuraworld.com/",
+      "notes": [],
+      "tags": [
+        "theme park",
+        "rides",
+        "outside city",
+        "rollercoaster",
+        "family"
+      ],
+      "duration_hours": 8,
+      "best_time": "any",
+      "cafe": {
+        "name": "Εντός του πάρκου",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 14,
+      "name": "Parc de la Ciutadella",
+      "description": "Το πιο γνωστό πάρκο της Βαρκελώνης, ακριβώς δίπλα στην παλιά πόλη. Με μια πανέμορφη λίμνη για βαρκάδα, ένα τεράστιο σιντριβάνι που μοιάζει με καταρράκτη,  το Κοινοβούλιο της Καταλονίας και ζωολογικό κήπο. Είναι πολύ κοντά στην Αψίδα του Θριάμβου και στη θάλασσα, οπότε βολεύει να τα συνδυάσετε. ",
+      "category": "park",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.388,
+        "lng": 2.1861
+      },
+      "restaurant": {
+        "name": "Via Margutta",
+        "description": "Εδώ θα βρείτε πίτσες και μακαρονάδες σε πολύ καλές τιμές.",
+        "map_url": "https://maps.app.goo.gl/2TxKqPDV6fvpLfUN9"
+      },
+      "website": "https://www.barcelona.cat/es/que-hacer-en-bcn/parques-y-jardines/parque-de-la-ciutadella-92086011921",
+      "notes": [],
+      "tags": [
+        "park",
+        "free",
+        "nature",
+        "lake",
+        "family"
+      ],
+      "duration_hours": 2,
+      "best_time": "afternoon",
+      "freeActivity": true,
+      "cafe": {
+        "name": "Tranqui Brunch",
+        "description": "Πολύ κοντά, με εξαιρετικό καφέ και ωραίες επιλογές για brunch αν πεινάσετε.",
+        "map_url": "https://maps.app.goo.gl/76jPqph4hnhgMEq18"
+      }
+    },
+    {
+      "id": 15,
+      "name": "Poblenou Beaches",
+      "description": "Οι παραλίες του Poblenou, όπως η Bogatell και η Nova Icaria είναι πλατιές, έχουν λιγότερη φασαρία από την Barceloneta, υπέροχες παιδικές χαρές και είναι οι αγαπημένες των Ισπανών. Όλη αυτή η παραλιακή διαδρομή συνδέεται με έναν μεγάλο πεζόδρομο που είναι οτι πρέπει για ποδήλατο ή περπάτημα με θέα τη θάλασσα.",
+      "category": "beach",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.3797,
+        "lng": 2.1927
+      },
+      "restaurant": {
+        "name": "Xiroi",
+        "description": "Βρίσκεται ακριβώς πάνω στην παραλία Nova Icaria και ειναι σουπερ και για καφέ και για φαγητό.",
+        "map_url": "https://maps.app.goo.gl/Mfrre3tGbE5RiWBC8"
+      },
+      "website": "https://www.visitpineda.com/en/discover-pineda/beaches/poblenou-beach/",
+      "notes": [],
+      "tags": [
+        "beach",
+        "free",
+        "sea",
+        "outdoor",
+        "summer"
+      ],
+      "duration_hours": 3,
+      "best_time": "morning",
+      "freeActivity": true,
+      "cafe": {
+         "name": "Xiroi",
+        "description": "Βρίσκεται ακριβώς πάνω στην παραλία Nova Icaria και ειναι σουπερ και για καφέ και για φαγητό.",
+        "map_url": "https://maps.app.goo.gl/Mfrre3tGbE5RiWBC8"
+      }
+    },
+    {
+      "id": 16,
+      "name": "Magic Fountain (Font Màgica)",
+      "description": "Στους πρόποδες του λόφου Montjuïc, ακριβώς κάτω από το Εθνικό Μουσείο Τέχνης της Καταλονίας, είναι ένα από τα πιο εντυπωσιακά θεάματα της Βαρκελώνης. Ένας συνδυασμός από νερό, φώτα και μουσική με πανέμορφες χορογραφίες. Η πρόσβαση είναι πολύ εύκολη από την Plaça d'Espanya και η εμπειρία είναι μοναδική, αρκεί να ελέγξετε από πριν τις ώρες λειτουργίας γιατί αλλάζουν ανάλογα με την εποχή ή τους περιορισμούς νερού.",
+      "category": "attraction",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.3713,
+        "lng": 2.1517
+      },
+      "restaurant": {
+        "name": "Burger Fest",
+        "description": "Στην Plaça d'Espanya, μια πολύ καλή και γρήγορη λύση. Είναι ένα μέρος που επικεντρώνεται στα μπέργκερ. ",
+        "map_url": "https://maps.app.goo.gl/Z7CYTAimHDjzE15C7"
+      },
+      "website": "https://www.barcelona.cat/ca/que-pots-fer-a-bcn/font-magica",
+      "notes": [],
+      "tags": [
+        "fountain",
+        "free",
+        "light show",
+        "montjuic",
+        "evening"
+      ],
+      "duration_hours": 1,
+      "best_time": "evening",
+      "freeActivity": true,
+      "cafe": {
+        "name": "Arenas de Barcelona",
+        "description": "Είναι το εμπορικό κέντρο στην Plaça d'Espanya (περίπου 5-7 λεπτά περπάτημα). Στον τελευταίο όροφο έχει πολλές επιλογές για φαγητό και καφέ με φοβερή θέα σε όλη την περιοχή.",
+        "map_url": "https://maps.app.goo.gl/KWZj53Mnfg2yq89s5"
+      }
+    },
+    {
+      "id": 17,
+      "name": "Ciutat Vella / Barri Gòtic Exploration",
+      "description": "Η παλιά πόλη της Βαρκελώνης με το Barri Gòtic να αποτελεί το πιο ατμοσφαιρικό της κομμάτι. Εκεί θα βρείτε τον επιβλητικό Καθεδρικό Ναό, κρυμμένες πλατείες όπως την Plaça Sant Felip Neri,ιστορικά κτίρια, αλλά και ζωή,  μικρά μαγαζάκια, μπαρ για τάπας και καλλιτέχνες του δρόμου. ",
+      "category": "area",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.3829,
+        "lng": 2.1775
+      },
+      "restaurant": {
+        "name": "Colom Restaurant",
+        "description": "Ένα πολύ κλασικό και ζεστό εστιατόριο, με εντυπωσιακό αριθμό καλών κριτικών, ιδανικό για να δοκιμάσετε παέγια και παραδοσιακά τάπας σε καλές τιμές.",
+        "map_url": "https://maps.app.goo.gl/ZZAqiouVYWntMupK8"
+      },
+      "website": "https://www.barcelona-tourist-guide.com/en/tour/barcelona-city-centre/barcelona-city-centre-guide.html",
+      "notes": [],
+      "tags": [
+        "area",
+        "free",
+        "historic",
+        "gothic",
+        "walk"
+      ],
+      "duration_hours": 2.5,
+      "best_time": "afternoon",
+      "freeActivity": true,
+      "cafe": {
+        "name": "Mesón del Cafè 1909",
+        "description": "Αν θέλετε κάτι αυθεντικό και ιστορικό, αυτό το μικρό καφέ λειτουργεί πάνω από έναν αιώνα.",
+        "map_url": "https://maps.app.goo.gl/6nWcgB22C746sint9"
+      }
+    },
+    {
+      "id": 18,
+      "name": "Museu Blau (Natural History Museum)",
+      "description": " Μέσα από τη μόνιμη έκθεση Planet Life, θα ανακαλύψετε την ιστορία της Γης και την εξέλιξη της ζωής με τη βοήθεια εντυπωσιακών απολιθωμάτων, πετρωμάτων και ζώων, ενώ ο ειδικά διαμορφωμένος χώρος Science Nest επιτρέπει στα παιδιά κάτω των 6 ετών να εξερευνήσουν τη φύση μέσα από το παιχνίδι και τις αισθήσεις τους. Είναι ένας διαδραστικός χώρος που συνδυάζει τη γνώση με την ψυχαγωγία.",
+      "category": "museum",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.3708,
+        "lng": 2.1978
+      },
+      "restaurant": {
+        "name": "Hamburgueseria Goiko",
+        "description": "Φημίζεται για τα πληθωρικά και πολύ νόστιμα μπέργκερ του, τα οποία έχουν φανατικούς θαυμαστές",
+        "map_url": "https://maps.app.goo.gl/VMdnSEPqhALzd7PH6"
+      },
+      "website": "https://museuciencies.cat/",
+      "notes": [],
+      "tags": [
+        "museum",
+        "natural history",
+        "science",
+        "dinosaurs",
+        "educational"
+      ],
+      "duration_hours": 2.5,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "Pangea Café",
+        "description": "Κοντινή επιλογή με καλές τιμές και κριτικές.",
+        "map_url": "https://maps.app.goo.gl/vN2ghm374AtAPyyf6"
+      }
+    },
+    {
+      "id": 19,
+      "name": "La Casa dels Entremesos - Μουσείο των Γιγάντων",
+      "description": "Οι  τεράστιες παραδοσιακές φιγούρες της Βαρκελώνης, οι Gegants, οι οποίοι αποτελούν αναπόσπαστο κομμάτι των τοπικών γιορτών. Επιβλητικοί γίγαντες, δράκοι και τα άλλα μυθικά πλάσματα που χρησιμοποιούνται στις παρελάσεις. Η είσοδος είναι  δωρεάν και προτείνταια ακόμη και για 2-3 ετών. , ",
+      "category": "museum",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.3832,
+        "lng": 2.1751
+      },
+      "restaurant": {
+        "name": "La Central Burgers",
+        "description": "Σε μόλις 200 μέτρα απόσταση, ένα εστιατόριο με πολύ καλές τιμές που φημίζεται για τα χειροποίητα μπέργκερ του και τις πολύ καλές πατάτες bravas. Η ποιότητα των υλικών θεωρείται από τις καλύτερες στην περιοχή.",
+        "map_url": "https://maps.app.goo.gl/pUh8KuF11kUcscx7A"
+      },
+      "website": "https://www.lacasadelsentremesos.cat/",
+      "notes": [],
+      "tags": [
+        "museum",
+        "giants",
+        "culture",
+        "folklore",
+        "catalan"
+      ],
+      "duration_hours": 1,
+      "best_time": "any",
+      "cafe": {
+        "name": "Jon Cake",
+        "description": "Είναι πασίγνωστο στη Βαρκελώνη για τα χειροποίητα cheesecake του, τα οποία κυκλοφορούν σε διάφορες γεύσεις, από κλασικό μέχρι με μπλε τυρί ή σοκολάτα.",
+        "map_url": "https://maps.app.goo.gl/8Gy2wmeJEJEmyuRs9"
+      }
+    }
+  ]
+}
