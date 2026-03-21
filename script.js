@@ -4646,6 +4646,7 @@ function createDestinationDropdown() {
                 <option value="">-- Επιλέξτε πόλη --</option>
                <optgroup label="✅ Πλήρης Υποστήριξη">
     <option value="amsterdam">Άμστερνταμ (Ολλανδία)</option>
+    <option value="barcelona">Βαρκελώνη (Ισπανία)</option>
     <option value="warsaw">Βαρσοβία (Πολωνία)</option>
     <option value="vienna">Βιέννη (Αυστρία)</option>
     <option value="berlin">Βερολίνο (Γερμανία)</option>
@@ -4658,7 +4659,6 @@ function createDestinationDropdown() {
     <option value="madrid">Μαδρίτη (Ισπανία)</option>
     <option value="paris">Παρίσι (Γαλλία)</option>
     <option value="prague">Πράγα (Τσεχία)</option>
-    <option value="barcelona">Βαρκελώνη (Ισπανία)</option>
 </optgroup>
 <optgroup label="🛠️ Σύντομα Διαθέσιμες">
     <option value="brussels">Βρυξέλλες (Βέλγιο)</option>
