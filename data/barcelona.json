@@ -786,7 +786,7 @@
         "description": "Εδώ θα βρείτε πίτσες και μακαρονάδες σε πολύ καλές τιμές.",
         "map_url": "https://maps.app.goo.gl/2TxKqPDV6fvpLfUN9"
       },
-      "website": "",
+      "website": "https://www.barcelona.cat/es/que-hacer-en-bcn/parques-y-jardines/parque-de-la-ciutadella-92086011921",
       "notes": [],
       "tags": [
         "park",
@@ -842,7 +842,7 @@
         "description": "Βρίσκεται ακριβώς πάνω στην παραλία Nova Icaria και ειναι σουπερ και για καφέ και για φαγητό.",
         "map_url": "https://maps.app.goo.gl/Mfrre3tGbE5RiWBC8"
       },
-      "website": "",
+      "website": "https://www.visitpineda.com/en/discover-pineda/beaches/poblenou-beach/",
       "notes": [],
       "tags": [
         "beach",
@@ -898,7 +898,7 @@
         "description": "Στην Plaça d'Espanya, μια πολύ καλή και γρήγορη λύση. Είναι ένα μέρος που επικεντρώνεται στα μπέργκερ. ",
         "map_url": "https://maps.app.goo.gl/Z7CYTAimHDjzE15C7"
       },
-      "website": "https://ajuntament.barcelona.cat/en/",
+      "website": "https://www.barcelona.cat/ca/que-pots-fer-a-bcn/font-magica",
       "notes": [],
       "tags": [
         "fountain",
@@ -919,7 +919,7 @@
     {
       "id": 17,
       "name": "Ciutat Vella / Barri Gòtic Exploration",
-      "description": "Η παλιά πόλη της Βαρκελώνης με το Barri Gòtic να αποτελεί το πιο ατμοσφαιρικό της κομμάτι, γεμάτο με στενά δρομάκια που σε μεταφέρουν σε άλλες εποχές. Εκεί θα βρείτε τον επιβλητικό Καθεδρικό Ναό, κρυμμένες πλατείες όπως την Plaça Sant Felip Neri και ιστορικά κτίρια που στέκονται εκεί εδώ και αιώνες, αλλά και ζωή,  μικρά μαγαζάκια, μπαρ για τάπας και καλλιτέχνες του δρόμου. ",
+      "description": "Η παλιά πόλη της Βαρκελώνης με το Barri Gòtic να αποτελεί το πιο ατμοσφαιρικό της κομμάτι. Εκεί θα βρείτε τον επιβλητικό Καθεδρικό Ναό, κρυμμένες πλατείες όπως την Plaça Sant Felip Neri,ιστορικά κτίρια, αλλά και ζωή,  μικρά μαγαζάκια, μπαρ για τάπας και καλλιτέχνες του δρόμου. ",
       "category": "area",
       "top": false,
       "prices": {
@@ -954,7 +954,7 @@
         "description": "Ένα πολύ κλασικό και ζεστό εστιατόριο, με εντυπωσιακό αριθμό καλών κριτικών, ιδανικό για να δοκιμάσετε παέγια και παραδοσιακά τάπας σε καλές τιμές.",
         "map_url": "https://maps.app.goo.gl/ZZAqiouVYWntMupK8"
       },
-      "website": "",
+      "website": "https://www.barcelona-tourist-guide.com/en/tour/barcelona-city-centre/barcelona-city-centre-guide.html",
       "notes": [],
       "tags": [
         "area",
