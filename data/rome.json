@@ -34,9 +34,9 @@
         "lng": 0
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Trattoria Da Regina",
+        "description": "Μια αυθεντική ρωμαϊκή τρατορία με πολύ καλές κριτικές και τιμές.",
+        "map_url": "https://maps.app.goo.gl/U4CoHE5PoifmuwnY9"
       },
       "website": "https://odescalchi.it/",
       "notes": [],
