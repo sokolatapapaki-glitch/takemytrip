@@ -1,0 +1,771 @@
+{
+  "city": "Ρώμη",
+  "country": "Ιταλία",
+  "currency": "EUR",
+  "emoji": "🇮🇹",
+  "pricing_model": "per_age",
+  "description": "",
+  "location": {
+    "lat": 41.9028,
+    "lng": 12.4964
+  },
+  "cityPass": {
+    "name": "",
+    "description": "",
+    "discountPercent": 0,
+    "url": ""
+  },
+  "passes": [],
+  "activities": [
+    {
+      "id": 1,
+      "name": "Castello Orsini-Odescalchi (Bracciano)",
+      "description": "",
+      "category": "castle",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://odescalchi.it/",
+      "notes": [],
+      "tags": ["castle", "history"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      }
+    },
+    {
+      "id": 2,
+      "name": "Santa Severa Castle",
+      "description": "",
+      "category": "castle",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.castellodisantasevera.it/",
+      "notes": [],
+      "tags": ["castle", "history", "beach"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      }
+    },
+    {
+      "id": 3,
+      "name": "Λόφος Gianicolo (Teatrino di Pulcinella)",
+      "description": "",
+      "category": "park",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.turismoroma.it/it/node/3283",
+      "notes": [],
+      "tags": ["park", "views", "family"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      }
+    },
+    {
+      "id": 4,
+      "name": "Parco degli Acquedotti",
+      "description": "",
+      "category": "park",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.parcodegliacquedotti.it/",
+      "notes": [],
+      "tags": ["park", "aqueducts", "history", "free"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      }
+    },
+    {
+      "id": 5,
+      "name": "Villa Ada",
+      "description": "",
+      "category": "park",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.italia.it/en/lazio/rome/villa-ada",
+      "notes": [],
+      "tags": ["park", "nature", "family"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      }
+    },
+    {
+      "id": 6,
+      "name": "Quartiere Coppedè",
+      "description": "",
+      "category": "neighborhood",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.turismoroma.it/it/luoghi/il-quartiere-copped%C3%A8",
+      "notes": [],
+      "tags": ["architecture", "neighborhood", "free"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      }
+    },
+    {
+      "id": 7,
+      "name": "Η Τρύπα της Κλειδαριάς (Aventine Keyhole)",
+      "description": "",
+      "category": "attraction",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.atlasobscura.com/places/the-aventine-keyhole-rome-rome-italy",
+      "notes": [],
+      "tags": ["hidden gem", "views", "free"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      }
+    },
+    {
+      "id": 8,
+      "name": "Villa Carpegna",
+      "description": "",
+      "category": "park",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.turismoroma.it/en/places/villa-carpegna",
+      "notes": [],
+      "tags": ["park", "nature", "family"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      }
+    },
+    {
+      "id": 9,
+      "name": "Explora (Τμήμα για νήπια)",
+      "description": "",
+      "category": "museum",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://mdbr.it/",
+      "notes": [],
+      "tags": ["museum", "children", "interactive", "family"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      }
+    },
+    {
+      "id": 10,
+      "name": "Museo delle Illusioni (Μουσείο Ψευδαισθήσεων)",
+      "description": "",
+      "category": "museum",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.museoillusioni.it/",
+      "notes": [],
+      "tags": ["museum", "interactive", "family"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      }
+    },
+    {
+      "id": 11,
+      "name": "Villa Borghese",
+      "description": "",
+      "category": "park",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.sovraintendenzaroma.it/i_luoghi/ville_e_parchi_storici/ville_dei_nobili/villa_borghese",
+      "notes": [],
+      "tags": ["park", "nature", "family", "free"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      }
+    },
+    {
+      "id": 12,
+      "name": "Bioparco di Roma",
+      "description": "",
+      "category": "zoo",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.bioparco.it/",
+      "notes": [],
+      "tags": ["zoo", "animals", "family"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      }
+    },
+    {
+      "id": 13,
+      "name": "Galleria Borghese",
+      "description": "",
+      "category": "museum",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": ["museum", "art", "sculpture"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      }
+    },
+    {
+      "id": 14,
+      "name": "Rome Gladiator School",
+      "description": "",
+      "category": "attraction",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.gruppostoricoromano.it/",
+      "notes": [],
+      "tags": ["gladiator", "history", "interactive", "family"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      }
+    },
+    {
+      "id": 15,
+      "name": "Cinecittà World",
+      "description": "",
+      "category": "theme_park",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.cinecittaworld.it/it",
+      "notes": [],
+      "tags": ["theme park", "rides", "family"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      }
+    },
+    {
+      "id": 16,
+      "name": "Luneur Park",
+      "description": "",
+      "category": "theme_park",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.luneurpark.it/",
+      "notes": [],
+      "tags": ["amusement park", "rides", "family"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      }
+    },
+    {
+      "id": 17,
+      "name": "Κολοσσαίο & Ρωμαϊκή Αγορά",
+      "description": "",
+      "category": "monument",
+      "top": true,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://colosseo.it/",
+      "notes": [],
+      "tags": ["monument", "history", "iconic", "ancient rome"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      }
+    },
+    {
+      "id": 18,
+      "name": "Castel Sant'Angelo",
+      "description": "",
+      "category": "castle",
+      "top": true,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://castelsantangelorome.com/",
+      "notes": [],
+      "tags": ["castle", "history", "monument", "iconic"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      }
+    },
+    {
+      "id": 19,
+      "name": "Largo di Torre Argentina",
+      "description": "",
+      "category": "monument",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.rome-info.gr/2016/03/to-shmeio-dolofonias-tou-iouliou-kesara-torre-argentina.html",
+      "notes": [],
+      "tags": ["monument", "history", "ancient rome", "cats"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      }
+    },
+    {
+      "id": 20,
+      "name": "Πάνθεον",
+      "description": "",
+      "category": "monument",
+      "top": true,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://direzionemuseiroma.cultura.gov.it/pantheon/",
+      "notes": [],
+      "tags": ["monument", "history", "iconic", "ancient rome"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      }
+    },
+    {
+      "id": 21,
+      "name": "Piazza Navona",
+      "description": "",
+      "category": "monument",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.turismoroma.it/en/places/navona-square",
+      "notes": [],
+      "tags": ["piazza", "fountain", "iconic", "free"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      }
+    },
+    {
+      "id": 22,
+      "name": "Fontana di Trevi",
+      "description": "",
+      "category": "monument",
+      "top": true,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://fontanaditrevi.roma.it/en",
+      "notes": [],
+      "tags": ["fountain", "iconic", "monument"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      }
+    },
+    {
+      "id": 23,
+      "name": "San Giovanni in Laterano",
+      "description": "",
+      "category": "church",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.basilicasangiovanni.va/it.html",
+      "notes": [],
+      "tags": ["church", "history", "architecture"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      }
+    },
+    {
+      "id": 24,
+      "name": "Βατικανό",
+      "description": "",
+      "category": "monument",
+      "top": true,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.basilicasanpietro.va/it/",
+      "notes": [],
+      "tags": ["vatican", "church", "iconic", "history"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      }
+    },
+    {
+      "id": 25,
+      "name": "Μουσεία Βατικανού και Καπέλα Σιστίνα",
+      "description": "",
+      "category": "museum",
+      "top": true,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 0,
+        "lng": 0
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.museivaticani.va/content/museivaticani/it.html",
+      "notes": [],
+      "tags": ["museum", "art", "vatican", "sistine chapel", "iconic"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      }
+    }
+  ]
+}
