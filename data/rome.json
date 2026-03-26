@@ -47,16 +47,16 @@
         "2_adults_2_children": 0
       },
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Caffè del Castello",
+        "description": "Βρίσκεται ακριβώς έξω από το κάστρο. Είναι το πιο κλασικό σημείο για να ξεκινήσετε τη μέρα έχοντας θέα τα τείχη.",
+        "map_url": "https://maps.app.goo.gl/v5ozBDCCU4wKaKxC7"
       }
     },
     {
       "id": 2,
-      "name": "Santa Severa Castle",
-      "description": "Βρίσκεται ακριβώς πάνω στο κύμα, στην παραλία Santa Severa. Είναι ένα μαγικό μέρος κι ένα υπέροχο παραθαλάσσιο φρούριο.",
-      "category": "castle",
+      "name": "Welcome to Rome",
+      "description": "Το Welcome to Rome είναι μια τρισδιάστατη εμπειρία που δείχνει την ιστορία της Ρώμης με τρόπο που μοιάζει με ταινία. Μέσα από φωτεινές προβολές και μακέτες που αλλάζουν μπροστά στα μάτια σας, βλέπετε πώς χτίστηκαν τα αρχαία μνημεία και πώς εξελίχθηκε η πόλη μέσα στους αιώνες. Είναι ένας εύκολος και ξεκούραστος τρόπος για να καταλάβουν οι μεγάλοι και κυρίως τα παιδιά τι θα δουν αργότερα στις βόλτες τους στους αρχαιολογικούς χώρους.",
+      "category": "",
       "top": false,
       "prices": {
         "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
@@ -69,22 +69,22 @@
         "lng": 0
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Da Tonino - Trattoria Bassetti",
+        "description": "Μια αυθεντική τρατορία που την προτιμούν οι ντόπιοι. Δεν έχει φανφάρες στη διακόσμηση, αλλά το φαγητό είναι σπιτικό, οι μερίδες γενναιόδωρες και οι τιμές πολύ λογικές για το κέντρο της Ρώμης",
+        "map_url": "https://maps.app.goo.gl/NiKYfc9obgSvJZUq8"
       },
-      "website": "https://www.castellodisantasevera.it/",
+      "website": "https://welcometo-rome.it/",
       "notes": [],
-      "tags": ["castle", "history", "beach"],
+      "tags": ["history"],
       "duration_hours": 0,
       "best_time": "",
       "family_prices": {
         "2_adults_2_children": 0
       },
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Two Sizes",
+        "description": "Είναι διάσημο κυρίως για το τιραμισού του, το οποίο βγαίνει σε δύο μεγέθη (εξ ου και το όνομα) και σε διάφορες γεύσεις, όπως η κλασική, φιστίκι, φράουλα, καραμέλα και φυστικοβούτυρο. Εκτός από τιραμισού, θα βρείτε επίσης πολύ ωραία σικελιανά κανόλι.",
+        "map_url": "https://maps.app.goo.gl/LKpMgWxg1o5Mbt437"
       }
     },
     {
