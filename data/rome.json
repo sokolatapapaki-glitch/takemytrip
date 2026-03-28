@@ -222,9 +222,9 @@
         "2_adults_2_children": 0
       },
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "La Vita è Un Mozzico",
+        "description": "Σούπερ επιλογή για γρήγορο σνακ, σάντουιτς ή πίτσα στο χέρι, με πολύ καλές κριτικές.",
+        "map_url": "https://maps.app.goo.gl/GZP2H6sQufSoowCi8"
       }
     },
     {
@@ -244,9 +244,9 @@
         "lng": 0
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Mascalzoni Romani",
+        "description": "Απέχει μόλις 5 λεπτά με τα πόδια από την Piazza Mincio και φημίζεται για την πολύ υψηλή βαθμολογία του (4.9) και την αυθεντική ρωμαϊκή του κουζίνα",
+        "map_url": "https://maps.app.goo.gl/DdPZ5Cyvway5ntE1A"
       },
       "website": "https://www.turismoroma.it/it/luoghi/il-quartiere-copped%C3%A8",
       "notes": [],
@@ -257,9 +257,9 @@
         "2_adults_2_children": 0
       },
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Gruè",
+        "description": "Αν βρεθείτε στην περιοχή για πρωινό ή απόγευμα, αυτο το μαγαζί είναι "must". Θεωρείται από τα καλύτερα της Ρώμης για τα γλυκά , τα μακαρόν και τον καφέ .",
+        "map_url": "https://maps.app.goo.gl/T15AGrpt8iiZGn4a9"
       }
     },
     {
@@ -279,9 +279,9 @@
         "lng": 0
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Εστιατόριο ελληνικο",
+        "description": "Αν τυχαίνει να σας έχει λείψει η ελληνική κουζίνα, αυτό το εστιατόριο είναι πολύ δημοφιλές στην περιοχή και με πολύ καλές τιμές.",
+        "map_url": "https://maps.app.goo.gl/Mw5ndE9ZY6yPhCvH7"
       },
       "website": "https://www.atlasobscura.com/places/the-aventine-keyhole-rome-rome-italy",
       "notes": [],
@@ -292,9 +292,9 @@
         "2_adults_2_children": 0
       },
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Tram Depot",
+        "description": "Ένα πολύ ιδιαίτερο καφέ-κιόσκι που μοιάζει με παλιό βαγόνι τραμ. Είναι ιδανικό για καφέ, χυμούς και ελαφριά σνακ σε εξωτερικό χώρο",
+        "map_url": "https://maps.app.goo.gl/RZ7eBSeizqRKwbyP7"
       }
     },
     {
@@ -314,9 +314,9 @@
         "lng": 0
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Mejo ! "Cucina Romana"",
+        "description": "Είναι μια εξαιρετική επιλογή για αυθεντικό ρωμαϊκό φαγητό σε έναν πιο ανεπίσημο και ζωντανό χώρο. Έχει πολύ υψηλή βαθμολογία (4.9), κάτι που δείχνει την ποιότητα της κουζίνας του.",
+        "map_url": "https://maps.app.goo.gl/oxvhVLnEfNpC6FRR8"
       },
       "website": "https://www.turismoroma.it/en/places/villa-carpegna",
       "notes": [],
@@ -327,9 +327,9 @@
         "2_adults_2_children": 0
       },
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Fermento Bistrot Caffè",
+        "description": "Είναι μια πολύ βολική επιλογή, καθώς βρίσκεται ακριβώς απέναντι από την είσοδο της Villa Carpegna.",
+        "map_url": "https://maps.app.goo.gl/3GcQt55EAFN8JigA9"
       }
     },
     {
