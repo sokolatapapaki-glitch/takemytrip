@@ -194,9 +194,9 @@
     },
     {
       "id": 5,
-      "name": "Villa Ada",
-      "description": "Ένα από τα πιο μεγάλα και άγρια πάρκα της Ρώμης. Με παιδικές χαρές, λίμνες με πάπιες και πολλά μονοπάτια στη φύση",
-      "category": "park",
+      "name": "Museo Leonardo Da Vinci",
+      "description": "Στο μουσείο της Piazza del Popolo, τα παιδιά έρχονται σε επαφή με τον κόσμο του Λεονάρντο μέσα από ξύλινες μηχανές που μπορούν να αγγίξουν και να κινήσουν. Είναι ένας χώρος γεμάτος έξυπνες εφευρέσεις για την πτήση και τη μηχανική, μαζί με αντίγραφα των διάσημων πινάκων του.",
+      "category": "museum",
       "top": false,
       "prices": {
         "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
@@ -205,17 +205,17 @@
         "adult": 0
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 41.9113,
+        "lng": 12.4763
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Al Vantaggio",
+        "description": "Ένα κλασικό εστιατόριο της περιοχής με μεγάλη ιστορία. Έχει άνετο χώρο και όλα τα αγαπημένα των παιδιών, όπως απλές μακαρονάδες και πίτσα ψημένη σε ξυλόφουρνο.",
+        "map_url": "https://maps.app.goo.gl/1Ap4vUe623XpMW8c9"
       },
-      "website": "https://www.italia.it/en/lazio/rome/villa-ada",
+      "website": "https://www.museodavinci.it/",
       "notes": [],
-      "tags": ["park", "nature", "family"],
+      "tags": ["museum", "family"],
       "duration_hours": 0,
       "best_time": "",
       "family_prices": {
