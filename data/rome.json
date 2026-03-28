@@ -350,9 +350,9 @@
         "lng": 0
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Ristorante Pizzeria Popolo Caffè",
+        "description": Mόλις λίγα μέτρα από το μουσείο Explora. Λειτουργεί όλη την ημέρα, συνδυάζει καφέ, σνακ και κανονικό φαγητό με πίτσα και ζυμαρικά",
+        "map_url": "https://maps.app.goo.gl/mvW3wQCzZw4i1Uyu6"
       },
       "website": "https://mdbr.it/",
       "notes": [],
@@ -363,9 +363,9 @@
         "2_adults_2_children": 0
       },
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Sensorio Coffee Lab",
+        "description": Απέχει μόλις λίγα μέτρα από το μουσείο Explora. Πρόκειται για ένα σύγχρονο καφέ που εστιάζει στην ποιότητα του χαρμανιού με ωραίες επιλογές για πρωινό, ελαφριά σνακ και γλυκά. ",
+        "map_url": "https://maps.app.goo.gl/p4BSGkQH3EDpY39T8"
       }
     },
     {
@@ -385,9 +385,9 @@
         "lng": 0
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Merulì - Pizza e Cucina",
+        "description": "Περίπου 5 λεπτά με τα πόδια. Πολύ ωραία πίτσα και κλασικά ρωμαϊκά πιάτα σε έναν φιλόξενο χώρο.",
+        "map_url": "https://maps.app.goo.gl/gX7RFZJBxzAmoa7y9"
       },
       "website": "https://www.museoillusioni.it/",
       "notes": [],
@@ -398,9 +398,9 @@
         "2_adults_2_children": 54
       },
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Merulana Cafè",
+        "description": "Ένα κλασικό σημείο συνάντησης πάνω στον δρόμο, ανοιχτό όλη μέρα, για καφέ ή ένα ελαφρύ γεύμα.",
+        "map_url": "https://maps.app.goo.gl/oVJDKxSoSGRmryZc8"
       }
     },
     {
