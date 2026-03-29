@@ -420,9 +420,9 @@
         "lng": 0
       },
       "restaurant": {
-        "name": "Taverna Rossini",
-        "description": "Βρίσκεται στην περιοχή Parioli, βόρεια του πάρκου. Είναι ένα κλασικό στέκι των ντόπιων που λειτουργεί όλη μέρα και έχει τα πάντα: από πίτσα και ζυμαρικά μέχρι φρέσκο ψάρι.",
-        "map_url": "https://maps.app.goo.gl/GMxp9tU85ZnwHVpo7"
+        "name": "Osteria la Giara - Vino & Cucina dal 1920",
+        "description": "Πρόκειται για ένα ιστορικό εστιατόριο που κρατά από το 1920. Έχει παραδοσιακό χαρακτήρα και είναι γνωστό για την καλή ποιότητα των υλικών του.",
+        "map_url": "https://maps.app.goo.gl/AUqetNhD1NLemyNLA"
       },
       "website": "https://www.sovraintendenzaroma.it/i_luoghi/ville_e_parchi_storici/ville_dei_nobili/villa_borghese",
       "notes": [],
@@ -435,7 +435,7 @@
       "cafe": {
         "name": "Caffè delle Arti",
         "description": "Βρίσκεται στην Εθνική Πινακοθήκη Μοντέρνας Τέχνης (GNAM) στην άκρη του πάρκου",
-        "map_url": "https://maps.app.goo.gl/jAtFkUEvRrMBkn2LA"
+        "map_url": "https://maps.app.goo.gl/aZSFqZ2e6spvjDww5"
       }
     },
     {
@@ -454,9 +454,9 @@
         "lng": 0
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+       "name": "Taverna Rossini",
+        "description": "Βρίσκεται στην περιοχή Parioli, βόρεια του πάρκου. Είναι ένα κλασικό στέκι των ντόπιων που λειτουργεί όλη μέρα και έχει τα πάντα: από πίτσα και ζυμαρικά μέχρι φρέσκο ψάρι.",
+        "map_url": "https://maps.app.goo.gl/GMxp9tU85ZnwHVpo7"
       },
       "website": "https://www.bioparco.it/",
       "notes": ["Παιδιά κάτω από 1 μέτρο ύψος εισέρχονται δωρεάν."],
@@ -502,14 +502,14 @@
         "2_adults_2_children": 0
       },
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Faro - Caffè Specialty",
+        "description": "Είναι μια εξαιρετική επιλογή, καθώς θεωρείται ένα από τα καλύτερα σημεία για καφέ στη Ρώμη, με έμφαση στην ποιότητα των κόκκων και τη βιώσιμη προέλευση.",
+        "map_url": "https://maps.app.goo.gl/6GnxvkkAz8su827cA"
       }
     },
     {
       "id": 14,
-      "name": "Rome Gladiator School",
+      "name": "Rome Gladiator School - Gruppo Storico Romano",
       "description": "Τα παιδιά μαθαίνουν τις τεχνικές των μονομάχων φορώντας παραδοσιακές στολές.Κατάλληλο απο 6 ετών και άνω. ",
       "category": "attraction",
       "top": false,
@@ -524,9 +524,9 @@
         "lng": 0
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Trattoria Priscilla",
+        "description": "Μια οικογενειακή επιχείρηση με ιστορία δεκαετιών.",
+        "map_url": "https://maps.app.goo.gl/gkszgFEJneQvUsKU8"
       },
       "website": "https://www.gruppostoricoromano.it/",
       "notes": [],
@@ -595,9 +595,9 @@
         "lng": 0
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Garden Ristò EUR",
+        "description": "Ένα όμορφο cafe-bistrot με κήπο, ιδανικό για καφέ, πρωινό ή  μεσημεριανό δίπλα στο Luneur Park. ",
+        "map_url": "https://maps.app.goo.gl/C8fDzvmsXqoJtgdg9"
       },
       "website": "https://www.luneurpark.it/",
       "notes": ["επισκεφθείτε την επίσημη ιστοσελίδα για προσφορές και πακέτα."],
