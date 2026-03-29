@@ -420,9 +420,9 @@
         "lng": 0
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Taverna Rossini",
+        "description": "Βρίσκεται στην περιοχή Parioli, βόρεια του πάρκου. Είναι ένα κλασικό στέκι των ντόπιων που λειτουργεί όλη μέρα και έχει τα πάντα: από πίτσα και ζυμαρικά μέχρι φρέσκο ψάρι.",
+        "map_url": "https://maps.app.goo.gl/GMxp9tU85ZnwHVpo7"
       },
       "website": "https://www.sovraintendenzaroma.it/i_luoghi/ville_e_parchi_storici/ville_dei_nobili/villa_borghese",
       "notes": [],
@@ -433,9 +433,9 @@
         "2_adults_2_children": 0
       },
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Caffè delle Arti",
+        "description": "Βρίσκεται στην Εθνική Πινακοθήκη Μοντέρνας Τέχνης (GNAM) στην άκρη του πάρκου",
+        "map_url": "https://maps.app.goo.gl/jAtFkUEvRrMBkn2LA"
       }
     },
     {
@@ -489,9 +489,9 @@
         "lng": 0
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Osteria la Giara - Vino & Cucina dal 1920",
+        "description": "Είναι μια εξαιρετική επιλογή για αυθεντική ρωμαϊκή κουζίνα σε έναν χώρο με ιστορία που ξεπερνά τα 100 χρόνια. Απέχει περίπου 10 λεπτά με τα πόδια από την έξοδο της Villa Borghese (κοντά στην Porta Pinciana), οπότε είναι μια πολύ καλή λύση για φαγητό αν βρίσκεστε σε εκείνη την πλευρά του πάρκου.",
+        "map_url": "https://maps.app.goo.gl/ULLFNNHcihrLmY2Q6"
       },
       "website": "",
       "notes": [],
