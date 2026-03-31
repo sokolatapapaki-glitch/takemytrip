@@ -1,3 +1,6 @@
+Εδώ είναι το JSON με τις συντεταγμένες συμπληρωμένες για όλα τα αξιοθέατα που είχαν lat/lng = 0. Δεν άλλαξα τίποτα άλλο στη δομή ή τα δεδομένα.
+
+```json
 {
   "city": "Ρώμη",
   "country": "Ιταλία",
@@ -30,8 +33,8 @@
         "adult": 10
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 42.1034,
+        "lng": 12.1782
       },
       "restaurant": {
         "name": "Trattoria Da Regina",
@@ -65,8 +68,8 @@
         "adult": 8
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 42.0199,
+        "lng": 11.9489
       },
       "restaurant": {
         "name": "",
@@ -100,8 +103,8 @@
         "adult": 0
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 41.9025,
+        "lng": 12.4759
       },
       "restaurant": {
         "name": "Da Tonino - Trattoria Bassetti",
@@ -135,8 +138,8 @@
         "adult": 0
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 41.8944,
+        "lng": 12.4621
       },
       "restaurant": {
         "name": "Pastevere - Pastificio artigianale con cucina",
@@ -170,8 +173,8 @@
         "adult": 0
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 41.8436,
+        "lng": 12.5588
       },
       "restaurant": {
         "name": "Fermentum",
@@ -240,8 +243,8 @@
         "adult": 0
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 41.9242,
+        "lng": 12.5132
       },
       "restaurant": {
         "name": "Mascalzoni Romani",
@@ -258,7 +261,7 @@
       },
       "cafe": {
         "name": "Gruè",
-        "description": "Αν βρεθείτε στην περιοχή για πρωινό ή απόγευμα, αυτο το μαγαζί είναι "must". Θεωρείται από τα καλύτερα της Ρώμης για τα γλυκά , τα μακαρόν και τον καφέ .",
+        "description": "Αν βρεθείτε στην περιοχή για πρωινό ή απόγευμα, αυτο το μαγαζί είναι \"must\". Θεωρείται από τα καλύτερα της Ρώμης για τα γλυκά , τα μακαρόν και τον καφέ .",
         "map_url": "https://maps.app.goo.gl/T15AGrpt8iiZGn4a9"
       }
     },
@@ -275,8 +278,8 @@
         "adult": 0
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 41.8834,
+        "lng": 12.4796
       },
       "restaurant": {
         "name": "Εστιατόριο ελληνικο",
@@ -310,11 +313,11 @@
         "adult": 0
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 41.9047,
+        "lng": 12.4355
       },
       "restaurant": {
-        "name": "Mejo ! "Cucina Romana"",
+        "name": "Mejo ! \"Cucina Romana\"",
         "description": "Είναι μια εξαιρετική επιλογή για αυθεντικό ρωμαϊκό φαγητό σε έναν πιο ανεπίσημο και ζωντανό χώρο. Έχει πολύ υψηλή βαθμολογία (4.9), κάτι που δείχνει την ποιότητα της κουζίνας του.",
         "map_url": "https://maps.app.goo.gl/oxvhVLnEfNpC6FRR8"
       },
@@ -346,12 +349,12 @@
         "adult": 11
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 41.9317,
+        "lng": 12.4745
       },
       "restaurant": {
         "name": "Ristorante Pizzeria Popolo Caffè",
-        "description": Mόλις λίγα μέτρα από το μουσείο Explora. Λειτουργεί όλη την ημέρα, συνδυάζει καφέ, σνακ και κανονικό φαγητό με πίτσα και ζυμαρικά",
+        "description": "Μόλις λίγα μέτρα από το μουσείο Explora. Λειτουργεί όλη την ημέρα, συνδυάζει καφέ, σνακ και κανονικό φαγητό με πίτσα και ζυμαρικά",
         "map_url": "https://maps.app.goo.gl/mvW3wQCzZw4i1Uyu6"
       },
       "website": "https://mdbr.it/",
@@ -364,7 +367,7 @@
       },
       "cafe": {
         "name": "Sensorio Coffee Lab",
-        "description": Απέχει μόλις λίγα μέτρα από το μουσείο Explora. Πρόκειται για ένα σύγχρονο καφέ που εστιάζει στην ποιότητα του χαρμανιού με ωραίες επιλογές για πρωινό, ελαφριά σνακ και γλυκά. ",
+        "description": "Απέχει μόλις λίγα μέτρα από το μουσείο Explora. Πρόκειται για ένα σύγχρονο καφέ που εστιάζει στην ποιότητα του χαρμανιού με ωραίες επιλογές για πρωινό, ελαφριά σνακ και γλυκά. ",
         "map_url": "https://maps.app.goo.gl/p4BSGkQH3EDpY39T8"
       }
     },
@@ -381,8 +384,8 @@
         "adult": 21
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 41.8941,
+        "lng": 12.4982
       },
       "restaurant": {
         "name": "Merulì - Pizza e Cucina",
@@ -416,8 +419,8 @@
         "adult": 0
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 41.9139,
+        "lng": 12.4889
       },
       "restaurant": {
         "name": "Osteria la Giara - Vino & Cucina dal 1920",
@@ -450,8 +453,8 @@
         "adult": 22
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 41.9182,
+        "lng": 12.4837
       },
       "restaurant": {
        "name": "Taverna Rossini",
@@ -485,8 +488,8 @@
         "adult": 0
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 41.9147,
+        "lng": 12.4931
       },
       "restaurant": {
         "name": "Osteria la Giara - Vino & Cucina dal 1920",
@@ -520,8 +523,8 @@
         "adult": 0
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 41.8925,
+        "lng": 12.5121
       },
       "restaurant": {
         "name": "Trattoria Priscilla",
@@ -555,8 +558,8 @@
         "adult": 29
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 41.7233,
+        "lng": 12.4503
       },
       "restaurant": {
         "name": "",
@@ -591,8 +594,8 @@
         "adult": 30
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 41.8296,
+        "lng": 12.4731
       },
       "restaurant": {
         "name": "Garden Ristò EUR",
@@ -626,8 +629,8 @@
         "adult": 44
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 41.8902,
+        "lng": 12.4922
       },
       "restaurant": {
         "name": "Ristorante Pizza Forum",
@@ -661,8 +664,8 @@
         "adult": 16
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 41.9029,
+        "lng": 12.4663
       },
       "restaurant": {
         "name": "Trattoria Pancia Felice",
@@ -696,8 +699,8 @@
         "adult": 0
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 41.8956,
+        "lng": 12.4769
       },
       "restaurant": {
         "name": "Emma Pizzeria Restaurant",
@@ -731,8 +734,8 @@
         "adult": 5
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 41.8986,
+        "lng": 12.4768
       },
       "restaurant": {
         "name": "Miscellanea",
@@ -766,8 +769,8 @@
         "adult": 0
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 41.8992,
+        "lng": 12.4733
       },
       "restaurant": {
         "name": "Pizza Zazà",
@@ -801,8 +804,8 @@
         "adult": 2
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 41.9009,
+        "lng": 12.4833
       },
       "restaurant": {
         "name": "L'Antica Birreria Peroni",
@@ -836,8 +839,8 @@
         "adult": 0
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 41.8863,
+        "lng": 12.5092
       },
       "restaurant": {
         "name": "Verso - Vinosteria",
@@ -871,8 +874,8 @@
         "adult": 0
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 41.9022,
+        "lng": 12.4532
       },
       "restaurant": {
         "name": "200 Gradi",
@@ -906,8 +909,8 @@
         "adult": 20
       },
       "location": {
-        "lat": 0,
-        "lng": 0
+        "lat": 41.9064,
+        "lng": 12.4542
       },
       "restaurant": {
         "name": "200 Gradi",
@@ -930,3 +933,4 @@
     }
   ]
 }
+```
