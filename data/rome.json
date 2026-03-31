@@ -770,9 +770,9 @@
         "lng": 0
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Pizza Zazà",
+        "description": "Φημίζεται για την εξαιρετική του πίτσα με βιολογικό αλεύρι και για τις πολύ καλές τιμές. Μπορείτε να πάρετε μερικά κομμάτια στο χέρι και να συνεχίσετε τη βόλτα .",
+        "map_url": "https://maps.app.goo.gl/RiiospAPJmKGA1e18"
       },
       "website": "https://www.turismoroma.it/en/places/navona-square",
       "notes": [],
@@ -783,9 +783,9 @@
         "2_adults_2_children": 0
       },
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "L'Emporio alla Pace",
+        "description": "Ένα από τα πιο ατμοσφαιρικά καφέ, γεμάτο βιβλία και vintage έπιπλα. Είναι ήσυχο, ιδανικό για να χαλαρώσετε σε έναν από τους πιο γραφικούς δρόμους πίσω από την πλατεία.",
+        "map_url": "https://maps.app.goo.gl/w7j1HMKunMfgNk8W8"
       }
     },
     {
@@ -805,9 +805,9 @@
         "lng": 0
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "L'Antica Birreria Peroni",
+        "description": "Ένας ιστορικός χώρος που θυμίζει παλιό ζυθοποιείο. Είναι ιδανικό για ένα πιο γρήγορο και οικονομικό γεύμα, με μεγάλη ποικιλία, καλές τιμές και κριτικές.",
+        "map_url": "https://maps.app.goo.gl/vcGFBxfVvBvh2nb3A"
       },
       "website": "https://fontanaditrevi.roma.it/en",
       "notes": ["Το εισιτήριο αφορά μόνο την κατέβασμα για να το δείτε από κοντά. Αν θέλετε απλώς να το δείτε από μακριά, είναι δωρεάν."],
@@ -818,9 +818,9 @@
         "2_adults_2_children": 0
       },
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Don Pasquale Restaurant & Bar",
+        "description": "Βρίσκεται μέσα στο Hotel Maalot, κυριολεκτικά δύο βήματα από το συντριβάνι και έχει εξαρετικές κριτικές.",
+        "map_url": "https://maps.app.goo.gl/fsSymwAngohrtDr6A"
       }
     },
     {
