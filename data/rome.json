@@ -630,9 +630,9 @@
         "lng": 0
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Ristorante Pizza Forum",
+        "description": "Είναι μια εξαιρετική επιλογή για την περιοχή, καθώς καταφέρνει να διατηρεί υψηλή ποιότητα και καλές τιμές παρά την πολύ τουριστική του τοποθεσία.",
+        "map_url": "https://maps.app.goo.gl/RxNfqFKriegzWzFD7"
       },
       "website": "https://colosseo.it/",
       "notes": [],
@@ -643,9 +643,9 @@
         "2_adults_2_children": 0
       },
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "RoYaL Art Cafè",
+        "description": "Βρίσκεται ακριβώς απέναντι από το Κολοσσαίο. Αν και είναι τουριστικό σημείο, η ταράτσα του είναι υπέροχη για έναν καφέ με άμεση θέα στο μνημείο.",
+        "map_url": "https://maps.app.goo.gl/qLvTvvVdo5uNEbPy5"
       }
     },
     {
@@ -665,9 +665,9 @@
         "lng": 0
       },
       "restaurant": {
-        "name": "Labottega Pastificio con Cucina Roma",
-        "description": "Είναι ένα εξαιρετικό σημείο για όποιον θέλει να δοκιμάσει αληθινά, χειροποίητα ζυμαρικά. Βρίσκεται σε μια από τις πιο όμορφες και ιστορικές γειτονιές της Ρώμης, ανάμεσα στο Castel Sant'Angelo και το Campo de' Fiori.",
-        "map_url": "https://maps.app.goo.gl/Pz1vCSQd76P74hPD9"
+        "name": "Trattoria Pancia Felice",
+        "description": "Σε απόσταση αναπνοής, με πολύ καλές κριτικές και τιμές",
+        "map_url": "https://maps.app.goo.gl/Je7KWRAXfYs31ViBA"
       },
       "website": "https://castelsantangelorome.com/",
       "notes": [],
