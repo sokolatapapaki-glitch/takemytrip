@@ -665,9 +665,9 @@
         "lng": 0
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Labottega Pastificio con Cucina Roma",
+        "description": "Είναι ένα εξαιρετικό σημείο για όποιον θέλει να δοκιμάσει αληθινά, χειροποίητα ζυμαρικά. Βρίσκεται σε μια από τις πιο όμορφες και ιστορικές γειτονιές της Ρώμης, ανάμεσα στο Castel Sant'Angelo και το Campo de' Fiori.",
+        "map_url": "https://maps.app.goo.gl/Pz1vCSQd76P74hPD9"
       },
       "website": "https://castelsantangelorome.com/",
       "notes": [],
@@ -700,9 +700,9 @@
         "lng": 0
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Emma Pizzeria Restaurant",
+        "description": "Μια από τις πιο γνωστές pizzerie στην περιοχή. Φημίζεται για τη λεπτή, τραγανή ρωμαϊκή πίτσα και τα ποιοτικά υλικά της.",
+        "map_url": "https://maps.app.goo.gl/U5u2Tddexx8F4kqU6"
       },
       "website": "https://www.rome-info.gr/2016/03/to-shmeio-dolofonias-tou-iouliou-kesara-torre-argentina.html",
       "notes": [],
@@ -713,9 +713,9 @@
         "2_adults_2_children": 0
       },
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Slow - Specialty Coffee & Pastry Lab",
+        "description": "Δίνει έμφαση στον ποιοτικό καφέ και τα χειροποίητα γλυκά.",
+        "map_url": "https://maps.app.goo.gl/A7t9g9fdw4c9iN7x7"
       }
     },
     {
@@ -735,9 +735,9 @@
         "lng": 0
       },
       "restaurant": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "Miscellanea",
+        "description": "Μια πολύ καλή και πιο οικονομική λύση ακριβώς πίσω από το Πάνθεον. Είναι ένας χώρος με υπαίθρια τραπεζάκια και πολύ δημοφιλής",
+        "map_url": "https://maps.app.goo.gl/q7TVzenJGv4fSqpx7"
       },
       "website": "https://direzionemuseiroma.cultura.gov.it/pantheon/",
       "notes": [],
@@ -748,9 +748,9 @@
         "2_adults_2_children": 0
       },
       "cafe": {
-        "name": "",
-        "description": "",
-        "map_url": ""
+        "name": "La Casa del Caffè Tazza d'Oro",
+        "description": "Ένα ιστορικό σημείο ακριβώς δίπλα στο μνημείο. Είναι το ιδανικό μέρος για να δοκιμάσετε τη διάσημη γρανίτα καφέ με σαντιγί ειδικά αν ο καιρός είναι ζεστός.",
+        "map_url": "https://maps.app.goo.gl/ZwBGPFuG7WmyFJca6"
       }
     },
     {
