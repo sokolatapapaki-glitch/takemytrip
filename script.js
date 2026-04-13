@@ -8023,6 +8023,13 @@ function exportItineraryToPDF() {
 
     const filename = `itinerary-${destination.replace(/\s+/g, '-').toLowerCase()}.pdf`;
 
+    // html2canvas requires the element to be in the DOM to render it.
+    // Position it off-screen so it is invisible but measurable.
+    container.style.position = 'fixed';
+    container.style.top      = '-9999px';
+    container.style.left     = '-9999px';
+    document.body.appendChild(container);
+
     showToast('📄 Δημιουργία PDF...', 'info');
 
     html2pdf()
@@ -8030,14 +8037,18 @@ function exportItineraryToPDF() {
             margin:        [0, 0, 0, 0],
             filename:      filename,
             image:         { type: 'jpeg', quality: 0.97 },
-            html2canvas:   { scale: 2, useCORS: true, logging: false },
+            html2canvas:   { scale: 2, useCORS: true, logging: false, windowWidth: 794 },
             jsPDF:         { unit: 'pt', format: 'a4', orientation: 'portrait' },
             pagebreak:     { mode: ['avoid-all', 'css', 'legacy'] }
         })
         .from(container)
         .save()
-        .then(() => showToast('✅ Το PDF κατεβάστηκε!', 'success'))
+        .then(() => {
+            document.body.removeChild(container);
+            showToast('✅ Το PDF κατεβάστηκε!', 'success');
+        })
         .catch(err => {
+            if (document.body.contains(container)) document.body.removeChild(container);
             console.error('PDF error:', err);
             showToast('❌ Σφάλμα κατά τη δημιουργία PDF', 'error');
         });
