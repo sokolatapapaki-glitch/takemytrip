@@ -7917,13 +7917,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // ==================== PDF EXPORT ====================
 
 function exportItineraryToPDF() {
-    // Use jsPDF directly from the html2pdf bundle — bypasses html2canvas entirely,
-    // which was the root cause of blank PDFs (html2canvas can't paint off-screen nodes).
-    const jsPDFClass = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
-    if (!jsPDFClass) {
-        showToast('❌ Η βιβλιοθήκη PDF δεν είναι διαθέσιμη. Ανανεώστε τη σελίδα.', 'error');
+    // jsPDF is loaded explicitly via CDN (jspdf.umd.min.js) before script.js.
+    // It exposes itself as window.jspdf.jsPDF (UMD build).
+    if (!window.jspdf) {
+        alert('PDF library failed to load. Please refresh the page.');
         return;
     }
+    const { jsPDF } = window.jspdf;
+    const jsPDFClass = jsPDF;
 
     const program = state.geographicProgram;
     if (!program || !program.days || program.days.length === 0) {
