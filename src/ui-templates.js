@@ -623,9 +623,32 @@ export function getSummaryStepHTML() {
                 </div>
 
                 <!-- ΚΟΥΜΠΙΑ -->
-                <div style="text-align: center; margin-top: 30px;">
-                    <button class="btn btn-primary" onclick="showStep('map')" style="margin-right: 10px;">
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 30px; align-items: center;">
+                    <button class="btn btn-primary" onclick="showStep('map')">
                         <i class="fas fa-map-marked-alt"></i> Συνέχεια στον Χάρτη
+                    </button>
+                    <button
+                        id="export-pdf-btn"
+                        class="btn"
+                        onclick="exportItineraryToPDF()"
+                        style="
+                            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+                            color: white;
+                            border: none;
+                            padding: 10px 22px;
+                            border-radius: 8px;
+                            font-size: 15px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            display: inline-flex;
+                            align-items: center;
+                            gap: 8px;
+                            box-shadow: 0 2px 8px rgba(5,150,105,0.35);
+                            transition: opacity 0.2s;
+                        "
+                        onmouseover="this.style.opacity='0.88'"
+                        onmouseout="this.style.opacity='1'">
+                        <i class="fas fa-file-pdf"></i> Export to PDF
                     </button>
                     <button class="btn btn-outline" onclick="showStep('activities')">
                         <i class="fas fa-arrow-left"></i> Επιστροφή

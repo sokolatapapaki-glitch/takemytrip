@@ -101,6 +101,9 @@ import {
     getMapStepHTML
 } from './ui-templates.js';
 
+// PDF Export
+import { exportItineraryToPDF } from './pdf-export.js';
+
 // Destination filtering and selection
 import {
     filterDestinations,
@@ -211,6 +214,9 @@ window.getHotelStepHTML = getHotelStepHTML;
 window.getActivitiesStepHTML = getActivitiesStepHTML;
 window.getSummaryStepHTML = getSummaryStepHTML;
 window.getMapStepHTML = getMapStepHTML;
+
+// PDF Export
+window.exportItineraryToPDF = exportItineraryToPDF;
 
 // Destination functions
 window.filterDestinations = filterDestinations;
