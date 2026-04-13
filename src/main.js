@@ -136,8 +136,21 @@ import {
     setupMapStep,
     showManualDestinationModal,
     closeManualDestinationModal,
-    saveManualDestination
+    saveManualDestination,
+    generateGeographicProgram
 } from './core.js';
+
+// Saved Itineraries (multi-slot persistence)
+import {
+    getSavedItineraries,
+    saveCurrentItinerary,
+    loadSavedItinerary,
+    deleteSavedItinerary,
+    deleteSavedItineraryAndRefresh,
+    renderSavedTripsPanel,
+    saveItineraryWithFeedback,
+    toggleSavedTripsPanel
+} from './saved-itineraries.js';
 
 // ==================== WINDOW EXPORTS FOR HTML ONCLICK HANDLERS ====================
 // All functions must be exported to window for HTML onclick compatibility
@@ -254,6 +267,19 @@ window.setupMapStep = setupMapStep;
 window.showManualDestinationModal = showManualDestinationModal;
 window.closeManualDestinationModal = closeManualDestinationModal;
 window.saveManualDestination = saveManualDestination;
+
+// Core functions - Geographic Program
+window.generateGeographicProgram = generateGeographicProgram;
+
+// Saved Itineraries
+window.getSavedItineraries = getSavedItineraries;
+window.saveCurrentItinerary = saveCurrentItinerary;
+window.loadSavedItinerary = loadSavedItinerary;
+window.deleteSavedItinerary = deleteSavedItinerary;
+window.deleteSavedItineraryAndRefresh = deleteSavedItineraryAndRefresh;
+window.renderSavedTripsPanel = renderSavedTripsPanel;
+window.saveItineraryWithFeedback = saveItineraryWithFeedback;
+window.toggleSavedTripsPanel = toggleSavedTripsPanel;
 
 // ==================== APPLICATION INITIALIZATION ====================
 

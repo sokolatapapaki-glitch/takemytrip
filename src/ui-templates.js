@@ -622,11 +622,64 @@ export function getSummaryStepHTML() {
                     </div>
                 </div>
 
+                <!-- ===== SAVED TRIPS PANEL ===== -->
+                <div class="card" style="margin-top: 28px; background: #f8fafc; border: 1px solid #e2e8f0;">
+                    <!-- Header (clickable to collapse) -->
+                    <div
+                        onclick="toggleSavedTripsPanel()"
+                        style="
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            cursor: pointer;
+                            user-select: none;
+                        ">
+                        <h4 style="margin: 0; color: #1e293b; font-size: 15px;">
+                            <i class="fas fa-bookmark" style="color: #4F46E5; margin-right: 8px;"></i>
+                            Αποθηκευμένα Ταξίδια
+                        </h4>
+                        <span id="saved-trips-toggle" style="color: #64748b; font-size: 13px;">
+                            <i class="fas fa-chevron-down"></i>
+                        </span>
+                    </div>
+
+                    <!-- Collapsible body (hidden by default; shown after saving) -->
+                    <div id="saved-trips-collapse" style="margin-top: 14px; display: none;">
+                        <div id="saved-trips-panel">
+                            <!-- Populated by renderSavedTripsPanel() -->
+                        </div>
+                    </div>
+                </div>
+
                 <!-- ΚΟΥΜΠΙΑ -->
-                <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 30px; align-items: center;">
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 24px; align-items: center;">
                     <button class="btn btn-primary" onclick="showStep('map')">
                         <i class="fas fa-map-marked-alt"></i> Συνέχεια στον Χάρτη
                     </button>
+                    <!-- Save Itinerary -->
+                    <button
+                        class="btn"
+                        onclick="saveItineraryWithFeedback()"
+                        style="
+                            background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%);
+                            color: white;
+                            border: none;
+                            padding: 10px 22px;
+                            border-radius: 8px;
+                            font-size: 15px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            display: inline-flex;
+                            align-items: center;
+                            gap: 8px;
+                            box-shadow: 0 2px 8px rgba(14,165,233,0.35);
+                            transition: opacity 0.2s;
+                        "
+                        onmouseover="this.style.opacity='0.88'"
+                        onmouseout="this.style.opacity='1'">
+                        <i class="fas fa-bookmark"></i> Αποθήκευση Ταξιδιού
+                    </button>
+                    <!-- Export PDF -->
                     <button
                         id="export-pdf-btn"
                         class="btn"

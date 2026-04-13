@@ -1289,6 +1289,21 @@ if (window.state.selectedActivities.length > 0) {
         // 5. 🔴 ΚΡΙΤΙΚΟ: Δημιουργία προτεινόμενου προγράμματος
         createSuggestedProgram();
 
+        // If a persisted program exists (restored from localStorage or saved trips),
+        // make the program section visible immediately and use _renderProgramToDOM to
+        // display it with full cafe/restaurant data.
+        if (window.state.geographicProgram && window.state.geographicProgram.days) {
+            const section = document.getElementById('geographic-program-section');
+            if (section) section.style.display = 'block';
+            const COLOR_PALETTE = [
+                '#4F46E5','#10B981','#F59E0B','#EF4444',
+                '#8B5CF6','#EC4899','#14B8A6','#F97316'
+            ];
+            _renderProgramToDOM(window.state.geographicProgram, COLOR_PALETTE);
+        }
+
+        // Populate the saved trips panel if visible
+        if (window.renderSavedTripsPanel) window.renderSavedTripsPanel();
 
     }, 100);
 }
@@ -1406,6 +1421,46 @@ function createSuggestedProgram() {
     `;
 
     programDiv.innerHTML = html;
+
+    // Also persist a geographicProgram in state (if one doesn't already exist)
+    // so that page refreshes and PDF export can work without clicking the button.
+    if (!window.state.geographicProgram && window.state.selectedDays > 0) {
+        const COLOR_PALETTE = [
+            '#4F46E5','#10B981','#F59E0B','#EF4444',
+            '#8B5CF6','#EC4899','#14B8A6','#F97316'
+        ];
+        const cityById = {};
+        (window.state.currentCityActivities || []).forEach(a => { cityById[a.id] = a; });
+        const acts = (window.state.selectedActivities || []).map(act => {
+            const full = cityById[act.id] || {};
+            return { ...full, ...act,
+                cafe: act.cafe || full.cafe || null,
+                restaurant: act.restaurant || full.restaurant || null,
+                price: act.price ?? full.price ?? 0,
+                duration_hours: act.duration_hours || full.duration_hours || 1.5,
+            };
+        });
+        const days = window.state.selectedDays;
+        const perDay = Math.ceil(acts.length / days);
+        window.state.geographicProgram = {
+            totalDays: days,
+            days: Array.from({ length: days }, (_, d) => {
+                const bucket = acts.slice(d * perDay, (d + 1) * perDay);
+                return {
+                    dayNumber: d + 1,
+                    totalActivities: bucket.length,
+                    estimatedTime: bucket.reduce((s, a) => s + (a.duration_hours || 1.5), 0),
+                    totalCost: bucket.reduce((s, a) => s + (a.price || 0), 0),
+                    totalEffort: bucket.length * 20,
+                    groups: [{ center: null, activities: bucket, count: bucket.length }],
+                };
+            }).filter(d => d.totalActivities > 0),
+            groups: [],
+            isGenerated: true,
+            generatedAt: new Date().toISOString(),
+        };
+        saveState();
+    }
 }
 
 // ==================== ΒΟΗΘΗΤΙΚΗ ΣΥΝΑΡΤΗΣΗ: SUGGEST DAYS FROM GROUPS ====================
@@ -1436,6 +1491,259 @@ function suggestDaysFromGroups() {
     console.log(`📅 Προτεινόμενες μέρες από ομαδοποίηση: ${suggestedDays}`);
 
     return suggestedDays;
+}
+
+// ==================== GENERATE GEOGRAPHIC PROGRAM ====================
+// This is the function called by the "ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΓΡΑΜΜΑΤΟΣ" button.
+// It builds state.geographicProgram from the current selectedActivities,
+// persists it to localStorage, and renders it in the DOM.
+export function generateGeographicProgram() {
+    if (!window.state) return;
+
+    const state = window.state;
+    const activities = state.selectedActivities || [];
+    const days = state.selectedDays || 0;
+
+    if (activities.length === 0) {
+        if (window.showToast) window.showToast('⚠️ Επιλέξτε πρώτα δραστηριότητες από το Βήμα 4.', 'warning');
+        return;
+    }
+    if (days === 0) {
+        if (window.showToast) window.showToast('⚠️ Επιλέξτε πρώτα τον αριθμό ημερών από το dropdown.', 'warning');
+        return;
+    }
+
+    // Build a city-activity lookup so we can fill in missing cafe/restaurant/price
+    // fields for activities that were added via the legacy checkbox path (which only
+    // stores id/name/price/category).
+    const cityById = {};
+    (state.currentCityActivities || []).forEach(a => { cityById[a.id] = a; });
+
+    const enrichAct = (act) => {
+        const full = cityById[act.id] || {};
+        return {
+            ...full,          // full city data as base
+            ...act,           // override with whatever is already in selectedActivities
+            cafe:       act.cafe       || full.cafe       || null,
+            restaurant: act.restaurant || full.restaurant || null,
+            price:      act.price      ?? full.price      ?? 0,
+            category:   act.category   || full.category   || '',
+            duration_hours: act.duration_hours || full.duration_hours || 1.5,
+        };
+    };
+
+    const enrichedActivities = activities.map(enrichAct);
+
+    // ── Distribute activities across days ──────────────────────────────────
+    // Try the geographic scheduler if available (exposed by script.js);
+    // fall back to a simple even distribution.
+    let dayBuckets = null; // Array of Array<activity>
+
+    try {
+        if (
+            window.groupActivitiesByProximity &&
+            window.distributeGroupsToDays &&
+            enrichedActivities.every(a => a.location)
+        ) {
+            const groups = window.groupActivitiesByProximity(enrichedActivities, 2.0);
+            if (groups && groups.length > 0) {
+                const distributed = window.distributeGroupsToDays(groups, days);
+                if (distributed && distributed.days) {
+                    dayBuckets = distributed.days.map(day =>
+                        (day.groups || []).flatMap(g => g.activities || [])
+                    );
+                }
+            }
+        }
+    } catch (e) {
+        console.warn('[generateGeographicProgram] geographic scheduler failed, using even distribution', e);
+    }
+
+    if (!dayBuckets || dayBuckets.length !== days) {
+        // Even (round-robin) distribution fallback
+        dayBuckets = Array.from({ length: days }, () => []);
+        enrichedActivities.forEach((act, i) => {
+            dayBuckets[i % days].push(act);
+        });
+    }
+
+    // ── Build the geographicProgram object ─────────────────────────────────
+    const COLOR_PALETTE = [
+        '#4F46E5', '#10B981', '#F59E0B', '#EF4444',
+        '#8B5CF6', '#EC4899', '#14B8A6', '#F97316'
+    ];
+
+    const geoProgram = {
+        totalDays: days,
+        days: dayBuckets.map((bucket, idx) => ({
+            dayNumber: idx + 1,
+            totalActivities: bucket.length,
+            estimatedTime: bucket.reduce((s, a) => s + (a.duration_hours || 1.5), 0),
+            totalCost: bucket.reduce((s, a) => s + (a.price || 0), 0),
+            totalEffort: bucket.length * 20,     // rough effort estimate
+            groups: [{
+                center: null,
+                activities: bucket,
+                count: bucket.length,
+            }],
+        })),
+        groups: [],
+        isGenerated: true,
+        generatedAt: new Date().toISOString(),
+    };
+
+    // ── Persist and display ────────────────────────────────────────────────
+    state.geographicProgram = geoProgram;
+    saveState();
+
+    // Show the program section card
+    const section = document.getElementById('geographic-program-section');
+    if (section) section.style.display = 'block';
+
+    // Render day cards
+    _renderProgramToDOM(geoProgram, COLOR_PALETTE);
+
+    if (window.showToast) {
+        window.showToast(
+            `✅ Πρόγραμμα δημιουργήθηκε: ${activities.length} δραστηριότητες σε ${days} μέρες!`,
+            'success'
+        );
+    }
+
+    console.log('✅ geographicProgram saved to state and localStorage', geoProgram);
+}
+
+/** Internal: renders geographicProgram days into #geographic-program */
+function _renderProgramToDOM(geoProgram, COLOR_PALETTE) {
+    const programDiv = document.getElementById('geographic-program');
+    if (!programDiv) return;
+
+    const getDayColor = (idx) => COLOR_PALETTE[idx % COLOR_PALETTE.length];
+
+    let html = `<div style="padding: 10px;">
+        <div style="text-align:center; margin-bottom:20px;">
+            <p style="color:#64748b; font-size:14px;">
+                ${geoProgram.days.reduce((s,d)=>s+d.totalActivities,0)} δραστηριότητες
+                σε ${geoProgram.totalDays} μέρες
+            </p>
+        </div>`;
+
+    geoProgram.days.forEach((day, idx) => {
+        const color = getDayColor(idx);
+        const timeStr = day.estimatedTime > 0 ? `~${day.estimatedTime.toFixed(1)}h` : '';
+        const costStr = day.totalCost > 0 ? `${day.totalCost.toFixed(2)}€` : '';
+
+        html += `
+        <div style="
+            margin-bottom:16px;
+            border-radius:10px;
+            overflow:hidden;
+            border:1px solid ${color}40;
+            box-shadow:0 2px 6px rgba(0,0,0,0.05);
+        ">
+            <div style="
+                background:${color};
+                padding:10px 16px;
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+            ">
+                <span style="color:white;font-weight:700;font-size:15px;">
+                    <i class="fas fa-calendar-day"></i> Μέρα ${idx + 1}
+                </span>
+                <span style="color:rgba(255,255,255,.85);font-size:12px;">
+                    ${[day.totalActivities + ' δραστ.', timeStr, costStr].filter(Boolean).join(' | ')}
+                </span>
+            </div>
+            <div style="background:#fff; padding:8px 0;">`;
+
+        (day.groups || []).forEach(group => {
+            (group.activities || []).forEach(act => {
+                const emoji = window.getActivityEmoji ? window.getActivityEmoji(act.category) : '📍';
+                const price = act.price ? act.price.toFixed(2) + '€' : 'Δωρεάν';
+                const restaurant = act.restaurant?.name || '';
+                const cafe = act.cafe?.name || '';
+                const dining = [restaurant, cafe].filter(Boolean).join(' & ');
+
+                html += `
+                <div style="padding:8px 14px; border-bottom:1px solid #f1f5f9;">
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+                        <span style="font-weight:600;color:#1e293b;font-size:13px;">
+                            ${emoji} ${act.name}
+                        </span>
+                        <span style="font-size:11px;color:#64748b;white-space:nowrap;">
+                            ${act.duration_hours || 1.5}h &nbsp;|&nbsp;
+                            <span style="color:${color};font-weight:600;">${price}</span>
+                        </span>
+                    </div>
+                    ${dining ? `
+                    <div style="
+                        margin-top:4px;
+                        margin-left:18px;
+                        font-size:11px;
+                        color:#78350f;
+                        font-style:italic;
+                        padding:2px 8px;
+                        background:#fffbeb;
+                        border-left:2px solid #f59e0b;
+                        border-radius:0 4px 4px 0;
+                    ">
+                        🍽️ <span style="font-weight:500;font-style:normal;">Recommended:</span> ${dining}
+                    </div>` : ''}
+                </div>`;
+            });
+        });
+
+        // Day total
+        if (day.totalCost > 0) {
+            html += `
+            <div style="
+                padding:8px 14px;
+                display:flex;
+                justify-content:space-between;
+                font-weight:600;
+                font-size:13px;
+                background:#f8fafc;
+                color:#334155;
+            ">
+                <span>Σύνολο Μέρας:</span>
+                <span style="color:${color};">${day.totalCost.toFixed(2)}€</span>
+            </div>`;
+        }
+
+        html += `</div></div>`;
+    });
+
+    // Grand total
+    const totalCost = geoProgram.days.reduce((s, d) => s + d.totalCost, 0);
+    if (totalCost > 0) {
+        html += `
+        <div style="
+            margin-top:16px;
+            padding:16px;
+            background:linear-gradient(135deg,#4F46E5,#7C3AED);
+            color:white;
+            border-radius:10px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        ">
+            <div>
+                <div style="font-size:12px;opacity:.75;text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px;">Συνολικό Κόστος</div>
+                <div style="font-size:28px;font-weight:700;">${totalCost.toFixed(2)}€</div>
+            </div>
+            <div style="text-align:right;font-size:12px;opacity:.75;">
+                ${geoProgram.days.reduce((s,d)=>s+d.totalActivities,0)} δραστηριότητες<br>
+                ${geoProgram.totalDays} μέρες
+            </div>
+        </div>`;
+    }
+
+    html += '</div>';
+    programDiv.innerHTML = html;
+    programDiv.style.background = '';
+    programDiv.style.border = 'none';
+    programDiv.style.textAlign = 'left';
 }
 
 // ==================== MAP FUNCTIONS ====================

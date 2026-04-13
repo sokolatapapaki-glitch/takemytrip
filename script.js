@@ -6871,14 +6871,22 @@ function saveUserProgram() {
     userProgram.days.forEach((dayActivities, index) => {
         const dayNumber = index + 1;
         
-        // Βρες τις πλήρεις πληροφορίες για κάθε δραστηριότητα
+        // Βρες τις πλήρεις πληροφορίες για κάθε δραστηριότητα (συμπεριλαμβάνει cafe/restaurant/price)
         const activitiesWithDetails = dayActivities.map(activity => {
             const fullActivity = state.currentCityActivities?.find(a => a.id === activity.id) || activity;
+            const selectedActivity = (state.selectedActivities || []).find(a => a.id === activity.id) || {};
             return {
+                ...fullActivity,
+                ...selectedActivity,
+                ...activity,
                 id: activity.id,
-                name: activity.name,
-                duration_hours: fullActivity.duration_hours || 2,
-                location: fullActivity.location || null
+                name: activity.name || fullActivity.name || '',
+                duration_hours: activity.duration_hours || fullActivity.duration_hours || 2,
+                location: activity.location || fullActivity.location || null,
+                cafe: activity.cafe || selectedActivity.cafe || fullActivity.cafe || null,
+                restaurant: activity.restaurant || selectedActivity.restaurant || fullActivity.restaurant || null,
+                price: activity.price ?? selectedActivity.price ?? fullActivity.price ?? 0,
+                category: activity.category || selectedActivity.category || fullActivity.category || '',
             };
         });
         
@@ -6889,11 +6897,16 @@ function saveUserProgram() {
             count: activitiesWithDetails.length
         }] : [];
         
+        const totalHours = activitiesWithDetails.reduce((sum, act) => sum + (act.duration_hours || 2), 0);
+        const totalCost  = activitiesWithDetails.reduce((sum, act) => sum + (act.price || 0), 0);
         geoProgram.days.push({
             dayNumber: dayNumber,
             totalActivities: activitiesWithDetails.length,
             groups: groups,
-            totalHours: activitiesWithDetails.reduce((sum, act) => sum + (act.duration_hours || 2), 0)
+            totalHours,
+            estimatedTime: totalHours,
+            totalCost,
+            totalEffort: activitiesWithDetails.length * 20,
         });
     });
     
