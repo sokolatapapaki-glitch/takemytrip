@@ -1879,10 +1879,10 @@ function getMapStepHTML() {
                             Αποθηκευμένα Ταξίδια
                         </h4>
                         <span id="saved-trips-toggle" style="color:#64748b;font-size:13px;">
-                            <i class="fas fa-chevron-down"></i>
+                            <i class="fas fa-chevron-up"></i>
                         </span>
                     </div>
-                    <div id="saved-trips-collapse" style="margin-top:14px;display:none;">
+                    <div id="saved-trips-collapse" style="margin-top:14px;display:block;">
                         <div id="saved-trips-panel">
                             <!-- populated by renderSavedTripsPanel() -->
                         </div>
@@ -6961,10 +6961,13 @@ function saveUserProgram() {
     // 6. Ενημέρωση χρήστη
     showToast(`✅ Το πρόγραμμα αποθηκεύτηκε! ${geoProgram.totalDays} μέρες, ${geoProgram.days.reduce((sum, day) => sum + day.totalActivities, 0)} δραστηριότητες`, 'success');
 
-    // 7. Αυτόματη αποθήκευση στη λίστα αποθηκευμένων ταξιδιών (με default όνομα)
-    const autoName = (state.selectedDestination || 'Ταξίδι') + ' - ' +
-        new Date().toLocaleDateString('el-GR', { day: '2-digit', month: 'short', year: 'numeric' });
-    saveCurrentItinerary(autoName);
+    // 7. Αυτόματη αποθήκευση στη λίστα αποθηκευμένων ταξιδιών (μόνο αν υπάρχουν δραστηριότητες)
+    const totalActs = geoProgram.days.reduce((s, d) => s + d.totalActivities, 0);
+    if (totalActs > 0) {
+        const autoName = (state.selectedDestination || 'Ταξίδι') + ' - ' +
+            new Date().toLocaleDateString('el-GR', { day: '2-digit', month: 'short', year: 'numeric' });
+        saveCurrentItinerary(autoName);
+    }
 
     // 8. Ανανέωση panel & auto-expand
     renderSavedTripsPanel();
@@ -7917,169 +7920,143 @@ document.addEventListener('DOMContentLoaded', function() {
 // ==================== PDF EXPORT ====================
 
 function exportItineraryToPDF() {
-    // jsPDF is loaded explicitly via CDN (jspdf.umd.min.js) before script.js.
-    // It exposes itself as window.jspdf.jsPDF (UMD build).
-    if (!window.jspdf) {
-        alert('PDF library failed to load. Please refresh the page.');
+    if (typeof html2pdf === 'undefined') {
+        showToast('❌ Η βιβλιοθήκη PDF δεν φορτώθηκε. Ανανεώστε τη σελίδα.', 'error');
         return;
     }
-    const { jsPDF } = window.jspdf;
-    const jsPDFClass = jsPDF;
 
-    const program = state.geographicProgram;
+    // Build program: use geographicProgram, fall back to selectedActivities
+    let program = state.geographicProgram;
+    if ((!program || !program.days || program.days.length === 0) &&
+        state.selectedActivities && state.selectedActivities.length > 0) {
+        program = {
+            totalDays: 1,
+            days: [{ dayNumber: 1, totalActivities: state.selectedActivities.length,
+                     groups: [{ activities: state.selectedActivities }] }]
+        };
+    }
     if (!program || !program.days || program.days.length === 0) {
-        showToast('⚠️ Δεν υπάρχει πρόγραμμα για εξαγωγή. Αποθηκεύστε πρώτα το πρόγραμμά σας.', 'warning');
+        showToast('⚠️ Δεν υπάρχει πρόγραμμα. Αποθηκεύστε πρώτα.', 'warning');
         return;
     }
 
-    const doc        = new jsPDFClass('p', 'pt', 'a4');
-    const W          = doc.internal.pageSize.getWidth();   // 595.28 pt
-    const H          = doc.internal.pageSize.getHeight();  // 841.89 pt
-    const mx         = 32;                                  // horizontal margin
-    const cw         = W - mx * 2;                          // content width
     const destination = state.selectedDestination || 'Ταξίδι';
-    const today       = new Date().toLocaleDateString('el-GR', { day: '2-digit', month: 'long', year: 'numeric' });
+    const today       = new Date().toLocaleDateString('el-GR',
+        { day: '2-digit', month: 'long', year: 'numeric' });
+    const numDays     = program.totalDays || program.days.length;
+    const actTotal    = program.days.reduce((s, d) =>
+        s + (d.groups || []).reduce((ss, g) => ss + (g.activities || []).length, 0), 0);
+    const familyLine  = (state.familyMembers || [])
+        .map(m => m.name + (m.age ? ` (${m.age})` : '')).join(', ');
 
-    // ── helpers ──────────────────────────────────────────────────────────────
-    function hexToRgb(hex) {
-        const r = parseInt(hex.slice(1,3),16);
-        const g = parseInt(hex.slice(3,5),16);
-        const b = parseInt(hex.slice(5,7),16);
-        return [r,g,b];
-    }
-    function setFill(hex)  { const [r,g,b] = hexToRgb(hex); doc.setFillColor(r,g,b); }
-    function setColor(hex) { const [r,g,b] = hexToRgb(hex); doc.setTextColor(r,g,b); }
-    function checkPageBreak(needed) {
-        if (y + needed > H - 40) { doc.addPage(); y = 36; }
-    }
-
-    // Day colour palette
     const DAY_COLORS = ['#4F46E5','#059669','#D97706','#DC2626',
                         '#7C3AED','#0891B2','#BE185D','#16A34A'];
 
-    // ── HEADER BLOCK ─────────────────────────────────────────────────────────
-    setFill('#4F46E5');
-    doc.rect(0, 0, W, 82, 'F');
-
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(9);
-    setColor('#c7d2fe');
-    doc.text('ΟΙΚΟΓΕΝΕΙΑΚΟΣ ΤΑΞΙΔΙΩΤΙΚΟΣ ΟΡΓΑΝΩΤΗΣ', mx, 18);
-
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(22);
-    setColor('#ffffff');
-    doc.text(destination, mx, 42);
-
-    const actTotal = program.days.reduce((s,d) =>
-        s + (d.groups||[]).reduce((ss,g) => ss + (g.activities||[]).length, 0), 0);
-    const numDays  = program.totalDays || program.days.length;
-
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(10);
-    setColor('#e0e7ff');
-    doc.text(`${numDays} ημέρες  ·  ${actTotal} δραστηριότητες  ·  ${today}`, mx, 60);
-
-    const familyLine = (state.familyMembers||[])
-        .map(m => m.name + (m.age ? ` (${m.age})` : '')).join(', ');
-    if (familyLine) {
-        doc.setFontSize(9); setColor('#a5b4fc');
-        doc.text(familyLine, mx, 74);
-    }
-
-    // ── DAY CARDS ─────────────────────────────────────────────────────────────
-    let y = 96;
-
+    // Build day cards HTML — browser renders Greek natively via html2canvas
+    let daysHTML = '';
     program.days.forEach((day, idx) => {
-        const hexColor = DAY_COLORS[idx % DAY_COLORS.length];
-        const acts = [];
-        (day.groups||[]).forEach(g => (g.activities||[]).forEach(a => acts.push(a)));
+        const color = DAY_COLORS[idx % DAY_COLORS.length];
+        const acts  = [];
+        (day.groups || []).forEach(g => (g.activities || []).forEach(a => acts.push(a)));
+        const cost  = day.totalCost || acts.reduce((s, a) => s + (a.price || 0), 0);
 
-        // Estimate height needed (header + rows)
-        const ROW_H    = 19;
-        const DINE_H   = 15;
-        let needed = 26 + 6; // day header + top pad
-        acts.forEach(a => { needed += ROW_H; if (a.restaurant||a.cafe) needed += DINE_H; });
-        needed += 14; // bottom gap
+        const rowsHTML = acts.length > 0
+            ? acts.map((act, ai) => {
+                const dur    = act.duration_hours ? `${act.duration_hours}ω` : '';
+                const price  = act.price > 0 ? `€${act.price}` : 'Δωρεάν';
+                const dining = (act.restaurant || act.cafe)
+                    ? `<div style="margin-top:5px;padding:5px 10px;
+                                   background:#fffbeb;border-left:3px solid #f59e0b;
+                                   font-size:11px;color:#92400e;line-height:1.5;">
+                           ${act.restaurant ? `<span>&#127829; ${act.restaurant}</span>` : ''}
+                           ${act.restaurant && act.cafe ? '&nbsp;&bull;&nbsp;' : ''}
+                           ${act.cafe        ? `<span>&#9749; ${act.cafe}</span>`       : ''}
+                       </div>`
+                    : '';
+                return `
+                    <div style="padding:9px 14px;border-bottom:1px solid #f1f5f9;
+                                background:${ai % 2 === 0 ? '#f8fafc' : '#fff'};">
+                        <div style="font-weight:600;font-size:13px;color:#1e293b;">
+                            ${act.name || ''}
+                        </div>
+                        <div style="font-size:11px;color:#64748b;margin-top:2px;">
+                            ${dur}${dur ? ' &bull; ' : ''}${price}
+                        </div>
+                        ${dining}
+                    </div>`;
+            }).join('')
+            : `<div style="padding:10px 14px;color:#94a3b8;font-size:12px;">
+                   Καμία δραστηριότητα
+               </div>`;
 
-        checkPageBreak(needed);
-
-        // — Day header bar —
-        setFill(hexColor);
-        doc.rect(mx, y, cw, 24, 'F');
-
-        doc.setFont('helvetica', 'bold'); doc.setFontSize(11); setColor('#ffffff');
-        doc.text(`Ημέρα ${day.dayNumber}  —  ${acts.length} δραστηριότητες`, mx+8, y+16);
-
-        const cost = day.totalCost || acts.reduce((s,a)=>s+(a.price||0),0);
-        if (cost > 0) {
-            doc.setFont('helvetica','normal'); doc.setFontSize(10);
-            doc.text(`€${cost}`, W - mx - 6, y+16, { align:'right' });
-        }
-        y += 24;
-
-        // — Activity rows —
-        acts.forEach((act, ai) => {
-            checkPageBreak(ROW_H + 4);
-
-            // alternating row background
-            setFill(ai % 2 === 0 ? '#f8fafc' : '#ffffff');
-            doc.rect(mx, y, cw, ROW_H, 'F');
-
-            // name (truncate if needed)
-            const name = (act.name||'').substring(0, 58);
-            doc.setFont('helvetica','bold'); doc.setFontSize(10); setColor('#1e293b');
-            doc.text(name, mx+6, y+13);
-
-            // duration
-            if (act.duration_hours) {
-                doc.setFont('helvetica','normal'); doc.setFontSize(9); setColor('#64748b');
-                doc.text(`${act.duration_hours}ω`, W - mx - 44, y+13);
-            }
-
-            // price badge
-            const price = (act.price>0) ? `€${act.price}` : 'Δωρεάν';
-            doc.setFont('helvetica','normal'); doc.setFontSize(9); setColor('#0369a1');
-            doc.text(price, W - mx - 4, y+13, { align:'right' });
-
-            y += ROW_H;
-
-            // dining callout
-            if (act.restaurant || act.cafe) {
-                checkPageBreak(DINE_H + 2);
-                setFill('#fffbeb');
-                doc.rect(mx+6, y, cw-6, DINE_H, 'F');
-                // amber left border
-                setFill('#f59e0b');
-                doc.rect(mx+6, y, 3, DINE_H, 'F');
-
-                const parts = [];
-                if (act.restaurant) parts.push(`Εστ: ${act.restaurant}`);
-                if (act.cafe)       parts.push(`Καφέ: ${act.cafe}`);
-                doc.setFont('helvetica','italic'); doc.setFontSize(8.5); setColor('#92400e');
-                doc.text(parts.join('   |   '), mx+14, y+10);
-                y += DINE_H;
-            }
-        });
-
-        y += 14; // gap between days
+        daysHTML += `
+            <div style="margin-bottom:16px;border:1px solid #e2e8f0;border-radius:8px;
+                        overflow:hidden;page-break-inside:avoid;">
+                <div style="background:${color};padding:10px 14px;
+                            display:flex;justify-content:space-between;align-items:center;">
+                    <span style="color:white;font-weight:700;font-size:13px;">
+                        Ημέρα ${day.dayNumber} &mdash; ${acts.length} δραστηριότητες
+                    </span>
+                    ${cost > 0
+                        ? `<span style="color:rgba(255,255,255,.85);font-size:12px;">€${cost}</span>`
+                        : ''}
+                </div>
+                ${rowsHTML}
+            </div>`;
     });
 
-    // ── FOOTER ────────────────────────────────────────────────────────────────
-    const totalPages = doc.internal.getNumberOfPages();
-    for (let p = 1; p <= totalPages; p++) {
-        doc.setPage(p);
-        doc.setFont('helvetica','normal'); doc.setFontSize(8); setColor('#94a3b8');
-        doc.text('Δημιουργήθηκε με τον Οικογενειακό Ταξιδιωτικό Οργανωτή',
-                 W/2, H - 18, { align:'center' });
-        if (totalPages > 1) {
-            doc.text(`${p} / ${totalPages}`, W - mx, H - 18, { align:'right' });
-        }
-    }
+    // Assemble the printable container
+    const container = document.createElement('div');
+    // position:fixed at 0,0 with z-index:-9999 keeps it behind the app while
+    // staying at valid viewport coordinates that html2canvas can capture.
+    container.style.cssText = [
+        'position:fixed', 'top:0', 'left:0',
+        'z-index:-9999', 'pointer-events:none',
+        'width:794px',   'background:white',
+        'font-family:Arial,Helvetica,sans-serif', 'color:#1e293b'
+    ].join(';');
+    container.innerHTML = `
+        <div style="background:#4F46E5;padding:28px 28px 22px;color:white;">
+            <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+                        opacity:.75;margin-bottom:6px;">
+                Οικογενειακος Ταξιδιωτικος Οργανωτης
+            </div>
+            <div style="font-size:24px;font-weight:700;margin-bottom:6px;">${destination}</div>
+            <div style="font-size:12px;opacity:.85;">
+                ${numDays} ημερες &nbsp;&bull;&nbsp; ${actTotal} δραστηριοτητες
+                ${familyLine ? '&nbsp;&bull;&nbsp; ' + familyLine : ''}
+            </div>
+            <div style="font-size:10px;opacity:.6;margin-top:5px;">${today}</div>
+        </div>
+        <div style="padding:16px 20px;">${daysHTML}</div>
+        <div style="text-align:center;padding:12px;font-size:10px;color:#94a3b8;
+                    border-top:1px solid #e2e8f0;">
+            Δημιουργηθηκε με τον Οικογενειακο Ταξιδιωτικο Οργανωτη
+        </div>`;
 
-    const filename = `itinerary-${destination.replace(/\s+/g,'-').toLowerCase()}.pdf`;
-    doc.save(filename);
-    showToast('✅ Το PDF κατεβάστηκε!', 'success');
+    document.body.appendChild(container);
+    showToast('📄 Δημιουργία PDF...', 'info');
+
+    html2pdf()
+        .set({
+            margin:      0,
+            filename:    `itinerary-${destination.replace(/\s+/g, '-').toLowerCase()}.pdf`,
+            image:       { type: 'jpeg', quality: 0.97 },
+            html2canvas: { scale: 2, useCORS: true, logging: false, windowWidth: 794 },
+            jsPDF:       { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak:   { mode: ['avoid-all', 'css', 'legacy'] }
+        })
+        .from(container)
+        .save()
+        .then(() => {
+            document.body.removeChild(container);
+            showToast('✅ Το PDF κατεβάστηκε!', 'success');
+        })
+        .catch(err => {
+            if (document.body.contains(container)) document.body.removeChild(container);
+            console.error('PDF error:', err);
+            showToast('❌ Σφάλμα κατά τη δημιουργία PDF', 'error');
+        });
 }
 
 
@@ -8099,51 +8076,58 @@ function getSavedItineraries() {
 }
 
 function saveCurrentItinerary(name) {
-    const program = state.geographicProgram;
-    if (!program || !program.days || program.days.length === 0) {
-        showToast('⚠️ Δεν υπάρχει πρόγραμμα για αποθήκευση.', 'warning');
-        return false;
-    }
-
-    const saved = getSavedItineraries();
-
-    // Duplicate guard: same destination + activity count within 60 s
-    const actCount = program.days.reduce((s, d) => s + (d.totalActivities || 0), 0);
-    const now = Date.now();
-    const isDuplicate = saved.some(s =>
-        s.destination === state.selectedDestination &&
-        s.activityCount === actCount &&
-        (now - new Date(s.savedAt).getTime()) < 60000
-    );
-    if (isDuplicate) {
-        showToast('ℹ️ Αυτό το ταξίδι έχει ήδη αποθηκευτεί πρόσφατα.', 'info');
-        return false;
-    }
-
-    if (saved.length >= MAX_SAVED_ITINERARIES) {
-        saved.shift(); // remove oldest
-    }
-
-    const entry = {
-        id:              Date.now().toString(),
-        name:            name || (state.selectedDestination || 'Ταξίδι') + ' - ' + new Date().toLocaleDateString('el-GR'),
-        destination:     state.selectedDestination || '',
-        savedAt:         new Date().toISOString(),
-        activityCount:   actCount,
-        totalDays:       program.totalDays || program.days.length,
-        geographicProgram: JSON.parse(JSON.stringify(program)),
-        selectedActivities: JSON.parse(JSON.stringify(state.selectedActivities || [])),
-        familyMembers:   JSON.parse(JSON.stringify(state.familyMembers || [])),
-        selectedDays:    state.selectedDays || 0
-    };
-
-    saved.push(entry);
     try {
+        // Resolve the program to save — prefer geographicProgram, fall back
+        // to a flat wrap of selectedActivities so saving always works even
+        // before the user has built a day-by-day schedule.
+        let program = state.geographicProgram;
+        if (!program || !program.days || program.days.length === 0) {
+            const acts = state.selectedActivities || [];
+            if (acts.length === 0) {
+                showToast('⚠️ Δεν υπάρχουν δραστηριότητες για αποθήκευση.', 'warning');
+                return false;
+            }
+            program = {
+                totalDays: 1,
+                days: [{ dayNumber: 1, totalActivities: acts.length,
+                         groups: [{ activities: acts }] }],
+                isFallback: true
+            };
+        }
+
+        const saved = getSavedItineraries();
+        if (saved.length >= MAX_SAVED_ITINERARIES) saved.shift();
+
+        const actCount = program.days.reduce((s, d) =>
+            s + (d.groups || []).reduce((ss, g) =>
+                ss + (g.activities || []).length, 0), 0);
+
+        const defaultName = (state.selectedDestination || 'Ταξίδι') +
+            ' - ' + new Date().toLocaleDateString('el-GR',
+                { day: '2-digit', month: 'short', year: 'numeric' });
+
+        const entry = {
+            id:                 Date.now().toString(),
+            name:               (name || defaultName).trim() || defaultName,
+            destination:        state.selectedDestination || '',
+            savedAt:            new Date().toISOString(),
+            activityCount:      actCount,
+            totalDays:          program.totalDays || program.days.length,
+            geographicProgram:  JSON.parse(JSON.stringify(program)),
+            selectedActivities: JSON.parse(JSON.stringify(state.selectedActivities || [])),
+            familyMembers:      JSON.parse(JSON.stringify(state.familyMembers || [])),
+            selectedDays:       state.selectedDays || 0
+        };
+
+        saved.push(entry);
         localStorage.setItem(SAVED_ITINERARIES_KEY, JSON.stringify(saved));
+        console.log('✅ Saved itinerary:', entry.name,
+                    '| total saves:', saved.length,
+                    '| key:', SAVED_ITINERARIES_KEY);
         return true;
     } catch (e) {
-        console.error('saveCurrentItinerary error:', e);
-        showToast('❌ Αποτυχία αποθήκευσης (χώρος localStorage)', 'error');
+        console.error('saveCurrentItinerary failed:', e);
+        showToast('❌ Αποτυχία αποθήκευσης', 'error');
         return false;
     }
 }
