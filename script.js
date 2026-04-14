@@ -7925,7 +7925,7 @@ function exportItineraryToPDF() {
         return;
     }
 
-    // ── Resolve program ───────────────────────────────────────────────────────
+    // ── 1. Resolve program ────────────────────────────────────────────────────
     let program = state.geographicProgram;
     if ((!program || !program.days || program.days.length === 0) &&
         state.selectedActivities && state.selectedActivities.length > 0) {
@@ -7940,24 +7940,23 @@ function exportItineraryToPDF() {
         return;
     }
 
-    // ── Debug logging ─────────────────────────────────────────────────────────
+    // ── 2. Flatten activities + pre-export logging ────────────────────────────
     const allActs = [];
     program.days.forEach(d =>
         (d.groups || []).forEach(g =>
             (g.activities || []).forEach(a => allActs.push(a))));
 
-    console.log('[PDF] days:', program.days.length,
+    console.log('[PDF] state snapshot → days:', program.days.length,
                 '| activities:', allActs.length,
                 '| with restaurant:', allActs.filter(a => a.restaurant).length,
-                '| with cafe:',       allActs.filter(a => a.cafe).length);
-    if (allActs.length > 0) console.log('[PDF] sample activity:', allActs[0]);
+                '| with cafe:', allActs.filter(a => a.cafe).length);
+    if (allActs.length > 0) console.log('[PDF] sample act:', JSON.stringify(allActs[0]).slice(0, 200));
 
-    // ── Build HTML ────────────────────────────────────────────────────────────
+    // ── 3. Build HTML ─────────────────────────────────────────────────────────
     const destination = state.selectedDestination || 'Ταξίδι';
     const today       = new Date().toLocaleDateString('el-GR',
         { day: '2-digit', month: 'long', year: 'numeric' });
     const numDays     = program.totalDays || program.days.length;
-    const actTotal    = allActs.length;
     const familyLine  = (state.familyMembers || [])
         .map(m => m.name + (m.age ? ` (${m.age})` : '')).join(', ');
 
@@ -7973,66 +7972,79 @@ function exportItineraryToPDF() {
 
         const rowsHTML = acts.length > 0
             ? acts.map((act, ai) => {
-                const dur    = act.duration_hours ? `${act.duration_hours}ω` : '';
-                const price  = act.price > 0 ? `€${act.price}` : 'Δωρεάν';
+                const dur    = act.duration_hours ? `${act.duration_hours}w` : '';
+                const price  = act.price > 0 ? `€${act.price}` : 'Free';
                 const dining = (act.restaurant || act.cafe)
-                    ? `<div data-dining="1" style="margin-top:5px;padding:5px 10px;background:#fffbeb;border-left:3px solid #f59e0b;font-size:11px;color:#92400e;line-height:1.5;">
-                           ${act.restaurant ? `Εστ: ${act.restaurant}` : ''}
-                           ${act.restaurant && act.cafe ? ' &bull; ' : ''}
-                           ${act.cafe        ? `Καφε: ${act.cafe}` : ''}
+                    ? `<div data-dining="1"
+                             style="margin-top:5px;padding:5px 10px;background:#fffbeb;
+                                    border-left:3px solid #f59e0b;font-size:11px;color:#92400e;">
+                           ${act.restaurant ? `Rest: ${act.restaurant}` : ''}
+                           ${act.restaurant && act.cafe ? '  |  ' : ''}
+                           ${act.cafe ? `Cafe: ${act.cafe}` : ''}
                        </div>`
                     : '';
-                return `
-                    <div style="padding:9px 14px;border-bottom:1px solid #f1f5f9;background:${ai % 2 === 0 ? '#f8fafc' : '#ffffff'};">
-                        <div style="font-weight:600;font-size:13px;color:#1e293b;">${act.name || ''}</div>
-                        <div style="font-size:11px;color:#64748b;margin-top:2px;">${dur}${dur ? ' - ' : ''}${price}</div>
-                        ${dining}
-                    </div>`;
+                return `<div data-activity-row="1"
+                             style="padding:9px 14px;border-bottom:1px solid #f1f5f9;
+                                    background:${ai % 2 === 0 ? '#f8fafc' : '#ffffff'};">
+                            <div style="font-weight:600;font-size:13px;color:#1e293b;">${act.name || ''}</div>
+                            <div style="font-size:11px;color:#64748b;margin-top:2px;">${dur}${dur ? ' - ' : ''}${price}</div>
+                            ${dining}
+                        </div>`;
             }).join('')
-            : `<div style="padding:10px 14px;color:#94a3b8;font-size:12px;">Καμια δραστηριοτητα</div>`;
+            : `<div style="padding:10px 14px;color:#94a3b8;font-size:12px;">No activities</div>`;
 
         daysHTML += `
             <div style="margin-bottom:16px;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;">
-                <div style="background:${color};padding:10px 14px;display:flex;justify-content:space-between;align-items:center;">
-                    <span style="color:white;font-weight:700;font-size:13px;">Ημερα ${day.dayNumber} - ${acts.length} δραστηριοτητες</span>
+                <div style="background:${color};padding:10px 14px;
+                            display:flex;justify-content:space-between;align-items:center;">
+                    <span style="color:white;font-weight:700;font-size:13px;">
+                        Day ${day.dayNumber} - ${acts.length} activities
+                    </span>
                     ${cost > 0 ? `<span style="color:rgba(255,255,255,.85);font-size:12px;">€${cost}</span>` : ''}
                 </div>
                 ${rowsHTML}
             </div>`;
     });
 
-    // ── Assemble container (NO positioning tricks — plain block element) ───────
+    // ── 4. Assemble container (plain block, NO positioning tricks) ────────────
     const container = document.createElement('div');
-    container.id = 'pdf-export-container';
-    container.style.cssText = 'width:794px;background:white;font-family:Arial,Helvetica,sans-serif;color:#1e293b;';
-    container.innerHTML = `
-        <div style="background:#4F46E5;padding:28px 28px 22px;color:white;">
-            <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;opacity:.75;margin-bottom:6px;">Οικογενειακος Ταξιδιωτικος Οργανωτης</div>
+    container.id    = 'pdf-export-container';
+    container.style.cssText = 'width:794px;background:white;' +
+        'font-family:Arial,Helvetica,sans-serif;color:#1e293b;';
+    container.innerHTML =
+        `<div style="background:#4F46E5;padding:28px 28px 22px;color:white;">
+            <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+                        opacity:.75;margin-bottom:6px;">Travel Organizer</div>
             <div style="font-size:24px;font-weight:700;margin-bottom:6px;">${destination}</div>
-            <div style="font-size:12px;opacity:.85;">${numDays} ημερες - ${actTotal} δραστηριοτητες${familyLine ? ' - ' + familyLine : ''}</div>
+            <div style="font-size:12px;opacity:.85;">${numDays} days - ${allActs.length} activities${familyLine ? ' - ' + familyLine : ''}</div>
             <div style="font-size:10px;opacity:.6;margin-top:5px;">${today}</div>
-        </div>
-        <div style="padding:16px 20px;">${daysHTML}</div>
-        <div style="text-align:center;padding:12px;font-size:10px;color:#94a3b8;border-top:1px solid #e2e8f0;">Δημιουργηθηκε με τον Οικογενειακο Ταξιδιωτικο Οργανωτη</div>`;
+         </div>
+         <div style="padding:16px 20px;">${daysHTML}</div>
+         <div style="text-align:center;padding:12px;font-size:10px;color:#94a3b8;
+                     border-top:1px solid #e2e8f0;">Generated with Travel Organizer</div>`;
 
-    // ── Loading overlay covers the screen while the container renders ─────────
-    // The container is appended in NORMAL document flow (no z-index, no fixed pos).
-    // The overlay sits on top so the user never sees the flash.
+    // ── 5. Show overlay, mount container in normal document flow ──────────────
     const overlay = document.createElement('div');
-    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(255,255,255,.96);z-index:99999;display:flex;align-items:center;justify-content:center;';
-    overlay.innerHTML = '<div style="text-align:center;"><div style="font-size:36px;margin-bottom:12px;">📄</div><p style="color:#4F46E5;font-weight:600;font-size:15px;margin:0;">Δημιουργια PDF...</p></div>';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(255,255,255,.97);' +
+        'z-index:99999;display:flex;align-items:center;justify-content:center;';
+    overlay.innerHTML =
+        '<div style="text-align:center;">' +
+        '<div style="font-size:36px;margin-bottom:12px;">&#128196;</div>' +
+        '<p style="color:#4F46E5;font-weight:600;font-size:15px;margin:0;" id="pdf-overlay-msg">Generating PDF...</p>' +
+        '</div>';
 
     document.body.appendChild(overlay);
-    document.body.appendChild(container);
+    document.body.appendChild(container);   // plain append — no z-index, no fixed pos
 
-    // ── Wait for 2 paint frames so the browser fully lays out the container ────
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-        // Debug: confirm container has height (if 0 → content didn't render)
-        console.log('[PDF] container.offsetHeight =', container.offsetHeight,
-                    '| dining rows =', container.querySelectorAll('[data-dining]').length);
+    const filename     = `itinerary-${destination.replace(/\s+/g, '-').toLowerCase()}.pdf`;
+    const expectedRows = allActs.length;    // how many [data-activity-row] we need
 
-        const filename = `itinerary-${destination.replace(/\s+/g, '-').toLowerCase()}.pdf`;
+    function cleanup() {
+        if (document.body.contains(container)) document.body.removeChild(container);
+        if (document.body.contains(overlay))   document.body.removeChild(overlay);
+    }
 
+    function runCapture() {
         html2pdf()
             .set({
                 margin:      0,
@@ -8045,17 +8057,56 @@ function exportItineraryToPDF() {
             .from(container)
             .save()
             .then(() => {
-                document.body.removeChild(container);
-                document.body.removeChild(overlay);
-                showToast('✅ Το PDF κατεβάστηκε!', 'success');
+                cleanup();
+                showToast('✅ PDF downloaded!', 'success');
             })
             .catch(err => {
-                if (document.body.contains(container)) document.body.removeChild(container);
-                if (document.body.contains(overlay))   document.body.removeChild(overlay);
-                console.error('[PDF] error:', err);
-                showToast('❌ Σφάλμα κατά τη δημιουργία PDF', 'error');
+                cleanup();
+                console.error('[PDF] capture error:', err);
+                showToast('❌ PDF generation failed', 'error');
             });
-    }));
+    }
+
+    // ── 6. Validate DOM is rendered before capturing (retry up to 3×) ─────────
+    // Check: container has height AND all expected activity rows are in the DOM.
+    // If not, wait 100 ms and retry — handles slow layout / async state flushes.
+    const MAX_RETRIES = 3;
+
+    function validateThenCapture(attempt) {
+        const h        = container.offsetHeight;
+        const rendered = container.querySelectorAll('[data-activity-row]').length;
+
+        console.log(`[PDF] validate (attempt ${attempt + 1}/${MAX_RETRIES}): ` +
+                    `offsetHeight=${h}, renderedRows=${rendered}, expectedRows=${expectedRows}`);
+
+        // Ready when: container has layout height AND
+        //             all expected rows are present (or 0 expected = header-only export)
+        const ready = h > 0 && (expectedRows === 0 || rendered >= expectedRows);
+
+        if (ready) {
+            console.log('[PDF] DOM confirmed ready — starting capture');
+            runCapture();
+            return;
+        }
+
+        if (attempt >= MAX_RETRIES - 1) {
+            console.error('[PDF] DOM never reached expected state after', MAX_RETRIES, 'attempts');
+            cleanup();
+            showToast('❌ Export failed: content did not render in time', 'error');
+            return;
+        }
+
+        // Update overlay message so user sees progress
+        const msg = document.getElementById('pdf-overlay-msg');
+        if (msg) msg.textContent = `Waiting for render... (${attempt + 2}/${MAX_RETRIES})`;
+
+        setTimeout(() => validateThenCapture(attempt + 1), 100);
+    }
+
+    // Kick off after 2 rAFs (initial layout), then enter the validation loop
+    requestAnimationFrame(() =>
+        requestAnimationFrame(() =>
+            validateThenCapture(0)));
 }
 
 
