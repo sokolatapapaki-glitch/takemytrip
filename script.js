@@ -7925,7 +7925,7 @@ function exportItineraryToPDF() {
         return;
     }
 
-    // Build program: use geographicProgram, fall back to selectedActivities
+    // ── Resolve program ───────────────────────────────────────────────────────
     let program = state.geographicProgram;
     if ((!program || !program.days || program.days.length === 0) &&
         state.selectedActivities && state.selectedActivities.length > 0) {
@@ -7940,19 +7940,30 @@ function exportItineraryToPDF() {
         return;
     }
 
+    // ── Debug logging ─────────────────────────────────────────────────────────
+    const allActs = [];
+    program.days.forEach(d =>
+        (d.groups || []).forEach(g =>
+            (g.activities || []).forEach(a => allActs.push(a))));
+
+    console.log('[PDF] days:', program.days.length,
+                '| activities:', allActs.length,
+                '| with restaurant:', allActs.filter(a => a.restaurant).length,
+                '| with cafe:',       allActs.filter(a => a.cafe).length);
+    if (allActs.length > 0) console.log('[PDF] sample activity:', allActs[0]);
+
+    // ── Build HTML ────────────────────────────────────────────────────────────
     const destination = state.selectedDestination || 'Ταξίδι';
     const today       = new Date().toLocaleDateString('el-GR',
         { day: '2-digit', month: 'long', year: 'numeric' });
     const numDays     = program.totalDays || program.days.length;
-    const actTotal    = program.days.reduce((s, d) =>
-        s + (d.groups || []).reduce((ss, g) => ss + (g.activities || []).length, 0), 0);
+    const actTotal    = allActs.length;
     const familyLine  = (state.familyMembers || [])
         .map(m => m.name + (m.age ? ` (${m.age})` : '')).join(', ');
 
     const DAY_COLORS = ['#4F46E5','#059669','#D97706','#DC2626',
                         '#7C3AED','#0891B2','#BE185D','#16A34A'];
 
-    // Build day cards HTML — browser renders Greek natively via html2canvas
     let daysHTML = '';
     program.days.forEach((day, idx) => {
         const color = DAY_COLORS[idx % DAY_COLORS.length];
@@ -7965,98 +7976,86 @@ function exportItineraryToPDF() {
                 const dur    = act.duration_hours ? `${act.duration_hours}ω` : '';
                 const price  = act.price > 0 ? `€${act.price}` : 'Δωρεάν';
                 const dining = (act.restaurant || act.cafe)
-                    ? `<div style="margin-top:5px;padding:5px 10px;
-                                   background:#fffbeb;border-left:3px solid #f59e0b;
-                                   font-size:11px;color:#92400e;line-height:1.5;">
-                           ${act.restaurant ? `<span>&#127829; ${act.restaurant}</span>` : ''}
-                           ${act.restaurant && act.cafe ? '&nbsp;&bull;&nbsp;' : ''}
-                           ${act.cafe        ? `<span>&#9749; ${act.cafe}</span>`       : ''}
+                    ? `<div data-dining="1" style="margin-top:5px;padding:5px 10px;background:#fffbeb;border-left:3px solid #f59e0b;font-size:11px;color:#92400e;line-height:1.5;">
+                           ${act.restaurant ? `Εστ: ${act.restaurant}` : ''}
+                           ${act.restaurant && act.cafe ? ' &bull; ' : ''}
+                           ${act.cafe        ? `Καφε: ${act.cafe}` : ''}
                        </div>`
                     : '';
                 return `
-                    <div style="padding:9px 14px;border-bottom:1px solid #f1f5f9;
-                                background:${ai % 2 === 0 ? '#f8fafc' : '#fff'};">
-                        <div style="font-weight:600;font-size:13px;color:#1e293b;">
-                            ${act.name || ''}
-                        </div>
-                        <div style="font-size:11px;color:#64748b;margin-top:2px;">
-                            ${dur}${dur ? ' &bull; ' : ''}${price}
-                        </div>
+                    <div style="padding:9px 14px;border-bottom:1px solid #f1f5f9;background:${ai % 2 === 0 ? '#f8fafc' : '#ffffff'};">
+                        <div style="font-weight:600;font-size:13px;color:#1e293b;">${act.name || ''}</div>
+                        <div style="font-size:11px;color:#64748b;margin-top:2px;">${dur}${dur ? ' - ' : ''}${price}</div>
                         ${dining}
                     </div>`;
             }).join('')
-            : `<div style="padding:10px 14px;color:#94a3b8;font-size:12px;">
-                   Καμία δραστηριότητα
-               </div>`;
+            : `<div style="padding:10px 14px;color:#94a3b8;font-size:12px;">Καμια δραστηριοτητα</div>`;
 
         daysHTML += `
-            <div style="margin-bottom:16px;border:1px solid #e2e8f0;border-radius:8px;
-                        overflow:hidden;page-break-inside:avoid;">
-                <div style="background:${color};padding:10px 14px;
-                            display:flex;justify-content:space-between;align-items:center;">
-                    <span style="color:white;font-weight:700;font-size:13px;">
-                        Ημέρα ${day.dayNumber} &mdash; ${acts.length} δραστηριότητες
-                    </span>
-                    ${cost > 0
-                        ? `<span style="color:rgba(255,255,255,.85);font-size:12px;">€${cost}</span>`
-                        : ''}
+            <div style="margin-bottom:16px;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;">
+                <div style="background:${color};padding:10px 14px;display:flex;justify-content:space-between;align-items:center;">
+                    <span style="color:white;font-weight:700;font-size:13px;">Ημερα ${day.dayNumber} - ${acts.length} δραστηριοτητες</span>
+                    ${cost > 0 ? `<span style="color:rgba(255,255,255,.85);font-size:12px;">€${cost}</span>` : ''}
                 </div>
                 ${rowsHTML}
             </div>`;
     });
 
-    // Assemble the printable container
+    // ── Assemble container (NO positioning tricks — plain block element) ───────
     const container = document.createElement('div');
-    // position:fixed at 0,0 with z-index:-9999 keeps it behind the app while
-    // staying at valid viewport coordinates that html2canvas can capture.
-    container.style.cssText = [
-        'position:fixed', 'top:0', 'left:0',
-        'z-index:-9999', 'pointer-events:none',
-        'width:794px',   'background:white',
-        'font-family:Arial,Helvetica,sans-serif', 'color:#1e293b'
-    ].join(';');
+    container.id = 'pdf-export-container';
+    container.style.cssText = 'width:794px;background:white;font-family:Arial,Helvetica,sans-serif;color:#1e293b;';
     container.innerHTML = `
         <div style="background:#4F46E5;padding:28px 28px 22px;color:white;">
-            <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
-                        opacity:.75;margin-bottom:6px;">
-                Οικογενειακος Ταξιδιωτικος Οργανωτης
-            </div>
+            <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;opacity:.75;margin-bottom:6px;">Οικογενειακος Ταξιδιωτικος Οργανωτης</div>
             <div style="font-size:24px;font-weight:700;margin-bottom:6px;">${destination}</div>
-            <div style="font-size:12px;opacity:.85;">
-                ${numDays} ημερες &nbsp;&bull;&nbsp; ${actTotal} δραστηριοτητες
-                ${familyLine ? '&nbsp;&bull;&nbsp; ' + familyLine : ''}
-            </div>
+            <div style="font-size:12px;opacity:.85;">${numDays} ημερες - ${actTotal} δραστηριοτητες${familyLine ? ' - ' + familyLine : ''}</div>
             <div style="font-size:10px;opacity:.6;margin-top:5px;">${today}</div>
         </div>
         <div style="padding:16px 20px;">${daysHTML}</div>
-        <div style="text-align:center;padding:12px;font-size:10px;color:#94a3b8;
-                    border-top:1px solid #e2e8f0;">
-            Δημιουργηθηκε με τον Οικογενειακο Ταξιδιωτικο Οργανωτη
-        </div>`;
+        <div style="text-align:center;padding:12px;font-size:10px;color:#94a3b8;border-top:1px solid #e2e8f0;">Δημιουργηθηκε με τον Οικογενειακο Ταξιδιωτικο Οργανωτη</div>`;
 
+    // ── Loading overlay covers the screen while the container renders ─────────
+    // The container is appended in NORMAL document flow (no z-index, no fixed pos).
+    // The overlay sits on top so the user never sees the flash.
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(255,255,255,.96);z-index:99999;display:flex;align-items:center;justify-content:center;';
+    overlay.innerHTML = '<div style="text-align:center;"><div style="font-size:36px;margin-bottom:12px;">📄</div><p style="color:#4F46E5;font-weight:600;font-size:15px;margin:0;">Δημιουργια PDF...</p></div>';
+
+    document.body.appendChild(overlay);
     document.body.appendChild(container);
-    showToast('📄 Δημιουργία PDF...', 'info');
 
-    html2pdf()
-        .set({
-            margin:      0,
-            filename:    `itinerary-${destination.replace(/\s+/g, '-').toLowerCase()}.pdf`,
-            image:       { type: 'jpeg', quality: 0.97 },
-            html2canvas: { scale: 2, useCORS: true, logging: false, windowWidth: 794 },
-            jsPDF:       { unit: 'mm', format: 'a4', orientation: 'portrait' },
-            pagebreak:   { mode: ['avoid-all', 'css', 'legacy'] }
-        })
-        .from(container)
-        .save()
-        .then(() => {
-            document.body.removeChild(container);
-            showToast('✅ Το PDF κατεβάστηκε!', 'success');
-        })
-        .catch(err => {
-            if (document.body.contains(container)) document.body.removeChild(container);
-            console.error('PDF error:', err);
-            showToast('❌ Σφάλμα κατά τη δημιουργία PDF', 'error');
-        });
+    // ── Wait for 2 paint frames so the browser fully lays out the container ────
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+        // Debug: confirm container has height (if 0 → content didn't render)
+        console.log('[PDF] container.offsetHeight =', container.offsetHeight,
+                    '| dining rows =', container.querySelectorAll('[data-dining]').length);
+
+        const filename = `itinerary-${destination.replace(/\s+/g, '-').toLowerCase()}.pdf`;
+
+        html2pdf()
+            .set({
+                margin:      0,
+                filename,
+                image:       { type: 'jpeg', quality: 0.97 },
+                html2canvas: { scale: 2, useCORS: true, logging: false, windowWidth: 794 },
+                jsPDF:       { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak:   { mode: ['avoid-all', 'css', 'legacy'] }
+            })
+            .from(container)
+            .save()
+            .then(() => {
+                document.body.removeChild(container);
+                document.body.removeChild(overlay);
+                showToast('✅ Το PDF κατεβάστηκε!', 'success');
+            })
+            .catch(err => {
+                if (document.body.contains(container)) document.body.removeChild(container);
+                if (document.body.contains(overlay))   document.body.removeChild(overlay);
+                console.error('[PDF] error:', err);
+                showToast('❌ Σφάλμα κατά τη δημιουργία PDF', 'error');
+            });
+    }));
 }
 
 
