@@ -1028,7 +1028,13 @@ function loadStepContent(stepName) {
         console.log('📋 Εμφάνιση διαθέσιμων δραστηριοτήτων με καθυστέρηση 2000ms');
         renderAvailableActivities();
     }, 2000);
-    
+
+    // Itinerary view and saved list — render after DOM is ready
+    setTimeout(() => {
+        renderItineraryView();
+        renderSavedItineraries();
+    }, 150);
+
     break;
     } // Τέλος του switch
     
@@ -1855,6 +1861,43 @@ function getMapStepHTML() {
                         </div>
                     `}
                 </div>
+
+                <!-- ==================== ITINERARY VIEW SECTION ==================== -->
+                <div id="itinerary-section" class="card" style="margin-top: 25px; border: 2px solid #4F46E5; border-radius: 15px; background: linear-gradient(to bottom, #ffffff, #f8faff);">
+                    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
+                        <h3 style="color: var(--primary); margin: 0;">
+                            <i class="fas fa-calendar-check"></i> Πρόγραμμα Ταξιδιού
+                        </h3>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button onclick="saveItinerary()" class="btn btn-primary" style="padding: 10px 18px; font-size: 14px;">
+                                <i class="fas fa-bookmark"></i> Αποθήκευση Ταξιδιού
+                            </button>
+                            <button onclick="exportItineraryToPDF()" class="btn btn-accent" style="padding: 10px 18px; font-size: 14px; background: linear-gradient(135deg, #10B981, #059669); border: none;">
+                                <i class="fas fa-file-pdf"></i> Εξαγωγή PDF
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Rendered itinerary — this is the PDF capture target -->
+                    <div id="itinerary-view-container" style="min-height: 80px;">
+                        <p style="color: var(--gray); text-align: center; padding: 30px;">
+                            <i class="fas fa-info-circle"></i>
+                            Αποθηκεύστε πρώτα το πρόγραμμα (κουμπί "Αποθήκευση Προγράμματος" παραπάνω) για να εμφανιστεί εδώ.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- ==================== SAVED ITINERARIES SECTION ==================== -->
+                <div id="saved-itineraries-section" class="card" style="margin-top: 20px; background: linear-gradient(135deg, #f0f9ff 0%, #e8f4fd 100%);">
+                    <h3 style="color: var(--primary); margin-bottom: 15px;">
+                        <i class="fas fa-folder-open"></i> Αποθηκευμένα Ταξίδια
+                    </h3>
+                    <div id="saved-itineraries-list">
+                        <p style="color: var(--gray); text-align: center; padding: 20px;">
+                            <i class="fas fa-inbox"></i> Δεν υπάρχουν αποθηκευμένα ταξίδια
+                        </p>
+                    </div>
+                </div>
+
                   <!-- CUSTOM MAP POINTS SECTION -->
                 <div class="card" style="margin-bottom: 20px; background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);">
                     <h4 style="margin: 0 0 15px 0; color: var(--dark);">
@@ -6877,7 +6920,13 @@ function saveUserProgram() {
             return {
                 id: activity.id,
                 name: activity.name,
+                category: fullActivity.category || 'attraction',
+                duration: fullActivity.duration_hours || 2,
                 duration_hours: fullActivity.duration_hours || 2,
+                price: activity.price !== undefined ? activity.price : null,
+                restaurant: fullActivity.restaurant || null,
+                cafe: fullActivity.cafe || null,
+                coordinates: fullActivity.location || null,
                 location: fullActivity.location || null
             };
         });
@@ -6912,10 +6961,14 @@ function saveUserProgram() {
     
     // 6. Ενημέρωση χρήστη
     showToast(`✅ Το πρόγραμμα αποθηκεύτηκε! ${geoProgram.totalDays} μέρες, ${geoProgram.days.reduce((sum, day) => sum + day.totalActivities, 0)} δραστηριότητες`, 'success');
-    
+
     // 7. Ανανέωση εμφάνισης
     renderProgramDays();
     renderAvailableActivities();
+
+    // 8. Ενημέρωση itinerary view (ορατό container + αποθηκευμένα)
+    renderItineraryView();
+    renderSavedItineraries();
 }
 
 // ==================== SYNCHRONIZE MAP WITH PROGRAM ====================
@@ -7241,6 +7294,14 @@ window.handleProgramDragLeave = handleProgramDragLeave;
 window.handleProgramDrop = handleProgramDrop;
 window.addActivityToQuickDay = addActivityToQuickDay;
 window.handleActivityCheckbox = handleActivityCheckbox;
+
+// Itinerary save / load / export
+window.saveItinerary = saveItinerary;
+window.renderSavedItineraries = renderSavedItineraries;
+window.loadSavedItinerary = loadSavedItinerary;
+window.deleteSavedItinerary = deleteSavedItinerary;
+window.renderItineraryView = renderItineraryView;
+window.exportItineraryToPDF = exportItineraryToPDF;
 
 // ==================== CSS ANIMATIONS FOR PROGRAM ====================
 // Προσθήκη CSS animation για το spinner (για το βήμα 5)
@@ -7816,6 +7877,266 @@ document.addEventListener('click', function(e) {
         wizard.classList.remove('open');
     }
 });
+
+// ==================== ITINERARY SAVE / LOAD / EXPORT ====================
+
+var ITINERARY_STORAGE_KEY = 'takemytrip_saved_itineraries';
+
+// Render the itinerary view from state.geographicProgram into #itinerary-view-container
+function renderItineraryView() {
+    var container = document.getElementById('itinerary-view-container');
+    if (!container) return;
+
+    var program = state.geographicProgram;
+    if (!program || !program.days || program.days.length === 0) {
+        container.innerHTML = '<p style="color: var(--gray); text-align: center; padding: 30px;"><i class="fas fa-info-circle"></i> Αποθηκεύστε πρώτα το πρόγραμμα (κουμπί "Αποθήκευση Προγράμματος" παραπάνω) για να εμφανιστεί εδώ.</p>';
+        return;
+    }
+
+    var destination = state.selectedDestination || 'Άγνωστος Προορισμός';
+    var html = '<div style="font-family: \'Roboto\', sans-serif; padding: 10px;">';
+    html += '<h2 style="text-align: center; color: #4F46E5; margin-bottom: 6px; font-size: 22px;">';
+    html += '<i class="fas fa-map-marked-alt"></i> ' + destination;
+    html += '</h2>';
+    html += '<p style="text-align: center; color: #64748b; margin-bottom: 20px; font-size: 14px;">';
+    html += program.totalDays + ' μέρες &bull; ';
+    html += program.days.reduce(function(sum, d) { return sum + (d.totalActivities || 0); }, 0) + ' δραστηριότητες';
+    html += '</p>';
+
+    program.days.forEach(function(day, dayIndex) {
+        var dayNumber = dayIndex + 1;
+        var dayColor = getDayColor(dayNumber);
+        var activities = [];
+        if (day.groups) {
+            day.groups.forEach(function(g) {
+                if (g.activities) activities = activities.concat(g.activities);
+            });
+        }
+
+        html += '<div style="margin-bottom: 24px; border-left: 4px solid ' + dayColor + '; padding-left: 14px;">';
+        html += '<h4 style="color: ' + dayColor + '; margin: 0 0 12px 0; font-size: 16px;">';
+        html += '<i class="fas fa-calendar-day"></i> Μέρα ' + dayNumber;
+        if (activities.length > 0) {
+            html += ' <span style="font-weight: normal; font-size: 13px; color: #94a3b8;">(' + activities.length + ' δραστηριότητες)</span>';
+        }
+        html += '</h4>';
+
+        if (activities.length === 0) {
+            html += '<p style="color: #94a3b8; font-style: italic; font-size: 13px;">Ελεύθερη μέρα</p>';
+        } else {
+            activities.forEach(function(activity) {
+                var priceStr = (activity.price !== null && activity.price !== undefined && activity.price !== '')
+                    ? Number(activity.price).toFixed(2) + '€'
+                    : 'Δωρεάν';
+                var durationStr = (activity.duration || activity.duration_hours) ? (activity.duration || activity.duration_hours) + 'h' : '';
+
+                html += '<div data-activity-row style="';
+                html += 'background: white;';
+                html += 'border-radius: 8px;';
+                html += 'padding: 12px 14px;';
+                html += 'margin-bottom: 10px;';
+                html += 'border: 1px solid #e2e8f0;';
+                html += 'box-shadow: 0 1px 3px rgba(0,0,0,0.04);';
+                html += '">';
+
+                // Activity name + emoji
+                html += '<div style="font-weight: 600; font-size: 14px; margin-bottom: 7px; color: #1e293b;">';
+                html += getActivityEmoji(activity.category || 'attraction') + ' ' + (activity.name || '');
+                html += '</div>';
+
+                // Duration + price row
+                html += '<div style="display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; color: #64748b; margin-bottom: 6px;">';
+                if (durationStr) {
+                    html += '<span><i class="fas fa-clock"></i> ' + durationStr + '</span>';
+                }
+                html += '<span><i class="fas fa-tag"></i> ' + priceStr + '</span>';
+                html += '</div>';
+
+                // Restaurant
+                if (activity.restaurant) {
+                    var rName = typeof activity.restaurant === 'object' ? (activity.restaurant.name || '') : activity.restaurant;
+                    if (rName) {
+                        html += '<div style="margin-top: 6px; font-size: 12px; color: #065F46; background: #D1FAE5; padding: 5px 9px; border-radius: 5px; display: inline-block;">';
+                        html += '<i class="fas fa-utensils"></i> <strong>Εστιατόριο:</strong> ' + rName;
+                        html += '</div>';
+                    }
+                }
+
+                // Cafe
+                if (activity.cafe) {
+                    var cName = typeof activity.cafe === 'object' ? (activity.cafe.name || '') : activity.cafe;
+                    if (cName) {
+                        html += '<div style="margin-top: 5px; font-size: 12px; color: #92400E; background: #FEF3C7; padding: 5px 9px; border-radius: 5px; display: inline-block;">';
+                        html += '<i class="fas fa-coffee"></i> <strong>Cafe:</strong> ' + cName;
+                        html += '</div>';
+                    }
+                }
+
+                html += '</div>'; // data-activity-row
+            });
+        }
+
+        html += '</div>'; // day section
+    });
+
+    html += '</div>';
+    container.innerHTML = html;
+}
+
+// Save current geographicProgram to the saved itineraries list in localStorage
+function saveItinerary() {
+    var program = state.geographicProgram;
+    if (!program || !program.days || program.days.length === 0) {
+        showToast('⚠️ Δεν υπάρχει πρόγραμμα για αποθήκευση. Πρώτα δημιουργήστε και αποθηκεύστε ένα πρόγραμμα.', 'warning');
+        return;
+    }
+
+    var saved = _loadSavedItinerariesFromStorage();
+    var entry = {
+        id: Date.now(),
+        name: state.selectedDestination || 'Άγνωστος Προορισμός',
+        createdAt: new Date().toISOString(),
+        data: JSON.parse(JSON.stringify(program))
+    };
+
+    saved.push(entry);
+    localStorage.setItem(ITINERARY_STORAGE_KEY, JSON.stringify(saved));
+
+    showToast('✅ Το ταξίδι αποθηκεύτηκε!', 'success');
+    renderSavedItineraries();
+}
+
+// Internal helper — read saved itineraries array from localStorage
+function _loadSavedItinerariesFromStorage() {
+    try {
+        var stored = localStorage.getItem(ITINERARY_STORAGE_KEY);
+        var parsed = stored ? JSON.parse(stored) : [];
+        return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+        return [];
+    }
+}
+
+// Render the list of saved itineraries into #saved-itineraries-list
+function renderSavedItineraries() {
+    var container = document.getElementById('saved-itineraries-list');
+    if (!container) return;
+
+    var saved = _loadSavedItinerariesFromStorage();
+
+    if (saved.length === 0) {
+        container.innerHTML = '<p style="color: var(--gray); text-align: center; padding: 20px;"><i class="fas fa-inbox"></i> Δεν υπάρχουν αποθηκευμένα ταξίδια</p>';
+        return;
+    }
+
+    var html = '';
+    saved.forEach(function(entry) {
+        var dateStr = '';
+        try { dateStr = new Date(entry.createdAt).toLocaleDateString('el-GR'); } catch(e) {}
+        var totalActs = 0;
+        if (entry.data && entry.data.days) {
+            totalActs = entry.data.days.reduce(function(s, d) { return s + (d.totalActivities || 0); }, 0);
+        }
+
+        html += '<div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: white; border-radius: 8px; margin-bottom: 8px; border-left: 4px solid #4F46E5; box-shadow: 0 1px 4px rgba(0,0,0,0.05);">';
+        html += '<div>';
+        html += '<div style="font-weight: bold; color: #1e293b;">' + entry.name + '</div>';
+        html += '<div style="font-size: 12px; color: #64748b; margin-top: 2px;">' + dateStr + ' &bull; ' + (entry.data ? entry.data.totalDays : 0) + ' μέρες &bull; ' + totalActs + ' δραστηριότητες</div>';
+        html += '</div>';
+        html += '<div style="display: flex; gap: 8px; flex-shrink: 0;">';
+        html += '<button onclick="loadSavedItinerary(' + entry.id + ')" class="btn btn-primary" style="padding: 6px 12px; font-size: 12px;"><i class="fas fa-folder-open"></i> Φόρτωση</button>';
+        html += '<button onclick="deleteSavedItinerary(' + entry.id + ')" class="btn btn-outline" style="padding: 6px 12px; font-size: 12px; color: #EF4444; border-color: #EF4444;"><i class="fas fa-trash"></i></button>';
+        html += '</div>';
+        html += '</div>';
+    });
+
+    container.innerHTML = html;
+}
+
+// Load a saved itinerary by id — restores geographicProgram and re-renders
+function loadSavedItinerary(id) {
+    var saved = _loadSavedItinerariesFromStorage();
+    var entry = null;
+    for (var i = 0; i < saved.length; i++) {
+        if (saved[i].id === id) { entry = saved[i]; break; }
+    }
+
+    if (!entry || !entry.data) {
+        showToast('⚠️ Δεν βρέθηκε το αποθηκευμένο ταξίδι.', 'warning');
+        return;
+    }
+
+    state.geographicProgram = JSON.parse(JSON.stringify(entry.data));
+    saveState();
+
+    renderItineraryView();
+    showToast('✅ Φορτώθηκε: ' + entry.name, 'success');
+}
+
+// Delete a saved itinerary by id
+function deleteSavedItinerary(id) {
+    if (!confirm('Θέλετε να διαγράψετε αυτό το αποθηκευμένο ταξίδι;')) return;
+
+    var saved = _loadSavedItinerariesFromStorage();
+    var filtered = saved.filter(function(e) { return e.id !== id; });
+    localStorage.setItem(ITINERARY_STORAGE_KEY, JSON.stringify(filtered));
+
+    renderSavedItineraries();
+    showToast('🗑️ Το ταξίδι διαγράφηκε.', 'info');
+}
+
+// Export itinerary to PDF using html2pdf.js
+function exportItineraryToPDF() {
+    // 1. Validate state
+    if (!state.geographicProgram || !state.geographicProgram.days || state.geographicProgram.days.length === 0) {
+        showToast('⚠️ Δεν υπάρχει πρόγραμμα για εξαγωγή. Δημιουργήστε και αποθηκεύστε πρώτα ένα πρόγραμμα.', 'warning');
+        return;
+    }
+
+    // 2. Get the visible, in-flow container
+    var container = document.getElementById('itinerary-view-container');
+    if (!container) {
+        showToast('⚠️ Σφάλμα: Δεν βρέθηκε το τμήμα προγράμματος. Ανανεώστε τη σελίδα.', 'warning');
+        return;
+    }
+
+    // 3. Safety check: count rendered activity rows
+    var activityRows = container.querySelectorAll('[data-activity-row]');
+    if (activityRows.length === 0) {
+        showToast('⚠️ Δεν βρέθηκαν δραστηριότητες στην εκτύπωση. Πατήστε "Αποθήκευση Προγράμματος" πρώτα.', 'warning');
+        return;
+    }
+
+    // 4. Check library is loaded
+    if (typeof html2pdf === 'undefined') {
+        showToast('⚠️ Η βιβλιοθήκη PDF δεν φορτώθηκε. Ανανεώστε τη σελίδα και δοκιμάστε ξανά.', 'warning');
+        return;
+    }
+
+    var filename = 'takemytrip-' + (state.selectedDestination || 'itinerary').replace(/\s+/g, '-') + '.pdf';
+
+    // 5. Wait for two animation frames so layout is fully painted, then export
+    requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+            var opt = {
+                margin: [10, 10, 10, 10],
+                filename: filename,
+                image: { type: 'jpeg', quality: 0.97 },
+                html2canvas: { scale: 2, useCORS: true, logging: false },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(container).save()
+                .then(function() {
+                    showToast('✅ Το PDF δημιουργήθηκε επιτυχώς!', 'success');
+                })
+                .catch(function(err) {
+                    console.error('PDF export error:', err);
+                    showToast('⚠️ Σφάλμα κατά τη δημιουργία PDF.', 'warning');
+                });
+        });
+    });
+}
 
 // Sync vimata active state when page loads or step changes
 document.addEventListener('DOMContentLoaded', function() {
