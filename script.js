@@ -8093,29 +8093,40 @@ function exportItineraryToPDF() {
         return;
     }
 
-    // 2. Get the visible, in-flow container
-    var container = document.getElementById('itinerary-view-container');
+    // 2. Locate container using querySelector (canonical selector)
+    var container = document.querySelector('#itinerary-view-container');
     if (!container) {
         showToast('⚠️ Σφάλμα: Δεν βρέθηκε το τμήμα προγράμματος. Ανανεώστε τη σελίδα.', 'warning');
         return;
     }
 
-    // 3. Safety check: count rendered activity rows
-    var activityRows = container.querySelectorAll('[data-activity-row]');
-    if (activityRows.length === 0) {
-        showToast('⚠️ Δεν βρέθηκαν δραστηριότητες στην εκτύπωση. Πατήστε "Αποθήκευση Προγράμματος" πρώτα.', 'warning');
+    // 3. Hard content verification — innerHTML must be non-empty
+    if (!container.innerHTML || container.innerHTML.trim().length === 0) {
+        showToast('⚠️ Το τμήμα προγράμματος είναι κενό. Πατήστε "Αποθήκευση Προγράμματος" πρώτα.', 'warning');
         return;
     }
 
-    // 4. Check library is loaded
+    // 4. Hard row verification — at least one [data-activity-row] must exist
+    var activityRows = container.querySelectorAll('[data-activity-row]');
+    if (activityRows.length === 0) {
+        showToast('⚠️ Δεν βρέθηκαν δραστηριότητες για εκτύπωση. Πατήστε "Αποθήκευση Προγράμματος" πρώτα.', 'warning');
+        return;
+    }
+
+    // 5. Check library is loaded
     if (typeof html2pdf === 'undefined') {
         showToast('⚠️ Η βιβλιοθήκη PDF δεν φορτώθηκε. Ανανεώστε τη σελίδα και δοκιμάστε ξανά.', 'warning');
         return;
     }
 
+    // 6. Force container visibility BEFORE capture — no hidden, no offscreen
+    container.style.display = 'block';
+    container.style.visibility = 'visible';
+    container.style.position = 'relative';
+
     var filename = 'takemytrip-' + (state.selectedDestination || 'itinerary').replace(/\s+/g, '-') + '.pdf';
 
-    // 5. Wait for two animation frames so layout is fully painted, then export
+    // 7. Double rAF AFTER visibility fix so browser paints before html2canvas reads pixels
     requestAnimationFrame(function() {
         requestAnimationFrame(function() {
             var opt = {
