@@ -8093,22 +8093,21 @@ async function exportItineraryToPDF() {
         return;
     }
 
-    // 2. Locate container
-    var container = document.querySelector('#itinerary-view-container');
-    if (!container) {
+    // 2. Locate original container
+    var original = document.querySelector('#itinerary-view-container');
+    if (!original) {
         showToast('⚠️ Σφάλμα: Δεν βρέθηκε το τμήμα προγράμματος. Ανανεώστε τη σελίδα.', 'warning');
         return;
     }
 
     // 3. Hard content verification
-    if (!container.innerHTML || container.innerHTML.trim().length === 0) {
+    if (!original.innerHTML || original.innerHTML.trim().length === 0) {
         showToast('⚠️ Το τμήμα προγράμματος είναι κενό. Πατήστε "Αποθήκευση Προγράμματος" πρώτα.', 'warning');
         return;
     }
 
     // 4. Hard row verification
-    var activityRows = container.querySelectorAll('[data-activity-row]');
-    if (activityRows.length === 0) {
+    if (original.querySelectorAll('[data-activity-row]').length === 0) {
         showToast('⚠️ Δεν βρέθηκαν δραστηριότητες για εκτύπωση. Πατήστε "Αποθήκευση Προγράμματος" πρώτα.', 'warning');
         return;
     }
@@ -8119,35 +8118,26 @@ async function exportItineraryToPDF() {
         return;
     }
 
-    // 6. Force fully visible, layout-stable container
-    container.style.setProperty('display', 'block', 'important');
-    container.style.setProperty('visibility', 'visible', 'important');
-    container.style.setProperty('opacity', '1', 'important');
-    container.style.setProperty('position', 'relative', 'important');
-    container.style.setProperty('height', 'auto', 'important');
-    container.style.setProperty('overflow', 'visible', 'important');
+    // 6. Clone node — isolates it from app layout context (flex/grid/hidden ancestors)
+    var clone = original.cloneNode(true);
+    clone.style.position = 'absolute';
+    clone.style.left = '0';
+    clone.style.top = '0';
+    clone.style.display = 'block';
+    clone.style.visibility = 'visible';
+    clone.style.background = '#ffffff';
+    clone.style.width = original.scrollWidth + 'px';
 
-    // 7. Force layout reflow
-    container.getBoundingClientRect();
+    // 7. Attach to body outside app layout so html2canvas sees a clean stacking context
+    document.body.appendChild(clone);
 
-    // 8. Wait for all fonts and images to be ready
-    await document.fonts.ready;
+    // 8. Double rAF — let browser paint the clone before capture
+    await new Promise(function(r) { requestAnimationFrame(function() { requestAnimationFrame(r); }); });
 
-    var images = Array.from(container.querySelectorAll('img'));
-    await Promise.all(images.map(function(img) {
-        if (img.complete) return Promise.resolve();
-        return new Promise(function(res) { img.onload = img.onerror = res; });
-    }));
-
-    // 9. Three rAF frames to ensure full paint cycle before capture
-    await new Promise(requestAnimationFrame);
-    await new Promise(requestAnimationFrame);
-    await new Promise(requestAnimationFrame);
-
-    // 10. Capture and save
     var filename = 'takemytrip-' + (state.selectedDestination || 'itinerary').replace(/\s+/g, '-') + '.pdf';
 
     try {
+        // 9. Export from clone, NOT from the live container
         await html2pdf().set({
             margin: 0,
             filename: filename,
@@ -8155,16 +8145,20 @@ async function exportItineraryToPDF() {
             html2canvas: {
                 scale: 2,
                 useCORS: true,
-                logging: false,
                 backgroundColor: '#ffffff'
             },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        }).from(container).save();
+        }).from(clone).save();
 
         showToast('✅ Το PDF δημιουργήθηκε επιτυχώς!', 'success');
     } catch (err) {
         console.error('PDF export error:', err);
         showToast('⚠️ Σφάλμα κατά τη δημιουργία PDF.', 'warning');
+    } finally {
+        // 10. Always remove clone from DOM
+        if (clone.parentNode) {
+            document.body.removeChild(clone);
+        }
     }
 }
 
