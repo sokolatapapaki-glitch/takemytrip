@@ -8086,27 +8086,27 @@ function deleteSavedItinerary(id) {
 }
 
 // Export itinerary to PDF using html2pdf.js
-function exportItineraryToPDF() {
+async function exportItineraryToPDF() {
     // 1. Validate state
     if (!state.geographicProgram || !state.geographicProgram.days || state.geographicProgram.days.length === 0) {
         showToast('⚠️ Δεν υπάρχει πρόγραμμα για εξαγωγή. Δημιουργήστε και αποθηκεύστε πρώτα ένα πρόγραμμα.', 'warning');
         return;
     }
 
-    // 2. Locate container using querySelector (canonical selector)
+    // 2. Locate container
     var container = document.querySelector('#itinerary-view-container');
     if (!container) {
         showToast('⚠️ Σφάλμα: Δεν βρέθηκε το τμήμα προγράμματος. Ανανεώστε τη σελίδα.', 'warning');
         return;
     }
 
-    // 3. Hard content verification — innerHTML must be non-empty
+    // 3. Hard content verification
     if (!container.innerHTML || container.innerHTML.trim().length === 0) {
         showToast('⚠️ Το τμήμα προγράμματος είναι κενό. Πατήστε "Αποθήκευση Προγράμματος" πρώτα.', 'warning');
         return;
     }
 
-    // 4. Hard row verification — at least one [data-activity-row] must exist
+    // 4. Hard row verification
     var activityRows = container.querySelectorAll('[data-activity-row]');
     if (activityRows.length === 0) {
         showToast('⚠️ Δεν βρέθηκαν δραστηριότητες για εκτύπωση. Πατήστε "Αποθήκευση Προγράμματος" πρώτα.', 'warning');
@@ -8119,34 +8119,53 @@ function exportItineraryToPDF() {
         return;
     }
 
-    // 6. Force container visibility BEFORE capture — no hidden, no offscreen
-    container.style.display = 'block';
-    container.style.visibility = 'visible';
-    container.style.position = 'relative';
+    // 6. Force fully visible, layout-stable container
+    container.style.setProperty('display', 'block', 'important');
+    container.style.setProperty('visibility', 'visible', 'important');
+    container.style.setProperty('opacity', '1', 'important');
+    container.style.setProperty('position', 'relative', 'important');
+    container.style.setProperty('height', 'auto', 'important');
+    container.style.setProperty('overflow', 'visible', 'important');
 
+    // 7. Force layout reflow
+    container.getBoundingClientRect();
+
+    // 8. Wait for all fonts and images to be ready
+    await document.fonts.ready;
+
+    var images = Array.from(container.querySelectorAll('img'));
+    await Promise.all(images.map(function(img) {
+        if (img.complete) return Promise.resolve();
+        return new Promise(function(res) { img.onload = img.onerror = res; });
+    }));
+
+    // 9. Three rAF frames to ensure full paint cycle before capture
+    await new Promise(requestAnimationFrame);
+    await new Promise(requestAnimationFrame);
+    await new Promise(requestAnimationFrame);
+
+    // 10. Capture and save
     var filename = 'takemytrip-' + (state.selectedDestination || 'itinerary').replace(/\s+/g, '-') + '.pdf';
 
-    // 7. Double rAF AFTER visibility fix so browser paints before html2canvas reads pixels
-    requestAnimationFrame(function() {
-        requestAnimationFrame(function() {
-            var opt = {
-                margin: [10, 10, 10, 10],
-                filename: filename,
-                image: { type: 'jpeg', quality: 0.97 },
-                html2canvas: { scale: 2, useCORS: true, logging: false },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
+    try {
+        await html2pdf().set({
+            margin: 0,
+            filename: filename,
+            image: { type: 'jpeg', quality: 1 },
+            html2canvas: {
+                scale: 2,
+                useCORS: true,
+                logging: false,
+                backgroundColor: '#ffffff'
+            },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        }).from(container).save();
 
-            html2pdf().set(opt).from(container).save()
-                .then(function() {
-                    showToast('✅ Το PDF δημιουργήθηκε επιτυχώς!', 'success');
-                })
-                .catch(function(err) {
-                    console.error('PDF export error:', err);
-                    showToast('⚠️ Σφάλμα κατά τη δημιουργία PDF.', 'warning');
-                });
-        });
-    });
+        showToast('✅ Το PDF δημιουργήθηκε επιτυχώς!', 'success');
+    } catch (err) {
+        console.error('PDF export error:', err);
+        showToast('⚠️ Σφάλμα κατά τη δημιουργία PDF.', 'warning');
+    }
 }
 
 // Sync vimata active state when page loads or step changes
