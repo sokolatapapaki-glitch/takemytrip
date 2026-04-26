@@ -3,8 +3,7 @@
 const express = require('express');
 const puppeteer = require('puppeteer-core');
 
-const CHROMIUM_PATH = process.env.CHROMIUM_PATH ||
-    '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
+const CHROMIUM_PATH = process.env.CHROMIUM_PATH || null;
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -23,7 +22,13 @@ app.use((req, res, next) => {
 
 async function generatePDF(html) {
     const browser = await puppeteer.launch({
-        executablePath: CHROMIUM_PATH,
+    executablePath: CHROMIUM_PATH || undefined,
+    args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage'
+    ]
+});
         args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
     });
     try {
