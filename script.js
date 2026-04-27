@@ -1840,19 +1840,25 @@ function getMapStepHTML() {
                         </div>
                         
                         <!-- ΚΟΥΜΠΙΑ -->
-                        <div style="display: flex; gap: 15px; margin-top: 30px; justify-content: center;">
+                        <div style="display: flex; gap: 15px; margin-top: 30px; justify-content: center; flex-wrap: wrap;">
                             <button class="btn btn-primary" onclick="saveUserProgram()" id="save-program-btn">
                                 <i class="fas fa-save"></i> Αποθήκευση Προγράμματος
                             </button>
-                            
+
                             <button class="btn btn-outline" onclick="showProgramOnMap()" id="show-program-btn">
                                 <i class="fas fa-eye"></i> Προβολή στον Χάρτη
                             </button>
-                            
+
+                            <button class="btn btn-success" onclick="exportItineraryToPDF()" id="export-pdf-btn"
+                                    style="background: #059669; border-color: #059669; color: white;">
+                                <i class="fas fa-file-pdf"></i> Εξαγωγή PDF
+                            </button>
+
                             <button class="btn btn-danger" onclick="resetUserProgram()">
                                 <i class="fas fa-redo"></i> Επαναφορά
                             </button>
                         </div>
+                        <div id="pdf-export-status" style="display:none; margin-top:12px; text-align:center; font-size:13px; color:#4F46E5;"></div>
                     `}
                 </div>
                   <!-- CUSTOM MAP POINTS SECTION -->
@@ -7849,3 +7855,89 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// ==================== PDF EXPORT ====================
+async function exportItineraryToPDF() {
+    const PDF_SERVER = 'http://localhost:3001/api/generate-pdf';
+
+    const statusEl = document.getElementById('pdf-export-status');
+    const btnEl = document.getElementById('export-pdf-btn');
+
+    function setStatus(msg, color) {
+        if (statusEl) {
+            statusEl.textContent = msg;
+            statusEl.style.color = color || '#4F46E5';
+            statusEl.style.display = msg ? 'block' : 'none';
+        }
+    }
+
+    // Validate: need a saved program
+    if (!userProgram || !userProgram.days || userProgram.days.length === 0) {
+        showToast('⚠️ Αποθηκεύστε πρώτα το πρόγραμμά σας', 'warning');
+        return;
+    }
+
+    if (btnEl) { btnEl.disabled = true; btnEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Δημιουργία PDF...'; }
+    setStatus('⏳ Δημιουργία PDF, παρακαλώ περιμένετε...', '#4F46E5');
+
+    try {
+        // Build payload: enrich each activity with full restaurant/cafe data
+        const days = userProgram.days.map((dayActivities, index) => {
+            const activities = dayActivities.map(act => {
+                // Look up full activity data from city activities
+                const full = (state.currentCityActivities || []).find(a =>
+                    a.id === act.id || a.name === act.name
+                ) || act;
+
+                return {
+                    name: full.name || act.name || '',
+                    description: full.description || act.description || '',
+                    duration_hours: full.duration_hours || act.duration_hours || null,
+                    notes: Array.isArray(full.notes) ? full.notes : [],
+                    restaurant: full.restaurant || null,
+                    cafe: full.cafe || null
+                };
+            });
+
+            return { dayNumber: index + 1, activities };
+        });
+
+        const payload = {
+            destination: state.selectedDestination || 'Ταξίδι',
+            totalDays: userProgram.totalDays || days.length,
+            days
+        };
+
+        const response = await fetch(PDF_SERVER, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+            const err = await response.json().catch(() => ({ error: 'Unknown error' }));
+            throw new Error(err.error || `Server error ${response.status}`);
+        }
+
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `itinerary-${(state.selectedDestination || 'trip').replace(/\s+/g, '-')}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        setStatus('✅ Το PDF κατεβάστηκε επιτυχώς!', '#059669');
+        showToast('✅ Το πρόγραμμα εξήχθη ως PDF!', 'success');
+        setTimeout(() => setStatus('', ''), 4000);
+
+    } catch (err) {
+        console.error('PDF export error:', err);
+        setStatus(`❌ Σφάλμα: ${err.message}`, '#EF4444');
+        showToast('❌ Αποτυχία εξαγωγής PDF. Βεβαιωθείτε ότι ο server τρέχει.', 'error');
+    } finally {
+        if (btnEl) { btnEl.disabled = false; btnEl.innerHTML = '<i class="fas fa-file-pdf"></i> Εξαγωγή PDF'; }
+    }
+}

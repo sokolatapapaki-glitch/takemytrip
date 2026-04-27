@@ -1,0 +1,934 @@
+{
+  "city": "Ρώμη",
+  "country": "Ιταλία",
+  "currency": "EUR",
+  "emoji": "🇮🇹",
+  "pricing_model": "per_age",
+  "description": "",
+  "location": {
+    "lat": 41.9028,
+    "lng": 12.4964
+  },
+  "cityPass": {
+    "name": "Omnia + Roma Pass",
+    "description": "Ένα συνδυαστικό πάσο που περιλαμβάνει είσοδο στα Μουσεία του Βατικανού + Καπέλα Σιστίνα και 2 δωρεάν αξιοθέατα στη Ρώμη (π.χ. Κολοσσαίο) + απεριόριστες συγκοινωνίες και hop‑on hop‑off bus.",
+    "discountPercent": 50,
+    "url": "https://www.romevaticancard.com/omniacards/omnia-card-72/?utm_source=Google&utm_medium=cpc&utm_campaign=inglese&gad_source=1&gad_campaignid=20537386924&gbraid=0AAAAAC3eW4Jt2727E8N0qVd39uzM6eJDs&gclid=Cj0KCQjw4a3OBhCHARIsAChaqJNiQd4osm9rveG0ruvHqNL0xcj0HtY1suEWhElX8xNyW9HVR_u_xhEaAn6mEALw_wcB"
+  },
+  "passes": [],
+  "activities": [
+    {
+      "id": 1,
+      "name": "Castello Orsini-Odescalchi (Bracciano)",
+      "description": "Ένα εντυπωσιακό κάστρο πάνω στη λίμνη Bracciano (περίπου 1 ώρα από τη Ρώμη). Είναι πολύ καλά διατηρημένο και συχνά οργανώνει θεματικές ξεναγήσεις για παιδιά.",
+      "category": "castle",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
+        "6": 8, "7": 8, "8": 8, "9": 8, "10": 8, "11": 8, "12": 8,
+        "13": 10, "14": 10, "15": 10, "16": 10, "17": 10, "18": 10, "19": 10,
+        "adult": 10
+      },
+      "location": {
+        "lat": 42.1034,
+        "lng": 12.1782
+      },
+      "restaurant": {
+        "name": "Trattoria Da Regina",
+        "description": "Μια αυθεντική ρωμαϊκή τρατορία με πολύ καλές κριτικές και τιμές.",
+        "map_url": "https://maps.app.goo.gl/U4CoHE5PoifmuwnY9"
+      },
+      "website": "https://odescalchi.it/",
+      "notes": [],
+      "tags": ["castle", "history"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      },
+      "cafe": {
+        "name": "Caffè del Castello",
+        "description": "Βρίσκεται ακριβώς έξω από το κάστρο. Είναι το πιο κλασικό σημείο για να ξεκινήσετε τη μέρα έχοντας θέα τα τείχη.",
+        "map_url": "https://maps.app.goo.gl/v5ozBDCCU4wKaKxC7"
+      }
+    },
+    {
+      "id": 26,
+      "name": "Santa Severa Castle",
+      "description": "Ένα παραθαλάσσιο κάστρο με ιστορία αιώνων, λίγο έξω από τη Ρώμη. Προσφέρει εκπληκτική θέα στη θάλασσα και μια γοητευτική εμπειρία για οικογένειες.",
+      "category": "castle",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
+        "6": 6, "7": 6, "8": 6, "9": 6, "10": 6, "11": 6, "12": 6, "13": 6, "14": 6,
+        "15": 8, "16": 8, "17": 8, "18": 8, "19": 8,
+        "adult": 8
+      },
+      "location": {
+        "lat": 42.0199,
+        "lng": 11.9489
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "",
+      "notes": [],
+      "tags": ["castle", "history", "seaside"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_all_children_under_17": 16
+      },
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 2,
+      "name": "Welcome to Rome",
+      "description": "Το Welcome to Rome είναι μια τρισδιάστατη εμπειρία που δείχνει την ιστορία της Ρώμης με τρόπο που μοιάζει με ταινία. Μέσα από φωτεινές προβολές και μακέτες που αλλάζουν μπροστά στα μάτια σας, βλέπετε πώς χτίστηκαν τα αρχαία μνημεία και πώς εξελίχθηκε η πόλη μέσα στους αιώνες. Είναι ένας εύκολος και ξεκούραστος τρόπος για να καταλάβουν οι μεγάλοι και κυρίως τα παιδιά τι θα δουν αργότερα στις βόλτες τους στους αρχαιολογικούς χώρους.",
+      "category": "",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
+        "6": 11, "7": 11, "8": 11, "9": 11, "10": 11, "11": 11, "12": 11, "13": 11, "14": 11, "15": 11, "16": 11, "17": 11,
+        "18": 16, "19": 16,
+        "adult": 16
+      },
+      "location": {
+        "lat": 41.9025,
+        "lng": 12.4759
+      },
+      "restaurant": {
+        "name": "Da Tonino - Trattoria Bassetti",
+        "description": "Μια αυθεντική τρατορία που την προτιμούν οι ντόπιοι. Δεν έχει φανφάρες στη διακόσμηση, αλλά το φαγητό είναι σπιτικό, οι μερίδες γενναιόδωρες και οι τιμές πολύ λογικές για το κέντρο της Ρώμης",
+        "map_url": "https://maps.app.goo.gl/NiKYfc9obgSvJZUq8"
+      },
+      "website": "https://welcometo-rome.it/",
+      "notes": [],
+      "tags": ["history"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      },
+      "cafe": {
+        "name": "Two Sizes",
+        "description": "Είναι διάσημο κυρίως για το τιραμισού του, το οποίο βγαίνει σε δύο μεγέθη (εξ ου και το όνομα) και σε διάφορες γεύσεις, όπως η κλασική, φιστίκι, φράουλα, καραμέλα και φυστικοβούτυρο. Εκτός από τιραμισού, θα βρείτε επίσης πολύ ωραία σικελιανά κανόλι.",
+        "map_url": "https://maps.app.goo.gl/LKpMgWxg1o5Mbt437"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Λόφος Gianicolo (Teatrino di Pulcinella)",
+      "description": "Στον λόφο Gianicolo, στήνεται ένα παραδοσιακό κουκλοθέατρο με τον Pulcinella. Είναι δωρεάν συμβουλευτείτε την επίσημη ιστοσελίδα για ημέρες και ώρες. Στις 12:00 ακριβώς, μπορείτε να ακούσετε και τον παραδοσιακό κανονιοβολισμό.",
+      "category": "park",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.8944,
+        "lng": 12.4621
+      },
+      "restaurant": {
+        "name": "Pastevere - Pastificio artigianale con cucina",
+        "description": "Βρίσκεται σε κοντινή απόσταση με τα πόδια, προς την πλευρά του Βατικανού, με πολύ καλές τιμές και καλές κριτικές",
+        "map_url": "https://maps.app.goo.gl/PsYEKzHhQDemhQAB7"
+      },
+      "website": "https://www.turismoroma.it/it/node/3283",
+      "notes": [],
+      "tags": ["park", "views", "family"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      },
+      "cafe": {
+        "name": "Bar Gianicolo",
+        "description": "Βρίσκεται ακριβώς πάνω στον λόφο. Είναι ένα κλασικό, απλό ιταλικό μπαρ,ότι πρέπει για έναν γρήγορο καφέ",
+        "map_url": "https://maps.app.goo.gl/sY2jjR5KoXyhkhgK6"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Parco degli Acquedotti",
+      "description": "Είναι ένα τεράστιο πάρκο με αρχαίες καμάρες που μοιάζουν με γέφυρες και στέκονται εκεί εδώ και αιώνες. Μπορείτε να κάνετε πικ νικ κάτω από τα δέντρα, βλέποντας τα ερείπια από κοντά.",
+      "category": "park",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.8436,
+        "lng": 12.5588
+      },
+      "restaurant": {
+        "name": "Fermentum",
+        "description": "Ίσως η πιο δημοφιλής επιλογή, ένα εστιατόριο-πιτσαρία μέσα στο πάρκο.",
+        "map_url": "https://maps.app.goo.gl/iNmkvjqCzGTTUxDJA"
+      },
+      "website": "https://www.parcodegliacquedotti.it/",
+      "notes": [],
+      "tags": ["park", "aqueducts", "history", "free"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      },
+      "cafe": {
+        "name": "Maat American Cafe",
+        "description": "Αμερικανικού τύπου πρωινό,καφές, σνακ, brunch, pancakes και burgers",
+        "map_url": "https://maps.app.goo.gl/NPtMidiNL3DW2E248"
+      }
+    },
+    {
+      "id": 5,
+      "name": "Museo Leonardo Da Vinci",
+      "description": "Στο μουσείο της Piazza del Popolo, τα παιδιά έρχονται σε επαφή με τον κόσμο του Λεονάρντο μέσα από ξύλινες μηχανές που μπορούν να αγγίξουν και να κινήσουν. Είναι ένας χώρος γεμάτος έξυπνες εφευρέσεις για την πτήση και τη μηχανική, μαζί με αντίγραφα των διάσημων πινάκων του.",
+      "category": "museum",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
+        "6": 12, "7": 12, "8": 12, "9": 12, "10": 12, "11": 12, "12": 12, "13": 12, "14": 12, "15": 12, "16": 12, "17": 12,
+        "18": 14, "19": 14,
+        "adult": 14
+      },
+      "location": {
+        "lat": 41.9113,
+        "lng": 12.4763
+      },
+      "restaurant": {
+        "name": "Al Vantaggio",
+        "description": "Ένα κλασικό εστιατόριο της περιοχής με μεγάλη ιστορία. Έχει άνετο χώρο και όλα τα αγαπημένα των παιδιών, όπως απλές μακαρονάδες και πίτσα ψημένη σε ξυλόφουρνο.",
+        "map_url": "https://maps.app.goo.gl/1Ap4vUe623XpMW8c9"
+      },
+      "website": "https://www.museodavinci.it/",
+      "notes": [],
+      "tags": ["museum", "family"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 40
+      },
+      "cafe": {
+        "name": "La Vita è Un Mozzico",
+        "description": "Σούπερ επιλογή για γρήγορο σνακ, σάντουιτς ή πίτσα στο χέρι, με πολύ καλές κριτικές.",
+        "map_url": "https://maps.app.goo.gl/GZP2H6sQufSoowCi8"
+      }
+    },
+    {
+      "id": 6,
+      "name": "Quartiere Coppedè",
+      "description": "Μια γειτονιά που μοιάζει να βγήκε από παραμύθι ή ταινία φαντασίας. Η αρχιτεκτονική με τις λεπτομέρειες από ζώα, σιδερένια φανάρια και το Σιντριβάνι των Βατράχων (Fontana delle Rane) είναι υπέροχα.",
+      "category": "neighborhood",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.9242,
+        "lng": 12.5132
+      },
+      "restaurant": {
+        "name": "Mascalzoni Romani",
+        "description": "Απέχει μόλις 5 λεπτά με τα πόδια από την Piazza Mincio και φημίζεται για την πολύ υψηλή βαθμολογία του (4.9) και την αυθεντική ρωμαϊκή του κουζίνα",
+        "map_url": "https://maps.app.goo.gl/DdPZ5Cyvway5ntE1A"
+      },
+      "website": "https://www.turismoroma.it/it/luoghi/il-quartiere-copped%C3%A8",
+      "notes": [],
+      "tags": ["architecture", "neighborhood", "free"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      },
+      "cafe": {
+        "name": "Gruè",
+        "description": "Αν βρεθείτε στην περιοχή για πρωινό ή απόγευμα, αυτο το μαγαζί είναι \"must\". Θεωρείται από τα καλύτερα της Ρώμης για τα γλυκά , τα μακαρόν και τον καφέ .",
+        "map_url": "https://maps.app.goo.gl/T15AGrpt8iiZGn4a9"
+      }
+    },
+    {
+      "id": 7,
+      "name": "Η Τρύπα της Κλειδαριάς (Aventine Keyhole)",
+      "description": "Στον λόφο Aventine, υπάρχει μια πόρτα με μια κλειδαριά από την οποία μπορείτε να δείτε τέλεια ευθυγραμμισμένο τον τρούλο του Αγίου Πέτρου.",
+      "category": "attraction",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.8834,
+        "lng": 12.4796
+      },
+      "restaurant": {
+        "name": "Εστιατόριο ελληνικο",
+        "description": "Αν τυχαίνει να σας έχει λείψει η ελληνική κουζίνα, αυτό το εστιατόριο είναι πολύ δημοφιλές στην περιοχή και με πολύ καλές τιμές.",
+        "map_url": "https://maps.app.goo.gl/Mw5ndE9ZY6yPhCvH7"
+      },
+      "website": "https://www.atlasobscura.com/places/the-aventine-keyhole-rome-rome-italy",
+      "notes": [],
+      "tags": ["hidden gem", "views", "free"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      },
+      "cafe": {
+        "name": "Tram Depot",
+        "description": "Ένα πολύ ιδιαίτερο καφέ-κιόσκι που μοιάζει με παλιό βαγόνι τραμ. Είναι ιδανικό για καφέ, χυμούς και ελαφριά σνακ σε εξωτερικό χώρο",
+        "map_url": "https://maps.app.goo.gl/RZ7eBSeizqRKwbyP7"
+      }
+    },
+    {
+      "id": 8,
+      "name": "Villa Carpegna",
+      "description": "Ένα μικρότερο, πιο ήσυχο πάρκο με μια πολύ ωραία παιδική χαρά που είναι ασφαλής για τα πολύ μικρά παιδιά.",
+      "category": "park",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.9047,
+        "lng": 12.4355
+      },
+      "restaurant": {
+        "name": "Mejo ! \"Cucina Romana\"",
+        "description": "Είναι μια εξαιρετική επιλογή για αυθεντικό ρωμαϊκό φαγητό σε έναν πιο ανεπίσημο και ζωντανό χώρο. Έχει πολύ υψηλή βαθμολογία (4.9), κάτι που δείχνει την ποιότητα της κουζίνας του.",
+        "map_url": "https://maps.app.goo.gl/oxvhVLnEfNpC6FRR8"
+      },
+      "website": "https://www.turismoroma.it/en/places/villa-carpegna",
+      "notes": [],
+      "tags": ["park", "nature", "family"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      },
+      "cafe": {
+        "name": "Fermento Bistrot Caffè",
+        "description": "Είναι μια πολύ βολική επιλογή, καθώς βρίσκεται ακριβώς απέναντι από την είσοδο της Villa Carpegna.",
+        "map_url": "https://maps.app.goo.gl/3GcQt55EAFN8JigA9"
+      }
+    },
+    {
+      "id": 9,
+      "name": "Explora",
+      "description": "Ένας παράδεισος για τα παιδιά στη Ρώμη, μοιάζει με μια μικρή, δική τους πόλη. Τα παιδιά έχουν την ευκαιρία να πειραματιστούν με το νερό, να παίξουν ρόλους στην αγορά ή στην τράπεζα και να κατανοήσουν πώς λειτουργεί ο κόσμος γύρω τους μέσα από το παιχνίδι.Εχει ειδικά διαμορφωμένο χώρο για παιδιά κάτω των 3 ετών, με μαλακά παιχνίδια και αισθητηριακές δραστηριότητες. Τιμές καθημερινές λίγο χαμηλότερες.",
+      "category": "museum",
+      "top": false,
+      "prices": {
+        "0": 0,
+        "1": 7, "2": 7,
+        "3": 11, "4": 11, "5": 11, "6": 11, "7": 11, "8": 11, "9": 11, "10": 11,
+        "11": 11, "12": 11, "13": 11, "14": 11, "15": 11, "16": 11, "17": 11, "18": 11, "19": 11,
+        "adult": 11
+      },
+      "location": {
+        "lat": 41.9317,
+        "lng": 12.4745
+      },
+      "restaurant": {
+        "name": "Ristorante Pizzeria Popolo Caffè",
+        "description": "Μόλις λίγα μέτρα από το μουσείο Explora. Λειτουργεί όλη την ημέρα, συνδυάζει καφέ, σνακ και κανονικό φαγητό με πίτσα και ζυμαρικά",
+        "map_url": "https://maps.app.goo.gl/mvW3wQCzZw4i1Uyu6"
+      },
+      "website": "https://mdbr.it/",
+      "notes": [],
+      "tags": ["museum", "children", "interactive", "family"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      },
+      "cafe": {
+        "name": "Sensorio Coffee Lab",
+        "description": "Απέχει μόλις λίγα μέτρα από το μουσείο Explora. Πρόκειται για ένα σύγχρονο καφέ που εστιάζει στην ποιότητα του χαρμανιού με ωραίες επιλογές για πρωινό, ελαφριά σνακ και γλυκά. ",
+        "map_url": "https://maps.app.goo.gl/p4BSGkQH3EDpY39T8"
+      }
+    },
+    {
+      "id": 10,
+      "name": "Museo delle Illusioni (Μουσείο Ψευδαισθήσεων)",
+      "description": "Ένας διασκεδαστικός χώρος με οπτικές απάτες και δωμάτια που προκαλούν τις αισθήσεις, κατάλληλο για πολλές φωτογραφίες",
+      "category": "museum",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
+        "6": 15, "7": 15, "8": 15, "9": 15, "10": 15, "11": 15, "12": 15, "13": 15, "14": 15, "15": 15,
+        "16": 21, "17": 21, "18": 21, "19": 21,
+        "adult": 21
+      },
+      "location": {
+        "lat": 41.8941,
+        "lng": 12.4982
+      },
+      "restaurant": {
+        "name": "Merulì - Pizza e Cucina",
+        "description": "Περίπου 5 λεπτά με τα πόδια. Πολύ ωραία πίτσα και κλασικά ρωμαϊκά πιάτα σε έναν φιλόξενο χώρο.",
+        "map_url": "https://maps.app.goo.gl/gX7RFZJBxzAmoa7y9"
+      },
+      "website": "https://www.museoillusioni.it/",
+      "notes": [],
+      "tags": ["museum", "interactive", "family"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 54
+      },
+      "cafe": {
+        "name": "Merulana Cafè",
+        "description": "Ένα κλασικό σημείο συνάντησης πάνω στον δρόμο, ανοιχτό όλη μέρα, για καφέ ή ένα ελαφρύ γεύμα.",
+        "map_url": "https://maps.app.goo.gl/oVJDKxSoSGRmryZc8"
+      }
+    },
+    {
+      "id": 11,
+      "name": "Villa Borghese",
+      "description": "Το πιο γνωστό πάρκο της πόλης. Εκεί μπορείτε να νοικιάσετε οικογενειακά ποδήλατα, να κάνετε βαρκάδα στη λίμνη ή να δείτε μια παράσταση στο κουκλοθέατρο San Carlino",
+      "category": "park",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.9139,
+        "lng": 12.4889
+      },
+      "restaurant": {
+        "name": "Osteria la Giara - Vino & Cucina dal 1920",
+        "description": "Πρόκειται για ένα ιστορικό εστιατόριο που κρατά από το 1920. Έχει παραδοσιακό χαρακτήρα και είναι γνωστό για την καλή ποιότητα των υλικών του.",
+        "map_url": "https://maps.app.goo.gl/AUqetNhD1NLemyNLA"
+      },
+      "website": "https://www.sovraintendenzaroma.it/i_luoghi/ville_e_parchi_storici/ville_dei_nobili/villa_borghese",
+      "notes": [],
+      "tags": ["park", "nature", "family", "free"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      },
+      "cafe": {
+        "name": "Caffè delle Arti",
+        "description": "Βρίσκεται στην Εθνική Πινακοθήκη Μοντέρνας Τέχνης (GNAM) στην άκρη του πάρκου",
+        "map_url": "https://maps.app.goo.gl/aZSFqZ2e6spvjDww5"
+      }
+    },
+    {
+      "id": 12,
+      "name": "Bioparco di Roma",
+      "description": "Ο ζωολογικός κήπος της Ρώμης, που βρίσκεται μέσα στη Villa Borghese και φιλοξενεί πάνω από 1.000 ζώα.",
+      "category": "zoo",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0,
+        "3": 15, "4": 15, "5": 15, "6": 15, "7": 15, "8": 15, "9": 15,
+        "10": 22, "11": 22, "12": 22, "13": 22, "14": 22, "15": 22, "16": 22, "17": 22, "18": 22, "19": 22,
+        "adult": 22
+      },
+      "location": {
+        "lat": 41.9182,
+        "lng": 12.4837
+      },
+      "restaurant": {
+       "name": "Taverna Rossini",
+        "description": "Βρίσκεται στην περιοχή Parioli, βόρεια του πάρκου. Είναι ένα κλασικό στέκι των ντόπιων που λειτουργεί όλη μέρα και έχει τα πάντα: από πίτσα και ζυμαρικά μέχρι φρέσκο ψάρι.",
+        "map_url": "https://maps.app.goo.gl/GMxp9tU85ZnwHVpo7"
+      },
+      "website": "https://www.bioparco.it/",
+      "notes": ["Παιδιά κάτω από 1 μέτρο ύψος εισέρχονται δωρεάν."],
+      "tags": ["zoo", "animals", "family"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      },
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 13,
+      "name": "Galleria Borghese",
+      "description": "Μουσείο με διάσημα αγάλματα και πίνακες (Bernini, Caravaggio). Ο χώρος είναι περιορισμένος, πρέπει να κλείσετε εισιτήρια από πριν.",
+      "category": "museum",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
+        "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0, "16": 0, "17": 0,
+        "18": 15, "19": 15,
+        "adult": 15
+      },
+      "location": {
+        "lat": 41.9147,
+        "lng": 12.4931
+      },
+      "restaurant": {
+        "name": "Osteria la Giara - Vino & Cucina dal 1920",
+        "description": "Είναι μια εξαιρετική επιλογή για αυθεντική ρωμαϊκή κουζίνα σε έναν χώρο με ιστορία που ξεπερνά τα 100 χρόνια. Απέχει περίπου 10 λεπτά με τα πόδια από την έξοδο της Villa Borghese (κοντά στην Porta Pinciana), οπότε είναι μια πολύ καλή λύση για φαγητό αν βρίσκεστε σε εκείνη την πλευρά του πάρκου.",
+        "map_url": "https://maps.app.goo.gl/ULLFNNHcihrLmY2Q6"
+      },
+      "website": "",
+      "notes": [],
+      "tags": ["museum", "art", "sculpture"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      },
+      "cafe": {
+        "name": "Faro - Caffè Specialty",
+        "description": "Είναι μια εξαιρετική επιλογή, καθώς θεωρείται ένα από τα καλύτερα σημεία για καφέ στη Ρώμη, με έμφαση στην ποιότητα των κόκκων και τη βιώσιμη προέλευση.",
+        "map_url": "https://maps.app.goo.gl/6GnxvkkAz8su827cA"
+      }
+    },
+    {
+      "id": 14,
+      "name": "Rome Gladiator School - Gruppo Storico Romano",
+      "description": "Τα παιδιά μαθαίνουν τις τεχνικές των μονομάχων φορώντας παραδοσιακές στολές.Κατάλληλο απο 6 ετών και άνω. ",
+      "category": "attraction",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
+        "6": 55, "7": 55, "8": 55, "9": 55, "10": 55, "11": 55, "12": 55, "13": 55, "14": 55, "15": 55, "16": 55, "17": 55,
+        "18": 55, "19": 55,
+        "adult": 55
+      },
+      "location": {
+        "lat": 41.8925,
+        "lng": 12.5121
+      },
+      "restaurant": {
+        "name": "Trattoria Priscilla",
+        "description": "Μια οικογενειακή επιχείρηση με ιστορία δεκαετιών.",
+        "map_url": "https://maps.app.goo.gl/gkszgFEJneQvUsKU8"
+      },
+      "website": "https://www.gruppostoricoromano.it/",
+      "notes": [],
+      "tags": ["gladiator", "history", "interactive", "family"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      },
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 15,
+      "name": "Cinecittà World",
+      "description": "Πάρκο αφιερωμένο στον κινηματογράφο και την τηλεόραση με παιχνίδια και θεάματα για όλες τις ηλικίες. Σημείωση: οι γονείς πρέπει να ελέγχουν το ύψος των παιδιών πριν αγοράσουν εισιτήρια.",
+      "category": "theme_park",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0,
+        "3": 24, "4": 24, "5": 24, "6": 24, "7": 24, "8": 24, "9": 24,
+        "10": 29, "11": 29, "12": 29, "13": 29, "14": 29, "15": 29, "16": 29, "17": 29, "18": 29, "19": 29,
+        "adult": 29
+      },
+      "location": {
+        "lat": 41.7233,
+        "lng": 12.4503
+      },
+      "restaurant": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      },
+      "website": "https://www.cinecittaworld.it/it",
+      "notes": ["Τιμολόγηση βάσει ύψους: έως 1μ δωρεάν, 1μ–1,40μ: 24€, άνω 1,40μ: 29€."],
+      "tags": ["theme park", "rides", "family"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "4_tickets": 84,
+        "3_tickets": 72
+      },
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 16,
+      "name": "Luneur Park",
+      "description": "Ιστορικό λούνα παρκ, ειδικό για μικρότερα παιδιά από 2 έως 12 ετών.",
+      "category": "theme_park",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
+        "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.8296,
+        "lng": 12.4731
+      },
+      "restaurant": {
+        "name": "Garden Ristò EUR",
+        "description": "Ένα όμορφο cafe-bistrot με κήπο, ιδανικό για καφέ, πρωινό ή  μεσημεριανό δίπλα στο Luneur Park. ",
+        "map_url": "https://maps.app.goo.gl/C8fDzvmsXqoJtgdg9"
+      },
+      "website": "https://www.luneurpark.it/",
+      "notes": ["Pricing is dynamic (entry + rides or packages ~15–25€), no fixed ticket."],
+      "tags": ["amusement park", "rides", "family"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      },
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 17,
+      "name": "Κολοσσαίο & Ρωμαϊκή Αγορά",
+      "description": "Υπάρχουν διαθέσιμες ξεναγήσεις με κυνήγι θησαυρού ή ιστορίες για μονομάχους ειδικά διαμορφωμένες για οικογένειες με παιδιά.",
+      "category": "monument",
+      "top": true,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
+        "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0, "16": 0, "17": 0,
+        "18": 18, "19": 18,
+        "adult": 18
+      },
+      "location": {
+        "lat": 41.8902,
+        "lng": 12.4922
+      },
+      "restaurant": {
+        "name": "Ristorante Pizza Forum",
+        "description": "Είναι μια εξαιρετική επιλογή για την περιοχή, καθώς καταφέρνει να διατηρεί υψηλή ποιότητα και καλές τιμές παρά την πολύ τουριστική του τοποθεσία.",
+        "map_url": "https://maps.app.goo.gl/RxNfqFKriegzWzFD7"
+      },
+      "website": "https://colosseo.it/",
+      "notes": [],
+      "tags": ["monument", "history", "iconic", "ancient rome"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      },
+      "cafe": {
+        "name": "RoYaL Art Cafè",
+        "description": "Βρίσκεται ακριβώς απέναντι από το Κολοσσαίο. Αν και είναι τουριστικό σημείο, η ταράτσα του είναι υπέροχη για έναν καφέ με άμεση θέα στο μνημείο.",
+        "map_url": "https://maps.app.goo.gl/qLvTvvVdo5uNEbPy5"
+      }
+    },
+    {
+      "id": 18,
+      "name": "Castel Sant'Angelo",
+      "description": "Κάστρο δίπλα στον Τίβερη με μυστικά περάσματα και υπέροχη θέα από την ταράτσα.Προτείνεται απο 6-7 ετών και πάνω. Το καρότσι για μικρότερα παιδιά θα σας δυσκολέψει. Ακριβώς έξω από το κάστρο υπάρχει το Parco Adriano, ένα μεγάλο πάρκο με παιδική χαρά,",
+      "category": "castle",
+      "top": true,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
+        "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0, "16": 0, "17": 0,
+        "18": 16, "19": 16,
+        "adult": 16
+      },
+      "location": {
+        "lat": 41.9029,
+        "lng": 12.4663
+      },
+      "restaurant": {
+        "name": "Trattoria Pancia Felice",
+        "description": "Σε απόσταση αναπνοής, με πολύ καλές κριτικές και τιμές",
+        "map_url": "https://maps.app.goo.gl/Je7KWRAXfYs31ViBA"
+      },
+      "website": "https://castelsantangelorome.com/",
+      "notes": [],
+      "tags": ["castle", "history", "monument", "iconic"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      },
+      "cafe": {
+        "name": "",
+        "description": "",
+        "map_url": ""
+      }
+    },
+    {
+      "id": 19,
+      "name": "Largo di Torre Argentina",
+      "description": "Αρχαία πλατεία που  πλεόν λειτουργεί ως καταφύγιο για γάτες. Είναι ο τόπος δολοφονίας του Ιουλίου Καίσαρα.",
+      "category": "monument",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.8956,
+        "lng": 12.4769
+      },
+      "restaurant": {
+        "name": "Emma Pizzeria Restaurant",
+        "description": "Μια από τις πιο γνωστές pizzerie στην περιοχή. Φημίζεται για τη λεπτή, τραγανή ρωμαϊκή πίτσα και τα ποιοτικά υλικά της.",
+        "map_url": "https://maps.app.goo.gl/U5u2Tddexx8F4kqU6"
+      },
+      "website": "https://www.rome-info.gr/2016/03/to-shmeio-dolofonias-tou-iouliou-kesara-torre-argentina.html",
+      "notes": [],
+      "tags": ["monument", "history", "ancient rome", "cats"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      },
+      "cafe": {
+        "name": "Slow - Specialty Coffee & Pastry Lab",
+        "description": "Δίνει έμφαση στον ποιοτικό καφέ και τα χειροποίητα γλυκά.",
+        "map_url": "https://maps.app.goo.gl/A7t9g9fdw4c9iN7x7"
+      }
+    },
+    {
+      "id": 20,
+      "name": "Πάνθεον",
+      "description": "Αρχαίος εντυπωσιακός ναός με τεράστιο τρούλο και τρύπα στην οροφή. Το νερό της βροχής όταν πέφτει εξαφανίζεται σε μικρές τρύπες στο πάτωμα.",
+      "category": "monument",
+      "top": true,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0,
+        "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0, "16": 0, "17": 0,
+        "18": 5, "19": 5,
+        "adult": 5
+      },
+      "location": {
+        "lat": 41.8986,
+        "lng": 12.4768
+      },
+      "restaurant": {
+        "name": "Miscellanea",
+        "description": "Μια πολύ καλή και πιο οικονομική λύση ακριβώς πίσω από το Πάνθεον. Είναι ένας χώρος με υπαίθρια τραπεζάκια και πολύ δημοφιλής",
+        "map_url": "https://maps.app.goo.gl/q7TVzenJGv4fSqpx7"
+      },
+      "website": "https://direzionemuseiroma.cultura.gov.it/pantheon/",
+      "notes": [],
+      "tags": ["monument", "history", "iconic", "ancient rome"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      },
+      "cafe": {
+        "name": "La Casa del Caffè Tazza d'Oro",
+        "description": "Ένα ιστορικό σημείο ακριβώς δίπλα στο μνημείο. Είναι το ιδανικό μέρος για να δοκιμάσετε τη διάσημη γρανίτα καφέ με σαντιγί ειδικά αν ο καιρός είναι ζεστός.",
+        "map_url": "https://maps.app.goo.gl/ZwBGPFuG7WmyFJca6"
+      }
+    },
+    {
+      "id": 21,
+      "name": "Piazza Navona",
+      "description": "Μεγάλη πλατεία γεμάτη  πανέμορφα σιντριβάνια και ζωγράφους.",
+      "category": "monument",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.8992,
+        "lng": 12.4733
+      },
+      "restaurant": {
+        "name": "Pizza Zazà",
+        "description": "Φημίζεται για την εξαιρετική του πίτσα με βιολογικό αλεύρι και για τις πολύ καλές τιμές. Μπορείτε να πάρετε μερικά κομμάτια στο χέρι και να συνεχίσετε τη βόλτα .",
+        "map_url": "https://maps.app.goo.gl/RiiospAPJmKGA1e18"
+      },
+      "website": "https://www.turismoroma.it/en/places/navona-square",
+      "notes": [],
+      "tags": ["piazza", "fountain", "iconic", "free"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      },
+      "cafe": {
+        "name": "L'Emporio alla Pace",
+        "description": "Ένα από τα πιο ατμοσφαιρικά καφέ, γεμάτο βιβλία και vintage έπιπλα. Είναι ήσυχο, ιδανικό για να χαλαρώσετε σε έναν από τους πιο γραφικούς δρόμους πίσω από την πλατεία.",
+        "map_url": "https://maps.app.goo.gl/w7j1HMKunMfgNk8W8"
+      }
+    },
+    {
+      "id": 22,
+      "name": "Fontana di Trevi",
+      "description": "Το διάσημο πανέμορφο σιντριβάνι όπου ρίχνουν νόμισμα οι επισκέπτες με την ευχή να επιστρέψουν στην Ρώμη.",
+      "category": "monument",
+      "top": true,
+      "prices": {
+        "0": 2, "1": 2, "2": 2, "3": 2, "4": 2, "5": 2,
+        "6": 2, "7": 2, "8": 2, "9": 2, "10": 2, "11": 2, "12": 2, "13": 2, "14": 2, "15": 2, "16": 2, "17": 2,
+        "18": 2, "19": 2,
+        "adult": 2
+      },
+      "location": {
+        "lat": 41.9009,
+        "lng": 12.4833
+      },
+      "restaurant": {
+        "name": "L'Antica Birreria Peroni",
+        "description": "Ένας ιστορικός χώρος που θυμίζει παλιό ζυθοποιείο. Είναι ιδανικό για ένα πιο γρήγορο και οικονομικό γεύμα, με μεγάλη ποικιλία, καλές τιμές και κριτικές.",
+        "map_url": "https://maps.app.goo.gl/vcGFBxfVvBvh2nb3A"
+      },
+      "website": "https://fontanaditrevi.roma.it/en",
+      "notes": ["Το εισιτήριο αφορά μόνο την κατέβασμα για να το δείτε από κοντά. Αν θέλετε απλώς να το δείτε από μακριά, είναι δωρεάν."],
+      "tags": ["fountain", "iconic", "monument"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      },
+      "cafe": {
+        "name": "Don Pasquale Restaurant & Bar",
+        "description": "Βρίσκεται μέσα στο Hotel Maalot, κυριολεκτικά δύο βήματα από το συντριβάνι και έχει εξαρετικές κριτικές.",
+        "map_url": "https://maps.app.goo.gl/fsSymwAngohrtDr6A"
+      }
+    },
+    {
+      "id": 23,
+      "name": "San Giovanni in Laterano",
+      "description": "Επιβλητικός καθεδρικός ναός της Ρώμης με πελώρια αγάλματα και την Ιερή Σκάλα, ένα από τα σημαντικότερα προσκυνήματα της Ρώμης, καθώς η παράδοση θεωρεί ότι την ανέβηκε ο Χριστός στην Ιερουσαλήμ.",
+      "category": "church",
+      "top": false,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.8863,
+        "lng": 12.5092
+      },
+      "restaurant": {
+        "name": "Verso - Vinosteria",
+        "description": "Είναι μια εξαιρετική επιλογή αν βρίσκεστε κοντά στη San Giovanni in Laterano, καθώς απέχει μόλις 5-8 λεπτά με τα πόδια από τη Βασιλική. Πρόκειται για έναν συνδυασμό κάβας και εστιατορίου (vinosteria), που είναι πολύ δημοφιλής στους ντόπιους",
+        "map_url": "https://maps.app.goo.gl/WMWaviHwqLKX6kXF7"
+      },
+      "website": "https://www.basilicasangiovanni.va/it.html",
+      "notes": [],
+      "tags": ["church", "history", "architecture"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      },
+      "cafe": {
+        "name": "Materia Cafe",
+        "description": "Για τους λάτρεις του ποιοτικού καφέ ανώτερης κατηγορίας. Ένας σύγχρονος χώρος με έμφαση στη λεπτομέρεια και την προέλευση των κόκκων.",
+        "map_url": "https://maps.app.goo.gl/Nqdy1FZuwz3LSKBa9"
+      }
+    },
+    {
+      "id": 24,
+      "name": "Βατικανό",
+      "description": "Πλατεία και Βασιλική Αγίου Πέτρου, η μεγαλύτερη εκκλησία που έχετε δει ποτέ.καρδιά του Βατικανού, ένας χώρος που εντυπωσιάζει με το τεράστιο μέγεθός του και τον εμβληματικό τρούλο του Μιχαήλ Αγγέλου.",
+      "category": "monument",
+      "top": true,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0,
+        "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0,
+        "16": 0, "17": 0, "18": 0, "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 41.9022,
+        "lng": 12.4532
+      },
+      "restaurant": {
+        "name": "200 Gradi",
+        "description": "Αν ψάχνετε για κάτι γρήγορο και νόστιμο, αυτό το σημείο φημίζεται για τα δημιουργικά του σάντουιτς (panini).",
+        "map_url": "https://maps.app.goo.gl/QCXD87Gre2G9Sysx9"
+      },
+      "website": "https://www.basilicasanpietro.va/it/",
+      "notes": [],
+      "tags": ["vatican", "church", "iconic", "history"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      },
+      "cafe": {
+         "name": "Fábrica",
+        "description": "Εκτός από ποιοτικό καπουτσίνο και μεγάλη ποικιλία σε τσάι, μπορείτε να βρείτε σπιτικά γλυκά, τάρτες αλλά και ελαφριά πιάτα για ένα γρήγορο γεύμα",
+        "map_url": "https://maps.app.goo.gl/snohasbz89eBxv2Z7"
+      }
+    },
+    {
+      "id": 25,
+      "name": "Μουσεία Βατικανού και Καπέλα Σιστίνα",
+      "description": "Αίθουσες γεμάτες θησαυρούς, αγάλματα και εντυπωσιακούς χάρτες και μέσα κρυμμένη θα δείτε την Καπέλα Σιστίνα, το πιο διάσημο παρεκκλήσι στον κόσμο. Οι τοιχογραφίες του Μιχαήλ Αγγέλου στην οροφή και στον τοίχο του ιερού αποτελούν αξεπέραστα αριστουργήματα",
+      "category": "museum",
+      "top": true,
+      "prices": {
+        "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0,
+        "7": 8, "8": 8, "9": 8, "10": 8, "11": 8, "12": 8, "13": 8, "14": 8, "15": 8, "16": 8, "17": 8, "18": 8,
+        "19": 20,
+        "adult": 20
+      },
+      "location": {
+        "lat": 41.9064,
+        "lng": 12.4542
+      },
+      "restaurant": {
+        "name": "200 Gradi",
+        "description": "Αν ψάχνετε για κάτι γρήγορο και νόστιμο, αυτό το σημείο φημίζεται για τα δημιουργικά του σάντουιτς (panini).",
+        "map_url": "https://maps.app.goo.gl/QCXD87Gre2G9Sysx9"
+      },
+      "website": "https://www.museivaticani.va/content/museivaticani/it.html",
+      "notes": [],
+      "tags": ["museum", "art", "vatican", "sistine chapel", "iconic"],
+      "duration_hours": 0,
+      "best_time": "",
+      "family_prices": {
+        "2_adults_2_children": 0
+      },
+      "cafe": {
+        "name": "Fábrica",
+        "description": "Εκτός από ποιοτικό καπουτσίνο και μεγάλη ποικιλία σε τσάι, μπορείτε να βρείτε σπιτικά γλυκά, τάρτες αλλά και ελαφριά πιάτα για ένα γρήγορο γεύμα",
+        "map_url": "https://maps.app.goo.gl/snohasbz89eBxv2Z7"
+      }
+    }
+  ]
+}
+

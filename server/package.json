@@ -1,0 +1,13 @@
+{
+  "name": "takemytrip-pdf-server",
+  "version": "1.0.0",
+  "description": "Server-side PDF generation for TakeMyTrip itineraries",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.22.1",
+    "puppeteer-core": "^24.42.0"
+  }
+}
