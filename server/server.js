@@ -6,8 +6,7 @@ const puppeteer = require('puppeteer-core');
 const CHROMIUM_PATH = process.env.CHROMIUM_PATH || null;
 
 const app = express();
-const PORT = process.env.PORT;
-
+const PORT = process.env.PORT || 8080;
 app.use(express.json({ limit: '10mb' }));
 
 app.use((req, res, next) => {
