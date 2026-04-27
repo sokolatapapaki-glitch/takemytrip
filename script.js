@@ -7986,7 +7986,7 @@ async function exportItineraryToPDF() {
         return;
     }
 
-    if (typeof html2pdf === 'undefined') {
+    if (typeof html2canvas === 'undefined' || typeof jspdf === 'undefined') {
         showToast('❌ Η βιβλιοθήκη PDF δεν φορτώθηκε. Ελέγξτε τη σύνδεσή σας.', 'error');
         return;
     }
@@ -8021,8 +8021,9 @@ async function exportItineraryToPDF() {
 
         const { css, bodyHTML } = buildItineraryPDFContent(data);
 
+        // Build hidden off-screen container
         wrapper = document.createElement('div');
-        wrapper.style.cssText = 'position:absolute;left:-9999px;top:0;width:190mm;background:#fff;';
+        wrapper.style.cssText = 'position:absolute;left:-9999px;top:0;width:794px;background:#ffffff;';
 
         const styleEl = document.createElement('style');
         styleEl.textContent = css;
@@ -8035,21 +8036,56 @@ async function exportItineraryToPDF() {
 
         document.body.appendChild(wrapper);
 
+        // Render to canvas
+        const canvas = await html2canvas(wrapper, {
+            scale: 2,
+            backgroundColor: '#ffffff',
+            useCORS: true,
+            logging: false,
+            allowTaint: false
+        });
+
+        // A4 dimensions in mm
+        const PAGE_W = 210;
+        const PAGE_H = 297;
+        const MARGIN = 10;
+        const contentWidthMM = PAGE_W - MARGIN * 2;
+        const contentHeightMM = PAGE_H - MARGIN * 2;
+
+        // How tall (in px) does one PDF page's content area represent on the canvas?
+        const pxPerMM = canvas.width / contentWidthMM;
+        const pageHeightPx = Math.floor(contentHeightMM * pxPerMM);
+
+        const pdf = new jspdf.jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+
+        let yPx = 0;
+        let pageIndex = 0;
+        while (yPx < canvas.height) {
+            if (pageIndex > 0) pdf.addPage();
+
+            const sliceH = Math.min(pageHeightPx, canvas.height - yPx);
+
+            // Draw this slice onto a temporary canvas
+            const pageCanvas = document.createElement('canvas');
+            pageCanvas.width = canvas.width;
+            pageCanvas.height = sliceH;
+            const ctx = pageCanvas.getContext('2d');
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+            ctx.drawImage(canvas, 0, yPx, canvas.width, sliceH, 0, 0, canvas.width, sliceH);
+
+            const imgData = pageCanvas.toDataURL('image/jpeg', 0.95);
+            const sliceHeightMM = sliceH / pxPerMM;
+            pdf.addImage(imgData, 'JPEG', MARGIN, MARGIN, contentWidthMM, sliceHeightMM);
+
+            yPx += sliceH;
+            pageIndex++;
+        }
+
         const safeDestination = (data.destination || 'trip')
             .normalize('NFD').replace(/[̀-ͯ]/g, '')
             .replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').toLowerCase() || 'itinerary';
-        const filename = `itinerary-${safeDestination}.pdf`;
-
-        await html2pdf()
-            .set({
-                margin: [10, 10, 10, 10],
-                filename,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true, logging: false },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            })
-            .from(wrapper)
-            .save();
+        pdf.save(`itinerary-${safeDestination}.pdf`);
 
         setStatus('✅ Το PDF κατεβάστηκε επιτυχώς!', '#059669');
         showToast('✅ Το πρόγραμμα εξήχθη ως PDF!', 'success');
