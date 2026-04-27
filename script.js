@@ -1005,8 +1005,11 @@ function loadStepContent(stepName) {
                 console.log('✅ [DEBUG] Αρχικοποιήθηκε κενό πρόγραμμα');
             }, 300);
         }
-        
-               
+
+        // Εμφάνιση banner αποθηκευμένου προγράμματος
+        setTimeout(() => updateSavedItineraryBanner(), 400);
+
+
     }, 100);
     
     // 🔴 ΑΛΛΑΓΗ 4: ΑΥΤΟΜΑΤΗ ΦΟΡΤΩΣΗ ΔΡΑΣΤΗΡΙΟΤΗΤΩΝ ΣΤΟΝ ΧΑΡΤΗ (ΜΟΝΟ ΓΙΑ ΑΡΧΙΚΗ ΕΜΦΑΝΙΣΗ)
@@ -1792,6 +1795,21 @@ function getMapStepHTML() {
                             </button>
                         </div>
                     ` : `
+                        <!-- ΑΠΟΘΗΚΕΥΜΕΝΟ ΠΡΟΓΡΑΜΜΑ BANNER -->
+                        <div id="saved-itinerary-banner" style="display:none; background:linear-gradient(135deg,#ecfdf5,#d1fae5); border:2px solid #10B981; border-radius:10px; padding:14px 18px; margin-bottom:20px; align-items:center; gap:12px; flex-wrap:wrap;">
+                            <span style="font-size:22px;">💾</span>
+                            <div style="flex:1; min-width:160px;">
+                                <div id="saved-banner-title" style="font-weight:700; color:#065f46; font-size:14px;"></div>
+                                <div id="saved-banner-subtitle" style="color:#047857; font-size:12px; margin-top:3px;"></div>
+                            </div>
+                            <button onclick="loadSavedItinerary()" style="background:#10B981;color:#fff;border:none;padding:8px 16px;border-radius:7px;font-size:13px;cursor:pointer;font-weight:600;">
+                                <i class="fas fa-folder-open"></i> Φόρτωση
+                            </button>
+                            <button onclick="deleteSavedItinerary()" style="background:#fff;color:#EF4444;border:2px solid #EF4444;padding:7px 12px;border-radius:7px;font-size:13px;cursor:pointer;font-weight:600;">
+                                <i class="fas fa-trash-alt"></i> Διαγραφή
+                            </button>
+                        </div>
+
                         <!-- ΕΠΙΛΟΓΗ ΗΜΕΡΩΝ -->
                         <div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 25px; border: 2px solid #e2e8f0;">
                             <h4 style="margin: 0 0 15px 0; color: var(--dark);">
@@ -1843,6 +1861,11 @@ function getMapStepHTML() {
                         <div style="display: flex; gap: 15px; margin-top: 30px; justify-content: center; flex-wrap: wrap;">
                             <button class="btn btn-primary" onclick="saveUserProgram()" id="save-program-btn">
                                 <i class="fas fa-save"></i> Αποθήκευση Προγράμματος
+                            </button>
+
+                            <button class="btn" onclick="loadSavedItinerary()" id="load-program-btn"
+                                    style="background:#6366f1;color:#fff;border:2px solid #6366f1;">
+                                <i class="fas fa-folder-open"></i> Φόρτωση Αποθηκευμένου
                             </button>
 
                             <button class="btn btn-outline" onclick="showProgramOnMap()" id="show-program-btn">
@@ -6908,7 +6931,22 @@ function saveUserProgram() {
     
     // 5. ΑΠΟΘΗΚΕΥΣΗ ΣΤΟ LOCALSTORAGE
     saveState();
-    
+
+    // 5b. Αποθήκευση σε dedicated key για εύκολη επαναφορά
+    const existingSave = getSavedItineraryInfo();
+    try {
+        localStorage.setItem('takemytrip_saved_itinerary', JSON.stringify({
+            destination: state.selectedDestination || '',
+            savedAt: new Date().toISOString(),
+            userProgram: userProgramCopy
+        }));
+    } catch(e) { console.error('❌ Αποτυχία dedicated save:', e); }
+
+    updateSavedItineraryBanner();
+    if (existingSave) {
+        console.log('📝 Αντικατάσταση προηγούμενης αποθήκευσης για:', existingSave.destination);
+    }
+
     console.log('📊 [DEBUG] Τελικά state:', {
         userProgram: state.userProgram,
         geoProgram: state.geographicProgram,
@@ -6922,6 +6960,64 @@ function saveUserProgram() {
     // 7. Ανανέωση εμφάνισης
     renderProgramDays();
     renderAvailableActivities();
+}
+
+// ==================== SAVED ITINERARY MANAGEMENT ====================
+
+const SAVED_ITINERARY_KEY = 'takemytrip_saved_itinerary';
+
+function getSavedItineraryInfo() {
+    try {
+        const raw = localStorage.getItem(SAVED_ITINERARY_KEY);
+        return raw ? JSON.parse(raw) : null;
+    } catch (e) { return null; }
+}
+
+function updateSavedItineraryBanner() {
+    const banner = document.getElementById('saved-itinerary-banner');
+    if (!banner) return;
+    const info = getSavedItineraryInfo();
+    if (info && info.userProgram && info.userProgram.days && info.userProgram.days.length > 0) {
+        const totalDays = info.userProgram.days.length;
+        const totalActivities = info.userProgram.days.reduce((s, d) => s + (Array.isArray(d) ? d.length : 0), 0);
+        const savedDate = info.savedAt ? new Date(info.savedAt).toLocaleDateString('el-GR') : '';
+        const titleEl = document.getElementById('saved-banner-title');
+        const subtitleEl = document.getElementById('saved-banner-subtitle');
+        if (titleEl) titleEl.textContent = `Αποθηκευμένο πρόγραμμα για ${info.destination || 'ταξίδι'}`;
+        if (subtitleEl) subtitleEl.textContent =
+            `${totalDays} ${totalDays === 1 ? 'μέρα' : 'μέρες'} • ${totalActivities} δραστηριότητες${savedDate ? ' • ' + savedDate : ''}`;
+        banner.style.display = 'flex';
+    } else {
+        banner.style.display = 'none';
+    }
+}
+
+function loadSavedItinerary() {
+    const info = getSavedItineraryInfo();
+    if (!info || !info.userProgram || !info.userProgram.days || info.userProgram.days.length === 0) {
+        showToast('⚠️ Δεν βρέθηκε αποθηκευμένο πρόγραμμα.', 'warning');
+        return;
+    }
+    state.userProgram = JSON.parse(JSON.stringify(info.userProgram));
+    userProgram = JSON.parse(JSON.stringify(info.userProgram));
+    saveState();
+    setTimeout(() => {
+        updateDaysDropdownFromProgram();
+        renderProgramDays();
+        renderAvailableActivities();
+        const totalDays = info.userProgram.days.length;
+        showToast(
+            `✅ Φορτώθηκε πρόγραμμα για ${info.destination || 'ταξίδι'} (${totalDays} ${totalDays === 1 ? 'μέρα' : 'μέρες'})!`,
+            'success'
+        );
+    }, 100);
+}
+
+function deleteSavedItinerary() {
+    if (!confirm('Να διαγραφεί οριστικά το αποθηκευμένο πρόγραμμα;')) return;
+    localStorage.removeItem(SAVED_ITINERARY_KEY);
+    updateSavedItineraryBanner();
+    showToast('🗑️ Το αποθηκευμένο πρόγραμμα διαγράφηκε.', 'info');
 }
 
 // ==================== SYNCHRONIZE MAP WITH PROGRAM ====================
@@ -7241,6 +7337,8 @@ window.setupProgramDays = setupProgramDays;
 window.saveUserProgram = saveUserProgram;
 window.showProgramOnMap = showProgramOnMap;
 window.resetUserProgram = resetUserProgram;
+window.loadSavedItinerary = loadSavedItinerary;
+window.deleteSavedItinerary = deleteSavedItinerary;
 window.handleProgramDragStart = handleProgramDragStart;
 window.handleProgramDragOver = handleProgramDragOver;
 window.handleProgramDragLeave = handleProgramDragLeave;
