@@ -7856,10 +7856,120 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// ==================== PDF EXPORT ====================
-async function exportItineraryToPDF() {
-    const PDF_SERVER = 'http://localhost:3001/api/generate-pdf';
+// ==================== CLIENT-SIDE PDF EXPORT ====================
 
+function buildItineraryPDFContent(data) {
+    const { destination, totalDays, days } = data;
+
+    const dayColors = [
+        '#4F46E5', '#10B981', '#F59E0B', '#EF4444',
+        '#8B5CF6', '#EC4899', '#14B8A6', '#F97316'
+    ];
+
+    function dayColor(n) { return dayColors[(n - 1) % dayColors.length]; }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    function renderVenueRow(icon, label, venue) {
+        if (!venue) return '';
+        if (typeof venue === 'string' && !venue.trim()) return '';
+        const name = typeof venue === 'object' ? (venue.name || '') : '';
+        const desc = typeof venue === 'object' ? (venue.description || '') : (typeof venue === 'string' ? venue : '');
+        if (!name && !desc) return '';
+        return `<div class="venue-row">
+            <span class="venue-icon">${icon}</span>
+            <div class="venue-body">
+                <span class="venue-label">${label}</span>
+                ${name ? `<span class="venue-name">${escapeHtml(name)}</span>` : ''}
+                ${desc ? `<span class="venue-desc">${escapeHtml(desc)}</span>` : ''}
+            </div>
+        </div>`;
+    }
+
+    const daysHTML = days.map(day => {
+        const color = dayColor(day.dayNumber);
+        const activitiesHTML = day.activities.map((act, idx) => `
+            <div class="pdf-activity">
+                <div class="pdf-activity-header">
+                    <span class="pdf-activity-num" style="background:${color};">${idx + 1}</span>
+                    <span class="pdf-activity-name">${escapeHtml(act.name)}</span>
+                    ${act.duration_hours ? `<span class="pdf-activity-duration">&#9200; ${act.duration_hours}h</span>` : ''}
+                </div>
+                ${act.description ? `<p class="pdf-activity-desc">${escapeHtml(act.description)}</p>` : ''}
+                ${act.notes && act.notes.length > 0 ? `<div class="pdf-activity-notes">&#9888; ${act.notes.map(escapeHtml).join(' &bull; ')}</div>` : ''}
+                <div class="pdf-venues">
+                    ${renderVenueRow('&#127869;', 'Κοντινό Εστιατόριο', act.restaurant)}
+                    ${renderVenueRow('&#9749;', 'Κοντινό Καφέ', act.cafe)}
+                </div>
+            </div>`).join('');
+
+        return `<div class="pdf-day-card" style="border-left-color:${color};">
+            <div class="pdf-day-header" style="background:${color};">
+                <span class="pdf-day-title">Μέρα ${day.dayNumber}</span>
+                <span class="pdf-day-meta">${day.activities.length} δραστηριότητ${day.activities.length === 1 ? 'α' : 'ες'}</span>
+            </div>
+            <div class="pdf-day-body">
+                ${activitiesHTML || '<p class="pdf-empty-day">Ελεύθερη μέρα</p>'}
+            </div>
+        </div>`;
+    }).join('');
+
+    const css = `
+        .pdf-root { font-family: Arial, sans-serif; font-size: 13px; color: #1a202c; background: #fff; padding: 10px; }
+        .pdf-cover { padding: 30px 20px 20px; text-align: center; border-bottom: 3px solid #4F46E5; margin-bottom: 24px; }
+        .pdf-cover h1 { font-size: 24px; color: #4F46E5; margin: 0 0 6px; }
+        .pdf-cover .pdf-subtitle { font-size: 14px; color: #64748b; margin: 0 0 10px; }
+        .pdf-cover .pdf-meta { display: flex; justify-content: center; gap: 20px; font-size: 12px; color: #475569; }
+        .pdf-day-card { border-left: 5px solid #4F46E5; margin-bottom: 20px; border-radius: 6px; overflow: hidden; }
+        .pdf-day-header { padding: 8px 14px; display: flex; align-items: center; justify-content: space-between; color: #fff; }
+        .pdf-day-title { font-size: 15px; font-weight: 700; }
+        .pdf-day-meta { font-size: 11px; opacity: 0.9; }
+        .pdf-day-body { padding: 10px 14px; background: #fafafa; }
+        .pdf-activity { background: #fff; border-radius: 5px; padding: 10px; margin-bottom: 8px; border: 1px solid #e2e8f0; }
+        .pdf-activity:last-child { margin-bottom: 0; }
+        .pdf-activity-header { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+        .pdf-activity-num { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; color: #fff; font-size: 10px; font-weight: 700; flex-shrink: 0; }
+        .pdf-activity-name { font-weight: 700; font-size: 13px; color: #1e293b; flex: 1; }
+        .pdf-activity-duration { font-size: 11px; color: #64748b; white-space: nowrap; }
+        .pdf-activity-desc { font-size: 12px; color: #475569; line-height: 1.5; margin-bottom: 5px; }
+        .pdf-activity-notes { font-size: 11px; color: #92400e; background: #fef3c7; border-left: 3px solid #f59e0b; padding: 4px 7px; border-radius: 3px; margin-bottom: 5px; }
+        .pdf-venues { display: flex; flex-direction: column; gap: 4px; margin-top: 5px; }
+        .venue-row { display: flex; align-items: flex-start; gap: 6px; background: #f8fafc; border-radius: 4px; padding: 4px 7px; font-size: 12px; }
+        .venue-icon { font-size: 12px; flex-shrink: 0; margin-top: 1px; }
+        .venue-body { display: flex; flex-direction: column; gap: 1px; }
+        .venue-label { font-size: 10px; font-weight: 700; text-transform: uppercase; color: #94a3b8; letter-spacing: 0.5px; }
+        .venue-name { font-weight: 600; color: #1e293b; }
+        .venue-desc { color: #475569; }
+        .pdf-empty-day { color: #94a3b8; font-style: italic; padding: 8px 0; }
+        .pdf-footer { margin-top: 24px; padding-top: 10px; border-top: 1px solid #e2e8f0; text-align: center; font-size: 11px; color: #94a3b8; }
+    `;
+
+    const totalActivities = days.reduce((s, d) => s + d.activities.length, 0);
+    const bodyHTML = `
+        <div class="pdf-cover">
+            <h1>&#9992; ${escapeHtml(destination || 'Ταξιδιωτικό Πρόγραμμα')}</h1>
+            <p class="pdf-subtitle">Ημερήσιο Πρόγραμμα</p>
+            <div class="pdf-meta">
+                <span>&#128197; ${totalDays} ${totalDays === 1 ? 'Ημέρα' : 'Ημέρες'}</span>
+                <span>&#128205; ${totalActivities} Δραστηριότητες</span>
+                <span>&#128467; ${new Date().toLocaleDateString('el-GR')}</span>
+            </div>
+        </div>
+        ${daysHTML}
+        <div class="pdf-footer">Δημιουργήθηκε από τον Ταξιδιωτικό Οργανωτή &bull; ${new Date().toLocaleString('el-GR')}</div>
+    `;
+
+    return { css, bodyHTML };
+}
+
+async function exportItineraryToPDF() {
     const statusEl = document.getElementById('pdf-export-status');
     const btnEl = document.getElementById('export-pdf-btn');
 
@@ -7871,24 +7981,26 @@ async function exportItineraryToPDF() {
         }
     }
 
-    // Validate: need a saved program
     if (!userProgram || !userProgram.days || userProgram.days.length === 0) {
         showToast('⚠️ Αποθηκεύστε πρώτα το πρόγραμμά σας', 'warning');
+        return;
+    }
+
+    if (typeof html2canvas === 'undefined' || typeof jspdf === 'undefined') {
+        showToast('❌ Η βιβλιοθήκη PDF δεν φορτώθηκε. Ελέγξτε τη σύνδεσή σας.', 'error');
         return;
     }
 
     if (btnEl) { btnEl.disabled = true; btnEl.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Δημιουργία PDF...'; }
     setStatus('⏳ Δημιουργία PDF, παρακαλώ περιμένετε...', '#4F46E5');
 
+    let wrapper = null;
     try {
-        // Build payload: enrich each activity with full restaurant/cafe data
         const days = userProgram.days.map((dayActivities, index) => {
             const activities = dayActivities.map(act => {
-                // Look up full activity data from city activities
                 const full = (state.currentCityActivities || []).find(a =>
                     a.id === act.id || a.name === act.name
                 ) || act;
-
                 return {
                     name: full.name || act.name || '',
                     description: full.description || act.description || '',
@@ -7898,36 +8010,82 @@ async function exportItineraryToPDF() {
                     cafe: full.cafe || null
                 };
             });
-
             return { dayNumber: index + 1, activities };
         });
 
-        const payload = {
+        const data = {
             destination: state.selectedDestination || 'Ταξίδι',
             totalDays: userProgram.totalDays || days.length,
             days
         };
 
-        const response = await fetch(PDF_SERVER, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
+        const { css, bodyHTML } = buildItineraryPDFContent(data);
+
+        // Build hidden off-screen container
+        wrapper = document.createElement('div');
+        wrapper.style.cssText = 'position:absolute;left:-9999px;top:0;width:794px;background:#ffffff;';
+
+        const styleEl = document.createElement('style');
+        styleEl.textContent = css;
+        wrapper.appendChild(styleEl);
+
+        const contentEl = document.createElement('div');
+        contentEl.className = 'pdf-root';
+        contentEl.innerHTML = bodyHTML;
+        wrapper.appendChild(contentEl);
+
+        document.body.appendChild(wrapper);
+
+        // Render to canvas
+        const canvas = await html2canvas(wrapper, {
+            scale: 2,
+            backgroundColor: '#ffffff',
+            useCORS: true,
+            logging: false,
+            allowTaint: false
         });
 
-        if (!response.ok) {
-            const err = await response.json().catch(() => ({ error: 'Unknown error' }));
-            throw new Error(err.error || `Server error ${response.status}`);
+        // A4 dimensions in mm
+        const PAGE_W = 210;
+        const PAGE_H = 297;
+        const MARGIN = 10;
+        const contentWidthMM = PAGE_W - MARGIN * 2;
+        const contentHeightMM = PAGE_H - MARGIN * 2;
+
+        // How tall (in px) does one PDF page's content area represent on the canvas?
+        const pxPerMM = canvas.width / contentWidthMM;
+        const pageHeightPx = Math.floor(contentHeightMM * pxPerMM);
+
+        const pdf = new jspdf.jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+
+        let yPx = 0;
+        let pageIndex = 0;
+        while (yPx < canvas.height) {
+            if (pageIndex > 0) pdf.addPage();
+
+            const sliceH = Math.min(pageHeightPx, canvas.height - yPx);
+
+            // Draw this slice onto a temporary canvas
+            const pageCanvas = document.createElement('canvas');
+            pageCanvas.width = canvas.width;
+            pageCanvas.height = sliceH;
+            const ctx = pageCanvas.getContext('2d');
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+            ctx.drawImage(canvas, 0, yPx, canvas.width, sliceH, 0, 0, canvas.width, sliceH);
+
+            const imgData = pageCanvas.toDataURL('image/jpeg', 0.95);
+            const sliceHeightMM = sliceH / pxPerMM;
+            pdf.addImage(imgData, 'JPEG', MARGIN, MARGIN, contentWidthMM, sliceHeightMM);
+
+            yPx += sliceH;
+            pageIndex++;
         }
 
-        const blob = await response.blob();
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `itinerary-${(state.selectedDestination || 'trip').replace(/\s+/g, '-')}.pdf`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+        const safeDestination = (data.destination || 'trip')
+            .normalize('NFD').replace(/[̀-ͯ]/g, '')
+            .replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').toLowerCase() || 'itinerary';
+        pdf.save(`itinerary-${safeDestination}.pdf`);
 
         setStatus('✅ Το PDF κατεβάστηκε επιτυχώς!', '#059669');
         showToast('✅ Το πρόγραμμα εξήχθη ως PDF!', 'success');
@@ -7936,8 +8094,9 @@ async function exportItineraryToPDF() {
     } catch (err) {
         console.error('PDF export error:', err);
         setStatus(`❌ Σφάλμα: ${err.message}`, '#EF4444');
-        showToast('❌ Αποτυχία εξαγωγής PDF. Βεβαιωθείτε ότι ο server τρέχει.', 'error');
+        showToast('❌ Αποτυχία εξαγωγής PDF.', 'error');
     } finally {
+        if (wrapper && wrapper.parentNode) wrapper.parentNode.removeChild(wrapper);
         if (btnEl) { btnEl.disabled = false; btnEl.innerHTML = '<i class="fas fa-file-pdf"></i> Εξαγωγή PDF'; }
     }
 }
