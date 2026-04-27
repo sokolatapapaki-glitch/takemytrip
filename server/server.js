@@ -19,26 +19,31 @@ app.use((req, res, next) => {
 });
 
 // ==================== PDF GENERATION ====================
-
 async function generatePDF(html) {
     const browser = await puppeteer.launch({
-    executablePath: CHROMIUM_PATH || undefined,
-    args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage'
-    ]
-});
-        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage'
+        ]
     });
+
     try {
         const page = await browser.newPage();
+
         await page.setContent(html, { waitUntil: 'networkidle0' });
+
         const pdf = await page.pdf({
             format: 'A4',
             printBackground: true,
-            margin: { top: '20mm', right: '15mm', bottom: '20mm', left: '15mm' }
+            margin: {
+                top: '20mm',
+                right: '15mm',
+                bottom: '20mm',
+                left: '15mm'
+            }
         });
+
         return pdf;
     } finally {
         await browser.close();
