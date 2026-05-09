@@ -34,6 +34,7 @@ def _apply_preference_weights(
     weights: Dict[str, float],
     preferences: List[str],
     style: str,
+    pacing_mode: str = "balanced",
 ) -> Dict[str, float]:
     w = weights.copy()
 
@@ -66,6 +67,32 @@ def _apply_preference_weights(
         w["priority"] += 0.05
         w["fatigue"] -= 0.05
 
+    # Pacing-mode adjustments: shift objective focus to match distribution strategy
+    if pacing_mode == "compact":
+        # Reward tight geographic packing; penalise imbalanced days less
+        w["cluster"]  += 0.10
+        w["distance"] += 0.05
+        w["balance"]  -= 0.10
+        w["preference"] -= 0.05
+    elif pacing_mode == "balanced":
+        # Reward even day-to-day distribution above all else
+        w["balance"]  += 0.15
+        w["cluster"]  -= 0.05
+        w["distance"] -= 0.05
+        w["fatigue"]  -= 0.05
+    elif pacing_mode == "relaxed":
+        # Reward low-fatigue, leisurely days; coverage matters less
+        w["fatigue"]    += 0.15
+        w["preference"] += 0.05
+        w["priority"]   -= 0.10
+        w["distance"]   -= 0.10
+    elif pacing_mode == "intensive":
+        # Reward high priority coverage and geographic efficiency
+        w["priority"]   += 0.15
+        w["cluster"]    += 0.05
+        w["fatigue"]    -= 0.15
+        w["preference"] -= 0.05
+
     # Normalise so weights sum to 1
     total = sum(w.values())
     return {k: max(0.0, v / total) for k, v in w.items()}
@@ -88,6 +115,7 @@ class ItineraryScorer:
             _BASE_WEIGHTS,
             settings.preferences,
             settings.travel_style,
+            getattr(settings, "pacing_mode", "balanced"),
         )
 
     # ── per-day score ─────────────────────────────────────────────────────────

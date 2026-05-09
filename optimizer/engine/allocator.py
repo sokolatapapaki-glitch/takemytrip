@@ -6,8 +6,11 @@ Strategy
 1. Group attractions into geographic clusters (supplied by clustering.py).
 2. Estimate the time budget required by each cluster (visit durations +
    intra-cluster travel).
-3. Pack clusters into days using a modified First-Fit-Decreasing bin-packing
-   algorithm, then improve balance with a local-search swap pass.
+3. Pack clusters into days using a strategy determined by pacing_mode:
+   - compact   : First-Fit-Decreasing (minimise active days)
+   - balanced  : Least-Loaded-First across all available days (spread evenly)
+   - relaxed   : FFD with reduced per-day capacity (lighter schedules)
+   - intensive : FFD with increased per-day tolerance (denser schedules)
 4. Honour the user's total_days constraint: if fewer days are needed, spare
    days are recorded as "free days".
 5. Respect per-attraction constraints: fixed_time, preferred_time_of_day, and
@@ -66,6 +69,16 @@ def _travel_style_multiplier(style: str) -> float:
     return {"relaxed": 0.75, "balanced": 1.0, "intensive": 1.25}.get(style, 1.0)
 
 
+# Per-pacing-mode multiplier applied to effective_capacity before subtracting lunch.
+# compact/balanced keep full capacity; relaxed cuts it; intensive pushes it slightly higher.
+_PACING_CAPACITY_MULTIPLIERS: Dict[str, float] = {
+    "compact":   1.00,
+    "balanced":  1.00,
+    "relaxed":   0.65,
+    "intensive": 1.10,
+}
+
+
 # ── main allocator ────────────────────────────────────────────────────────────
 
 class DayAllocator:
@@ -83,8 +96,8 @@ class DayAllocator:
         Visit duration in minutes per attraction (0-based).
     time_matrix : np.ndarray
         (n+1)×(n+1) matrix where index 0 = hotel; attractions start at 1.
-        When accessing durations we use 0-based, but for travel-time estimates
-        within a cluster we translate 0-based → extended (+1).
+    pacing_mode : str
+        One of "compact", "balanced", "relaxed", "intensive".
     """
 
     def __init__(
@@ -97,6 +110,7 @@ class DayAllocator:
         max_hours_per_day: float,
         travel_style: str = "balanced",
         preferences: List[str] | None = None,
+        pacing_mode: str = "balanced",
     ):
         self.labels = cluster_labels
         self.c_summary = cluster_summary
@@ -106,10 +120,13 @@ class DayAllocator:
         self.max_minutes = max_hours_per_day * 60
         self.style = travel_style
         self.prefs = preferences or []
+        self.pacing_mode = pacing_mode
 
         # Effective capacity per day (travel-style adjusts pacing)
-        self.effective_capacity = self.max_minutes * _travel_style_multiplier(travel_style)
-        # Add lunch break (60 min) to budgeting — that time is consumed
+        style_mult = _travel_style_multiplier(travel_style)
+        pacing_mult = _PACING_CAPACITY_MULTIPLIERS.get(pacing_mode, 1.0)
+        self.effective_capacity = self.max_minutes * style_mult * pacing_mult
+
         self.lunch_minutes = 60
         self.net_capacity = max(60, self.effective_capacity - self.lunch_minutes)
 
@@ -119,13 +136,20 @@ class DayAllocator:
         """
         Returns (day_groups, free_day_numbers).
 
-        *day_groups*    – list of lists; day_groups[d] = [attraction_idx, ...]
+        *day_groups*       – list of lists; day_groups[d] = [attraction_idx, ...]
         *free_day_numbers* – 1-based day numbers that have no planned activities
         """
-        day_groups = self._pack_clusters_into_days()
-        day_groups = self._balance_days(day_groups)
-        day_groups = self._split_overloaded_days(day_groups)
-        day_groups = self._trim_to_total_days(day_groups)
+        if self.pacing_mode == "balanced":
+            day_groups = self._spread_across_days()
+            day_groups = self._split_overloaded_days(day_groups)
+            if len(day_groups) > self.total_days:
+                day_groups = self._trim_to_total_days(day_groups)
+        else:
+            day_groups = self._pack_clusters_into_days()
+            day_groups = self._balance_days(day_groups)
+            day_groups = self._split_overloaded_days(day_groups)
+            day_groups = self._trim_to_total_days(day_groups)
+
         free_days = self._compute_free_days(day_groups)
         return day_groups, free_days
 
@@ -143,6 +167,89 @@ class DayAllocator:
                           key=lambda cid: self.c_summary[cid]["size"], reverse=True)
         return sorted(self.c_summary.keys(),
                       key=lambda cid: self.c_summary[cid]["avg_priority"], reverse=True)
+
+    def _balanced_target_capacity(self) -> int:
+        """
+        Per-day load target for balanced LLF distribution.
+
+        Derived from total attraction time spread over total_days with a 30%
+        travel overhead, capped at net_capacity.
+        """
+        total_visit = sum(self.durations)
+        per_day = (total_visit * 1.3) / max(1, self.total_days)
+        return max(90, min(self.net_capacity, round(per_day)))
+
+    def _spread_across_days(self) -> List[List[int]]:
+        """
+        Balanced mode: Least-Loaded-First allocation across total_days buckets.
+
+        Uses a reduced per-day target capacity derived from total attraction time
+        to maximise the number of active days and minimise empty-day waste.
+        """
+        ordered = self._ordered_clusters()
+        target_cap = self._balanced_target_capacity()
+
+        # Pre-initialise all available day slots
+        day_groups: List[List[int]] = [[] for _ in range(self.total_days)]
+        day_budgets: List[int] = [0] * self.total_days
+
+        def _ranked() -> List[int]:
+            return sorted(range(self.total_days), key=lambda d: day_budgets[d])
+
+        for cid in ordered:
+            cluster_indices = self.c_summary[cid]["attraction_indices"]
+            cluster_cost = _cluster_time_budget(
+                cluster_indices, self.durations, self.time_matrix
+            )
+
+            ranked = _ranked()
+            placed = False
+
+            # Pass 1: fit within balanced target capacity (prefer emptier days)
+            for d in ranked:
+                if day_budgets[d] + cluster_cost <= target_cap:
+                    day_groups[d].extend(cluster_indices)
+                    day_budgets[d] += cluster_cost
+                    placed = True
+                    break
+
+            # Pass 2: fit within full net_capacity
+            if not placed:
+                for d in ranked:
+                    if day_budgets[d] + cluster_cost <= self.net_capacity:
+                        day_groups[d].extend(cluster_indices)
+                        day_budgets[d] += cluster_cost
+                        placed = True
+                        break
+
+            # Pass 3: cluster too large — split into individual attractions
+            if not placed and len(cluster_indices) > 1:
+                for idx in cluster_indices:
+                    single_cost = _cluster_time_budget(
+                        [idx], self.durations, self.time_matrix
+                    )
+                    sub_ranked = _ranked()
+                    sub_placed = False
+                    for d in sub_ranked:
+                        if day_budgets[d] + single_cost <= self.net_capacity:
+                            day_groups[d].append(idx)
+                            day_budgets[d] += single_cost
+                            sub_placed = True
+                            break
+                    if not sub_placed:
+                        d = sub_ranked[0]
+                        day_groups[d].append(idx)
+                        day_budgets[d] += single_cost
+                placed = True
+
+            if not placed:
+                # Single oversized attraction: force onto least-loaded day
+                d = ranked[0]
+                day_groups[d].extend(cluster_indices)
+                day_budgets[d] += cluster_cost
+
+        # Return only non-empty days; empty slots become free days
+        return [g for g in day_groups if g]
 
     def _pack_clusters_into_days(self) -> List[List[int]]:
         """First-Fit-Decreasing bin-packing of clusters → days."""
