@@ -36,7 +36,7 @@
       <span class="badge">2-opt TSP</span>
       <span class="badge">DBSCAN Clustering</span>
       <span class="badge">Constraint Scheduling</span>
-      <span class="badge">Multi-objective Scoring</span>
+      <span class="badge">4 Pacing Modes</span>
     </div>
   </div>
 </section>
@@ -47,7 +47,7 @@
   <div class="planner-grid">
 
     <!-- ── LEFT PANEL: Configuration ── -->
-    <aside class="config-panel">
+    <aside class="config-panel" id="configPanel">
       <h2 class="panel-title">Trip Configuration</h2>
 
       <!-- City preset -->
@@ -140,6 +140,35 @@
         </div>
       </div>
 
+      <!-- Pacing mode -->
+      <div class="form-section">
+        <h3 class="section-title">Pacing Mode
+          <span class="section-hint">How activities spread across your days</span>
+        </h3>
+        <div class="pacing-grid">
+          <button class="pacing-btn" data-pacing="compact">
+            <span class="pacing-icon">⚡</span>
+            <strong>Compact</strong>
+            <small>Pack into fewest days, leave free days</small>
+          </button>
+          <button class="pacing-btn active" data-pacing="balanced">
+            <span class="pacing-icon">⚖️</span>
+            <strong>Balanced</strong>
+            <small>Spread evenly across all available days</small>
+          </button>
+          <button class="pacing-btn" data-pacing="relaxed">
+            <span class="pacing-icon">🌿</span>
+            <strong>Relaxed</strong>
+            <small>Lighter days with more free time</small>
+          </button>
+          <button class="pacing-btn" data-pacing="intensive">
+            <span class="pacing-icon">🔥</span>
+            <strong>Intensive</strong>
+            <small>Maximum sights per day</small>
+          </button>
+        </div>
+      </div>
+
       <!-- Preferences -->
       <div class="form-section">
         <h3 class="section-title">Preferences</h3>
@@ -176,8 +205,8 @@
         </div>
       </div>
 
-      <button class="btn btn-primary btn-lg" id="btnOptimize">
-        <span class="btn-icon">⚡</span> Optimize Itinerary
+      <button class="btn btn-primary btn-lg generate-btn" id="btnOptimize">
+        <span class="btn-icon">⚡</span> Generate Itinerary
       </button>
     </aside>
 
@@ -187,9 +216,14 @@
       <!-- Empty state -->
       <div class="empty-state" id="emptyState">
         <div class="empty-icon">🗺️</div>
-        <h3>Configure your trip and click Optimize</h3>
-        <p>The engine will cluster attractions, optimize routes across all days,
-           then schedule each day respecting opening hours and your preferences.</p>
+        <h3>Ready to plan your trip?</h3>
+        <p>Select a city, configure your settings, and click
+           <strong>Generate Itinerary</strong>. The engine will cluster
+           attractions geographically, optimise routes across all your days,
+           then schedule each day around opening hours and your preferences.</p>
+        <button class="btn btn-primary empty-cta" id="btnQuickStart">
+          ⚡ Try Paris — 5 days, balanced
+        </button>
         <div class="algo-cards">
           <div class="algo-card">
             <strong>DBSCAN</strong>
@@ -204,8 +238,8 @@
             <span>Day allocation</span>
           </div>
           <div class="algo-card">
-            <strong>Constraint solver</strong>
-            <span>Opening hours</span>
+            <strong>4 Pacing modes</strong>
+            <span>Compact · Balanced · Relaxed · Intensive</span>
           </div>
         </div>
       </div>
@@ -214,11 +248,51 @@
       <div class="loading-state" id="loadingState" style="display:none">
         <div class="spinner"></div>
         <h3>Optimizing your itinerary…</h3>
-        <p id="loadingStep">Clustering attractions geographically…</p>
+        <div class="loading-progress" id="loadingProgress">
+          <div class="lp-step pending" data-step="1">
+            <div class="lp-dot"></div><span>Fetching city data</span>
+          </div>
+          <div class="lp-step pending" data-step="2">
+            <div class="lp-dot"></div><span>Clustering geographically</span>
+          </div>
+          <div class="lp-step pending" data-step="3">
+            <div class="lp-dot"></div><span>Allocating across days</span>
+          </div>
+          <div class="lp-step pending" data-step="4">
+            <div class="lp-dot"></div><span>Optimizing routes</span>
+          </div>
+          <div class="lp-step pending" data-step="5">
+            <div class="lp-dot"></div><span>Scoring &amp; scheduling</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error state -->
+      <div class="error-state" id="errorState" style="display:none">
+        <div class="error-icon">⚠️</div>
+        <h3>Optimization Failed</h3>
+        <p id="errorMsg">Something went wrong. Please try again.</p>
+        <div class="error-actions">
+          <button class="btn btn-primary" id="btnRetry">↻ Try Again</button>
+          <button class="btn btn-outline" id="btnStartOver">← Start Over</button>
+        </div>
       </div>
 
       <!-- Results -->
       <div id="resultsContent" style="display:none">
+
+        <!-- Results header: pacing badge + action buttons -->
+        <div class="results-header">
+          <div id="pacingSummary"></div>
+          <div class="action-bar">
+            <button class="btn btn-primary btn-sm" id="btnRegenerate">
+              <span>↻</span> Re-optimize
+            </button>
+            <button class="btn btn-outline btn-sm" id="btnAdjustSettings">
+              ⚙ Adjust Settings
+            </button>
+          </div>
+        </div>
 
         <!-- Summary bar -->
         <div class="result-summary" id="resultSummary"></div>
@@ -240,6 +314,17 @@
 
         <!-- Free days -->
         <div id="freeDays"></div>
+
+        <!-- Bottom action bar -->
+        <div class="bottom-action-bar">
+          <button class="btn btn-primary" id="btnRegenerateBottom">
+            ↻ Re-optimize with Current Settings
+          </button>
+          <button class="btn btn-outline" id="btnAdjustSettingsBottom">
+            ⚙ Change Settings
+          </button>
+        </div>
+
       </div>
 
     </section>
@@ -288,12 +373,12 @@
       <div class="how-card">
         <div class="how-num">2</div>
         <h4>DBSCAN Clustering</h4>
-        <p>Geographic clusters group nearby attractions. Cluster radius adapts to travel style. Cluster-coherent days minimize pointless cross-city movement.</p>
+        <p>Geographic clusters group nearby attractions. Cluster radius adapts to travel style and pacing mode. Cluster-coherent days minimize pointless cross-city movement.</p>
       </div>
       <div class="how-card">
         <div class="how-num">3</div>
-        <h4>Day Allocation</h4>
-        <p>Modified First-Fit-Decreasing bin-packing assigns clusters to days. A local-search swap pass then balances load across days. Days that aren't needed become "free days".</p>
+        <h4>Pacing Modes</h4>
+        <p><strong>Compact</strong> packs into fewest days. <strong>Balanced</strong> spreads evenly across all days. <strong>Relaxed</strong> gives lighter schedules. <strong>Intensive</strong> maximizes coverage per day.</p>
       </div>
       <div class="how-card">
         <div class="how-num">4</div>
@@ -308,7 +393,7 @@
       <div class="how-card">
         <div class="how-num">6</div>
         <h4>Multi-objective Scoring</h4>
-        <p>Weighted scoring covers: distance efficiency, day balance, fatigue, cluster coherence, preference match, and priority coverage. Weights adapt to your travel style.</p>
+        <p>Weighted scoring covers distance efficiency, day balance, fatigue, cluster coherence, preference match, and priority coverage. Weights adapt dynamically to your pacing mode.</p>
       </div>
     </div>
   </div>

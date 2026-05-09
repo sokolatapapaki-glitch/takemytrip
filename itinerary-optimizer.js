@@ -6,12 +6,11 @@
 
 const API_BASE = window.location.origin;
 
-// ── Colour palette for day clusters ──────────────────────────────────────────
+// ── Colour palettes ───────────────────────────────────────────────────────────
 const DAY_COLORS = [
   '#2563eb','#0d9488','#d97706','#7c3aed','#dc2626',
   '#0891b2','#059669','#c2410c','#4f46e5','#0f766e',
 ];
-
 const CLUSTER_COLORS = [
   '#3b82f6','#10b981','#f59e0b','#8b5cf6','#ef4444',
   '#06b6d4','#84cc16','#f97316','#a855f7','#14b8a6',
@@ -22,6 +21,8 @@ const state = {
   selectedCity: null,
   customAttractions: null,
   currentResult: null,
+  lastHotel: null,
+  isOptimizing: false,
   map: null,
   markers: [],
   polylines: [],
@@ -30,8 +31,12 @@ const state = {
     maxHours: 8,
     transport: 'public_transport',
     style: 'balanced',
+    pacing: 'balanced',
   },
 };
+
+// ── Panel IDs (only one visible at a time) ───────────────────────────────────
+const PANELS = ['emptyState', 'loadingState', 'errorState', 'resultsContent'];
 
 // ── Category icons ────────────────────────────────────────────────────────────
 const CAT_ICONS = {
@@ -41,7 +46,15 @@ const CAT_ICONS = {
   general: '📍',
 };
 
-// ── Available cities (fetched from API) ───────────────────────────────────────
+// ── Pacing mode metadata (icon + colours + description) ──────────────────────
+const PACING_META = {
+  COMPACT:   { icon: '⚡', color: '#7c3aed', bg: '#f5f3ff', label: 'Compact'   },
+  BALANCED:  { icon: '⚖️', color: '#0d9488', bg: '#f0fdfa', label: 'Balanced'  },
+  RELAXED:   { icon: '🌿', color: '#16a34a', bg: '#f0fdf4', label: 'Relaxed'   },
+  INTENSIVE: { icon: '🔥', color: '#dc2626', bg: '#fef2f2', label: 'Intensive' },
+};
+
+// ── Cities ────────────────────────────────────────────────────────────────────
 const CITY_META = {
   paris:     { name: 'Paris',     emoji: '🇫🇷', color: '#2563eb' },
   rome:      { name: 'Rome',      emoji: '🇮🇹', color: '#dc2626' },
@@ -56,16 +69,36 @@ document.addEventListener('DOMContentLoaded', () => {
   initSteppers();
   initTransportButtons();
   initStyleButtons();
+  initPacingButtons();
   initRangeInput();
   initModals();
+  initActionButtons();
+
   document.getElementById('btnOptimize').addEventListener('click', runOptimize);
+  document.getElementById('btnQuickStart').addEventListener('click', quickStart);
 });
+
+// ── Quick start ───────────────────────────────────────────────────────────────
+function quickStart() {
+  // Ensure Paris is selected, 5 days, balanced pacing, then generate
+  const parisBtn = document.querySelector('.city-btn[data-city="paris"]');
+  if (parisBtn) selectCity('paris', parisBtn);
+
+  document.getElementById('valTotalDays').textContent = '5';
+  state.settings.totalDays = 5;
+
+  document.querySelectorAll('.pacing-btn').forEach(b => b.classList.remove('active'));
+  const balancedPacing = document.querySelector('.pacing-btn[data-pacing="balanced"]');
+  if (balancedPacing) balancedPacing.classList.add('active');
+  state.settings.pacing = 'balanced';
+
+  runOptimize();
+}
 
 // ── City grid ─────────────────────────────────────────────────────────────────
 function initCityGrid() {
   const grid = document.getElementById('cityGrid');
   grid.innerHTML = '';
-
   Object.entries(CITY_META).forEach(([key, meta]) => {
     const btn = document.createElement('button');
     btn.className = 'city-btn';
@@ -74,10 +107,9 @@ function initCityGrid() {
     btn.addEventListener('click', () => selectCity(key, btn));
     grid.appendChild(btn);
   });
-
   // Auto-select Paris
-  const firstBtn = grid.querySelector('.city-btn');
-  if (firstBtn) firstBtn.click();
+  const first = grid.querySelector('.city-btn');
+  if (first) first.click();
 }
 
 function selectCity(city, btn) {
@@ -104,7 +136,7 @@ function initSteppers() {
   });
 }
 
-// ── Transport ─────────────────────────────────────────────────────────────────
+// ── Transport buttons ─────────────────────────────────────────────────────────
 function initTransportButtons() {
   document.querySelectorAll('.transport-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -115,13 +147,24 @@ function initTransportButtons() {
   });
 }
 
-// ── Travel style ──────────────────────────────────────────────────────────────
+// ── Travel style buttons ──────────────────────────────────────────────────────
 function initStyleButtons() {
   document.querySelectorAll('.style-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.style-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       state.settings.style = btn.dataset.style;
+    });
+  });
+}
+
+// ── Pacing mode buttons ───────────────────────────────────────────────────────
+function initPacingButtons() {
+  document.querySelectorAll('.pacing-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.pacing-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.settings.pacing = btn.dataset.pacing;
     });
   });
 }
@@ -142,13 +185,11 @@ function initModals() {
   document.getElementById('btnCustomAttractions').addEventListener('click', () => {
     modal.style.display = 'flex';
   });
-
   ['closeModal', 'closeModal2'].forEach(id => {
     document.getElementById(id).addEventListener('click', () => {
       modal.style.display = 'none';
     });
   });
-
   document.getElementById('loadCustomJson').addEventListener('click', () => {
     try {
       const raw = document.getElementById('customJson').value.trim();
@@ -160,48 +201,138 @@ function initModals() {
       modal.style.display = 'none';
       showToast(`Loaded ${parsed.length} custom attractions`);
     } catch (e) {
-      alert('Invalid JSON: ' + e.message);
+      showToast('Invalid JSON: ' + e.message, 'error');
     }
   });
-
   modal.addEventListener('click', e => {
     if (e.target === modal) modal.style.display = 'none';
   });
+}
+
+// ── Post-results action buttons ───────────────────────────────────────────────
+function initActionButtons() {
+  // Header action bar
+  document.getElementById('btnRegenerate').addEventListener('click', runOptimize);
+  document.getElementById('btnAdjustSettings').addEventListener('click', scrollToConfig);
+
+  // Bottom action bar
+  document.getElementById('btnRegenerateBottom').addEventListener('click', runOptimize);
+  document.getElementById('btnAdjustSettingsBottom').addEventListener('click', scrollToConfig);
+
+  // Error state actions
+  document.getElementById('btnRetry').addEventListener('click', runOptimize);
+  document.getElementById('btnStartOver').addEventListener('click', () => showPanel('emptyState'));
+}
+
+function scrollToConfig() {
+  document.getElementById('configPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ════════════════════════════════════════════════════════════
+// Panel management
+// ════════════════════════════════════════════════════════════
+function showPanel(which) {
+  PANELS.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.style.display = id === which ? 'block' : 'none';
+  });
+  if (which === 'loadingState') {
+    document.getElementById('loadingState')
+      .scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  if (which === 'resultsContent') {
+    document.getElementById('resultsContent')
+      .scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+// ════════════════════════════════════════════════════════════
+// Loading step progress
+// ════════════════════════════════════════════════════════════
+function resetLoadingSteps() {
+  document.querySelectorAll('.lp-step').forEach(el => {
+    el.classList.remove('active', 'done');
+    el.classList.add('pending');
+  });
+}
+
+function advanceLoadingStep(stepNum) {
+  document.querySelectorAll('.lp-step').forEach(el => {
+    const n = parseInt(el.dataset.step, 10);
+    el.classList.remove('pending', 'active', 'done');
+    if (n < stepNum)      el.classList.add('done');
+    else if (n === stepNum) el.classList.add('active');
+    else                    el.classList.add('pending');
+  });
+}
+
+// ════════════════════════════════════════════════════════════
+// Generate button state
+// ════════════════════════════════════════════════════════════
+function setGenerateBtn(loading) {
+  const btn = document.getElementById('btnOptimize');
+  btn.disabled = loading;
+  btn.innerHTML = loading
+    ? `<span class="btn-spinner"></span> Optimizing…`
+    : `<span class="btn-icon">⚡</span> Generate Itinerary`;
 }
 
 // ════════════════════════════════════════════════════════════
 // Optimization
 // ════════════════════════════════════════════════════════════
 async function runOptimize() {
+  // Guard against duplicate requests
+  if (state.isOptimizing) return;
+
+  // Validate: need a city or custom attractions
   if (!state.selectedCity && !state.customAttractions) {
-    showToast('Please select a city or add custom attractions', 'error');
+    showToast('Select a city or add custom attractions first', 'error');
+    // Shake the city grid to draw attention
+    const grid = document.getElementById('cityGrid');
+    grid.style.animation = 'none';
+    grid.offsetHeight; // reflow
+    grid.style.animation = 'shake .4s ease';
     return;
   }
 
-  showLoading(true);
+  state.isOptimizing = true;
+  setGenerateBtn(true);
+  showPanel('loadingState');
+  resetLoadingSteps();
 
   try {
-    // Fetch dataset if city selected
-    let attractions = state.customAttractions;
-    let hotelLat, hotelLon, hotelName;
+    // ── Step 1: Fetch dataset ───────────────────────────────
+    advanceLoadingStep(1);
+    let attractions, hotelLat, hotelLon, hotelName;
 
     if (state.selectedCity) {
-      setLoadingStep('Fetching city dataset…');
       const resp = await fetch(`${API_BASE}/api/datasets/${state.selectedCity}`);
-      if (!resp.ok) throw new Error(`Failed to load dataset: ${resp.status}`);
+      if (!resp.ok) throw new Error(`Failed to load dataset (HTTP ${resp.status})`);
       const data = await resp.json();
       attractions = data.attractions;
-      hotelLat = data.hotel.latitude;
-      hotelLon = data.hotel.longitude;
+      hotelLat  = data.hotel.latitude;
+      hotelLon  = data.hotel.longitude;
       hotelName = data.hotel.name;
     } else {
-      // Use centroid of custom attractions as hotel
+      attractions = state.customAttractions;
       const lats = attractions.map(a => a.latitude);
       const lons = attractions.map(a => a.longitude);
-      hotelLat = lats.reduce((a, b) => a + b, 0) / lats.length;
-      hotelLon = lons.reduce((a, b) => a + b, 0) / lons.length;
+      hotelLat  = lats.reduce((a, b) => a + b, 0) / lats.length;
+      hotelLon  = lons.reduce((a, b) => a + b, 0) / lons.length;
       hotelName = 'Your Location';
     }
+
+    if (!attractions || attractions.length === 0) {
+      throw new Error('The selected dataset contains no attractions.');
+    }
+
+    // ── Step 2: Cluster (visual only — server does the real work) ──
+    advanceLoadingStep(2);
+    await sleep(180);
+
+    // ── Step 3: Build payload + allocate ───────────────────
+    advanceLoadingStep(3);
 
     const preferences = Array.from(
       document.querySelectorAll('.pref-list input[type=checkbox]:checked')
@@ -210,23 +341,22 @@ async function runOptimize() {
     const payload = {
       attractions,
       settings: {
-        total_days: state.settings.totalDays,
-        max_hours_per_day: state.settings.maxHours,
-        hotel: { latitude: hotelLat, longitude: hotelLon, name: hotelName },
-        transport_mode: state.settings.transport,
+        total_days:                state.settings.totalDays,
+        max_hours_per_day:         state.settings.maxHours,
+        hotel:                     { latitude: hotelLat, longitude: hotelLon, name: hotelName },
+        transport_mode:            state.settings.transport,
         walking_tolerance_minutes: parseInt(document.getElementById('walkingTolerance').value, 10),
-        travel_style: state.settings.style,
+        travel_style:              state.settings.style,
+        pacing_mode:               state.settings.pacing,
         preferences,
-        start_time: document.getElementById('startTime').value,
+        start_time:          document.getElementById('startTime').value,
         lunch_break_minutes: parseInt(document.getElementById('lunchBreak').value, 10),
-        city_name: state.selectedCity || 'Custom',
+        city_name:           state.selectedCity || 'Custom',
       },
     };
 
-    setLoadingStep('Clustering attractions geographically…');
-    await sleep(300);
-    setLoadingStep('Running multi-day allocation…');
-    await sleep(200);
+    // ── Step 4: Call optimizer API ─────────────────────────
+    advanceLoadingStep(4);
 
     const optResp = await fetch(`${API_BASE}/api/optimize`, {
       method: 'POST',
@@ -235,60 +365,114 @@ async function runOptimize() {
     });
 
     if (!optResp.ok) {
-      const err = await optResp.json();
-      throw new Error(err.detail || 'Optimization failed');
+      const errBody = await optResp.json().catch(() => ({}));
+      throw new Error(errBody.detail || `Server error (HTTP ${optResp.status})`);
     }
 
-    setLoadingStep('Scheduling and scoring…');
+    // ── Step 5: Score & render ─────────────────────────────
+    advanceLoadingStep(5);
+    await sleep(150);
+
     const result = await optResp.json();
     state.currentResult = result;
+    state.lastHotel = { lat: hotelLat, lon: hotelLon, name: hotelName };
 
-    showLoading(false);
-    renderResults(result, { lat: hotelLat, lon: hotelLon, name: hotelName });
+    renderResults(result, state.lastHotel);
+    showPanel('resultsContent');
 
   } catch (err) {
-    showLoading(false);
-    showError(err.message);
+    showErrorState(err.message);
+  } finally {
+    state.isOptimizing = false;
+    setGenerateBtn(false);
   }
+}
+
+// ── Error state ───────────────────────────────────────────────────────────────
+function showErrorState(msg) {
+  document.getElementById('errorMsg').textContent = msg || 'An unexpected error occurred.';
+  showPanel('errorState');
 }
 
 // ════════════════════════════════════════════════════════════
 // Rendering
 // ════════════════════════════════════════════════════════════
 function renderResults(result, hotel) {
-  document.getElementById('emptyState').style.display = 'none';
-  document.getElementById('resultsContent').style.display = 'block';
-
+  renderPacingSummary(result);   // also strips pacing note from warnings
   renderSummary(result);
   renderScoreCard(result.scoring_breakdown);
   renderWarnings(result.warnings);
   renderMap(result, hotel);
   renderDayPlans(result.days, result.cluster_map);
   renderFreeDays(result.free_days);
+}
 
-  document.getElementById('resultsContent').scrollIntoView({ behavior: 'smooth', block: 'start' });
+// ── Pacing summary chip ───────────────────────────────────────────────────────
+function renderPacingSummary(result) {
+  const el = document.getElementById('pacingSummary');
+  if (!el) return;
+
+  // The optimizer prepends "Pacing: MODE — description" as the first warning
+  const warnings = result.warnings || [];
+  const noteIdx  = warnings.findIndex(w => w.startsWith('Pacing:'));
+  if (noteIdx === -1) { el.innerHTML = ''; return; }
+
+  const note = warnings[noteIdx];
+  result.warnings = warnings.filter((_, i) => i !== noteIdx); // remove from warnings list
+
+  const modeMatch = note.match(/Pacing: (\w+)/);
+  const modeName  = modeMatch ? modeMatch[1].toUpperCase() : 'BALANCED';
+  const meta      = PACING_META[modeName] || PACING_META.BALANCED;
+  const desc      = note.split('—')[1]?.trim() || '';
+
+  el.innerHTML = `
+    <div class="pacing-chip"
+         style="background:${meta.bg};color:${meta.color};border-color:${meta.color}40">
+      ${meta.icon} <strong>${meta.label}</strong> mode
+      ${desc ? `<span style="font-weight:400;opacity:.8">— ${desc}</span>` : ''}
+    </div>
+  `;
 }
 
 // ── Summary bar ───────────────────────────────────────────────────────────────
 function renderSummary(result) {
   const el = document.getElementById('resultSummary');
-  const totalCost = result.days.reduce((sum, d) => sum + d.total_cost, 0);
-  const totalTravel = result.days.reduce((sum, d) => sum + d.total_travel_minutes, 0);
+  const totalCost   = result.days.reduce((s, d) => s + d.total_cost, 0);
+  const totalTravel = result.days.reduce((s, d) => s + d.total_travel_minutes, 0);
 
   el.innerHTML = `
-    <div class="summary-stat"><span class="stat-val">${result.total_days_used}</span><span class="stat-lbl">Active Days</span></div>
-    <div class="summary-stat"><span class="stat-val">${result.free_days.length}</span><span class="stat-lbl">Free Days</span></div>
-    <div class="summary-stat"><span class="stat-val">${result.total_attractions}</span><span class="stat-lbl">Attractions</span></div>
-    <div class="summary-stat"><span class="stat-val">${fmtDuration(totalTravel)}</span><span class="stat-lbl">Total Travel</span></div>
-    ${totalCost > 0 ? `<div class="summary-stat"><span class="stat-val">€${totalCost.toFixed(0)}</span><span class="stat-lbl">Est. Cost</span></div>` : ''}
-    <div class="summary-stat"><span class="stat-val">${result.overall_score.toFixed(0)}</span><span class="stat-lbl">Opt. Score</span></div>
+    <div class="summary-stat">
+      <span class="stat-val">${result.total_days_used}</span>
+      <span class="stat-lbl">Active Days</span>
+    </div>
+    <div class="summary-stat">
+      <span class="stat-val">${result.free_days.length}</span>
+      <span class="stat-lbl">Free Days</span>
+    </div>
+    <div class="summary-stat">
+      <span class="stat-val">${result.total_attractions}</span>
+      <span class="stat-lbl">Attractions</span>
+    </div>
+    <div class="summary-stat">
+      <span class="stat-val">${fmtDuration(totalTravel)}</span>
+      <span class="stat-lbl">Total Travel</span>
+    </div>
+    ${totalCost > 0 ? `
+    <div class="summary-stat">
+      <span class="stat-val">€${totalCost.toFixed(0)}</span>
+      <span class="stat-lbl">Est. Cost</span>
+    </div>` : ''}
+    <div class="summary-stat">
+      <span class="stat-val">${result.overall_score.toFixed(0)}</span>
+      <span class="stat-lbl">Opt. Score</span>
+    </div>
   `;
 }
 
 // ── Score card ────────────────────────────────────────────────────────────────
 function renderScoreCard(breakdown) {
   if (!breakdown || !Object.keys(breakdown).length) return;
-  const overall = breakdown.overall || 0;
+  const overall    = breakdown.overall || 0;
   const scoreClass = scoreColorClass(overall);
 
   const dims = [
@@ -337,16 +521,11 @@ function renderWarnings(warnings) {
 
 // ── Map ───────────────────────────────────────────────────────────────────────
 function renderMap(result, hotel) {
-  // Destroy existing map
-  if (state.map) {
-    state.map.remove();
-    state.map = null;
-  }
+  if (state.map) { state.map.remove(); state.map = null; }
 
   const map = L.map('itineraryMap', { zoomControl: true });
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors',
-    maxZoom: 19,
+    attribution: '© OpenStreetMap contributors', maxZoom: 19,
   }).addTo(map);
   state.map = map;
 
@@ -354,7 +533,9 @@ function renderMap(result, hotel) {
 
   // Hotel marker
   const hotelIcon = L.divIcon({
-    html: `<div style="background:#1f2937;color:#fff;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:14px;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.4)">🏨</div>`,
+    html: `<div style="background:#1f2937;color:#fff;border-radius:50%;width:30px;height:30px;
+                display:flex;align-items:center;justify-content:center;font-size:14px;
+                border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.4)">🏨</div>`,
     className: '', iconSize: [30, 30], iconAnchor: [15, 15],
   });
   L.marker([hotel.lat, hotel.lon], { icon: hotelIcon })
@@ -362,14 +543,12 @@ function renderMap(result, hotel) {
     .addTo(map);
   bounds.push([hotel.lat, hotel.lon]);
 
-  // Render each day
   const legend = document.getElementById('mapLegend');
   legend.innerHTML = '<div class="legend-item"><div class="legend-dot" style="background:#1f2937"></div><span>Hotel</span></div>';
 
   result.days.forEach((day, di) => {
     const color = DAY_COLORS[di % DAY_COLORS.length];
     const dayCoords = [[hotel.lat, hotel.lon]];
-
     legend.innerHTML += `<div class="legend-item"><div class="legend-dot" style="background:${color}"></div><span>Day ${day.day_number}</span></div>`;
 
     day.attractions.forEach((pa, ai) => {
@@ -379,7 +558,9 @@ function renderMap(result, hotel) {
       dayCoords.push([lat, lon]);
 
       const icon = L.divIcon({
-        html: `<div style="background:${color};color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;border:2px solid #fff;box-shadow:0 2px 4px rgba(0,0,0,.3)">${ai + 1}</div>`,
+        html: `<div style="background:${color};color:#fff;border-radius:50%;width:28px;height:28px;
+                    display:flex;align-items:center;justify-content:center;font-size:11px;
+                    font-weight:800;border:2px solid #fff;box-shadow:0 2px 4px rgba(0,0,0,.3)">${ai + 1}</div>`,
         className: '', iconSize: [28, 28], iconAnchor: [14, 14],
       });
 
@@ -394,20 +575,12 @@ function renderMap(result, hotel) {
         .addTo(map);
     });
 
-    // Draw route polyline for this day
     if (dayCoords.length > 1) {
-      L.polyline(dayCoords, {
-        color,
-        weight: 2.5,
-        opacity: 0.7,
-        dashArray: '6 4',
-      }).addTo(map);
+      L.polyline(dayCoords, { color, weight: 2.5, opacity: 0.7, dashArray: '6 4' }).addTo(map);
     }
   });
 
-  if (bounds.length > 0) {
-    map.fitBounds(bounds, { padding: [40, 40] });
-  }
+  if (bounds.length > 0) map.fitBounds(bounds, { padding: [40, 40] });
 }
 
 // ── Day plans ─────────────────────────────────────────────────────────────────
@@ -416,15 +589,13 @@ function renderDayPlans(days, clusterMap) {
   container.innerHTML = '';
 
   days.forEach((day, di) => {
-    const color = DAY_COLORS[di % DAY_COLORS.length];
+    const color      = DAY_COLORS[di % DAY_COLORS.length];
     const scoreClass = scoreColorClass(day.optimization_score);
+    const attrCount  = day.attractions.length;
+    const totalMin   = day.total_duration_minutes + day.total_travel_minutes;
 
     const card = document.createElement('div');
     card.className = 'day-card';
-
-    const attrCount = day.attractions.length;
-    const totalMin = day.total_duration_minutes + day.total_travel_minutes;
-
     card.innerHTML = `
       <div class="day-header" onclick="toggleDay(this)">
         <div class="day-number-badge" style="background:${color}">D${day.day_number}</div>
@@ -440,18 +611,18 @@ function renderDayPlans(days, clusterMap) {
         ${renderDayStats(day)}
       </div>
     `;
-
     container.appendChild(card);
   });
 }
 
 function renderTimeline(day, color) {
-  if (!day.attractions.length) return '<p style="color:var(--gray-400);font-size:.85rem">No attractions scheduled.</p>';
+  if (!day.attractions.length) {
+    return '<p style="color:var(--gray-400);font-size:.85rem;padding:16px 0">No attractions scheduled.</p>';
+  }
 
   let html = '<div class="timeline">';
-
   day.attractions.forEach((pa, i) => {
-    const icon = CAT_ICONS[pa.attraction.category] || '📍';
+    const icon         = CAT_ICONS[pa.attraction.category] || '📍';
     const clusterColor = CLUSTER_COLORS[pa.cluster_id % CLUSTER_COLORS.length];
 
     html += `
@@ -466,16 +637,18 @@ function renderTimeline(day, color) {
           <span class="tl-chip category">${pa.attraction.category}</span>
           <span class="tl-chip">${pa.attraction.duration_minutes} min</span>
           ${pa.attraction.cost > 0 ? `<span class="tl-chip cost">€${pa.attraction.cost}</span>` : ''}
-          ${pa.attraction.preferred_time_of_day !== 'any' ? `<span class="tl-chip">${pa.attraction.preferred_time_of_day}</span>` : ''}
+          ${pa.attraction.preferred_time_of_day !== 'any'
+            ? `<span class="tl-chip">${pa.attraction.preferred_time_of_day}</span>` : ''}
         </div>
       </div>
     `;
 
     if (i < day.attractions.length - 1 && pa.travel_to_next_minutes > 0) {
-      const modeEmoji = modeIcon(pa.travel_to_next_mode);
       html += `
         <div class="tl-travel">
-          ${modeEmoji} <div class="tl-travel-line"></div> ${pa.travel_to_next_minutes} min
+          ${modeIcon(pa.travel_to_next_mode)}
+          <div class="tl-travel-line"></div>
+          ${pa.travel_to_next_minutes} min
         </div>
       `;
     }
@@ -486,14 +659,15 @@ function renderTimeline(day, color) {
 }
 
 function renderDayStats(day) {
-  const totalCost = day.total_cost;
   return `
     <div class="day-stats">
       <span class="day-stat">🕐 Visit time: <strong>${fmtDuration(day.total_duration_minutes)}</strong></span>
       <span class="day-stat">🚌 Travel: <strong>${fmtDuration(day.total_travel_minutes)}</strong></span>
       <span class="day-stat">🚶 Walking: <strong>${day.total_walking_minutes} min</strong></span>
-      ${totalCost > 0 ? `<span class="day-stat">💶 Cost: <strong>€${totalCost.toFixed(0)}</strong></span>` : ''}
-      ${day.cluster_ids.length > 0 ? `<span class="day-stat">📍 Clusters: <strong>${day.cluster_ids.join(', ')}</strong></span>` : ''}
+      ${day.total_cost > 0
+        ? `<span class="day-stat">💶 Cost: <strong>€${day.total_cost.toFixed(0)}</strong></span>` : ''}
+      ${day.cluster_ids.length > 0
+        ? `<span class="day-stat">📍 Clusters: <strong>${day.cluster_ids.join(', ')}</strong></span>` : ''}
     </div>
   `;
 }
@@ -502,7 +676,6 @@ function renderDayStats(day) {
 function renderFreeDays(freeDays) {
   const container = document.getElementById('freeDays');
   container.innerHTML = '';
-
   if (!freeDays || freeDays.length === 0) return;
 
   freeDays.forEach(dayNum => {
@@ -518,9 +691,9 @@ function renderFreeDays(freeDays) {
   });
 }
 
-// ── Toggle day ────────────────────────────────────────────────────────────────
+// ── Toggle day body ───────────────────────────────────────────────────────────
 window.toggleDay = function (header) {
-  const body = header.nextElementSibling;
+  const body   = header.nextElementSibling;
   const toggle = header.querySelector('.day-toggle');
   const isOpen = body.style.display !== 'none';
   body.style.display = isOpen ? 'none' : 'block';
@@ -528,44 +701,20 @@ window.toggleDay = function (header) {
 };
 
 // ════════════════════════════════════════════════════════════
-// UI helpers
+// Utilities
 // ════════════════════════════════════════════════════════════
-function showLoading(show) {
-  document.getElementById('emptyState').style.display = show ? 'none' : '';
-  document.getElementById('loadingState').style.display = show ? 'block' : 'none';
-  document.getElementById('resultsContent').style.display = 'none';
-  if (show) {
-    document.getElementById('loadingState').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-}
-
-function setLoadingStep(msg) {
-  const el = document.getElementById('loadingStep');
-  if (el) el.textContent = msg;
-}
-
-function showError(msg) {
-  document.getElementById('emptyState').style.display = 'block';
-  document.getElementById('emptyState').innerHTML = `
-    <div class="empty-icon">❌</div>
-    <h3>Optimization Failed</h3>
-    <p style="color:var(--red)">${msg}</p>
-    <button class="btn btn-outline" onclick="location.reload()">Reload</button>
-  `;
-}
-
 function showToast(msg, type = 'success') {
   const t = document.createElement('div');
   t.style.cssText = `
-    position:fixed;bottom:24px;right:24px;z-index:999;
+    position:fixed;bottom:24px;right:24px;z-index:9999;
     background:${type === 'error' ? '#dc2626' : '#16a34a'};
     color:#fff;padding:12px 20px;border-radius:8px;
-    font-size:.88rem;font-weight:600;box-shadow:0 4px 12px rgba(0,0,0,.2);
-    animation:fadeIn .2s;
+    font-size:.88rem;font-weight:600;box-shadow:0 4px 12px rgba(0,0,0,.25);
+    animation:fadeInUp .25s ease;
   `;
   t.textContent = msg;
   document.body.appendChild(t);
-  setTimeout(() => t.remove(), 3000);
+  setTimeout(() => t.remove(), 3500);
 }
 
 function scoreColorClass(score) {
