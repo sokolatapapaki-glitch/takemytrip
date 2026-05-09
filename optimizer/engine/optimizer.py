@@ -37,6 +37,18 @@ def _epsilon_for_style(style: str) -> float:
     return {"relaxed": 1.5, "balanced": 1.2, "intensive": 0.9}.get(style, 1.2)
 
 
+def _epsilon_for_pacing(pacing_mode: str, base_eps: float) -> float:
+    """
+    Adjust cluster radius for pacing mode.
+
+    - compact/intensive: tighter clusters improve geographic efficiency on dense days
+    - balanced: slightly looser to allow cluster-splitting across more days
+    - relaxed: unchanged (natural neighbourhood grouping)
+    """
+    adjustments = {"compact": -0.2, "balanced": 0.1, "relaxed": 0.0, "intensive": -0.3}
+    return max(0.3, base_eps + adjustments.get(pacing_mode, 0.0))
+
+
 def _walking_threshold_for_mode(mode: str) -> float:
     """Distance below which we always walk regardless of transport mode."""
     return {"walking": 99.0, "cycling": 0.4, "public_transport": 0.5, "taxi": 0.3}.get(mode, 0.5)
@@ -78,7 +90,10 @@ class ItineraryOptimizer:
 
         # Step 2: cluster (only on attraction coords, not hotel)
         attr_coords = coords[1:]  # exclude hotel
-        eps_km = _epsilon_for_style(self.settings.travel_style)
+        pacing = getattr(self.settings, "pacing_mode", "balanced")
+        eps_km = _epsilon_for_pacing(
+            pacing, _epsilon_for_style(self.settings.travel_style)
+        )
         raw_labels = cluster_attractions(attr_coords, epsilon_km=eps_km)
         c_summary = cluster_summary(
             raw_labels,
@@ -97,6 +112,7 @@ class ItineraryOptimizer:
             max_hours_per_day=self.settings.max_hours_per_day,
             travel_style=self.settings.travel_style,
             preferences=self.settings.preferences,
+            pacing_mode=pacing,
         )
         day_groups_0based, free_days = allocator.allocate()
 
@@ -196,6 +212,16 @@ class ItineraryOptimizer:
             self.attractions[i].id: int(raw_labels[i])
             for i in range(len(self.attractions))
         }
+
+        # Emit an informational note about the active pacing strategy
+        pacing_notes = {
+            "compact":   "Pacing: COMPACT — activities packed into fewest possible days.",
+            "balanced":  "Pacing: BALANCED — activities spread evenly across available days.",
+            "relaxed":   "Pacing: RELAXED — lighter daily schedules with more free time.",
+            "intensive": "Pacing: INTENSIVE — maximum attractions per day.",
+        }
+        if pacing in pacing_notes:
+            self._warnings.insert(0, pacing_notes[pacing])
 
         return ItineraryResult(
             days=day_plans,

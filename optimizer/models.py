@@ -39,6 +39,7 @@ class UserSettings(BaseModel):
     transport_mode: Literal["walking", "cycling", "public_transport", "taxi"] = "public_transport"
     walking_tolerance_minutes: float = Field(default=30.0, ge=0.0, le=120.0)
     travel_style: Literal["relaxed", "balanced", "intensive"] = "balanced"
+    pacing_mode: Literal["compact", "balanced", "relaxed", "intensive"] = "balanced"
     preferences: List[Literal[
         "minimize_walking",
         "minimize_transport",
