@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Travel Itinerary Optimizer</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="itinerary-optimizer.css" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════════ HEADER ═══════════════════════════════ -->
+<header class="app-header">
+  <div class="header-inner">
+    <div class="header-logo">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+        <circle cx="16" cy="16" r="15" fill="#2563eb" stroke="#1d4ed8" stroke-width="1"/>
+        <path d="M16 6 L20 14 L28 15 L22 21 L24 29 L16 25 L8 29 L10 21 L4 15 L12 14 Z"
+              fill="#fff" fill-opacity="0.9"/>
+      </svg>
+      <span>Itinerary Optimizer</span>
+    </div>
+    <nav class="header-nav">
+      <a href="#planner" class="nav-link active">Planner</a>
+      <a href="#about" class="nav-link">About</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════ HERO ════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>Intelligent Multi-Day<br/><span class="hero-accent">Travel Optimizer</span></h1>
+    <p class="hero-sub">Deterministic algorithms. Geographic clustering. No AI. Just smart routing.</p>
+    <div class="hero-badges">
+      <span class="badge">2-opt TSP</span>
+      <span class="badge">DBSCAN Clustering</span>
+      <span class="badge">Constraint Scheduling</span>
+      <span class="badge">Multi-objective Scoring</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ PLANNER ═════════════════════════════ -->
+<main id="planner" class="container">
+
+  <div class="planner-grid">
+
+    <!-- ── LEFT PANEL: Configuration ── -->
+    <aside class="config-panel">
+      <h2 class="panel-title">Trip Configuration</h2>
+
+      <!-- City preset -->
+      <div class="form-section">
+        <h3 class="section-title">City Dataset</h3>
+        <div class="city-grid" id="cityGrid"></div>
+        <div class="or-divider"><span>or</span></div>
+        <button class="btn btn-outline btn-sm" id="btnCustomAttractions">
+          + Add custom attractions
+        </button>
+      </div>
+
+      <!-- Trip settings -->
+      <div class="form-section">
+        <h3 class="section-title">Trip Settings</h3>
+
+        <div class="form-row">
+          <label>Total Days</label>
+          <div class="stepper">
+            <button class="step-btn" data-field="totalDays" data-delta="-1">−</button>
+            <span class="step-val" id="valTotalDays">5</span>
+            <button class="step-btn" data-field="totalDays" data-delta="1">+</button>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label>Max Hours/Day</label>
+          <div class="stepper">
+            <button class="step-btn" data-field="maxHours" data-delta="-1">−</button>
+            <span class="step-val" id="valMaxHours">8</span>
+            <button class="step-btn" data-field="maxHours" data-delta="1">+</button>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label>Start Time</label>
+          <input type="time" id="startTime" class="time-input" value="09:00" />
+        </div>
+
+        <div class="form-row">
+          <label>Lunch Break</label>
+          <select id="lunchBreak" class="select-input">
+            <option value="0">No break</option>
+            <option value="30">30 min</option>
+            <option value="60" selected>1 hour</option>
+            <option value="90">1.5 hours</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Transport -->
+      <div class="form-section">
+        <h3 class="section-title">Transport Mode</h3>
+        <div class="transport-grid">
+          <button class="transport-btn active" data-mode="public_transport">
+            <span class="transport-icon">🚇</span>
+            <span>Transit</span>
+          </button>
+          <button class="transport-btn" data-mode="walking">
+            <span class="transport-icon">🚶</span>
+            <span>Walking</span>
+          </button>
+          <button class="transport-btn" data-mode="cycling">
+            <span class="transport-icon">🚲</span>
+            <span>Cycling</span>
+          </button>
+          <button class="transport-btn" data-mode="taxi">
+            <span class="transport-icon">🚕</span>
+            <span>Taxi</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Travel style -->
+      <div class="form-section">
+        <h3 class="section-title">Travel Style</h3>
+        <div class="style-grid">
+          <button class="style-btn" data-style="relaxed">
+            <span>😌</span><br/><strong>Relaxed</strong>
+            <small>Fewer sights, more breathing room</small>
+          </button>
+          <button class="style-btn active" data-style="balanced">
+            <span>⚖️</span><br/><strong>Balanced</strong>
+            <small>Optimal pace for most travelers</small>
+          </button>
+          <button class="style-btn" data-style="intensive">
+            <span>🏃</span><br/><strong>Intensive</strong>
+            <small>Maximum coverage, busy days</small>
+          </button>
+        </div>
+      </div>
+
+      <!-- Preferences -->
+      <div class="form-section">
+        <h3 class="section-title">Preferences</h3>
+        <div class="pref-list">
+          <label class="pref-item">
+            <input type="checkbox" value="group_nearby" checked /> Group nearby attractions
+          </label>
+          <label class="pref-item">
+            <input type="checkbox" value="balanced_days" /> Balanced days
+          </label>
+          <label class="pref-item">
+            <input type="checkbox" value="minimize_walking" /> Minimize walking
+          </label>
+          <label class="pref-item">
+            <input type="checkbox" value="minimize_transport" /> Minimize transport
+          </label>
+          <label class="pref-item">
+            <input type="checkbox" value="compact_itinerary" /> Compact itinerary
+          </label>
+          <label class="pref-item">
+            <input type="checkbox" value="free_time" /> Include free time
+          </label>
+        </div>
+      </div>
+
+      <!-- Walking tolerance -->
+      <div class="form-section">
+        <h3 class="section-title">Walking Tolerance</h3>
+        <input type="range" id="walkingTolerance" min="10" max="90" value="30" class="range-input" />
+        <div class="range-labels">
+          <span>10 min</span>
+          <span id="walkTolVal">30 min / day</span>
+          <span>90 min</span>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-lg" id="btnOptimize">
+        <span class="btn-icon">⚡</span> Optimize Itinerary
+      </button>
+    </aside>
+
+    <!-- ── RIGHT PANEL: Results ── -->
+    <section class="results-panel">
+
+      <!-- Empty state -->
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">🗺️</div>
+        <h3>Configure your trip and click Optimize</h3>
+        <p>The engine will cluster attractions, optimize routes across all days,
+           then schedule each day respecting opening hours and your preferences.</p>
+        <div class="algo-cards">
+          <div class="algo-card">
+            <strong>DBSCAN</strong>
+            <span>Geographic clustering</span>
+          </div>
+          <div class="algo-card">
+            <strong>2-opt TSP</strong>
+            <span>Route optimization</span>
+          </div>
+          <div class="algo-card">
+            <strong>Bin-packing</strong>
+            <span>Day allocation</span>
+          </div>
+          <div class="algo-card">
+            <strong>Constraint solver</strong>
+            <span>Opening hours</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading -->
+      <div class="loading-state" id="loadingState" style="display:none">
+        <div class="spinner"></div>
+        <h3>Optimizing your itinerary…</h3>
+        <p id="loadingStep">Clustering attractions geographically…</p>
+      </div>
+
+      <!-- Results -->
+      <div id="resultsContent" style="display:none">
+
+        <!-- Summary bar -->
+        <div class="result-summary" id="resultSummary"></div>
+
+        <!-- Map -->
+        <div class="map-container">
+          <div id="itineraryMap"></div>
+          <div class="map-legend" id="mapLegend"></div>
+        </div>
+
+        <!-- Scoring breakdown -->
+        <div class="score-card" id="scoreCard"></div>
+
+        <!-- Warnings -->
+        <div class="warnings-box" id="warningsBox" style="display:none"></div>
+
+        <!-- Day plans -->
+        <div id="dayPlans"></div>
+
+        <!-- Free days -->
+        <div id="freeDays"></div>
+      </div>
+
+    </section>
+  </div>
+
+  <!-- Custom attractions modal -->
+  <div class="modal-overlay" id="customModal" style="display:none">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Custom Attractions</h3>
+        <button class="modal-close" id="closeModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-hint">Paste a JSON array of attractions, or add them one by one.</p>
+        <textarea id="customJson" class="json-input" placeholder='[
+  {
+    "id": "my_place",
+    "title": "My Place",
+    "latitude": 48.86,
+    "longitude": 2.34,
+    "duration_minutes": 90,
+    "category": "landmark",
+    "priority_score": 8.0
+  }
+]'></textarea>
+        <div class="modal-footer-btns">
+          <button class="btn btn-outline" id="closeModal2">Cancel</button>
+          <button class="btn btn-primary" id="loadCustomJson">Load Attractions</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ═══════════════════════════════════ ABOUT ═══════════════════════════════ -->
+<section id="about" class="about-section">
+  <div class="container">
+    <h2>How It Works</h2>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-num">1</div>
+        <h4>Distance Matrix</h4>
+        <p>Haversine formula computes all-pairs distances. Travel times are estimated per transport mode (walking 4.5 km/h, transit 22 km/h, taxi 35 km/h) with boarding overhead.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">2</div>
+        <h4>DBSCAN Clustering</h4>
+        <p>Geographic clusters group nearby attractions. Cluster radius adapts to travel style. Cluster-coherent days minimize pointless cross-city movement.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">3</div>
+        <h4>Day Allocation</h4>
+        <p>Modified First-Fit-Decreasing bin-packing assigns clusters to days. A local-search swap pass then balances load across days. Days that aren't needed become "free days".</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">4</div>
+        <h4>2-opt TSP Routing</h4>
+        <p>Within each day, a nearest-neighbour seed tour is improved by 2-opt edge swaps. Or-opt relocates single nodes and pairs for further gains on longer days.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">5</div>
+        <h4>Constraint Scheduling</h4>
+        <p>Opening hours, fixed reservations, and preferred time-of-day slots are enforced. Attractions that can't fit are deferred or warned about.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">6</div>
+        <h4>Multi-objective Scoring</h4>
+        <p>Weighted scoring covers: distance efficiency, day balance, fatigue, cluster coherence, preference match, and priority coverage. Weights adapt to your travel style.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="app-footer">
+  <div class="container">
+    <p>Travel Itinerary Optimizer — deterministic planning engine, no AI required.</p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="itinerary-optimizer.js"></script>
+</body>
+</html>
