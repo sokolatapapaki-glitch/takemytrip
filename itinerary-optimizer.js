@@ -251,17 +251,17 @@ function showPanel(which) {
 // Loading step progress
 // ════════════════════════════════════════════════════════════
 function resetLoadingSteps() {
-  document.querySelectorAll('.lp-step').forEach(el => {
+  document.querySelectorAll('.ls-row').forEach(el => {
     el.classList.remove('active', 'done');
     el.classList.add('pending');
   });
 }
 
 function advanceLoadingStep(stepNum) {
-  document.querySelectorAll('.lp-step').forEach(el => {
+  document.querySelectorAll('.ls-row').forEach(el => {
     const n = parseInt(el.dataset.step, 10);
     el.classList.remove('pending', 'active', 'done');
-    if (n < stepNum)      el.classList.add('done');
+    if (n < stepNum)        el.classList.add('done');
     else if (n === stepNum) el.classList.add('active');
     else                    el.classList.add('pending');
   });
