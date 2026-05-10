@@ -11,16 +11,14 @@ GET  /health                Health check
 
 from __future__ import annotations
 import json
-import os
 from pathlib import Path
-from typing import List
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
 
-from optimizer.models import OptimizeRequest, ItineraryResult, Attraction
+from optimizer.models import OptimizeRequest, ItineraryResult
 from optimizer.engine.optimizer import ItineraryOptimizer
 
 app = FastAPI(
@@ -40,18 +38,10 @@ app.add_middleware(
 )
 
 _DATA_DIR = Path(__file__).parent / "data"
-
-# ── static frontend ───────────────────────────────────────────────────────────
-
-_ROOT_DIR = Path(__file__).parent.parent
-
-# Mount the optimizer's own static assets
-_STATIC_DIR = _ROOT_DIR / "optimizer-frontend"
-if _STATIC_DIR.exists():
-    app.mount("/static", StaticFiles(directory=str(_STATIC_DIR)), name="static")
+_ROOT_DIR  = Path(__file__).parent.parent   # /home/user/takemytrip
 
 
-# ── routes ────────────────────────────────────────────────────────────────────
+# ── API routes (must be declared before the catch-all static mount) ───────────
 
 @app.get("/health")
 def health():
@@ -79,18 +69,9 @@ def get_dataset(city: str):
 
 @app.post("/api/optimize", response_model=ItineraryResult)
 def optimize_itinerary(request: OptimizeRequest):
-    """
-    Run the full multi-day itinerary optimization pipeline.
-
-    - Clusters attractions geographically (DBSCAN)
-    - Allocates clusters to days (bin-packing + balance improvement)
-    - Optimises daily routes (2-opt TSP)
-    - Schedules visits with opening hours & constraints
-    - Scores the complete itinerary
-    """
+    """Run the full multi-day itinerary optimization pipeline."""
     if len(request.attractions) == 0:
         raise HTTPException(status_code=422, detail="At least one attraction is required.")
-
     if len(request.attractions) > 100:
         raise HTTPException(status_code=422, detail="Maximum 100 attractions per request.")
 
@@ -99,18 +80,23 @@ def optimize_itinerary(request: OptimizeRequest):
     return result
 
 
-# ── frontend entrypoint ───────────────────────────────────────────────────────
+# ── Frontend HTML entry-point ─────────────────────────────────────────────────
 
 @app.get("/optimizer", include_in_schema=False)
 @app.get("/optimizer/", include_in_schema=False)
 def serve_frontend():
     frontend = _ROOT_DIR / "itinerary-optimizer.html"
-    if frontend.exists():
-        return FileResponse(str(frontend))
-    raise HTTPException(status_code=404, detail="Frontend not found.")
+    if not frontend.exists():
+        raise HTTPException(status_code=404, detail="Frontend not found.")
+    return FileResponse(str(frontend), media_type="text/html")
 
 
 @app.get("/", include_in_schema=False)
 def root_redirect():
-    from fastapi.responses import RedirectResponse
     return RedirectResponse(url="/optimizer")
+
+
+# ── Static assets (CSS, JS and everything else in the repo root) ──────────────
+# Mounted AFTER all explicit routes so it never shadows the API.
+app.mount("/", StaticFiles(directory=str(_ROOT_DIR)), name="root_static")
+
