@@ -243,6 +243,87 @@ export function forceRefreshProgram() {
     showToast('✅ Το πρόγραμμα ανανεώθηκε!', 'success');
 }
 
+// ==================== GENERATE GEOGRAPHIC PROGRAM ====================
+
+export function generateGeographicProgram() {
+    console.log('🗺️ Δημιουργία γεωγραφικού προγράμματος...');
+
+    // Validation
+    if (!state.selectedActivities || state.selectedActivities.length === 0) {
+        showToast('⚠️ Δεν έχετε επιλέξει δραστηριότητες!', 'warning');
+        return;
+    }
+
+    if (!state.selectedDays || state.selectedDays < 1) {
+        showToast('⚠️ Παρακαλώ επιλέξτε πρώτα πόσες μέρες θα διαρκέσει το ταξίδι!', 'warning');
+        return;
+    }
+
+    // Get pacing mode from UI (or use default)
+    const pacingModeSelect = document.getElementById('pacing-mode-select');
+    const pacingModeId = pacingModeSelect ? pacingModeSelect.value : 'balanced';
+
+    console.log(`📊 Δημιουργία προγράμματος με pacing mode: ${pacingModeId}`);
+
+    // Show loading
+    const programDiv = document.getElementById('geographic-program');
+    if (programDiv) {
+        programDiv.innerHTML = `
+            <div style="padding: 60px 20px; text-align: center;">
+                <div class="loading">
+                    <i class="fas fa-map-marked-alt fa-spin fa-3x" style="color: var(--primary); margin-bottom: 20px;"></i>
+                    <h3 style="color: var(--dark); margin-bottom: 10px;">Δημιουργία Προγράμματος</h3>
+                    <p style="color: var(--gray);">
+                        Ομαδοποίηση ${state.selectedActivities.length} δραστηριοτήτων
+                        σε ${state.selectedDays} μέρες...
+                    </p>
+                </div>
+            </div>
+        `;
+    }
+
+    // Get full activity data
+    const fullActivities = state.selectedActivities.map(selected =>
+        state.currentCityActivities.find(a => a.id === selected.id) || selected
+    );
+
+    // Group activities by proximity
+    const activityGroups = window.groupActivitiesByProximity(fullActivities, 2.0);
+
+    if (!activityGroups || activityGroups.length === 0) {
+        showToast('❌ Σφάλμα στην ομαδοποίηση δραστηριοτήτων', 'warning');
+        return;
+    }
+
+    // Distribute groups to days with pacing mode
+    const daysProgram = window.distributeGroupsToDays(activityGroups, state.selectedDays, pacingModeId);
+
+    // Save to state
+    state.geographicProgram = {
+        days: daysProgram,
+        groups: activityGroups,
+        pacingMode: pacingModeId,
+        generatedAt: new Date().toISOString()
+    };
+
+    // Display the program
+    displayGeographicProgram(daysProgram, activityGroups);
+
+    // Show success message with pacing mode info
+    const pacingModes = window.PACING_MODES || {};
+    const modeName = pacingModes[pacingModeId.toUpperCase()]?.name || pacingModeId;
+    showToast(`✅ Πρόγραμμα δημιουργήθηκε με ${modeName}!`, 'success');
+
+    // Show the program section
+    const programSection = document.getElementById('geographic-program-section');
+    if (programSection) {
+        programSection.style.display = 'block';
+    }
+
+    // Save state
+    saveState();
+}
+
 // ==================== ACTIVITY SELECTION ====================
 
 export function toggleActivitySelection(activityId) {

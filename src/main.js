@@ -9,6 +9,7 @@ window.state = {
     selectedDestination: null,
     selectedDestinationId: null,
     selectedDays: 0,
+    pacingMode: 'balanced', // Default pacing mode
     familyMembers: [
         { name: "Ενήλικας 1", age: "" },
         { name: "Ενήλικας 2", age: "" }
@@ -35,6 +36,8 @@ console.log('✅ Global state initialized before module imports');
 // Data utilities and constants
 import {
     COLOR_PALETTE,
+    PACING_MODES,
+    getPacingMode,
     calculateDistance,
     getCityCoordinates,
     translateCategory,
@@ -68,6 +71,7 @@ import {
     showSavedTripModal,
     closeSavedTripModal,
     displayGeographicProgram,
+    generateGeographicProgram,
     forceRefreshProgram,
     toggleActivitySelection,
     clearSelectedActivities,
@@ -141,6 +145,8 @@ import {
 
 // Data utilities
 window.COLOR_PALETTE = COLOR_PALETTE;
+window.PACING_MODES = PACING_MODES;
+window.getPacingMode = getPacingMode;
 window.calculateDistance = calculateDistance;
 window.getCityCoordinates = getCityCoordinates;
 window.translateCategory = translateCategory;
@@ -168,6 +174,7 @@ window.showToast = showToast;
 window.showSavedTripModal = showSavedTripModal;
 window.closeSavedTripModal = closeSavedTripModal;
 window.displayGeographicProgram = displayGeographicProgram;
+window.generateGeographicProgram = generateGeographicProgram;
 window.forceRefreshProgram = forceRefreshProgram;
 
 // UI functions - Activity Selection

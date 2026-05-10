@@ -5,10 +5,12 @@
 // Import dependencies (will be provided by data.js)
 import { calculateDistance } from './data.js';
 import { COLOR_PALETTE } from './data.js';
+import { PACING_MODES, getPacingMode } from './data.js';
 
 // ==================== DISTRIBUTE GROUPS TO DAYS ====================
-export function distributeGroupsToDays(groups, totalDays) {
-    console.log(`📅 Κατανομή βασισμένη σε προσπάθεια: ${groups.length} ομάδων σε ${totalDays} μέρες`);
+export function distributeGroupsToDays(groups, totalDays, pacingModeId = 'balanced') {
+    const pacingMode = getPacingMode(pacingModeId);
+    console.log(`📅 Κατανομή με ${pacingMode.emoji} ${pacingMode.name}: ${groups.length} ομάδων σε ${totalDays} μέρες`);
 
     if (groups.length === 0 || totalDays < 1) {
         console.error('❌ Μη έγκυρα δεδομένα για κατανομή');
@@ -34,11 +36,11 @@ export function distributeGroupsToDays(groups, totalDays) {
         return (a.radius || 0) - (b.radius || 0);
     });
 
-    console.log('🎯 ΣΤΟΧΟΣ: Ισορροπία προσπάθειας με γεωγραφική συνοχή (όχι σκληρά όρια)');
+    console.log(`🎯 ΣΤΟΧΟΣ: ${pacingMode.description}`);
 
-    // 2. Distribute groups using effort-based algorithm
+    // 2. Distribute groups using effort-based algorithm with pacing mode
     sortedGroups.forEach((group, index) => {
-        const bestDayIndex = findBestDayForGroup(days, group, totalDays);
+        const bestDayIndex = findBestDayForGroup(days, group, totalDays, pacingMode);
 
         // Calculate group metrics
         const groupEffort = calculateGroupEffort(group);
@@ -144,11 +146,16 @@ export function getIntensityMultiplier(category) {
     return intensityMap[category?.toLowerCase()] || intensityMap['default'];
 }
 
-// Find the best day for a group using effort-based scoring (NO HARD CAPS)
-export function findBestDayForGroup(days, group, totalDays) {
-    // Soft guidelines (not enforced as hard limits)
-    const TARGET_EFFORT_PER_DAY = 100;  // Ideal daily effort
-    const MAX_REASONABLE_EFFORT = 200;  // Very full day, but not blocked
+// Find the best day for a group using effort-based scoring with pacing mode
+export function findBestDayForGroup(days, group, totalDays, pacingMode) {
+    // Use pacing mode parameters for optimization
+    const TARGET_EFFORT_PER_DAY = pacingMode.targetEffortPerDay;
+    const MAX_REASONABLE_EFFORT = pacingMode.maxReasonableEffort;
+    const EFFORT_PENALTY_MULT = pacingMode.effortPenaltyMultiplier;
+    const OVERAGE_PENALTY_MULT = pacingMode.overagePenaltyMultiplier;
+    const PROXIMITY_BONUS = pacingMode.proximityBonus;
+    const SPREAD_BONUS = pacingMode.emptyDaySpreadBonus;
+    const SPREAD_THRESHOLD = pacingMode.spreadThreshold;
 
     let bestDayIndex = 0;
     let bestScore = -Infinity;
@@ -163,33 +170,33 @@ export function findBestDayForGroup(days, group, totalDays) {
         let score = 0;
 
         // 1. Effort balance factor: prefer days closer to target
-        // Use a curve that gradually penalizes deviation from target
+        // Penalty scales with pacing mode preferences
         const effortDeviation = Math.abs(projectedEffort - TARGET_EFFORT_PER_DAY);
-        const effortPenalty = effortDeviation * 0.5; // Gentle penalty
+        const effortPenalty = effortDeviation * EFFORT_PENALTY_MULT;
         score -= effortPenalty;
 
-        // Extra penalty if going way over reasonable effort (but not blocking)
+        // Extra penalty if going way over reasonable effort
         if (projectedEffort > MAX_REASONABLE_EFFORT) {
-            const overagePenalty = (projectedEffort - MAX_REASONABLE_EFFORT) * 2;
+            const overagePenalty = (projectedEffort - MAX_REASONABLE_EFFORT) * OVERAGE_PENALTY_MULT;
             score -= overagePenalty;
         }
 
         // 2. Geographic proximity factor: PRIORITY - prefer days with nearby groups
         if (day.groups.length > 0 && day.center && group.center) {
             const distanceToDay = calculateDistance(day.center, group.center);
-            // Strong bonus for geographic proximity (primary constraint)
-            const proximityFactor = Math.max(0, 150 - distanceToDay * 15);
+            // Proximity bonus scales with pacing mode
+            const proximityFactor = Math.max(0, PROXIMITY_BONUS - distanceToDay * 15);
             score += proximityFactor;
         } else {
-            // If day is empty, give moderate score
-            score += 75;
+            // If day is empty, give moderate score (scaled by proximity bonus)
+            score += PROXIMITY_BONUS * 0.5;
         }
 
-        // 3. Activity spread factor: slight preference for variety
-        // Don't overfill one day when others are empty
+        // 3. Activity spread factor: varies by pacing mode
+        // Balanced/Relaxed encourage spreading, Compact/Intensive discourage it
         const daysFilled = days.filter(d => d.totalActivities > 0).length;
-        if (day.totalActivities === 0 && daysFilled < totalDays * 0.7) {
-            score += 20; // Bonus for spreading across days
+        if (day.totalActivities === 0 && daysFilled < totalDays * SPREAD_THRESHOLD) {
+            score += SPREAD_BONUS; // Can be positive (spread) or negative (compact)
         }
 
         if (score > bestScore) {

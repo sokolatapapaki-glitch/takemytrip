@@ -559,9 +559,12 @@ export function getSummaryStepHTML() {
                         Επιλέξτε πόσες μέρες θα διαρκέσει το ταξίδι σας. Το πρόγραμμα δημιουργείται αυτόματα.
                     </p>
 
-                    <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
-                        <!-- Dropdown Ημερών -->
-                        <select class="form-control" id="program-days" style="flex: 1; min-width: 200px; font-size: 16px; padding: 12px;">
+                    <!-- Dropdown Ημερών -->
+                    <div style="margin-bottom: 15px;">
+                        <label class="form-label" style="display: block; margin-bottom: 8px; font-weight: 500; color: var(--dark);">
+                            <i class="fas fa-calendar-alt"></i> Διάρκεια Ταξιδιού
+                        </label>
+                        <select class="form-control" id="program-days" style="width: 100%; font-size: 16px; padding: 12px;">
                             <option value="0" ${window.state?.selectedDays === 0 ? 'selected disabled' : 'disabled'}>-- Επιλέξτε μέρες --</option>
                             <option value="2" ${window.state?.selectedDays === 2 ? 'selected' : ''}>2 μέρες</option>
                             <option value="3" ${window.state?.selectedDays === 3 ? 'selected' : ''}>3 μέρες</option>
@@ -571,12 +574,34 @@ export function getSummaryStepHTML() {
                             <option value="10" ${window.state?.selectedDays === 10 ? 'selected' : ''}>10 μέρες</option>
                             <option value="14" ${window.state?.selectedDays === 14 ? 'selected' : ''}>14 μέρες</option>
                         </select>
-
-                        <!-- ΚΟΥΜΠΙ ΔΗΜΙΟΥΡΓΙΑΣ -->
-                        <button onclick="generateGeographicProgram()" class="btn btn-primary" style="flex: 1; min-width: 200px; padding: 12px 25px; font-size: 16px;">
-                            <i class="fas fa-map-marked-alt"></i> ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΓΡΑΜΜΑΤΟΣ
-                        </button>
                     </div>
+
+                    <!-- Pacing Mode Selector -->
+                    <div style="margin-bottom: 20px;">
+                        <label class="form-label" style="display: block; margin-bottom: 8px; font-weight: 500; color: var(--dark);">
+                            <i class="fas fa-tachometer-alt"></i> Ρυθμός Προγράμματος
+                        </label>
+                        <select class="form-control" id="pacing-mode-select" style="width: 100%; font-size: 16px; padding: 12px;">
+                            ${window.PACING_MODES ? Object.values(window.PACING_MODES).map(mode => `
+                                <option value="${mode.id}" ${(window.state?.pacingMode || 'balanced') === mode.id ? 'selected' : ''}>
+                                    ${mode.emoji} ${mode.name} - ${mode.description}
+                                </option>
+                            `).join('') : `
+                                <option value="compact">⚡ Συμπαγής - Ελαχιστοποίηση ημερών</option>
+                                <option value="balanced" selected>⚖️ Ισορροπημένο - Έξυπνη κατανομή</option>
+                                <option value="relaxed">🌴 Χαλαρό - Περισσότερος ελεύθερος χρόνος</option>
+                                <option value="intensive">🔥 Εντατικό - Μέγιστες δραστηριότητες</option>
+                            `}
+                        </select>
+                        <small style="display: block; margin-top: 6px; color: var(--gray); font-size: 13px;">
+                            Επιλέξτε πώς θέλετε να κατανεμηθούν οι δραστηριότητες στις ημέρες σας
+                        </small>
+                    </div>
+
+                    <!-- ΚΟΥΜΠΙ ΔΗΜΙΟΥΡΓΙΑΣ -->
+                    <button onclick="generateGeographicProgram()" class="btn btn-primary" style="width: 100%; padding: 14px 25px; font-size: 16px; font-weight: 600;">
+                        <i class="fas fa-map-marked-alt"></i> ΔΗΜΙΟΥΡΓΙΑ ΠΡΟΓΡΑΜΜΑΤΟΣ
+                    </button>
 
                     <!-- ΜΟΝΟ ΜΙΚΡΟ STATUS -->
                     <div id="days-display" style="margin-top: 10px; font-size: 14px; color: var(--success); font-weight: bold;">

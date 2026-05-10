@@ -8198,3 +8198,7 @@ async function exportItineraryToPDF() {
         if (btnEl) { btnEl.disabled = false; btnEl.innerHTML = '<i class="fas fa-file-pdf"></i> Εξαγωγή PDF'; }
     }
 }
+
+// ==================== WINDOW EXPORTS ====================
+// Export grouping function for use in modular code
+window.groupActivitiesByProximity = groupActivitiesByProximity;
