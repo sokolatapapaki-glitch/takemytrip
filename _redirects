@@ -1,0 +1,6 @@
+# Route the standalone optimizer page (no .html extension)
+/optimizer    /itinerary-optimizer.html    200
+
+# Proxy API calls to Netlify Functions
+/api/optimize             /.netlify/functions/optimize          200
+/api/datasets/:city       /.netlify/functions/datasets?city=:city  200
