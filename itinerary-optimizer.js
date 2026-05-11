@@ -213,6 +213,9 @@ function initModals() {
 function initActionButtons() {
   // Header action bar
   document.getElementById('btnRegenerate').addEventListener('click', runOptimize);
+  document.getElementById('btnRefreshMap').addEventListener('click', () => {
+    if (state.currentResult && state.lastHotel) renderMap(state.currentResult, state.lastHotel);
+  });
   document.getElementById('btnAdjustSettings').addEventListener('click', scrollToConfig);
 
   // Bottom action bar
@@ -558,10 +561,19 @@ function renderMap(result, hotel) {
       dayCoords.push([lat, lon]);
 
       const icon = L.divIcon({
-        html: `<div style="background:${color};color:#fff;border-radius:50%;width:28px;height:28px;
-                    display:flex;align-items:center;justify-content:center;font-size:11px;
-                    font-weight:800;border:2px solid #fff;box-shadow:0 2px 4px rgba(0,0,0,.3)">${ai + 1}</div>`,
-        className: '', iconSize: [28, 28], iconAnchor: [14, 14],
+        html: `<div style="background:${color};color:#fff;border-radius:50%;width:34px;height:34px;
+                    display:flex;align-items:center;justify-content:center;font-size:15px;
+                    font-weight:800;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.4);
+                    position:relative;">
+                 ${day.day_number}
+                 <span style="position:absolute;top:-5px;right:-5px;background:#fff;color:${color};
+                              border-radius:50%;width:15px;height:15px;
+                              display:flex;align-items:center;justify-content:center;
+                              font-size:8px;font-weight:900;border:1.5px solid ${color};line-height:1;">
+                   ${ai + 1}
+                 </span>
+               </div>`,
+        className: '', iconSize: [34, 34], iconAnchor: [17, 17],
       });
 
       L.marker([lat, lon], { icon })
