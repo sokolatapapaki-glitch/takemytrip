@@ -20,7 +20,7 @@ const BASE_WEIGHTS = {
   exhaustion: 0.12, timing: 0.10,
 };
 
-// ── Night / safety restrictions ───────────────────────────────────────────────
+// ── Night / safety restrictions ────────────────────────────────────────────
 
 // Hard cutoff: these categories must not be scheduled after NIGHT_CUTOFF_HOUR
 const NIGHT_RESTRICTED_CATS = new Set([
@@ -43,13 +43,13 @@ const EVENING_OK_CATS = new Set([
 const SUNSET_HOUR       = 20; // 20:00 – soft outdoor warning
 const NIGHT_CUTOFF_HOUR = 21; // 21:00 – hard cutoff for NIGHT_RESTRICTED_CATS
 
-// ── Daily hard limits ─────────────────────────────────────────────────────────
+// ── Daily hard limits ─────────────────────────────────────────────────
 
 const MAX_TRANSIT_PER_DAY_MIN = 180; // 3 h cumulative transit
 const MAX_DAY_SPAN_MIN        = 12 * 60; // 12 h from first departure to last end
 const HEAVY_TRANSFER_MIN      = 90;  // warn/penalise single legs > 90 min
 
-// ── Math helpers ──────────────────────────────────────────────────────────────
+// ── Math helpers ──────────────────────────────────────────────────────────
 
 function haversineKm(lat1, lon1, lat2, lon2) {
   const phi1 = lat1 * Math.PI / 180, phi2 = lat2 * Math.PI / 180;
@@ -232,7 +232,7 @@ function allocateDays(clusterLabels, cSummary, durations, timeMatrix,
   return { dayGroups, freeDays };
 }
 
-// ── Local search: improve day assignment ──────────────────────────────────────
+// ── Local search: improve day assignment ──────────────────────────────────────────
 
 function evalDayGroupQuality(dayGroups, durations, timeMatrix) {
   if (!dayGroups.length) return 0;
@@ -432,7 +432,7 @@ function trimToTotalDays(dayGroups, durations, totalDays) {
   return dayGroups;
 }
 
-// ── Time-preference-aware 2-opt TSP ──────────────────────────────────────────
+// ── Time-preference-aware 2-opt TSP ────────────────────────────────────────────
 
 function getCatTimePref(category) {
   const cat = (category || '').toLowerCase();
@@ -517,7 +517,7 @@ function optimiseDayRoute(hotelIdx, dayAttrIndices, timeMatrix, attractions) {
   return { route: optimised, travelTime: tourCost(optimised, timeMatrix) };
 }
 
-// ── Daily scheduler (hard + soft constraints) ─────────────────────────────────
+// ── Daily scheduler (hard + soft constraints) ───────────────────────────────
 
 function parseHHMM(s) {
   if (!s) return 0;
@@ -553,7 +553,7 @@ function scheduleDay(attractions, travelTimes, travelModes, walkTimes, startTime
 
     totalTransit += travelMin;
 
-    // ── Hard: daily transit cap ───────────────────────────────────────────────
+    // ── Hard: daily transit cap ──────────────────────────────────────────
     if (i > 0 && totalTransit > MAX_TRANSIT_PER_DAY_MIN) {
       warnings.push(
         `Daily transit limit (${MAX_TRANSIT_PER_DAY_MIN} min) reached. ` +
@@ -572,7 +572,7 @@ function scheduleDay(attractions, travelTimes, travelModes, walkTimes, startTime
       lunchInserted = true;
     }
 
-    // ── Hard: 12-hour day span ────────────────────────────────────────────────
+    // ── Hard: 12-hour day span ──────────────────────────────────────────
     if (arrival - dayStart > MAX_DAY_SPAN_MIN) {
       warnings.push(
         `12-hour day limit reached. '${attr.title}' and remaining attractions deferred.`
@@ -581,7 +581,7 @@ function scheduleDay(attractions, travelTimes, travelModes, walkTimes, startTime
       break;
     }
 
-    // ── Hard: fixed reservation time ──────────────────────────────────────────
+    // ── Hard: fixed reservation time ────────────────────────────────────
     if (attr.fixed_time) {
       const fixedDt = parseHHMM(attr.fixed_time);
       if (arrival > fixedDt + 30) {
@@ -594,7 +594,7 @@ function scheduleDay(attractions, travelTimes, travelModes, walkTimes, startTime
       if (arrival < fixedDt) arrival = fixedDt;
     }
 
-    // ── Hard: opening hours + last entry ─────────────────────────────────────
+    // ── Hard: opening hours + last entry ───────────────────────────────
     let opens = 0, closes = 23 * 60 + 59, lastEntry = closes;
     if (attr.opening_hours) {
       opens     = parseHHMM(attr.opening_hours.open   || '00:00');
@@ -621,7 +621,7 @@ function scheduleDay(attractions, travelTimes, travelModes, walkTimes, startTime
       continue;
     }
 
-    // ── Hard: night restriction ───────────────────────────────────────────────
+    // ── Hard: night restriction ──────────────────────────────────────────
     const cat = (attr.category || '').toLowerCase();
     if (arrival >= NIGHT_CUTOFF_HOUR * 60 && NIGHT_RESTRICTED_CATS.has(cat)) {
       warnings.push(
@@ -631,14 +631,14 @@ function scheduleDay(attractions, travelTimes, travelModes, walkTimes, startTime
       continue;
     }
 
-    // ── Soft: sunset warning for outdoor/remote categories ────────────────────
+    // ── Soft: sunset warning for outdoor/remote categories ────────────────
     if (arrival >= SUNSET_HOUR * 60 && NIGHT_RESTRICTED_CATS.has(cat)) {
       warnings.push(
         `'${attr.title}' (outdoor) scheduled near/after sunset at ${fmtHHMM(arrival)}.`
       );
     }
 
-    // ── Hard: attraction closes before arrival ────────────────────────────────
+    // ── Hard: attraction closes before arrival ────────────────────────────
     const visitEnd = arrival + attr.duration_minutes;
     if (visitEnd > closes) {
       if (arrival >= closes) {
@@ -662,7 +662,7 @@ function scheduleDay(attractions, travelTimes, travelModes, walkTimes, startTime
       );
     }
 
-    // ── Soft: preferred time-of-day ───────────────────────────────────────────
+    // ── Soft: preferred time-of-day ─────────────────────────────────────
     if (attr.preferred_time_of_day && attr.preferred_time_of_day !== 'any') {
       const [ws, we] = PREF_WINDOWS[attr.preferred_time_of_day] || PREF_WINDOWS.any;
       if (!(ws <= arrival && arrival <= we)) {
@@ -672,7 +672,7 @@ function scheduleDay(attractions, travelTimes, travelModes, walkTimes, startTime
       }
     }
 
-    // ── Soft: morning preference for demanding sites ──────────────────────────
+    // ── Soft: morning preference for demanding sites ──────────────────────
     if (MORNING_PREFERRED_CATS.has(cat) && arrival > 14 * 60) {
       warnings.push(`'${attr.title}' (${cat}) is best visited in the morning.`);
     }
@@ -681,7 +681,7 @@ function scheduleDay(attractions, travelTimes, travelModes, walkTimes, startTime
     const nextWalk   = (i + 1) < walkTimes.length   ? walkTimes[i + 1]   : 0;
     const nextMode   = (i + 1) < travelModes.length ? travelModes[i + 1] : 'walking';
 
-    // ── Soft: heavy-transfer warning ──────────────────────────────────────────
+    // ── Soft: heavy-transfer warning ─────────────────────────────────────
     if (nextTravel > HEAVY_TRANSFER_MIN) {
       warnings.push(
         `Long transfer after '${attr.title}' (${nextTravel} min by ${nextMode}).`
@@ -706,7 +706,7 @@ function scheduleDay(attractions, travelTimes, travelModes, walkTimes, startTime
   return { planned, deferred, warnings, totalTransitMin: totalTransit, daySpanMin };
 }
 
-// ── Scoring (8 dimensions) ────────────────────────────────────────────────────
+// ── Scoring (8 dimensions) ────────────────────────────────────────────────
 
 function applyWeights(weights, preferences, style, pacingMode) {
   const w = { ...weights };
@@ -743,7 +743,7 @@ function scoreItinerary(days, allPriorities, plannedPriorities, settings, cluste
   const avgDuration = activeDays.reduce((s, d) => s + d.total_duration_minutes, 0) / activeDays.length;
   const walkTol     = settings.walking_tolerance_minutes || 30;
 
-  // ── Distance / transit efficiency ─────────────────────────────────────────
+  // ── Distance / transit efficiency ───────────────────────────────────
   const distScores = activeDays.map(d => {
     const total       = d.total_duration_minutes + d.total_travel_minutes;
     const travelRatio = d.total_travel_minutes / Math.max(1, total);
@@ -752,20 +752,20 @@ function scoreItinerary(days, allPriorities, plannedPriorities, settings, cluste
   });
   const distScore = distScores.reduce((s, v) => s + v, 0) / distScores.length;
 
-  // ── Day balance ───────────────────────────────────────────────────────────
+  // ── Day balance ───────────────────────────────────────────────────
   const dayLoads = activeDays.map(d => d.total_duration_minutes);
   const meanLoad = dayLoads.reduce((s, v) => s + v, 0) / dayLoads.length;
   const stdLoad  = Math.sqrt(dayLoads.reduce((s, v) => s + (v - meanLoad) ** 2, 0) / dayLoads.length);
   const balScore = Math.max(0, 100 - (stdLoad / Math.max(1, meanLoad)) * 100);
 
-  // ── Fatigue (walking) ─────────────────────────────────────────────────────
+  // ── Fatigue (walking) ───────────────────────────────────────────────
   const fatScores = activeDays.map(d => {
     const walkPenalty = Math.min(100, (d.total_walking_minutes / Math.max(1, walkTol)) * 100);
     return Math.max(0, 100 - walkPenalty * 0.6 - (d.attractions.length / 10.0) * 40);
   });
   const fatScore = fatScores.reduce((s, v) => s + v, 0) / fatScores.length;
 
-  // ── Cluster coherence + region-switch penalty ─────────────────────────────
+  // ── Cluster coherence + region-switch penalty ─────────────────────────
   const clusterScores = activeDays.map(d => {
     if (d.attractions.length < 2) return 100;
     const cids = d.attractions.map(pa => pa.cluster_id);
@@ -782,7 +782,7 @@ function scoreItinerary(days, allPriorities, plannedPriorities, settings, cluste
   });
   const clusterScore = clusterScores.reduce((s, v) => s + v, 0) / clusterScores.length;
 
-  // ── Preference satisfaction ───────────────────────────────────────────────
+  // ── Preference satisfaction ───────────────────────────────────────────
   let prefScore = 80;
   if ((settings.preferences || []).includes('free_time')) {
     if (avgDuration < (settings.max_hours_per_day || 8) * 60 * 0.8) prefScore += 20;
@@ -793,7 +793,7 @@ function scoreItinerary(days, allPriorities, plannedPriorities, settings, cluste
   }
   prefScore = Math.min(100, prefScore);
 
-  // ── Priority coverage ─────────────────────────────────────────────────────
+  // ── Priority coverage ───────────────────────────────────────────────
   let priorityScore = 100;
   if (allPriorities.length > 0) {
     const sortedAll = [...allPriorities].sort((a, b) => b - a);
@@ -803,7 +803,7 @@ function scoreItinerary(days, allPriorities, plannedPriorities, settings, cluste
     priorityScore   = Math.min(100, (covered / topSet.size) * 100);
   }
 
-  // ── Exhaustion (day span + transit load + density) ────────────────────────
+  // ── Exhaustion (day span + transit load + density) ──────────────────────
   const exhaustScores = activeDays.map(d => {
     const span           = d.day_span_minutes || (d.total_duration_minutes + d.total_travel_minutes);
     // Penalise days exceeding 10h span
@@ -837,7 +837,7 @@ function scoreItinerary(days, allPriorities, plannedPriorities, settings, cluste
   });
   const timingScore = timingScores.reduce((s, v) => s + v, 0) / timingScores.length;
 
-  // ── Assemble breakdown ────────────────────────────────────────────────────
+  // ── Assemble breakdown ────────────────────────────────────────────────
   const breakdown = {
     distance:   Math.round(distScore     * 10) / 10,
     balance:    Math.round(balScore      * 10) / 10,
