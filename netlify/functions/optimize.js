@@ -15,9 +15,9 @@ const PACING_CAPACITY = { compact: 1.00, balanced: 1.00, relaxed: 0.65, intensiv
 const STYLE_MULT      = { relaxed: 0.75, balanced: 1.0,  intensive: 1.25 };
 
 const BASE_WEIGHTS = {
-  distance: 0.18, balance: 0.18, fatigue: 0.13,
-  cluster:  0.13, preference: 0.08, priority: 0.08,
-  exhaustion: 0.12, timing: 0.10,
+  distance: 0.13, balance: 0.13, fatigue: 0.11,
+  cluster:  0.11, preference: 0.06, priority: 0.06,
+  exhaustion: 0.10, timing: 0.09, flow: 0.12, sustainability: 0.09,
 };
 
 // ── Night / safety restrictions ────────────────────────────────────────────
@@ -59,6 +59,120 @@ const ANCHOR_MAX_SUPPS = 2;     // max supplement stops on an anchor day
 // ── Accommodation-aware routing constants ──────────────────────────────────────
 const LATE_RETURN_HOUR = 21;    // hotel arrival after this hour is penalised
 const LATE_RETURN_FAR  = 30;    // return transit (min) that triggers late penalty
+
+// ── Energy / fatigue model ─────────────────────────────────────────────────
+// Per-category energy profiles: physical, cognitive, emotional, stimulation (1–10 scale).
+// Accumulated across visit durations (hours) to produce day-level energy loads.
+// These are defaults only — an attraction may carry an explicit energy_profile object.
+const ENERGY_PROFILES = {
+  hiking:       { physical: 9, cognitive: 2, emotional: 3, stimulation: 5 },
+  mountain:     { physical: 8, cognitive: 2, emotional: 4, stimulation: 6 },
+  nature:       { physical: 5, cognitive: 1, emotional: 3, stimulation: 4 },
+  park:         { physical: 3, cognitive: 1, emotional: 2, stimulation: 2 },
+  garden:       { physical: 3, cognitive: 2, emotional: 2, stimulation: 2 },
+  beach:        { physical: 4, cognitive: 1, emotional: 3, stimulation: 3 },
+  memorial:     { physical: 2, cognitive: 5, emotional: 9, stimulation: 4 },
+  museum:       { physical: 2, cognitive: 7, emotional: 4, stimulation: 5 },
+  gallery:      { physical: 2, cognitive: 6, emotional: 4, stimulation: 5 },
+  cathedral:    { physical: 2, cognitive: 4, emotional: 6, stimulation: 4 },
+  palace:       { physical: 3, cognitive: 5, emotional: 4, stimulation: 5 },
+  heritage:     { physical: 3, cognitive: 5, emotional: 5, stimulation: 5 },
+  historical:   { physical: 2, cognitive: 6, emotional: 5, stimulation: 5 },
+  landmark:     { physical: 3, cognitive: 3, emotional: 3, stimulation: 4 },
+  castle:       { physical: 4, cognitive: 5, emotional: 4, stimulation: 5 },
+  ruins:        { physical: 4, cognitive: 5, emotional: 5, stimulation: 5 },
+  religious:    { physical: 2, cognitive: 4, emotional: 6, stimulation: 4 },
+  cemetery:     { physical: 2, cognitive: 3, emotional: 7, stimulation: 3 },
+  theme_park:   { physical: 8, cognitive: 3, emotional: 5, stimulation: 9 },
+  amusement:    { physical: 7, cognitive: 2, emotional: 4, stimulation: 9 },
+  zoo:          { physical: 5, cognitive: 3, emotional: 3, stimulation: 6 },
+  aquarium:     { physical: 2, cognitive: 4, emotional: 3, stimulation: 6 },
+  shopping:     { physical: 4, cognitive: 2, emotional: 2, stimulation: 4 },
+  market:       { physical: 4, cognitive: 3, emotional: 3, stimulation: 5 },
+  restaurant:   { physical: 1, cognitive: 1, emotional: 2, stimulation: 2 },
+  bar:          { physical: 1, cognitive: 1, emotional: 2, stimulation: 3 },
+  theater:      { physical: 1, cognitive: 5, emotional: 6, stimulation: 6 },
+  entertainment:{ physical: 4, cognitive: 2, emotional: 3, stimulation: 7 },
+  square:       { physical: 3, cognitive: 2, emotional: 2, stimulation: 3 },
+  neighborhood: { physical: 3, cognitive: 2, emotional: 2, stimulation: 3 },
+  boulevard:    { physical: 3, cognitive: 1, emotional: 2, stimulation: 3 },
+  viewpoint:    { physical: 4, cognitive: 1, emotional: 4, stimulation: 5 },
+  cave:         { physical: 5, cognitive: 3, emotional: 4, stimulation: 6 },
+  mine:         { physical: 5, cognitive: 4, emotional: 5, stimulation: 6 },
+  forest:       { physical: 5, cognitive: 1, emotional: 2, stimulation: 3 },
+  outdoor:      { physical: 5, cognitive: 2, emotional: 2, stimulation: 4 },
+  tour:         { physical: 4, cognitive: 4, emotional: 3, stimulation: 5 },
+  remote:       { physical: 6, cognitive: 2, emotional: 4, stimulation: 5 },
+};
+const DEFAULT_ENERGY = { physical: 3, cognitive: 3, emotional: 3, stimulation: 4 };
+
+function getEnergyProfile(attr) {
+  if (attr.energy_profile) return attr.energy_profile;
+  const cat = (attr.category || '').toLowerCase();
+  return ENERGY_PROFILES[cat] || DEFAULT_ENERGY;
+}
+
+// Aggregate weighted energy load for an array of plannedAttraction objects.
+// Each dimension = profile value × visit hours, summed across all stops.
+function computeDayEnergy(plannedAttractions) {
+  return plannedAttractions.reduce((acc, pa) => {
+    const ep  = getEnergyProfile(pa.attraction);
+    const hrs = (pa.attraction.duration_minutes || 60) / 60;
+    return {
+      physical:    acc.physical    + ep.physical    * hrs,
+      cognitive:   acc.cognitive   + ep.cognitive   * hrs,
+      emotional:   acc.emotional   + (ep.emotional ?? 3) * hrs,
+      stimulation: acc.stimulation + ep.stimulation * hrs,
+    };
+  }, { physical: 0, cognitive: 0, emotional: 0, stimulation: 0 });
+}
+
+// Transition penalty between two consecutive attractions (0 = smooth, 30 = jarring).
+// Rewards: varied intensity, natural de-escalation, transit buffer, geographic proximity.
+// Penalises: abrupt emotional exit, cognitive/physical stack, stimulation overload.
+// NOTE: same category is NOT penalised — only energy load matters.
+// Proximity discount: adjacent attractions (< 400 m) get reduced stack penalties,
+// reflecting the natural clustering of museums in the same building or district.
+function transitionPenalty(fromAttr, toAttr, transitMinutes) {
+  const from = getEnergyProfile(fromAttr);
+  const to   = getEnergyProfile(toAttr);
+  const fromEmotional = from.emotional ?? 3;
+  const toEmotional   = to.emotional   ?? 3;
+
+  let penalty = 0;
+
+  // Jarring emotional context switch (e.g. Holocaust memorial → amusement arcade)
+  const emotionalDrop = fromEmotional - toEmotional;
+  if      (emotionalDrop >= 6) penalty += 20;
+  else if (emotionalDrop >= 4) penalty += 10;
+  else if (emotionalDrop >= 2) penalty += 4;
+
+  // Cognitive overload stack (back-to-back high-cognition without a break)
+  if (from.cognitive >= 7 && to.cognitive >= 7) penalty += 12;
+  else if (from.cognitive >= 6 && to.cognitive >= 6) penalty += 6;
+
+  // Physical fatigue stack
+  if (from.physical >= 7 && to.physical >= 7) penalty += 12;
+  else if (from.physical >= 6 && to.physical >= 6) penalty += 6;
+
+  // Stimulation overload
+  if (from.stimulation >= 8 && to.stimulation >= 8) penalty += 8;
+
+  // Proximity discount: geographically adjacent attractions (same block / complex)
+  // naturally share pacing context — reduce cognitive/physical stack friction.
+  if (fromAttr.latitude && toAttr.latitude) {
+    const distKm = haversineKm(fromAttr.latitude, fromAttr.longitude, toAttr.latitude, toAttr.longitude);
+    if      (distKm < 0.3) penalty = Math.max(0, penalty - 8);  // across the street / same complex
+    else if (distKm < 0.8) penalty = Math.max(0, penalty - 4);  // same neighbourhood
+  }
+
+  // Transit time is a natural recovery buffer — further reduces transition friction
+  if      (transitMinutes >= 45) penalty = Math.max(0, penalty - 15);
+  else if (transitMinutes >= 20) penalty = Math.max(0, penalty - 8);
+  else if (transitMinutes >= 10) penalty = Math.max(0, penalty - 3);
+
+  return Math.min(30, penalty);
+}
 
 // ── Math helpers ──────────────────────────────────────────────────────────
 
@@ -652,10 +766,12 @@ const LUNCH_START = 12 * 60 + 30;
 
 function scheduleDay(attractions, travelTimes, travelModes, walkTimes, startTime, lunchBreakMinutes) {
   const planned = [], deferred = [], warnings = [];
-  let currentTime   = parseHHMM(startTime);
-  const dayStart    = currentTime;
-  let lunchInserted = false;
-  let totalTransit  = 0;
+  let currentTime        = parseHHMM(startTime);
+  const dayStart         = currentTime;
+  let lunchInserted      = false;
+  let totalTransit       = 0;
+  let continuousBlockMin = 0; // activity minutes since last meaningful transit break
+  const RECOVERY_WARN_MIN = 4 * 60; // warn if no break in 4 h
 
   for (let i = 0; i < attractions.length; i++) {
     const attr      = attractions[i];
@@ -812,6 +928,16 @@ function scheduleDay(attractions, travelTimes, travelModes, walkTimes, startTime
     });
 
     currentTime = effectiveEnd;
+
+    // Track continuous activity; significant transit resets the block clock
+    continuousBlockMin += attr.duration_minutes;
+    if (nextTravel >= 15) continuousBlockMin = 0;
+    if (continuousBlockMin >= RECOVERY_WARN_MIN) {
+      warnings.push(
+        `No significant break for ${Math.round(continuousBlockMin / 60)} h — consider a rest or snack stop.`
+      );
+      continuousBlockMin = 0; // suppress repeated warning
+    }
   }
 
   const daySpanMin = currentTime - dayStart;
@@ -828,13 +954,13 @@ function applyWeights(weights, preferences, style, pacingMode) {
   if (preferences.includes('balanced_days'))      { w.balance += 0.08; w.distance -= 0.04; w.fatigue -= 0.04; }
   if (preferences.includes('compact_itinerary'))  { w.cluster += 0.08; w.distance += 0.04; w.balance -= 0.08; w.preference -= 0.04; }
 
-  if (style === 'relaxed')   { w.fatigue += 0.05; w.priority -= 0.05; }
-  if (style === 'intensive') { w.priority += 0.05; w.fatigue -= 0.05; }
+  if (style === 'relaxed')   { w.fatigue += 0.04; w.flow += 0.02; w.sustainability += 0.02; w.priority -= 0.04; w.cluster -= 0.04; }
+  if (style === 'intensive') { w.priority += 0.04; w.cluster += 0.02; w.fatigue -= 0.03; w.flow -= 0.02; w.sustainability -= 0.01; }
 
-  if (pacingMode === 'compact')   { w.cluster += 0.08; w.distance += 0.04; w.balance -= 0.08; w.preference -= 0.04; }
-  if (pacingMode === 'balanced')  { w.balance += 0.10; w.cluster -= 0.04; w.distance -= 0.04; w.fatigue -= 0.02; }
-  if (pacingMode === 'relaxed')   { w.fatigue += 0.10; w.exhaustion += 0.05; w.priority -= 0.08; w.distance -= 0.07; }
-  if (pacingMode === 'intensive') { w.priority += 0.10; w.cluster += 0.04; w.fatigue -= 0.10; w.preference -= 0.04; }
+  if (pacingMode === 'compact')   { w.cluster += 0.06; w.distance += 0.04; w.balance -= 0.04; w.preference -= 0.03; w.flow -= 0.03; }
+  if (pacingMode === 'balanced')  { w.balance += 0.07; w.flow += 0.04; w.cluster -= 0.03; w.distance -= 0.04; w.fatigue -= 0.04; }
+  if (pacingMode === 'relaxed')   { w.fatigue += 0.07; w.flow += 0.05; w.sustainability += 0.05; w.exhaustion += 0.03; w.priority -= 0.07; w.distance -= 0.07; w.cluster -= 0.06; }
+  if (pacingMode === 'intensive') { w.priority += 0.08; w.cluster += 0.04; w.fatigue -= 0.06; w.flow -= 0.04; w.sustainability -= 0.02; }
 
   const total = Object.values(w).reduce((s, v) => s + v, 0);
   return Object.fromEntries(Object.entries(w).map(([k, v]) => [k, Math.max(0, v / total)]));
@@ -849,6 +975,7 @@ function scoreItinerary(days, allPriorities, plannedPriorities, settings, cluste
     return {
       overall: 100, distance: 100, balance: 100, fatigue: 100, cluster: 100,
       preference: 100, priority: 100, exhaustion: 100, timing: 100,
+      flow: 100, sustainability: 100,
     };
   }
 
@@ -870,10 +997,23 @@ function scoreItinerary(days, allPriorities, plannedPriorities, settings, cluste
   const stdLoad  = Math.sqrt(dayLoads.reduce((s, v) => s + (v - meanLoad) ** 2, 0) / dayLoads.length);
   const balScore = Math.max(0, 100 - (stdLoad / Math.max(1, meanLoad)) * 100);
 
-  // ── Fatigue (walking) ───────────────────────────────────────────────
+  // ── Fatigue (walking + energy profiling) ──────────────────────────────────
+  // Penalises excessive cumulative load. Thresholds in profile_level×hours units:
+  //   physical  28 = ~3h of hiking-level activity    (9 × 3h = 27)
+  //   cognitive 28 = ~4h of museum-level activity    (7 × 4h = 28) ← KHM+NHM stays penalty-free
+  //   emotional 27 = ~3h of memorial-level exposure  (9 × 3h = 27)
+  // Walk penalty fires only for excess walking beyond the user's stated tolerance.
+  // Same-category groupings (e.g. KHM + NHM) are NOT penalised on their own — only
+  // total accumulated load matters. A 5-museum day does get penalised (correctly).
   const fatScores = activeDays.map(d => {
-    const walkPenalty = Math.min(100, (d.total_walking_minutes / Math.max(1, walkTol)) * 100);
-    return Math.max(0, 100 - walkPenalty * 0.6 - (d.attractions.length / 10.0) * 40);
+    const walkExcess  = Math.max(0, d.total_walking_minutes - walkTol);
+    const walkPenalty = Math.min(25, walkExcess / 15 * 10);
+    const energy      = computeDayEnergy(d.attractions);
+    const physicalPenalty  = Math.max(0, (energy.physical  - 28) * 1.0);
+    const cognitivePenalty = Math.max(0, (energy.cognitive - 28) * 1.0);
+    const emotionalPenalty = Math.max(0, (energy.emotional - 27) * 1.2);
+    return Math.max(0, 100 - walkPenalty - physicalPenalty - cognitivePenalty - emotionalPenalty
+      - (d.attractions.length / 10) * 12);
   });
   const fatScore = fatScores.reduce((s, v) => s + v, 0) / fatScores.length;
 
@@ -915,18 +1055,50 @@ function scoreItinerary(days, allPriorities, plannedPriorities, settings, cluste
     priorityScore   = Math.min(100, (covered / topSet.size) * 100);
   }
 
-  // ── Exhaustion (day span + transit load + density + anchor overcrowding) ──
+  // ── Exhaustion (day span + transit + density + late-day intensity + meal break) ──
   const exhaustScores = activeDays.map(d => {
-    const span           = d.day_span_minutes || (d.total_duration_minutes + d.total_travel_minutes);
-    const spanPenalty    = Math.max(0, (span - 10 * 60) / 60) * 10;
-    const transitRatio   = d.total_travel_minutes / Math.max(1, span);
-    const transitPenalty = transitRatio > 0.4 ? (transitRatio - 0.4) * 80 : 0;
-    const densityPenalty = Math.max(0, d.attractions.length - 8) * 5;
-    // Penalise anchor days that are over-stuffed (more than anchor + ANCHOR_MAX_SUPPS)
+    const span             = d.day_span_minutes || (d.total_duration_minutes + d.total_travel_minutes);
+    const spanPenalty      = Math.max(0, (span - 10 * 60) / 60) * 10;
+    const transitRatio     = d.total_travel_minutes / Math.max(1, span);
+    const transitPenalty   = transitRatio > 0.4 ? (transitRatio - 0.4) * 80 : 0;
+    const densityPenalty   = Math.max(0, d.attractions.length - 8) * 5;
     const anchorOvercrowding = (d.is_anchor_day && d.attractions.length > ANCHOR_MAX_SUPPS + 1)
-      ? (d.attractions.length - (ANCHOR_MAX_SUPPS + 1)) * 15
-      : 0;
-    return Math.max(0, 100 - spanPenalty - transitPenalty - densityPenalty - anchorOvercrowding);
+      ? (d.attractions.length - (ANCHOR_MAX_SUPPS + 1)) * 15 : 0;
+
+    // Penalise high-intensity activities scheduled late in the day (after 17:00)
+    let lateIntensityPenalty = 0;
+    for (const pa of d.attractions) {
+      if (parseHHMM(pa.arrival_time) > 17 * 60) {
+        const ep        = getEnergyProfile(pa.attraction);
+        const intensity = (ep.physical + ep.cognitive + ep.stimulation) / 3;
+        if      (intensity >= 7) lateIntensityPenalty += 12;
+        else if (intensity >= 5) lateIntensityPenalty += 5;
+      }
+    }
+
+    // Penalise missing meal break in the 11:30–15:00 window for full days
+    const mealWindowStart = 11 * 60 + 30;
+    const mealWindowEnd   = 15 * 60;
+    let mealBreakPresent  = false;
+    for (let i = 0; i < d.attractions.length - 1; i++) {
+      const dep = parseHHMM(d.attractions[i].departure_time);
+      if (dep >= mealWindowStart && dep <= mealWindowEnd && d.attractions[i].travel_to_next_minutes >= 20) {
+        mealBreakPresent = true; break;
+      }
+    }
+    const mealPenalty = (d.attractions.length >= 4 && !mealBreakPresent) ? 10 : 0;
+
+    // Penalise continuous activity blocks > 4 h without a 15-min transit break
+    let maxBlock = 0, curBlock = 0;
+    for (const pa of d.attractions) {
+      curBlock += pa.attraction.duration_minutes;
+      if (pa.travel_to_next_minutes >= 15) { maxBlock = Math.max(maxBlock, curBlock); curBlock = 0; }
+    }
+    maxBlock = Math.max(maxBlock, curBlock);
+    const continuousPenalty = Math.max(0, (maxBlock - 4 * 60) / 60) * 8;
+
+    return Math.max(0, 100 - spanPenalty - transitPenalty - densityPenalty - anchorOvercrowding
+      - lateIntensityPenalty - mealPenalty - continuousPenalty);
   });
   const exhaustScore = exhaustScores.reduce((s, v) => s + v, 0) / exhaustScores.length;
 
@@ -957,16 +1129,60 @@ function scoreItinerary(days, allPriorities, plannedPriorities, settings, cluste
   });
   const timingScore = timingScores.reduce((s, v) => s + v, 0) / timingScores.length;
 
+  // ── Flow (transition coherence between consecutive attractions) ────────────
+  // Scores how naturally each pair of back-to-back attractions follows the other.
+  // Uses energy profiles: penalises jarring emotional exits, cognitive/physical stacks.
+  // Same-category adjacency is NOT penalised — only energy load context matters.
+  const flowScores = activeDays.map(d => {
+    if (d.attractions.length < 2) return 95;
+    let totalPenalty = 0;
+    for (let i = 0; i < d.attractions.length - 1; i++) {
+      totalPenalty += transitionPenalty(
+        d.attractions[i].attraction,
+        d.attractions[i + 1].attraction,
+        d.attractions[i].travel_to_next_minutes,
+      );
+    }
+    const avgPenalty = totalPenalty / (d.attractions.length - 1);
+    return Math.max(0, 100 - avgPenalty * 3.0);
+  });
+  const flowScore = flowScores.reduce((s, v) => s + v, 0) / flowScores.length;
+
+  // ── Sustainability (cross-day fatigue propagation) ─────────────────────────
+  // Consecutive heavy days should be avoided for a balanced multi-day trip.
+  // Denominators calibrated to "very heavy day" benchmarks:
+  //   physical  60 = all-day hiking (9 × 7h)
+  //   cognitive 42 = all-day museum marathon (7 × 6h)
+  //   emotional 24 = extended memorial / cemetery experience (9 × 3h)
+  const dayFatigueLoads = activeDays.map(d => {
+    const energy = computeDayEnergy(d.attractions);
+    const physLoad = Math.min(100, (energy.physical  / 60) * 100);
+    const cogLoad  = Math.min(100, (energy.cognitive / 42) * 100);
+    const emoLoad  = Math.min(100, (energy.emotional / 24) * 100);
+    return (physLoad + cogLoad + emoLoad) / 3;
+  });
+  let sustainPenalty = 0;
+  for (let i = 0; i < dayFatigueLoads.length - 1; i++) {
+    const a = dayFatigueLoads[i], b = dayFatigueLoads[i + 1];
+    if      (a > 75 && b > 75) sustainPenalty += 25;
+    else if (a > 60 && b > 60) sustainPenalty += 12;
+    else if (a > 50 && b > 50) sustainPenalty +=  5;
+  }
+  const sustainabilityScore = Math.max(0,
+    100 - sustainPenalty / Math.max(1, dayFatigueLoads.length - 1));
+
   // ── Assemble breakdown ────────────────────────────────────────────────
   const breakdown = {
-    distance:   Math.round(distScore     * 10) / 10,
-    balance:    Math.round(balScore      * 10) / 10,
-    fatigue:    Math.round(fatScore      * 10) / 10,
-    cluster:    Math.round(clusterScore  * 10) / 10,
-    preference: Math.round(prefScore     * 10) / 10,
-    priority:   Math.round(priorityScore * 10) / 10,
-    exhaustion: Math.round(exhaustScore  * 10) / 10,
-    timing:     Math.round(timingScore   * 10) / 10,
+    distance:       Math.round(distScore         * 10) / 10,
+    balance:        Math.round(balScore          * 10) / 10,
+    fatigue:        Math.round(fatScore          * 10) / 10,
+    cluster:        Math.round(clusterScore      * 10) / 10,
+    preference:     Math.round(prefScore         * 10) / 10,
+    priority:       Math.round(priorityScore     * 10) / 10,
+    exhaustion:     Math.round(exhaustScore      * 10) / 10,
+    timing:         Math.round(timingScore       * 10) / 10,
+    flow:           Math.round(flowScore         * 10) / 10,
+    sustainability: Math.round(sustainabilityScore * 10) / 10,
   };
   breakdown.overall = Math.round(
     Object.entries(breakdown).reduce((s, [k, v]) => s + (weights[k] || 0) * v, 0) * 10
