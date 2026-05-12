@@ -49,6 +49,17 @@ const MAX_TRANSIT_PER_DAY_MIN = 180; // 3 h cumulative transit
 const MAX_DAY_SPAN_MIN        = 12 * 60; // 12 h from first departure to last end
 const HEAVY_TRANSFER_MIN      = 90;  // warn/penalise single legs > 90 min
 
+// ── Anchor attraction constants ────────────────────────────────────────────────
+const ANCHOR_TOTAL_MIN = 240;   // duration + round-trip transit ≥ this → anchor
+const ANCHOR_DUR_MIN   = 300;   // standalone duration ≥ this → anchor (5 h)
+const ANCHOR_NEARBY_KM = 5.0;   // supplement must be within this distance of anchor
+const ANCHOR_LIGHT_MAX = 90;    // supplement duration must be ≤ this (min)
+const ANCHOR_MAX_SUPPS = 2;     // max supplement stops on an anchor day
+
+// ── Accommodation-aware routing constants ──────────────────────────────────────
+const LATE_RETURN_HOUR = 21;    // hotel arrival after this hour is penalised
+const LATE_RETURN_FAR  = 30;    // return transit (min) that triggers late penalty
+
 // ── Math helpers ──────────────────────────────────────────────────────────
 
 function haversineKm(lat1, lon1, lat2, lon2) {
@@ -171,6 +182,85 @@ function clusterSummary(labels, coords, priorities, durations) {
   return summary;
 }
 
+// ── Anchor detection ─────────────────────────────────────────────────────────
+
+function detectAnchors(attractions, timeMatrix) {
+  const anchors = new Set();
+  for (let i = 0; i < attractions.length; i++) {
+    const attr      = attractions[i];
+    const roundTrip = timeMatrix[0][i + 1] * 2;
+    if (
+      attr.anchor === true ||
+      (attr.duration_minutes ?? 60) >= ANCHOR_DUR_MIN ||
+      (attr.duration_minutes ?? 60) + roundTrip >= ANCHOR_TOTAL_MIN
+    ) {
+      anchors.add(i);
+    }
+  }
+  return anchors;
+}
+
+// After initial bin-packing, enforce anchor-day rules: each anchor gets its own
+// day with at most ANCHOR_MAX_SUPPS nearby/light supplements; everything else
+// is displaced to non-anchor days (or spills into new overflow days).
+function enforceAnchorDays(dayGroups, anchorSet, attractions, durations, timeMatrix, netCap) {
+  if (!anchorSet.size) return dayGroups;
+
+  const displaced = [];
+
+  const newGroups = dayGroups.map(group => {
+    const anchorIndices = group.filter(i => anchorSet.has(i));
+    if (!anchorIndices.length) return group;
+
+    // Pick heaviest anchor as the "main" one for the day
+    const mainAnchor = anchorIndices.reduce((best, i) =>
+      (durations[i] ?? 0) > (durations[best] ?? 0) ? i : best, anchorIndices[0]);
+
+    const supplements = [];
+    for (const i of group) {
+      if (anchorSet.has(i)) {
+        if (i !== mainAnchor) displaced.push(i);
+        continue;
+      }
+      const dist     = haversineKm(
+        attractions[mainAnchor].latitude, attractions[mainAnchor].longitude,
+        attractions[i].latitude,          attractions[i].longitude,
+      );
+      const isNearby = dist <= ANCHOR_NEARBY_KM;
+      const isLight  = (durations[i] ?? 60) <= ANCHOR_LIGHT_MAX;
+      if (isNearby && isLight && supplements.length < ANCHOR_MAX_SUPPS) {
+        supplements.push(i);
+      } else {
+        displaced.push(i);
+      }
+    }
+    return [mainAnchor, ...supplements];
+  });
+
+  // Re-insert displaced attractions into non-anchor days
+  const isAnchorDay = g => g.some(i => anchorSet.has(i));
+
+  for (const attrIdx of displaced) {
+    let placed = false;
+    const dayLoads = newGroups
+      .map((g, di) => [di, clusterTimeBudget(g, durations, timeMatrix)])
+      .filter(([di]) => !isAnchorDay(newGroups[di]))
+      .sort((a, b) => a[1] - b[1]);
+
+    for (const [di] of dayLoads) {
+      const proposed = [...newGroups[di], attrIdx];
+      if (clusterTimeBudget(proposed, durations, timeMatrix) <= netCap * 1.05) {
+        newGroups[di] = proposed;
+        placed = true;
+        break;
+      }
+    }
+    if (!placed) newGroups.push([attrIdx]);
+  }
+
+  return newGroups.filter(g => g.length > 0);
+}
+
 // ── Day allocation ────────────────────────────────────────────────────────────
 
 function clusterTimeBudget(attrIndices, durations, timeMatrix, overheadPct = 0.15) {
@@ -195,7 +285,8 @@ function clusterTimeBudget(attrIndices, durations, timeMatrix, overheadPct = 0.1
 }
 
 function allocateDays(clusterLabels, cSummary, durations, timeMatrix,
-                      totalDays, maxHours, travelStyle, preferences, pacingMode) {
+                      totalDays, maxHours, travelStyle, preferences, pacingMode,
+                      attractions, anchorSet) {
   const maxMinutes   = maxHours * 60;
   const styleMult    = STYLE_MULT[travelStyle] || 1.0;
   const pacingMult   = PACING_CAPACITY[pacingMode] || 1.0;
@@ -223,9 +314,14 @@ function allocateDays(clusterLabels, cSummary, durations, timeMatrix,
   dayGroups = splitOverloadedDays(dayGroups, durations, timeMatrix, netCap);
   if (dayGroups.length > totalDays) dayGroups = trimToTotalDays(dayGroups, durations, totalDays);
 
-  // Local search: iteratively move single attractions between days to improve
-  // geographic coherence and balance
-  dayGroups = localSearchDayImprove(dayGroups, durations, timeMatrix, netCap);
+  // Enforce anchor-day rules before local search
+  if (anchorSet && anchorSet.size) {
+    dayGroups = enforceAnchorDays(dayGroups, anchorSet, attractions, durations, timeMatrix, netCap);
+    if (dayGroups.length > totalDays) dayGroups = trimToTotalDays(dayGroups, durations, totalDays);
+  }
+
+  // Local search: move single attractions between days (respects anchor constraints)
+  dayGroups = localSearchDayImprove(dayGroups, durations, timeMatrix, netCap, anchorSet || new Set());
 
   const freeDays = [];
   for (let d = dayGroups.length + 1; d <= totalDays; d++) freeDays.push(d);
@@ -259,9 +355,10 @@ function evalDayGroupQuality(dayGroups, durations, timeMatrix) {
   return 0.5 * balanceScore + 0.5 * coherenceScore;
 }
 
-function localSearchDayImprove(dayGroups, durations, timeMatrix, netCap, maxIter = 400) {
+function localSearchDayImprove(dayGroups, durations, timeMatrix, netCap, anchorSet = new Set(), maxIter = 400) {
   if (dayGroups.length <= 1) return dayGroups;
   let bestScore = evalDayGroupQuality(dayGroups, durations, timeMatrix);
+  const isAnchorDay = g => g.some(i => anchorSet.has(i));
 
   for (let iter = 0; iter < maxIter; iter++) {
     const d1 = Math.floor(Math.random() * dayGroups.length);
@@ -270,8 +367,14 @@ function localSearchDayImprove(dayGroups, durations, timeMatrix, netCap, maxIter
     const ai   = Math.floor(Math.random() * dayGroups[d1].length);
     const attr = dayGroups[d1][ai];
 
+    // Never move anchor attractions out of their assigned day
+    if (anchorSet.has(attr)) continue;
+
     for (let d2 = 0; d2 < dayGroups.length; d2++) {
       if (d2 === d1) continue;
+
+      // Don't add regular attractions to anchor days
+      if (isAnchorDay(dayGroups[d2])) continue;
 
       const newD1 = dayGroups[d1].filter((_, k) => k !== ai);
       const newD2 = [...dayGroups[d2], attr];
@@ -483,8 +586,13 @@ function tourCost(route, timeMatrix) {
   return cost;
 }
 
-function twoOpt(route, timeMatrix, maxIter = 200) {
-  let best = [...route], bestCost = tourCost(best, timeMatrix);
+function twoOpt(route, timeMatrix, maxIter = 200, returnIdx = -1) {
+  // When returnIdx >= 0, include the return leg to hotel in the tour cost
+  const costFn = returnIdx >= 0
+    ? r => tourCost(r, timeMatrix) + (r.length > 0 ? timeMatrix[r[r.length - 1]][returnIdx] : 0)
+    : r => tourCost(r, timeMatrix);
+
+  let best = [...route], bestCost = costFn(best);
   let improved = true, iters = 0;
   while (improved && iters < maxIter) {
     improved = false; iters++;
@@ -495,7 +603,7 @@ function twoOpt(route, timeMatrix, maxIter = 200) {
           ...best.slice(i, k + 1).reverse(),
           ...best.slice(k + 1),
         ];
-        const newCost = tourCost(newRoute, timeMatrix);
+        const newCost = costFn(newRoute);
         if (newCost < bestCost) { best = newRoute; bestCost = newCost; improved = true; break; }
       }
       if (improved) break;
@@ -505,16 +613,20 @@ function twoOpt(route, timeMatrix, maxIter = 200) {
 }
 
 function optimiseDayRoute(hotelIdx, dayAttrIndices, timeMatrix, attractions) {
-  if (!dayAttrIndices.length) return { route: [], travelTime: 0 };
+  if (!dayAttrIndices.length) return { route: [], travelTime: 0, returnTime: 0 };
   if (dayAttrIndices.length === 1) {
+    const returnTime = timeMatrix[dayAttrIndices[0]][hotelIdx];
     return {
       route: [hotelIdx, ...dayAttrIndices],
       travelTime: timeMatrix[hotelIdx][dayAttrIndices[0]],
+      returnTime,
     };
   }
   const initial   = nearestNeighbourTimeAware(hotelIdx, dayAttrIndices, timeMatrix, attractions);
-  const optimised = twoOpt(initial, timeMatrix);
-  return { route: optimised, travelTime: tourCost(optimised, timeMatrix) };
+  // Circular 2-opt: include return-to-hotel leg in route cost optimisation
+  const optimised  = twoOpt(initial, timeMatrix, 200, hotelIdx);
+  const returnTime = timeMatrix[optimised[optimised.length - 1]][hotelIdx];
+  return { route: optimised, travelTime: tourCost(optimised, timeMatrix), returnTime };
 }
 
 // ── Daily scheduler (hard + soft constraints) ───────────────────────────────
@@ -803,36 +915,44 @@ function scoreItinerary(days, allPriorities, plannedPriorities, settings, cluste
     priorityScore   = Math.min(100, (covered / topSet.size) * 100);
   }
 
-  // ── Exhaustion (day span + transit load + density) ──────────────────────
+  // ── Exhaustion (day span + transit load + density + anchor overcrowding) ──
   const exhaustScores = activeDays.map(d => {
     const span           = d.day_span_minutes || (d.total_duration_minutes + d.total_travel_minutes);
-    // Penalise days exceeding 10h span
     const spanPenalty    = Math.max(0, (span - 10 * 60) / 60) * 10;
-    // Penalise high transit ratio (> 40%)
     const transitRatio   = d.total_travel_minutes / Math.max(1, span);
     const transitPenalty = transitRatio > 0.4 ? (transitRatio - 0.4) * 80 : 0;
-    // Penalise cramming > 8 stops
     const densityPenalty = Math.max(0, d.attractions.length - 8) * 5;
-    return Math.max(0, 100 - spanPenalty - transitPenalty - densityPenalty);
+    // Penalise anchor days that are over-stuffed (more than anchor + ANCHOR_MAX_SUPPS)
+    const anchorOvercrowding = (d.is_anchor_day && d.attractions.length > ANCHOR_MAX_SUPPS + 1)
+      ? (d.attractions.length - (ANCHOR_MAX_SUPPS + 1)) * 15
+      : 0;
+    return Math.max(0, 100 - spanPenalty - transitPenalty - densityPenalty - anchorOvercrowding);
   });
   const exhaustScore = exhaustScores.reduce((s, v) => s + v, 0) / exhaustScores.length;
 
-  // ── Timing (morning/evening placement, night-restriction compliance) ───────
+  // ── Timing (morning/evening placement, night violations, late hotel return) ──
   const timingScores = activeDays.map(d => {
     let penalty = 0;
     for (const pa of d.attractions) {
       const cat     = (pa.attraction.category || '').toLowerCase();
       const arrival = parseHHMM(pa.arrival_time);
 
-      // Hard violations that slipped through (should have been deferred) – score reflects it
       if (NIGHT_RESTRICTED_CATS.has(cat) && arrival >= NIGHT_CUTOFF_HOUR * 60) penalty += 40;
       else if (NIGHT_RESTRICTED_CATS.has(cat) && arrival >= SUNSET_HOUR * 60)   penalty += 12;
 
-      // Demanding cultural sites placed in afternoon/evening
       if (MORNING_PREFERRED_CATS.has(cat) && arrival > 15 * 60) penalty += 12;
-      // Evening-fine sites placed very early
       if (EVENING_OK_CATS.has(cat) && arrival < 9 * 60) penalty += 5;
     }
+
+    // Late hotel return: last departure + return transit exceeds LATE_RETURN_HOUR
+    const lastAttr = d.attractions[d.attractions.length - 1];
+    const returnMin = d.return_transit_minutes || 0;
+    if (lastAttr && returnMin > 0) {
+      const hotelArrival = parseHHMM(lastAttr.departure_time) + returnMin;
+      if (hotelArrival > LATE_RETURN_HOUR * 60 && returnMin > LATE_RETURN_FAR) penalty += 25;
+      else if (hotelArrival > LATE_RETURN_HOUR * 60)                            penalty += 10;
+    }
+
     return Math.max(0, 100 - penalty);
   });
   const timingScore = timingScores.reduce((s, v) => s + v, 0) / timingScores.length;
@@ -893,10 +1013,19 @@ function runOptimizer(attractions, settings) {
   const durations  = attractions.map(a => a.duration_minutes ?? 60);
   const cSummary   = clusterSummary(clusterLabels, attrCoords, priorities, durations);
 
-  // Step 3: Assign clusters to days + local-search improvement
+  // Detect anchor attractions before day allocation
+  const anchorSet = detectAnchors(attractions, timeMatrix);
+  if (anchorSet.size) {
+    warnings.push(
+      `${anchorSet.size} anchor attraction(s) detected — each scheduled as a dedicated day with limited supplements.`
+    );
+  }
+
+  // Step 3: Assign clusters to days + anchor enforcement + local-search improvement
   const { dayGroups, freeDays } = allocateDays(
     clusterLabels, cSummary, durations, timeMatrix,
-    total_days, max_hours_per_day, travel_style, preferences, pacing_mode
+    total_days, max_hours_per_day, travel_style, preferences, pacing_mode,
+    attractions, anchorSet
   );
 
   const cluster_map = {};
@@ -907,7 +1036,7 @@ function runOptimizer(attractions, settings) {
   // Step 4–5: Time-preference-aware route + constraint scheduling
   const plannedPriorities = [];
   const days = dayGroups.map((group, di) => {
-    const { route } = optimiseDayRoute(0, group.map(i => i + 1), timeMatrix, attractions);
+    const { route, returnTime } = optimiseDayRoute(0, group.map(i => i + 1), timeMatrix, attractions);
 
     const orderedAttrIndices = route.slice(1).map(extIdx => extIdx - 1);
     const orderedAttractions = orderedAttrIndices.map(i => attractions[i]);
@@ -931,6 +1060,7 @@ function runOptimizer(attractions, settings) {
     for (let k = 0; k < planned.length; k++) {
       const origIdx = orderedAttrIndices[k];
       planned[k].cluster_id = clusterLabels[origIdx] ?? 0;
+      planned[k].is_anchor  = anchorSet.has(origIdx);
       plannedPriorities.push(priorities[origIdx]);
     }
 
@@ -939,6 +1069,8 @@ function runOptimizer(attractions, settings) {
     const totalWalkMin     = planned.reduce((s, pa) => s + pa.walk_to_next_minutes, 0);
     const totalCost        = planned.reduce((s, pa) => s + (pa.attraction.cost || 0), 0);
     const clusterIds       = [...new Set(planned.map(pa => pa.cluster_id))];
+
+    const isAnchorDay = group.some(i => anchorSet.has(i));
 
     return {
       day_number:             di + 1,
@@ -951,6 +1083,8 @@ function runOptimizer(attractions, settings) {
       optimization_score:     0,
       cluster_ids:            clusterIds,
       day_span_minutes:       daySpanMin || (totalDurationMin + totalTravelMin),
+      return_transit_minutes: returnTime || 0,
+      is_anchor_day:          isAnchorDay,
       notes:                  [],
     };
   });
