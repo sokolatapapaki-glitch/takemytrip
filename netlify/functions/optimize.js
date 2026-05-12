@@ -762,11 +762,30 @@ const PREF_WINDOWS = {
   evening:   [17 * 60, 22 * 60],
   any:       [7 * 60,  22 * 60],
 };
-const LUNCH_START = 12 * 60 + 30;
+const LUNCH_WINDOW_START = 12 * 60;       // earliest acceptable lunch start
+const LUNCH_WINDOW_END   = 14 * 60 + 30;  // latest acceptable lunch start
+const LUNCH_MIN_DURATION = 45;            // floor for meal break (min)
+
+// ── Human Temporal Rhythm ──────────────────────────────────────────────────
+// All scheduled times are quantised to this grid so output looks like a
+// human planner wrote it (09:00 / 09:30 / 10:15 …) rather than a solver.
+const TIME_GRID_MIN = 15;
+
+function snapToGrid(minutes) {
+  return Math.round(minutes / TIME_GRID_MIN) * TIME_GRID_MIN;
+}
+
+// Narrative phase label for each stop — used by frontend and flow scoring.
+function dayPhase(arrivalMin) {
+  if (arrivalMin <  12 * 60)       return 'morning';
+  if (arrivalMin <= 14 * 60 + 30)  return 'midday';
+  if (arrivalMin <  18 * 60)       return 'afternoon';
+  return 'evening';
+}
 
 function scheduleDay(attractions, travelTimes, travelModes, walkTimes, startTime, lunchBreakMinutes) {
   const planned = [], deferred = [], warnings = [];
-  let currentTime        = parseHHMM(startTime);
+  let currentTime        = snapToGrid(parseHHMM(startTime)); // snap start to grid
   const dayStart         = currentTime;
   let lunchInserted      = false;
   let totalTransit       = 0;
@@ -791,13 +810,15 @@ function scheduleDay(attractions, travelTimes, travelModes, walkTimes, startTime
       break;
     }
 
-    let arrival = currentTime + travelMin;
+    let arrival = snapToGrid(currentTime + travelMin);
 
-    // Lunch break injection
-    if (!lunchInserted && arrival >= LUNCH_START && lunchBreakMinutes > 0) {
-      currentTime = arrival + lunchBreakMinutes;
-      arrival     = currentTime;
-      lunchInserted = true;
+    // Meal anchor: inject lunch anywhere in the 12:00–14:30 window.
+    // Enforce a minimum LUNCH_MIN_DURATION so it reads as a real break.
+    if (!lunchInserted && arrival >= LUNCH_WINDOW_START && arrival <= LUNCH_WINDOW_END && lunchBreakMinutes > 0) {
+      const lunchDur = Math.max(LUNCH_MIN_DURATION, lunchBreakMinutes);
+      currentTime    = arrival + lunchDur;
+      arrival        = snapToGrid(currentTime);
+      lunchInserted  = true;
     }
 
     // ── Hard: 12-hour day span ──────────────────────────────────────────
@@ -916,7 +937,8 @@ function scheduleDay(attractions, travelTimes, travelModes, walkTimes, startTime
       );
     }
 
-    const effectiveEnd = Math.min(visitEnd, closes);
+    // Snap departure to grid but never exceed closing time.
+    const effectiveEnd = Math.min(snapToGrid(Math.min(visitEnd, closes)), closes);
     planned.push({
       attraction:             attr,
       arrival_time:           fmtHHMM(arrival),
@@ -925,6 +947,7 @@ function scheduleDay(attractions, travelTimes, travelModes, walkTimes, startTime
       travel_to_next_mode:    nextMode,
       walk_to_next_minutes:   nextWalk,
       cluster_id:             0,
+      day_phase:              dayPhase(arrival),
     });
 
     currentTime = effectiveEnd;
@@ -1267,8 +1290,13 @@ function runOptimizer(attractions, settings) {
       prevExtIdx = extIdx;
     }
 
+    // Anchor days contain full-day attractions — force an early start so the
+    // attraction gets maximum daylight and the day reads as intentionally structured.
+    const isAnchorDay  = group.some(i => anchorSet.has(i));
+    const dayStartTime = (isAnchorDay && parseHHMM(start_time) > 9 * 60) ? '09:00' : start_time;
+
     const { planned, deferred, warnings: dayWarnings, totalTransitMin, daySpanMin } = scheduleDay(
-      orderedAttractions, travelTimes, travelModes, walkTimes, start_time, lunch_break_minutes
+      orderedAttractions, travelTimes, travelModes, walkTimes, dayStartTime, lunch_break_minutes
     );
 
     warnings.push(...dayWarnings);
@@ -1286,8 +1314,6 @@ function runOptimizer(attractions, settings) {
     const totalWalkMin     = planned.reduce((s, pa) => s + pa.walk_to_next_minutes, 0);
     const totalCost        = planned.reduce((s, pa) => s + (pa.attraction.cost || 0), 0);
     const clusterIds       = [...new Set(planned.map(pa => pa.cluster_id))];
-
-    const isAnchorDay = group.some(i => anchorSet.has(i));
 
     return {
       day_number:             di + 1,
