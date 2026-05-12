@@ -1277,6 +1277,7 @@ function runOptimizer(attractions, settings) {
       const origIdx = orderedAttrIndices[k];
       planned[k].cluster_id = clusterLabels[origIdx] ?? 0;
       planned[k].is_anchor  = anchorSet.has(origIdx);
+      planned[k].day_index  = di + 1; // 1-based; stable map identifier for this day
       plannedPriorities.push(priorities[origIdx]);
     }
 
