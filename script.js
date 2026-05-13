@@ -6364,6 +6364,10 @@ let userProgram = {
     selectedDay: 1   // Προεπιλεγμένη ημέρα
 };
 
+// Read-only presentation state for the last AI-generated itinerary.
+// Never mutated by the manual planner; userProgram is never auto-written from this.
+let aiGeneratedProgram = null;
+
 // 1. Ρύθμιση ημερών
 function setupProgramDays() {
     const daysSelect = document.getElementById('program-days-select');
@@ -8301,7 +8305,7 @@ async function optimizeItinerary() {
 
         const result = await resp.json();
         renderOptimizerResult(result, resultDiv);
-        hydrateUserProgramFromOptimizer(result);
+        storeAIResult(result);
         showToast(`✅ Βελτιστοποίηση ολοκληρώθηκε! Βαθμός: ${result.overall_score.toFixed(0)}/100`, 'success');
 
     } catch (err) {
@@ -8398,8 +8402,23 @@ function renderOptimizerResult(result, container) {
 
     html += `
             </div>
-            <div style="padding:0 24px 20px;font-size:12px;color:#9ca3af;text-align:center;">
-                Αλγόριθμος βελτιστοποίησης: DBSCAN geographic clustering + 2-opt TSP + Constraint scheduling
+            <div style="padding:16px 24px 20px;border-top:1px solid #e2e8f0;display:flex;flex-direction:column;align-items:center;gap:10px;">
+                <button
+                    onclick="applyAIItineraryToPlanner()"
+                    style="background:#2563eb;color:#fff;border:none;padding:12px 28px;border-radius:10px;
+                           font-size:14px;font-weight:700;cursor:pointer;width:100%;max-width:340px;
+                           box-shadow:0 2px 8px rgba(37,99,235,.3);transition:background .2s;"
+                    onmouseover="this.style.background='#1d4ed8'"
+                    onmouseout="this.style.background='#2563eb'">
+                    ✅ Εφαρμογή AI Προγράμματος στον Σχεδιαστή
+                </button>
+                <div style="font-size:11px;color:#9ca3af;text-align:center;max-width:320px;">
+                    Η προεπισκόπηση χρωμάτων στον χάρτη είναι ήδη ενεργή.
+                    Πατήστε παραπάνω για να μεταφέρετε το πρόγραμμα στον χειροκίνητο σχεδιαστή.
+                </div>
+                <div style="font-size:11px;color:#6b7280;text-align:center;">
+                    Αλγόριθμος: DBSCAN geographic clustering + 2-opt TSP + Constraint scheduling
+                </div>
             </div>
         </div>`;
 
@@ -8407,29 +8426,119 @@ function renderOptimizerResult(result, container) {
     container.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// Populate the manual-planner's userProgram state from an optimizer result so
-// that the existing map marker sync pipeline (synchronizeMapMarkersWithProgram)
-// colours markers by day exactly as it does for manually-built itineraries.
-function hydrateUserProgramFromOptimizer(result) {
+// ── AI Itinerary state management ─────────────────────────────────────────────
+//
+// Strict ownership model:
+//   aiGeneratedProgram  — read-only snapshot of the last optimizer result.
+//                         Never written back into userProgram automatically.
+//   userProgram         — editable manual-planner state. Only modified when
+//                         the user explicitly clicks "Apply AI itinerary".
+//
+// Map coloring for an AI preview is done by directly updating existing
+// MarkerCache markers (same physical markers, just different icon color).
+// This is visually identical to manual-planner coloring but does NOT mutate
+// the planner state, so there is no risk of duplicates or partial sync.
+
+// Resolve a marker from MarkerCache tolerating numeric ↔ string ID mismatch.
+// The optimizer sends IDs as strings; MarkerCache may have stored them as numbers.
+function resolveMarkerById(id) {
+    let m = MarkerCache.get(id);
+    if (m) return m;
+    const asNum = Number(id);
+    if (!isNaN(asNum)) m = MarkerCache.get(asNum);
+    return m || null;
+}
+
+// Return the key type (number or string) that MarkerCache actually uses for an
+// activity whose optimizer string-ID is `stringId`.
+function resolveOriginalMarkerKey(stringId) {
+    if (MarkerCache.has(stringId)) return stringId;
+    const asNum = Number(stringId);
+    if (!isNaN(asNum) && MarkerCache.has(asNum)) return asNum;
+    return stringId; // fallback — may still miss, but safe
+}
+
+// Store optimizer result in the AI-only state and preview day colors on the map.
+// Does NOT touch userProgram.
+function storeAIResult(result) {
     if (!result || !result.days) return;
+    aiGeneratedProgram = result;
+    previewAIItineraryOnMap(result);
+}
+
+// Color existing map markers according to the AI day assignment.
+// Uses getDayColor() + COLOR_PALETTE — the exact same logic as the manual planner —
+// but writes only to the marker icons, never to userProgram.
+function previewAIItineraryOnMap(aiResult) {
+    if (!aiResult || !aiResult.days) return;
+    if (!window.travelMap) return;
+
+    let colored = 0;
+    aiResult.days.forEach((day, di) => {
+        const dayNumber = di + 1;
+        const dayColor  = getDayColor(dayNumber);
+        const isTwoDigit = dayNumber > 9;
+        const size      = isTwoDigit ? 32 : 36;
+        const fontSize  = isTwoDigit ? 12 : 14;
+
+        day.attractions.forEach(pa => {
+            const marker = resolveMarkerById(pa.attraction.id);
+            if (!marker || !marker.setIcon) return;
+
+            marker.setIcon(L.divIcon({
+                html: `<div style="
+                    background:${dayColor};color:#fff;
+                    width:${size}px;height:${size}px;border-radius:50%;
+                    display:flex;align-items:center;justify-content:center;
+                    font-weight:bold;font-size:${fontSize}px;
+                    border:2px solid #fff;box-shadow:0 2px 6px ${dayColor}80;
+                    cursor:pointer;">
+                  ${dayNumber}
+                </div>`,
+                className: 'program-marker',
+                iconSize:   [size, size],
+                iconAnchor: [size / 2, size],
+            }));
+            colored++;
+        });
+    });
+
+    if (colored > 0) {
+        showToast(`🗺️ ${colored} πινέζες χρωματίστηκαν ανά ημέρα (προεπισκόπηση AI)`, 'success');
+    } else {
+        showToast('⚠️ Δεν βρέθηκαν πινέζες για χρωματισμό — βεβαιωθείτε ότι ο χάρτης έχει φορτωθεί', 'warning');
+    }
+}
+
+// Explicitly called when the user clicks "Apply AI itinerary to planner".
+// Writes aiGeneratedProgram into userProgram and runs the standard marker sync.
+function applyAIItineraryToPlanner() {
+    if (!aiGeneratedProgram || !aiGeneratedProgram.days) {
+        showToast('⚠️ Δεν υπάρχει αποθηκευμένο AI πρόγραμμα', 'warning');
+        return;
+    }
 
     userProgram = {
-        days: result.days.map(day =>
+        days: aiGeneratedProgram.days.map(day =>
             day.attractions.map(pa => ({
-                id:         pa.attraction.id,
+                // Use the same key type that MarkerCache stores so the sync succeeds
+                id:         resolveOriginalMarkerKey(pa.attraction.id),
                 name:       pa.attraction.title,
-                activityId: pa.attraction.id,
+                activityId: resolveOriginalMarkerKey(pa.attraction.id),
             }))
         ),
-        totalDays:   result.days.length,
+        totalDays:   aiGeneratedProgram.days.length,
         selectedDay: 1,
     };
 
     // Persist so the program survives panel navigation / page reload
     state.userProgram = JSON.parse(JSON.stringify(userProgram));
 
-    // Apply day colours to existing map markers through the shared pipeline
+    // Run the shared marker-sync pipeline (same as manual planner "show on map")
     synchronizeMapMarkersWithProgram();
+
+    showToast(`✅ AI πρόγραμμα εφαρμόστηκε! ${aiGeneratedProgram.days.length} ημέρες στον σχεδιαστή`, 'success');
 }
 
+window.applyAIItineraryToPlanner = applyAIItineraryToPlanner;
 window.optimizeItinerary = optimizeItinerary;
