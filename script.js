@@ -8301,6 +8301,7 @@ async function optimizeItinerary() {
 
         const result = await resp.json();
         renderOptimizerResult(result, resultDiv);
+        hydrateUserProgramFromOptimizer(result);
         showToast(`✅ Βελτιστοποίηση ολοκληρώθηκε! Βαθμός: ${result.overall_score.toFixed(0)}/100`, 'success');
 
     } catch (err) {
@@ -8404,6 +8405,31 @@ function renderOptimizerResult(result, container) {
 
     container.innerHTML = html;
     container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Populate the manual-planner's userProgram state from an optimizer result so
+// that the existing map marker sync pipeline (synchronizeMapMarkersWithProgram)
+// colours markers by day exactly as it does for manually-built itineraries.
+function hydrateUserProgramFromOptimizer(result) {
+    if (!result || !result.days) return;
+
+    userProgram = {
+        days: result.days.map(day =>
+            day.attractions.map(pa => ({
+                id:         pa.attraction.id,
+                name:       pa.attraction.title,
+                activityId: pa.attraction.id,
+            }))
+        ),
+        totalDays:   result.days.length,
+        selectedDay: 1,
+    };
+
+    // Persist so the program survives panel navigation / page reload
+    state.userProgram = JSON.parse(JSON.stringify(userProgram));
+
+    // Apply day colours to existing map markers through the shared pipeline
+    synchronizeMapMarkersWithProgram();
 }
 
 window.optimizeItinerary = optimizeItinerary;
