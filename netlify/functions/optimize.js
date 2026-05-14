@@ -75,6 +75,29 @@ const ZONE_CROSS_CITY_PEN  = 40;   // opposite-quadrant pair (NE↔SW or NW↔SE
 const ZONE_ADJACENT_PEN    = 15;   // adjacent-quadrant pair (NE↔NW, NE↔SE …)
 const ZONE_OUTER_EXTRA_PEN = 10;   // added when either attraction is in outer tier
 
+// ── Experiential Intensity Model ───────────────────────────────────────────
+// Intensity is a composite of physical + cognitive + stimulation energy profiles.
+// A score of 0–10 maps to four human-perceptible tiers.
+const INTENSITY_LOW      = 3.5;   // relaxed sightseeing, strolling
+const INTENSITY_MEDIUM   = 5.5;   // moderate effort, some focus required
+const INTENSITY_HIGH     = 7.5;   // demanding (long hike, museum marathon)
+// above HIGH_THRESHOLD → EXTREME (theme parks, extreme outdoor)
+
+// Maximum sustainable daily intensity load per pacing mode.
+// Computed as sum of per-attraction intensity scores × visit hours.
+const INTENSITY_BUDGETS = {
+  relaxed:   14,
+  balanced:  22,
+  intensive: 30,
+  compact:   28,
+};
+const INTENSITY_DEFAULT_BUDGET = 22;
+
+// An anchor is a high-commitment centrepiece (priority ≥ threshold AND long).
+// Stacking two or more true anchors in a single day → overwhelming UX.
+const INTENSITY_ANCHOR_SCORE_THRESHOLD = 6.0;  // intensity score ≥ this
+const INTENSITY_ANCHOR_MIN_HRS         = 2.0;  // visit duration ≥ this (hours)
+
 // ── Energy / fatigue model ─────────────────────────────────────────────────
 // Per-category energy profiles: physical, cognitive, emotional, stimulation (1–10 scale).
 // Accumulated across visit durations (hours) to produce day-level energy loads.
@@ -356,6 +379,56 @@ function dayDensityScore(group, attractions) {
   return headlineScore * 0.65 + varietyScore * 0.35;
 }
 
+// ── Experiential Intensity helpers ────────────────────────────────────────────
+
+// Composite intensity score for a single attraction (0–10 scale).
+// Uses the same ENERGY_PROFILES lookup as the fatigue model.
+function attractionIntensityScore(attr) {
+  const ep = getEnergyProfile(attr);
+  return (ep.physical + ep.cognitive + ep.stimulation) / 3;
+}
+
+// Map a numeric score to a human-readable tier label.
+function intensityLevel(score) {
+  if (score >= INTENSITY_HIGH)   return 'EXTREME_OR_HIGH';
+  if (score >= INTENSITY_MEDIUM) return 'MEDIUM';
+  if (score >= INTENSITY_LOW)    return 'LOW';
+  return 'MINIMAL';
+}
+
+// Total intensity load for a day group (sum of score × visit-hours per attraction).
+// `group` is an array of attraction indices; `attractions` is the global array.
+function dayIntensityLoad(group, attractions) {
+  return group.reduce((total, idx) => {
+    const a   = attractions[idx];
+    const hrs = (a.duration_minutes || 60) / 60;
+    return total + attractionIntensityScore(a) * hrs;
+  }, 0);
+}
+
+// Count true experiential anchors in a group — high-intensity AND long-duration.
+function dayIntensityAnchorCount(group, attractions) {
+  return group.filter(idx => {
+    const a   = attractions[idx];
+    const hrs = (a.duration_minutes || 60) / 60;
+    return attractionIntensityScore(a) >= INTENSITY_ANCHOR_SCORE_THRESHOLD
+        && hrs >= INTENSITY_ANCHOR_MIN_HRS;
+  }).length;
+}
+
+// Sustainability score [0,1] for a single day:
+//   1.0 = within budget, no anchor stacking
+//   penalised linearly for budget overrun; extra penalty for ≥2 true anchors
+function dayIntensitySustainability(group, attractions, pacingMode) {
+  if (!group.length) return 1.0;
+  const budget      = INTENSITY_BUDGETS[pacingMode] || INTENSITY_DEFAULT_BUDGET;
+  const load        = dayIntensityLoad(group, attractions);
+  const anchors     = dayIntensityAnchorCount(group, attractions);
+  const overrunPen  = Math.max(0, (load - budget) / budget);        // 0 → 1+ above budget
+  const stackingPen = anchors >= 2 ? (anchors - 1) * 0.20 : 0;     // 0.20 per extra anchor
+  return Math.max(0, 1 - overrunPen * 0.6 - stackingPen);
+}
+
 // ── Distance matrix ───────────────────────────────────────────────────────────
 
 function buildDistanceMatrix(coords, mode) {
@@ -590,7 +663,7 @@ function allocateDays(clusterLabels, cSummary, durations, timeMatrix,
 
   // Local search: move single attractions between days (respects anchor constraints).
   // zones + attractions enable district-aware and experience-aware quality evaluation.
-  dayGroups = localSearchDayImprove(dayGroups, durations, timeMatrix, netCap, anchorSet || new Set(), zones, attractions);
+  dayGroups = localSearchDayImprove(dayGroups, durations, timeMatrix, netCap, anchorSet || new Set(), zones, attractions, 400, pacingMode);
 
   const freeDays = [];
   for (let d = dayGroups.length + 1; d <= totalDays; d++) freeDays.push(d);
@@ -599,14 +672,15 @@ function allocateDays(clusterLabels, cSummary, durations, timeMatrix,
 
 // ── Local search: improve day assignment ──────────────────────────────────────────
 
-// Five-factor day-group quality function used by the local-search loop.
+// Six-factor day-group quality function used by the local-search loop.
 // Weights reflect what a human trip planner prioritizes:
-//   20 % balance       — keeps days roughly equal in total activity time
-//   22 % travel        — prefers geographically tight intra-day routing
-//   30 % zone          — district-coherent days (no cross-city ping-pong)
-//   18 % experience    — same-bucket attractions cluster together
-//   10 % density       — every day has a headline anchor, no filler-only days
-function evalDayGroupQuality(dayGroups, durations, timeMatrix, zones, attractions) {
+//   18 % balance       — keeps days roughly equal in total activity time
+//   20 % travel        — prefers geographically tight intra-day routing
+//   28 % zone          — district-coherent days (no cross-city ping-pong)
+//   16 % experience    — same-bucket attractions cluster together
+//    8 % density       — every day has a headline anchor, no filler-only days
+//   10 % intensity     — daily intensity load is sustainable; no anchor stacking
+function evalDayGroupQuality(dayGroups, durations, timeMatrix, zones, attractions, pacingMode) {
   if (!dayGroups.length) return 0;
 
   // Balance: coefficient of variation of day loads (lower spread = better)
@@ -642,16 +716,22 @@ function evalDayGroupQuality(dayGroups, durations, timeMatrix, zones, attraction
     ? dayGroups.reduce((s, g) => s + dayDensityScore(g, attractions), 0) / dayGroups.length
     : 0.6;
 
-  return 0.20 * balanceScore +
-         0.22 * travelScore  +
-         0.30 * zoneScore    +
-         0.18 * expScore     +
-         0.10 * densityScore;
+  // Intensity sustainability: daily load within pacing budget, no anchor stacking
+  const intensityScore = attractions
+    ? dayGroups.reduce((s, g) => s + dayIntensitySustainability(g, attractions, pacingMode), 0) / dayGroups.length
+    : 0.8;
+
+  return 0.18 * balanceScore   +
+         0.20 * travelScore    +
+         0.28 * zoneScore      +
+         0.16 * expScore       +
+         0.08 * densityScore   +
+         0.10 * intensityScore;
 }
 
-function localSearchDayImprove(dayGroups, durations, timeMatrix, netCap, anchorSet = new Set(), zones = null, attractions = null, maxIter = 400) {
+function localSearchDayImprove(dayGroups, durations, timeMatrix, netCap, anchorSet = new Set(), zones = null, attractions = null, maxIter = 400, pacingMode = 'balanced') {
   if (dayGroups.length <= 1) return dayGroups;
-  let bestScore = evalDayGroupQuality(dayGroups, durations, timeMatrix, zones, attractions);
+  let bestScore = evalDayGroupQuality(dayGroups, durations, timeMatrix, zones, attractions, pacingMode);
   const isAnchorDay = g => g.some(i => anchorSet.has(i));
 
   for (let iter = 0; iter < maxIter; iter++) {
@@ -679,7 +759,7 @@ function localSearchDayImprove(dayGroups, durations, timeMatrix, netCap, anchorS
       const candidate     = dayGroups
         .map((g, i) => (i === d1 ? newD1 : i === d2 ? newD2 : g))
         .filter(g => g.length > 0);
-      const candidateScore = evalDayGroupQuality(candidate, durations, timeMatrix, zones, attractions);
+      const candidateScore = evalDayGroupQuality(candidate, durations, timeMatrix, zones, attractions, pacingMode);
 
       if (candidateScore > bestScore + 0.001) {
         dayGroups  = candidate;
@@ -1304,6 +1384,14 @@ function scoreItinerary(days, allPriorities, plannedPriorities, settings, cluste
     const anchorOvercrowding = (d.is_anchor_day && d.attractions.length > ANCHOR_MAX_SUPPS + 1)
       ? (d.attractions.length - (ANCHOR_MAX_SUPPS + 1)) * 15 : 0;
 
+    // Penalise intensity anchor stacking: ≥2 high-intensity long-duration stops per day
+    const intensityAnchors = d.attractions.filter(pa => {
+      const hrs = (pa.attraction.duration_minutes || 60) / 60;
+      return attractionIntensityScore(pa.attraction) >= INTENSITY_ANCHOR_SCORE_THRESHOLD
+          && hrs >= INTENSITY_ANCHOR_MIN_HRS;
+    }).length;
+    const anchorStackingPenalty = intensityAnchors >= 2 ? (intensityAnchors - 1) * 18 : 0;
+
     // Penalise high-intensity activities scheduled late in the day (after 17:00)
     let lateIntensityPenalty = 0;
     for (const pa of d.attractions) {
@@ -1337,7 +1425,7 @@ function scoreItinerary(days, allPriorities, plannedPriorities, settings, cluste
     const continuousPenalty = Math.max(0, (maxBlock - 4 * 60) / 60) * 8;
 
     return Math.max(0, 100 - spanPenalty - transitPenalty - densityPenalty - anchorOvercrowding
-      - lateIntensityPenalty - mealPenalty - continuousPenalty);
+      - lateIntensityPenalty - mealPenalty - continuousPenalty - anchorStackingPenalty);
   });
   const exhaustScore = exhaustScores.reduce((s, v) => s + v, 0) / exhaustScores.length;
 
@@ -1387,25 +1475,47 @@ function scoreItinerary(days, allPriorities, plannedPriorities, settings, cluste
   });
   const flowScore = flowScores.reduce((s, v) => s + v, 0) / flowScores.length;
 
-  // ── Sustainability (cross-day fatigue propagation) ─────────────────────────
+  // ── Sustainability (cross-day fatigue propagation + intensity budget) ─────────────────────────
   // Consecutive heavy days should be avoided for a balanced multi-day trip.
+  // Two complementary signals are blended:
+  //   1. Energy-based fatigue (physical/cognitive/emotional load across energy profiles)
+  //   2. Intensity-based budget overrun (experiential intensity model)
+  //
   // Denominators calibrated to "very heavy day" benchmarks:
   //   physical  60 = all-day hiking (9 × 7h)
   //   cognitive 42 = all-day museum marathon (7 × 6h)
   //   emotional 24 = extended memorial / cemetery experience (9 × 3h)
+  const pacingMode = settings.pacing_mode || 'balanced';
+  const intensityBudget = INTENSITY_BUDGETS[pacingMode] || INTENSITY_DEFAULT_BUDGET;
+
   const dayFatigueLoads = activeDays.map(d => {
     const energy = computeDayEnergy(d.attractions);
     const physLoad = Math.min(100, (energy.physical  / 60) * 100);
     const cogLoad  = Math.min(100, (energy.cognitive / 42) * 100);
     const emoLoad  = Math.min(100, (energy.emotional / 24) * 100);
-    return (physLoad + cogLoad + emoLoad) / 3;
+    const energyLoad = (physLoad + cogLoad + emoLoad) / 3;
+
+    // Intensity dimension: how much the day exceeds its pacing budget (0–100)
+    const intensityLoad = d.attractions.reduce((tot, pa) => {
+      const hrs = (pa.attraction.duration_minutes || 60) / 60;
+      return tot + attractionIntensityScore(pa.attraction) * hrs;
+    }, 0);
+    const intensityOverrun = Math.min(100, Math.max(0, (intensityLoad - intensityBudget) / intensityBudget) * 100);
+
+    return energyLoad * 0.6 + intensityOverrun * 0.4;
   });
   let sustainPenalty = 0;
   for (let i = 0; i < dayFatigueLoads.length - 1; i++) {
     const a = dayFatigueLoads[i], b = dayFatigueLoads[i + 1];
-    if      (a > 75 && b > 75) sustainPenalty += 25;
-    else if (a > 60 && b > 60) sustainPenalty += 12;
-    else if (a > 50 && b > 50) sustainPenalty +=  5;
+    if      (a > 75 && b > 75) sustainPenalty += 30;
+    else if (a > 60 && b > 60) sustainPenalty += 15;
+    else if (a > 50 && b > 50) sustainPenalty +=  6;
+  }
+  // Also penalise three+ consecutive heavy days (intensity-aware)
+  for (let i = 0; i < dayFatigueLoads.length - 2; i++) {
+    if (dayFatigueLoads[i] > 60 && dayFatigueLoads[i + 1] > 60 && dayFatigueLoads[i + 2] > 60) {
+      sustainPenalty += 20;
+    }
   }
   const sustainabilityScore = Math.max(0,
     100 - sustainPenalty / Math.max(1, dayFatigueLoads.length - 1));
