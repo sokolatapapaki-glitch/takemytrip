@@ -60,6 +60,21 @@ const ANCHOR_MAX_SUPPS = 2;     // max supplement stops on an anchor day
 const LATE_RETURN_HOUR = 21;    // hotel arrival after this hour is penalised
 const LATE_RETURN_FAR  = 30;    // return transit (min) that triggers late penalty
 
+// ── Urban District Intelligence ───────────────────────────────────────────────
+// Attractions are assigned to geographic zones relative to the trip's centre
+// (hotel coordinates).  The zone system is city-size-agnostic: thresholds are
+// in km, so a 2 km city-centre radius works for Paris as well as Amsterdam.
+//
+// Zone labels:  CENTER | NE | NW | SE | SW | NE_OUT | NW_OUT | SE_OUT | SW_OUT
+//
+// Cross-city traversal penalties are applied during day-quality evaluation so
+// the local-search loop naturally prefers zone-coherent day groups.
+const ZONE_CORE_KM         = 2.0;  // within this radius → CENTER
+const ZONE_MID_KM          = 5.0;  // 2–5 km → inner quadrant; >5 km → _OUT variant
+const ZONE_CROSS_CITY_PEN  = 40;   // opposite-quadrant pair (NE↔SW or NW↔SE)
+const ZONE_ADJACENT_PEN    = 15;   // adjacent-quadrant pair (NE↔NW, NE↔SE …)
+const ZONE_OUTER_EXTRA_PEN = 10;   // added when either attraction is in outer tier
+
 // ── Energy / fatigue model ─────────────────────────────────────────────────
 // Per-category energy profiles: physical, cognitive, emotional, stimulation (1–10 scale).
 // Accumulated across visit durations (hours) to produce day-level energy loads.
@@ -200,6 +215,51 @@ function travelMinutes(lat1, lon1, lat2, lon2, mode = 'public_transport') {
 function walkingMinutes(lat1, lon1, lat2, lon2) {
   const dist = haversineKm(lat1, lon1, lat2, lon2);
   return Math.max(1, Math.round((dist / SPEEDS.walking) * 60));
+}
+
+// ── Urban District Intelligence helpers ──────────────────────────────────────
+
+// Assign a geographic zone to an attraction relative to the trip's centre.
+// Returns one of: CENTER, NE, NW, SE, SW, NE_OUT, NW_OUT, SE_OUT, SW_OUT
+function computeGeoZone(lat, lon, centerLat, centerLon) {
+  const dist = haversineKm(lat, lon, centerLat, centerLon);
+  if (dist < ZONE_CORE_KM) return 'CENTER';
+  const isOuter = dist >= ZONE_MID_KM;
+  const quad    = (lat >= centerLat ? 'N' : 'S') + (lon >= centerLon ? 'E' : 'W');
+  return isOuter ? quad + '_OUT' : quad;
+}
+
+// Penalty score (0–50) for scheduling two attractions in different zones on
+// the same day.  Reflects human perception of geographic friction.
+function zoneCrossPenalty(z1, z2) {
+  if (!z1 || !z2 || z1 === z2)           return 0;
+  if (z1 === 'CENTER' || z2 === 'CENTER') return 5;  // center is easily reachable
+
+  const d1 = z1.replace('_OUT', '');
+  const d2 = z2.replace('_OUT', '');
+  const outer = (z1.endsWith('_OUT') || z2.endsWith('_OUT')) ? ZONE_OUTER_EXTRA_PEN : 0;
+
+  if (d1 === d2) return 5 + outer;   // same quadrant, inner↔outer tier
+
+  // Diagonally opposite quadrants = full cross-city traversal
+  const opposite = (d1 === 'NE' && d2 === 'SW') || (d1 === 'SW' && d2 === 'NE') ||
+                   (d1 === 'NW' && d2 === 'SE') || (d1 === 'SE' && d2 === 'NW');
+  return (opposite ? ZONE_CROSS_CITY_PEN : ZONE_ADJACENT_PEN) + outer;
+}
+
+// Normalized [0, 1] zone coherence for a group of attraction indices.
+// 1.0 = all same zone (perfectly district-coherent day).
+// 0.0 = maximum cross-city fragmentation.
+function dayZoneCoherence(group, zones) {
+  if (!zones || group.length < 2) return 1.0;
+  let totalPen = 0, pairs = 0;
+  for (let i = 0; i < group.length; i++) {
+    for (let j = i + 1; j < group.length; j++) {
+      totalPen += zoneCrossPenalty(zones[group[i]], zones[group[j]]);
+      pairs++;
+    }
+  }
+  return Math.max(0, 1 - (totalPen / pairs) / ZONE_CROSS_CITY_PEN);
 }
 
 // ── Distance matrix ───────────────────────────────────────────────────────────
@@ -400,7 +460,7 @@ function clusterTimeBudget(attrIndices, durations, timeMatrix, overheadPct = 0.1
 
 function allocateDays(clusterLabels, cSummary, durations, timeMatrix,
                       totalDays, maxHours, travelStyle, preferences, pacingMode,
-                      attractions, anchorSet) {
+                      attractions, anchorSet, zones) {
   const maxMinutes   = maxHours * 60;
   const styleMult    = STYLE_MULT[travelStyle] || 1.0;
   const pacingMult   = PACING_CAPACITY[pacingMode] || 1.0;
@@ -435,7 +495,8 @@ function allocateDays(clusterLabels, cSummary, durations, timeMatrix,
   }
 
   // Local search: move single attractions between days (respects anchor constraints)
-  dayGroups = localSearchDayImprove(dayGroups, durations, timeMatrix, netCap, anchorSet || new Set());
+  // zones enables district-aware quality evaluation inside the search loop.
+  dayGroups = localSearchDayImprove(dayGroups, durations, timeMatrix, netCap, anchorSet || new Set(), zones);
 
   const freeDays = [];
   for (let d = dayGroups.length + 1; d <= totalDays; d++) freeDays.push(d);
@@ -444,7 +505,11 @@ function allocateDays(clusterLabels, cSummary, durations, timeMatrix,
 
 // ── Local search: improve day assignment ──────────────────────────────────────────
 
-function evalDayGroupQuality(dayGroups, durations, timeMatrix) {
+// zones: optional array indexed by attraction index; supplies the zone label
+// computed by computeGeoZone for each attraction.  When provided, zone
+// coherence drives 40 % of the quality score so the local-search loop
+// strongly prefers district-coherent day splits.
+function evalDayGroupQuality(dayGroups, durations, timeMatrix, zones) {
   if (!dayGroups.length) return 0;
 
   // Balance: coefficient of variation (lower = better balance)
@@ -453,7 +518,7 @@ function evalDayGroupQuality(dayGroups, durations, timeMatrix) {
   const std   = Math.sqrt(loads.reduce((s, v) => s + (v - mean) ** 2, 0) / loads.length);
   const balanceScore = 1 - Math.min(1, std / Math.max(1, mean));
 
-  // Geographic coherence: avg intra-day travel time (lower = better)
+  // Travel coherence: avg intra-day travel time (lower = better)
   let totalIntra = 0, pairs = 0;
   for (const day of dayGroups) {
     for (let i = 0; i < day.length; i++) {
@@ -464,14 +529,19 @@ function evalDayGroupQuality(dayGroups, durations, timeMatrix) {
     }
   }
   const avgIntra     = pairs > 0 ? totalIntra / pairs : 0;
-  const coherenceScore = Math.max(0, 1 - avgIntra / 60); // 60-min avg → score 0
+  const travelScore  = Math.max(0, 1 - avgIntra / 60); // 60-min avg → 0
 
-  return 0.5 * balanceScore + 0.5 * coherenceScore;
+  // Zone coherence: district-aware cross-city penalty (40 % of total score)
+  const zoneScore = zones
+    ? dayGroups.reduce((s, g) => s + dayZoneCoherence(g, zones), 0) / dayGroups.length
+    : 1.0;
+
+  return 0.25 * balanceScore + 0.35 * travelScore + 0.40 * zoneScore;
 }
 
-function localSearchDayImprove(dayGroups, durations, timeMatrix, netCap, anchorSet = new Set(), maxIter = 400) {
+function localSearchDayImprove(dayGroups, durations, timeMatrix, netCap, anchorSet = new Set(), zones = null, maxIter = 400) {
   if (dayGroups.length <= 1) return dayGroups;
-  let bestScore = evalDayGroupQuality(dayGroups, durations, timeMatrix);
+  let bestScore = evalDayGroupQuality(dayGroups, durations, timeMatrix, zones);
   const isAnchorDay = g => g.some(i => anchorSet.has(i));
 
   for (let iter = 0; iter < maxIter; iter++) {
@@ -499,7 +569,7 @@ function localSearchDayImprove(dayGroups, durations, timeMatrix, netCap, anchorS
       const candidate     = dayGroups
         .map((g, i) => (i === d1 ? newD1 : i === d2 ? newD2 : g))
         .filter(g => g.length > 0);
-      const candidateScore = evalDayGroupQuality(candidate, durations, timeMatrix);
+      const candidateScore = evalDayGroupQuality(candidate, durations, timeMatrix, zones);
 
       if (candidateScore > bestScore + 0.001) {
         dayGroups  = candidate;
@@ -1040,7 +1110,7 @@ function scoreItinerary(days, allPriorities, plannedPriorities, settings, cluste
   });
   const fatScore = fatScores.reduce((s, v) => s + v, 0) / fatScores.length;
 
-  // ── Cluster coherence + region-switch penalty ─────────────────────────
+  // ── Cluster coherence + region-switch penalty + district zone score ──────
   const clusterScores = activeDays.map(d => {
     if (d.attractions.length < 2) return 100;
     const cids = d.attractions.map(pa => pa.cluster_id);
@@ -1053,7 +1123,23 @@ function scoreItinerary(days, allPriorities, plannedPriorities, settings, cluste
       if (pa.travel_to_next_minutes > HEAVY_TRANSFER_MIN) switchPenalty += 20;
       else if (pa.travel_to_next_minutes > 45)             switchPenalty += 8;
     }
-    return Math.max(0, coherence - switchPenalty);
+
+    // District (zone) coherence penalty: cross-city days score worse.
+    // Uses the geo_zone field attached to each attraction in runOptimizer.
+    let zonePenSum = 0, zonePairs = 0;
+    for (let i = 0; i < d.attractions.length; i++) {
+      for (let j = i + 1; j < d.attractions.length; j++) {
+        const z1 = d.attractions[i].attraction.geo_zone;
+        const z2 = d.attractions[j].attraction.geo_zone;
+        if (z1 && z2) { zonePenSum += zoneCrossPenalty(z1, z2); zonePairs++; }
+      }
+    }
+    // Normalize zone penalty to 0–60 and apply
+    const districtPenalty = zonePairs > 0
+      ? (zonePenSum / zonePairs / ZONE_CROSS_CITY_PEN) * 60
+      : 0;
+
+    return Math.max(0, coherence - switchPenalty - districtPenalty);
   });
   const clusterScore = clusterScores.reduce((s, v) => s + v, 0) / clusterScores.length;
 
@@ -1252,6 +1338,16 @@ function runOptimizer(attractions, settings) {
   const durations  = attractions.map(a => a.duration_minutes ?? 60);
   const cSummary   = clusterSummary(clusterLabels, attrCoords, priorities, durations);
 
+  // Assign a geographic zone to every attraction relative to the hotel.
+  // zones[i] is used by evalDayGroupQuality and scoreItinerary to penalise
+  // cross-city day combinations (district intelligence layer).
+  const zones = attractions.map(a =>
+    computeGeoZone(a.latitude, a.longitude, hotel.latitude, hotel.longitude)
+  );
+  // Attach zone to each attraction object so it propagates into the output
+  // and into the scoring layer without extra parameter threading.
+  attractions.forEach((a, i) => { a.geo_zone = zones[i]; });
+
   // Detect anchor attractions before day allocation
   const anchorSet = detectAnchors(attractions, timeMatrix);
   if (anchorSet.size) {
@@ -1264,7 +1360,7 @@ function runOptimizer(attractions, settings) {
   const { dayGroups, freeDays } = allocateDays(
     clusterLabels, cSummary, durations, timeMatrix,
     total_days, max_hours_per_day, travel_style, preferences, pacing_mode,
-    attractions, anchorSet
+    attractions, anchorSet, zones
   );
 
   const cluster_map = {};
