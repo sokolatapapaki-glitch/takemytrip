@@ -262,6 +262,100 @@ function dayZoneCoherence(group, zones) {
   return Math.max(0, 1 - (totalPen / pairs) / ZONE_CROSS_CITY_PEN);
 }
 
+// ── Experiential grouping intelligence ───────────────────────────────────────
+// Attractions are assigned to experience buckets independent of geography.
+// Bucket affinity drives same-day preference in the local-search quality
+// function: a cultural-heritage day stays coherent even if it mixes a palace
+// with a gallery, while a recreational day naturally groups outdoor attractions.
+// This is strictly behavioral — no city-specific or POI-specific names.
+
+const EXPERIENCE_BUCKETS = {
+  cultural_heritage: new Set([
+    'museum', 'gallery', 'memorial', 'historical', 'heritage',
+    'palace', 'cathedral', 'religious', 'castle', 'ruins', 'landmark',
+  ]),
+  nature_outdoor: new Set([
+    'park', 'garden', 'nature', 'beach', 'mountain',
+    'forest', 'hiking', 'outdoor', 'viewpoint',
+  ]),
+  entertainment: new Set([
+    'theme_park', 'amusement', 'zoo', 'aquarium', 'theater', 'entertainment',
+  ]),
+  urban_social: new Set([
+    'neighborhood', 'square', 'boulevard', 'market', 'shopping',
+    'restaurant', 'bar',
+  ]),
+  expedition: new Set(['cave', 'mine', 'remote', 'tour']),
+};
+
+// Cross-bucket affinity pairs: moderate compatibility between experience types
+// that visitors naturally combine in a single day.
+const BUCKET_AFFINITY = new Map([
+  ['cultural_heritage|urban_social',   0.65], // historic district strolling
+  ['urban_social|cultural_heritage',   0.65],
+  ['nature_outdoor|expedition',        0.65], // outdoor excursion days
+  ['expedition|nature_outdoor',        0.65],
+  ['entertainment|urban_social',       0.60], // leisure / family days
+  ['urban_social|entertainment',       0.60],
+]);
+
+function getExperienceBucket(category) {
+  const cat = (category || '').toLowerCase();
+  for (const [bucket, cats] of Object.entries(EXPERIENCE_BUCKETS)) {
+    if (cats.has(cat)) return bucket;
+  }
+  return 'general';
+}
+
+// Normalized [0, 1] experiential affinity between two attraction categories.
+// 1.0 = same bucket; moderate values for compatible cross-bucket pairs;
+// 0.25 for incompatible mixes (e.g., theme-park next to a war memorial).
+function experienceAffinity(cat1, cat2) {
+  const b1 = getExperienceBucket(cat1);
+  const b2 = getExperienceBucket(cat2);
+  if (b1 === b2)                               return 1.0;
+  if (b1 === 'general' || b2 === 'general')    return 0.5;
+  return BUCKET_AFFINITY.get(`${b1}|${b2}`) ?? 0.25;
+}
+
+// Normalized [0, 1] experiential cohesion for a day group.
+// 1.0 = all attractions from the same experience bucket (e.g., pure museum day).
+// Low score = jarring experiential mash (e.g., cemetery + theme park).
+function groupExpCohesion(group, attractions) {
+  if (!attractions || group.length < 2) return 1.0;
+  let total = 0, pairs = 0;
+  for (let i = 0; i < group.length; i++) {
+    for (let j = i + 1; j < group.length; j++) {
+      const c1 = attractions[group[i]]?.category || '';
+      const c2 = attractions[group[j]]?.category || '';
+      total += experienceAffinity(c1, c2);
+      pairs++;
+    }
+  }
+  return pairs > 0 ? total / pairs : 1.0;
+}
+
+// Day density score [0, 1]: rewards days anchored by a high-priority attraction
+// complemented by supporting stops.  Penalises filler-only days where every
+// attraction has low priority (no headline experience for the visitor).
+function dayDensityScore(group, attractions) {
+  if (!attractions || group.length === 0) return 0.5;
+  if (group.length === 1) {
+    const p = attractions[group[0]]?.priority_score ?? 5;
+    return Math.min(1, (p - 2) / 8); // single attraction: depends on priority
+  }
+  const priorities = group.map(i => attractions[i]?.priority_score ?? 5);
+  const maxP = Math.max(...priorities);
+  const avgP = priorities.reduce((s, v) => s + v, 0) / priorities.length;
+
+  // Headline presence: strong anchor (priority ≥ 7 = ideal, ≤ 4 = filler day)
+  const headlineScore = Math.min(1, Math.max(0, (maxP - 3) / 7));
+  // Variety: some spread between max and average indicates anchor + complements
+  const varietyScore  = Math.min(1, (maxP - avgP) / 3 + 0.4);
+
+  return headlineScore * 0.65 + varietyScore * 0.35;
+}
+
 // ── Distance matrix ───────────────────────────────────────────────────────────
 
 function buildDistanceMatrix(coords, mode) {
@@ -494,9 +588,9 @@ function allocateDays(clusterLabels, cSummary, durations, timeMatrix,
     if (dayGroups.length > totalDays) dayGroups = trimToTotalDays(dayGroups, durations, totalDays);
   }
 
-  // Local search: move single attractions between days (respects anchor constraints)
-  // zones enables district-aware quality evaluation inside the search loop.
-  dayGroups = localSearchDayImprove(dayGroups, durations, timeMatrix, netCap, anchorSet || new Set(), zones);
+  // Local search: move single attractions between days (respects anchor constraints).
+  // zones + attractions enable district-aware and experience-aware quality evaluation.
+  dayGroups = localSearchDayImprove(dayGroups, durations, timeMatrix, netCap, anchorSet || new Set(), zones, attractions);
 
   const freeDays = [];
   for (let d = dayGroups.length + 1; d <= totalDays; d++) freeDays.push(d);
@@ -505,20 +599,23 @@ function allocateDays(clusterLabels, cSummary, durations, timeMatrix,
 
 // ── Local search: improve day assignment ──────────────────────────────────────────
 
-// zones: optional array indexed by attraction index; supplies the zone label
-// computed by computeGeoZone for each attraction.  When provided, zone
-// coherence drives 40 % of the quality score so the local-search loop
-// strongly prefers district-coherent day splits.
-function evalDayGroupQuality(dayGroups, durations, timeMatrix, zones) {
+// Five-factor day-group quality function used by the local-search loop.
+// Weights reflect what a human trip planner prioritizes:
+//   20 % balance       — keeps days roughly equal in total activity time
+//   22 % travel        — prefers geographically tight intra-day routing
+//   30 % zone          — district-coherent days (no cross-city ping-pong)
+//   18 % experience    — same-bucket attractions cluster together
+//   10 % density       — every day has a headline anchor, no filler-only days
+function evalDayGroupQuality(dayGroups, durations, timeMatrix, zones, attractions) {
   if (!dayGroups.length) return 0;
 
-  // Balance: coefficient of variation (lower = better balance)
+  // Balance: coefficient of variation of day loads (lower spread = better)
   const loads = dayGroups.map(g => g.reduce((s, i) => s + durations[i], 0));
   const mean  = loads.reduce((s, v) => s + v, 0) / loads.length;
   const std   = Math.sqrt(loads.reduce((s, v) => s + (v - mean) ** 2, 0) / loads.length);
   const balanceScore = 1 - Math.min(1, std / Math.max(1, mean));
 
-  // Travel coherence: avg intra-day travel time (lower = better)
+  // Travel coherence: avg intra-day pairwise travel time (60-min avg → 0)
   let totalIntra = 0, pairs = 0;
   for (const day of dayGroups) {
     for (let i = 0; i < day.length; i++) {
@@ -528,20 +625,33 @@ function evalDayGroupQuality(dayGroups, durations, timeMatrix, zones) {
       }
     }
   }
-  const avgIntra     = pairs > 0 ? totalIntra / pairs : 0;
-  const travelScore  = Math.max(0, 1 - avgIntra / 60); // 60-min avg → 0
+  const travelScore = Math.max(0, 1 - (pairs > 0 ? totalIntra / pairs : 0) / 60);
 
-  // Zone coherence: district-aware cross-city penalty (40 % of total score)
+  // Zone (district) coherence: penalise cross-city combinations
   const zoneScore = zones
     ? dayGroups.reduce((s, g) => s + dayZoneCoherence(g, zones), 0) / dayGroups.length
     : 1.0;
 
-  return 0.25 * balanceScore + 0.35 * travelScore + 0.40 * zoneScore;
+  // Experiential cohesion: same-experience-bucket attractions prefer same day
+  const expScore = attractions
+    ? dayGroups.reduce((s, g) => s + groupExpCohesion(g, attractions), 0) / dayGroups.length
+    : 0.7;
+
+  // Density: each day should have at least one headline anchor
+  const densityScore = attractions
+    ? dayGroups.reduce((s, g) => s + dayDensityScore(g, attractions), 0) / dayGroups.length
+    : 0.6;
+
+  return 0.20 * balanceScore +
+         0.22 * travelScore  +
+         0.30 * zoneScore    +
+         0.18 * expScore     +
+         0.10 * densityScore;
 }
 
-function localSearchDayImprove(dayGroups, durations, timeMatrix, netCap, anchorSet = new Set(), zones = null, maxIter = 400) {
+function localSearchDayImprove(dayGroups, durations, timeMatrix, netCap, anchorSet = new Set(), zones = null, attractions = null, maxIter = 400) {
   if (dayGroups.length <= 1) return dayGroups;
-  let bestScore = evalDayGroupQuality(dayGroups, durations, timeMatrix, zones);
+  let bestScore = evalDayGroupQuality(dayGroups, durations, timeMatrix, zones, attractions);
   const isAnchorDay = g => g.some(i => anchorSet.has(i));
 
   for (let iter = 0; iter < maxIter; iter++) {
@@ -569,7 +679,7 @@ function localSearchDayImprove(dayGroups, durations, timeMatrix, netCap, anchorS
       const candidate     = dayGroups
         .map((g, i) => (i === d1 ? newD1 : i === d2 ? newD2 : g))
         .filter(g => g.length > 0);
-      const candidateScore = evalDayGroupQuality(candidate, durations, timeMatrix, zones);
+      const candidateScore = evalDayGroupQuality(candidate, durations, timeMatrix, zones, attractions);
 
       if (candidateScore > bestScore + 0.001) {
         dayGroups  = candidate;
@@ -1124,8 +1234,7 @@ function scoreItinerary(days, allPriorities, plannedPriorities, settings, cluste
       else if (pa.travel_to_next_minutes > 45)             switchPenalty += 8;
     }
 
-    // District (zone) coherence penalty: cross-city days score worse.
-    // Uses the geo_zone field attached to each attraction in runOptimizer.
+    // District (zone) coherence: cross-city days score worse.
     let zonePenSum = 0, zonePairs = 0;
     for (let i = 0; i < d.attractions.length; i++) {
       for (let j = i + 1; j < d.attractions.length; j++) {
@@ -1134,12 +1243,33 @@ function scoreItinerary(days, allPriorities, plannedPriorities, settings, cluste
         if (z1 && z2) { zonePenSum += zoneCrossPenalty(z1, z2); zonePairs++; }
       }
     }
-    // Normalize zone penalty to 0–60 and apply
     const districtPenalty = zonePairs > 0
-      ? (zonePenSum / zonePairs / ZONE_CROSS_CITY_PEN) * 60
+      ? (zonePenSum / zonePairs / ZONE_CROSS_CITY_PEN) * 55
       : 0;
 
-    return Math.max(0, coherence - switchPenalty - districtPenalty);
+    // Experiential cohesion: jarring experience-bucket mismatches reduce score.
+    // Computed from pairwise category affinities across the day's attractions.
+    const expPairs  = [];
+    for (let i = 0; i < d.attractions.length; i++) {
+      for (let j = i + 1; j < d.attractions.length; j++) {
+        expPairs.push(experienceAffinity(
+          d.attractions[i].attraction.category,
+          d.attractions[j].attraction.category,
+        ));
+      }
+    }
+    const avgExpAffinity  = expPairs.length > 0
+      ? expPairs.reduce((s, v) => s + v, 0) / expPairs.length
+      : 1.0;
+    // Low affinity (0.25) → up to 30 pts penalty; high affinity (1.0) → 0 pts
+    const expCohPenalty   = (1 - avgExpAffinity) * 30;
+
+    // Density: filler-only day (no headline anchor) loses up to 20 pts.
+    const maxP          = d.attractions.reduce((m, pa) => Math.max(m, pa.attraction.priority_score ?? 5), 0);
+    const densityBonus  = Math.max(0, (maxP - 5) / 5 * 20); // 5→0, 10→+20
+    const fillerPenalty = maxP < 4 ? 20 : 0;                 // no headline at all
+
+    return Math.max(0, coherence - switchPenalty - districtPenalty - expCohPenalty + densityBonus - fillerPenalty);
   });
   const clusterScore = clusterScores.reduce((s, v) => s + v, 0) / clusterScores.length;
 
