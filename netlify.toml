@@ -1,0 +1,12 @@
+[build]
+  publish = "."
+
+[functions]
+  directory = "netlify/functions"
+  # Bundle the city JSON datasets with every function deployment
+  included_files = ["optimizer/data/**"]
+
+[dev]
+  command    = "python3 -m uvicorn optimizer.main:app --host 0.0.0.0 --port 8000"
+  targetPort = 8000
+  port       = 8888
