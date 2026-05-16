@@ -1857,6 +1857,25 @@ function getMapStepHTML() {
                             </div>
                         </div>
                         
+                        <!-- OPTIMIZE ITINERARY BANNER -->
+                        <div style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border:2px solid #2563eb;border-radius:12px;padding:18px 20px;margin-bottom:20px;">
+                            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                                <span style="font-size:26px;">⚡</span>
+                                <div style="flex:1;min-width:200px;">
+                                    <div style="font-weight:700;color:#1d4ed8;font-size:15px;">Αυτόματη Βελτιστοποίηση Προγράμματος</div>
+                                    <div style="color:#3b82f6;font-size:13px;margin-top:3px;">Επιλέξτε αριθμό ημερών παραπάνω, μετά πατήστε το κουμπί για βελτιστοποίηση με DBSCAN + 2-opt TSP</div>
+                                </div>
+                                <button id="btn-optimize-itinerary"
+                                        onclick="optimizeItinerary()"
+                                        style="background:linear-gradient(135deg,#2563eb,#0891b2);color:#fff;border:none;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(37,99,235,.35);transition:all .2s;white-space:nowrap;">
+                                    ⚡ Βελτιστοποίηση Προγράμματος
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- OPTIMIZER RESULT -->
+                        <div id="optimizer-result" style="display:none;margin-bottom:24px;"></div>
+
                         <!-- ΚΟΥΜΠΙΑ -->
                         <div style="display: flex; gap: 15px; margin-top: 30px; justify-content: center; flex-wrap: wrap;">
                             <button class="btn btn-primary" onclick="saveUserProgram()" id="save-program-btn">
@@ -6345,6 +6364,10 @@ let userProgram = {
     selectedDay: 1   // Προεπιλεγμένη ημέρα
 };
 
+// Read-only presentation state for the last AI-generated itinerary.
+// Never mutated by the manual planner; userProgram is never auto-written from this.
+let aiGeneratedProgram = null;
+
 // 1. Ρύθμιση ημερών
 function setupProgramDays() {
     const daysSelect = document.getElementById('program-days-select');
@@ -8198,3 +8221,324 @@ async function exportItineraryToPDF() {
         if (btnEl) { btnEl.disabled = false; btnEl.innerHTML = '<i class="fas fa-file-pdf"></i> Εξαγωγή PDF'; }
     }
 }
+
+// ==================== ITINERARY OPTIMIZER INTEGRATION ====================
+
+async function optimizeItinerary() {
+    const btn = document.getElementById('btn-optimize-itinerary');
+    const resultDiv = document.getElementById('optimizer-result');
+
+    // Validate: need activities with locations
+    const fullActivities = getFullActivitiesWithLocation();
+    if (!fullActivities || fullActivities.length === 0) {
+        showToast('⚠️ Δεν βρέθηκαν δραστηριότητες με τοποθεσία. Επιλέξτε δραστηριότητες στο Βήμα 4.', 'error');
+        return;
+    }
+
+    // Validate: need number of days
+    const daysSelect = document.getElementById('program-days-select');
+    const totalDays = daysSelect ? parseInt(daysSelect.value) : 0;
+    if (!totalDays || totalDays < 1) {
+        showToast('⚠️ Παρακαλώ επιλέξτε αριθμό ημερών πριν τη βελτιστοποίηση.', 'error');
+        if (daysSelect) daysSelect.focus();
+        return;
+    }
+
+    // Get hotel/center coordinates
+    const cityCoords = getCityCoordinates(state.selectedDestinationId);
+    const hotelLat = cityCoords ? cityCoords[0] : (fullActivities.reduce((s, a) => s + a.location.lat, 0) / fullActivities.length);
+    const hotelLng = cityCoords ? cityCoords[1] : (fullActivities.reduce((s, a) => s + a.location.lng, 0) / fullActivities.length);
+
+    // Map activities to optimizer schema
+    const CATEGORY_PRIORITY = { museum: 8, landmark: 9, park: 6, religious: 7, shopping: 5, default: 6 };
+    const attractions = fullActivities.map(a => ({
+        id: String(a.id),
+        title: a.name || a.title || `Activity ${a.id}`,
+        latitude: Number(a.location.lat),
+        longitude: Number(a.location.lng),
+        duration_minutes: a.duration_hours ? Math.round(a.duration_hours * 60) : 90,
+        category: (a.category || 'general').toLowerCase(),
+        priority_score: CATEGORY_PRIORITY[(a.category || '').toLowerCase()] || CATEGORY_PRIORITY.default,
+        cost: 0,
+        preferred_time_of_day: 'any',
+    }));
+
+    // Show loading state
+    btn.disabled = true;
+    btn.innerHTML = '<span style="display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px;"></span> Βελτιστοποίηση…';
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = `
+        <div style="background:#fff;border-radius:12px;border:2px solid #e2e8f0;padding:32px;text-align:center;">
+            <div style="width:44px;height:44px;border:4px solid #e2e8f0;border-top-color:#2563eb;border-radius:50%;margin:0 auto 16px;animation:spin .8s linear infinite;"></div>
+            <div style="font-weight:600;color:#1e40af;">Βελτιστοποίηση δρομολογίου με DBSCAN + 2-opt TSP…</div>
+            <div style="font-size:13px;color:#6b7280;margin-top:8px;">${attractions.length} δραστηριότητες → ${totalDays} ημέρες</div>
+        </div>`;
+
+    try {
+        const payload = {
+            attractions,
+            settings: {
+                total_days: totalDays,
+                max_hours_per_day: 8,
+                hotel: { latitude: hotelLat, longitude: hotelLng, name: state.selectedDestination || 'Κέντρο πόλης' },
+                transport_mode: 'public_transport',
+                walking_tolerance_minutes: 30,
+                travel_style: 'balanced',
+                pacing_mode: 'balanced',
+                preferences: [],
+                start_time: '09:00',
+                lunch_break_minutes: 60,
+                city_name: state.selectedDestinationId || 'custom',
+            },
+        };
+
+        const resp = await fetch('/api/optimize', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+        });
+
+        if (!resp.ok) {
+            const err = await resp.json().catch(() => ({}));
+            throw new Error(err.detail || `Σφάλμα διακομιστή (HTTP ${resp.status})`);
+        }
+
+        const result = await resp.json();
+        renderOptimizerResult(result, resultDiv);
+        storeAIResult(result);
+        showToast(`✅ Βελτιστοποίηση ολοκληρώθηκε! Βαθμός: ${result.overall_score.toFixed(0)}/100`, 'success');
+
+    } catch (err) {
+        resultDiv.innerHTML = `
+            <div style="background:#fef2f2;border:2px solid #fca5a5;border-radius:12px;padding:20px;text-align:center;">
+                <div style="font-size:28px;margin-bottom:10px;">⚠️</div>
+                <div style="font-weight:700;color:#dc2626;margin-bottom:8px;">Αποτυχία βελτιστοποίησης</div>
+                <div style="font-size:13px;color:#6b7280;">${err.message}</div>
+                <button onclick="optimizeItinerary()" style="margin-top:14px;background:#dc2626;color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:600;">
+                    ↻ Δοκιμή ξανά
+                </button>
+            </div>`;
+        console.error('Optimizer error:', err);
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '⚡ Βελτιστοποίηση Προγράμματος';
+    }
+}
+
+function renderOptimizerResult(result, container) {
+    const DAY_COLORS = ['#2563eb','#0d9488','#d97706','#7c3aed','#dc2626','#0891b2','#059669','#c2410c','#4f46e5','#0f766e'];
+    const CAT_ICONS = { museum:'🏛️', landmark:'🗼', park:'🌳', religious:'⛪', shopping:'🛍️', general:'📍' };
+
+    const totalTravel = result.days.reduce((s, d) => s + (d.total_travel_minutes || 0), 0);
+    const score = result.overall_score || 0;
+    const scoreColor = score >= 80 ? '#16a34a' : score >= 60 ? '#2563eb' : score >= 40 ? '#d97706' : '#dc2626';
+
+    let html = `
+        <div style="background:#fff;border-radius:14px;border:2px solid #2563eb;overflow:hidden;box-shadow:0 4px 20px rgba(37,99,235,.15);">
+            <!-- Header -->
+            <div style="background:linear-gradient(135deg,#2563eb,#0891b2);color:#fff;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+                <div>
+                    <div style="font-size:17px;font-weight:800;">⚡ Βελτιστοποιημένο Πρόγραμμα</div>
+                    <div style="font-size:13px;opacity:.85;margin-top:3px;">DBSCAN clustering + 2-opt TSP route optimization</div>
+                </div>
+                <div style="display:flex;gap:20px;flex-wrap:wrap;">
+                    <div style="text-align:center;">
+                        <div style="font-size:22px;font-weight:800;">${result.total_days_used}</div>
+                        <div style="font-size:11px;opacity:.8;">Ενεργές Μέρες</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <div style="font-size:22px;font-weight:800;">${result.total_attractions}</div>
+                        <div style="font-size:11px;opacity:.8;">Δραστηριότητες</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <div style="font-size:22px;font-weight:800;color:${scoreColor === '#2563eb' ? '#93c5fd' : '#86efac'};">${score.toFixed(0)}</div>
+                        <div style="font-size:11px;opacity:.8;">Βαθμός</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Days -->
+            <div style="padding:20px 24px;">`;
+
+    result.days.forEach((day, di) => {
+        const color = DAY_COLORS[di % DAY_COLORS.length];
+        html += `
+            <div style="margin-bottom:16px;border-radius:10px;border:1.5px solid #e2e8f0;overflow:hidden;">
+                <div style="background:${color};color:#fff;padding:12px 16px;display:flex;align-items:center;gap:12px;">
+                    <div style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;">Μ${day.day_number}</div>
+                    <div style="flex:1;">
+                        <div style="font-weight:700;font-size:15px;">${day.date_label}</div>
+                        <div style="font-size:12px;opacity:.85;">${day.attractions.length} δραστηριότητες · ~${Math.round((day.total_duration_minutes + day.total_travel_minutes) / 60 * 10) / 10}h</div>
+                    </div>
+                </div>
+                <div style="padding:12px 16px;background:#fafafa;">`;
+
+        day.attractions.forEach((pa, ai) => {
+            const icon = CAT_ICONS[(pa.attraction.category || '').toLowerCase()] || '📍';
+            const durationH = Math.round(pa.attraction.duration_minutes / 60 * 10) / 10;
+            html += `
+                <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;${ai < day.attractions.length - 1 ? 'border-bottom:1px solid #f0f0f0;' : ''}">
+                    <div style="width:24px;height:24px;border-radius:50%;background:${color};color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;margin-top:2px;">${ai + 1}</div>
+                    <div style="flex:1;">
+                        <div style="font-weight:600;font-size:14px;">${icon} ${pa.attraction.title}</div>
+                        <div style="font-size:12px;color:#6b7280;margin-top:2px;">${pa.arrival_time} – ${pa.departure_time} · ${durationH}h επίσκεψη</div>
+                    </div>
+                </div>`;
+            if (ai < day.attractions.length - 1 && pa.travel_to_next_minutes > 0) {
+                html += `<div style="font-size:11px;color:#9ca3af;padding:4px 34px;">🚇 ${pa.travel_to_next_minutes} λεπτά μετακίνηση</div>`;
+            }
+        });
+
+        html += `</div></div>`;
+    });
+
+    if (result.free_days && result.free_days.length > 0) {
+        result.free_days.forEach(d => {
+            html += `<div style="background:#f0fdf4;border:1.5px dashed #86efac;border-radius:10px;padding:14px 16px;margin-bottom:12px;display:flex;align-items:center;gap:10px;">
+                <span style="font-size:20px;">🌴</span>
+                <div><div style="font-weight:700;color:#16a34a;">Ημέρα ${d} — Ελεύθερη</div><div style="font-size:13px;color:#6b7280;">Δεν υπάρχουν προγραμματισμένες δραστηριότητες</div></div>
+            </div>`;
+        });
+    }
+
+    html += `
+            </div>
+            <div style="padding:16px 24px 20px;border-top:1px solid #e2e8f0;display:flex;flex-direction:column;align-items:center;gap:10px;">
+                <button
+                    onclick="applyAIItineraryToPlanner()"
+                    style="background:#2563eb;color:#fff;border:none;padding:12px 28px;border-radius:10px;
+                           font-size:14px;font-weight:700;cursor:pointer;width:100%;max-width:340px;
+                           box-shadow:0 2px 8px rgba(37,99,235,.3);transition:background .2s;"
+                    onmouseover="this.style.background='#1d4ed8'"
+                    onmouseout="this.style.background='#2563eb'">
+                    ✅ Εφαρμογή AI Προγράμματος στον Σχεδιαστή
+                </button>
+                <div style="font-size:11px;color:#9ca3af;text-align:center;max-width:320px;">
+                    Η προεπισκόπηση χρωμάτων στον χάρτη είναι ήδη ενεργή.
+                    Πατήστε παραπάνω για να μεταφέρετε το πρόγραμμα στον χειροκίνητο σχεδιαστή.
+                </div>
+                <div style="font-size:11px;color:#6b7280;text-align:center;">
+                    Αλγόριθμος: DBSCAN geographic clustering + 2-opt TSP + Constraint scheduling
+                </div>
+            </div>
+        </div>`;
+
+    container.innerHTML = html;
+    container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── AI Itinerary state management ─────────────────────────────────────────────
+//
+// Strict ownership model:
+//   aiGeneratedProgram  — read-only snapshot of the last optimizer result.
+//                         Never written back into userProgram automatically.
+//   userProgram         — editable manual-planner state. Only modified when
+//                         the user explicitly clicks "Apply AI itinerary".
+//
+// Map coloring for an AI preview is done by directly updating existing
+// MarkerCache markers (same physical markers, just different icon color).
+// This is visually identical to manual-planner coloring but does NOT mutate
+// the planner state, so there is no risk of duplicates or partial sync.
+
+// Resolve a marker from MarkerCache tolerating numeric ↔ string ID mismatch.
+// The optimizer sends IDs as strings; MarkerCache may have stored them as numbers.
+function resolveMarkerById(id) {
+    let m = MarkerCache.get(id);
+    if (m) return m;
+    const asNum = Number(id);
+    if (!isNaN(asNum)) m = MarkerCache.get(asNum);
+    return m || null;
+}
+
+// Return the key type (number or string) that MarkerCache actually uses for an
+// activity whose optimizer string-ID is `stringId`.
+function resolveOriginalMarkerKey(stringId) {
+    if (MarkerCache.has(stringId)) return stringId;
+    const asNum = Number(stringId);
+    if (!isNaN(asNum) && MarkerCache.has(asNum)) return asNum;
+    return stringId; // fallback — may still miss, but safe
+}
+
+// Store optimizer result in the AI-only state and preview day colors on the map.
+// Does NOT touch userProgram.
+function storeAIResult(result) {
+    if (!result || !result.days) return;
+    aiGeneratedProgram = result;
+    previewAIItineraryOnMap(result);
+}
+
+// Color existing map markers according to the AI day assignment.
+// Uses getDayColor() + COLOR_PALETTE — the exact same logic as the manual planner —
+// but writes only to the marker icons, never to userProgram.
+function previewAIItineraryOnMap(aiResult) {
+    if (!aiResult || !aiResult.days) return;
+    if (!window.travelMap) return;
+
+    let colored = 0;
+    aiResult.days.forEach((day, di) => {
+        const dayNumber = di + 1;
+        const dayColor  = getDayColor(dayNumber);
+        const isTwoDigit = dayNumber > 9;
+        const size      = isTwoDigit ? 32 : 36;
+        const fontSize  = isTwoDigit ? 12 : 14;
+
+        day.attractions.forEach(pa => {
+            const marker = resolveMarkerById(pa.attraction.id);
+            if (!marker || !marker.setIcon) return;
+
+            marker.setIcon(L.divIcon({
+                html: `<div style="
+                    background:${dayColor};color:#fff;
+                    width:${size}px;height:${size}px;border-radius:50%;
+                    display:flex;align-items:center;justify-content:center;
+                    font-weight:bold;font-size:${fontSize}px;
+                    border:2px solid #fff;box-shadow:0 2px 6px ${dayColor}80;
+                    cursor:pointer;">
+                  ${dayNumber}
+                </div>`,
+                className: 'program-marker',
+                iconSize:   [size, size],
+                iconAnchor: [size / 2, size],
+            }));
+            colored++;
+        });
+    });
+
+    if (colored > 0) {
+        showToast(`🗺️ ${colored} πινέζες χρωματίστηκαν ανά ημέρα (προεπισκόπηση AI)`, 'success');
+    } else {
+        showToast('⚠️ Δεν βρέθηκαν πινέζες για χρωματισμό — βεβαιωθείτε ότι ο χάρτης έχει φορτωθεί', 'warning');
+    }
+}
+
+// Explicitly called when the user clicks "Apply AI itinerary to planner".
+// Writes aiGeneratedProgram into userProgram and runs the standard marker sync.
+function applyAIItineraryToPlanner() {
+    if (!aiGeneratedProgram || !aiGeneratedProgram.days) {
+        showToast('⚠️ Δεν υπάρχει αποθηκευμένο AI πρόγραμμα', 'warning');
+        return;
+    }
+
+    userProgram = {
+        days: aiGeneratedProgram.days.map(day =>
+            day.attractions.map(pa => ({
+                // Use the same key type that MarkerCache stores so the sync succeeds
+                id:         resolveOriginalMarkerKey(pa.attraction.id),
+                name:       pa.attraction.title,
+                activityId: resolveOriginalMarkerKey(pa.attraction.id),
+            }))
+        ),
+        totalDays:   aiGeneratedProgram.days.length,
+        selectedDay: 1,
+    };
+
+    // Persist so the program survives panel navigation / page reload
+    state.userProgram = JSON.parse(JSON.stringify(userProgram));
+
+    // Run the shared marker-sync pipeline (same as manual planner "show on map")
+    synchronizeMapMarkersWithProgram();
+
+    showToast(`✅ AI πρόγραμμα εφαρμόστηκε! ${aiGeneratedProgram.days.length} ημέρες στον σχεδιαστή`, 'success');
+}
+
+window.applyAIItineraryToPlanner = applyAIItineraryToPlanner;
+window.optimizeItinerary = optimizeItinerary;
