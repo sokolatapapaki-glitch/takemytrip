@@ -48,6 +48,7 @@ class UserSettings(BaseModel):
         "free_time",
         "group_nearby",
     ]] = Field(default_factory=list)
+    max_activities_per_day: int = Field(default=5, ge=1, le=20)
     start_time: str = "09:00"   # daily start time "HH:MM"
     lunch_break_minutes: int = 60
     city_name: str = ""

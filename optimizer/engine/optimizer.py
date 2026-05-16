@@ -110,11 +110,13 @@ class ItineraryOptimizer:
             time_matrix=time_matrix,
             total_days=self.settings.total_days,
             max_hours_per_day=self.settings.max_hours_per_day,
+            max_activities_per_day=getattr(self.settings, "max_activities_per_day", 5),
             travel_style=self.settings.travel_style,
             preferences=self.settings.preferences,
             pacing_mode=pacing,
         )
         day_groups_0based, free_days = allocator.allocate()
+        self._warnings.extend(allocator.warnings)
 
         # Convert 0-based attraction indices → extended matrix indices (hotel=0 → attrs=1..n)
         day_groups_raw = [[i + 1 for i in group] for group in day_groups_0based]

@@ -21,12 +21,14 @@ from optimizer.models import DayPlan, UserSettings
 
 # Default weights (must sum to 1.0)
 _BASE_WEIGHTS: Dict[str, float] = {
-    "distance":    0.25,
-    "balance":     0.20,
-    "fatigue":     0.20,
-    "cluster":     0.15,
-    "preference":  0.10,
-    "priority":    0.10,
+    "distance":                0.18,
+    "balance":                 0.13,
+    "fatigue":                 0.13,
+    "cluster":                 0.10,
+    "preference":              0.10,
+    "priority":                0.10,
+    "micro_cluster_integrity": 0.16,
+    "daily_load":              0.10,
 }
 
 
@@ -211,18 +213,81 @@ class ItineraryScorer:
         # Preference matching (soft heuristic)
         preference_score = self._preference_match_score(active_days)
 
+        # Micro-cluster integrity: penalise clusters split across non-consecutive days
+        micro_cluster_score = self._micro_cluster_integrity_score(active_days)
+
+        # Daily load: penalise days exceeding hour/activity caps
+        max_acts = getattr(self.settings, "max_activities_per_day", 5)
+        daily_load_score = self._daily_load_score(
+            active_days, self.settings.max_hours_per_day, max_acts
+        )
+
         breakdown = {
-            "distance": round(avg_day_score, 1),
-            "balance": round(balance_score, 1),
-            "fatigue": round(fatigue_score, 1),
-            "cluster": round(float(cluster_score), 1),
-            "preference": round(preference_score, 1),
-            "priority": round(priority_score, 1),
+            "distance":                round(avg_day_score, 1),
+            "balance":                 round(balance_score, 1),
+            "fatigue":                 round(fatigue_score, 1),
+            "cluster":                 round(float(cluster_score), 1),
+            "preference":              round(preference_score, 1),
+            "priority":                round(priority_score, 1),
+            "micro_cluster_integrity": round(micro_cluster_score, 1),
+            "daily_load":              round(daily_load_score, 1),
         }
 
-        overall = sum(self.weights[k] * v for k, v in breakdown.items())
+        overall = sum(self.weights.get(k, 0.0) * v for k, v in breakdown.items())
         breakdown["overall"] = round(overall, 1)
         return breakdown
+
+    def _micro_cluster_integrity_score(self, days: List[DayPlan]) -> float:
+        """Return 100 if no cluster is split across non-consecutive days; penalise otherwise."""
+        cluster_days: Dict[int, List[int]] = {}
+        for day in days:
+            for cid in day.cluster_ids:
+                cluster_days.setdefault(cid, [])
+                if day.day_number not in cluster_days[cid]:
+                    cluster_days[cid].append(day.day_number)
+
+        if not cluster_days:
+            return 100.0
+
+        total = len(cluster_days)
+        violations = 0
+        for cid, day_nums in cluster_days.items():
+            if len(day_nums) > 1:
+                sorted_days = sorted(day_nums)
+                consecutive = all(
+                    sorted_days[i + 1] == sorted_days[i] + 1
+                    for i in range(len(sorted_days) - 1)
+                )
+                if not consecutive:
+                    violations += 1
+
+        return 100.0 * (1.0 - violations / max(1, total))
+
+    def _daily_load_score(
+        self,
+        days: List[DayPlan],
+        max_hours_per_day: float,
+        max_activities: int,
+    ) -> float:
+        """Penalise days that exceed the hour or activity-count caps."""
+        if not days:
+            return 100.0
+
+        max_minutes = max_hours_per_day * 60
+        total_penalty = 0.0
+
+        for day in days:
+            n_attrs = len(day.attractions)
+            visit_minutes = day.total_duration_minutes
+
+            if visit_minutes > max_minutes:
+                excess_ratio = (visit_minutes - max_minutes) / max(1.0, max_minutes)
+                total_penalty += min(50.0, excess_ratio * 100)
+
+            if n_attrs > max_activities:
+                total_penalty += min(30.0, (n_attrs - max_activities) * 10.0)
+
+        return max(0.0, 100.0 - total_penalty / max(1, len(days)))
 
     def _preference_match_score(self, days: List[DayPlan]) -> float:
         score = 80.0   # baseline
