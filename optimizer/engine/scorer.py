@@ -20,15 +20,17 @@ from optimizer.models import DayPlan, UserSettings
 
 
 # Default weights (must sum to 1.0)
+# Geographic integrity is the primary objective (0.35).
+# Daily load and time-efficiency together enforce human-paced days (0.30).
 _BASE_WEIGHTS: Dict[str, float] = {
-    "distance":                0.18,
-    "balance":                 0.13,
-    "fatigue":                 0.13,
-    "cluster":                 0.10,
-    "preference":              0.10,
-    "priority":                0.10,
-    "micro_cluster_integrity": 0.16,
-    "daily_load":              0.10,
+    "micro_cluster_integrity": 0.35,   # geography first
+    "daily_load":              0.15,   # human-paced days
+    "distance":                0.15,   # travel efficiency
+    "fatigue":                 0.10,   # pacing / walking
+    "balance":                 0.10,   # even day distribution
+    "cluster":                 0.07,   # cross-day continuity
+    "priority":                0.05,   # coverage of top sights
+    "preference":              0.03,   # user preference match
 }
 
 

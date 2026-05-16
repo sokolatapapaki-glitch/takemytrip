@@ -106,6 +106,8 @@ class ItineraryOptimizer:
         allocator = DayAllocator(
             cluster_labels=raw_labels,
             cluster_summary=c_summary,
+            coords=list(attr_coords),
+            priorities=[a.priority_score for a in self.attractions],
             durations=[a.duration_minutes for a in self.attractions],
             time_matrix=time_matrix,
             total_days=self.settings.total_days,
