@@ -17,16 +17,20 @@ from typing import List, Dict
 import numpy as np
 
 from optimizer.models import DayPlan, UserSettings
+from optimizer.engine.distance import haversine_km
 
 
 # Default weights (must sum to 1.0)
+# "continuity" captures cross-day geographic partitioning quality;
+# budget taken from "balance" and "cluster" which now share the role.
 _BASE_WEIGHTS: Dict[str, float] = {
     "distance":    0.25,
-    "balance":     0.20,
+    "balance":     0.15,
     "fatigue":     0.20,
-    "cluster":     0.15,
+    "cluster":     0.10,
     "preference":  0.10,
     "priority":    0.10,
+    "continuity":  0.10,
 }
 
 
@@ -44,8 +48,9 @@ def _apply_preference_weights(
         w["balance"] -= 0.05
 
     if "minimize_transport" in preferences:
-        w["distance"] += 0.10
+        w["distance"] += 0.05
         w["cluster"] += 0.05
+        w["continuity"] += 0.05
         w["balance"] -= 0.10
         w["preference"] -= 0.05
 
@@ -55,7 +60,8 @@ def _apply_preference_weights(
         w["fatigue"] -= 0.05
 
     if "compact_itinerary" in preferences:
-        w["cluster"] += 0.10
+        w["cluster"] += 0.05
+        w["continuity"] += 0.05
         w["distance"] += 0.05
         w["balance"] -= 0.10
         w["preference"] -= 0.05
@@ -69,29 +75,28 @@ def _apply_preference_weights(
 
     # Pacing-mode adjustments: shift objective focus to match distribution strategy
     if pacing_mode == "compact":
-        # Reward tight geographic packing; penalise imbalanced days less
-        w["cluster"]  += 0.10
-        w["distance"] += 0.05
-        w["balance"]  -= 0.10
-        w["preference"] -= 0.05
+        w["cluster"]     += 0.05
+        w["continuity"]  += 0.05
+        w["distance"]    += 0.05
+        w["balance"]     -= 0.10
+        w["preference"]  -= 0.05
     elif pacing_mode == "balanced":
-        # Reward even day-to-day distribution above all else
-        w["balance"]  += 0.15
-        w["cluster"]  -= 0.05
-        w["distance"] -= 0.05
-        w["fatigue"]  -= 0.05
+        w["balance"]     += 0.10
+        w["continuity"]  += 0.05
+        w["cluster"]     -= 0.05
+        w["distance"]    -= 0.05
+        w["fatigue"]     -= 0.05
     elif pacing_mode == "relaxed":
-        # Reward low-fatigue, leisurely days; coverage matters less
-        w["fatigue"]    += 0.15
-        w["preference"] += 0.05
-        w["priority"]   -= 0.10
-        w["distance"]   -= 0.10
+        w["fatigue"]     += 0.15
+        w["preference"]  += 0.05
+        w["priority"]    -= 0.10
+        w["distance"]    -= 0.10
     elif pacing_mode == "intensive":
-        # Reward high priority coverage and geographic efficiency
-        w["priority"]   += 0.15
-        w["cluster"]    += 0.05
-        w["fatigue"]    -= 0.15
-        w["preference"] -= 0.05
+        w["priority"]    += 0.10
+        w["continuity"]  += 0.05
+        w["cluster"]     += 0.05
+        w["fatigue"]     -= 0.15
+        w["preference"]  -= 0.05
 
     # Normalise so weights sum to 1
     total = sum(w.values())
@@ -158,6 +163,53 @@ class ItineraryScorer:
         same = sum(1 for a, b in zip(cids, cids[1:]) if a == b)
         return 100.0 * same / (len(cids) - 1)
 
+    def _cross_day_continuity_score(self, days: List[DayPlan]) -> float:
+        """
+        Measure how well the itinerary partitions the city across days.
+
+        Computes a geographic centroid for each day from its attractions'
+        coordinates, then evaluates pairwise centroid distances.  Days that
+        cover the same city area (centroids < 2 km apart) are penalised as
+        district revisits.  The score is 100 when every pair of days is
+        geographically well-separated, dropping toward 0 as more day-pairs
+        share the same urban corridor.
+
+        This is destination-independent: it uses only coordinates, not names.
+        """
+        if len(days) <= 1:
+            return 100.0
+
+        centroids = []
+        for day in days:
+            lats = [pa.attraction.latitude for pa in day.attractions]
+            lons = [pa.attraction.longitude for pa in day.attractions]
+            if lats:
+                centroids.append((sum(lats) / len(lats), sum(lons) / len(lons)))
+
+        if len(centroids) <= 1:
+            return 100.0
+
+        pair_distances = [
+            haversine_km(centroids[i][0], centroids[i][1],
+                         centroids[j][0], centroids[j][1])
+            for i in range(len(centroids))
+            for j in range(i + 1, len(centroids))
+        ]
+
+        if not pair_distances:
+            return 100.0
+
+        # Days whose centroids are ≥ 2 km apart are considered well-separated.
+        SEPARATION_KM = 2.0
+        well_separated = sum(1 for d in pair_distances if d >= SEPARATION_KM)
+        separation_ratio = well_separated / len(pair_distances)
+
+        # Bonus for high average inter-day spread (city cleanly decomposed).
+        avg_sep = sum(pair_distances) / len(pair_distances)
+        avg_bonus = min(20.0, avg_sep * 3.0)  # ~6.7 km avg → full bonus
+
+        return min(100.0, separation_ratio * 80.0 + avg_bonus)
+
     # ── overall score ─────────────────────────────────────────────────────────
 
     def score_itinerary(
@@ -205,8 +257,11 @@ class ItineraryScorer:
             daily_fatigue.append(max(0.0, 100.0 - ratio * 80))
         fatigue_score = float(np.mean(daily_fatigue))
 
-        # Cluster coherence averaged
+        # Cluster coherence averaged (intra-day)
         cluster_score = np.mean([self._cluster_coherence_score(d) for d in active_days])
+
+        # Cross-day geographic continuity (inter-day district partitioning)
+        continuity_score = self._cross_day_continuity_score(active_days)
 
         # Preference matching (soft heuristic)
         preference_score = self._preference_match_score(active_days)
@@ -218,6 +273,7 @@ class ItineraryScorer:
             "cluster": round(float(cluster_score), 1),
             "preference": round(preference_score, 1),
             "priority": round(priority_score, 1),
+            "continuity": round(continuity_score, 1),
         }
 
         overall = sum(self.weights[k] * v for k, v in breakdown.items())
