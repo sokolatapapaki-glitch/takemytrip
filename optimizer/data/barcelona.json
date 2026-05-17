@@ -1,0 +1,141 @@
+{
+  "city": "Barcelona",
+  "country": "Spain",
+  "hotel": {
+    "name": "Central Barcelona Hotel",
+    "latitude": 41.3851,
+    "longitude": 2.1734
+  },
+  "attractions": [
+    {
+      "id": "sagrada_familia",
+      "title": "Sagrada Família",
+      "latitude": 41.4036,
+      "longitude": 2.1744,
+      "duration_minutes": 150,
+      "opening_hours": { "open": "09:00", "close": "20:00", "days": [0,1,2,3,4,5,6] },
+      "category": "landmark",
+      "priority_score": 10.0,
+      "preferred_time_of_day": "morning",
+      "cost": 26.0,
+      "tags": ["gaudi", "architecture", "iconic"]
+    },
+    {
+      "id": "park_guell",
+      "title": "Park Güell",
+      "latitude": 41.4145,
+      "longitude": 2.1527,
+      "duration_minutes": 120,
+      "opening_hours": { "open": "08:00", "close": "20:30", "days": [0,1,2,3,4,5,6] },
+      "category": "park",
+      "priority_score": 9.0,
+      "preferred_time_of_day": "morning",
+      "cost": 10.0,
+      "tags": ["gaudi", "park", "views"]
+    },
+    {
+      "id": "gothic_quarter",
+      "title": "Gothic Quarter",
+      "latitude": 41.3827,
+      "longitude": 2.1769,
+      "duration_minutes": 120,
+      "opening_hours": { "open": "00:00", "close": "23:59", "days": [0,1,2,3,4,5,6] },
+      "category": "neighborhood",
+      "priority_score": 8.5,
+      "preferred_time_of_day": "afternoon",
+      "cost": 0.0,
+      "tags": ["medieval", "walking", "history"]
+    },
+    {
+      "id": "las_ramblas",
+      "title": "La Rambla",
+      "latitude": 41.3797,
+      "longitude": 2.1739,
+      "duration_minutes": 60,
+      "opening_hours": { "open": "00:00", "close": "23:59", "days": [0,1,2,3,4,5,6] },
+      "category": "boulevard",
+      "priority_score": 7.5,
+      "preferred_time_of_day": "any",
+      "cost": 0.0,
+      "tags": ["boulevard", "shopping", "iconic"]
+    },
+    {
+      "id": "casa_batllo",
+      "title": "Casa Batlló",
+      "latitude": 41.3916,
+      "longitude": 2.1649,
+      "duration_minutes": 90,
+      "opening_hours": { "open": "09:00", "close": "21:00", "days": [0,1,2,3,4,5,6] },
+      "category": "landmark",
+      "priority_score": 9.0,
+      "preferred_time_of_day": "any",
+      "cost": 35.0,
+      "tags": ["gaudi", "modernisme", "architecture"]
+    },
+    {
+      "id": "casa_mila",
+      "title": "Casa Milà (La Pedrera)",
+      "latitude": 41.3954,
+      "longitude": 2.1619,
+      "duration_minutes": 90,
+      "opening_hours": { "open": "09:00", "close": "20:30", "days": [0,1,2,3,4,5,6] },
+      "category": "landmark",
+      "priority_score": 8.5,
+      "preferred_time_of_day": "any",
+      "cost": 25.0,
+      "tags": ["gaudi", "modernisme", "rooftop"]
+    },
+    {
+      "id": "picasso_museum",
+      "title": "Picasso Museum",
+      "latitude": 41.3851,
+      "longitude": 2.1804,
+      "duration_minutes": 120,
+      "opening_hours": { "open": "10:00", "close": "20:00", "days": [0,2,3,4,5,6] },
+      "category": "museum",
+      "priority_score": 8.0,
+      "preferred_time_of_day": "afternoon",
+      "cost": 14.0,
+      "tags": ["art", "modern", "picasso"]
+    },
+    {
+      "id": "barceloneta",
+      "title": "Barceloneta Beach",
+      "latitude": 41.3783,
+      "longitude": 2.1892,
+      "duration_minutes": 120,
+      "opening_hours": { "open": "00:00", "close": "23:59", "days": [0,1,2,3,4,5,6] },
+      "category": "beach",
+      "priority_score": 7.5,
+      "preferred_time_of_day": "afternoon",
+      "cost": 0.0,
+      "tags": ["beach", "relaxing", "outdoor"]
+    },
+    {
+      "id": "montjuic",
+      "title": "Montjuïc Castle & Gardens",
+      "latitude": 41.3636,
+      "longitude": 2.1663,
+      "duration_minutes": 150,
+      "opening_hours": { "open": "10:00", "close": "20:00", "days": [0,1,2,3,4,5,6] },
+      "category": "landmark",
+      "priority_score": 7.5,
+      "preferred_time_of_day": "afternoon",
+      "cost": 9.0,
+      "tags": ["castle", "views", "gardens"]
+    },
+    {
+      "id": "boqueria",
+      "title": "La Boqueria Market",
+      "latitude": 41.3816,
+      "longitude": 2.1717,
+      "duration_minutes": 60,
+      "opening_hours": { "open": "08:00", "close": "20:30", "days": [0,1,2,3,4,5] },
+      "category": "market",
+      "priority_score": 8.0,
+      "preferred_time_of_day": "morning",
+      "cost": 0.0,
+      "tags": ["food", "market", "iconic"]
+    }
+  ]
+}
