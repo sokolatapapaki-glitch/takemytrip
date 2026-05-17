@@ -3,6 +3,10 @@ Geographic clustering of attractions using DBSCAN.
 
 Each cluster represents a walkable/compact neighborhood of sights.
 Cluster-coherent days minimize pointless cross-city travel.
+
+eps=0.02 degrees (Euclidean) ≈ 2.2 km at equator.  This is the single
+source of truth for geographic grouping — no additional runtime distance
+calculations are needed in the allocator.
 """
 
 from __future__ import annotations
@@ -10,24 +14,21 @@ from typing import List, Tuple
 import numpy as np
 from sklearn.cluster import DBSCAN
 
-# 1° of latitude ≈ 111 km → convert km threshold to radians for haversine metric
-_KM_TO_RAD = 1.0 / 6371.0
-
 
 def cluster_attractions(
     coords: List[Tuple[float, float]],
-    epsilon_km: float = 1.2,
+    epsilon_degrees: float = 0.02,
     min_samples: int = 1,
 ) -> np.ndarray:
     """
     Cluster (lat, lon) coordinates into geographic neighborhoods.
 
-    *epsilon_km*  – maximum distance in km for two points to be neighbors.
-    *min_samples* – DBSCAN minimum cluster size (1 = no noise, every point
-                    belongs to some cluster).
+    Uses Euclidean distance on raw degree coordinates.
+    *epsilon_degrees* = 0.02 ≈ 2.2 km at the equator (accurate to ±5% in cities).
+    *min_samples* = 1 means every point belongs to some cluster (no noise).
 
     Returns an integer array of cluster labels, one per attraction.
-    Noise points (label -1 from DBSCAN) are reassigned to singleton clusters.
+    Noise points (label -1) are reassigned to unique singleton cluster IDs.
     """
     if len(coords) == 0:
         return np.array([], dtype=int)
@@ -35,11 +36,8 @@ def cluster_attractions(
     if len(coords) == 1:
         return np.array([0], dtype=int)
 
-    coords_rad = np.radians(coords)
-    eps_rad = epsilon_km * _KM_TO_RAD
-
-    db = DBSCAN(eps=eps_rad, min_samples=min_samples, metric="haversine", algorithm="ball_tree")
-    raw_labels = db.fit_predict(coords_rad)
+    db = DBSCAN(eps=epsilon_degrees, min_samples=min_samples, metric="euclidean")
+    raw_labels = db.fit_predict(np.array(coords, dtype=float))
 
     # Reassign noise points (-1) to unique new cluster IDs
     labels = raw_labels.copy()

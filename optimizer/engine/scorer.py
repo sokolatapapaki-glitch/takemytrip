@@ -20,17 +20,17 @@ from optimizer.models import DayPlan, UserSettings
 
 
 # Default weights (must sum to 1.0)
-# Geographic integrity is the primary objective (0.35).
-# Daily load and time-efficiency together enforce human-paced days (0.30).
+# Geographic integrity is the primary objective (0.40).
+# Splitting a geographic cluster across non-consecutive days is heavily penalised.
 _BASE_WEIGHTS: Dict[str, float] = {
-    "micro_cluster_integrity": 0.35,   # geography first
+    "micro_cluster_integrity": 0.40,   # geography first — split = major score loss
     "daily_load":              0.15,   # human-paced days
-    "distance":                0.15,   # travel efficiency
+    "distance":                0.13,   # travel efficiency
     "fatigue":                 0.10,   # pacing / walking
     "balance":                 0.10,   # even day distribution
-    "cluster":                 0.07,   # cross-day continuity
+    "cluster":                 0.05,   # cross-day continuity
     "priority":                0.05,   # coverage of top sights
-    "preference":              0.03,   # user preference match
+    "preference":              0.02,   # user preference match
 }
 
 

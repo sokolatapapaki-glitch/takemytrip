@@ -33,18 +33,12 @@ from optimizer.engine.scorer import ItineraryScorer
 
 
 def _epsilon_for_style(style: str) -> float:
-    """Cluster radius in km based on travel style."""
+    """Kept for backward compatibility. Optimizer now uses fixed eps=0.02°."""
     return {"relaxed": 1.5, "balanced": 1.2, "intensive": 0.9}.get(style, 1.2)
 
 
 def _epsilon_for_pacing(pacing_mode: str, base_eps: float) -> float:
-    """
-    Adjust cluster radius for pacing mode.
-
-    - compact/intensive: tighter clusters improve geographic efficiency on dense days
-    - balanced: slightly looser to allow cluster-splitting across more days
-    - relaxed: unchanged (natural neighbourhood grouping)
-    """
+    """Kept for backward compatibility. Optimizer now uses fixed eps=0.02°."""
     adjustments = {"compact": -0.2, "balanced": 0.1, "relaxed": 0.0, "intensive": -0.3}
     return max(0.3, base_eps + adjustments.get(pacing_mode, 0.0))
 
@@ -89,12 +83,10 @@ class ItineraryOptimizer:
         attr_indices = list(range(1, len(self.attractions) + 1))
 
         # Step 2: cluster (only on attraction coords, not hotel)
+        # Fixed eps=0.02 degrees (≈ 2.2 km) — Euclidean, no per-style tuning.
         attr_coords = coords[1:]  # exclude hotel
         pacing = getattr(self.settings, "pacing_mode", "balanced")
-        eps_km = _epsilon_for_pacing(
-            pacing, _epsilon_for_style(self.settings.travel_style)
-        )
-        raw_labels = cluster_attractions(attr_coords, epsilon_km=eps_km)
+        raw_labels = cluster_attractions(attr_coords)  # eps=0.02° default
         c_summary = cluster_summary(
             raw_labels,
             attr_coords,

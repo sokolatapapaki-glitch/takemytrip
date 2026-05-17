@@ -3,23 +3,13 @@ Multi-day attraction allocator.
 
 Strategy
 --------
-1. Group attractions into geographic clusters (supplied by clustering.py).
-2. Build GEOGRAPHIC BUNDLES: merge DBSCAN micro-clusters whose members are
-   within 2 km of each other.  These bundles are the hard allocation unit —
-   attractions in the same bundle MUST land on the same day (or consecutive
-   days if the bundle exceeds max_hours_per_day × 1.5).
-3. Allocate bundles to days using geography-first placement:
-   - For each bundle, prefer the day whose current content is geographically
-     closest to the bundle centroid.
-   - Empty days are used only when no occupied day has room.
-4. When a bundle is too large for one day (visit time > max_hours × 1.5),
-   split it into consecutive sub-days, keeping pieces in order.
-5. All capacity decisions use RAW VISIT TIME — the 15 % overhead in
-   _cluster_time_budget is used only for scheduling, never for split
-   decisions.
-6. Honour the user's total_days constraint; spare days become free days.
-
-Output: a list of day-groups, each being a list of attraction indices.
+1. DBSCAN cluster labels (eps=0.02°, Euclidean, from clustering.py) are the
+   HARD allocation unit.  Attractions in the same cluster MUST share a day.
+2. Each cluster is placed as an atomic unit on the least-loaded available day.
+3. Exception: if a cluster's total visit time exceeds max_hours × 1.5 (10.5 h)
+   it is split across CONSECUTIVE days only.
+4. No runtime distance calculations for placement decisions.
+   The 0.02° DBSCAN epsilon already groups geographically close attractions.
 """
 
 from __future__ import annotations
@@ -40,16 +30,13 @@ def _cluster_time_budget(
 ) -> int:
     """
     Estimate total minutes (visit + travel + overhead) for scheduling only.
-    NOT used for capacity / split decisions — use visit time directly instead.
+    NOT used for capacity / split decisions.
     """
     if not attr_indices_0based:
         return 0
-
     total_visit = sum(durations[i] for i in attr_indices_0based)
-
     if len(attr_indices_0based) == 1:
         return round(total_visit * (1 + overhead_pct))
-
     ext = [i + 1 for i in attr_indices_0based]
     unvisited = set(ext)
     current = ext[0]
@@ -60,7 +47,6 @@ def _cluster_time_budget(
         travel += int(time_matrix[current, nearest])
         current = nearest
         unvisited.discard(current)
-
     return round((total_visit + travel) * (1 + overhead_pct))
 
 
@@ -80,41 +66,14 @@ _PACING_CAPACITY_MULTIPLIERS: Dict[str, float] = {
 
 class DayAllocator:
     """
-    Assigns attractions to days, returning a list of day-groups.
+    Assigns attractions to days using DBSCAN cluster IDs as hard constraints.
 
-    Geography is the primary constraint: attractions within 2 km of each
-    other are bundled together and must share a day.  Visit-time limits are
-    enforced secondarily and only cause splits when a bundle exceeds
-    max_hours_per_day × 1.5.
-
-    Parameters
-    ----------
-    cluster_labels : np.ndarray
-        DBSCAN cluster id per attraction (0-based index).
-    cluster_summary : dict
-        Output of clustering.cluster_summary() – uses 0-based attraction indices.
-    coords : list of (lat, lon) tuples
-        Geographic coordinates for each attraction (0-based, excludes hotel).
-    priorities : list of float
-        Priority scores per attraction (0-based).
-    durations : list of int
-        Visit duration in minutes per attraction (0-based).
-    time_matrix : np.ndarray
-        (n+1)×(n+1) matrix where index 0 = hotel; attractions start at 1.
-    max_activities_per_day : int
-        Soft cap on attractions per day (exceeded only when all activities ≤1h).
-    pacing_mode : str
-        One of "compact", "balanced", "relaxed", "intensive".
+    Same cluster → same day (hard rule).
+    Splits only when cluster visit time > max_hours × SPLIT_THRESHOLD_MULTIPLIER.
+    Splits are always consecutive.
     """
 
-    # Two attractions within this distance are forced into the same bundle
-    GEO_BUNDLE_THRESHOLD_KM: float = 2.0
-    # Bundle is split across consecutive days only when visit > max_hours × this
     SPLIT_THRESHOLD_MULTIPLIER: float = 1.5
-    # Pass-1 placement: prefer days whose content centroid is within this range
-    GEO_CLOSE_KM: float = 5.0
-    # Pass-2 placement: allow days whose content centroid is within this range
-    GEO_MODERATE_KM: float = 15.0
 
     def __init__(
         self,
@@ -133,7 +92,7 @@ class DayAllocator:
     ):
         self.labels = cluster_labels
         self.c_summary = cluster_summary
-        self.coords = coords          # (lat, lon) per attraction, 0-based
+        self.coords = coords
         self.priorities = priorities
         self.durations = durations
         self.time_matrix = time_matrix
@@ -152,13 +111,9 @@ class DayAllocator:
         self.lunch_minutes = 60
         self.net_capacity = max(60, self.effective_capacity - self.lunch_minutes)
 
-        # Build geographic bundles (2 km union-find on top of DBSCAN)
-        self._bundle_labels: np.ndarray = self._build_geographic_bundles()
-        self._bundle_summary: dict = self._build_bundle_summary()
-
-        # Reverse map: 0-based attraction index → bundle id (used for integrity)
+        # Hard constraint: attraction index → DBSCAN cluster id
         self._attr_cluster: Dict[int, int] = {
-            i: int(self._bundle_labels[i]) for i in range(len(self._bundle_labels))
+            i: int(self.labels[i]) for i in range(len(self.labels))
         }
 
     # ── public entry point ────────────────────────────────────────────────────
@@ -167,8 +122,8 @@ class DayAllocator:
         """
         Returns (day_groups, free_day_numbers).
 
-        day_groups[d]     = [attraction_idx, ...]
-        free_day_numbers  = 1-based day numbers that have no planned activities
+        day_groups[d]    = [attraction_idx, ...]  (0-based)
+        free_day_numbers = 1-based day numbers with no planned activities
         """
         if self.pacing_mode == "balanced":
             day_groups = self._spread_across_days()
@@ -181,130 +136,24 @@ class DayAllocator:
             day_groups = self._split_overloaded_days(day_groups)
             day_groups = self._trim_to_total_days(day_groups)
 
-        self.warnings.extend(self._validate_micro_cluster_integrity(day_groups))
+        self.warnings.extend(self._validate_cluster_integrity(day_groups))
         free_days = self._compute_free_days(day_groups)
         return day_groups, free_days
 
-    # ── geographic bundle construction ────────────────────────────────────────
+    # ── helpers ───────────────────────────────────────────────────────────────
 
-    def _approx_km(
-        self, lat1: float, lon1: float, lat2: float, lon2: float
-    ) -> float:
-        """Fast Euclidean approximation of distance in km (accurate to ±5 % in cities)."""
-        mid_lat = math.radians((lat1 + lat2) / 2)
-        dlat = (lat2 - lat1) * 111.0
-        dlon = (lon2 - lon1) * 111.0 * math.cos(mid_lat)
-        return math.sqrt(dlat * dlat + dlon * dlon)
-
-    def _are_geographically_close(
-        self, i: int, j: int, threshold_km: float = GEO_BUNDLE_THRESHOLD_KM
-    ) -> bool:
-        """True if attractions i and j are within threshold_km of each other."""
-        lat1, lon1 = self.coords[i]
-        lat2, lon2 = self.coords[j]
-        return self._approx_km(lat1, lon1, lat2, lon2) <= threshold_km
-
-    def _build_geographic_bundles(self) -> np.ndarray:
-        """
-        Merge DBSCAN micro-clusters into geographic bundles using Union-Find.
-
-        Two attractions are in the same bundle if:
-        - They share a DBSCAN micro-cluster label, OR
-        - They are within GEO_BUNDLE_THRESHOLD_KM (2 km) of each other.
-
-        This ensures that walking-distance neighbours always share a day,
-        even if DBSCAN used a tighter epsilon.
-        """
-        n = len(self.coords)
-        parent = list(range(n))
-
-        def find(x: int) -> int:
-            while parent[x] != x:
-                parent[x] = parent[parent[x]]
-                x = parent[x]
-            return x
-
-        def union(x: int, y: int) -> None:
-            px, py = find(x), find(y)
-            if px != py:
-                parent[px] = py
-
-        # Step 1: union same DBSCAN cluster members
-        label_to_members: Dict[int, List[int]] = {}
-        for i, lbl in enumerate(self.labels):
-            label_to_members.setdefault(int(lbl), []).append(i)
-        for members in label_to_members.values():
-            for k in range(1, len(members)):
-                union(members[0], members[k])
-
-        # Step 2: union attractions within 2 km (regardless of DBSCAN label)
-        for i in range(n):
-            for j in range(i + 1, n):
-                if self._are_geographically_close(i, j):
-                    union(i, j)
-
-        # Assign canonical bundle IDs
-        roots: Dict[int, int] = {}
-        next_id = 0
-        bundle_labels = np.zeros(n, dtype=int)
-        for i in range(n):
-            r = find(i)
-            if r not in roots:
-                roots[r] = next_id
-                next_id += 1
-            bundle_labels[i] = roots[r]
-
-        return bundle_labels
-
-    def _build_bundle_summary(self) -> dict:
-        """Build a cluster_summary-compatible dict keyed by bundle_id."""
-        summary: Dict[int, dict] = {}
-        for idx, bid in enumerate(self._bundle_labels):
-            bid = int(bid)
-            if bid not in summary:
-                summary[bid] = {
-                    "bundle_id": bid,
-                    "attraction_indices": [],
-                    "centroid_lat": 0.0,
-                    "centroid_lon": 0.0,
-                    "total_visit_minutes": 0,
-                    "avg_priority": 0.0,
-                    "size": 0,
-                }
-            s = summary[bid]
-            s["attraction_indices"].append(idx)
-            s["total_visit_minutes"] += self.durations[idx]
-            s["size"] += 1
-
-        for bid, s in summary.items():
-            idxs = s["attraction_indices"]
-            lats = [self.coords[i][0] for i in idxs]
-            lons = [self.coords[i][1] for i in idxs]
-            pris = [self.priorities[i] for i in idxs]
-            s["centroid_lat"] = float(np.mean(lats))
-            s["centroid_lon"] = float(np.mean(lons))
-            s["avg_priority"] = float(np.mean(pris))
-
-        return summary
-
-    # ── private helpers ───────────────────────────────────────────────────────
-
-    def _ordered_bundles(self) -> List[int]:
-        """
-        Order bundles for assignment.
-        Larger bundles first (geographic groups before singletons).
-        Tie-break by descending average priority.
-        """
+    def _ordered_clusters(self) -> List[int]:
+        """Larger clusters first, then by descending average priority."""
         return sorted(
-            self._bundle_summary.keys(),
-            key=lambda bid: (
-                -self._bundle_summary[bid]["size"],
-                -self._bundle_summary[bid]["avg_priority"],
+            self.c_summary.keys(),
+            key=lambda cid: (
+                -self.c_summary[cid]["size"],
+                -self.c_summary[cid]["avg_priority"],
             ),
         )
 
     def _balanced_target_visit(self) -> int:
-        """Per-day VISIT-TIME target: total visit / total_days, capped at max_minutes."""
+        """Per-day visit-time target, capped at max_minutes."""
         total_visit = sum(self.durations)
         per_day = total_visit / max(1, self.total_days)
         return max(60, min(self.max_minutes, round(per_day)))
@@ -314,11 +163,6 @@ class DayAllocator:
 
     def _cluster_visit_minutes(self, indices: List[int]) -> int:
         return sum(self.durations[i] for i in indices)
-
-    def _centroid(self, indices: List[int]) -> Tuple[float, float]:
-        lats = [self.coords[i][0] for i in indices]
-        lons = [self.coords[i][1] for i in indices]
-        return (sum(lats) / len(lats), sum(lons) / len(lons))
 
     def _all_short(self, indices: List[int]) -> bool:
         return all(self.durations[i] <= 60 for i in indices)
@@ -335,130 +179,57 @@ class DayAllocator:
             return True
         return self._all_short(day_groups[day_idx] + new_indices)
 
-    def _day_geo_dist(
-        self,
-        bundle_indices: List[int],
-        d: int,
-        day_groups: List[List[int]],
-    ) -> float:
-        """
-        Distance in km from the bundle centroid to day d's content centroid.
-        Returns 0.0 for empty days (treated as geographically neutral).
-        """
-        if not day_groups[d]:
-            return 0.0
-        blat, blon = self._centroid(bundle_indices)
-        dlat, dlon = self._centroid(day_groups[d])
-        return self._approx_km(blat, blon, dlat, dlon)
-
-    def _geo_ranked_days(
-        self,
-        bundle_indices: List[int],
-        day_groups: List[List[int]],
-        day_visits: List[int],
-    ) -> List[int]:
-        """
-        Sort day indices geography-first, load second.
-
-        Occupied days come first (sorted by distance from bundle centroid to
-        day centroid).  Empty days are appended at the end.
-
-        This ensures singletons join the geographically nearest occupied day
-        rather than the least-loaded day (which may be far away).
-        """
-        blat, blon = self._centroid(bundle_indices)
-
-        occupied: List[int] = []
-        empty: List[int] = []
-        for d in range(self.total_days):
-            if day_groups[d]:
-                occupied.append(d)
-            else:
-                empty.append(d)
-
-        def dist_to_day(d: int) -> float:
-            dlat, dlon = self._centroid(day_groups[d])
-            return self._approx_km(blat, blon, dlat, dlon)
-
-        occupied.sort(key=lambda d: (dist_to_day(d), day_visits[d]))
-        return occupied + empty
-
     # ── spread (balanced mode) ────────────────────────────────────────────────
 
     def _spread_across_days(self) -> List[List[int]]:
         """
-        Geography-first, balanced allocation across total_days buckets.
+        Cluster-first balanced allocation.
 
-        Allocation unit: GEOGRAPHIC BUNDLE (DBSCAN cluster ∪ 2 km proximity).
+        Each DBSCAN cluster is an atomic unit placed on the least-loaded day
+        that still fits within max_hours_per_day.  If no single day fits within
+        max_hours (7 h), the cluster is allowed up to split_threshold (10.5 h)
+        before being split across consecutive days.
 
-        Four passes (all use raw VISIT TIME, no 15 % overhead):
-
-        Pass 1 – geographically close day (≤ GEO_CLOSE_KM) within target visit
-                 OR empty day within target visit
-        Pass 2 – geographically moderate day (≤ GEO_MODERATE_KM) within max_hours
-                 OR empty day within max_hours
-        Pass 3 – any day within max_hours (geographic fallback, capacity only)
-        Pass 4 – bundle too large: split into CONSECUTIVE sub-groups
-
-        The distance gates in Passes 1–2 prevent singletons from being placed
-        on a geographically distant day just because it has spare load capacity.
+        No distance gates — DBSCAN eps=0.02° already groups close attractions.
         """
-        ordered = self._ordered_bundles()
-        target_visit = self._balanced_target_visit()
+        ordered = self._ordered_clusters()
 
         day_groups: List[List[int]] = [[] for _ in range(self.total_days)]
         day_visits: List[int] = [0] * self.total_days
         day_activities: List[int] = [0] * self.total_days
 
-        for bid in ordered:
-            bundle_indices = self._bundle_summary[bid]["attraction_indices"]
-            bundle_visit = self._cluster_visit_minutes(bundle_indices)
+        for cid in ordered:
+            cluster_indices = self.c_summary[cid]["attraction_indices"]
+            cluster_visit = self._cluster_visit_minutes(cluster_indices)
             placed = False
 
-            # Geography-first ranking: closest occupied day first, empty days last
-            ranked = self._geo_ranked_days(bundle_indices, day_groups, day_visits)
-
-            # Pass 1: close (≤ GEO_CLOSE_KM or empty) AND target capacity
-            for d in ranked:
-                dist = self._day_geo_dist(bundle_indices, d, day_groups)
-                if (dist <= self.GEO_CLOSE_KM
-                        and day_visits[d] + bundle_visit <= target_visit
-                        and self._acts_ok(d, day_groups, day_activities, bundle_indices)):
-                    day_groups[d].extend(bundle_indices)
-                    day_visits[d] += bundle_visit
-                    day_activities[d] += len(bundle_indices)
-                    placed = True
-                    break
-
-            # Pass 2: moderate proximity (≤ GEO_MODERATE_KM or empty) AND max_hours
-            if not placed:
-                for d in ranked:
-                    dist = self._day_geo_dist(bundle_indices, d, day_groups)
-                    if (dist <= self.GEO_MODERATE_KM
-                            and day_visits[d] + bundle_visit <= self.max_minutes
-                            and self._acts_ok(d, day_groups, day_activities, bundle_indices)):
-                        day_groups[d].extend(bundle_indices)
-                        day_visits[d] += bundle_visit
-                        day_activities[d] += len(bundle_indices)
+            if cluster_visit <= self.split_threshold:
+                # Pass 1: fit within max_hours (7 h) on least-loaded day
+                for d in sorted(range(self.total_days), key=lambda d: day_visits[d]):
+                    if (day_visits[d] + cluster_visit <= self.max_minutes
+                            and self._acts_ok(d, day_groups, day_activities, cluster_indices)):
+                        day_groups[d].extend(cluster_indices)
+                        day_visits[d] += cluster_visit
+                        day_activities[d] += len(cluster_indices)
                         placed = True
                         break
 
-            # Pass 3: any day with room (geographic fallback — no distance gate)
-            if not placed:
-                for d in ranked:
-                    if (day_visits[d] + bundle_visit <= self.max_minutes
-                            and self._acts_ok(d, day_groups, day_activities, bundle_indices)):
-                        day_groups[d].extend(bundle_indices)
-                        day_visits[d] += bundle_visit
-                        day_activities[d] += len(bundle_indices)
-                        placed = True
-                        break
+                # Pass 2: allow up to split_threshold (10.5 h) before splitting
+                if not placed:
+                    for d in sorted(range(self.total_days), key=lambda d: day_visits[d]):
+                        if (day_visits[d] + cluster_visit <= self.split_threshold
+                                and self._acts_ok(d, day_groups, day_activities, cluster_indices)):
+                            day_groups[d].extend(cluster_indices)
+                            day_visits[d] += cluster_visit
+                            day_activities[d] += len(cluster_indices)
+                            placed = True
+                            break
 
-            # Pass 4: bundle too large — split into CONSECUTIVE sub-groups only
-            if not placed and len(bundle_indices) > 1:
-                sub_groups = self._split_cluster_into_subgroups(bundle_indices)
+            # Cluster too large or no day fits: split across consecutive days
+            if not placed:
+                sub_groups = self._split_cluster_into_subgroups(cluster_indices)
                 window = self._find_consecutive_day_window(
-                    sub_groups, day_visits, day_activities, day_groups, bid
+                    sub_groups, day_visits, day_activities, day_groups, cid
                 )
                 for i, sub in enumerate(sub_groups):
                     d = window[i % len(window)]
@@ -467,25 +238,14 @@ class DayAllocator:
                     day_activities[d] += len(sub)
                 placed = True
 
-            if not placed:
-                # Single oversized attraction: force onto least-loaded day
-                d = min(range(self.total_days), key=lambda x: day_visits[x])
-                day_groups[d].extend(bundle_indices)
-                day_visits[d] += bundle_visit
-                day_activities[d] += len(bundle_indices)
-
         return [g for g in day_groups if g]
 
     def _split_cluster_into_subgroups(
         self, cluster_indices: List[int]
     ) -> List[List[int]]:
         """
-        Split a large bundle into sequential sub-groups.
-
-        A bundle is only split when its VISIT TIME exceeds
-        max_hours_per_day × SPLIT_THRESHOLD_MULTIPLIER (default 1.5 = 10.5 h).
-        Each sub-group's visit time is kept ≤ max_hours_per_day.
-        Preserves input order so geographically adjacent attractions stay together.
+        Split a large cluster into sequential sub-groups each ≤ max_hours.
+        Only called when total visit time > split_threshold (10.5 h).
         """
         sub_groups: List[List[int]] = []
         current: List[int] = []
@@ -516,15 +276,15 @@ class DayAllocator:
         day_visits: List[int],
         day_activities: List[int],
         day_groups: List[List[int]],
-        bundle_id: int,
+        cluster_id: int,
     ) -> List[int]:
         """
         Find the best consecutive window of len(sub_groups) day indices.
 
         Priority:
-        1. Bundle-pure window that fits (all days empty or same bundle) → tier 1
-        2. Fits capacity → tier 2
-        3. Least-loaded consecutive window → tier 3
+        1. Cluster-pure window (days empty or same cluster) that fits capacity
+        2. Any window that fits capacity
+        3. Least-loaded consecutive window (fallback)
         """
         n = len(sub_groups)
         total = len(day_visits)
@@ -546,7 +306,7 @@ class DayAllocator:
                 for i in range(n)
             )
             is_pure = all(
-                all(self._attr_cluster.get(idx) == bundle_id for idx in day_groups[d])
+                all(self._attr_cluster.get(idx) == cluster_id for idx in day_groups[d])
                 for d in window
             )
             load = sum(day_visits[d] for d in window)
@@ -562,16 +322,8 @@ class DayAllocator:
 
     # ── pack (non-balanced modes) ─────────────────────────────────────────────
 
-    def _ordered_clusters(self) -> List[int]:
-        """Order DBSCAN clusters for non-balanced packing."""
-        if "group_nearby" in self.prefs:
-            return sorted(self.c_summary.keys(),
-                          key=lambda cid: self.c_summary[cid]["size"], reverse=True)
-        return sorted(self.c_summary.keys(),
-                      key=lambda cid: self.c_summary[cid]["avg_priority"], reverse=True)
-
     def _pack_clusters_into_days(self) -> List[List[int]]:
-        """First-Fit-Decreasing bin-packing of clusters → days (non-balanced modes)."""
+        """First-Fit-Decreasing bin-packing of clusters → days."""
         ordered = self._ordered_clusters()
         day_groups: List[List[int]] = []
         day_visits: List[int] = []
@@ -620,8 +372,8 @@ class DayAllocator:
 
     def _balance_days(self, day_groups: List[List[int]]) -> List[List[int]]:
         """
-        Single-pass swap improvement: reduces std-dev of day load.
-        Never swaps an attraction whose move would make its bundle span
+        Swap attractions between days to reduce load std-dev.
+        Never moves an attraction whose transfer would split its cluster across
         non-consecutive days.
         """
         if len(day_groups) <= 1:
@@ -673,21 +425,18 @@ class DayAllocator:
         to_day: int,
         day_groups: List[List[int]],
     ) -> bool:
-        """
-        True if moving attr_idx from from_day to to_day would cause its
-        geographic bundle to span non-consecutive days.
-        """
-        my_bundle = self._attr_cluster.get(attr_idx)
-        if my_bundle is None:
+        """True if moving attr_idx would cause its cluster to span non-consecutive days."""
+        my_cluster = self._attr_cluster.get(attr_idx)
+        if my_cluster is None:
             return False
 
         cluster_days: set = set()
         for d_idx, day in enumerate(day_groups):
-            if any(self._attr_cluster.get(i) == my_bundle for i in day):
+            if any(self._attr_cluster.get(i) == my_cluster for i in day):
                 cluster_days.add(d_idx)
 
         from_still_has = any(
-            self._attr_cluster.get(i) == my_bundle
+            self._attr_cluster.get(i) == my_cluster
             for i in day_groups[from_day]
             if i != attr_idx
         )
@@ -713,24 +462,21 @@ class DayAllocator:
 
     def _split_overloaded_days(self, day_groups: List[List[int]]) -> List[List[int]]:
         """
-        Any day whose total VISIT TIME exceeds max_hours_per_day gets split.
-        Splitting respects geographic bundle integrity.
+        Split any day whose total visit time exceeds split_threshold (10.5 h).
+        Days between max_hours (7 h) and split_threshold are allowed when a
+        single cluster fills them — cluster integrity takes priority.
         """
         result: List[List[int]] = []
         for day in day_groups:
             visit_time = self._day_visit_minutes(day)
-            if visit_time > self.max_minutes and len(day) > 1:
-                sub_groups = self._split_day_by_clusters(day)
-                result.extend(sub_groups)
+            if visit_time > self.split_threshold and len(day) > 1:
+                result.extend(self._split_day_by_clusters(day))
             else:
                 result.append(day)
         return result
 
     def _split_day_by_clusters(self, day: List[int]) -> List[List[int]]:
-        """
-        Split a day's attractions into sub-groups respecting bundle membership.
-        Capacity is measured by raw VISIT TIME.
-        """
+        """Split a day into sub-groups respecting cluster membership."""
         seen: list = []
         cluster_groups: Dict[int, List[int]] = {}
         for idx in day:
@@ -766,10 +512,8 @@ class DayAllocator:
 
     # ── validation ────────────────────────────────────────────────────────────
 
-    def _validate_micro_cluster_integrity(
-        self, day_groups: List[List[int]]
-    ) -> List[str]:
-        """Warn if any geographic bundle appears on non-consecutive days."""
+    def _validate_cluster_integrity(self, day_groups: List[List[int]]) -> List[str]:
+        """Warn if any DBSCAN cluster appears on non-consecutive days."""
         warnings: List[str] = []
         cluster_days: Dict[int, List[int]] = {}
         for d_idx, day in enumerate(day_groups):
@@ -788,7 +532,7 @@ class DayAllocator:
                 )
                 if not consecutive:
                     warnings.append(
-                        f"Bundle {cid} spans non-consecutive days: "
+                        f"Cluster {cid} spans non-consecutive days: "
                         f"{[d + 1 for d in sorted_days]}"
                     )
         return warnings
@@ -798,7 +542,7 @@ class DayAllocator:
     def _trim_to_total_days(self, day_groups: List[List[int]]) -> List[List[int]]:
         """
         Merge days until len(day_groups) <= total_days.
-        Prefers pairs whose combined VISIT TIME stays within max_minutes.
+        Prefers pairs whose combined visit time stays within max_minutes.
         Falls back to merging the two lightest days.
         """
         while len(day_groups) > self.total_days and len(day_groups) > 1:
