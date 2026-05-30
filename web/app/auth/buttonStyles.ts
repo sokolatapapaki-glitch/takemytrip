@@ -1,0 +1,21 @@
+export const googleButtonClasses = `
+  flex
+  justify-center
+  items-center
+  gap-4
+  bg-[#646cff]
+  text-white
+  border-none
+  py-3
+  px-4
+  rounded-lg
+  text-base
+  font-medium
+  cursor-pointer
+  transition
+  duration-300
+  hover:bg-[#535bf2]
+  transform
+  hover:scale-105
+  w-full
+`;

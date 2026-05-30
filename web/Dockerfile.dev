@@ -1,0 +1,20 @@
+# syntax=docker/dockerfile:1.7
+
+FROM node:20-slim
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends openssl ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY package.json ./
+COPY prisma ./prisma
+
+# Install with optional deps so linux-native binaries (lightningcss, @tailwindcss/oxide) are present.
+RUN npm install --include=optional --no-audit --no-fund \
+    && npx prisma generate
+
+EXPOSE 3000
+# Use webpack (not Turbopack) inside the container — Turbopack's file watcher
+# doesn't honor the polling env vars below, which we need across the
+# Windows <-> Docker bind mount.
+CMD ["npx", "next", "dev", "--webpack", "-H", "0.0.0.0"]

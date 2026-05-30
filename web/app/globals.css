@@ -1,0 +1,289 @@
+@import "tailwindcss";
+
+/* Switch dark mode from media-query to class-based (required for next-themes) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ── Base / Light ─────────────────────────────────────────── */
+:root {
+  --background: #f3f4f6;
+  --foreground: #1c1917;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans, Arial, Helvetica, sans-serif);
+}
+
+::selection {
+  background-color: oklch(0.60 0.16 260 / 0.22);
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: oklch(0.82 0.012 260);
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.70 0.016 260);
+}
+
+
+/* ── Dark ─────────────────────────────────────────────────── */
+.dark {
+  color-scheme: dark;
+  --background: oklch(0.10 0.018 264);
+  --foreground: oklch(0.96 0.005 264);
+
+  --color-white: oklch(0.13 0.022 264);
+  --color-gray-50: oklch(0.13 0.022 264);
+  --color-gray-100: oklch(0.19 0.028 264);
+  --color-gray-200: oklch(0.26 0.032 261);
+  --color-gray-300: oklch(0.35 0.030 260);
+  --color-gray-400: oklch(0.45 0.024 259);
+  --color-gray-500: oklch(0.55 0.018 264);
+  --color-gray-600: oklch(0.66 0.015 264);
+  --color-gray-700: oklch(0.77 0.011 262);
+  --color-gray-800: oklch(0.87 0.007 264);
+  --color-gray-900: oklch(0.93 0.004 264);
+  --color-gray-950: oklch(0.97 0.002 261);
+
+  scrollbar-color: oklch(0.28 0.022 264) transparent;
+  scrollbar-width: thin;
+}
+
+.dark body {
+  background-color: oklch(0.10 0.018 264);
+  background-image: radial-gradient(ellipse 80% 40% at 50% -5%,
+      oklch(0.17 0.055 258 / 0.7) 0%,
+      transparent 100%);
+}
+
+.dark ::selection {
+  background-color: oklch(0.56 0.20 264 / 0.40);
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: oklch(0.13 0.022 264);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: oklch(0.28 0.022 264);
+  border-radius: 99px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.38 0.028 264);
+}
+
+
+/* ── Ocean ────────────────────────────────────────────────── */
+.ocean {
+  color-scheme: dark;
+  --background: oklch(0.11 0.048 232);
+  --foreground: oklch(0.95 0.024 214);
+
+  --color-white: oklch(0.15 0.052 234);
+  --color-gray-50: oklch(0.15 0.052 234);
+  --color-gray-100: oklch(0.20 0.060 231);
+  --color-gray-200: oklch(0.27 0.068 228);
+  --color-gray-300: oklch(0.36 0.078 225);
+  --color-gray-400: oklch(0.46 0.086 222);
+  --color-gray-500: oklch(0.57 0.090 219);
+  --color-gray-600: oklch(0.67 0.082 217);
+  --color-gray-700: oklch(0.77 0.064 216);
+  --color-gray-800: oklch(0.86 0.044 215);
+  --color-gray-900: oklch(0.93 0.028 214);
+  --color-gray-950: oklch(0.97 0.015 213);
+
+  scrollbar-color: oklch(0.36 0.078 225) transparent;
+  scrollbar-width: thin;
+}
+
+.ocean body {
+  background-color: oklch(0.11 0.048 232);
+  background-image:
+    radial-gradient(ellipse 60% 50% at 90% -5%,
+      oklch(0.22 0.14 205 / 0.65) 0%,
+      transparent 100%),
+    radial-gradient(ellipse 50% 40% at 10% 105%,
+      oklch(0.15 0.08 248 / 0.55) 0%,
+      transparent 100%);
+}
+
+.ocean ::selection {
+  background-color: oklch(0.62 0.20 210 / 0.50);
+  color: oklch(0.97 0.018 213);
+}
+
+.ocean ::-webkit-scrollbar-track {
+  background: oklch(0.15 0.052 234);
+}
+
+.ocean ::-webkit-scrollbar-thumb {
+  background: oklch(0.36 0.078 225);
+  border-radius: 99px;
+}
+
+.ocean ::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.46 0.086 222);
+}
+
+
+/* ── Forest ───────────────────────────────────────────────── */
+.forest {
+  color-scheme: dark;
+  --background: oklch(0.11 0.042 148);
+  --foreground: oklch(0.95 0.022 144);
+
+  --color-white: oklch(0.14 0.045 150);
+  --color-gray-50: oklch(0.14 0.045 150);
+  --color-gray-100: oklch(0.19 0.054 148);
+  --color-gray-200: oklch(0.26 0.062 146);
+  --color-gray-300: oklch(0.35 0.072 144);
+  --color-gray-400: oklch(0.45 0.080 142);
+  --color-gray-500: oklch(0.56 0.085 140);
+  --color-gray-600: oklch(0.66 0.078 140);
+  --color-gray-700: oklch(0.77 0.062 141);
+  --color-gray-800: oklch(0.86 0.043 143);
+  --color-gray-900: oklch(0.93 0.026 145);
+  --color-gray-950: oklch(0.97 0.014 147);
+
+  scrollbar-color: oklch(0.35 0.072 144) transparent;
+  scrollbar-width: thin;
+}
+
+.forest body {
+  background-color: oklch(0.11 0.042 148);
+  background-image:
+    radial-gradient(ellipse 55% 45% at 15% -5%,
+      oklch(0.18 0.10 128 / 0.65) 0%,
+      transparent 100%),
+    radial-gradient(ellipse 45% 40% at 85% 110%,
+      oklch(0.14 0.065 162 / 0.55) 0%,
+      transparent 100%);
+}
+
+.forest ::selection {
+  background-color: oklch(0.58 0.20 142 / 0.50);
+  color: oklch(0.97 0.018 147);
+}
+
+.forest ::-webkit-scrollbar-track {
+  background: oklch(0.14 0.045 150);
+}
+
+.forest ::-webkit-scrollbar-thumb {
+  background: oklch(0.35 0.072 144);
+  border-radius: 99px;
+}
+
+.forest ::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.45 0.080 142);
+}
+
+
+/* ── Sunset ───────────────────────────────────────────────── */
+.sunset {
+  color-scheme: dark;
+  --background: oklch(0.11 0.040 34);
+  --foreground: oklch(0.95 0.022 52);
+
+  --color-white: oklch(0.15 0.044 37);
+  --color-gray-50: oklch(0.15 0.044 37);
+  --color-gray-100: oklch(0.20 0.052 39);
+  --color-gray-200: oklch(0.27 0.062 41);
+  --color-gray-300: oklch(0.36 0.074 43);
+  --color-gray-400: oklch(0.46 0.084 45);
+  --color-gray-500: oklch(0.57 0.092 47);
+  --color-gray-600: oklch(0.67 0.084 49);
+  --color-gray-700: oklch(0.77 0.066 51);
+  --color-gray-800: oklch(0.86 0.046 50);
+  --color-gray-900: oklch(0.93 0.028 48);
+  --color-gray-950: oklch(0.97 0.016 46);
+
+  scrollbar-color: oklch(0.36 0.074 43) transparent;
+  scrollbar-width: thin;
+}
+
+.sunset body {
+  background-color: oklch(0.11 0.040 34);
+  background-image:
+    radial-gradient(ellipse 65% 50% at 100% -5%,
+      oklch(0.20 0.14 26 / 0.70) 0%,
+      transparent 100%),
+    radial-gradient(ellipse 40% 35% at 0% 100%,
+      oklch(0.14 0.058 52 / 0.50) 0%,
+      transparent 100%);
+}
+
+.sunset ::selection {
+  background-color: oklch(0.62 0.22 40 / 0.50);
+  color: oklch(0.97 0.018 46);
+}
+
+.sunset ::-webkit-scrollbar-track {
+  background: oklch(0.15 0.044 37);
+}
+
+.sunset ::-webkit-scrollbar-thumb {
+  background: oklch(0.36 0.074 43);
+  border-radius: 99px;
+}
+
+.sunset ::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.46 0.084 45);
+}
+
+
+/* ── TipTap editor content ────────────────────────────────── */
+.tiptap-content { line-height: 1.55; color: #111827; }
+.tiptap-content > * + * { margin-top: 0.5rem; }
+.tiptap-content h1 { font-size: 1.75rem; font-weight: 700; line-height: 1.2; margin-top: 1rem; }
+.tiptap-content h2 { font-size: 1.4rem;  font-weight: 700; line-height: 1.25; margin-top: 0.9rem; }
+.tiptap-content h3 { font-size: 1.15rem; font-weight: 600; line-height: 1.3;  margin-top: 0.8rem; }
+.tiptap-content p { margin: 0; }
+.tiptap-content ul { list-style: disc;    padding-left: 1.4rem; }
+.tiptap-content ol { list-style: decimal; padding-left: 1.4rem; }
+.tiptap-content li > p { margin: 0; }
+.tiptap-content blockquote {
+  border-left: 3px solid #d1d5db; padding-left: 0.75rem;
+  color: #4b5563; font-style: italic;
+}
+.tiptap-content code {
+  background: #f3f4f6; padding: 0.1rem 0.35rem;
+  border-radius: 4px; font-size: 0.9em;
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+}
+.tiptap-content pre {
+  background: #0f172a; color: #e2e8f0;
+  padding: 0.85rem 1rem; border-radius: 8px;
+  overflow-x: auto; font-size: 0.875rem;
+}
+.tiptap-content pre code { background: transparent; padding: 0; color: inherit; }
+.tiptap-content hr { border: 0; border-top: 1px solid #e5e7eb; margin: 1rem 0; }
+.tiptap-content a { color: #2563eb; text-decoration: underline; }
+.tiptap-content mark { background: #fef08a; padding: 0 0.15rem; border-radius: 2px; }
+.tiptap-content [data-text-align="center"] { text-align: center; }
+.tiptap-content [data-text-align="right"]  { text-align: right; }
+.tiptap-content [data-text-align="justify"]{ text-align: justify; }
+.tiptap-content p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: #9ca3af; float: left; height: 0; pointer-events: none;
+}

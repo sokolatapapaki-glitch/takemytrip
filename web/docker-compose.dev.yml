@@ -1,0 +1,22 @@
+services:
+  nextjs:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: my-next-app-dev
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    volumes:
+      # Mount source so file changes show up instantly.
+      - .:/app
+      # Anonymous volumes keep the container's own node_modules / .next
+      # so the host's (Windows-built) versions don't override them.
+      - /app/node_modules
+      - /app/.next
+    environment:
+      # File watching across Windows -> Docker bind mounts needs polling.
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
+    restart: unless-stopped
