@@ -1,0 +1,1149 @@
+{
+  "city": "Παρίσι",
+  "country": "Γαλλία",
+  "currency": "EUR",
+  "emoji": "🇫🇷",
+  "pricing_model": "per_age",
+  "description": "Η πόλη του φωτός",
+  "location": {
+    "lat": 48.8566,
+    "lng": 2.3522
+  },
+  "cityPass": {
+    "name": "Paris Museum Pass",
+    "description": "Δωρεάν skip-the-line είσοδος σε 50+ μουσεία και μνημεία μεταξύ των οποίων το Λούβρο και οι Βερσαλλίες",
+    "discountPercent": 25,
+    "url": "https://www.parismuseumpass.fr/en"
+  },
+  "activities": [
+    {
+      "id": 1,
+      "name": "Disneyland Paris",
+      "description": "Το διάσημο θεματικό πάρκο Disney",
+      "category": "themepark",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 45,
+        "4": 45,
+        "5": 45,
+        "6": 55,
+        "7": 55,
+        "8": 55,
+        "9": 55,
+        "10": 55,
+        "11": 55,
+        "12": 55,
+        "13": 55,
+        "14": 55,
+        "15": 65,
+        "16": 65,
+        "17": 65,
+        "18": 75,
+        "19": 75,
+        "adult": 75
+      },
+      "location": {
+        "lat": 48.8722,
+        "lng": 2.7758
+      },
+      "restaurant": {
+        "name": "Cowboy Cookout Barbecue",
+        "description": "Κρέας σε μεγάλες μερίδες και καλές τιμές, σε έναν πολύ όμορφο χώρο που μοιάζει με αχυρώνα.",
+        "map_url": "https://maps.app.goo.gl/RkWZtmjwGL1r1z4s6"
+      },
+      "website": "https://www.disneylandparis.com/",
+      "notes": [
+        "0-2 ετών: δωρεάν",
+        "3-11 ετών: περίπου 45-55€",
+        "12 ετών και άνω: περίπου 65-75€",
+        "Οι τιμές διαφέρουν ανάλογα με την ημερομηνία (dynamic pricing)"
+      ],
+      "tags": [
+        "Οικογένειες",
+        "Παιδιά",
+        "disney",
+        "theme park",
+        "family"
+      ],
+      "duration_hours": 7,
+      "best_time": "any",
+      "emoji": "🏰",
+      "cafe": {
+        "name": "Disney Village Cafés",
+        "description": "πολλές επιλογές",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Disneyland+Paris+Cafe"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Πύργος του Άιφελ",
+      "description": "Το παγκόσμια γνωστό αξιοθέατο της Γαλλίας με θέα στο Παρίσι",
+      "category": "landmark",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 8.5,
+        "5": 8.5,
+        "6": 8.5,
+        "7": 8.5,
+        "8": 8.5,
+        "9": 8.5,
+        "10": 8.5,
+        "11": 8.5,
+        "12": 17,
+        "13": 17,
+        "14": 17,
+        "15": 17,
+        "16": 17,
+        "17": 17,
+        "18": 26,
+        "19": 26,
+        "adult": 26
+      },
+      "location": {
+        "lat": 48.8584,
+        "lng": 2.2945
+      },
+      "restaurant": {
+        "name": "Chez Pippo",
+        "description": "Μια ζεστή ιταλική τρατορία που φημίζεται για τις λεπτές πίτσες και τα ζυμαρικά της.",
+        "map_url": "https://maps.app.goo.gl/CQB2LQKFRYkjXkyK8"
+      },
+      "website": "https://www.toureiffel.paris/",
+      "notes": [
+        "0-3 ετών: δωρεάν",
+        "4-11 ετών: 8.5€ (ανελκυστήρας κορυφή)",
+        "12-24 ετών: 17€",
+        "25 ετών και άνω: 26€"
+      ],
+      "tags": [
+        "Ζευγάρια",
+        "Φωτογραφίες",
+        "eiffel tower",
+        "landmark",
+        "view",
+        "top"
+      ],
+      "duration_hours": 2.5,
+      "best_time": "evening",
+      "emoji": "🗼",
+      "cafe": {
+        "name": "FRAME RESTAURANT AND BAR",
+        "description": "Εστιατόριο, ιδανικό και για καφέ ή ένα σνακ, με πολύ μοντέρνο χώρο και άμεση πρόσβαση στον Πύργο.",
+        "map_url": "https://maps.app.goo.gl/QnjrSGqTqLFGkbv57"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Μουσείο του Λούβρου",
+      "description": "Το μεγαλύτερο μουσείο τέχνης στον κόσμο με τη Μόνα Λίζα και χιλιάδες αριστουργήματα",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 32
+      },
+      "location": {
+        "lat": 48.8606,
+        "lng": 2.3376
+      },
+      "restaurant": {
+        "name": "Happy Caffé",
+        "description": "Είναι ιδανικό για κάτι γρήγορο και φθηνό. Σερβίρει γλυκές και αλμυρές κρέπες, σάντουιτς με μπαγκέτα και καφέ",
+        "map_url": "https://maps.app.goo.gl/bRaugfscgaRyufdGA"
+      },
+      "website": "https://www.louvre.fr/en",
+      "notes": [
+        "0-17 ετών: δωρεάν",
+        "18 ετών και άνω (εκτός ΕΟΧ): 32€",
+        "Πολίτες/κάτοικοι ΕΟΧ: χαμηλότερη τιμή",
+        "Δωρεάν κάθε πρώτη Παρασκευή του μήνα μετά τις 18:00"
+      ],
+      "tags": [
+        "art",
+        "museum",
+        "mona lisa",
+        "culture",
+        "top"
+      ],
+      "duration_hours": 4,
+      "best_time": "morning",
+      "emoji": "🖼️",
+      "cafe": {
+         "name": "Happy Caffé",
+        "description": "Είναι ιδανικό για κάτι γρήγορο και φθηνό. Σερβίρει γλυκές και αλμυρές κρέπες, σάντουιτς με μπαγκέτα και καφέ",
+        "map_url": "https://maps.app.goo.gl/bRaugfscgaRyufdGA"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Αψίδα του Θριάμβου",
+      "description": "Το εμβληματικό μνημείο στη Champs-Élysées με πανοραμική θέα του Παρισιού",
+      "category": "landmark",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 16
+      },
+      "location": {
+        "lat": 48.8738,
+        "lng": 2.295
+      },
+      "restaurant": {
+        "name": "Le Café de Paris Friedland",
+        "description": "κλασικό γαλλικό μπιστρό με βεράντα και θέα απευθείας στην Αψίδα του Θριάμβου σε πολύ κοντινή απόσταση.",
+        "map_url": "https://maps.app.goo.gl/sSBTN8hivjB9h9wBA"
+      },
+      "website": "https://www.paris-arc-de-triomphe.fr/en",
+      "notes": [
+        "0-17 ετών: δωρεάν",
+        "18-25 ετών (πολίτες ΕΕ): δωρεάν",
+        "18 ετών και άνω: 16€ (online) / 17€ (ταμείο)",
+        "Δωρεάν κάθε πρώτη Κυριακή (Ιαν-Μαρ & Νοε-Δεκ)"
+      ],
+      "tags": [
+        "landmark",
+        "monument",
+        "view",
+        "history",
+        "top"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "evening",
+      "emoji": "🏛️",
+      "cafe": {
+        "name": "Café Latéral",
+        "description": "Κλασικό παριζιάνικο καφέ ακριβώς δίπλα στην Αψίδα. Έχει από καφέ μέχρι brunch και γλυκά,",
+        "map_url": "https://maps.app.goo.gl/yaEVcdewrPC1c3m2A"
+      }
+    },
+    {
+      "id": 5,
+      "name": "Μουσείο Orsay",
+      "description": "Ένας από τους πιο εντυπωσιακούς χώρους τέχνης στον κόσμο με τη μεγαλύτερη συλλογή ιμπρεσιονιστών στον κόσμο. Κατάλληλο για παιδιά 6 ετών και άνω, ιδανικά από 9-10 ετών",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 16
+      },
+      "location": {
+        "lat": 48.86,
+        "lng": 2.3266
+      },
+      "restaurant": {
+        "name": "Les Antiquaires",
+        "description": "Ένα παραδοσιακό μπιστρό με εξαιρετικές κριτικές σε απόσταση 5 λεπτών",
+        "map_url": "https://maps.app.goo.gl/9Pyf2Bvz1o9b8YJs8"
+      },
+      "website": "https://www.musee-orsay.fr/en",
+      "notes": [
+        "0-17 ετών: δωρεάν",
+        "18-25 ετών (πολίτες ΕΕ): δωρεάν",
+        "18 ετών και άνω: 16€",
+        "Δωρεάν κάθε πρώτη Κυριακή του μήνα"
+      ],
+      "tags": [
+        "art",
+        "museum",
+        "impressionism",
+        "culture",
+        "top"
+      ],
+      "duration_hours": 3,
+      "best_time": "afternoon",
+      "emoji": "🎨",
+      "cafe": {
+        "name": "Café de l'Empire",
+        "description": "Μια εξαιρετική οικονομική επιλογή και για καφέ και για ελαφρύ γεύμα, σε πολύ κοντινή απόσταση. Κλασικό μπιστρό",
+        "map_url": "https://maps.app.goo.gl/HtZBgwSEmmq1G9jx8"
+      }
+    },
+    {
+      "id": 6,
+      "name": "Ανάκτορα των Βερσαλλιών",
+      "description": "Το μεγαλοπρεπές ανάκτορο του Βασιλιά Ήλιου με τους θρυλικούς κήπους. Ιδανικό για άνω των 6-7 ετών. Για τα μικρότερα παιδιά Εστιάστε στους Κήπους και στο Petit Trianon, με το μικρό χωριό και τα ζωάκια (Hameau de la Reine).",
+      "category": "palace",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 30
+      },
+      "location": {
+        "lat": 48.8049,
+        "lng": 2.1204
+      },
+      "restaurant": {
+        "name": "Aux Delices de Katty",
+        "description": "Πολύ οικονομικό, με υψηλή βαθμολογία και απόσταση 5-10 λεπτά απο την είσοδο",
+        "map_url": "https://maps.app.goo.gl/9z9chWTuujigyCyr6"
+      },
+      "website": "https://en.chateauversailles.fr/",
+      "notes": [
+        "0-17 ετών: δωρεάν",
+        "18-25 ετών (πολίτες ΕΕ): δωρεάν",
+        "18 ετών και άνω: 25€ (χειμώνας) / 35€ (καλοκαίρι)",
+        "Το εισιτήριο Passport περιλαμβάνει ανάκτορο, κήπους και Trianon"
+      ],
+      "tags": [
+        "palace",
+        "gardens",
+        "history",
+        "luxury",
+        "top"
+      ],
+      "duration_hours": 5,
+      "best_time": "morning",
+      "emoji": "👑",
+      "cafe": {
+        "name": "Angelina",
+        "description": "Είναι το πιο διάσημο σημείο μέσα στο Παλάτι (1ος όροφος). Φημίζεται για τη συγκλονιστική ζεστή σοκολάτα L'Africain και το γλυκό Mont-Blanc.",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Angelina+Versailles"
+      }
+    },
+    {
+      "id": 7,
+      "name": "Sainte-Chapelle",
+      "description": "Παρεκκλήσι με 15 τεράστια βιτρό με 1.100 βιβλικές σκηνές.Προτείνεται για όλες τις ηλικίες, ιδανικά με ήλιο, όμως έχει αυστηρό έλεγχο ασφαλείας (όπως στο αεροδρόμιο).",
+      "category": "monument",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 22
+      },
+      "location": {
+        "lat": 48.8554,
+        "lng": 2.345
+      },
+      "restaurant": {
+       "name": "Brasserie Les Deux Palais",
+        "description": "Παραδοσιακή παριζιάνικη μπρασερί με στυλ Belle Époque, κυριολεκτικά δίπλα σας (λιγότερο από 1 λεπτό με τα πόδια)",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Brasserie+Les+Deux+Palais+Paris"
+      },
+      "website": "https://www.sainte-chapelle.fr/en",
+      "notes": [
+        "0-17 ετών: δωρεάν",
+        "18-25 ετών (πολίτες ΕΕ): δωρεάν",
+        "18 ετών και άνω (εκτός ΕΟΧ): 22€",
+        "18 ετών και άνω (ΕΟΧ): 16€",
+        "Combo με Conciergerie: 30€"
+      ],
+      "tags": [
+        "church",
+        "gothic",
+        "stained glass",
+        "architecture",
+        "top"
+      ],
+      "duration_hours": 1,
+      "best_time": "morning",
+      "emoji": "⛪",
+      "cafe": {
+        "name": "Le Soleil d'Or",
+        "description": "Μια εξαιρετική και πολύ κοντινή επιλογή (μόλις 1-2 λεπτά με τα πόδια). Είναι ένα κλασικό παριζιάνικο καφέ-εστιατόριο με πολύ καλή βαθμολογία (4.5)",
+        "map_url": "https://maps.app.goo.gl/8ySsS777EaWAj1ge7"
+      }
+    },
+    {
+      "id": 8,
+      "name": "Πάνθεον",
+      "description": "Μαυσωλείο με τάφους διάσημων προσωπικοτήτων όπως Βολταίρος, Ρουσσώ, Βίκτωρ Ουγκώ και Μαρί Κιουρί.Στο εσωτερικό εντυπωσιάζει το Εκκρεμές του Φουκώ, που δείχνει την περιστροφή της Γης. Ιδανικά για άνω των 6 ετών",
+      "category": "monument",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 14
+      },
+      "location": {
+        "lat": 48.8462,
+        "lng": 2.3464
+      },
+      "restaurant": {
+        "name": "JOZI BRUNCH Pantheon",
+        "description": "Ένα πολύ ζεστό και πολύχρωμο καφέ, ιδανικό για πρωινό ή brunch. Σερβίρουν χειροποίητο καφέ, pancakes και τοστ με αβοκάντο.",
+        "map_url": "https://maps.app.goo.gl/oLHFyLJCoenFJkbv6"
+      },
+      "website": "https://www.paris-pantheon.fr/en",
+      "notes": [
+        "0-17 ετών: δωρεάν",
+        "18-25 ετών (πολίτες ΕΕ): δωρεάν",
+        "18 ετών και άνω: 13€ (online) / 14€ (ταμείο)",
+        "Δωρεάν κάθε πρώτη Κυριακή (Ιαν-Μαρ & Νοε-Δεκ)"
+      ],
+      "tags": [
+        "monument",
+        "history",
+        "neoclassical",
+        "culture"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "afternoon",
+      "emoji": "🏛️",
+      "cafe": {
+        "name": "Strada Café",
+        "description": "café με θέα στο Πάνθεον",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Strada+Cafe+Pantheon+Paris"
+      }
+    },
+    {
+      "id": 9,
+      "name": "Μουσείο Rodin",
+      "description": "Ένα από τα πιο ατμοσφαιρικά μουσεία του Παρισιού, αφιερωμένο στον Rodin.Ξεχωρίζει για τον μεγάλο κήπο με τα διάσημα γλυπτά του, όπως ο Σκεπτόμενος και οι Πύλες της Κολάσεως. Ιδανικά από 6 ετών και πάνω",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 14
+      },
+      "location": {
+        "lat": 48.8553,
+        "lng": 2.3159
+      },
+      "restaurant": {
+        "name": "La villa Reine",
+        "description": "Με εξαιρετικές κριτικές (4.9/5) και καλή ισορροπία ποιότητας και τιμής για γεύμα ή δείπνο σε ένα πιο επίσημο αλλά όχι απλησίαστο περιβάλλον.",
+        "map_url": "https://maps.app.goo.gl/CxrXkHg3h47inkK58"
+      },
+      "website": "https://www.musee-rodin.fr/en",
+      "notes": [
+        "0-17 ετών: δωρεάν",
+        "18-25 ετών (πολίτες ΕΕ): δωρεάν",
+        "18 ετών και άνω: 14€",
+        "Δωρεάν κάθε πρώτη Κυριακή (Οκτ-Μαρ)"
+      ],
+      "tags": [
+        "art",
+        "museum",
+        "sculpture",
+        "garden"
+      ],
+      "duration_hours": 2,
+      "best_time": "afternoon",
+      "emoji": "🗿",
+      "cafe": {
+        "name": "Boulangerie du Musée",
+        "description": "Ιδανικός φούρνος για γρήγορο και οικονομικό φαγητό: μπαγκέτες-σάντουιτς, κις, πίτσες, γλυκά και καφέ για το χέρι ή σε κοντινό παγκάκι.",
+        "map_url": "https://maps.app.goo.gl/jWKhKSFfWECjKbtB8"
+      }
+    },
+    {
+      "id": 10,
+      "name": "Conciergerie",
+      "description": "Ένα αριστούργημα αρχιτεκτονικής,γνωστή ως η σκληρή φυλακή της Γαλλικής Επανάστασης. Ιδανικό απο 7 ετών και πάνω. Χάρη στο Histopad στρέφετε το tablet και βλέπετε στην οθόνη πώς ήταν ο χώρος τον 14ο αιώνα παίζοντας και κυνήγι χαμένου θησαυρού",
+      "category": "monument",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 13
+      },
+      "location": {
+        "lat": 48.8566,
+        "lng": 2.3469
+      },
+      "restaurant": {
+        "name": "Brasserie Les Deux Palais",
+        "description": "Παραδοσιακή παριζιάνικη μπρασερί με στυλ Belle Époque, κυριολεκτικά δίπλα σας (λιγότερο από 1 λεπτό με τα πόδια)",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Brasserie+Les+Deux+Palais+Paris"
+      },
+      "website": "https://www.paris-conciergerie.fr/en",
+      "notes": [
+        "0-17 ετών: δωρεάν",
+        "18-25 ετών (πολίτες ΕΕ): δωρεάν",
+        "18 ετών και άνω: 13€",
+        "Combo με Sainte-Chapelle: 20€",
+        "Δωρεάν κάθε πρώτη Κυριακή (Οκτ-Μαρ)"
+      ],
+      "tags": [
+        "history",
+        "medieval",
+        "revolution",
+        "monument"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "any",
+      "emoji": "🏰",
+      "cafe": {
+        "name": "Le Soleil d'Or",
+        "description": "Μια εξαιρετική και πολύ κοντινή επιλογή (μόλις 1-2 λεπτά με τα πόδια). Είναι ένα κλασικό παριζιάνικο καφέ-εστιατόριο με πολύ καλή βαθμολογία (4.5)",
+        "map_url": "https://maps.app.goo.gl/8ySsS777EaWAj1ge7"
+      }
+    },
+    {
+      "id": 11,
+      "name": "Aquarium de Paris",
+      "description": "Εντυπωσιακό ενυδρείο με 10.000 ψάρια και καρχαρίες κοντά στον Πύργο του Άιφελ. Κατάλληλο για κάθε ηλικία",
+      "category": "aquarium",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 13,
+        "4": 13,
+        "5": 13,
+        "6": 13,
+        "7": 13,
+        "8": 13,
+        "9": 13,
+        "10": 13,
+        "11": 13,
+        "12": 13,
+        "13": 20.5,
+        "14": 20.5,
+        "15": 20.5,
+        "16": 20.5,
+        "17": 20.5,
+        "adult": 20.5
+      },
+      "location": {
+        "lat": 48.8631,
+        "lng": 2.2933
+      },
+      "restaurant": {
+        "name": "Le New York",
+        "description": "Ένα μοντέρνο εστιατόριο με θέα τον Πύργο του Άιφελ, ιδανικό για burgers και σνακ. Απέχει περίπου 2 λεπτά.",
+        "map_url": "https://maps.app.goo.gl/1eW8spekqRHzJR4NA"
+      },
+      "website": "https://aquariumdeparis.com/en",
+      "notes": [
+        "0-2 ετών: δωρεάν",
+        "3-12 ετών: 13€ (online)",
+        "13 ετών και άνω: 20.50€ (online)",
+        "Οι τιμές διαφέρουν online vs ταμείο"
+      ],
+      "tags": [
+        "aquarium",
+        "family",
+        "kids",
+        "marine life"
+      ],
+      "duration_hours": 2,
+      "best_time": "any",
+      "emoji": "🐠",
+      "cafe": {
+        "name": "Café Kléber",
+        "description": "Με τα πόδια, θα χρειαστείτε περίπου 8 λεπτά, σε μια πολύ ευχάριστη διαδρομή μέσω της πλατείας Trocadéro.Κλασικό σημείο με υπέροχη θέα",
+        "map_url": "https://maps.app.goo.gl/Aob68Mbj3kwXkFci7"
+      }
+    },
+    {
+      "id": 12,
+      "name": "Μουσείο de l'Orangerie",
+      "description": "Εδώ θα δείτε τα τεράστια Νούφαρα του Μονέ . Ένα σύντομο μουσείο που κρατάει τα παιδιά καθηλωμένα με χρώματα και φαντασία.Ιδανικό από 5-6 ετών",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 12.5
+      },
+      "location": {
+        "lat": 48.8638,
+        "lng": 2.3228
+      },
+      "restaurant": {
+        "name": "Happy Caffé",
+        "description": "Είναι ένα χαλαρό καφέ που ειδικεύεται σε γλυκές και αλμυρές κρέπες, ενώ σερβίρει επίσης σάντουιτς με μπαγκέτα και διάφορα γλυκά σε πολύ καλές τιμές",
+        "map_url": "https://maps.app.goo.gl/28sBMeUqahpUHHoaA"
+      },
+      "website": "https://www.musee-orangerie.fr/en",
+      "notes": [
+        "0-17 ετών: δωρεάν",
+        "18-25 ετών (πολίτες ΕΕ): δωρεάν",
+        "18 ετών και άνω: 12.50€",
+        "Δωρεάν κάθε πρώτη Κυριακή του μήνα"
+      ],
+      "tags": [
+        "art",
+        "museum",
+        "monet",
+        "impressionism"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "morning",
+      "emoji": "🌸",
+      "cafe": {
+       "name": "Happy Caffé",
+        "description": "Είναι ένα χαλαρό καφέ που ειδικεύεται σε γλυκές και αλμυρές κρέπες, ενώ σερβίρει επίσης σάντουιτς με μπαγκέτα και διάφορα γλυκά σε πολύ καλές τιμές",
+        "map_url": "https://maps.app.goo.gl/28sBMeUqahpUHHoaA"
+      }
+    },
+    {
+      "id": 13,
+      "name": "Sacré-Cœur (Θόλος)",
+      "description": "Η Sacré-Cœur είναι εμβληματική βασιλική στη Μονμάρτρη με πανοραμική θέα στο Παρίσι. Κατάλληλη για όλες τις ηλικίες. Προσοχή στα πολλά σκαλιά· προτίμησε το τελεφερίκ.",
+      "category": "monument",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 8,
+        "17": 8,
+        "adult": 8
+      },
+      "location": {
+        "lat": 48.8867,
+        "lng": 2.3431
+      },
+      "restaurant": {
+        "name": "Le Poulbot",
+        "description": "Μόλις 220 μέτρα από τη Βασιλική. Είναι ένα μικρό, παραδοσιακό γαλλικό στέκι",
+        "map_url": "https://maps.app.goo.gl/QZHb2fq28evj4UMJ9"
+      },
+      "website": "https://www.sacre-coeur-montmartre.com/en",
+      "notes": [
+        "Βασιλική: δωρεάν είσοδος",
+        "Θόλος: 0-15 ετών: 5€, 16+ ετών: 8€",
+        "Πρόσβαση μόνο με σκάλες (280 σκαλοπάτια)",
+        "Δεν υπάρχει ασανσέρ"
+      ],
+      "tags": [
+        "church",
+        "view",
+        "montmartre",
+        "landmark",
+        "top"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "evening",
+      "emoji": "⛪",
+      "cafe": {
+        "name": "Kozy",
+        "description": "Στα 350 μέτρα. Πολύ δημοφιλές spot για ποιοτικό καφέ και γλυκά, ιδανικό για μια γρήγορη στάση",
+        "map_url": "https://maps.app.goo.gl/7pXpfd5Z1egnNMMZA"
+      }
+    },
+    {
+  "id": 14,
+  "name": "Jardin d'Acclimatation",
+  "description": "Λούνα παρκ της πόλης με παιχνίδια, ζώα, τρενάκι, τραμπολίνα. Παράδεισος για παιδιά 2-12 ετών.",
+  "category": "themepark",
+  "prices": {
+    "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0,
+    "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0, "16": 0, "17": 0, "adult": 0
+  },
+  "location": {
+    "lat": 48.8785,
+    "lng": 2.2691
+  },
+  "restaurant": {
+    "name": "Sam & So",
+    "description": "Αν δεν καθήσετε σε κάποιο εντός του πάρκου (έχουν υψηλές τιμές και λιγότερο καλές κριτικές) μια πολύ κοντινή, καλή και οικονομική επιλογή",
+    "map_url": "https://maps.app.goo.gl/iiqPUxHsbRXRdtqN8"
+  },
+  "website": "https://www.jardindacclimatation.fr/",
+  "notes": [
+    "Η τιμολόγηση είναι δυναμική, εξαρτάται από ηλικία και ύψος. Ενημερωθείτε απο το επίσημο site.",
+    "2-12 ετών: ιδανική ηλικία",
+    "Διάρκεια: 3.5 ώρες περίπου"
+  ],
+  "tags": [
+    "theme park",
+    "family",
+    "kids",
+    "rides",
+    "animals"
+  ],
+  "duration_hours": 3.5,
+  "best_time": "afternoon",
+  "emoji": "🎡",
+  "cafe": {
+    "name": "διάφορα café",
+    "description": "café εντός του πάρκου",
+    "map_url": ""
+  }
+},
+{
+  "id": 15,
+  "name": "Cité des Sciences et de l'Industrie",
+  "description": "Ένα από τα μεγαλύτερα μουσεία επιστήμης στην Ευρώπη. Περιλαμβάνει τη La Géode (IMAX), πλανητάριο και το υποβρύχιο Argonaute. Ιδανικό για όλες τις ηλικίες, με ειδικούς χώρους για παιδιά 2–12 ετών.",
+  "category": "science_museum",
+  "prices": {
+    "0": 0, "1": 0, "2": 4, "3": 4, "4": 4, "5": 4, "6": 12, "7": 12, "8": 12, "9": 12,
+    "10": 12, "11": 12, "12": 12, "13": 12, "14": 12, "15": 12, "16": 12, "17": 12, "18": 12,
+    "19": 12, "20": 12, "21": 12, "22": 12, "23": 12, "24": 12, "25": 12, "adult": 15
+  },
+  "location": {
+    "lat": 48.8959,
+    "lng": 2.3876
+  },
+  "restaurant": {
+    "name": "Food Market | Loisirs | Événements | Boom Boom Villette",
+    "description": "Βρίσκεται ακριβώς δίπλα στο μουσείο. Είναι ένα τεράστιο food market με πάρα πολλές επιλογές από street food σε πολύ καλές τιμές. Είναι η πιο εύκολη και γρήγορη λύση",
+    "map_url": "https://maps.app.goo.gl/WuWma86fkCATupJk6"
+  },
+  "website": "https://www.cite-sciences.fr/fr/accueil/",
+  "notes": [
+    "0-1 ετών: 0€",
+    "2-5 ετών: 4€",
+    "6-25 ετών: 12€",
+    "26+ ετών: 15€",
+    "2-12 ετών: ιδανική ηλικία",
+    "Διάρκεια: 4 ώρες περίπου"
+  ],
+  "tags": [
+    "science",
+    "museum",
+    "kids",
+    "interactive",
+    "educational"
+  ],
+  "duration_hours": 4,
+  "best_time": "morning",
+  "emoji": "🔬",
+  "cafe": {
+   "name": "Food Market | Loisirs | Événements | Boom Boom Villette",
+    "description": "Βρίσκεται ακριβώς δίπλα στο μουσείο. Είναι ένα τεράστιο food market με πάρα πολλές επιλογές από street food και φυσικά καφέ σε πολύ καλές τιμές. Είναι η πιο εύκολη και γρήγορη λύση",
+    "map_url": "https://maps.app.goo.gl/WuWma86fkCATupJk6"
+  }
+},
+{
+  "id": 16,
+  "name": "Ζωολογικός Κήπος του Παρισιού (Zoo de Vincennes)",
+  "description": "Δεν είναι ένας παραδοσιακός ζωολογικός κήπος με κλουβιά, αλλά ένα πάρκο που χωρίζεται σε 5 βιοζώνες με τα ζώα να ζουν σε χώρους που προσομοιάζουν το φυσικό τους περιβάλλον. Κατάλληλο για κάθε ηλικία",
+  "category": "zoo",
+  "prices": {
+    "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0,
+    "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0, "16": 0, "17": 0, "adult": 0
+  },
+  "location": {
+    "lat": 48.8314,
+    "lng": 2.4134
+  },
+  "restaurant": {
+    "name": "Le 217 Brasserie Restaurant",
+    "description": "Αν δεν επιλέξετε τα εστιατόρια μέσα στο πάρκο, υπάρχει στα 15 λεπτά περπάτημα αυτή η κλασική γαλλική μπρασερί με πολύ καλή βαθμολογία (4.7) και καλές τιμές ",
+    "map_url": "https://maps.app.goo.gl/BbYGo2izESnR4qN58"
+  },
+  "website": "https://www.parczoologiquedeparis.fr/en",
+  "notes": [
+    "Prices must be fetched from official website",
+    "Για όλες τις ηλικίες",
+    "Διάρκεια: 4 ώρες περίπου"
+  ],
+  "tags": [
+    "zoo",
+    "animals",
+    "family",
+    "kids",
+    "nature"
+  ],
+  "duration_hours": 4,
+  "best_time": "morning",
+  "emoji": "🦁",
+  "cafe": {
+    "name": "Akita Cafe",
+    "description": "Απέχει μόλις 150 μέτρα. Είναι η ιδανική επιλογή αν θέλετε κάτι σχεδόν δίπλα στην έξοδο.",
+    "map_url": "https://maps.app.goo.gl/vSzBqEVMStd271sWA"
+  }
+},
+{
+  "id": 17,
+  "name": "Κήποι του Λουξεμβούργου",
+  "description": "Πάρκο με παιδική χαρά, βόλτες με πόνι, μικρά καραβάκια",
+  "category": "park",
+  "prices": {
+    "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0,
+    "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0, "16": 0, "17": 0, "adult": 0
+  },
+  "location": {
+    "lat": 48.8462,
+    "lng": 2.3372
+  },
+  "restaurant": {
+    "name": "Le Coup de Torchon",
+    "description": "Ένα πολύ καλό εστιατόριο με υψηλή βαθμολογία (4.7) για γαλλική κουζίνα και πολύ καλές τιμές στα 450μ.",
+    "map_url": "https://maps.app.goo.gl/ZJDdM759fizp25Rv8"
+  },
+  "website": "https://www.senat.fr/visite/jardin/",
+  "notes": [
+    "Δωρεάν είσοδος",
+    "Για όλες τις ηλικίες",
+    "Διάρκεια: 2 ώρες περίπου"
+  ],
+  "tags": [
+    "park",
+    "garden",
+    "family",
+    "kids",
+    "playground"
+  ],
+  "duration_hours": 2,
+  "best_time": "afternoon",
+  "emoji": "🌳",
+  "cafe": {
+    "name": "Garden Café",
+    "description": "Σε πολύ κοντινή απόσταση, ένα ήσυχο cafe με καλές κριτικές και καλές τιμές",
+    "map_url": "https://maps.app.goo.gl/RBPNk7Cnx8DoWTTN7"
+  }
+},
+{
+  "id": 18,
+  "name": "Jardin de Tuileries",
+  "description": "Ιστορικός κήπος ανάμεσα στο Λούβρο και την Place de la Concorde. Παιδικές χαρές, καρουζέλ και βαρκάκια για τα παιδιά, και τα μουσεία Orangerie και Jeu de Paume για τους ενήλικες.",
+  "category": "park",
+  "prices": {
+    "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0,
+    "10": 0, "11": 0, "12": 0, "13": 0, "14": 0, "15": 0, "16": 0, "17": 0, "adult": 0
+  },
+  "location": {
+    "lat": 48.8634,
+    "lng": 2.3275
+  },
+  "restaurant": {
+    "name": "Café des Marronniers",
+    "description": "Βρίσκεται κυριολεκτικά στην καρδιά του Jardin des Tuileries, ανάμεσα στα δέντρα.",
+    "map_url": "https://maps.app.goo.gl/q6xcfFDrEGjQix2a9"
+  },
+  "website": "https://parisjetaime.com/culture/jardin-des-tuileries-p3545",
+  "notes": [
+    "Δωρεάν είσοδος",
+    "Για όλες τις ηλικίες",
+    "Διάρκεια: 1.5 ώρες περίπου"
+  ],
+  "tags": [
+    "park",
+    "garden",
+    "family",
+    "kids",
+    "central"
+  ],
+  "duration_hours": 1.5,
+  "best_time": "afternoon",
+  "emoji": "🌷",
+  "cafe": {
+    "name": "Café Kitsuné Tuileries",
+    "description": "ελάχιστα βήματα από τον κήπο. Είναι το πιο κοντινό σημείο για ποιοτικό καφέ",
+    "map_url": "https://maps.app.goo.gl/Bd7tRJRf6HnUSrge6"
+  }
+},
+{
+  "id": 19,
+  "name": "Κρουαζιέρα στον Σηκουάνα",
+  "description": "Η εταιρία Vedettes du Pont Neuf με 6.500 κριτικές και βαθμολογία 4,4 είναι η πιο συμφέρουσα επιλογή. Το μικρότερο σκάφος και η ζωντανή ξενάγηση δημιουργούν ατμοσφαιρική εμπειρία",
+  "category": "boat_tour",
+  "prices": {
+    "0": 0, "1": 0, "2": 0, "3": 0, "4": 7, "5": 7, "6": 7, "7": 7, "8": 7, "9": 7,
+    "10": 7, "11": 7, "12": 7, "13": 17, "14": 17, "15": 17, "16": 17, "17": 17, "adult": 17
+  },
+  "location": {
+    "lat": 48.8606,
+    "lng": 2.3376
+  },
+  "restaurant": {
+    "name": "Le Bistro des Augustins",
+    "description": "3–4 λεπτά με τα πόδια από την αποβάθρα. Ζεστό, οικονομικό μπιστρό με φημισμένες gratinées και σαλάτες, αυθεντική παρισινή ατμόσφαιρα.",
+    "map_url": "https://maps.app.goo.gl/aAdCuPPM5pDQpAhg9"
+  },
+  "website": "https://www.vedettesdupontneuf.com/?utm_source=GoogleMyBusiness&utm_medium=referral&utm_campaign=Fiche",
+  "notes": [
+    "0-3 ετών: 0€",
+    "4-12 ετών: 7€",
+    "13+ ετών: 17€",
+    "Για όλες τις ηλικίες",
+    "Διάρκεια: 1 ώρα"
+  ],
+  "tags": [
+    "boat",
+    "cruise",
+    "seine",
+    "sightseeing",
+    "family"
+  ],
+  "duration_hours": 1,
+  "best_time": "evening",
+  "emoji": "🚢",
+  "cafe": {
+    "name": "Costadoro Social Coffee",
+    "description": "Αν ψάχνετε για πραγματικά καλό καφέ αυτό είναι το κατάλληλο σημείο.",
+    "map_url": "https://maps.app.goo.gl/aMVPQMbdonQ6KoC76"
+  }
+},
+{
+  "id": 20,
+  "name": "Μουσείο Κέρινων Ομοιωμάτων Grévin",
+  "description": "Πάνω από 200 κέρινα ομοιώματα διάσημων προσώπων και μια εντυπωσιακή Αίθουσα των Κατόπτρων. Ιδανικό για όλες τις ηλικίες, με ήρωες κινουμένων σχεδίων για τα παιδιά ",
+  "category": "interactive_museum",
+  "prices": {
+    "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 19.5, "6": 19.5, "7": 19.5, "8": 19.5, "9": 19.5,
+    "10": 19.5, "11": 19.5, "12": 19.5, "13": 19.5, "14": 19.5, "15": 19.5, "16": 19.5, "17": 19.5,
+    "18": 19.5, "19": 27, "adult": 27
+  },
+  "location": {
+    "lat": 48.8719,
+    "lng": 2.3422
+  },
+  "restaurant": {
+    "name": "Bouillon Chartier Grands Boulevards",
+    "description": "67 μέτρα από το μουσείο. Ιστορικό εστιατόριο (από το 1896) με παραδοσιακή γαλλική κουζίνα σε χαμηλές τιμές, όπου οι σερβιτόροι γράφουν την παραγγελία στο τραπεζομάντιλο.",
+    "map_url": "https://maps.app.goo.gl/LV8GkWF1pvP3HWtr8"
+  },
+  "website": "https://www.grevin-paris.com/en",
+  "notes": [
+    "5-18 ετών: 19.5€",
+    "19+ ετών: 27€",
+    "Many family discounts available, check official website",
+    "7 ετών και άνω: ιδανική ηλικία",
+    "Διάρκεια: 2 ώρες περίπου"
+  ],
+  "tags": [
+    "museum",
+    "wax",
+    "interactive",
+    "family",
+    "entertainment"
+  ],
+  "duration_hours": 2,
+  "best_time": "any",
+  "emoji": "🎭",
+  "cafe": {
+    "name": "La Crème de Paris",
+    "description": "Είναι ένα χαλαρό καφέ που ειδικεύεται σε χειροποίητες κρέπες, βάφλες και παγωτά",
+    "map_url": "https://maps.app.goo.gl/Wr3YjAesSGaYbbdq8"
+  }
+},
+{
+  "id": 21,
+  "name": "Κατακόμβες του Παρισιού",
+  "description": "Υπόγειες οστεοθήκες και σήραγγες με οστά πάνω απο 6εκ.ανθρώπων. Ιδανικά από 10-12 ετών και πάνω. Υπάρχουν σκαλιά χωρίς ασανσέρ. Προσοχή: κλειστό έως και την άνοιξη 2026 λόγω έργων συντήρησης",
+  "category": "underground",
+  "prices": {
+    "0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 12, "6": 12, "7": 12, "8": 12, "9": 12,
+    "10": 12, "11": 12, "12": 12, "13": 12, "14": 12, "15": 12, "16": 12, "17": 12, "adult": 31
+  },
+  "location": {
+    "lat": 48.8338,
+    "lng": 2.3324
+  },
+  "restaurant": {
+    "name": "Félicie",
+    "description": "Είναι μια κλασική, στιλάτη παρισινή μπρασερί με πολύ ωραία ατμόσφαιρα και τραπεζάκια στο πεζοδρόμιο, καλές τιμές και απόσταση 450 μέτρα από τις κατακόμβες",
+    "map_url": "https://maps.app.goo.gl/fHaLANtu4sB4Hp5D8"
+  },
+  "website": "https://www.catacombes.paris.fr/en",
+  "notes": [
+    "0-4 ετών: 0€",
+    "5-17 ετών: 12€ (25€ if they want audioguide)",
+    "18+ ετών: 31€ (includes audioguide)",
+    "10 ετών και άνω: ιδανική ηλικία",
+    "Διάρκεια: 1.5 ώρες περίπου"
+  ],
+  "tags": [
+    "underground",
+    "catacombs",
+    "history",
+    "unique",
+    "dark"
+  ],
+  "duration_hours": 1.5,
+  "best_time": "any",
+  "emoji": "💀",
+  "cafe": {
+    "name": "Terres de Café Daguerre",
+    "description": "Είναι μικρό, μοντέρνο και με πολύ υψηλή βαθμολογία (4.5). Ιδανικό για να πάρετε έναν καφέ στο χέρι ή να κάνετε μια σύντομη στάση.",
+    "map_url": "https://maps.app.goo.gl/VNh9b7ZhzrBEDLzi7"
+  }
+},
+{
+  "id": 22,
+  "name": "Parc Astérix",
+  "description": "Η «γαλλική» εναλλακτική της Disneyland,. Έχει κορυφαία roller coasters και χαρόυμενα vibes. Σε σχέση με Disneyland είναι πιο οικονομικό, με λιγότερες ουρές και πιο δυνατές συγκινήσεις, ακόμα πιο ιδανικό για εφήβους και ενήλικες.",
+  "category": "themepark",
+  "prices": {
+    "0": 0, "1": 0, "2": 0, "3": 57, "4": 57, "5": 57, "6": 57, "7": 57, "8": 57, "9": 57,
+    "10": 57, "11": 57, "12": 65, "13": 65, "14": 65, "15": 65, "16": 65, "17": 65, "adult": 65
+  },
+  "location": {
+    "lat": 49.1359,
+    "lng": 2.5721
+  },
+  "restaurant": {
+    "name": "Le Relais Gaulois",
+    "description": "Είναι self-service εστιατόριο με μεγάλη ποικιλία (σαλάτες, ζεστά πιάτα, επιδόρπια) εντός του πάρκου, σε καλές τιμές.",
+    "map_url": "https://maps.app.goo.gl/3MViWSq3STcamxaj6"
+  },
+  "website": "https://www.parcasterix.fr/en",
+  "notes": [
+    "3-11 ετών: 57€",
+    "12+ ετών: 65€",
+    "Δυναμική τιμολόγηση, επισκεφτείτε το επίσημο site. Πολλές προσφορές τρέχουν κατά καιρούς, ακόμη για δωρεάν τα παιδιά έως 11 ετών",
+    "7-16 ετών: ιδανική ηλικία, υπάρχουν όμως παιχνίδια και για από 3 ετών",
+    "Διάρκεια: 7 ώρες περίπου"
+  ],
+  "tags": [
+    "theme park",
+    "roller coaster",
+    "family",
+    "kids",
+    "asterix"
+  ],
+  "duration_hours": 7,
+  "best_time": "morning",
+  "emoji": "🎢",
+  "cafe": {
+    "name": "L'Aérolaf",
+    "description": "Αυτή είναι η πιο εντυπωσιακή εμπειρία για καφέ ή ποτό. Πρόκειται για ένα bar που περιστρέφεται στον αέρα σε ύψος 35 μέτρων!",
+    "map_url": "https://maps.app.goo.gl/vWnZn6Jck5qXxsmg8"
+  }
+}
+  ]
+}

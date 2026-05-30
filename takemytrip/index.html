@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Οικογενειακός Οργανωτής Ταξιδιού ✈️</title>
+    
+    <!-- CLEANUP: Unregister all service workers and purge all caches -->
+    <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(regs) {
+        regs.forEach(function(r) { r.unregister(); });
+      });
+    }
+    if ('caches' in window) {
+      caches.keys().then(function(names) {
+        names.forEach(function(n) { caches.delete(n); });
+      });
+    }
+    </script>
+
+    <!-- ΕΙΚΟΝΙΔΙΟ -->
+    <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/2983/2983787.png">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2983/2983787.png">
+
+    <!-- PWA Manifest for Add to Home Screen (no service worker, no caching) -->
+    <link rel="manifest" href="manifest-shortcut.json">
+    <meta name="theme-color" content="#4A90E2">
+    
+    <!-- GOOGLE FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- ΕΞΩΤΕΡΙΚΟ CSS -->
+    <link rel="stylesheet" href="style.css">
+    <!-- CSS για checkboxes δραστηριοτήτων -->
+<style>
+/* Checkbox για κάρτες δραστηριοτήτων */
+.activity-card-checkbox {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 20;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+}
+
+.activity-card-checkbox input {
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    border: 2px solid #4F46E5;
+    border-radius: 4px;
+    background: white;
+    appearance: none;
+    -webkit-appearance: none;
+    position: relative;
+}
+
+.activity-card-checkbox input:checked {
+    background: #4F46E5;
+    border-color: #4F46E5;
+}
+
+.activity-card-checkbox input:checked::after {
+    content: '✓';
+    position: absolute;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+</style>
+    <!-- LEAFLET CSS (για χάρτη) -->
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""/>
+    
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- MOBILE NAVIGATION -->
+    <div class="mobile-nav">
+        <!-- Original select (hidden, used by existing showStep sync) -->
+        <select id="mobile-step-selector" class="mobile-step-select-hidden">
+            <option value="destination">1. Εύρεση Προορισμού</option>
+            <option value="flight">2. Αεροπορικά</option>
+            <option value="hotel">3. Ξενοδοχεία</option>
+            <option value="activities">4. Δραστηριότητες</option>
+            <option value="map">5. Διαδραστικός Χάρτης</option>
+        </select>
+
+        <!-- ΒΗΜΑΤΑ Wizard UI (wrapper only, forwards to showStep) -->
+        <div class="vimata-wizard">
+            <button type="button" class="vimata-trigger" onclick="toggleVimataDropdown()">
+                <span>ΒΗΜΑΤΑ</span>
+                <span class="vimata-arrow">▼</span>
+            </button>
+            <div class="vimata-dropdown" id="vimata-dropdown">
+                <div class="vimata-item" data-step="destination" onclick="selectVimataStep('destination')">
+                    <span class="vimata-num">1</span> Εύρεση Προορισμού
+                </div>
+                <div class="vimata-item" data-step="flight" onclick="selectVimataStep('flight')">
+                    <span class="vimata-num">2</span> Αεροπορικά
+                </div>
+                <div class="vimata-item" data-step="hotel" onclick="selectVimataStep('hotel')">
+                    <span class="vimata-num">3</span> Ξενοδοχεία
+                </div>
+                <div class="vimata-item" data-step="activities" onclick="selectVimataStep('activities')">
+                    <span class="vimata-num">4</span> Δραστηριότητες
+                </div>
+                <div class="vimata-item" data-step="map" onclick="selectVimataStep('map')">
+                    <span class="vimata-num">5</span> Διαδραστικός Χάρτης
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h1><i class="fas fa-suitcase-rolling"></i> Ταξιδιωτικός Οργανωτής</h1>
+                <p class="subtitle">Οικογενειακές Διακοπές</p>
+            </div>
+            
+            <div class="steps-container">
+                <div class="step active" data-step="destination">
+                    <div class="step-icon">1</div>
+                    <div class="step-content">
+                        <h3>Εύρεση Προορισμού</h3>
+                        <p>Βρες την τέλεια πόλη για την οικογένειά σου</p>
+                    </div>
+                </div>
+                
+                <div class="step" data-step="flight">
+                    <div class="step-icon">2</div>
+                    <div class="step-content">
+                        <h3>Αεροπορικά</h3>
+                        <p>Αναζήτηση & κράτηση πτήσεων</p>
+                    </div>
+                </div>
+                
+                <div class="step" data-step="hotel">
+                    <div class="step-icon">3</div>
+                    <div class="step-content">
+                        <h3>Ξενοδοχεία</h3>
+                        <p>Διαμονή & οικογενειακά δωμάτια</p>
+                    </div>
+                </div>
+                
+                <div class="step" data-step="activities">
+                    <div class="step-icon">4</div>
+                    <div class="step-content">
+                        <h3>Δραστηριότητες</h3>
+                        <p>Αξιοθέατα & ψυχαγωγία για όλους</p>
+                    </div>
+                </div>
+                
+                               
+                <div class="step" data-step="map">
+                    <div class="step-icon">5</div>
+                    <div class="step-content">
+                        <h3>Διαδραστικός Χάρτης</h3>
+                        <p>Προβολή σημείων & δρομολόγια</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sidebar-footer">
+                <div class="current-trip">
+                    <h4><i class="fas fa-map-marker-alt"></i> Τρέχον Ταξίδι:</h4>
+                    <p id="current-destination-display">Δεν έχει επιλεγεί</p>
+                </div>
+                <button class="btn-reset" id="reset-all">
+                    <i class="fas fa-trash-alt"></i> Διαγραφή Όλων
+                </button>
+            </div>
+        </nav>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <div id="step-content" class="step-page">
+                <!-- ΕΔΩ ΘΑ ΦΟΡΤΩΝΕΙ ΚΑΘΕ ΒΗΜΑ ΑΠΟ ΤΟ script.js -->
+            </div>
+            
+            <!-- ΑΦΑΙΡΕΘΗΚΕ ΤΟ ΚΑΤΩ ΣΕΤ ΚΟΥΜΠΙΩΝ - ΜΟΝΟ ΤΑ ΠΑΝΩ ΜΕΝΟΥΝ -->
+            
+    
+    <!-- LOADING OVERLAY -->
+    <div id="loading-overlay">
+        <div class="loading-spinner">
+            <i class="fas fa-plane-departure fa-spin"></i>
+            <p>Φόρτωση...</p>
+        </div>
+    </div>
+
+       <!-- html2canvas + jsPDF για client-side PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- ΕΞΩΤΕΡΙΚΟ JavaScript - ΔΙΟΡΘΩΜΕΝΟ -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+    <script src="combo-calculator.js"></script> <!-- ΑΥΤΗ Η ΝΕΑ ΓΡΑΜΜΗ -->
+
+    <script>
+    // ONE-TIME SIDEBAR FIX - ΒΗΜΑ 9
+    window.addEventListener('load', function() {
+        console.log('=== ONE-TIME SIDEBAR FIX ===');
+        setTimeout(function() {
+            const h3s = document.querySelectorAll('.step-content h3');
+            h3s.forEach(h3 => { h3.style.color = '#FFFFFF'; h3.style.fontWeight = '600'; });
+            const ps = document.querySelectorAll('.step-content p');
+            ps.forEach(p => { p.style.color = 'rgba(255, 255, 255, 0.8)'; p.style.display = 'block'; });
+            document.querySelector('.sidebar').style.backgroundColor = '#1A202C';
+        }, 500);
+    });
+
+    // IMMEDIATE SIDEBAR FIX
+    (function fixSidebarImmediately() {
+        const style = document.createElement('style');
+        style.textContent = `
+            .step-content h3 { color: #FFFFFF !important; font-weight: 600 !important; font-size: 14px !important; display: block !important; opacity: 1 !important; visibility: visible !important; }
+            .step-content p { color: rgba(255, 255, 255, 0.8) !important; display: block !important; opacity: 1 !important; visibility: visible !important; font-size: 11px !important; }
+            .step { background: rgba(255, 255, 255, 0.05) !important; }
+        `;
+        document.head.appendChild(style);
+        setTimeout(() => {
+            const steps = document.querySelectorAll('.step');
+            steps.forEach(step => {
+                const h3 = step.querySelector('h3'); if(h3){h3.style.color='#FFFFFF'; h3.style.fontWeight='600'; h3.style.display='block';}
+                const p = step.querySelector('p'); if(p){p.style.color='rgba(255, 255, 255, 0.8)'; p.style.display='block';}
+            });
+        }, 100);
+    })();
+    </script>
+
+</body>
+</html>

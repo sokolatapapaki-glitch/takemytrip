@@ -1,0 +1,1739 @@
+{
+  "city": "Λονδίνο",
+  "country": "Ηνωμένο Βασίλειο",
+  "currency": "GBP",
+  "emoji": "🇬🇧",
+  "pricing_model": "per_age",
+  "cityPass": {
+    "name": "Merlin Multi-Attraction Pass (2–4 Attractions)",
+    "description": "Συνδυαστικό εισιτήριο για 2 έως 4 δραστηριότητες της Merlin (London Eye, SEA LIFE, Madame Tussauds, Shrek's Adventure).",
+    "discountPercent": 35,
+    "applicableActivities": [
+      1,
+      29,
+      30,
+      31
+    ],
+    "url": "https://www.londoneye.com/tickets-and-prices/multi-attraction-tickets/",
+    "additionalInfo": [
+      {
+        "name": "London Pass",
+        "url": "https://www.londonpass.com/en?utm_source=chatgpt.com",
+        "note": "Πληροφοριακά, δεν αντικαθιστά το Merlin Pass"
+      },
+      {
+        "name": "Go City London Pass",
+        "url": "https://gocity.com/en/london/passes/explorer?utm_source=chatgpt.com",
+        "note": "Πληροφοριακά, δεν αντικαθιστά το Merlin Pass"
+      }
+    ]
+  },
+  "infoBoxes": [
+    {
+      "color": "turquoise",
+      "title": "🎭 Μουσικά υπερθεάματα στο Λονδίνο",
+      "body": "Αν βρεθείτε στο Λονδίνο, αξίζει να ζήσετε μια εμπειρία που δεν μοιάζει με καμία άλλη: τα παγκοσμίου φήμης musical της πόλης. Πρόκειται για ανεπανάληπτα υπερθεάματα.",
+      "links": [
+        {
+          "text": "The Lion King",
+          "url": "https://thelionking.co.uk"
+        },
+        {
+          "text": "Matilda the Musical",
+          "url": "https://uk.matildathemusical.com"
+        }
+      ],
+      "closingLine": "Ένα αληθινό υπερθέαμα που μετατρέπει το ταξίδι σας σε όνειρο."
+    }
+  ],
+  "activities": [
+    {
+      "id": 1,
+      "name": "London Eye",
+      "description": "Η γιγαντιαία ρόδα με πανοραμική θέα του Λονδίνου.Κατάλληλη για κάθε ηλικία",
+      "category": "attraction",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 34,
+        "6": 34,
+        "7": 34,
+        "8": 34,
+        "9": 34,
+        "10": 34,
+        "11": 34,
+        "12": 34,
+        "13": 34,
+        "14": 34,
+        "15": 34,
+        "16": 37,
+        "17": 37,
+        "adult": 37
+      },
+      "location": {
+        "lat": 51.5033,
+        "lng": -0.1195
+      },
+      "restaurant": {
+        "name": "Giraffe",
+        "description": "Είναι μια αλυσίδα με πολύ ζωντανή και χρωματιστή ατμόσφαιρα, σχεδιασμένη για να υποδέχεται οικογένειες με παιδιά. Μόλις 5 λεπτά απόσταση από την ρόδα",
+        "map_url": "https://maps.app.goo.gl/XLgpTe7V3sohSoaw8"
+      },
+      "restaurantType": "restaurant",
+      "restaurantDistance": 0,
+      "website": "https://www.londoneye.com/",
+      "notes": [
+        "Κράτηση online συχνά φθηνότερη."
+      ],
+      "tags": [
+        "wheel",
+        "view",
+        "landmark"
+      ],
+      "duration_hours": 1,
+      "best_time": "any",
+      "top": true,
+      "cafe": {
+        "name": "GAIL's Bakery Southbank",
+        "description": "Είναι η ιδανική επιλογή για οικογένειες. Φημίζεται για τον ποιοτικό καφέ του και είναι σε πολυ κοντινή απόσταση 3 λεπτών με τα πόδια.",
+        "map_url": "https://maps.app.goo.gl/o1br5hTqufX2HoQZ8"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Tower of London",
+      "description": "Ιστορικό κάστρο-φρούριο με τα εντυπωσιακά **Κοσμήματα του Στέμματος** και συναρπαστικές ιστορίες για φυλακισμένους και βασιλείς. Ιδανικά για ηλικίες 7+,  προσφέρει μια μοναδική εμπειρία ζωντανής ιστορίας μέσα από τις ξεναγήσεις των Beefeaters.",
+      "category": "castle",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 20,
+        "6": 20,
+        "7": 20,
+        "8": 20,
+        "9": 20,
+        "10": 20,
+        "11": 20,
+        "12": 20,
+        "13": 20,
+        "14": 20,
+        "15": 20,
+        "16": 41,
+        "17": 41,
+        "adult": 41
+      },
+      "location": {
+        "lat": 51.5081,
+        "lng": -0.0759
+      },
+      "restaurant": {
+        "name": "Coppa Club Tower Bridge",
+        "description": "Ακριβώς δίπλα στο ποτάμι με εκπληκτική θέα στη Tower Bridge.",
+        "map_url": "https://maps.app.goo.gl/vGSc2LeYRxL6Lak69"
+      },
+      "restaurantType": "cafe",
+      "restaurantDistance": 0,
+      "website": "https://www.hrp.org.uk/tower-of-london/",
+      "notes": [
+        "Δωρεάν για κάτω των 5.",
+        "Κράτηση απαιτείται."
+      ],
+      "tags": [
+        "castle",
+        "history",
+        "crown jewels"
+      ],
+      "top": true,
+      "duration_hours": 3,
+      "best_time": "morning",
+      "cafe": {
+        "name": "De Vine",
+        "description": "Μια παραδοσιακή και οικονομική επιλογή. Είναι ένα κλασικό cafe, σερβίρει πρωινό και μεσημεριανό. Έχει εξαιρετική βαθμολογία (5/5) για την ποιότητα και την εξυπηρέτησή του.",
+        "map_url": "https://maps.app.goo.gl/RciY8yLATMv3detB9"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Natural History Museum",
+      "description": "Δωρεάν μουσείο με δεινόσαυρους και φυσική ιστορία, κατάλληλο για κάθε ηλικία",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 51.4967,
+        "lng": -0.1764
+      },
+      "restaurant": {
+        "name": "T. Rex Restaurant",
+        "description": "Βurgers, σαλάτες και πίτσες ψημένες σε πέτρινο φούρνο. Εντός του Μουσείου",
+        "map_url": "https://maps.app.goo.gl/Af3CuWWAh3Z4GXUh9"
+      },
+      "restaurantType": "cafe",
+      "restaurantDistance": 0,
+      "website": "https://www.nhm.ac.uk/",
+      "notes": [
+        "ΔΩΡΕΑΝ είσοδος. Συνεισφορά προαιρετική."
+      ],
+      "tags": [
+        "museum",
+        "free",
+        "dinosaurs"
+      ],
+      "duration_hours": 2.5,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "EL&N London",
+        "description": "Είναι ένα από τα πιο Instagrammable καφέ του Λονδίνου με έντονο ροζ χρώμα και λουλουδένια διακόσμηση.",
+        "map_url": "https://maps.app.goo.gl/2AZ6gCEvjfR6L4yb9"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Warner Bros. Harry Potter Studio Tour",
+      "description": "Περιήγηση στα κινηματογραφικά στούντιο του Harry Potter.",
+      "category": "attraction",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 51,
+        "6": 51,
+        "7": 51,
+        "8": 51,
+        "9": 51,
+        "10": 51,
+        "11": 51,
+        "12": 51,
+        "13": 51,
+        "14": 51,
+        "15": 51,
+        "16": 63,
+        "17": 63,
+        "adult": 63
+      },
+      "location": {
+        "lat": 51.69,
+        "lng": -0.4187
+      },
+      "restaurant": {
+        "name": "The Food Hall",
+        "description": "Μεγάλος χώρος με ξύλινα τραπέζια που θυμίζει τη Μεγάλη Αίθουσα. Βρίσκεται εντός του studio",
+        "map_url": "https://maps.app.goo.gl/GGC2hgxGfW2PqDqv7"
+      },
+      "website": "https://www.wbstudiotour.co.uk/",
+      "notes": [
+        "Χωρίς μεταφορά.",
+        "Οικογενειακή έκπτωση 26€ (2 ενήλικες + 2 παιδιά).",
+        "Κράτηση απαραίτητη."
+      ],
+      "tags": [
+        "harry potter",
+        "movie",
+        "studio"
+      ],
+      "duration_hours": 3.5,
+      "best_time": "any",
+      "cafe": {
+        "name": "Chocolate Frog Café",
+        "description": "Kέικ, παγωτά και γλυκά εμπνευσμένα από τον κόσμο του Harry Potter.",
+        "map_url": "https://maps.app.goo.gl/qPQ88bByU81rCgkr5"
+      }
+    },
+    {
+      "id": 5,
+      "name": "ZSL London Zoo",
+      "description": "Ένας από τους παλαιότερους και ιστορικότερους ζωολογικούς κήπους  μέσα στο πανέμορφο Regetn's Park.",
+      "category": "zoo",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 26,
+        "6": 26,
+        "7": 26,
+        "8": 26,
+        "9": 26,
+        "10": 26,
+        "11": 26,
+        "12": 26,
+        "13": 26,
+        "14": 26,
+        "15": 26,
+        "16": 32,
+        "17": 32,
+        "adult": 32
+      },
+      "location": {
+        "lat": 51.5353,
+        "lng": -0.1534
+      },
+      "restaurant": {
+        "name": "Regent's Bar & Kitchen",
+        "description": "Μέσα στον χώρο. Από πίτσες έως burgers και καφέ",
+        "map_url": "https://maps.app.goo.gl/ZdDTZy21aT7CVBSK9"
+      },
+      "restaurantType": "restaurant",
+      "restaurantDistance": 0,
+      "website": "https://www.zsl.org/zsl-london-zoo",
+      "notes": [
+        "Τιμές Off-Peak. Peak: Παιδιά 30€, Ενήλικες 37€.",
+        "Κράτηση συνιστάται."
+      ],
+      "tags": [
+        "zoo",
+        "animals",
+        "family"
+      ],
+      "duration_hours": 4,
+      "best_time": "morning",
+      "cafe": {
+        "name": "The Waterside Café",
+        "description": "Δίπλα στη λίμνη. Έχει καφέ, γλυκά αλλά και ελαφριά γεύματα με υπέροχη θέα στο νερό.",
+        "map_url": "https://maps.app.goo.gl/bjTNZBpFS4GMSaV97"
+      }
+    },
+    {
+      "id": 6,
+      "name": "Royal Observatory Greenwich",
+      "description": "Το σημείο όπου ορίστηκε ο παγκόσμιος χρόνος (GMT) και ο Πρώτος Μεσημβρινός. Ιδανικό για κάθε ηλικία, με διαδραστικά εκθέματα και πλανητάριο και μια από τις καλύτερες παιδικές χαρές του Λονδίνου. Συνδυάζεται άψογα με το Ναυτικό Μουσείο",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 8,
+        "6": 8,
+        "7": 8,
+        "8": 8,
+        "9": 8,
+        "10": 8,
+        "11": 8,
+        "12": 8,
+        "13": 8,
+        "14": 8,
+        "15": 8,
+        "16": 16,
+        "17": 16,
+        "adult": 16
+      },
+      "location": {
+        "lat": 51.4769,
+        "lng": -0.0005
+      },
+      "restaurant": {
+        "name": "Bill's Greenwich Restaurant",
+        "description": "Απέχει περίπου 7-9 λεπτά με τα πόδια από το Βασιλικό Αστεροσκοπείο, κατηφορίζοντας τον λόφο προς το κέντρο της πόλης.Aπό τις πιο σίγουρες και αγαπημένες επιλογές για οικογένειες στην περιοχή.",
+        "map_url": "https://maps.app.goo.gl/kjkSZKS3wjr1pULp9"
+      },
+      "website": "https://www.rmg.co.uk/royal-observatory",
+      "notes": [
+        "Greenwich Park (έξω) είναι δωρεάν.",
+        "Εκτίμηση τιμών."
+      ],
+      "tags": [
+        "observatory",
+        "planetarium",
+        "history"
+      ],
+      "duration_hours": 2,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "Royal Teas",
+        "description": "Πολύ δημοφιλές , σε απόσταση περίπου 8-10 λεπτών με τα πόδια κατηφορίζοντας τον λόφο προς την πλευρά της πόλης.",
+        "map_url": "https://maps.app.goo.gl/jTjZGJQUkSasXcJHA"
+      }
+    },
+    {
+      "id": 7,
+      "name": "Postal Museum + Mail Rail",
+      "description": "Ένα από τα πιο πρωτότυπα μουσεία του Λονδίνου, με κορυφαία εμπειρία τη βόλτα με το Mail Rail, ένα μικροσκοπικό υπόγειο τρένο που διασχίζει τις παλιές σήραγγες μεταφοράς αλληλογραφίας.Ιδανικό για 1-12 ετών.",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 12.5,
+        "3": 12.5,
+        "4": 12.5,
+        "5": 12.5,
+        "6": 12.5,
+        "7": 12.5,
+        "8": 12.5,
+        "9": 12.5,
+        "10": 12.5,
+        "11": 12.5,
+        "12": 12.5,
+        "13": 12.5,
+        "14": 12.5,
+        "15": 12.5,
+        "16": 14.5,
+        "17": 14.5,
+        "18": 14.5,
+        "19": 14.5,
+        "20": 14.5,
+        "21": 14.5,
+        "22": 14.5,
+        "23": 14.5,
+        "24": 14.5,
+        "adult": 21
+      },
+      "location": {
+        "lat": 51.5291,
+        "lng": -0.1213
+      },
+      "restaurant": {
+        "name": "Luce e Limoni - Italian (Sicilian) Restaurant",
+        "description": "Μια από τις πιο αγαπημένες ιταλικές τρατορίες της περιοχής.",
+        "map_url": "https://maps.app.goo.gl/hJw6PcjWAgLwxqtr5"
+      },
+      "website": "https://www.postalmuseum.org/",
+      "notes": [
+        "⚠️ Η τιμή 'adult' (21€) ισχύει για επισκέπτες 25 ετών και άνω.",
+        "Επισκέπτες 16-24 ετών: 14.5€."
+      ],
+      "tags": [
+        "interactive",
+        "train",
+        "history"
+      ],
+      "duration_hours": 2,
+      "best_time": "any",
+      "cafe": {
+        "name": "Mouse Tail Coffee Farringdon",
+        "description": "Μόλις 1-2 λεπτά με τα πόδια από το μουσείο. Είναι ένα εξαιρετικό specialty coffee shop με πολύ καλή βαθμολογία (4.5/5).",
+        "map_url": "https://maps.app.goo.gl/rJRGXvDw6MJ6J7Gm7"
+      }
+    },
+    {
+      "id": 8,
+      "name": "Horniman Museum – Ενυδρείο",
+      "description": "Ενυδρείο στο Horniman Museum με τέλειο μέγεθος για παιδιά που κουράζονται εύκολα. Συνδυάζεται με το Animal Walk που είναι δωρεάν και έχει αλπακά, κατσίκες και πρόβατα.Ιδανικό και για πολύ μικρά παιδιά",
+      "category": "aquarium",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 5,
+        "4": 5,
+        "5": 5,
+        "6": 5,
+        "7": 5,
+        "8": 5,
+        "9": 5,
+        "10": 5,
+        "11": 5,
+        "12": 5,
+        "13": 5,
+        "14": 5,
+        "15": 5,
+        "16": 6,
+        "17": 6,
+        "adult": 6
+      },
+      "location": {
+        "lat": 51.4403,
+        "lng": -0.0618
+      },
+      "restaurant": {
+         "name": "Horniman Museum Cafe",
+        "description": "Βρίσκεται μέσα στο πάρκο του μουσείου, σε ένα κτίριο με μεγάλες τζαμαρίες για ωραία θέα στους κήπους.Έχει καφέ, γλυκά, σνακ και φαγητό",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Horniman+Museum+Cafe"
+      },
+      "website": "https://www.horniman.ac.uk/event/aquarium/",
+      "notes": [
+        "Μόνο το ενυδρείο είναι πληρωτέο.",
+        "Το μουσείο & οι κήποι είναι ΔΩΡΕΑΝ.",
+        "Εκτίμηση τιμών."
+      ],
+      "tags": [
+        "aquarium",
+        "museum",
+        "garden"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "Horniman Museum Cafe",
+        "description": "Βρίσκεται μέσα στο πάρκο του μουσείου, σε ένα κτίριο με μεγάλες τζαμαρίες για ωραία θέα στους κήπους.Έχει καφέ, γλυκά, σνακ και φαγητό",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Horniman+Museum+Cafe"
+      }
+    },
+    {
+      "id": 9,
+      "name": "Science Museum",
+      "description": "Τεράστιος χώρος με ιστορικά αντικείμενα (ατμομηχανή, κάψουλα Apollo 10, ), χώρο για πειράματα και το IMAX Cinema, μια τεράστια οθόνη με εντυπωσιακές προβολές.",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 51.4975,
+        "lng": -0.1747
+      },
+      "restaurant": {
+        "name": "Energy Cafe",
+        "description": "Βρίσκεται ακριβώς δίπλα στο Science Museum και είναι πολύ καλό για κάτι γρήγορο και οικονομικό.",
+        "map_url": "https://maps.app.goo.gl/GYWwPgsoLQoYpADg7"
+      },
+      "website": "https://www.sciencemuseum.org.uk/",
+      "notes": [
+        "ΔΩΡΕΑΝ είσοδος. Συνεισφορά προαιρετική."
+      ],
+      "tags": [
+        "museum",
+        "free",
+        "science",
+        "interactive"
+      ],
+      "duration_hours": 3,
+      "best_time": "afternoon",
+      "cafe": {
+         "name": "Energy Cafe",
+        "description": "Βρίσκεται ακριβώς δίπλα στο Science Museum και είναι πολύ καλό για κάτι γρήγορο και οικονομικό.",
+        "map_url": "https://maps.app.goo.gl/GYWwPgsoLQoYpADg7"
+      }
+    },
+    {
+      "id": 10,
+      "name": "British Museum",
+      "description": "Επιβλητικό μουσείο για ταξίδι στους πολιτισμούς όλης της γης μέσα από την τέχνη και την αρχαιολογία.Ιδανικό από 6 ετών και πάνω",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 51.5194,
+        "lng": -0.1269
+      },
+      "restaurant": {
+        "name": "Great Court Restaurant",
+        "description": "Εντός του μουσείου. Έχει ευρωπαϊκή κουζίνα και τσάι ακριβώς κάτω από την περίφημη γυάλινη οροφή.",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=British+Museum+Great+Court+Restaurant"
+      },
+      "restaurantType": "restaurant",
+      "restaurantDistance": 0,
+      "website": "https://www.britishmuseum.org/",
+      "notes": [
+        "ΔΩΡΕΑΝ είσοδος. Συνεισφορά προαιρετική."
+      ],
+      "tags": [
+        "museum",
+        "free",
+        "history",
+        "art"
+      ],
+      "top": true,
+      "duration_hours": 4,
+      "best_time": "morning",
+      "cafe": {
+        "name": "Museum Street Cafe",
+        "description": "Ένα από τα πιο κοντινά και κλασικά καφέ ακριβώς απέναντι από την κεντρική πύλη.",
+        "map_url": "https://maps.app.goo.gl/V75PMd93rpzkowgd7"
+      }
+    },
+    {
+      "id": 11,
+      "name": "Tate Modern",
+      "description": "Το κορυφαίο μουσείο μοντέρνας τέχνης με εντυπωσιακά έργα όπως Πικάσο, Νταλί, την τεράστια αίθουσα Turbine Hall για υπερμεγέθη εκθέματα και πανοραμική θέα στον Τάμεση.Ιδανικό για εφήβους και παιδιά 5-12 ετών.",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 51.5076,
+        "lng": -0.0994
+      },
+      "restaurant": {
+        "name": "The Corner at Tate Modern",
+        "description": "Ένα υπέροχο καφέ/εστιατόριο στο ισόγειο που σερβίρει από καφέ μέχρι πλήρη γεύματα.",
+        "map_url": "https://maps.app.goo.gl/84m8kdR3kFyqUBY49"
+      },
+      "website": "https://www.tate.org.uk/visit/tate-modern",
+      "notes": [
+        "ΔΩΡΕΑΝ είσοδος στις μόνιμες συλλογές.",
+        "Ορισμένες ειδικές εκθέσεις έχουν χρέωση."
+      ],
+      "tags": [
+        "museum",
+        "free",
+        "modern art"
+      ],
+      "duration_hours": 2.5,
+      "best_time": "afternoon",
+      "cafe": {
+         "name": "The Corner at Tate Modern",
+        "description": "Ένα υπέροχο καφέ/εστιατόριο στο ισόγειο που σερβίρει από καφέ μέχρι πλήρη γεύματα.",
+        "map_url": "https://maps.app.goo.gl/84m8kdR3kFyqUBY49"
+      }
+    },
+    {
+      "id": 12,
+      "name": "Museum of London Docklands",
+      "description": "'Ενα εξαιρετικό μουσείο για την ιστορία του  Τάμεση και των αποβαθρών του Λονδίνου, σε μια παλιά αποθήκη 200 ετών.Ιδανικό από 0 ετών λόγω του Mudlarks, έναν υπέροχο διαδραστικό χώρο για τα πολύ μικρά παιδιά.",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 51.5071,
+        "lng": -0.0236
+      },
+      "restaurant": {
+        "name": "Browns West India Quay",
+        "description": "Κλασική βρετανική μπρασερί με πλούσιο μενού για πρωινό και brunch ή καφέ",
+        "map_url": "https://maps.app.goo.gl/v6uiATMWzMBshZXA6"
+      },
+      "website": "https://www.museumoflondon.org.uk/museum-london-docklands",
+      "notes": [
+        "ΔΩΡΕΑΝ είσοδος."
+      ],
+      "tags": [
+        "museum",
+        "free",
+        "history",
+        "docklands"
+      ],
+      "duration_hours": 2,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "Museum Cafe",
+        "description": "Βρίσκεται εντός του μουσείου, η πιο βολική επιλογή.",
+        "map_url": "https://maps.app.goo.gl/Mo129km6Su4QmmvJA"
+      }
+    },
+    {
+      "id": 13,
+      "name": "Regent's Park",
+      "description": "Ένα από τα πιο όμορφα Βασιλικά Πάρκα του Λονδίνου. Ξεχωρίζει για τα Queen Mary’s Gardens με 12.000 τριαντάφυλλα και για το London Zoo, τον παλαιότερο επιστημονικό ζωολογικό κήπο στον κόσμο.",
+      "category": "park",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 51.5311,
+        "lng": -0.1566
+      },
+      "restaurant": {
+       "name": "The Waterside Café",
+        "description": "Kοντά στην είσοδο Hanover Gate, με χαρακτηριστική θέα στη λίμνη με τις βάρκες (Boating Lake).",
+        "map_url": "https://maps.app.goo.gl/Yqncu9yHQ15E2EEt6"
+      },
+      "website": "https://www.royalparks.org.uk/parks/the-regents-park",
+      "notes": [
+        "ΔΩΡΕΑΝ είσοδος."
+      ],
+      "tags": [
+        "park",
+        "free",
+        "garden"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "The Waterside Café",
+        "description": "Kοντά στην είσοδο Hanover Gate, με χαρακτηριστική θέα στη λίμνη με τις βάρκες (Boating Lake).",
+        "map_url": "https://maps.app.goo.gl/Yqncu9yHQ15E2EEt6"
+      }
+    },
+    {
+      "id": 14,
+      "name": "Sky Garden",
+      "description": "Δωρεάν κήπος σε ουρανοξύστη με πανοραμική θέα (απαιτείται κράτηση).",
+      "category": "viewpoint",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 51.5115,
+        "lng": -0.0841
+      },
+      "restaurant": {
+        "name": "Blacklock City",
+        "description": "Είναι ένας υπόγειος χώρος σε ένα παλιό κελάρι που ειδικεύεται στα chops (παϊδάκια/μπριζολάκια) ψημένα στα κάρβουνα. ",
+        "map_url": "https://maps.app.goo.gl/VMChM5n1aDztrc5i7"
+      },
+      "website": "https://skygarden.london/",
+      "notes": [
+        "ΔΩΡΕΑΝ, αλλά απαιτείται ΚΡΑΤΗΣΗ online."
+      ],
+      "tags": [
+        "view",
+        "free",
+        "garden",
+        "skyscraper"
+      ],
+      "top": true,
+      "duration_hours": 1,
+      "best_time": "any",
+      "cafe": {
+        "name": "Sky Pod Bar",
+        "description": "Είναι το ιδανικό μέρος αν θέλετε να απολαύσετε έναν καφέ με την εντυπωσιακή πανοραμική θέα του Λονδίνου",
+        "map_url": "https://maps.app.goo.gl/bidxnhAxH1kARYL36"
+      }
+    },
+    {
+      "id": 15,
+      "name": "Borough Market",
+      "description": "Η πιο διάσημη και ιστορική αγορά τροφίμων του Λονδίνου. Έχει τεράστια ποικιλία από φρέσκα προϊόντα από όλο τον κόσμο, αλλά και εξαιρετικό street food.",
+      "category": "market",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 51.5056,
+        "lng": -0.0912
+      },
+      "restaurant": {
+        "name": "Πολλά street food stalls",
+        "description": "",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Borough+Market+Food+Stalls"
+      },
+      "website": "https://boroughmarket.org.uk/",
+      "notes": [
+        "ΔΩΡΕΑΝ είσοδος."
+      ],
+      "tags": [
+        "market",
+        "free",
+        "food"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "morning",
+      "cafe": {
+        "name": "Monmouth Coffee Company",
+        "description": "Eίναι η πιο κοντινή επιλογή (λιγότερο από 1 λεπτό). Είναι θρυλικό σημείο για καφέ, αν και συνήθως έχει ουρά.",
+        "map_url": "https://maps.app.goo.gl/nxoyhzkrSgTcpT4t9"
+      }
+    },
+    {
+      "id": 17,
+      "name": "Richmond Park",
+      "description": "Το μεγαλύτερο Βασιλικό Πάρκο του Λονδίνου, γνωστό για τα ελεύθερα ελάφια.",
+      "category": "park",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 51.4498,
+        "lng": -0.2802
+      },
+      "restaurant": {
+        "name": "Bill's Richmond Restaurant",
+        "description": "Από πρωινό, μεσημεριανό, τσάι έως δείπνο. Βρίσκεται πολύ κοντά στην πύλη εξόδου",
+        "map_url": "https://maps.app.goo.gl/taWPqEqQjkpqTXk46"
+      },
+      "website": "https://www.royalparks.org.uk/parks/richmond-park",
+      "notes": [
+        "ΔΩΡΕΑΝ.",
+        "Προσοχή στα ελάφια!."
+      ],
+      "tags": [
+        "park",
+        "free",
+        "deer",
+        "nature"
+      ],
+      "duration_hours": 2.5,
+      "best_time": "morning",
+      "cafe": {
+        "name": "Long Black Richmond",
+        "description": "Βρίσκεται πολύ κοντά στην πύλη Richmond Gate και έχει πολυ υψηλή βαθμολογία",
+        "map_url": "https://maps.app.goo.gl/vBMjfrcRZQt8HdEZ7"
+      }
+    },
+    {
+      "id": 18,
+      "name": "Kyoto Garden (Holland Park)",
+      "description": "Ένα από τα πιο κρυμμένα διαμάντια, ένας παραδοσιακός ιαπωνικός κήπος  Είναι σχεδόν βέβαιο ότι θα συναντήσετε παγώνια .",
+      "category": "park",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 51.5017,
+        "lng": -0.2045
+      },
+      "restaurant": {
+        "name": "Daisy Green at Holland Park",
+        "description": "καφέ ή brunch ακριβώς μέσα στο πάρκο",
+        "map_url": "https://maps.app.goo.gl/nkCMr96BHpTxL2WW9"
+      },
+      "website": "https://www.tripadvisor.com/Attraction_Review-g186338-d7379922-Reviews-Kyoto_Garden-London_England.html",
+      "notes": [
+        "ΔΩΡΕΑΝ.",
+        "Μέρος του Holland Park."
+      ],
+      "tags": [
+        "park",
+        "free",
+        "japanese garden",
+        "peaceful"
+      ],
+      "duration_hours": 0.75,
+      "best_time": "any",
+      "cafe": {
+        "name": "Daisy Green at Holland Park",
+        "description": "καφέ ή brunch ακριβώς μέσα στο πάρκο",
+        "map_url": "https://maps.app.goo.gl/nkCMr96BHpTxL2WW9"
+      }
+    },
+    {
+      "id": 19,
+      "name": "St Dunstan in the East",
+      "description":  "Τα ερείπια της εκκλησίας που βομβαρδίστηκε έχουν καταληφθεί από αναρριχητικά φυτά και το σκηνικό μοιάζει από ταινία  Harry Potter. Ιδανική στάση μετά το Tower of London ή το Sky Garden. ",
+      "category": "park",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 51.5106,
+        "lng": -0.0806
+      },
+      "restaurant": {
+        "name": "HAZ Plantation Place",
+        "description": "Το πιο κοντινό (3 λεπτά). Ιδανικό για τουρκική κουζίνα και πολύ γρήγορη πρόσβαση.",
+        "map_url": "https://maps.app.goo.gl/tZYs1vwpui7PTE216"
+      },
+      "website": "https://www.tripadvisor.com/Attraction_Review-g186338-d5998784-Reviews-St_Dunstan_In_The_East-London_England.html",
+      "notes": [
+        "ΔΩΡΕΑΝ.",
+        "Ιδανικό για μια σύντομη ξεκούραση από την πόλη."
+      ],
+      "tags": [
+        "park",
+        "free",
+        "garden",
+        "ruins",
+        "hidden gem"
+      ],
+      "duration_hours": 0.5,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "Byward Kitchen and Bar",
+        "description": "Λειτουργεί και ως εστιατόριο με κλασικό βρετανικό μενού, αλλά και ως καφέ.",
+        "map_url": "https://maps.app.goo.gl/BhvcSEjLUV3cncdTA"
+      }
+    },
+    {
+      "id": 20,
+      "name": "Little Venice",
+      "description": "Γραφική περιοχή όπου συναντούνται δύο κανάλια, γεμάτη με πλοιάρια και καφέ.",
+      "category": "area",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 51.5232,
+        "lng": -0.1837
+      },
+      "restaurant": {
+        "name": "The Waterway",
+        "description": "Η μεγάλη του βεράντα δίπλα στο κανάλι είναι ένα από τα πιο δημοφιλή σημεία της περιοχής",
+        "map_url": "https://maps.app.goo.gl/uqb78XpS66enfHkSA"
+      },
+      "website": "https://www.tripadvisor.com/Attraction_Review-g186338-d189033-Reviews-Little_Venice-London_England.html",
+      "notes": [
+        "ΔΩΡΕΑΝ βόλτα.",
+        "Σημείο αναχώρησης για βόλτες με βαρκάδα προς το Camden."
+      ],
+      "tags": [
+        "canal",
+        "free",
+        "walk",
+        "picturesque"
+      ],
+      "duration_hours": 1,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "Waterside Cafe",
+        "description": "Eμβληματικό καφέ που στεγάζεται πάνω σε μια παραδοσιακή πλωτή μαούνα",
+        "map_url": "https://maps.app.goo.gl/AYLKQnnaFKkrD2U68"
+      }
+    },
+    {
+      "id": 21,
+      "name": "Mudchute Park & Farm",
+      "description": "Ένα κοινοτικό πάρκο και αγρόκτημα με πάνω από 100 ζώα, συμπεριλαμβανομένων σπάνιων φυλών, αλόγων, πόνι, προβάτων και γουρουνιών. Ιδανικό για κάθε ηλικία. ",
+      "category": "park",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 51.4911,
+        "lng": -0.0114
+      },
+      "restaurant": {
+        "name": "The Old Millwall Fire Station Restaurant",
+        "description": "Σε παλιό πυροσβεστικό σταθμό με τουρκική κουζίνα και εξαιρετικές κριτικές.",
+        "map_url": "https://maps.app.goo.gl/UuDZtKHrjUocwvx17"
+      },
+      "website": "https://www.mudchute.org/",
+      "notes": [
+        "ΔΩΡΕΑΝ.",
+        "Επαφή με φάρμα και χωράφι στην καρδιά του Λονδίνου."
+      ],
+      "tags": [
+        "park",
+        "free",
+        "farm",
+        "animals",
+        "family"
+      ],
+      "duration_hours": 2,
+      "best_time": "morning",
+      "cafe": {
+        "name": "Cafe No 92",
+        "description": "Ένα μοντέρνο τοπικό καφέ με γλυκά και ελαφριά γεύματα. Απέχει ελάχιστα λεπτά με τα πόδια.",
+        "map_url": "https://maps.app.goo.gl/7tQ5oFGN2EGDyxxA8"
+      }
+    },
+    {
+      "id": 22,
+      "name": "Coram's Fields",
+      "description": "Παιδικές χαρές, φάρμες και παιχνίδια στο νερό..Ένας τεράστιος χώρος προσβάσιμος μόνο σε ενήλικες που συνοδεύουν παιδιά. Μόλις 10 λεπτά περπάτημα απο το Βρετανικό Μουσείο",
+      "category": "park",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 51.5244,
+        "lng": -0.1203
+      },
+      "restaurant": {
+        "name": "Brunswick Centre Cafes",
+        "description": "Μόλις 5 λεπτά με τα πόδια βρίσκεται το Brunswick Centre, ένα ανοιχτό εμπορικό κέντρο με πολλές επιλογές για φαγητό και καφέ ή σούπερ μάρκετ για εφοδιασμό πικ-νικ! ",
+        "map_url": "https://maps.app.goo.gl/KxQsH4tDL9aiK5fCA"
+      },
+      "website": "https://www.coramsfields.org/",
+      "notes": [
+        "ΔΩΡΕΑΝ.",
+        "Είσοδος ΜΟΝΟ για ενήλικες που συνοδεύουν παιδί/παιδιά."
+      ],
+      "tags": [
+        "park",
+        "free",
+        "playground",
+        "family",
+        "children only"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "Brunswick Centre Cafes",
+        "description": "Μόλις 5 λεπτά με τα πόδια βρίσκεται το Brunswick Centre, ένα ανοιχτό εμπορικό κέντρο με πολλές επιλογές για φαγητό και καφέ ή σούπερ μάρκετ για εφοδιασμό πικ-νικ! ",
+        "map_url": "https://maps.app.goo.gl/KxQsH4tDL9aiK5fCA"
+      }
+    },
+    {
+      "id": 23,
+      "name": "Camden Market",
+      "description": "Αγορά με άπειρα πρατήρια ρούχων, παράξενα αντικείμενα και street food.Μπορείτε από το Little Venice να φτάσετε στο Camden Market με κρουαζιέρα ",
+      "category": "market",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 51.5419,
+        "lng": -0.1468
+      },
+      "restaurant": {
+        "name": "Andy’s Greek Taverna",
+        "description": "Μια ιστορική και πολύ αγαπημένη ελληνική ταβέρνα (από το 1967) αν σας λείψει το σπιτικό φαγητό.",
+        "map_url": "https://maps.app.goo.gl/yfmxpaRtXnC8gtyo9"
+      },
+      "website": "https://www.camdenmarket.com/",
+      "notes": [
+        "ΔΩΡΕΑΝ είσοδος.",
+        "Πολυσύχναστη, ιδιαίτερα το Σαββατοκύριακο."
+      ],
+      "tags": [
+        "market",
+        "free",
+        "food",
+        "alternative",
+        "shopping"
+      ],
+      "duration_hours": 2.5,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "Hans & Gretel",
+        "description": "Ένα πραγματικά παραμυθένιο γλυκοπωλείο γεμάτο με γιγάντια γλειφιτζούρια, κρεμαστά ζαχαρωτά, μαγικά δέντρα και μια ιπτάμενη μάγισσα. ",
+        "map_url": "https://maps.app.goo.gl/zRwAQ94CBsc6LcNn6"
+      }
+    },
+    {
+      "id": 24,
+      "name": "Chinatown",
+      "description": "Πολύχρωμες πύλες, κρεμαστά φανάρια και εκατοντάδες εστιατόρια για αυθεντικές γεύσεις από την Ασία.",
+      "category": "area",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 51.5113,
+        "lng": -0.1304
+      },
+      "restaurant": {
+        "name": "Misato",
+        "description": "Ιαπωνέζικο εστιατόριο, θρυλικό για τις τεράστιες μερίδες και τις χαμηλές τιμές.Πολλές επιλογές για απλά πιάτα για τα παιδιά",
+        "map_url": "https://maps.app.goo.gl/54RxumajzyuSYYUQ7"
+      },
+      "website": "https://chinatown.co.uk/en/",
+      "notes": [
+        "ΔΩΡΕΑΝ βόλτα.",
+        "Ιδιαίτερα ζωντανή κατά τις βραδινές ώρες και για το Κινέζικο Νέο Έτος."
+      ],
+      "tags": [
+        "area",
+        "free",
+        "chinese",
+        "food",
+        "walk"
+      ],
+      "duration_hours": 1,
+      "best_time": "evening",
+      "cafe": {
+        "name": "Bubblewrap Dessert Shop Chinatown",
+        "description": "Εδώ η βάφλα έχει σχήμα με φυσαλίδες και γεμίζει με παγωτό,  φρούτα, σοκολάτες, μπισκότα και διάφορα σιρόπια.",
+        "map_url": "https://maps.app.goo.gl/3sjTpjJvP6jNYwZ76"
+      }
+    },
+    {
+      "id": 25,
+      "name": "God's Own Junkyard",
+      "description": "Mια τεράστια συλλογή από neon επιγραφές, vintage πινακίδες, ντίσκο μπάλες και κινηματογραφικά σκηνικά. Kατάλληλο για κάθε ηλικία. Προσοχή, ανοιχτό μόνο Παρ.-Σάβ.-Κυρ.  ",
+      "category": "exhibition",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 51.585,
+        "lng": -0.0047
+      },
+      "restaurant": {
+        "name": "Pillars Brewery- East London Lager",
+        "description": " Zυθοποιία με εξαιρετική πίτσα σε ξυλόφουρνο. Τα Σαββατοκύριακα η αυλή γεμίζει με κόσμο και οικογένειες",
+        "map_url": "https://maps.app.goo.gl/cfJyDMqgTKpAaqfx5"
+      },
+      "website": "https://www.godsownjunkyard.co.uk/",
+      "notes": [
+        "ΔΩΡΕΑΝ.",
+        "Απαγορεύεται η εμπορική φωτογραφία.",
+        "Καλύτερα να ελέγξετε ώρες λειτουργίας."
+      ],
+      "tags": [
+        "exhibition",
+        "free",
+        "neon",
+        "art",
+        "unique"
+      ],
+      "duration_hours": 1,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "HAVEN Coffee",
+        "description": "Για καφέ σε μια από τις πιο χωριάτικες γειτονιές, στο Walthamstow Village (10–12 λεπτά περπάτημα) στο HAVEN Coffee. Εξαιρετικός καφές με κοινωνικό σκοπό, αφού υποστηρίζουν πρόσφυγες.",
+        "map_url": "https://maps.app.goo.gl/JorJejidMt1wXMBv5"
+      }
+    },
+    {
+      "id": 26,
+      "name": "Diana Memorial Playground",
+      "description": "Μεγάλος, μαγικός χώρος παιχνιδιών με πειρατικό πλοίο ως κεντρικό στοιχείο, αφιερωμένος στη πριγκίπισσα Νταϊάνα. Προσωρινά κλειστά, ενημερωθείτε απο την ιστοσελίδα",
+      "category": "park",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 51.5094,
+        "lng": -0.1874
+      },
+      "restaurant": {
+        "name": "Jacuzzi",
+        "description": "Ένα εντυπωσιακό ιταλικό εστιατόριο στην Kensington High Street με πολύ ωραία ατμόσφαιρα. Είναι λίγο πιο μακριά (15 λεπτά με τα πόδια) αλλά είναι πραγματικά ξεχωριστό ",
+        "map_url": "https://maps.app.goo.gl/7C3yiXWGwFpr1t1E9"
+      },
+      "website": "https://www.royalparks.org.uk/visit/parks/kensington-gardens/diana-memorial-playground",
+      "notes": [
+        "ΔΩΡΕΑΝ.",
+        "Συχνά υπάρχει ουρά για είσοδο.",
+        "Είσοδος ΜΟΝΟ για ενήλικες που συνοδεύουν παιδί/παιδιά."
+      ],
+      "tags": [
+        "park",
+        "free",
+        "playground",
+        "family",
+        "children only"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "morning",
+      "cafe": {
+        "name": "Cafe Diana",
+        "description": "Βρίσκεται ακριβώς απέναντι από την πύλη (Black Lion Gate), λιγότερο από 2 λεπτά περπάτημα. Kαφέ αφιερωμένο στην Πριγκίπισσα Νταϊάνα, γνωστό για το πρωινό του και τα κεμπάπ του.",
+        "map_url": "https://maps.app.goo.gl/RgnLUGAbYCeNXS2Z9"
+      }
+    },
+    {
+      "id": 27,
+      "name": "Hamleys Toy Store",
+      "description": "Το παλαιότερο και μεγαλύτερο (7οροφο) παιχνιδάδικο του κόσμου.Σε κάθε γωνιά υπάρχουν υπάλληλοι που παίζουν με τα παιχνίδια, πετούν drones, φτιάχνουν τεράστιες σαπουνόφουσκες ή δείχνουν μαγικά κόλπα.",
+      "category": "shop",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 51.5147,
+        "lng": -0.1405
+      },
+      "restaurant": {
+        "name": "Pizza Pilgrims",
+        "description": "Τέλεια επιλογή για οικογένειες.Αυθεντική ναπολιτάνικη πίτσα σε πολύ καλές τιμές σε απόσταση 3-4 λεπτά με τα πόδια",
+        "map_url": "https://maps.app.goo.gl/Y2p7tVAuZpRwpKvVA"
+      },
+      "website": "https://www.hamleys.com/",
+      "notes": [
+        "ΔΩΡΕΑΝ είσοδος.",
+        "Εμπειρία περιήγησης και παιχνιδιού, όχι απλά ψώνια.",
+        "Πολυσύχναστο, ιδιαίτερα το Σαββατοκύριακο."
+      ],
+      "tags": [
+        "shop",
+        "free",
+        "toys",
+        "family",
+        "landmark"
+      ],
+      "duration_hours": 1,
+      "best_time": "morning",
+      "cafe": {
+        "name": "Hagen Espresso Bar (Hagen Mayfair)",
+        "description": "Δανέζικο espresso bar με πολύ προσεγμένο design και έμφαση στην ποιότητα του καφέ.",
+        "map_url": "https://maps.app.goo.gl/C4ryUQPwTjGc155Q8"
+      }
+    },
+    {
+      "id": 28,
+      "name": "Horniman Museum (Main Collections)",
+      "description": "Μουσείο με εκθέσεις φυσικής ιστορίας, ανθρωπολογίας και μουσικών οργάνων και υπέροχους κήπους.Ιδανικό για παιδιά από 0 ετών, με πολλά διαδραστικά και στο ύψος τους εκθέματα.",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 51.4403,
+        "lng": -0.0618
+      },
+      "restaurant": {
+        "name": "Horniman Museum Cafe",
+        "description": "Μέσα στο πάρκο του μουσείου, σε ένα κτίριο με μεγάλες τζαμαρίες για θέα στους κήπους.Έχει καφέ, γλυκά, σνακ και φαγητό",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Horniman+Museum+Cafe"
+      },
+      "website": "https://www.horniman.ac.uk/",
+      "notes": [
+        "ΔΩΡΕΑΝ για τις κύριες συλλογές.",
+        "Το Ενυδρείο είναι ξεχωριστή πληρωμένη είσοδος.",
+        "Οι κήποι είναι επίσης δωρεάν."
+      ],
+      "tags": [
+        "museum",
+        "free",
+        "gardens",
+        "view",
+        "anthropology"
+      ],
+      "duration_hours": 2,
+      "best_time": "afternoon",
+      "cafe": {
+       "name": "Horniman Museum Cafe",
+        "description": "Μέσα στο πάρκο του μουσείου, σε ένα κτίριο με μεγάλες τζαμαρίες για θέα στους κήπους.Έχει καφέ, γλυκά, σνακ και φαγητόό",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Horniman+Museum+Cafe"
+      }
+    },
+    {
+      "id": 29,
+      "name": "Madame Tussauds London",
+      "description": "Μουσείο κέρινων αγαλμάτων με 150+ διασημότητες και διαδραστικές ζώνες.",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 35,
+        "6": 35,
+        "7": 35,
+        "8": 35,
+        "9": 35,
+        "10": 35,
+        "11": 35,
+        "12": 35,
+        "13": 35,
+        "14": 35,
+        "15": 35,
+        "16": 40,
+        "17": 40,
+        "adult": 40
+      },
+      "location": {
+        "lat": 51.5231,
+        "lng": -0.1544
+      },
+      "restaurant": {
+        "name": "Bill's Baker Street Restaurant",
+        "description": "Μοντέρνα ευρωπαϊκή αλυσίδα που έχει τα πάντα, από burgers και σαλάτες μέχρι πρωινό και απογευματινό τσάι.",
+        "map_url": "https://maps.app.goo.gl/B9cZQCcpffTAkDhr8"
+      },
+      "website": "https://www.madametussauds.com/london/",
+      "notes": [
+        "Συχνά περιλαμβάνεται σε Combo Passes."
+      ],
+      "tags": [
+        "wax",
+        "museum",
+        "celebrities"
+      ],
+      "top": true,
+      "duration_hours": 2,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "The Marylebone Corner",
+        "description": "Ένα εξαιρετικό καφέ (βαθμολογία 4.7) που βρίσκεται περίπου 5 λεπτά με τα πόδια από το μουσείο",
+        "map_url": "https://maps.app.goo.gl/2ssQEpzJX97RfghQ6"
+      }
+    },
+    {
+      "id": 30,
+      "name": "SEA LIFE London Aquarium",
+      "description": "Ενυδρείο στο South Bank με πάνω από 500 είδη θαλάσσιας ζωής. Κατάλληλο για όλες τις ηλικίες",
+      "category": "aquarium",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 25,
+        "6": 25,
+        "7": 25,
+        "8": 25,
+        "9": 25,
+        "10": 25,
+        "11": 25,
+        "12": 25,
+        "13": 25,
+        "14": 25,
+        "15": 25,
+        "16": 30,
+        "17": 30,
+        "adult": 30
+      },
+      "location": {
+        "lat": 51.5023,
+        "lng": -0.1192
+      },
+      "restaurant": {
+        "name": "Giraffe",
+        "description": "Μια αλυσίδα με πολύ ζωντανή και χρωματιστή ατμόσφαιρα, σχεδιασμένη για να υποδέχεται οικογένειες με παιδιά. Μόλις 5 λεπτά απόσταση από την ρόδα",
+        "map_url": "https://maps.app.goo.gl/XLgpTe7V3sohSoaw8"
+      },
+      "website": "https://www.visitsealife.com/london/",
+      "notes": [
+        "Συχνά περιλαμβάνεται σε Combo Passes."
+      ],
+      "tags": [
+        "aquarium",
+        "fish",
+        "family"
+      ],
+      "top": true,
+      "duration_hours": 1.5,
+      "best_time": "any",
+      "cafe": {
+        "name": "GAIL's Bakery Southbank",
+        "description": "Ιδανική επιλογή για οικογένειες με ποιοτικό καφέ σε απόσταση 3 λεπτών με τα πόδια.",
+        "map_url": "https://maps.app.goo.gl/o1br5hTqufX2HoQZ8"
+      }
+    },
+    {
+      "id": 31,
+      "name": "Shrek's Adventure London",
+      "description": "Διαδραστική περιπέτεια. Ξεκινά με μια εντυπωσιακή βόλτα σε ένα ιπτάμενο λεωφορείο 4D με οδηγό τον Γάιδαρο. Ιδανικό για ηλικίες 6-12, κατάλληλο απο 3 και πάνω. ",
+      "category": "attraction",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 28,
+        "6": 28,
+        "7": 28,
+        "8": 28,
+        "9": 28,
+        "10": 28,
+        "11": 28,
+        "12": 28,
+        "13": 28,
+        "14": 28,
+        "15": 28,
+        "16": 32,
+        "17": 32,
+        "adult": 32
+      },
+      "location": {
+        "lat": 51.5029,
+        "lng": -0.1193
+      },
+      "restaurant": {
+        "name": "Troia Southbank",
+        "description": "Το πιο κοντινό, στα 300 μέτρα, με πολύ υψηλή βαθμολογία",
+        "map_url": "https://maps.app.goo.gl/HAJGTUaSra43KKeNA"
+      },
+      "website": "https://www.shreksadventure.com/",
+      "notes": [
+        "περιλαμβάνεται σε Combo Passes."
+      ],
+      "tags": [
+        "shrek",
+        "interactive",
+        "family",
+        "adventure"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "any",
+      "cafe": {
+        "name": "Maries Thai Cafe",
+        "description": "(Περίπου 10 λεπτά περπάτημα) Το Maries είναι θρυλικό στην περιοχή για τις πολύ χαμηλές του τιμές.Από καφέ, αγγλικό πρωινό και burger σε πολύ χαμηλές τιμές έως ταϋλανδέζικο φαγητό το βράδυ. ",
+        "map_url": "https://maps.app.goo.gl/WLbs8BY8rA49zp7M6"
+      }
+    },
+    {
+      "id": 32,
+      "name": "National Maritime Museum",
+      "description": "Το μεγαλύτερο ναυτικό μουσείο του κόσμου, με εντυπωσιακά εκθέματα για πλοία, εξερευνητές και τον ωκεανό. Δωρεάν είσοδος για όλες τις ηλικίες. Συνδυάζεται άψογα με το Βασιλικό Αστεροσκοπείο του Γκρίνουιτς.",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 51.4809,
+        "lng": -0.0054
+      },
+      "restaurant": {
+        "name": "Bill's Greenwich Restaurant",
+        "description": "Απέχει περίπου 7-9 λεπτά με τα πόδια από το Βασιλικό Αστεροσκοπείο, κατηφορίζοντας τον λόφο προς το κέντρο της πόλης.Aπό τις πιο σίγουρες και αγαπημένες επιλογές για οικογένειες στην περιοχή.",
+        "map_url": "https://maps.app.goo.gl/ceDcw5M1eJDkSseg8"
+      },
+      "website": "https://www.rmg.co.uk/national-maritime-museum",
+      "notes": [
+        "ΔΩΡΕΑΝ είσοδος.",
+        "Συνδυάζεται με το Βασιλικό Αστεροσκοπείο του Γκρίνουιτς."
+      ],
+      "tags": [
+        "museum",
+        "free",
+        "maritime",
+        "family"
+      ],
+      "duration_hours": 2,
+      "best_time": "any",
+      "cafe": {
+        "name": "Royal Teas",
+        "description": "Πολύ δημοφιλές , σε απόσταση περίπου 8-10 λεπτών με τα πόδια κατηφορίζοντας τον λόφο προς την πλευρά της πόλης.",
+        "map_url": "https://maps.app.goo.gl/oivBnCoAbgWyXZPe7"
+      }
+    }
+  ]
+}

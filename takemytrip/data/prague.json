@@ -1,0 +1,570 @@
+{
+  "city": "Πράγα",
+  "country": "Τσεχία",
+  "currency": "EUR",
+  "emoji": "🇨🇿",
+  "pricing_model": "per_age",
+  "description": "Η πόλη των 100 πύργων",
+  "location": {
+    "lat": 50.0875,
+    "lng": 14.4213
+  },
+  "cityPass": {
+    "name": "Prague Visitor Pass",
+    "description": "Δωρεάν είσοδος σε πάνω απο 70 δραστηριότητες, κρουαζιέρα και απεριόριστες μετακινήσεις με τα μέσα",
+    "discountPercent": 25,
+    "url": "https://praguepass.eu/en/"
+  },
+  "activities": [
+    {
+      "id": 1,
+      "name": "Πλατεία Παλιάς Πόλης & Αστρονομικό Ρολόι",
+      "description": "Η Πλατεία της Παλιάς Πόλης είναι η ιστορική καρδιά της Πράγας. Εκεί είναι το Αστρονομικό Ρολόι ένα από τα παλαιότερα λειτουργικά ρολόγια στον κόσμο.",
+      "category": "landmark",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 50.0875,
+        "lng": 14.4213
+      },
+      "restaurant": {
+        "name": "U Pivrnce",
+        "description": "το U Pivrnce (Maiselova 60) απέχει μόλις 3-4 λεπτά με τα πόδια από το Αστρονομικό Ρολόι και παραμένει η πιο value-for-money λύση στην περιοχή!",
+        "map_url": "https://maps.app.goo.gl/NCRZTWNtikioyeFd7"
+      },
+      "website": "https://prague.eu/cs/objevujte/staromestske-namesti",
+      "notes": [],
+      "tags": [
+        "Ιστορία",
+        "Φωτογραφίες",
+        "square",
+        "historic",
+        "clock"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "any",
+      "emoji": "🏛️",
+      "cafe": {
+        "name": "Café Louvre",
+        "description": "ιστορικό καφέ από το 1902",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Cafe+Louvre+Prague"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Γέφυρα του Καρόλου",
+      "description": "Εμβληματική γέφυρα με υπέροχα αγάλματα, θέα, μουσικούς, και δύο πύργους στις άκρες της - σήματα κατατεθέν της Πράγας.",
+      "category": "landmark",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 50.0865,
+        "lng": 14.4114
+      },
+      "restaurant": {
+        "name": "Pork's Mostecka",
+        "description": "Ειδικεύεται στο χοιρινό κότσι",
+        "map_url": "https://maps.app.goo.gl/hCrWNHnWrLidaMNo7"
+      },
+      "website": "https://www.prague.eu/en/object/places/30/charles-bridge-karluv-most",
+      "notes": [],
+      "tags": [
+        "Φωτογραφίες",
+        "Βόλτες",
+        "bridge",
+        "historic",
+        "river"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "morning",
+      "emoji": "🌉",
+      "cafe": {
+        "name": "CAFÉ CLUB MÍŠEŇSKÁ",
+        "description": "Είναι το πιο κοντινό καφέ, σε απόσταση μόλις 190 μέτρων (περίπου 2-3 λεπτά περπάτημα) από τη γέφυρα στην πλευρά της Malá Strana. Είναι ένας πολύ ατμοσφαιρικός χώρος που στεγάζεται σε ένα ιστορικό κτίριο.",
+        "map_url": "https://maps.app.goo.gl/pB6vJbXNyQYW76U76"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Μουσείο LEGO",
+      "description": "Η μεγαλύτερη έκθεση LEGO στον κόσμο.",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 10,
+        "4": 10,
+        "5": 10,
+        "6": 10,
+        "7": 10,
+        "8": 10,
+        "9": 10,
+        "10": 10,
+        "11": 10,
+        "12": 10,
+        "13": 10,
+        "14": 10,
+        "15": 10,
+        "16": 10,
+        "17": 10,
+        "18": 13.5,
+        "19": 13.5,
+        "adult": 13.5
+      },
+      "location": {
+        "lat": 50.0833,
+        "lng": 14.4167
+      },
+      "restaurant": {
+        "name": "Sad Man's Tongue Bar & Bistro",
+        "description": "θεωρείται ένα από τα μέρη με τα καλύτερα burger στην πόλη.",
+        "map_url": "https://maps.app.goo.gl/saZCpE7y1rcWkq2A6"
+      },
+      "website": "https://muzeumlega.cz/en/",
+      "notes": [],
+      "tags": [
+        "Παιδιά",
+        "Οικογένειες",
+        "lego",
+        "interactive",
+        "toys"
+      ],
+      "duration_hours": 2.5,
+      "best_time": "afternoon",
+      "emoji": "🧱",
+      "cafe": {
+        "name": "Café Louvre",
+        "description": "ένας πανέμορφος, μεγάλος χώρος με ατμόσφαιρα 100 ετών",
+        "map_url": "https://maps.app.goo.gl/7S3D81X8JR6AsAtN8"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Illusion Art Museum Prague",
+      "description": "Το πρώτο μουσείο στην Τσεχία αφιερωμένο στις οπτικές ψευδαισθήσεις και το trick-art, για μια άκρως διαδραστική εμπειρία για όλες τις ηλικίες.",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 10,
+        "7": 10,
+        "8": 10,
+        "9": 10,
+        "10": 10,
+        "11": 10,
+        "12": 10,
+        "13": 10,
+        "14": 10,
+        "15": 10,
+        "16": 10,
+        "17": 10,
+        "18": 14.5,
+        "19": 14.5,
+        "adult": 14.5
+      },
+      "location": {
+        "lat": 50.0878,
+        "lng": 14.4205
+      },
+      "restaurant": {
+        "name": "Ribs of Prague",
+        "description": "Ειδικεύεται στα παϊδάκια (ribs) και το χοιρινό κότσι.Aν θέλετε κάτι χορταστικό και παραδοσιακό σε πολύ κοντινή απόσταση",
+        "map_url": "https://maps.app.goo.gl/9YgEDou9kMbkj4xDA"
+      },
+      "website": "https://iamprague.eu/en/home/",
+      "notes": [],
+      "tags": [
+        "Οικογένειες",
+        "Διαδραστικά",
+        "illusions",
+        "optical",
+        "art"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "any",
+      "emoji": "🎭",
+      "cafe": {
+        "name": "Bakeshop",
+        "description": "Αν θέλετε κάτι με εκπληκτικά γλυκά και καφέ, απέχει περίπου 4 λεπτά (οδός Kozí). Είναι από τα πιο γνωστά στέκια στην περιοχή.",
+        "map_url": "https://maps.app.goo.gl/vbizJLFLWrrTGi9H7"
+      }
+    },
+    {
+      "id": 5,
+      "name": "Μουσείο Αισθήσεων (Sense Museum)",
+      "description": "Διαδραστικό μουσείο για τις πέντε αισθήσεις, φουτουριστικό υπερθέαμα.",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 10,
+        "7": 10,
+        "8": 10,
+        "9": 10,
+        "10": 10,
+        "11": 10,
+        "12": 10,
+        "13": 10,
+        "14": 10,
+        "15": 10,
+        "16": 10,
+        "17": 10,
+        "18": 14.5,
+        "19": 14.5,
+        "adult": 14.5
+      },
+      "location": {
+        "lat": 50.087,
+        "lng": 14.4198
+      },
+      "restaurant": {
+        "name": "Restaurace U Jindřišské věže",
+        "description": "Παραδοσιακή τσέχικη παμπ, για οικογένειες που θέλουν να δοκιμάσουν τοπικές γεύσεις. ",
+        "map_url": "https://maps.app.goo.gl/11sTcYv4KyxyzuqZA"
+      },
+      "website": "https://museumofsenses.cz/#tickets",
+      "notes": [],
+      "tags": [
+        "Οικογένειες",
+        "Διαδραστικά",
+        "senses",
+        "interactive",
+        "futuristic"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "any",
+      "emoji": "👁️",
+      "cafe": {
+        "name": "Spell Coffee",
+        "description": "μέσα στο μουσείο",
+        "map_url": "https://maps.app.goo.gl/WDtpEh1AEQiPztgH9"
+      }
+    },
+    {
+      "id": 6,
+      "name": "Κάστρο της Πράγας",
+      "description": "Το Κάστρο της Πράγας είναι το μεγαλύτερο συγκρότημα κάστρων στον κόσμο.",
+      "category": "castle",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 12.3,
+        "7": 12.3,
+        "8": 12.3,
+        "9": 12.3,
+        "10": 12.3,
+        "11": 12.3,
+        "12": 12.3,
+        "13": 12.3,
+        "14": 12.3,
+        "15": 12.3,
+        "16": 12.3,
+        "17": 12.3,
+        "18": 18.5,
+        "19": 18.5,
+        "adult": 18.5
+      },
+      "location": {
+        "lat": 50.0911,
+        "lng": 14.4015
+      },
+      "restaurant": {
+        "name": "U Glaubiců",
+        "description": "Είναι μια ιστορική μπυραρία (ταβέρνα) που στεγάζεται σε ένα εντυπωσιακό κελάρι 700 ετών.",
+        "map_url": "https://maps.app.goo.gl/ZV2BE2mA1xkXUnTv8"
+      },
+      "website": "https://www.hrad.cz/en",
+      "notes": [],
+      "tags": [
+        "Ιστορία",
+        "Αρχιτεκτονική",
+        "castle",
+        "historic",
+        "fortress"
+      ],
+      "duration_hours": 3.5,
+      "best_time": "morning",
+      "emoji": "🏰",
+      "cafe": {
+        "name": "Nerudova 211 Café",
+        "description": "Από τα πιο αγαπημένα καφέ στην περιοχή. Βρίσκεται στον ιστορικό δρόμο Nerudova που οδηγεί στο κάστρο.",
+        "map_url": "https://maps.app.goo.gl/YoT1PywraEbYytAg6"
+      }
+    },
+    {
+      "id": 7,
+      "name": "Μουσείο Παιχνιδιών",
+      "description": "Βρίσκεται μέσα στο Κάστρο της Πράγας και είναι ένας χώρος γεμάτος παλιά παιχνίδια, τρενάκια και μια τεράστια συλλογή Barbie. Ιδανικά από παιδιά από 5 ετών και πάνω καθώς τα πολύ μικρά παιδάκια ίσως βαρεθούν γιατί δεν μπορούν να αγγίξουν.",
+      "category": "museum",
+      "prices": {
+        "0": 3,
+        "1": 3,
+        "2": 3,
+        "3": 3,
+        "4": 3,
+        "5": 3,
+        "6": 3,
+        "7": 3,
+        "8": 3,
+        "9": 3,
+        "10": 3,
+        "11": 3,
+        "12": 3,
+        "13": 3,
+        "14": 3,
+        "15": 3,
+        "16": 3,
+        "17": 3,
+        "18": 7.5,
+        "19": 7.5,
+        "adult": 7.5
+      },
+      "location": {
+        "lat": 50.0913,
+        "lng": 14.4018
+      },
+      "restaurant": {
+        "name": "Lobkowicz Palace Restaurant & Café",
+        "description": "μέσα στο συγκρότημα , εστιατόριο και καφέ, με εκπληκτική θέα",
+        "map_url": "https://maps.app.goo.gl/puZ6cduKeJWLJp1G9"
+      },
+      "website": "https://narodnimuzeumhracek.cz/",
+      "notes": [],
+      "tags": [
+        "Παιδιά",
+        "Οικογένειες",
+        "toys",
+        "museum",
+        "games"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "afternoon",
+      "emoji": "🎪",
+      "cafe": {
+        "name": "Lobkowicz Palace Restaurant & Café",
+        "description": "μέσα στο συγκρότημα, εστιατόριο και καφέ, με εκπληκτική θέα",
+        "map_url": "https://maps.app.goo.gl/puZ6cduKeJWLJp1G9"
+      }
+    },
+    {
+      "id": 8,
+      "name": "Ζωολογικός Κήπος (Zoo Praha)",
+      "description": "Θεωρείται ένας από τους καλύτερους στον κόσμο.",
+      "category": "zoo",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 8.5,
+        "4": 8.5,
+        "5": 8.5,
+        "6": 8.5,
+        "7": 8.5,
+        "8": 8.5,
+        "9": 8.5,
+        "10": 8.5,
+        "11": 8.5,
+        "12": 8.5,
+        "13": 8.5,
+        "14": 8.5,
+        "15": 8.5,
+        "16": 8.5,
+        "17": 8.5,
+        "18": 12.5,
+        "19": 12.5,
+        "adult": 12.5
+      },
+      "location": {
+        "lat": 50.1167,
+        "lng": 14.4058
+      },
+      "restaurant": {
+        "name": "Gulab Restaurant",
+        "description": "μέσα στον ζωολογικό κήπο",
+        "map_url": "https://maps.app.goo.gl/ZdK22fZParG67qtG8"
+      },
+      "website": "https://www.zoopraha.cz/en",
+      "notes": [],
+      "tags": [
+        "Οικογένειες",
+        "Ζώα",
+        "zoo",
+        "animals",
+        "park"
+      ],
+      "duration_hours": 4,
+      "best_time": "morning",
+      "emoji": "🦁",
+      "cafe": {
+        "name": "Restaurant Gaston",
+        "description": "Είναι η ιδανική επιλογή αν θέλετε κάτι πολύ κοντά και με τα πόδια, καθώς βρίσκεται ακριβώς δίπλα στην κύρια είσοδο.",
+        "map_url": "https://maps.app.goo.gl/ft9dC39mPFDBXcX26"
+      }
+    },
+    {
+      "id": 9,
+      "name": "Sea World (Mořský svět)",
+      "description": "Ενυδρείο με θαλάσσια ζώα.",
+      "category": "aquarium",
+      "prices": {
+        "0": 3.3,
+        "1": 3.3,
+        "2": 3.3,
+        "3": 3.3,
+        "4": 3.3,
+        "5": 3.3,
+        "6": 7.5,
+        "7": 7.5,
+        "8": 7.5,
+        "9": 7.5,
+        "10": 7.5,
+        "11": 7.5,
+        "12": 7.5,
+        "13": 7.5,
+        "14": 7.5,
+        "15": 7.5,
+        "16": 7.5,
+        "17": 7.5,
+        "18": 12,
+        "19": 12,
+        "adult": 12
+      },
+      "location": {
+        "lat": 50.1078,
+        "lng": 14.4378
+      },
+      "restaurant": {
+        "name": "Mon House Restaurant",
+        "description": "Είναι μια εξαιρετική επιλογή με πολύ υψηλή βαθμολογία. Ασιατικό εστιατόριο, με πολύ  καλές τιμές και μεγάλες μερίδες",
+        "map_url": "https://maps.app.goo.gl/ztPe7QX1rmHyQq9u5"
+      },
+      "website": "https://www.morsky-svet.cz/en/",
+      "notes": [],
+      "tags": [
+        "Οικογένειες",
+        "Θαλάσσια ζώα",
+        "aquarium",
+        "marine",
+        "fish"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "any",
+      "emoji": "🐠",
+      "cafe": {
+        "name": "KOLEKTOR",
+        "description": "Πολύ καλό καφέ, φρέσκα γλυκά, αλλά και επιλογές για ελαφρύ φαγητό (σάντουιτς, σούπες) ή ακόμα και μπύρα,κρασί αν το επισκεφθείτε αργότερα",
+        "map_url": "https://maps.app.goo.gl/u1n2Gvkix6GBPCXE8"
+      }
+    },
+    {
+  "id": 10,
+  "name": "Κρουαζιέρα στον Μολδάβα",
+  "description": "Υπέροχη εμπειρία για ξεκούραση, χαλάρωση και ταυτόχρονα θέαση πανέμορφων μνημείων.",
+  "category": "cruise",
+  "prices": {
+    "0": 0,
+    "1": 0,
+    "2": 0,
+    "3": 15,
+    "4": 15,
+    "5": 15,
+    "6": 15,
+    "7": 15,
+    "8": 15,
+    "9": 15,
+    "10": 15,
+    "11": 15,
+    "12": 15,
+    "13": 15,
+    "14": 15,
+    "15": 15,
+    "16": 15,
+    "17": 15,
+    "18": 15,
+    "19": 15,
+    "adult": 15
+  },
+  "location": {
+    "lat": 50.0889,
+    "lng": 14.4075
+  },
+  "restaurant": {
+    "name": "TURQUOISE-Mediterranean kitchen",
+    "description": "Μεσογειακά πιάτα με έμφαση στις γεύσεις της Τουρκίας και της Μέσης Ανατολής. Έχει πολύ καλές κριτικές για την ποιότητα και τις τιμές του",
+    "map_url": "https://maps.app.goo.gl/dL3v3AihR2PcZHNs6"
+  },
+  "website": "https://www.prague-boats.cz/en/",
+  "notes": [],
+  "tags": [
+    "Ρομαντικό",
+    "Θέα",
+    "cruise",
+    "river",
+    "boat"
+  ],
+  "duration_hours": 1.5,
+  "best_time": "evening",
+  "emoji": "🚢",
+  "cafe": { 
+    "name": "Mistral Cafe",
+    "description": "Είναι ένας κήπος μέσα στην πόλη, ιδανικός για να χαλαρώσετε μακριά από τη φασαρία του κέντρου",
+    "map_url": "https://maps.app.goo.gl/N8dvLPdDAsUkXupdA"
+  }
+}
+]
+}

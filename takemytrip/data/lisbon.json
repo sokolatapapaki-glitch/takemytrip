@@ -1,0 +1,589 @@
+{
+  "city": "Λισαβόνα",
+  "country": "Πορτογαλία",
+  "currency": "EUR",
+  "emoji": "🇵🇹",
+  "pricing_model": "per_age",
+  "description": "Η  πρωτεύουσα της Πορτογαλίας, χτισμένη σε επτά λόφους, με ιστορικά μνημεία, παραδοσιακές συνοικίες και θέα στον Τάγο.",
+  "location": {
+    "lat": 38.7223,
+    "lng": -9.1393
+  },
+  "cityPass": {
+    "name": "Lisboa Card",
+    "description": "Δωρεάν είσοδος σε 51 δραστηριότητες, απεριόριστη πρόσβαση στα μέσα μεταφοράς συμπεριλαμβανομένου του τρένου προς Sintra ",
+    "discountPercent": 30,
+    "url": "https://www.lisboacard.org/"
+  },
+  "activities": [
+    {
+      "id": 1,
+      "name": "Oceanário de Lisboa",
+      "description": "Ένα από τα μεγαλύτερα ενυδρεία στην Ευρώπη με χιλιάδες ψάρια και θαλάσσια είδη.",
+      "category": "aquarium",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 8,
+        "4": 8,
+        "5": 8,
+        "6": 12,
+        "7": 12,
+        "8": 12,
+        "9": 12,
+        "10": 12,
+        "11": 12,
+        "12": 12,
+        "13": 12,
+        "14": 12,
+        "15": 17,
+        "16": 17,
+        "17": 17,
+        "18": 19,
+        "19": 19,
+        "adult": 19
+      },
+      "location": {
+        "lat": 38.7633,
+        "lng": -9.0937
+      },
+      "restaurant": {
+        "name": "Honest Greens Parque das Nações",
+        "description": "Έχει πολλές επιλογές για όλα τα γούστα (κρέας, ψάρι, φυτικά πιάτα) και μεγάλες μερίδες. Είναι ιδανικό αν θέλετε κάτι γρήγορο, υγιεινό και οικονομικό.",
+        "map_url": "https://maps.app.goo.gl/7U9qW4f2dv2WGW1h6"
+      },
+      "website": "https://www.oceanario.pt/en/",
+      "notes": [],
+      "tags": [
+        "aquarium",
+        "marine life",
+        "family",
+        "ocean",
+        "fish"
+      ],
+      "duration_hours": 3,
+      "best_time": "any",
+      "cafe": {
+        "name": "Restaurante Sea the Future",
+        "description": "Εκτός από καφέ, smoothies, φυσικούς χυμούς και ελαφριά σνακ (bagels, σαλάτες).",
+        "map_url": "https://maps.app.goo.gl/qyFQQc3J8mnt4K7Z7"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Pavilhão do Conhecimento",
+      "description": "Διαδραστικό μουσείο επιστήμης ιδανικό για παιδιά και εφήβους (3-16 ετών).Είναι ο παράδεισος για όποιον θέλει να πειραματιστεί, με απίθανα εκθέματα όπως το να κάνεις ποδήλατο πάνω σε ένα σχοινί στον αέρα ή να μπαίνεις μέσα σε τεράστιες σαπουνόφουσκες.",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 6,
+        "4": 6,
+        "5": 6,
+        "6": 8,
+        "7": 8,
+        "8": 8,
+        "9": 8,
+        "10": 8,
+        "11": 8,
+        "12": 8,
+        "13": 8,
+        "14": 8,
+        "15": 9,
+        "16": 9,
+        "17": 9,
+        "18": 9,
+        "19": 9,
+        "adult": 9
+      },
+      "location": {
+        "lat": 38.7625,
+        "lng": -9.095
+      },
+     "restaurant": {
+        "name": "ZeroZero Parque das Nações",
+        "description": "πίτσες εξαιρετικής ποιότητας με υλικά από την Ιταλία",
+        "map_url": "https://maps.app.goo.gl/m8auyvHpnRcNFcgu5"
+      },
+      "website": "https://www.pavconhecimento.pt/en/",
+      "notes": [],
+      "tags": [
+        "museum",
+        "science",
+        "interactive",
+        "children",
+        "hands-on"
+      ],
+      "duration_hours": 2.5,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "The Coffee",
+        "description": "Είναι η καλύτερη επιλογή για brunch και ποιοτικό καφέ.",
+        "map_url": "https://maps.app.goo.gl/yJ6HsGLinCtBvunTA"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Πύργος του Μπελέμ",
+      "description": "Μνημείο της UNESCO και το πιο αναγνωρίσιμο ορόσημο της Λισαβόνας, εντυπωσιάζοντας με τη «δαντελωτή» αρχιτεκτονική του που μοιάζει με κάστρο μέσα στο νερό.Το εσωτερικό του είναι δύσκολο με παιδιά κάτω των 5-6 ετών λόγω στενών σκαλιών.",
+      "category": "monument",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 6,
+        "7": 6,
+        "8": 6,
+        "9": 6,
+        "10": 6,
+        "11": 6,
+        "12": 6,
+        "13": 6,
+        "14": 6,
+        "15": 8,
+        "16": 8,
+        "17": 8,
+        "18": 8,
+        "19": 8,
+        "adult": 8
+      },
+      "location": {
+        "lat": 38.6916,
+        "lng": -9.216
+      },
+      "restaurant": {
+        "name": "Pita.gr FoodTruck Chef Thassos",
+        "description": "Αν σας έχει λείψει το ελληνικό φαγητό...! με πολύ καλές τιμές και κριτικές.",
+        "map_url": "https://maps.app.goo.gl/ScgNjrpaBnYaA3SB8"
+      },
+      "website": "https://www.museusemonumentos.pt/pt/museus-e-monumentos/torre-de-belem",
+      "notes": [],
+      "tags": [
+        "tower",
+        "historic",
+        "unesco",
+        "monument",
+        "landmark"
+      ],
+      "duration_hours": 1,
+      "best_time": "morning",
+      "cafe": {
+        "name": "The Folks Belém",
+        "description": "Ένας υπέροχος χώρος για specialty coffee και brunch",
+        "map_url": "https://maps.app.goo.gl/7Q7thikZMEKxvyXY7"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Μοναστήρι των Ιερονομιτών",
+      "description": "Μνημείο UNESCO με εκπληκτική αρχιτεκτονική και ιστορία. Κατάλληλο για παιδιά από 3 ετών αν και ίσως κουραστούν. Θα εκτιμηθεί περισσότερο από ηλικίες άνω των 6-7 ετών",
+      "category": "monument",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 7,
+        "7": 7,
+        "8": 7,
+        "9": 7,
+        "10": 7,
+        "11": 7,
+        "12": 7,
+        "13": 7,
+        "14": 7,
+        "15": 10,
+        "16": 10,
+        "17": 10,
+        "18": 10,
+        "19": 10,
+        "adult": 10
+      },
+      "location": {
+        "lat": 38.6978,
+        "lng": -9.2067
+      },
+      "restaurant": {
+        "name": "Guelra Restaurante",
+        "description": "Ένα από τα κορυφαία εστιατόρια της περιοχής με βαθμολογία 4.7, γνωστό για τα θαλασσινά και τα ψάρια του",
+        "map_url": "https://maps.app.goo.gl/9u91arxvTrCeqzCD7"
+      },
+      "website": "https://www.museusemonumentos.pt/pt/museus-e-monumentos/mosteiro-dos-jeronimos-e-capela-de-sao-jeronimo",
+      "notes": [],
+      "tags": [
+        "monastery",
+        "unesco",
+        "historic",
+        "architecture",
+        "gothic"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "morning",
+      "cafe": {
+        "name": "Pastéis de Belém",
+        "description": "Είναι το ιστορικότερο ζαχαροπλαστείο της Λισαβόνας (από το 1837), που σερβίρει τις αυθεντικές τάρτες με τη «μυστική συνταγή» των μοναχών. Το μαγαζί είναι τεράστιο εσωτερικά , οι τάρτες τρώγονται ζεστές με κανέλα και άχνη, και παρόλο που έχει πάντα ουρές, η εξυπηρέτηση είναι ταχύτατη.",
+        "map_url": "https://maps.app.goo.gl/uWiGeyhkDk4aNbNf6"
+      }
+    },
+    {
+      "id": 5,
+      "name": "Κάστρο του Αγίου Γεωργίου",
+      "description": "Μεσαιωνικό κάστρο με πανοραμική θέα της Λισαβόνας.Δύσκολο για καρότσι. Ιδανική ηλικία άνω των 5 ετών",
+      "category": "castle",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 5,
+        "4": 5,
+        "5": 5,
+        "6": 8,
+        "7": 8,
+        "8": 8,
+        "9": 8,
+        "10": 8,
+        "11": 8,
+        "12": 8,
+        "13": 8,
+        "14": 8,
+        "15": 10,
+        "16": 10,
+        "17": 10,
+        "18": 10,
+        "19": 10,
+        "adult": 10
+      },
+      "location": {
+        "lat": 38.7139,
+        "lng": -9.1335
+      },
+      "restaurant": {
+        "name": "Paladarium",
+        "description": "παραδοσιακές πορτογαλικές σπεσιαλιτέ και κρασί σε ένα περιβάλλον που θυμίζει παλιά Λισαβόνα",
+        "map_url": "https://maps.app.goo.gl/UV1r4jnZNBi7689Z8"
+      },
+      "website": "https://castelodesaojorge.pt/en/",
+      "notes": [],
+      "tags": [
+        "castle",
+        "medieval",
+        "view",
+        "panorama",
+        "historic"
+      ],
+      "duration_hours": 2,
+      "best_time": "evening",
+      "cafe": {
+        "name": "Quase Café",
+        "description": "Ένα από τα πιο κοντινά και γραφικά καφέ, ιδανικό για ένα χαλαρό διάλειμμα. Είναι γνωστό για την ποιότητα του καφέ του και τις σπιτικές λιχουδιές του.",
+        "map_url": "https://maps.app.goo.gl/MT7V59QW1XxaGNg36"
+      }
+    },
+    {
+      "id": 6,
+      "name": "Museu da Marioneta",
+      "description": "Το Museu da Marioneta είναι ένας μικρός θησαυρός μέσα σε ένα παλιό μοναστήρι, όπου ο κόσμος της κούκλας ζωντανεύει με έναν τρόπο μαγικό. Θα δεις από παραδοσιακές μαριονέτες της Πορτογαλίας μέχρι εντυπωσιακές φιγούρες από την Ασία και την Αφρική, ενώ το καλύτερο είναι ότι μπορείς να δεις από κοντά πώς φτιάχνονται και πώς κινούνται.",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 2.5,
+        "14": 2.5,
+        "15": 2.5,
+        "16": 2.5,
+        "17": 2.5,
+        "18": 2.5,
+        "19": 2.5,
+        "20": 2.5,
+        "21": 2.5,
+        "22": 2.5,
+        "23": 2.5,
+        "24": 2.5,
+        "25": 2.5,
+        "adult": 5
+      },
+      "location": {
+        "lat": 38.707917,
+        "lng": -9.156117
+      },
+      "restaurant": {
+        "name": "Taberna da Esperança",
+        "description": "Αυτό το εστιατόριο είναι ιδανικό αν θέλετε να δοκιμάσετε πολλά διαφορετικά πιάτα, καθώς ειδικεύεται στα petiscos (τα πορτογαλικά tapas).",
+        "map_url": "https://maps.app.goo.gl/bYHhqTsUrstQctDo9"
+      },
+      "website": "https://www.museudamarioneta.pt/pt/",
+      "notes": [
+        "Οι τιμές για παραστάσεις (shows) είναι περίπου 2€ ακριβότερες."
+      ],
+      "tags": [
+        "museum",
+        "puppets",
+        "marionettes",
+        "culture",
+        "family"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "Liberty: brunch, coffee & books",
+        "description": "Μια υπέροχη επιλογή μόλις 2-3 λεπτά μακριά (200 μέτρα). Συνδυάζει καφέ, brunch και βιβλία σε έναν πολύ ζεστό χώρο. Έχει εξαιρετική βαθμολογία 4.9/5.",
+        "map_url": "https://maps.app.goo.gl/kPAXo6i8R4BKrTYC7"
+      }
+    },
+    {
+      "id": 7,
+      "name": "Μνημείο των Ανακαλύψεων",
+      "description": "Εντυπωσιακό μνημείο αφιερωμένο στους Πορτογάλους εξερευνητές με πανοραμική θέα της Λισαβόνας.",
+      "category": "monument",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 5,
+        "14": 5,
+        "15": 5,
+        "16": 5,
+        "17": 5,
+        "18": 5,
+        "19": 5,
+        "20": 5,
+        "21": 5,
+        "22": 5,
+        "23": 5,
+        "24": 5,
+        "25": 5,
+        "adult": 10
+      },
+      "location": {
+        "lat": 38.693596,
+        "lng": -9.205712
+      },
+      "restaurant": {
+        "name": "Portugália Cervejaria Belém",
+        "description": "",
+        "map_url": "https://maps.app.goo.gl/fk4v9RDqVmnx7Yf88"
+      },
+      "website": "https://padraodosdescobrimentos.pt/",
+      "notes": [
+        "Οι τιμές περιλαμβάνουν την πρόσβαση στην κορυφή για θέα, την ταινία και την έκθεση."
+      ],
+      "tags": [
+        "monument",
+        "historic",
+        "view",
+        "explorers",
+        "panorama"
+      ],
+      "duration_hours": 1,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "Miolo",
+        "description": "",
+        "map_url": "https://maps.app.goo.gl/GvZUYQ5ofubpowGVA"
+      }
+    },
+    {
+      "id": 8,
+      "name": "Cascais",
+      "description": "Το Cascais είναι το παραθαλάσσιο στολίδι της Λισαβόνας, μόλις 40 λεπτά με το τρένο. Είναι ένα παλιό ψαροχώρι που έγινε το καλοκαιρινό καταφύγιο των βασιλιάδων. Μην χάσετε το Πάρκο Marechal Carmona με την απίθανη παιδική χαρά τις πάπιες και τα παγώνια.",
+      "category": "daytrip",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "20": 0,
+        "21": 0,
+        "22": 0,
+        "23": 0,
+        "24": 0,
+        "25": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 38.6979,
+        "lng": -9.4215
+      },
+      "restaurant": {
+        "name": "Mana",
+        "description": "Το Mana θεωρείται από τα πιο 'child-friendly' εστιατόρια στο Cascais, καθώς συνδυάζει μια χαλαρή ατμόσφαιρα με συγκεκριμένες παροχές για παιδιά.",
+        "map_url": "https://maps.app.goo.gl/me7esT2ef9a6ZgzM7"
+      },
+      "website": "https://www.tripadvisor.com.gr/Tourism-g189154-Cascais_Lisbon_District_Central_Portugal-Vacations.html",
+      "notes": [
+        "Το εύρος τιμών εισιτηρίου τρένου είναι περίπου 5€ ανά άτομο, με εκπτώσεις για παιδιά."
+      ],
+      "tags": [
+        "daytrip",
+        "beach",
+        "coastal",
+        "train",
+        "family"
+      ],
+      "duration_hours": 6,
+      "best_time": "any",
+      "cafe": {
+        "name": "Kafeine Cascais",
+        "description": "Βρίσκεται στη μαρίνα του Cascais, οπότε έχει το πλεονέκτημα της θέας στα σκάφη και της θαλασσινής αύρας.",
+        "map_url": "https://maps.app.goo.gl/xyAb6NKfDpNttw1aA"
+      }
+    },
+    {
+      "id": 9,
+      "name": "Quinta da Regaleira (Sintra)",
+      "description": "Ένα ιδιωτικό κτήμα με παλάτι, πύργους, υπόγεια σπήλαια, κρυφά μονοπάτια και πηγάδια.Πολύ περισσότερο διαδραστικό για παιδιά από το Palácio da Pena.Το Initiation Well είναι must — ένα σπηλαιώδες πηγάδι με σπειροειδή σκάλα που μοιάζει με σκηνικό από παραμύθι ή ταινία. όχι κατάλληλο για καροτσάκια ή πολύ μικρά παιδιά, χρειάζεται επίβλεψη σε σήραγγες..",
+      "category": "palace",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 15,
+        "7": 15,
+        "8": 15,
+        "9": 15,
+        "10": 15,
+        "11": 15,
+        "12": 15,
+        "13": 15,
+        "14": 15,
+        "15": 15,
+        "16": 15,
+        "17": 15,
+        "18": 20,
+        "19": 20,
+        "adult": 20
+      },
+      "location": {
+        "lat": 38.7911,
+        "lng": -9.3910
+      },
+      "restaurant": {
+        "name": "Tascantiga",
+        "description": "Ιδανικό για να δοκιμάσετε πολλές διαφορετικές γεύσεις. Βρίσκεται σε ένα γραφικό δρομάκι με σκαλιά και έχει υπέροχη ατμόσφαιρα.",
+        "map_url": "https://maps.app.goo.gl/KHko88uvXBnJPV9D8"
+      },
+      "website": "https://www.regaleira.pt/pt/",
+      "notes": [
+        "Εισιτήριο οικογένειας: 2 ενήλικες + 2 παιδιά (6-17 ετών) = 60€"
+      ],
+      "tags": [
+        "palace",
+        "garden",
+        "sintra",
+        "mystery",
+        "unesco"
+      ],
+      "duration_hours": 2.5,
+      "best_time": "morning",
+      "cafe": {
+        "name": "Sintra Terrace",
+        "description": "Θα πάτε για την εκπληκτική πανοραμική θέα από την ταράτσα του. Είναι ιδανικό για ένα ποτήρι κρασί ή έναν καφέ με θέα το τοπίο της Σίντρα",
+        "map_url": "https://maps.app.goo.gl/BrFchDePuodxS7iY6"
+      }
+    },
+    {
+      "id": 10,
+      "name": "Palácio da Pena",
+      "description": "Το πιο διάσημο παλάτι της Sintra, χρωματιστό, στο υψηλότερο σημείο της περιοχής.Μοιάζει με παραμυθένιο κάστρο. Υπάρχει λεωφορείο Shuttle Bus από το πάρκινγκ ή το σιδηροδρομικό σταθμό προς την είσοδο για να αποφύγετε την ανηφόρα με τα παιδιά. Προτείνεται να ξεκινήσετε από αυτό το παλάτι την επισκεψή σας, και μετά να κατεβείτει προς το Quinta da Regaleira. Ιδανικά από 5 ετών και πάνω, μη φιλικό για καρότσι",
+      "category": "palace",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 10,
+        "7": 10,
+        "8": 10,
+        "9": 10,
+        "10": 10,
+        "11": 10,
+        "12": 10,
+        "13": 10,
+        "14": 10,
+        "15": 10,
+        "16": 10,
+        "17": 10,
+        "18": 13,
+        "19": 13,
+        "adult": 13
+      },
+      "location": {
+        "lat": 38.7860,
+        "lng": -9.3877
+      },
+      "restaurant": {
+        "name": "Parques de Sintra Cafeterias",
+        "description": "Λόγω τοποθεσίας του παλατιού, το εστιατόριο εντός είναι το πιο βολικό. Αναζητήστε την ταμπέλα Restaurant.",
+        "map_url": "https://maps.app.goo.gl/dxCp6grg3M41DJuy8"
+      },
+      "website": "https://bilheteira.parquesdesintra.pt/home/en",
+      "notes": [
+        "Οι τιμές αφορούν είσοδο στο Palácio da Pena και υπάρχουν διαθέσιμα οικογενειακά εισιτήρια.",
+        "Εισιτήριο οικογένειας: 2 ενήλικες + 2 νέοι (6-17 ετών) = 35€"
+      ],
+      "tags": [
+        "palace",
+        "unesco",
+        "romantic",
+        "sintra",
+        "gardens"
+      ],
+      "duration_hours": 3,
+      "best_time": "morning",
+      "cafe": {
+        "name": "Parques de Sintra Cafeterias",
+        "description": "Λόγω τοποθεσίας του παλατιού, η καφετέρια εντός είναι η πιο βολική. Αναζητήστε την ταμπέλα Terrace.",
+        "map_url": "https://maps.app.goo.gl/dxCp6grg3M41DJuy8"
+      }
+    }
+  ]
+}

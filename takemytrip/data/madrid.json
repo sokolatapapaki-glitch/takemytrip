@@ -1,0 +1,1178 @@
+{
+  "city": "Μαδρίτη",
+  "country": "Ισπανία",
+  "currency": "EUR",
+  "emoji": "🇪🇸",
+  "pricing_model": "per_age",
+  "description": "Η ζωηρή πρωτεύουσα της Ισπανίας, γνωστή για τα μουσεία της, τον πολιτισμό, τις πολλές πράσινες περιοχές και τη ζεστή ατμόσφαιρά της.",
+  "location": {
+    "lat": 40.4168,
+    "lng": -3.7038
+  },
+  "cityPass": {
+    "name": "Madrid City Card",
+    "description": "Η επίσημη κάρτα της πόλης με εκπτώσεις και είσοδο στα μέσα μεταφοράς",
+    "discountPercent": 15,
+    "url": "https://citycard.esmadrid.com/en"
+  },
+  "activities": [
+    {
+      "id": 1,
+      "name": "Parque del Retiro",
+      "description": "Ο κύριος πνεύμονας πρασίνου στο κέντρο της Μαδρίτης, περιλαμβάνει εμβληματικά σημεία όπως η μεγάλη λίμνη για βαρκάδα, το Κρυστάλλινο Παλάτι και το Μνημείο του Αλφόνσου ΙΒ'. Η πρόσβαση είναι πολύ εύκολη μέσω των σταθμών μετρό Retiro, Ibiza και Atocha. Διαθέτει έντεκα διαφορετικές παιδικές χαρές διασκορπισμένες σε όλη την έκτασή του, οι οποίες είναι κατάλληλες για διάφορες ηλικίες και περιλαμβάνουν από παραδοσιακές κούνιες μέχρι πιο σύγχρονες κατασκευές αναρρίχησης",
+      "category": "park",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 40.415,
+        "lng": -3.6834
+      },
+      "restaurant": {
+        "name": "Erre Que Erre Retiro",
+        "description": "Είναι ένας χαλαρός χώρος που προσφέρει καλή ποιότητα σε πολύ λογικές τιμές. Σερβίρει από πρωινό και καφέ μέχρι τάπας, σάντουιτς και μερίδες",
+        "map_url": "https://maps.app.goo.gl/vx8rsMjYL9yHQeg26"
+      },
+      "website": "https://www.esmadrid.com/informacion-turistica/parque-del-retiro",
+      "notes": [],
+      "tags": [
+        "park",
+        "free",
+        "lake",
+        "palace",
+        "nature"
+      ],
+      "duration_hours": 2.5,
+      "best_time": "afternoon",
+      "freeActivity": true,
+      "cafe": {
+        "name": "VEIA Café & Clubhouse",
+        "description": "Με την εντυπωσιακή βαθμολογία 4.9, είναι ίσως η καλύτερη επιλογή στην περιοχή. Είναι ένας πολύ προσεγμένος χώρος",
+        "map_url": "https://maps.app.goo.gl/Yc6qE8yYQYbyTZgf9"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Casa de Campo",
+      "description": "Το τεράστιο αστικό πάρκο όπου βρίσκονται το Zoo, το Λούνα Παρκ και το Teleférico. Ιδανικό για ποδηλασία, πικνίκ και πεζοπορία. Κατάλληλο για κάθε ηλικία",
+      "category": "park",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 40.4242,
+        "lng": -3.7587
+      },
+      "restaurant": {
+        "name": "Taberna El Urogallo Lago I Restaurante Casa de Campo",
+        "description": "Αν θέλετε κάτι πιο απλό ή πιο casual δίπλα στη λίμνη",
+        "map_url": "https://maps.app.goo.gl/JMTYXuxmF4a56qva6"
+      },
+      "website": "https://www.tripadvisor.com.gr/Attraction_Review-g187514-d244592-Reviews-Casa_de_Campo-Madrid.html",
+      "notes": [],
+      "tags": [
+        "park",
+        "free",
+        "huge",
+        "nature",
+        "outdoor"
+      ],
+      "duration_hours": 4,
+      "best_time": "any",
+      "freeActivity": true,
+      "cafe": {
+        "name": "Café del Lago",
+        "description": "Βρίσκεται ακριβώς δίπλα στο νερό σε φωτεινό χώρο με μεγάλη βεράντα. Είναι πολύ δημοφιλές για την προνομιακή του θέση.",
+        "map_url": "https://maps.app.goo.gl/1Zx7qfMecpzXvRCs6"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Madrid Río",
+      "description": "Xιλιόμετρα διαδρομών για περπάτημα, ποδηλασία και τρέξιμο, ενώ διαθέτει πολυάριθμες παιδικές χαρές με ιδιαίτερη σχεδίαση, γήπεδα άθλησης και την περίφημη αστική παραλία με πίδακες νερού για τις ζεστές ημέρες. Το πάρκο συνδέει ιστορικά μνημεία όπως τη γέφυρα Segovia και τη γέφυρα Toledo με μοντέρνες κατασκευές όπως η εμβληματική Arganzuela Footbridge",
+      "category": "park",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 40.398,
+        "lng": -3.72
+      },
+      "restaurant": {
+        "name": "Matadero Madrid",
+        "description": "πολιτιστικό κέντρο με εστιατόρια",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Matadero+Madrid"
+      },
+      "website": "https://share.google/ux5ElTcQra4isJPfd",
+      "notes": [],
+      "tags": [
+        "park",
+        "free",
+        "river",
+        "cycling",
+        "playgrounds"
+      ],
+      "duration_hours": 2,
+      "best_time": "afternoon",
+      "freeActivity": true,
+      "cafe": {
+        "name": "Dot Café Bar",
+        "description": "Μην παραλείψετε να δοκιμάσετε τα σπιτικά γλυκά τους ή το περίφημο bikini sandwich τους.",
+        "map_url": "https://maps.app.goo.gl/JjArVpyUJwdFWQcv7"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Templo de Debod",
+      "description": "Αρχαίος αιγυπτιακός ναός που μεταφέρθηκε στη Μαδρίτη. Υπέροχος χώρος για το ηλιοβασίλεμα.Κατάλληλο για κάθε ηλικία - στο εσωτερικό το καρότσι ίσως είναι δύσκολο και τα παιδιά ίσως βαρεθούν. Αξίζει για τον εξωτερικό του χώρο και την ομόρφη θέα στο ηλιοβασίλεμα",
+      "category": "monument",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 40.4238,
+        "lng": -3.7185
+      },
+      "restaurant": {
+        "name": "Restaurante Aladino",
+        "description": "Μια από τις πιο κοντινές και οικονομικές επιλογές. Aυθεντική συριακή και μεσογειακή κουζίνα σε καλές τιμές.",
+        "map_url": "https://maps.app.goo.gl/jHNDBoKnRj5egpY88"
+      },
+      "website": "https://share.google/5O5XpCsF0MpBfWdf0",
+      "notes": [],
+      "tags": [
+        "temple",
+        "free",
+        "egyptian",
+        "sunset",
+        "historic"
+      ],
+      "duration_hours": 1,
+      "best_time": "evening",
+      "freeActivity": true,
+      "cafe": {
+        "name": "The Fix - Café de Especialidad",
+        "description": "Ένα σύγχρονο καφέ με εξαιρετικό καφέ  και πολύ καλές κριτικές.",
+        "map_url": "https://maps.app.goo.gl/MmoZYi94RPU4k54K9"
+      }
+    },
+    {
+      "id": 5,
+      "name": "MUNCYT Alcobendas (Μουσείο Επιστήμης & Τεχνολογίας)",
+      "description": "Πολύ διαδραστικό και εκπαιδευτικό, ιδανικό για οικογένειες με παιδιά. Καταλληλότερο για άνω των 5 ετών",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 40.5423,
+        "lng": -3.6385
+      },
+      "restaurant": {
+        "name": "Bar Restaurante Geospain",
+        "description": "Από τις καλύτερες επιλογές στην περιοχή με βαθμολογία (4.9/5).Γνωστό για το καλό του menú del día (μενού ημέρας), ο πιο οικονομικός τρόπος για να φάτε στην Ισπανία.",
+        "map_url": "https://maps.app.goo.gl/uYKRhHjQrBgfE8tT6"
+      },
+      "website": "https://www.muncyt.es/",
+      "notes": [],
+      "tags": [
+        "museum",
+        "science",
+        "free",
+        "interactive",
+        "technology"
+      ],
+      "duration_hours": 2.5,
+      "best_time": "afternoon",
+      "freeActivity": true,
+      "cafe": {
+        "name": "La Especial Moraleja churrería & cafetería",
+        "description": "Αυτή είναι ίσως η καλύτερη επιλογή αν θέλετε κάτι αυθεντικό. Είναι γνωστό για τα churros και τους λουκουμάδες του (porras), μια κλασική ισπανική εμπειρία.",
+        "map_url": "https://maps.app.goo.gl/Tw6CuH82qVkJhEV9A"
+      }
+    },
+    {
+      "id": 6,
+      "name": "Museo Naval (Ναυτικό Μουσείο)",
+      "description": "Σπουδαία συλλογή με ναυτικούς χάρτες, μακέτες πλοίων και ιστορικά αντικείμενα. Κοντά στο κέντρο.Ιδανικό για ηλικίες 6-14 ετών",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 40.4176,
+        "lng": -3.692
+      },
+      "restaurant": {
+        "name": "VIPS",
+        "description": "Όπως όλα τα VIPS, διαθέτει παιδικό μενού, παιδικά καθίσματα και είναι συνηθισμένο σε οικογένειες με καρότσια.Burgers, σάντουιτς και σαλάτες σε πολύ καλές τιμές",
+        "map_url": "https://maps.app.goo.gl/TKd4Ms8F1Ti1RPDx8"
+      },
+      "website": "https://armada.defensa.gob.es/ArmadaPortal/page/Portal/ArmadaEspannola/cienciaorgano/prefLang-es/01cienciamuseo",
+      "notes": [],
+      "tags": [
+        "museum",
+        "naval",
+        "free",
+        "history",
+        "ships"
+      ],
+      "duration_hours": 2,
+      "best_time": "afternoon",
+      "freeActivity": true,
+      "cafe": {
+        "name": "Osom Coffee Cantine",
+        "description": "Είναι ένας μοντέρνος και φωτεινός χώρος με εξαιρετικό specialty coffee και υγιεινά σνακ",
+        "map_url": "https://maps.app.goo.gl/86pgHKPUZDGjVyAL9"
+      }
+    },
+    {
+      "id": 7,
+      "name": "Planetario de Madrid (Πλανητάριο)",
+      "description": "Πολύ οικονομικό για προβολές σχετικές με το διάστημα.Κατάλληλο απο 3 ετών και πάνω",
+      "category": "planetarium",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 1.65,
+        "4": 1.65,
+        "5": 1.65,
+        "6": 1.65,
+        "7": 1.65,
+        "8": 1.65,
+        "9": 1.65,
+        "10": 1.65,
+        "11": 1.65,
+        "12": 1.65,
+        "13": 1.65,
+        "14": 1.65,
+        "15": 3.6,
+        "16": 3.6,
+        "17": 3.6,
+        "18": 3.6,
+        "19": 3.6,
+        "adult": 3.6
+      },
+      "location": {
+        "lat": 40.3927,
+        "lng": -3.6853
+      },
+      "restaurant": {
+        "name": "Cafetería Restaurante IN TIME",
+        "description": "καφέ-εστιατόριο για πιο χαλαρό γεύμα σε πολύ λογικές τιμές",
+        "map_url": "https://maps.app.goo.gl/MjD9CuRRGTmVEZRW8"
+      },
+      "website": "https://planetmad.es/",
+      "notes": [],
+      "tags": [
+        "planetarium",
+        "space",
+        "astronomy",
+        "educational"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "any",
+      "cafe": {
+        "name": "Cafetería Restaurante IN TIME",
+        "description": "καφέ-εστιατόριο για πιο χαλαρό γεύμα σε πολύ λογικές τιμές",
+        "map_url": "https://maps.app.goo.gl/MjD9CuRRGTmVEZRW8"
+      }
+    },
+    {
+      "id": 8,
+      "name": "Museo Nacional de Ciencias Naturales - Μουσείο Φυσικών Επιστημών",
+      "description": "Περιλαμβάνει εκθέσεις με δεινόσαυρους και διάφορα οικοσυστήματα.Ιδανικά από 6-7 ετών και πάνω, κατάλληλο όμως και από 3 ετών",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 3.5,
+        "4": 3.5,
+        "5": 3.5,
+        "6": 3.5,
+        "7": 3.5,
+        "8": 3.5,
+        "9": 3.5,
+        "10": 3.5,
+        "11": 3.5,
+        "12": 3.5,
+        "13": 3.5,
+        "14": 3.5,
+        "15": 7,
+        "16": 7,
+        "17": 7,
+        "18": 7,
+        "19": 7,
+        "adult": 7
+      },
+      "location": {
+        "lat": 40.4405,
+        "lng": -3.6902
+      },
+      "restaurant": {
+        "name": "Mo de Movimiento",
+        "description": "Το Mo de Movimiento είναι μια εξαιρετική λύση, καθώς πρόκειται για έναν μεγάλο, ανοιχτό και βιομηχανικό χώρο με μοντέρνα μεσογειακή κουζίνα και πίτσα, όπου το καρότσι χωράει άνετα.",
+        "map_url": "https://maps.app.goo.gl/5sN1A5Mwo55B93DF6"
+      },
+      "website": "https://www.mncn.csic.es/",
+      "notes": [],
+      "tags": [
+        "museum",
+        "natural history",
+        "dinosaurs",
+        "ecosystems",
+        "science"
+      ],
+      "duration_hours": 2.5,
+      "best_time": "afternoon",
+      "cafe": {
+       "name": "Escuela de Ingenieros Industriales",
+        "description": "Ακριβώς δίπλα στο μουσείο βρίσκεται η Escuela de Ingenieros Industriales (Πολυτεχνική Σχολή). Η καφετέρια της σχολής είναι ανοιχτή στο κοινό και είναι το πιο οικονομικό σημείο στην περιοχή για φαγητό ή καφέ, σε απόσταση μόλις 1 λεπτού",
+        "map_url": "https://maps.app.goo.gl/3poNS8QhV7Hm8dzx5"
+      }
+    },
+    {
+      "id": 9,
+      "name": "Museo de Cera (Μουσείο κέρινων ομοιομάτων)",
+      "description": "Με κέρινα αγάλματα διάσημων προσωπικοτήτων.Ιδανικό για άνω των 6-7 ετών, ίσως κάποια αγάλματα τρομάξουν τα πολύ μικρά",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 13,
+        "4": 13,
+        "5": 13,
+        "6": 13,
+        "7": 13,
+        "8": 13,
+        "9": 13,
+        "10": 13,
+        "11": 13,
+        "12": 13,
+        "13": 13,
+        "14": 13,
+        "15": 19,
+        "16": 19,
+        "17": 19,
+        "18": 19,
+        "19": 19,
+        "adult": 19
+      },
+      "location": {
+        "lat": 40.4201,
+        "lng": -3.6964
+      },
+      "restaurant": {
+        "name": "Casa Dani",
+        "description": "Πολύ διάσημο για την καλύτερη ίσως tortilla de patatas (ισπανική ομελέτα) στην πόλη. Βρίσκεται μέσα στην αγορά Mercado de la Paz, περίπου 10 λεπτά με τα πόδια. Είναι μια αυθεντική και οικονομική εμπειρία.",
+        "map_url": "https://maps.app.goo.gl/eNzmfV9WgmfUz2366"
+      },
+      "website": "https://museoceramadrid.com/",
+      "notes": [],
+      "tags": [
+        "wax",
+        "museum",
+        "celebrities",
+        "figures",
+        "family"
+      ],
+      "duration_hours": 2,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "Café Colón Madrid",
+        "description": "Βρίσκεται ακριβώς δίπλα στο μουσείο!",
+        "map_url": "https://maps.app.goo.gl/zP9RFCxDBtdaic2y9"
+      }
+    },
+    {
+      "id": 10,
+      "name": "Zoo Aquarium de Madrid",
+      "description": "Το Zoo Aquarium de Madrid είναι ένας από τους παλαιότερους και πληρέστερους ζωολογικούς κήπους στον κόσμο, καθώς συνδυάζει στον ίδιο χώρο παραδοσιακό πάρκο ζώων, ενυδρείο, δελφινάριο και έκθεση πτηνών. Κατάλληλο για κάθε ηλικία",
+      "category": "zoo",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 16.9,
+        "4": 16.9,
+        "5": 16.9,
+        "6": 19.8,
+        "7": 19.8,
+        "8": 19.8,
+        "9": 19.8,
+        "10": 19.8,
+        "11": 19.8,
+        "12": 19.8,
+        "13": 19.8,
+        "14": 19.8,
+        "15": 19.8,
+        "16": 19.8,
+        "17": 19.8,
+        "18": 19.8,
+        "19": 19.8,
+        "adult": 19.8
+      },
+      "location": {
+        "lat": 40.4062,
+        "lng": -3.7584
+      },
+      "restaurant": {
+        "name": "El Urogallo I Restaurante Casa de Campo",
+        "description": "Κλασικό εστιατόριο στη Casa de Campo με μερίδες από περίπου 10 € στα ορεκτικά, ουσιαστικά παραδοσιακές ισπανικές γεύσεις και μεγάλη μερίδα φαγητού.",
+        "map_url": "https://maps.app.goo.gl/zpuA3oQ21ke7w2by7"
+      },
+      "website": "https://www.zoomadrid.com/",
+      "notes": [
+        "Combo με Faunia: 39.90€ (online)"
+      ],
+      "tags": [
+        "zoo",
+        "aquarium",
+        "combo",
+        "animals",
+        "marine"
+      ],
+      "duration_hours": 4,
+      "best_time": "morning",
+      "cafe": {
+        "name": "Café del Lago",
+        "description": "Καφέ - εστιατόριο με θέα στη λίμνη",
+        "map_url": "https://maps.app.goo.gl/XHZcwVk3rS7ppynb7"
+      }
+    },
+    {
+      "id": 11,
+      "name": "Faunia",
+      "description": "Το Faunia είναι ένα μεγάλο βοτανικό πάρκο και ζωολογικός κήπος στη Μαδρίτη, το οποίο χωρίζεται σε διάφορα οικοσυστήματα, όπως η ζούγκλα, οι πόλοι και τα δάση, επιτρέποντάς σας να δείτε ζώα στο φυσικό τους περιβάλλον. Είναι ιδιαίτερα γνωστό για το οικοσύστημα των πιγκουίνων, το οποίο θεωρείται ένα από τα μεγαλύτερα στην Ευρώπη, καθώς και για τη νυχτερινή περιοχή όπου μπορείτε να παρατηρήσετε ζώα που δραστηριοποιούνται στο σκοτάδι.",
+      "category": "zoo",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 16.9,
+        "4": 16.9,
+        "5": 16.9,
+        "6": 16.9,
+        "7": 16.9,
+        "8": 16.9,
+        "9": 16.9,
+        "10": 16.9,
+        "11": 16.9,
+        "12": 16.9,
+        "13": 16.9,
+        "14": 16.9,
+        "15": 16.9,
+        "16": 16.9,
+        "17": 16.9,
+        "18": 16.9,
+        "19": 16.9,
+        "adult": 16.9
+      },
+      "location": {
+        "lat": 40.3742,
+        "lng": -3.6026
+      },
+      "restaurant": {
+        "name": "Restaurante Trasgu",
+        "description": "Αν δεν θέλετε να φάτε σε εστιατόριο εντός του Faunia, είναι ένα πιο προσεγμένο εστιατόριο με πολύ ωραίο περιβάλλον, ιδανικό αν θέλετε κάτι πιο κάθιστο και ποιοτικό. (4.3/5)",
+        "map_url": "https://maps.app.goo.gl/ZeBvSYuKifxwY9je7"
+      },
+      "website": "https://www.faunia.es/",
+      "notes": [
+        "Combo με Zoo: 39.90€ (online)"
+      ],
+      "tags": [
+        "park",
+        "ecosystems",
+        "animals",
+        "combo",
+        "nature"
+      ],
+      "duration_hours": 4,
+      "best_time": "any",
+      "cafe": {
+        "name": "Starbucks",
+        "description": "Starbucks που βρίσκεται στο εμπορικό κέντρο Alegra, ακριβώς δίπλα στο Micropolix",
+        "map_url": "https://maps.app.goo.gl/AGSyKaGz9YeFMkUx7"
+      }
+    },
+    {
+      "id": 12,
+      "name": "Atlantis Aquarium (Ενυδρείο)",
+      "description": "Ενυδρείο στο εμπορικό Xanadu.Κατάλληλο για κάθε ηλικία",
+      "category": "aquarium",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 9.9,
+        "4": 9.9,
+        "5": 9.9,
+        "6": 9.9,
+        "7": 9.9,
+        "8": 9.9,
+        "9": 9.9,
+        "10": 9.9,
+        "11": 9.9,
+        "12": 9.9,
+        "13": 9.9,
+        "14": 9.9,
+        "15": 9.9,
+        "16": 9.9,
+        "17": 9.9,
+        "18": 9.9,
+        "19": 9.9,
+        "adult": 9.9
+      },
+      "location": {
+        "lat": 40.299534,
+        "lng": -3.923605
+      },
+      "restaurant": {
+        "name": "Ginos",
+        "description": "εντός του εμπορικού κέντρου ,  ιταλικές γεύσεις",
+        "map_url": "https://maps.app.goo.gl/yXLp2qmyYYc49dbq6"
+      },
+      "website": "https://atlantisaquarium-madrid.es/",
+      "notes": [],
+      "tags": [
+        "aquarium",
+        "mall",
+        "marine",
+        "fish",
+        "shopping"
+      ],
+      "duration_hours": 2,
+      "best_time": "any",
+      "cafe": {
+         "name": "Manolo Bakes",
+        "description": "Είναι ίσως το πιο δημοφιλές σημείο για καφέ αυτή τη στιγμή στην Ισπανία, γνωστό για τα περίφημα Manolitos (μικρά κρουασάν).",
+        "map_url": "https://maps.app.goo.gl/59popRfFrZw3swze6"
+      }
+    },
+    {
+      "id": 13,
+      "name": "Parque de Atracciones (Λούνα Παρκ)",
+      "description": "Το Parque de Atracciones είναι το ιστορικό λούνα παρκ της Μαδρίτης μέσα στο πάρκο Casa de Campo, με πάνω από 30 αξιοθέατα για όλες τις ηλικίες, από έντονα τρενάκια μέχρι παιδική ζώνη Nickelodeon Land, και είναι εύκολα προσβάσιμο με το μετρό (στάση Batán, Γραμμή 10). Χρησιμοποιεί δυναμική τιμολόγηση (η τιμή αλλάζει ανά ημέρα).Κατάλληλο από 2 ετών και πάνω - υπάρχει ειδική ζώνη για τα μικρά",
+      "category": "themepark",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 24,
+        "4": 24,
+        "5": 24,
+        "6": 24,
+        "7": 24,
+        "8": 24,
+        "9": 24,
+        "10": 24,
+        "11": 24,
+        "12": 24,
+        "13": 24,
+        "14": 24,
+        "15": 24,
+        "16": 24,
+        "17": 24,
+        "18": 42,
+        "19": 42,
+        "adult": 42
+      },
+      "location": {
+        "lat": 40.424,
+        "lng": -3.7572
+      },
+      "restaurant": {
+        "name": "El Urogallo I Restaurante Casa de Campo",
+        "description": "Ένα από τα πιο γνωστά εστιατόρια της περιοχής με πολύ καλά κρεατικά και tapas. Λίγο έξω απο το πάρκο",
+        "map_url": "https://maps.app.goo.gl/VVs3firGNaSVHkK2A"
+      },
+      "website": "https://www.parquedeatracciones.es/",
+      "notes": [
+        "⚠️ Δυναμική τιμολόγηση - ελέγξτε online για ακριβή τιμή"
+      ],
+      "tags": [
+        "theme park",
+        "rides",
+        "attractions",
+        "dynamic pricing"
+      ],
+      "duration_hours": 5,
+      "best_time": "any",
+      "cafe": {
+        "name": "Nickelodeon café",
+        "description": "Βρίσκεται στη ζώνη των παιδικών παιχνιδιών (Nickelodeon Land)",
+        "map_url": "https://maps.app.goo.gl/i3PfBB5RTAdWwniRA"
+      }
+    },
+    {
+      "id": 14,
+      "name": "Parque Warner Madrid",
+      "description": "Θεματικό πάρκο με χαρακτήρες Warner Bros. Βρίσκεται εκτός πόλης (~25χλμ).Κατάλληλο απο 3 ετών και πάνω, υπάρχει ειδική ζώνη για τα μικρά. Ανοιχτό από Μάρτιο έως αρχές Ιανουαρίου",
+      "category": "themepark",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 32.9,
+        "4": 32.9,
+        "5": 32.9,
+        "6": 32.9,
+        "7": 32.9,
+        "8": 32.9,
+        "9": 32.9,
+        "10": 32.9,
+        "11": 32.9,
+        "12": 32.9,
+        "13": 32.9,
+        "14": 32.9,
+        "15": 32.9,
+        "16": 32.9,
+        "17": 32.9,
+        "18": 32.9,
+        "19": 32.9,
+        "adult": 32.9
+      },
+      "location": {
+        "lat": 40.2311,
+        "lng": -3.5931
+      },
+      "restaurant": {
+        "name": "Hollywood Hot Dogs",
+        "description": "Eντός του πάρκου.",
+        "map_url": "https://maps.app.goo.gl/BkSbwcKyeYThg6nf8"
+      },
+      "website": "https://www.parquewarner.com/",
+      "notes": [
+        "⚠️ ΜΟΝΟ online αγορά - στο ταμείο πιο ακριβά"
+      ],
+      "tags": [
+        "theme park",
+        "warner bros",
+        "outside city",
+        "rides",
+        "characters"
+      ],
+      "duration_hours": 6,
+      "best_time": "any",
+      "cafe": {
+        "name": "Starbucks",
+        "description": "Κλασικά Starbucks",
+        "map_url": "https://maps.app.goo.gl/BuZGhuFCqc1kZP6s6"
+      }
+    },
+    {
+      "id": 15,
+      "name": "Safari Madrid (Aldea del Fresno)",
+      "description": "Σαφάρι με ζώα.Μπαίνεις με το δικό σου αυτοκίνητο σε μεγάλες περιφραγμένες εκτάσεις όπου κυκλοφορούν ελεύθερα ζώα. (50χλμ από Μαδρίτη).",
+      "category": "zoo",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 17.9,
+        "4": 17.9,
+        "5": 17.9,
+        "6": 17.9,
+        "7": 17.9,
+        "8": 17.9,
+        "9": 17.9,
+        "10": 17.9,
+        "11": 17.9,
+        "12": 17.9,
+        "13": 17.9,
+        "14": 17.9,
+        "15": 22.9,
+        "16": 22.9,
+        "17": 22.9,
+        "18": 22.9,
+        "19": 22.9,
+        "adult": 22.9
+      },
+      "location": {
+        "lat": 40.3089,
+        "lng": -4.2540
+      },
+      "restaurant": {
+        "name": "Restaurante Amboseli",
+        "description": "Είναι το κεντρικό εστιατόριο του πάρκου. Κυρίως κλασικές επιλογές όπως μπέργκερ, σάντουιτς και κάποια ισπανικά πιάτα.",
+        "map_url": "https://maps.app.goo.gl/FSZYorv9fYnrFUjR6"
+      },
+      "website": "https://www.safarimadrid.com/",
+      "notes": [
+        "⚠️ ΥΠΟΧΡΕΩΤΙΚΑ online αγορά εκ των προτέρων"
+      ],
+      "tags": [
+        "safari",
+        "animals",
+        "drive-through",
+        "outside city",
+        "car required"
+      ],
+      "duration_hours": 3,
+      "best_time": "morning",
+      "cafe": {
+        "name": "Bar El Barril",
+        "description": "Το χωριό Aldea del Fresno (μόλις 5-8 λεπτά με το αυτοκίνητο) έχει πολύ ωραίες  επιλογές: Το Bar El Barril είναι υπέροχο για καφέ, σνακ ή τάπας, με πολύ υψηλή βαθμολογία (4.6). ",
+        "map_url": "https://maps.app.goo.gl/LQHHW7DgZ2rMChX57"
+      }
+    },
+    {
+      "id": 16,
+      "name": "Santiago Bernabéu Tour (Tour Γηπέδου Ρεάλ Μαδρίτης)",
+      "description": "Το τουρ στο Μπερναμπέου είναι μια διαδρομή που εστιάζει κυρίως στο πλούσιο μουσείο με τα 15 Champions League, τις Χρυσές Μπάλες και την ιστορία της Ρεάλ. Περιλαμβάνει πέρασμα από τις κερκίδες για φωτογραφίες, επίσκεψη στα αποδυτήρια και το τούνελ των παικτών, ενώ καταλήγει στο μεγάλο κατάστημα της ομάδας. Είναι μια εμπειρία προσανατολισμένη στον εντυπωσιασμό μέσω οθονών και τροπαίων, που διαρκεί περίπου μιάμιση ώρα ανάλογα.",
+      "category": "stadium",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 42,
+        "4": 42,
+        "5": 42,
+        "6": 42,
+        "7": 42,
+        "8": 42,
+        "9": 42,
+        "10": 42,
+        "11": 42,
+        "12": 42,
+        "13": 42,
+        "14": 42,
+        "15": 45,
+        "16": 45,
+        "17": 45,
+        "18": 45,
+        "19": 45,
+        "adult": 45
+      },
+      "location": {
+        "lat": 40.453,
+        "lng": -3.6883
+      },
+      "restaurant": {
+        "name": "Bar La Huella",
+        "description": "Μεσογειακή κουζίνα.Πιο οικονομική λύση από τα εστιατόρια εντός του γηπέδου",
+        "map_url": "https://maps.app.goo.gl/X4uJV82nfWamuLJa9"
+      },
+      "website": "https://www.realmadrid.com/",
+      "notes": [
+        "⚠️ Δυναμική τιμολόγηση - οι τιμές διαφέρουν ανά ημερομηνία"
+      ],
+      "tags": [
+        "stadium",
+        "football",
+        "real madrid",
+        "tour",
+        "sports"
+      ],
+      "duration_hours": 2,
+      "best_time": "any",
+      "cafe": {
+        "name": "Maison Kayser Bernabéu",
+        "description": "Μια εξαιρετική γαλλική boulangerie/café ακριβώς απέναντι. Ιδανικό για πολύ καλό καφέ, φρέσκα κρουασάν και γλυκά σε έναν πολύ όμορφο χώρο.",
+        "map_url": "https://maps.app.goo.gl/dNJdjtU87QuPsT9F9"
+      }
+    },
+    {
+      "id": 17,
+      "name": "Micropolix (Παιδική Πόλη Επαγγελμάτων)",
+      "description": "Το Micropolix είναι μια στεγασμένη πόλη των παιδιών 12.000 τ.μ. στο San Sebastián de los Reyes, όπου παιδιά 4-14 ετών κάνουν παιχνίδια ρόλων σε επαγγέλματα, κερδίζουν το τοπικό νόμισμα Eurix και μαθαίνουν για την κοινωνική ζωή.",
+      "category": "edutainment",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 15,
+        "4": 15,
+        "5": 15,
+        "6": 16,
+        "7": 16,
+        "8": 16,
+        "9": 16,
+        "10": 16,
+        "11": 16,
+        "12": 16,
+        "13": 16,
+        "14": 16,
+        "15": 16,
+        "16": 16,
+        "17": 16,
+        "18": 16,
+        "19": 16,
+        "adult": 16
+      },
+      "location": {
+        "lat": 40.4735,
+        "lng": -3.6128
+      },
+      "restaurant": {
+        "name": "Restaurante Micropolix",
+        "description": "Εστιατόριο μέσα στον χώρο",
+        "map_url": "https://maps.app.goo.gl/y2VpL2TUQcX2MecR9"
+      },
+      "website": "https://micropolix.com/",
+      "notes": [],
+      "tags": [
+        "children",
+        "edutainment",
+        "city",
+        "professions",
+        "interactive"
+      ],
+      "duration_hours": 4,
+      "best_time": "any",
+      "cafe": {
+        "name": "The Chatter Cafe",
+        "description": "Βρίσκεται ακριβώς δίπλα, εντός του συγκροτήματος",
+        "map_url": "https://maps.app.goo.gl/scQ6Es4BYRsYnMie6"
+      }
+    },
+    {
+      "id": 18,
+      "name": "Sweet Space (Παιδικός Χώρος με Γλυκά Θέματα)",
+      "description": "Χώρος με θέμα τα γλυκά και διαδραστικές εμπειρίες.10 θεματικά δωμάτια,  πισίνες με μπαλάκια,  τσουλήθρες και, φυσικά, γλυκά που προσφέρονται σε κάθε σταθμό. Ιδανικό από 3 ετών και πάνω",
+      "category": "entertainment",
+      "prices": {
+        "0": 10,
+        "1": 10,
+        "2": 10,
+        "3": 10,
+        "4": 10,
+        "5": 10,
+        "6": 12,
+        "7": 12,
+        "8": 12,
+        "9": 12,
+        "10": 12,
+        "11": 12,
+        "12": 12,
+        "13": 12,
+        "14": 12,
+        "15": 15,
+        "16": 15,
+        "17": 15,
+        "18": 15,
+        "19": 15,
+        "adult": 15
+      },
+      "location": {
+        "lat": 40.4255,
+        "lng": -3.7035
+      },
+      "restaurant": {
+        "name": "VIPS",
+        "description": "Πρόκειται για μια πολύ δημοφιλή αλυσίδα στην Ισπανία, η οποία αποτελεί την ιδανική λύση για κοντά και οικονομικά.",
+        "map_url": "https://maps.app.goo.gl/LdqdN6FXoyPziPSa7"
+      },
+      "website": "https://www.sweetspace.com/",
+      "notes": [
+        "👨‍👩‍👧‍👦 Οικογενειακό πακέτο (2+2): 40€"
+      ],
+      "tags": [
+        "sweets",
+        "children",
+        "interactive",
+        "themed",
+        "family"
+      ],
+      "duration_hours": 2,
+      "best_time": "any",
+      "cafe": {
+        "name": "VIPS",
+        "description": "Πρόκειται για μια πολύ δημοφιλή αλυσίδα στην Ισπανία, η οποία αποτελεί την ιδανική λύση για κοντά και οικονομικά.",
+        "map_url": "https://maps.app.goo.gl/LdqdN6FXoyPziPSa7"
+      }
+    },
+    {
+      "id": 19,
+      "name": "IKONO (Διαδραστική & Φωτογραφική Εμπειρία)",
+      "description": "Διαδραστική εμπειρία 10 περίπου δωματίων που συνδυάζει την τέχνη με τις αισθήσεις, προσφέροντας εντυπωσιακά σκηνικά για παιχνίδι και φωτογραφίες.Ιδανικό από 5 ετών και πάνω.",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 13.9,
+        "4": 13.9,
+        "5": 13.9,
+        "6": 13.9,
+        "7": 13.9,
+        "8": 13.9,
+        "9": 13.9,
+        "10": 13.9,
+        "11": 13.9,
+        "12": 13.9,
+        "13": 13.9,
+        "14": 13.9,
+        "15": 17.9,
+        "16": 17.9,
+        "17": 17.9,
+        "18": 17.9,
+        "19": 17.9,
+        "adult": 17.9
+      },
+      "location": {
+        "lat": 40.418,
+        "lng": -3.702
+      },
+      "restaurant": {
+        "name": "Tierra Burrito Bar",
+        "description": "Αν ψάχνετε για κάτι πολύ γρήγορο, οικονομικό και σίγουρο (ειδικά για παιδιά που αγαπούν τα burritos και τα nachos), το Tierra είναι η καλύτερη επιλογή στην περιοχή",
+        "map_url": "https://maps.app.goo.gl/6T3fMQ5TqSTS1SxbA"
+      },
+      "website": "https://ikonomadrid.com/",
+      "notes": [
+        "👨‍👩‍👧‍👦 Οικογενειακό πακέτο: 3 άτομα x 13.90€"
+      ],
+      "tags": [
+        "interactive",
+        "photo",
+        "experience",
+        "museum",
+        "digital"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "any",
+      "cafe": {
+        "name": "Hola Coffee Fourquet",
+        "description": "Είναι ένα από τα πιο διάσημα specialty coffee spots στη Μαδρίτη",
+        "map_url": "https://maps.app.goo.gl/gwQju4P36JM32uP2A"
+      }
+    },
+    {
+      "id": 20,
+      "name": "Urban Planet Las Rejas ",
+      "description": "Ένα σύγχρονο δίκτυο κλειστών πάρκων με τραμπολίνο. Κατάλληλο για άνω των 5 ετών",
+      "category": "sports",
+      "prices": {
+        "0": 12,
+        "1": 12,
+        "2": 12,
+        "3": 12,
+        "4": 12,
+        "5": 12,
+        "6": 12,
+        "7": 12,
+        "8": 12,
+        "9": 12,
+        "10": 12,
+        "11": 12,
+        "12": 12,
+        "13": 12,
+        "14": 12,
+        "15": 12,
+        "16": 12,
+        "17": 12,
+        "18": 12,
+        "19": 12,
+        "adult": 12
+      },
+      "location": {
+        "lat": 40.38,
+        "lng": -3.625
+      },
+      "restaurant": {
+        "name": "Freestyle Cantina: Sports Bar con Bolera",
+        "description": "Λειτουργεί ως Sports Bar, προσφέροντας κυρίως πίτσες, hot dogs, nachos και άλλα σνακ που είναι δημοφιλή σε μικρούς και μεγάλους.",
+        "map_url": "https://maps.app.goo.gl/Z1Mf5dum8dV9TaRs5"
+      },
+      "website": "https://urbanplanetjump.es/parques/las-rejas/",
+      "notes": [
+        "💰 ~12€ για 60 λεπτά"
+      ],
+      "tags": [
+        "sports",
+        "parkour",
+        "extreme",
+        "park",
+        "active"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "any",
+      "cafe": {
+       "name": "Freestyle Cantina: Sports Bar con Bolera",
+        "description": "Λειτουργεί ως Sports Bar, προσφέροντας κυρίως πίτσες, hot dogs, nachos και άλλα σνακ που είναι δημοφιλή σε μικρούς και μεγάλους.",
+        "map_url": "https://maps.app.goo.gl/Z1Mf5dum8dV9TaRs5"
+      }
+    },
+    {
+      "id": 21,
+      "name": "Teleférico de Madrid",
+      "description": "Τελεφερίκ με θέα την πόλη. ⚠️ ΠΡΟΣΩΡΙΝΑ ΚΛΕΙΣΤΟ - ενημερωθείτε από το επίσημο site. Κατάλληλο για κάθε ηλικία",
+      "category": "attraction",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 5,
+        "4": 5,
+        "5": 5,
+        "6": 5,
+        "7": 5,
+        "8": 5,
+        "9": 5,
+        "10": 5,
+        "11": 5,
+        "12": 5,
+        "13": 5,
+        "14": 5,
+        "15": 6,
+        "16": 6,
+        "17": 6,
+        "18": 6,
+        "19": 6,
+        "adult": 6
+      },
+      "location": {
+        "lat": 40.4245,
+        "lng": -3.721
+      },
+      "restaurant": {
+        "name": "Casa Mingo",
+        "description": "Παραδοσιακό ισπανικό εστιατόριο",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Casa+Mingo+Madrid"
+      },
+      "website": "https://teleferico.emtmadrid.es/",
+      "notes": [
+        "⚠️ ΠΡΟΣΩΡΙΝΑ ΚΛΕΙΣΤΟ - Ελέγξτε πριν από επίσκεψη"
+      ],
+      "tags": [
+        "cable car",
+        "view",
+        "panorama",
+        "transportation"
+      ],
+      "duration_hours": 1,
+      "best_time": "any",
+      "currentlyClosed": true,
+      "cafe": {
+        "name": "Cafetería Teleférico",
+        "description": "Αν πάρετε το τελεφερίκ στον σταθμό άφιξης (Casa de Campo) αυτή η καφετέρια έχει την καλύτερη πανοραμική θέα της Μαδρίτης.",
+        "map_url": "https://maps.app.goo.gl/DuAiQdUDtMaW7ETH9"
+      }
+    }
+  ]
+}

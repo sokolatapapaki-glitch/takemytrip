@@ -1,0 +1,11 @@
+# Don't send these to the Docker build context.
+node_modules
+.next
+.git
+.gitignore
+Dockerfile
+.dockerignore
+docker-compose.yml
+npm-debug.log*
+README.md
+.env*.local

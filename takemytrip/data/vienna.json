@@ -1,0 +1,1103 @@
+{
+  "city": "Βιέννη",
+  "country": "Αυστρία",
+  "currency": "EUR",
+  "emoji": "🇦🇹",
+  "pricing_model": "per_age",
+  "description": "Η αυτοκρατορική πρωτεύουσα της Αυστρίας, γνωστή για τα πανύψηλα παλάτια, την κλασική μουσική, τις καφετέριες και τον πλούσιο πολιτισμό της.",
+  "location": {
+    "lat": 48.2082,
+    "lng": 16.3738
+  },
+  "cityPass": {
+    "name": "Vienna Pass",
+    "description": "Δωρεάν είσοδος σε περισσότερα από 90 αξιοθέατα",
+    "discountPercent": 30,
+    "url": "https://www.viennapass.de/en"
+  },
+  "activities": [
+    {
+      "id": 1,
+      "name": "Palace Ticket - Schönbrunn Palace",
+      "description": "Βασικό εισιτήριο για τα κρατικά/ιδιωτικά διαμερίσματα του διασημου ανακτόρου των Αψβούργων. Με audio-guide.",
+      "category": "attraction",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 28,
+        "7": 28,
+        "8": 28,
+        "9": 28,
+        "10": 28,
+        "11": 28,
+        "12": 28,
+        "13": 28,
+        "14": 28,
+        "15": 31.5,
+        "16": 31.5,
+        "17": 31.5,
+        "18": 38,
+        "19": 38,
+        "adult": 38
+      },
+      "location": {
+        "lat": 48.1845,
+        "lng": 16.3122
+      },
+      "restaurant": {
+        "name": "Brandauer Schlossbräu",
+        "description": "Απέχει μόλις 5-7 λεπτά με τα πόδια από την έξοδο του παλατιού. Είναι ένα ευρύχωρο, παραδοσιακό εστιατόριο-ζυθοποιία που στεγάζεται σε ένα ιστορικό κτίριο.",
+        "map_url": "https://maps.app.goo.gl/XoZmtt1fygAJnt6a9"
+      },
+      "website": "https://www.schoenbrunn.at/en/",
+      "notes": [
+        "Σχολικές ομάδες (6-18): €18.00"
+      ],
+      "tags": [
+        "palace",
+        "unesco",
+        "imperial",
+        "audio guide"
+      ],
+      "duration_hours": 2.5,
+      "best_time": "morning",
+      "cafe": {
+        "name": "Café Gloriette",
+        "description": "Βρίσκεται στον λόφο απέναντι απο το παλάτι και έχει υπέροχη πανοραμική θέα. ",
+        "map_url": "https://maps.app.goo.gl/bvTHsxUrY8XodUrP8"
+      }
+    },
+    {
+      "id": 2,
+      "name": "State Apartments",
+      "description": "Σύντομη ξενάγηση στα διαμερίσματα του διάσημου ανακτόρου των Αψβούργων ",
+      "category": "attraction",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 19,
+        "7": 19,
+        "8": 19,
+        "9": 19,
+        "10": 19,
+        "11": 19,
+        "12": 19,
+        "13": 19,
+        "14": 19,
+        "15": 19,
+        "16": 19,
+        "17": 19,
+        "18": 19,
+        "19": 28,
+        "adult": 28
+      },
+      "location": {
+        "lat": 48.1846,
+        "lng": 16.3123
+      },
+      "restaurant": {
+        "name": "Brandauer Schlossbräu",
+        "description": "Απέχει μόλις 5-7 λεπτά με τα πόδια από την έξοδο του παλατιού. Είναι ένα ευρύχωρο, παραδοσιακό εστιατόριο-ζυθοποιία που στεγάζεται σε ένα ιστορικό κτίριο.",
+        "map_url": "https://maps.app.goo.gl/XoZmtt1fygAJnt6a9"
+      },
+      "website": "https://www.schoenbrunn.at/en/",
+      "notes": [],
+      "tags": [
+        "palace",
+        "guided tour",
+        "imperial apartments"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "any",
+       "cafe": {
+        "name": "Café Gloriette",
+        "description": "υπέροχη θέα, μέσα στον χώρο",
+        "map_url": "https://maps.app.goo.gl/bvTHsxUrY8XodUrP8"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Sisi Pass (3 αυτοκρατορικά αξιοθέατα)",
+      "description": "Schönbrunn Palace + Sisi Museum (Hofburg) + Vienna Furniture Museum.",
+      "category": "attraction",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 37,
+        "7": 37,
+        "8": 37,
+        "9": 37,
+        "10": 37,
+        "11": 37,
+        "12": 37,
+        "13": 37,
+        "14": 37,
+        "15": 37,
+        "16": 37,
+        "17": 37,
+        "18": 57,
+        "19": 57,
+        "adult": 57
+      },
+      "location": {
+        "lat": 48.2058,
+        "lng": 16.3698
+      },
+      "restaurant": {
+        "name": "Figlmüller – Wollzeile",
+        "description": "Αν καταλήξετε στο Hofburg πολύ κοντά είναι το Figlmüller, διάσημο για τα καλύτερα schnitzel της Βιέννης. Θέλει κράτηση πολυ καιρό πριν. Εναλλακτικά δείτε το Reinthaler's Beisl",
+        "map_url": "https://maps.app.goo.gl/wPtAbh7zMC56qUeF7"
+      },
+      "website": "https://www.schoenbrunn.at/en/all-tickets/sisi-pass",
+      "notes": [
+        "Εκπτωτικό combo για 3 αξιοθέατα"
+      ],
+      "tags": [
+        "combo pass",
+        "museum",
+        "palace",
+        "imperial"
+      ],
+      "duration_hours": 6,
+      "best_time": "any",
+       "cafe": {
+        "name": "Café Central",
+        "description": "H πιο διάσημh ιστορική καφετέρια της Βιέννης, με υπέροχη νεογοτθική αίθουσα. Τόπος συνάντησης διανοουμένων και καλλιτεχνών",
+        "map_url": "https://maps.app.goo.gl/x37tEi7C843zCohk9"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Winter Pass (χειμερινή περίοδος)",
+      "description": "Palace Ticket + Zoo + Desert House + Palm House Schönbrunn. Ισχύει Νοέμβριο με Μάρτιο.",
+      "category": "attraction",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 47,
+        "7": 47,
+        "8": 47,
+        "9": 47,
+        "10": 47,
+        "11": 47,
+        "12": 47,
+        "13": 47,
+        "14": 47,
+        "15": 47,
+        "16": 47,
+        "17": 47,
+        "18": 69,
+        "19": 69,
+        "adult": 69
+      },
+      "location": {
+        "lat": 48.1847,
+        "lng": 16.3124
+      },
+       "restaurant": {
+        "name": "Brandauer Schlossbräu",
+        "description": "Απέχει μόλις 5-7 λεπτά με τα πόδια από την έξοδο του παλατιού. Είναι ένα ευρύχωρο, παραδοσιακό εστιατόριο-ζυθοποιία που στεγάζεται σε ένα ιστορικό κτίριο.",
+        "map_url": "https://maps.app.goo.gl/XoZmtt1fygAJnt6a9"
+      },
+      "website": "https://www.schoenbrunn.at/en/all-tickets/winter-pass",
+      "notes": [],
+      "tags": [
+        "combo pass",
+        "seasonal",
+        "winter",
+        "zoo",
+        "garden"
+      ],
+      "duration_hours": 5,
+      "best_time": "any",
+      "seasonal": true,
+      "cafe": {
+        "name": "Café Gloriette",
+        "description": "υπέροχη θέα, μέσα στον χώρο",
+        "map_url": "https://maps.app.goo.gl/bvTHsxUrY8XodUrP8"
+      }
+    },
+    {
+      "id": 5,
+      "name": "Classic Pass (καλοκαιρινή περίοδος)",
+      "description": "Palace Ticket + Privy Garden + Maze & Labyrinth + Orangery Garden + Gloriette terrace.Καλύπτει μεγάλο μέρος του Schönbrunn.",
+      "category": "attraction",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 28,
+        "7": 28,
+        "8": 28,
+        "9": 28,
+        "10": 28,
+        "11": 28,
+        "12": 28,
+        "13": 28,
+        "14": 28,
+        "15": 31,
+        "16": 31,
+        "17": 31,
+        "18": 40,
+        "19": 40,
+        "adult": 40
+      },
+      "location": {
+        "lat": 48.1848,
+        "lng": 16.3125
+      },
+      "restaurant": {
+        "name": "Brandauer Schlossbräu",
+        "description": "Απέχει μόλις 5-7 λεπτά με τα πόδια από την έξοδο του παλατιού. Είναι ένα ευρύχωρο, παραδοσιακό εστιατόριο-ζυθοποιία που στεγάζεται σε ένα ιστορικό κτίριο.",
+        "map_url": "https://maps.app.goo.gl/XoZmtt1fygAJnt6a9"
+      },
+      "website": "https://www.schoenbrunn.at/en/all-tickets/classic-pass",
+      "notes": [
+        "Ιδανικό για μονοήμερη επίσκεψη"
+      ],
+      "tags": [
+        "combo pass",
+        "garden",
+        "maze",
+        "view"
+      ],
+      "duration_hours": 4,
+      "best_time": "any",
+      "cafe": {
+        "name": "Café Gloriette",
+        "description": "υπέροχη θέα, μέσα στον χώρο",
+        "map_url": "https://maps.app.goo.gl/bvTHsxUrY8XodUrP8"
+      }
+    },
+    {
+      "id": 6,
+      "name": "Classic Pass Plus (πλήρες πακέτο)",
+      "description": "Classic Pass + Zoo + Desert House + Palm House - σχεδόν όλο το Schönbrunn.",
+      "category": "attraction",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 53.5,
+        "7": 53.5,
+        "8": 53.5,
+        "9": 53.5,
+        "10": 53.5,
+        "11": 53.5,
+        "12": 53.5,
+        "13": 53.5,
+        "14": 53.5,
+        "15": 53.5,
+        "16": 53.5,
+        "17": 53.5,
+        "18": 76,
+        "19": 76,
+        "adult": 76
+      },
+      "location": {
+        "lat": 48.1849,
+        "lng": 16.3126
+      },
+      "restaurant": {
+        "name": "Tyrolean Garden Inn",
+        "description": "Πρόκειται για ένα παραδοσιακό αυστριακό εστιατόριο που μοιάζει με ορεινό καταφύγιο των Άλπεων, παρόλο που βρίσκεται μέσα στην πόλη. Είναι δίπλα από το zoo",
+        "map_url": "https://maps.app.goo.gl/29hDDm92VGo4v6uj7"
+      },
+      "website": "https://www.schoenbrunn.at/en/all-tickets/classic-pass-plus",
+      "notes": [
+        "20-30% εξοικονόμηση"
+      ],
+      "tags": [
+        "combo pass",
+        "full package",
+        "zoo",
+        "garden"
+      ],
+      "duration_hours": 6,
+      "best_time": "any",
+      "cafe": {
+        "name": "Café Gloriette",
+        "description": "Βρίσκεται στον λόφο απέναντι από το παλάτι και έχει πανοραμική υπέροχη θέα.",
+        "map_url": "https://maps.app.goo.gl/RSzzSCTv5VWbCuFy7"
+      }
+    },
+    {
+      "id": 7,
+      "name": "Children's Museum (Kindermuseum)",
+      "description": "Διαδραστικό μουσείο για παιδιά 3-12 ετών. Τα παιδιά μπορούν να ντυθούν με βασιλικά ρούχα, να παίξουν με παλιά παιχνίδια και να μάθουν για το πρωτόκολλο του παλατιού",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 12,
+        "4": 12,
+        "5": 12,
+        "6": 12,
+        "7": 12,
+        "8": 12,
+        "9": 12,
+        "10": 12,
+        "11": 12,
+        "12": 12,
+        "13": 12,
+        "14": 12,
+        "15": 12,
+        "16": 12,
+        "17": 12,
+        "18": 12,
+        "19": 12,
+        "adult": 12
+      },
+      "location": {
+        "lat": 48.185,
+        "lng": 16.3127
+      },
+      "restaurant": {
+        "name": "Brandauer Schlossbräu",
+        "description": "Οικογενειακό, παραδοσιακό με εσωτερικό παιδότοπο.",
+        "map_url": "https://maps.app.goo.gl/vv2b1VsfMP41wTHA7"
+      },
+      "website": "https://www.kindermuseumschoenbrunn.at/en/",
+      "notes": [],
+      "tags": [
+        "museum",
+        "interactive",
+        "children",
+        "family"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "Schlosscafé Schönbrunn",
+        "description": "Είναι εξαιρετικά κοντά, περίπου 2-3 λεπτά με τα πόδια.",
+        "map_url": "https://maps.app.goo.gl/Vjvmjk2ie1Yyf5ZH6"
+      }
+    },
+    {
+      "id": 8,
+      "name": "Zoo Vienna - Family Block Ticket",
+      "description": "5 εισιτήρια (2 adults + 3 children/adolescents) - ισχύει 1 χρόνο.",
+      "category": "zoo",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 19.2,
+        "4": 19.2,
+        "5": 19.2,
+        "6": 19.2,
+        "7": 19.2,
+        "8": 19.2,
+        "9": 19.2,
+        "10": 19.2,
+        "11": 19.2,
+        "12": 19.2,
+        "13": 19.2,
+        "14": 19.2,
+        "15": 19.2,
+        "16": 19.2,
+        "17": 19.2,
+        "18": 19.2,
+        "19": 19.2,
+        "adult": 19.2
+      },
+      "location": {
+        "lat": 48.18,
+        "lng": 16.3028
+      },
+      "restaurant": {
+        "name": "Café im Tiergarten Schönbrunn",
+        "description": "",
+        "map_url": "https://maps.app.goo.gl/XRkfxBAACm4tCnNE6"
+      },
+      "website": "https://zoovienna.at/",
+      "notes": [
+        "Σύνολο: €96 για 5 άτομα"
+      ],
+      "tags": [
+        "zoo",
+        "family ticket",
+        "validity 1 year"
+      ],
+      "duration_hours": 3,
+      "best_time": "morning",
+     "cafe": {
+        "name": "Café Gloriette",
+        "description": "υπέροχη θέα, μέσα στον χώρο",
+        "map_url": "https://maps.app.goo.gl/bvTHsxUrY8XodUrP8"
+      }
+    },
+    {
+      "id": 9,
+      "name": "Zoo + Palm House + Desert House Combo Schönbrunn",
+      "description": "Συνδυαστικό εισιτήριο για μία επίσκεψη σε κάθε αξιοθέατο.",
+      "category": "zoo",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 22.5,
+        "4": 22.5,
+        "5": 22.5,
+        "6": 22.5,
+        "7": 22.5,
+        "8": 22.5,
+        "9": 22.5,
+        "10": 22.5,
+        "11": 22.5,
+        "12": 22.5,
+        "13": 22.5,
+        "14": 22.5,
+        "15": 22.5,
+        "16": 22.5,
+        "17": 22.5,
+        "18": 36,
+        "19": 36,
+        "adult": 36
+      },
+      "location": {
+        "lat": 48.1801,
+        "lng": 16.3029
+      },
+      "restaurant": {
+        "name": "Palm House Café",
+        "description": "",
+        "map_url": "https://maps.app.goo.gl/XRkfxBAACm4tCnNE6"
+      },
+      "website": "https://zoovienna.at/",
+      "notes": [
+        "Ιδανικό για οικογένειες"
+      ],
+      "tags": [
+        "zoo",
+        "combo",
+        "garden",
+        "greenhouse"
+      ],
+      "duration_hours": 4,
+      "best_time": "any",
+      "cafe": {
+        "name": "Café Gloriette",
+        "description": "υπέροχη θέα, μέσα στον χώρο",
+        "map_url": "https://maps.app.goo.gl/bvTHsxUrY8XodUrP8"
+      }
+    },
+    {
+      "id": 10,
+      "name": "Haus des Meeres (Aqua Terra Zoo)",
+      "description": "Ενυδρείο και μικρός ζωολογικός κήπος στο κέντρο της Βιέννης.",
+      "category": "aquarium",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 6.5,
+        "4": 6.5,
+        "5": 6.5,
+        "6": 9.8,
+        "7": 9.8,
+        "8": 9.8,
+        "9": 9.8,
+        "10": 9.8,
+        "11": 9.8,
+        "12": 9.8,
+        "13": 9.8,
+        "14": 9.8,
+        "15": 22.9,
+        "16": 22.9,
+        "17": 22.9,
+        "18": 22.9,
+        "19": 22.9,
+        "adult": 22.9
+      },
+      "location": {
+        "lat": 48.205,
+        "lng": 16.3575
+      },
+      "restaurant": {
+        "name": "360 ocean sky",
+        "description": "Εστιατόριο με περιστρεφόμενο πάτωμα και πανοραμική θέα 360 μοιρών της Βιέννης. Eντυπωσιακή εμπειρία",
+        "map_url": "https://maps.app.goo.gl/iA2AEYzEw4qijmMK6"
+      },
+      "website": "https://www.haus-des-meeres.at/en",
+      "notes": [],
+      "tags": [
+        "aquarium",
+        "zoo",
+        "city center",
+        "tower"
+      ],
+      "duration_hours": 2.5,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "cafe Sperl",
+        "description": "Αυθεντικό, πατροπαράδοτο βιεννέζικο καφέ του 1880. Διατηρεί την παλιά γοητεία χωρίς τουριστική οχλαγωγία",
+        "map_url": "https://maps.app.goo.gl/NW6y5oMWs95PX1Xa9"
+      }
+    },
+    {
+      "id": 11,
+      "name": "Time Travel Vienna",
+      "description": "Διαδραστικό ταξίδι 2000 χρόνων της ιστορίας της Βιέννης με 5D εμπειρία. Ιδανικό για παιδιά άνω των 5-6 ετών. Οι μικρότερες ηλικίες ίσως τρομάξουν ελαφρώς με τα εφέ (κίνηση, σκοτάδι, θόρυβοι) στο σινεμά 5D.",
+      "category": "attraction",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 18,
+        "7": 18,
+        "8": 18,
+        "9": 18,
+        "10": 18,
+        "11": 18,
+        "12": 18,
+        "13": 18,
+        "14": 18,
+        "15": 22,
+        "16": 22,
+        "17": 22,
+        "18": 22,
+        "19": 22,
+        "adult": 22
+      },
+      "location": {
+        "lat": 48.2084,
+        "lng": 16.3731
+      },
+      "restaurant": {
+        "name": "Esterházykeller",
+        "description": "Μετά το ταξίδι στην ιστορία με το Time Travel, το Esterházykeller σας μεταφέρει σε ένα αυθεντικό ιστορικό περιβάλλον, σε μια από τις παλαιότερες κελάρια-ταβέρνες της πόλης.",
+        "map_url": "https://maps.app.goo.gl/85c2eNxYoTfLv7o16"
+      },
+      "website": "https://www.timetravel-vienna.at/en",
+      "notes": [],
+      "tags": [
+        "interactive",
+        "history",
+        "multimedia",
+        "family"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "any",
+      "cafe": {
+        "name": "Café Central",
+        "description": "Είναι ίσως το πιο διάσημο καφέ της πόλης και απέχει μόλις 3 λεπτά με τα πόδια (250 μέτρα)",
+        "map_url": "https://maps.app.goo.gl/6hoDQTWwVDaBs2Au7"
+      }
+    },
+    {
+      "id": 12,
+      "name": "Sisi's Amazing Journey (VR Experience)",
+      "description": "VR εμπειρία για τη ζωή της αυτοκράτειρας Σίσσι, ταξίδι πάνω σε βάρκα μαζί της! Κατάλληλο για όλες τις ηλικίες αρκεί να μπορούν να φορέσουν την μάσκα 5D.",
+      "category": "attraction",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 14,
+        "7": 14,
+        "8": 14,
+        "9": 14,
+        "10": 14,
+        "11": 14,
+        "12": 14,
+        "13": 14,
+        "14": 14,
+        "15": 14,
+        "16": 14,
+        "17": 14,
+        "18": 14,
+        "19": 14,
+        "adult": 14
+      },
+      "location": {
+        "lat": 48.2058,
+        "lng": 16.3698
+      },
+      "restaurant": {
+        "name": "Esterházykeller",
+        "description": "Μετά το ταξίδι στην ιστορία με το Time Travel, το Esterházykeller σας μεταφέρει σε ένα αυθεντικό ιστορικό περιβάλλον, σε μια από τις παλαιότερες κελάρια-ταβέρνες της πόλης.",
+        "map_url": "https://maps.app.goo.gl/85c2eNxYoTfLv7o16"
+      },
+      "website": "https://www.amazing-sisi.at/?utm_source=google&utm_medium=seo&utm_campaign=google-my-business",
+      "notes": [
+        "Combo με Time Travel διαθέσιμο"
+      ],
+      "tags": [
+        "vr",
+        "interactive",
+        "sisi",
+        "imperial"
+      ],
+      "duration_hours": 0.75,
+      "best_time": "any",
+      "cafe": {
+        "name": "Café Central",
+        "description": "Είναι ίσως το πιο διάσημο καφέ της πόλης και απέχει μόλις 3 λεπτά με τα πόδια (250 μέτρα)",
+        "map_url": "https://maps.app.goo.gl/6hoDQTWwVDaBs2Au7"
+      }
+    },
+    {
+      "id": 13,
+      "name": "House of Music (Haus der Musik)",
+      "description": "Διαδραστικό μουσείο μουσικής για όλες τις ηλικίες.",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 10,
+        "4": 10,
+        "5": 10,
+        "6": 10,
+        "7": 10,
+        "8": 10,
+        "9": 10,
+        "10": 10,
+        "11": 10,
+        "12": 10,
+        "13": 10,
+        "14": 10,
+        "15": 22,
+        "16": 22,
+        "17": 22,
+        "18": 22,
+        "19": 22,
+        "adult": 22
+      },
+      "location": {
+        "lat": 48.2032,
+        "lng": 16.3738
+      },
+      "restaurant": {
+        "name": "Huth Gastwirtschaft",
+        "description": "οικογενειακή ατμόσφαιρα και βιεννέζικη κουζίνα",
+        "map_url": "https://maps.app.goo.gl/pHDM281APeHafzv1A"
+      },
+      "website": "https://www.hausdermusik.com/en",
+      "notes": [],
+      "tags": [
+        "museum",
+        "music",
+        "interactive",
+        "sound"
+      ],
+      "duration_hours": 2,
+      "best_time": "afternoon",
+      "familyTicket": "2 adults + up to 3 children = 35€",
+      "cafe": {
+        "name": "Café Frauenhuber",
+        "description": "Ένα από τα παλαιότερα καφέ της Βιέννης, με μουσική πιάνο και αυθεντική βιεννέζικη ατμόσφαιρα",
+        "map_url": "https://maps.app.goo.gl/kzUPxBrPPvkhhquV8"
+      }
+    },
+    {
+      "id": 14,
+      "name": "Museum der Illusionen (Μουσείο Ψευδαισθήσεων)",
+      "description": "Ένα μουσείο γεμάτο οπτικές ψευδαισθήσεις και διαδραστικά εκθέματα. Κατάλληλο για όλες τις ηλικίες",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 10,
+        "7": 10,
+        "8": 10,
+        "9": 10,
+        "10": 10,
+        "11": 10,
+        "12": 10,
+        "13": 10,
+        "14": 10,
+        "15": 12,
+        "16": 12,
+        "17": 12,
+        "18": 14,
+        "19": 14,
+        "adult": 14
+      },
+      "location": {
+        "lat": 48.2095,
+        "lng": 16.3702
+      },
+      "restaurant": {
+        "name": "Joyce Café Restaurant",
+        "description": "Μοντέρνο καφέ-εστιατόριο με αμερικανική/διεθνή κουζίνα, δημοφιλές για branch.",
+        "map_url": "https://maps.app.goo.gl/1f7tECnDJmNJZ5HP8"
+      },
+      "website": "https://www.museumderillusionen.at/wien/",
+      "notes": [],
+      "tags": [
+        "museum",
+        "illusions",
+        "interactive",
+        "optical"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "any",
+      "cafe": {
+        "name": "Café Central",
+        "description": "H πιο διάσημh ιστορική καφετέρια της Βιέννης, με υπέροχη νεογοτθική αίθουσα.",
+        "map_url": "https://maps.app.goo.gl/x37tEi7C843zCohk9"
+      }
+    },
+    {
+      "id": 15,
+      "name": "Vienna State Opera Tour",
+      "description": "Ξενάγηση στο ιστορικό και εμβληματκό κτήριο της όπερας με την υπέροχη σκάλα και τα πολυτελή φουαγιέ. Θα μάθετε επίσης και μυστικά για το πώς στήνεται μια παράσταση.",
+      "category": "attraction",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 9,
+        "7": 9,
+        "8": 9,
+        "9": 9,
+        "10": 9,
+        "11": 9,
+        "12": 9,
+        "13": 9,
+        "14": 9,
+        "15": 15,
+        "16": 15,
+        "17": 15,
+        "18": 15,
+        "19": 15,
+        "adult": 15
+      },
+      "location": {
+        "lat": 48.2034,
+        "lng": 16.3692
+      },
+      "restaurant": {
+        "name": "L'opéra Restaurant and Cafe",
+        "description": "Πολύ βολικό καθώς είναι ακριβώς δίπλα. Μια μίξη βιεννέζικης και διεθνούς κουζίνας",
+        "map_url": "https://maps.app.goo.gl/P4j6gY5m6UrDJkgUA"
+      },
+      "website": "https://www.wiener-staatsoper.at/en/",
+      "notes": [],
+      "tags": [
+        "opera",
+        "guided tour",
+        "historic",
+        "architecture"
+      ],
+      "duration_hours": 1,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "Gerstner K. u. K. Hofzuckerbäcker",
+        "description": "Βρίσκεται ακριβώς απέναντι από την Όπερα. Πρόκειται για ένα από τα πιο όμορφα και ιστορικά ζαχαροπλαστεία της Βιέννης",
+        "map_url": "https://maps.app.goo.gl/UL6vWoKkzCXriJ1h6"
+      }
+    },
+    {
+      "id": 16,
+      "name": "Belvedere Palace",
+      "description": "Είναι ένα εντυπωσιακό μπαρόκ συγκρότημα με δύο παλάτια (Άνω και Κάτω Μπελβεντέρε) που συνδέονται με πανέμορφους κήπους. Σήμερα λειτουργεί ως μουσείο τέχνης και φιλοξενεί τον διάσημο πίνακα Το Φιλί του Γκούσταβ Κλιμτ.",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 29,
+        "19": 29,
+        "adult": 29
+      },
+      "location": {
+        "lat": 48.191,
+        "lng": 16.3805
+      },
+      "restaurant": {
+        "name": "Salm Bräu",
+        "description": "παραδοσιακή μπυραρία με φαγητό",
+        "map_url": "https://maps.app.goo.gl/7cupuAVJth5Y8DYv8"
+      },
+      "website": "https://www.belvedere.at/en",
+      "notes": [
+        "Δωρεάν για κάτω των 19 (μόνιμη συλλογή)"
+      ],
+      "tags": [
+        "palace",
+        "museum",
+        "art",
+        "baroque"
+      ],
+      "duration_hours": 2.5,
+      "best_time": "morning",
+      "cafe": {
+        "name": "Café Goldegg",
+        "description": "αυθεντικό βιεννέζικο καφενείο",
+        "map_url": "https://maps.app.goo.gl/1hVS6UmE42NYt9w1A"
+      }
+    },
+    {
+      "id": 17,
+      "name": "Donauturm (Danube Tower)",
+      "description": "Πανοραμική θέα της Βιέννης από τον πύργο του Δούναβη.",
+      "category": "attraction",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 4,
+        "4": 4,
+        "5": 4,
+        "6": 8,
+        "7": 8,
+        "8": 8,
+        "9": 8,
+        "10": 8,
+        "11": 8,
+        "12": 8,
+        "13": 8,
+        "14": 8,
+        "15": 12,
+        "16": 12,
+        "17": 12,
+        "18": 12,
+        "19": 12,
+        "adult": 12
+      },
+      "location": {
+        "lat": 48.2389,
+        "lng": 16.4103
+      },
+      "restaurant": {
+        "name": "Τurm Restaurant",
+        "description": "Εστιατόριο με υπέροχη θέα στον πύργο. Σύγχρονη αυστριακή κουζίνα με επίσημη ατμόσφαιρα. Ακριβό στις τιμές λόγω της θέας και της ταυτόχρονης περιστροφής",
+        "map_url": "https://maps.app.goo.gl/9dyEhjTh5Sb91HQy5"
+      },
+      "website": "https://www.donauturm.at/en/",
+      "notes": [],
+      "tags": [
+        "tower",
+        "view",
+        "panorama",
+        "restaurant"
+      ],
+      "duration_hours": 1,
+      "best_time": "any",
+      "cafe": {
+        "name": "Turm cafe",
+        "description": "Απλούστερο και χαλαρότερο από το Turm Restaurant, ιδανικό για καφέ, σνακ ή ελαφρύ γεύμα με θέα.",
+        "map_url": "https://maps.app.goo.gl/Y1cDcKYuQemdMzhU6"
+      }
+    },
+    {
+      "id": 18,
+      "name": "Mozarthaus Vienna",
+      "description": "Είναι το αυθεντικό διαμέρισμα όπου έζησε ο Μότσαρτ.Αξίζει για παιδιά άνω των 6 ετών κυρίως χάρη στην εξαιρετική παιδική ακουστική ξενάγηση, αν και είναι λιγότερο διαδραστικό σε σχέση με άλλα μουσικά μουσεία της Βιέννης.",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 4.5,
+        "4": 4.5,
+        "5": 4.5,
+        "6": 4.5,
+        "7": 4.5,
+        "8": 4.5,
+        "9": 4.5,
+        "10": 4.5,
+        "11": 4.5,
+        "12": 4.5,
+        "13": 4.5,
+        "14": 4.5,
+        "15": 14,
+        "16": 14,
+        "17": 14,
+        "18": 14,
+        "19": 14,
+        "adult": 14
+      },
+      "location": {
+        "lat": 48.2086,
+        "lng": 16.3735
+      },
+      "restaurant": {
+        "name": "Figlmüller – Restaurant Bäckerstraße",
+        "description": "μαγαζί θρύλος της Βιέννης και το πιο διάσημο schnitzel στον κόσμο.",
+        "map_url": "https://maps.app.goo.gl/Wkmv9kFiHL3zPMm2A"
+      },
+      "website": "https://www.mozarthausvienna.at/en/",
+      "notes": [],
+      "tags": [
+        "museum",
+        "mozart",
+        "composer",
+        "historic house"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "afternoon",
+      "familyTicket": "2 adults + up to 3 children = 29€",
+      "cafe": {
+        "name": "Café Frauenhuber",
+        "description": "Ένα από τα παλαιότερα καφενεία της πόλης, όπου λέγεται ότι έπαιζε μουσική ο ίδιος ο Μότσαρτ",
+        "map_url": "https://maps.app.goo.gl/VE81BVs76WXbXMC46"
+      }
+    },
+    {
+      "id": 19,
+      "name": "St. Stephen's Cathedral Crypt",
+      "description": "Μια υπόγεια διαδρομή που αποκαλύπτει τους τάφους των Αψβούργων και ομαδικούς χώρους ταφής από την εποχή της πανούκλας. Είναι μια ατμοσφαιρική αλλά σκοτεινή εμπειρία στην καρδιά της Βιέννης.Ηλικία: Κατάλληλο για 12+ ετών.",
+      "category": "attraction",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 3,
+        "7": 3,
+        "8": 3,
+        "9": 3,
+        "10": 3,
+        "11": 3,
+        "12": 3,
+        "13": 3,
+        "14": 3,
+        "15": 5,
+        "16": 5,
+        "17": 5,
+        "18": 5,
+        "19": 5,
+        "adult": 5
+      },
+      "location": {
+        "lat": 48.2085,
+        "lng": 16.373
+      },
+      "restaurant": {
+        "name": "Figlmüller – Restaurant Bäckerstraße",
+        "description": "Πασίγνωστο για το καλύτερο schnitzel της Βιέννης",
+        "map_url": "https://maps.app.goo.gl/g9ngtkpLLEQuNenM7"
+      },
+      "website": "https://www.stephanskirche.at/",
+      "notes": [],
+      "tags": [
+        "cathedral",
+        "crypt",
+        "historic",
+        "gothic"
+      ],
+      "duration_hours": 0.75,
+      "best_time": "any",
+      "cafe": {
+        "name": "Aida cafe",
+        "description": "Η πιο αναγνωρίσιμη αλυσίδα καφέ στην Βιέννη! Όλα είναι ρετρό και ροζ! ",
+        "map_url": "https://maps.app.goo.gl/vyodbxJcW8gvjuqY6"
+      }
+    },
+    {
+      "id": 20,
+      "name": "Spanish Riding School",
+      "description": "Προπόνηση των διάσημων ίππων Lipizzaner. ⚠️ <strong>Ηλικιακοί περιορισμοί:</strong> Παιδιά κάτω 3 ετών: ΑΔΥΝΑΤΗ ΕΙΣΟΔΟΣ | 3-5 ετών: Μόνο σε family performances",
+      "category": "attraction",
+      "prices": {
+        "0": "N/A",
+        "1": "N/A",
+        "2": "N/A",
+        "3": 8,
+        "4": 8,
+        "5": 8,
+        "6": 14,
+        "7": 14,
+        "8": 14,
+        "9": 14,
+        "10": 14,
+        "11": 14,
+        "12": 14,
+        "13": 14,
+        "14": 14,
+        "15": 16,
+        "16": 16,
+        "17": 16,
+        "18": 16,
+        "19": 16,
+        "adult": 16
+      },
+      "location": {
+        "lat": 48.2068,
+        "lng": 16.3675
+      },
+      "restaurant": {
+        "name": "Reinthaler's Beisl",
+        "description": "Παραδοσιακή βιεννέζικη κουζίνα, πολύ δημοφιλές για το σνίτσελ του. Είναι σχεδόν δίπλα στη σχολή.",
+        "map_url": "https://maps.app.goo.gl/wh2q3wDn2TRL4uJW8"
+      },
+      "website": "https://www.srs.at/en/",
+      "notes": [
+        "⚠️ Παιδιά κάτω των 3 ετών ΔΕΝ επιτρέπονται. 3-5 ετών: μόνο σε family performances"
+      ],
+      "tags": [
+        "horses",
+        "equestrian",
+        "training",
+        "historic"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "morning",
+      "ageRestrictions": true,
+      "minAge": 3,
+      "ageWarning": "⚠️ Παιδιά κάτω των 3 ετών ΔΕΝ επιτρέπονται. 3-5 ετών: μόνο σε family performances",
+      "cafe": {
+        "name": "Café Spanish Riding School",
+        "description": "Διάσημο για την βεράντα (το καλοκαίρι) ή τα παράθυρα που βλέπουν απευθείας στην Αυλή Stallburg, και κάποιες φορές στα πανέμορφα λευκά άλογα Lipizzaner.",
+        "map_url": "https://maps.app.goo.gl/4MHjxuVhQkYtk3yM6"
+      }
+    }
+  ]
+}

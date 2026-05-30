@@ -1,0 +1,769 @@
+{
+  "city": "Άμστερνταμ",
+  "country": "Ολλανδία",
+  "currency": "EUR",
+  "emoji": "🌷",
+  "pricing_model": "per_age",
+  "cityPass": {
+    "name": "I amsterdam City Card",
+    "description": "Δωρεάν είσοδος σε περισσότερα από 70 μουσεία, απεριόριστη χρήση δημόσιων συγκοινωνιών, κρουαζιέρα στα κανάλια και 25% έκπτωση σε εστιατόρια και αξιοθέατα",
+    "discountPercent": 25,
+    "url": "https://www.iamsterdam.com/en/tickets/i-amsterdam-city-card"
+  },
+  "activities": [
+    {
+      "id": 1,
+      "name": "NEMO Science Museum",
+      "description": "Το κορυφαίο διαδραστικό μουσείο επιστημών. Μην ξεχάσετε την ταράτσα με  θέα και τα παιχνίδια νερού.",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 21.5,
+        "5": 21.5,
+        "6": 21.5,
+        "7": 21.5,
+        "8": 21.5,
+        "9": 21.5,
+        "10": 21.5,
+        "11": 21.5,
+        "12": 21.5,
+        "13": 21.5,
+        "14": 21.5,
+        "15": 21.5,
+        "16": 21.5,
+        "17": 21.5,
+        "adult": 21.5
+      },
+      "location": {
+        "lat": 52.3744,
+        "lng": 4.9122
+      },
+      "restaurant": {
+        "name": "NEMO Restaurant",
+        "description": "rooftop cafe με θέα, εντός του μουσείου",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=NEMO+Museum+Restaurant+Amsterdam"
+      },
+      "website": "https://www.nemosciencemuseum.nl/",
+      "notes": [
+        "0-3 ετών: δωρεάν",
+        "4 ετών και άνω: 21.5€"
+      ],
+      "tags": [
+        "science",
+        "interactive",
+        "rooftop",
+        "top"
+      ],
+      "duration_hours": 3,
+      "best_time": "any",
+      "cafe": {
+        "name": "OBA Café Oosterdok",
+        "description": "Βρίσκεται μέσα στην κεντρική βιβλιοθήκη, oba, με την καλύτερη θέα στην πόλη, καθώς είναι στον τελευταίο όροφο της βιβλιοθήκης.",
+        "map_url": "https://maps.app.goo.gl/LzZw5WvMtLEDRKfr6"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Rijksmuseum",
+      "description": "Κλασική τέχνη με ειδικά προγράμματα και 'κυνήγι θησαυρού' για παιδιά.",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "adult": 25
+      },
+      "location": {
+        "lat": 52.3598,
+        "lng": 4.8852
+      },
+      "restaurant": {
+        "name": "Brasserie Zuiderbad",
+        "description": "Χορταστικό μενού σε λογικές τιμές, πολύ κοντά.",
+        "map_url": "https://maps.app.goo.gl/cK2JvehhkvjPpiXU7"
+      },
+      "website": "https://www.rijksmuseum.nl/",
+      "notes": [
+        "0-18 ετών: δωρεάν",
+        "19 ετών και άνω: 25€"
+      ],
+      "tags": [
+        "art",
+        "museum",
+        "history",
+        "top"
+      ],
+      "duration_hours": 2.5,
+      "best_time": "morning",
+      "cafe": {
+        "name": "Cobra Café",
+        "description": "Με μεγάλη βεράντα και θέα στο μουσείο, στα 2-3 λεπτά απόσταση.",
+        "map_url": "https://maps.app.goo.gl/4dJWzpvYxczEtM6XA"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Van Gogh Museum",
+      "description": "Ειδικές οικογενειακές ξεναγήσεις για να γνωρίσουν οι μικροί επισκέπτες τον μεγάλο ζωγράφο.",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 24
+      },
+      "location": {
+        "lat": 52.3584,
+        "lng": 4.8811
+      },
+      "restaurant": {
+        "name": "Van Gogh Museum Cafe-Bistro Vincent",
+        "description": "cafe και εστιατόριο εντός του μουσείου",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Van+Gogh+Museum+Cafe-Bistro+Vincent"
+      },
+      "website": "https://www.vangoghmuseum.nl/",
+      "notes": [
+        "0-17 ετών: δωρεάν",
+        "18 ετών και άνω: 24€"
+      ],
+      "tags": [
+        "art",
+        "vangogh",
+        "museum",
+        "top"
+      ],
+      "duration_hours": 2,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "Kiosk Rembrandt Van Gogh",
+        "description": "Το κοντινότερο και πιο πρακτικό καφέ ακριβώς δίπλα στο Μουσείο Βαν Γκογκ (ανάμεσα σε αυτό και το Rijksmuseum) είναι το Kiosk Rembrandt Van Gogh.",
+        "map_url": "https://maps.app.goo.gl/y717wfYgbYe244Bf6"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Madame Tussauds Amsterdam",
+      "description": "Το διάσημο μουσείο κέρινων ομοιωμάτων στην πλατεία Dam.",
+      "category": "museum",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 22,
+        "3": 22,
+        "4": 22,
+        "5": 22,
+        "6": 22,
+        "7": 22,
+        "8": 22,
+        "9": 22,
+        "10": 22,
+        "11": 22,
+        "12": 22,
+        "13": 22,
+        "14": 22,
+        "15": 27,
+        "16": 27,
+        "17": 27,
+        "adult": 27
+      },
+      "location": {
+        "lat": 52.3731,
+        "lng": 4.8925
+      },
+      "restaurant": {
+        "name": "Omelegg City Center",
+        "description": "Το καλύτερο σημείο για ομελέτες και brunch, πολύ φιλικό για παιδιά και οικονομικό, 5 λεπτά από την πλατεία Dam.",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Omelegg+City+Center"
+      },
+      "combos": {
+        "madame_tussauds_this_is_holland": {
+          "name": "Madame Tussauds + This is Holland",
+          "prices": {
+            "0": 0,
+            "1": 0,
+            "2": 32,
+            "3": 32,
+            "4": 32,
+            "5": 32,
+            "6": 32,
+            "7": 32,
+            "8": 32,
+            "9": 32,
+            "10": 32,
+            "11": 32,
+            "12": 32,
+            "13": 32,
+            "14": 32,
+            "15": 37,
+            "16": 37,
+            "17": 37,
+            "adult": 37
+          }
+        },
+        "madame_tussauds_canal_cruise": {
+          "name": "Madame Tussauds + Canal Cruise",
+          "prices": {
+            "0": 0,
+            "1": 0,
+            "2": 29.5,
+            "3": 29.5,
+            "4": 29.5,
+            "5": 29.5,
+            "6": 29.5,
+            "7": 29.5,
+            "8": 29.5,
+            "9": 29.5,
+            "10": 29.5,
+            "11": 29.5,
+            "12": 29.5,
+            "13": 29.5,
+            "14": 29.5,
+            "15": 37,
+            "16": 37,
+            "17": 37,
+            "adult": 37
+          }
+        }
+      },
+      "website": "https://www.madametussauds.com/amsterdam/",
+      "notes": [
+        "0-1 ετών: δωρεάν",
+        "2-14 ετών: 22€",
+        "15 ετών και άνω: 27€",
+        "COMBO: Madame Tussauds + This is Holland - 0-1 ετών: δωρεάν, 2-14 ετών: 32€, 15+ ετών: 37€",
+        "COMBO: Madame Tussauds + Canal cruise - 0-1 ετών: δωρεάν, 2-14 ετών: 29.5€, 15+ ετών: 37€"
+      ],
+      "tags": [
+        "wax",
+        "celebrities",
+        "interactive",
+        "top"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "any",
+      "cafe": {
+        "name": "De Drie Graefjes American Bakery - Vestiging Dam",
+        "description": "Είναι διάσημο σε όλο το Άμστερνταμ για το Red Velvet cake του και τις γενναιόδωρες μερίδες στα γλυκά.",
+        "map_url": "https://maps.app.goo.gl/Ji3KP49HYvhS7AVk8"
+      }
+    },
+    {
+      "id": 5,
+      "name": "WONDR Experience",
+      "description": "Μια 'Instagrammable' παιδική χαρά με πισίνες από marshmallows και δωμάτια γεμάτα χρώμα.",
+      "category": "experience",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 19,
+        "4": 19,
+        "5": 19,
+        "6": 19,
+        "7": 19,
+        "8": 19,
+        "9": 19,
+        "10": 19,
+        "11": 27,
+        "12": 27,
+        "13": 27,
+        "14": 27,
+        "15": 27,
+        "16": 27,
+        "17": 27,
+        "adult": 27
+      },
+      "location": {
+        "lat": 52.3886,
+        "lng": 4.8689
+      },
+     "restaurant": {
+        "name": "Fritto",
+        "description": "Ειδικεύεται σε κλασικό ολλανδικό snack bar στυλ, burgers, κροκέτες.",
+        "map_url": "https://maps.app.goo.gl/dpqr3fqNYs9Ei4Yy8"
+      },
+      "website": "https://www.wondrexperience.com/",
+      "notes": [
+        "0-2 ετών: δωρεάν",
+        "3-10 ετών: 19€",
+        "11 ετών και άνω: 27€"
+      ],
+      "tags": [
+        "instagram",
+        "interactive",
+        "play",
+        "top"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "any",
+      "cafe": {
+        "name": "SUBCULT",
+        "description": "Ένα εναλλακτικό και δημιουργικό καφέ-πολυχώρος ακριβώς δίπλα στο WONDR. Ιδανικό για καφέ και σνακ σε ένα χαλαρό και φιλικό περιβάλλον.",
+        "map_url": "https://maps.google.com/?cid=9577572624550529966&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+      }
+    },
+    {
+      "id": 6,
+      "name": "This is Holland",
+      "description": "Μια 5D πτήση πάνω από τα αξιοθέατα της Ολλανδίας που συναρπάζει τα παιδιά.",
+      "category": "experience",
+      "prices": {
+        "0": "ΔΕΝ ΕΠΙΤΡΕΠΕΤΑΙ",
+        "1": "ΔΕΝ ΕΠΙΤΡΕΠΕΤΑΙ",
+        "2": "ΔΕΝ ΕΠΙΤΡΕΠΕΤΑΙ",
+        "3": "ΔΕΝ ΕΠΙΤΡΕΠΕΤΑΙ",
+        "4": 19,
+        "5": 19,
+        "6": 19,
+        "7": 19,
+        "8": 19,
+        "9": 19,
+        "10": 19,
+        "11": 19,
+        "12": 19,
+        "13": 24,
+        "14": 24,
+        "15": 24,
+        "16": 24,
+        "17": 24,
+        "adult": 24
+      },
+      "location": {
+        "lat": 52.3758,
+        "lng": 4.8979
+      },
+      "restaurant": {
+        "name": "THT (Tolhuistuin)",
+        "description": "Ευρύχωρο εστιατόριο με ωραία θέα, ακριβώς δίπλα στο This is Holland",
+        "map_url": "https://maps.app.goo.gl/tHGtyaRrJjEZW25M6"
+      },
+      "combos": {
+        "this_is_holland_madame_tussauds": {
+          "name": "This is Holland + Madame Tussauds",
+          "prices": {
+            "0": 0,
+            "1": 0,
+            "2": 32,
+            "3": 32,
+            "4": 32,
+            "5": 32,
+            "6": 32,
+            "7": 32,
+            "8": 32,
+            "9": 32,
+            "10": 32,
+            "11": 32,
+            "12": 32,
+            "13": 32,
+            "14": 32,
+            "15": 37,
+            "16": 37,
+            "17": 37,
+            "adult": 37
+          }
+        },
+        "this_is_holland_pancake_cruise": {
+          "name": "This is Holland + Pancake Cruise",
+          "prices": {
+            "4": 35.5,
+            "5": 35.5,
+            "6": 35.5,
+            "7": 35.5,
+            "8": 35.5,
+            "9": 35.5,
+            "10": 35.5,
+            "11": 35.5,
+            "12": 35.5,
+            "13": 43.5,
+            "14": 43.5,
+            "15": 43.5,
+            "16": 43.5,
+            "17": 43.5,
+            "adult": 43.5
+          }
+        }
+      },
+      "website": "https://www.thisisholland.com/",
+      "notes": [
+        "ΠΡΟΣΟΧΗ: Δεν επιτρέπονται κάτω των 4 ετών και κάτω του 100cm",
+        "COMBO με pancakes cruise (απεριόριστα pancakes): 13+ ετών: 43.5€, 4-12 ετών: 35.5€, 0-3 ετών δεν επιτρέπονται",
+        "Family tickets: 1 ενήλικας + 2 παιδιά (4-12): 50.25€",
+        "Family tickets: 1 ενήλικας + 3 παιδιά (4-12): 66€",
+        "Family tickets: 2 ενήλικες + 1 παιδί (4-12): 52.25€",
+        "Family tickets: 2 ενήλικες + 2 παιδιά (4-12): 69€",
+        "Family tickets: 2 ενήλικες + 3 παιδιά (4-12): 84.75€",
+        "Τα παιδιά αποκλειστικά 4-12 ετών. Ενήλικες 18+"
+      ],
+      "tags": [
+        "5d",
+        "flight",
+        "simulator",
+        "top"
+      ],
+      "duration_hours": 1,
+      "best_time": "any",
+     "cafe": {
+  "name": "Eye Bar & Restaurant",
+  "description": "Μοντέρνο καφέ-εστιατόριο στο Eye Film Museum με τεράστια τζαμαρία και πανοραμική θέα στο ποτάμι IJ. Πολύ ευρύχωρο και άνετο για οικογένειες.",
+  "map_url": "https://maps.google.com/?cid=9368306361257283331&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ",
+  "website": "https://www.eyefilm.nl/restaurant"
+      }
+    },
+    {
+      "id": 7,
+      "name": "Artis Royal Zoo & Planetarium",
+      "description": "Ένας ιστορικός ζωολογικός κήπος που περιλαμβάνει ενυδρείο και πλανητάριο.",
+      "category": "zoo",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 25.5,
+        "4": 25.5,
+        "5": 25.5,
+        "6": 25.5,
+        "7": 25.5,
+        "8": 25.5,
+        "9": 25.5,
+        "10": 25.5,
+        "11": 25.5,
+        "12": 25.5,
+        "13": 29.5,
+        "14": 29.5,
+        "15": 29.5,
+        "16": 29.5,
+        "17": 29.5,
+        "adult": 29.5
+      },
+      "location": {
+        "lat": 52.3661,
+        "lng": 4.9145
+      },
+      "restaurant": {
+        "name": "De Plantage",
+        "description": "Ένα εμβληματικό εστιατόριο-καφέ σε ένα ιστορικό κτίριο του 19ου αιώνα, με υπέροχη βεράντα κάτω από τα δέντρα και θέα στον ζωολογικό κήπο.",
+        "map_url": "https://maps.google.com/?cid=153695864003453909&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+      },
+      "website": "https://www.artis.nl/",
+      "notes": [
+        "0-2 ετών: δωρεάν",
+        "3-12 ετών: 25.5€",
+        "13 ετών και άνω: 29.5€"
+      ],
+      "tags": [
+        "zoo",
+        "animals",
+        "planetarium",
+        "top"
+      ],
+      "duration_hours": 4,
+      "best_time": "morning",
+      "cafe": {
+        "name": "De Serre",
+        "description": "Κεντρικό εστιατόριο εντός του ARTIS, ιδανικό για ένα γρήγορο γεύμα, σνακ ή καφέ σε χαλαρή ατμόσφαιρα.",
+        "map_url": "https://maps.google.com/?cid=1377385187891197699&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+      }
+   },
+    {
+      "id": 8,
+      "name": "Vondelpark",
+      "description": "Το κεντρικό πάρκο της πόλης με πολλές παιδικές χαρές και το φιλικό προς παιδιά καφέ 'Grote Melkhuis'.",
+      "category": "park",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 52.3586,
+        "lng": 4.8681
+      },
+      "restaurant": {
+        "name": "Grote Melkhuis",
+        "description": "παιδική χαρά & pancakes στο πάρκο",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Grote+Melkhuis+Vondelpark"
+      },
+      "website": "https://www.tripadvisor.com.gr/Attraction_Review-g188590-d189384-Reviews-Vondelpark-Amsterdam_North_Holland_Province.html",
+      "notes": [
+        "Δωρεάν είσοδος"
+      ],
+      "tags": [
+        "park",
+        "playground",
+        "free"
+      ],
+      "duration_hours": 2,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "Blauwe Theehuis",
+        "description": "Είναι ένας εμβληματικός χώρος, που θυμίζει ιπτάμενο δίσκο και φημίζεται για τη χαλαρή του ατμόσφαιρα",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Blauwe+Theehuis+Vondelpark"
+      }
+    },
+    {
+      "id": 9,
+      "name": "Amsterdamse Bos",
+      "description": "Ένα τεράστιο δάσος στις παρυφές της πόλης με λίμνες, κανό, φάρμα με κατσίκες και πάρκο αναρρίχησης.",
+      "category": "park",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 52.3161,
+        "lng": 4.8319
+      },
+      "restaurant": {
+        "name": "Goatfarm Ridammerhoeve",
+        "description": "φάρμα με χειροποίητα προϊόντα & παιδική χαρά",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=Boerderij+Megan+Amsterdamse+Bos"
+      },
+      "website": "https://www.amsterdamsebos.nl/",
+      "notes": [
+        "Δωρεάν είσοδος"
+      ],
+      "tags": [
+        "forest",
+        "nature",
+        "free"
+      ],
+      "duration_hours": 3,
+      "best_time": "any",
+      "cafe": {
+        "name": "Koffie tentje Amsterdamse bos",
+        "description": "Στην είσοδο του δάσους, ιδανικό για καφέ, ζεστή σοκολάτα και ελαφριά σνακ.",
+        "map_url": "https://maps.google.com/?cid=16148306879835281686&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+      }
+    },
+    {
+      "id": 10,
+      "name": "Amstelpark",
+      "description": "Ιδανικό για το μικρό του τρενάκι, το μίνι γκολφ και τον λαβύρινθο.",
+      "category": "park",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "adult": 0
+      },
+      "location": {
+        "lat": 52.3325,
+        "lng": 4.8883
+      },
+      "restaurant": {
+        "name": "Rosarium Amsterdam",
+        "description": "Εστιατόριο με υπέροχη βεράντα δίπλα στον κήπο. Με ποιοτικό φαγητό σε ένα ήρεμο περιβάλλον, ιδανικό για οικογενειακό γεύμα.",
+        "map_url": "https://maps.google.com/?cid=4683538794829262812&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+      },
+      "website": "https://www.amstelpark.info/",
+      "notes": [
+        "Είσοδος δωρεάν",
+        "Χρέωση ανάλογα με επιλογές δραστηριοτήτων εντός του πάρκου"
+      ],
+      "tags": [
+        "park",
+        "train",
+        "minigolf"
+      ],
+      "duration_hours": 2.5,
+      "best_time": "afternoon",
+      "cafe": {
+        "name": "Café de Orchidee",
+        "description": "Πολύ ζεστό και οικονομικό καφέ εντός του πάρκου. Ιδανικό για καφέ, παγωτό ή ένα γρήγορο σνακ ανάμεσα στις δραστηριότητες των παιδιών.",
+        "map_url": "https://maps.google.com/?cid=893613239285080731&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+      }
+    },
+    {
+      "id": 11,
+      "name": "Canal Cruise (Απλή Ξενάγηση)",
+      "description": "Κρουαζιέρα στα κανάλια του Άμστερνταμ.",
+      "category": "cruise",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 9.9,
+        "5": 9.9,
+        "6": 9.9,
+        "7": 9.9,
+        "8": 9.9,
+        "9": 9.9,
+        "10": 9.9,
+        "11": 9.9,
+        "12": 9.9,
+        "13": 15.5,
+        "14": 15.5,
+        "15": 15.5,
+        "16": 15.5,
+        "17": 15.5,
+        "adult": 15.5
+      },
+      "location": {
+        "lat": 52.3676,
+        "lng": 4.9041
+      },
+      "restaurant": {
+        "name": "Lunchcafé Waterloo",
+        "description": "Σερβίρει κλασικά σάντουιτς, ομελέτες και καφέ.",
+        "map_url": "https://maps.app.goo.gl/Myo38P9dCCWWJQpP6"
+      },
+      "website": "https://amsterdamcanalcruises.nl/",
+      "notes": [
+        "0-3 ετών: δωρεάν",
+        "4-12 ετών: 9.90€",
+        "13 ετών και άνω: 15.5€",
+        "Κατά μέσο όρο - οι τιμές διαφέρουν ανά εταιρεία"
+      ],
+      "tags": [
+        "boat",
+        "canal",
+        "sightseeing"
+      ],
+      "duration_hours": 1,
+      "best_time": "any",
+      "cafe": {
+        "name": "De Koffieschenkerij",
+        "description": "Ένα μοναδικό καφέ στην παλαιότερη εκκλησία της πόλης, με υπέροχο κήπο και σπιτικά γλυκά.",
+        "map_url": "https://www.google.com/maps/search/?api=1&query=De+Koffieschenkerij"
+      }
+    },
+    {
+      "id": 12,
+      "name": "Pancake Boat (Pannenkoekenboot)",
+      "description": "Κρουαζιέρα με απεριόριστες τηγανίτες κατά τη διάρκεια της βόλτας.",
+      "category": "cruise",
+      "prices": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 21,
+        "4": 21,
+        "5": 21,
+        "6": 21,
+        "7": 21,
+        "8": 21,
+        "9": 21,
+        "10": 21,
+        "11": 21,
+        "12": 26,
+        "13": 26,
+        "14": 26,
+        "15": 26,
+        "16": 26,
+        "17": 26,
+        "adult": 26
+      },
+      "location": {
+        "lat": 52.3756,
+        "lng": 4.9039
+      },
+      "restaurant": {
+        "name": "Pllek",
+        "description": "Επιλέξτε το αν η κρουαζιέρα φεύγει από NDSM-Werf (το πιο πιθανόν). Ένα πολύ ιδιαίτερο εστιατόριο φτιαγμένο από containers με δική του αμμουδιά δίπλα στο νερό. Πολύ φιλικό για παιδιά, με χαλαρή ατμόσφαιρα και ωραία θέα.",
+        "map_url": "https://maps.google.com/?cid=18315978441786872412&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+      },
+      "website": "https://www.pannenkoekenboot.nl/",
+      "notes": [
+        "0-2 ετών: δωρεάν",
+        "3-11 ετών: 21€",
+        "12 ετών και άνω: 26€",
+        "Προσοχή: οι τιμές αλλάζουν σε σαββατοκύριακα και αργίες"
+      ],
+      "tags": [
+        "boat",
+        "pancakes",
+        "food"
+      ],
+      "duration_hours": 1.5,
+      "best_time": "any",
+     "cafe": {
+        "name": "IJver Amsterdam",
+        "description": "Επιλέξτε το αν η κρουαζιέρα φεύγει από NDSM-Werf (το πιο πιθανόν).Ένα ευρύχωρο, βιομηχανικού στυλ καφέ-εστιατόριο μέσα σε μια παλιά αποθήκη πλοίων, με μεγάλη εσωτερική και εξωτερική αυλή.",
+        "map_url": "https://maps.google.com/?cid=15616292713757750973&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+      }
+    }
+  ]
+}
