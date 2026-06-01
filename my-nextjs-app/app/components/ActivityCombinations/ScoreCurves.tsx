@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { CURVES, type Params, type ScaleScore } from "./curves";
+import { CURVES } from "./core/curves.data";
+import type { Params, ScaleScore } from "./core/curves.functions";
 
 // =============================================================================
 // Graph geometry

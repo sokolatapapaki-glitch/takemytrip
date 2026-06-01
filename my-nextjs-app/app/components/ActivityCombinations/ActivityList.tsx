@@ -1,11 +1,13 @@
-import { ACTIVITIES, VIBES } from "./activities";
+import { ACTIVITIES, DAYS, VIBES } from "./core/activities.data";
+import { openingHoursFor } from "./core/activities.functions";
 
-// The catalogue of available activities.
-export function ActivityList() {
+// The catalogue of available activities. Opening hours are shown for the
+// currently selected day.
+export function ActivityList({ day }: { day: number }) {
   return (
     <section>
       <h2 className="mb-3 text-lg font-semibold text-zinc-800 dark:text-zinc-100">
-        Activities
+        Activities <span className="text-sm font-normal text-zinc-400 dark:text-zinc-500">· hours for {DAYS[day]}</span>
       </h2>
       <div className="flex flex-col gap-2">
         {ACTIVITIES.map((activity) => (
@@ -27,6 +29,9 @@ export function ActivityList() {
             <div className="flex shrink-0 flex-col items-end gap-0.5">
               <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
                 {activity.hours}h · €{activity.cost}
+              </span>
+              <span className="text-xs text-zinc-400 dark:text-zinc-500">
+                {openingHoursFor(activity, day)}
               </span>
             </div>
           </div>

@@ -10,9 +10,13 @@
 // localStorage is an external store shared by both routes, so we expose it via
 // useSyncExternalStore — the right tool for client-only state that must survive
 // navigation and stay in sync between the editor and the results page.
+//
+// The derived DEFAULT_EDITS data lives in filterStore.data.
 import { useSyncExternalStore } from "react";
-import { DEFAULT_FILTERS, type Filter, type Unit } from "./filters";
-import { type Params } from "./curves";
+import { DEFAULT_FILTERS } from "./filters.data";
+import type { Filter, Unit } from "./filters.functions";
+import { type Params } from "./curves.functions";
+import { DEFAULT_EDITS } from "./filterStore.data";
 
 export type EditableOption = { name: string; target: number };
 
@@ -34,16 +38,6 @@ export function isMulti(filterIndex: number): boolean {
 export function filterUnit(filterIndex: number): Unit | undefined {
   return DEFAULT_FILTERS[filterIndex]?.unit;
 }
-
-// Clone the serializable parts of the built-in defaults.
-export const DEFAULT_EDITS: EditableFilter[] = DEFAULT_FILTERS.map((f) => ({
-  name: f.name,
-  weight: f.weight,
-  scoreName: f.scoreName,
-  params: { ...f.params },
-  hint: f.hint ?? "",
-  options: f.options.map((o) => ({ name: o.name, target: o.target })),
-}));
 
 // Merge the edits back onto the code-bound defaults -> runtime filters.
 // Option `value` bindings are carried over by index from the default options.

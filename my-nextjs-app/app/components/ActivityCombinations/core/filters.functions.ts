@@ -1,8 +1,12 @@
 // -----------------------------------------------------------------------------
-// Filters, index calculators, and scoring
+// Filters: index calculators, scoring, breakdown + types
 // -----------------------------------------------------------------------------
-import { Activity, NumericKey, VIBES, maxComboValue } from "./activities";
-import { CURVE_BY_NAME, type Params, type ScaleScore } from "./curves";
+// The filter config objects themselves (units, DEFAULT_FILTERS) live in
+// filters.data. This file holds the reusable index calculators, the scoring
+// math, and the types.
+import { Activity, NumericKey, maxComboValue } from "./activities.functions";
+import { CURVE_BY_NAME } from "./curves.data";
+import type { Curve, Params, ScaleScore } from "./curves.functions";
 
 // -----------------------------------------------------------------------------
 // Reusable index calculators
@@ -38,11 +42,8 @@ export const costToIndex = (cost: number) => (cost / maxComboValue("cost")) * 10
 // index at scoring time. Code-bound (not user-edited).
 export type Unit = { label: string; suffix: string; toIndex: (raw: number) => number };
 
-export const HOURS_UNIT: Unit = { label: "Hours", suffix: "h", toIndex: hoursToIndex };
-export const COST_UNIT: Unit = { label: "Euros", suffix: "€", toIndex: costToIndex };
-
 // -----------------------------------------------------------------------------
-// Filters (data-driven config)
+// Filter types (data-driven config; the objects live in filters.data)
 // -----------------------------------------------------------------------------
 // Each filter scores its index with a CURVE (referenced by name) shaped by
 // `params`. A budget "ceiling" is just `asymmetricLinear` with no below-target
@@ -73,61 +74,18 @@ export type Filter = {
   unit?: Unit;
   value?: (combo: Activity[]) => number;
   format?: (combo: Activity[]) => string;
+  // When present and it returns false for a combo, this filter is left out of
+  // that combo's score ENTIRELY — not scored as 0, simply absent, as if the
+  // filter didn't exist for it (e.g. route directness is meaningless for 1–2
+  // stops). Code-bound (not user-edited); undefined = always applies.
+  appliesTo?: (combo: Activity[]) => boolean;
   options: FilterOption[];
 };
 
-// Asymmetric-linear ceiling: free below target, very steep above.
-const CEILING_PARAMS: Params = { under: 0, over: 100 };
-
-// ONE multi-select Vibe filter (Model B): each option scores a different vibe
-// index at target 10 ("a lot"). No unit -> targets are plain 0–10 indexes.
-const VIBE_FILTER: Filter = {
-  name: "Vibe",
-  weight: 0.2,
-  scoreName: "Linear (symmetric)",
-  params: { slope: 1 },
-  multi: true,
-  hint: "Pick any you want a lot of",
-  options: VIBES.map((vibe) => ({
-    name: vibe.name,
-    target: 10,
-    value: averageIndex(vibe.key),
-  })),
-};
-
-export const DEFAULT_FILTERS: Filter[] = [
-  VIBE_FILTER,
-  {
-    name: "Time budget",
-    weight: 0.9,
-    scoreName: "Asymmetric linear",
-    params: CEILING_PARAMS,
-    hint: "Stay within this budget",
-    unit: HOURS_UNIT,
-    value: normalizedSumIndex("hours"),
-    format: (combo) => `${sumOf("hours")(combo)}h`,
-    // Targets are stored in HOURS (the unit); converted to index when scoring.
-    options: [3, 6, 9, 12, maxComboValue("hours")].map((h) => ({
-      name: `up to ${h}h`,
-      target: h,
-    })),
-  },
-  {
-    name: "Cost budget",
-    weight: 0.5,
-    scoreName: "Asymmetric linear",
-    params: CEILING_PARAMS,
-    hint: "Stay within this budget",
-    unit: COST_UNIT,
-    value: normalizedSumIndex("cost"),
-    format: (combo) => `€${sumOf("cost")(combo)}`,
-    // Targets are stored in EUROS (the unit); converted to index when scoring.
-    options: [20, 50, 90, maxComboValue("cost")].map((eur) => ({
-      name: `up to €${eur}`,
-      target: eur,
-    })),
-  },
-];
+// Whether a filter contributes to a given combo's score at all (see appliesTo).
+export function filterApplies(filter: Filter, combo: Activity[]): boolean {
+  return !filter.appliesTo || filter.appliesTo(combo);
+}
 
 // Selection = the chosen option INDEXES per filter, keyed by FILTER INDEX (so
 // renaming a filter doesn't lose its selection). Single-select filters hold one.
@@ -156,9 +114,14 @@ export function optionValue(
   return option.value ?? filter.value ?? (() => 0);
 }
 
-// Resolve a filter's scoring curve, falling back to symmetric linear.
+// Resolve a filter's scoring curve, falling back to symmetric linear. The whole
+// Curve (fn + display metadata like its colour) so callers — scoring AND the
+// proof graph — share one source of truth for which function actually scores.
+function resolveCurve(filter: Filter): Curve {
+  return CURVE_BY_NAME[filter.scoreName] ?? CURVE_BY_NAME["Linear (symmetric)"];
+}
 function scoreFn(filter: Filter): ScaleScore {
-  return (CURVE_BY_NAME[filter.scoreName] ?? CURVE_BY_NAME["Linear (symmetric)"]).fn;
+  return resolveCurve(filter).fn;
 }
 
 // -----------------------------------------------------------------------------
@@ -172,6 +135,7 @@ export function comboScore(
   filters: Filter[]
 ): number {
   return filters.reduce((sum, f, fi) => {
+    if (!filterApplies(f, combo)) return sum; // filter absent for this combo
     const fn = scoreFn(f);
     const picked = selection[fi] ?? [];
     return (
@@ -185,6 +149,95 @@ export function comboScore(
       }, 0)
     );
   }, 0);
+}
+
+// -----------------------------------------------------------------------------
+// Score breakdown (the "why this rank" proof)
+// -----------------------------------------------------------------------------
+// A step-by-step record of how comboScore arrives at its number, so the UI can
+// show the math: per selected option, the index value, the target, the raw
+// curve output, the clamp, and the weighted contribution.
+export type OptionBreakdown = {
+  optionName: string;
+  value: number; // the 0–10 index this option scores for the combo
+  realTarget: number; // option.target in the filter's unit (or raw index)
+  targetIdx: number; // that target as a 0–10 index
+  raw: number; // curve(value, targetIdx, params) before clamping
+  clamped: number; // raw clamped into 0–10
+  weight: number; // the filter's weight
+  contribution: number; // weight × clamped (what lands in the total)
+};
+
+export type FilterBreakdown = {
+  filterName: string;
+  scoreName: string;
+  weight: number;
+  unitSuffix?: string; // e.g. "h", "€" — for showing real-world targets
+  realWorld?: string; // e.g. "12h", "€80" — the combo's real total, if any
+  params: Params;
+  fn: ScaleScore; // the exact curve that scored this filter (for the proof graph)
+  curveColor: string; // its display colour, so graph + legend match
+  options: OptionBreakdown[];
+  subtotal: number; // sum of this filter's contributions
+};
+
+export type ScoreBreakdown = {
+  filters: FilterBreakdown[];
+  total: number; // equals comboScore(...)
+};
+
+// Recompute comboScore with every intermediate value retained, for display.
+export function scoreBreakdown(
+  combo: Activity[],
+  selection: Selection,
+  filters: Filter[]
+): ScoreBreakdown {
+  const breakdown: FilterBreakdown[] = filters
+    .map((f, fi): FilterBreakdown | null => {
+    // A filter that doesn't apply to this combo is omitted from the proof
+    // entirely — it contributes nothing and shouldn't be shown (see appliesTo).
+    if (!filterApplies(f, combo)) return null;
+    const curve = resolveCurve(f);
+    const fn = curve.fn;
+    const picked = selection[fi] ?? [];
+    const options: OptionBreakdown[] = picked
+      .map((i) => {
+        const option = f.options[i];
+        if (!option) return null;
+        const value = optionValue(f, option)(combo);
+        const targetIdx = targetIndex(f, option);
+        const raw = fn(value, targetIdx, f.params);
+        const clamped = Math.max(0, Math.min(10, raw));
+        return {
+          optionName: option.name,
+          value,
+          realTarget: option.target,
+          targetIdx,
+          raw,
+          clamped,
+          weight: f.weight,
+          contribution: f.weight * clamped,
+        } satisfies OptionBreakdown;
+      })
+      .filter((o): o is OptionBreakdown => o !== null);
+    return {
+      filterName: f.name,
+      scoreName: f.scoreName,
+      weight: f.weight,
+      unitSuffix: f.unit?.suffix,
+      realWorld: f.format ? f.format(combo) : undefined,
+      params: f.params,
+      fn,
+      curveColor: curve.color,
+      options,
+      subtotal: options.reduce((s, o) => s + o.contribution, 0),
+    } satisfies FilterBreakdown;
+  })
+    .filter((f): f is FilterBreakdown => f !== null);
+  return {
+    filters: breakdown,
+    total: breakdown.reduce((s, f) => s + f.subtotal, 0),
+  };
 }
 
 // Enumerate every non-empty subset, then order by score for the given filters.
