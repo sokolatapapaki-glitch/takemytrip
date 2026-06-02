@@ -96,4 +96,24 @@ export const DEFAULT_FILTERS: Filter[] = [
       { name: "near-straight", target: 10 },
     ],
   },
+  {
+    // TRIP-LEVEL index (not per-combo): controls how easily the planner LEAVES
+    // ACTIVITIES OUT of the multi-day trip. value = the number of placeable
+    // activities left unused; target = 0 (use them all). "Asymmetric linear" with
+    // under:0 / over:1 means raw = 10 − 1·(left out), so each extra left-out
+    // activity drops the score by one point → costs `weight` of the trip
+    // objective. Raising the weight makes the optimizer keep more activities even
+    // if a day gets fuller (lower leave-out sensitivity); weight 0 = off.
+    // DEFAULT 0 so behaviour is unchanged until you tune it on the editor page.
+    name: "Use every activity",
+    weight: 0,
+    scoreName: "Asymmetric linear",
+    params: { under: 0, over: 1 },
+    hint: "Raise the weight to leave out fewer activities",
+    tripUseAll: true,
+    // Never scored at the combo level — it's a whole-trip measure.
+    appliesTo: () => false,
+    // One target: how many left-out activities are acceptable (0 = use them all).
+    options: [{ name: "use them all", target: 0 }],
+  },
 ];

@@ -79,8 +79,22 @@ export type Filter = {
   // filter didn't exist for it (e.g. route directness is meaningless for 1–2
   // stops). Code-bound (not user-edited); undefined = always applies.
   appliesTo?: (combo: Activity[]) => boolean;
+  // TRIP-LEVEL flag: this filter doesn't score a single combo — it scores the
+  // whole multi-day trip. "Use every activity" is one: its value is the count of
+  // placeable activities LEFT OUT (target 0), so raising its weight makes the
+  // planner keep more of them (lowers the "leave-out" sensitivity). It's kept in
+  // the same editable store (weight/curve tunable in the editor) but is excluded
+  // from every combo score and the results sidebar, and applied only by planTrip.
+  // See usageBreakdown / tripUseAllFilter below. Code-bound (not user-edited).
+  tripUseAll?: boolean;
   options: FilterOption[];
 };
+
+// Whether a filter scores the whole trip (not a single combo) — so it's left out
+// of every combo score and the results sidebar, and applied only by planTrip.
+export function isTripLevel(filter: Filter): boolean {
+  return !!filter.tripUseAll;
+}
 
 // Whether a filter contributes to a given combo's score at all (see appliesTo).
 export function filterApplies(filter: Filter, combo: Activity[]): boolean {
@@ -149,6 +163,82 @@ export function comboScore(
       }, 0)
     );
   }, 0);
+}
+
+// -----------------------------------------------------------------------------
+// Trip-level indices (scored across the whole multi-day trip, not one combo)
+// -----------------------------------------------------------------------------
+// Unlike the per-combo filters above, these score the WHOLE trip from a single
+// trip-level VALUE (e.g. how many activities were left out). Each lives in the
+// same editable store (so its weight and curve are tunable in the editor) but is
+// flagged trip-level, so it's excluded from every combo score and the results
+// sidebar, and applied only by planTrip. Its weighted, clamped curve score is
+// ADDED to the average of the day scores.
+
+// Locate the (single) "use every activity" filter among the runtime filters.
+export function tripUseAllFilter(
+  filters: Filter[]
+): { filter: Filter; index: number } | null {
+  const index = filters.findIndex((f) => f.tripUseAll);
+  return index === -1 ? null : { filter: filters[index], index };
+}
+
+// The shared proof of one trip-level index: the value, the target, and the curve
+// math (raw → clamp → × weight) that turns it into the contribution ADDED to the
+// trip's day average.
+export type TripIndexProof = {
+  value: number; // the trip-level value on the curve's x-scale
+  realTarget: number; // the option target in its real-world unit (or raw)
+  targetIdx: number; // that target as an index
+  raw: number; // curve(value, targetIdx, params) before clamping
+  clamped: number; // raw clamped into 0–10
+  weight: number; // the filter's weight
+  contribution: number; // weight × clamped — what's ADDED to the day average
+  scoreName: string;
+  params: Params;
+  fn: ScaleScore; // the curve that scored it (for the proof graph)
+  curveColor: string;
+};
+
+// Score one trip-level value with a filter's curve, keeping every intermediate
+// for the proof. `value` is already on the curve's x-scale (callers apply any
+// unit conversion first).
+function scoreTripIndex(filter: Filter, value: number): TripIndexProof {
+  const curve = resolveCurve(filter);
+  const option = filter.options[0];
+  const realTarget = option?.target ?? 0;
+  const targetIdx = filter.unit ? filter.unit.toIndex(realTarget) : realTarget;
+  const raw = curve.fn(value, targetIdx, filter.params);
+  const clamped = Math.max(0, Math.min(10, raw));
+  return {
+    value,
+    realTarget,
+    targetIdx,
+    raw,
+    clamped,
+    weight: filter.weight,
+    contribution: filter.weight * clamped,
+    scoreName: filter.scoreName,
+    params: filter.params,
+    fn: curve.fn,
+    curveColor: curve.color,
+  };
+}
+
+// "Use every activity": value = how many placeable activities were LEFT OUT,
+// scored toward a target of 0. A higher weight makes each left-out activity cost
+// more, so the optimizer keeps more of them (lower leave-out sensitivity).
+export type UseAllBreakdown = TripIndexProof & {
+  leftoverCount: number; // placeable activities not used
+  placedCount: number; // activities actually scheduled
+};
+export function usageBreakdown(
+  filter: Filter,
+  leftoverCount: number,
+  placedCount: number
+): UseAllBreakdown {
+  const value = filter.unit ? filter.unit.toIndex(leftoverCount) : leftoverCount;
+  return { ...scoreTripIndex(filter, value), leftoverCount, placedCount };
 }
 
 // -----------------------------------------------------------------------------
