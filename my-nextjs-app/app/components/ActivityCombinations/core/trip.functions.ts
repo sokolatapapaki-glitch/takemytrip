@@ -56,6 +56,7 @@ export type Trip = {
   alternatives: Trip[];
   evaluated: number; // feasible assignments considered (for the proof)
   exact: boolean; // true = exhaustive global optimum; false = heuristic fallback
+  elapsedMs: number; // wall-clock time the search took (set by planTrip)
 };
 
 // The exhaustive search explores (days + 1)^pool assignments. Once that estimate
@@ -225,6 +226,7 @@ function assembleTrip(
     alternatives: [],
     evaluated,
     exact,
+    elapsedMs: 0, // filled in by planTrip
   };
 }
 
@@ -433,5 +435,8 @@ export function planTrip(
   // Exhaustive only while the (days + 1)^pool state space stays within budget;
   // otherwise the greedy heuristic. Empty day set (no days) → heuristic trivially.
   const states = Math.pow(dayIndices.length + 1, pool.length);
-  return states <= STATE_BUDGET ? planExhaustive(...args) : planHeuristic(...args);
+  const t0 = performance.now();
+  const trip = states <= STATE_BUDGET ? planExhaustive(...args) : planHeuristic(...args);
+  trip.elapsedMs = performance.now() - t0;
+  return trip;
 }

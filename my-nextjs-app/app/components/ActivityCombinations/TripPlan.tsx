@@ -54,6 +54,13 @@ function TripView({
           trip score {trip.score.toFixed(2)}
         </span>
       </div>
+      {showProof ? (
+        <p className="mb-2 font-mono text-xs text-zinc-400 dark:text-zinc-500">
+          {trip.exact ? "exhaustive" : "heuristic"} ·{" "}
+          {trip.evaluated.toLocaleString()} states ·{" "}
+          {trip.elapsedMs < 1 ? "<1" : Math.round(trip.elapsedMs).toLocaleString()} ms
+        </p>
+      ) : null}
       {description ? (
         <p className="mb-3 text-sm text-zinc-500 dark:text-zinc-400">{description}</p>
       ) : null}

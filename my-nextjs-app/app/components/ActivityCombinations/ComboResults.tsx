@@ -170,24 +170,26 @@ export function ComboResults({
   combinations,
   selections,
   startHours,
-  day,
-  daysAfter,
+  dayIndices,
   activeDay,
+  evaluated,
+  elapsedMs,
 }: {
   filters: Filter[];
   combinations: Activity[][];
   selections: Selection[]; // per day slot (each day's filter choices)
   startHours: number[]; // per day slot
-  day: number; // selected start weekday
-  daysAfter: number; // how many days after the selected to lay out (0–4)
-  activeDay: number; // the day tab that ranks + scores the list (0..daysAfter)
+  dayIndices: number[]; // weekday (Mon=0) per chosen day, in order
+  activeDay: number; // the day tab that ranks + scores the list
+  evaluated: number; // how many subsets were evaluated when calculated
+  elapsedMs: number; // wall-clock time the calculation took
 }) {
   // The list is ranked + scored for the ACTIVE day's filters; each combo card
   // still lays out every day, each with its own day's start hour + time budget.
   const activeSelection = selections[activeDay];
   const activeStart = startHours[activeDay];
   const activeEnd = scheduleEndHour(filters, activeSelection, activeStart);
-  const activeWeekday = (day + activeDay) % 7;
+  const activeWeekday = dayIndices[activeDay];
 
   // Which combos' "why this rank" dashboards / maps are open. Each is a Set so
   // several can stay open at once; keyed by combo identity so re-sorting doesn't
@@ -210,6 +212,10 @@ export function ComboResults({
       <h2 className="mb-1 text-lg font-semibold text-zinc-800 dark:text-zinc-100">
         Combinations ({combinations.length})
       </h2>
+      <p className="mb-1 font-mono text-xs text-zinc-400 dark:text-zinc-500">
+        evaluated {evaluated.toLocaleString()} subsets ·{" "}
+        {elapsedMs < 1 ? "<1" : Math.round(elapsedMs).toLocaleString()} ms
+      </p>
       <p className="mb-3 text-sm text-zinc-500 dark:text-zinc-400">
         Ranked for <span className="font-medium text-zinc-600 dark:text-zinc-300">{DAYS[activeWeekday]}</span>
         &apos;s filters (runs {formatTime(activeStart)}–{formatTime(activeEnd)}):{" "}
@@ -227,13 +233,10 @@ export function ComboResults({
       <div className="flex flex-col gap-2">
         {combinations.map((combo, index) => {
           const score = comboScore(combo, activeSelection, filters);
-          // The selected day plus `daysAfter` following days (wrapping past Sun →
-          // Mon). Each day is scheduled with ITS OWN day's start hour + time
-          // budget, so per-day filters produce each day's own itinerary.
-          const days = Array.from(
-            { length: daysAfter + 1 },
-            (_, i) => (day + i) % 7
-          );
+          // One itinerary per chosen date (by weekday). Each day is scheduled with
+          // ITS OWN day's start hour + time budget, so per-day filters produce
+          // each day's own itinerary.
+          const days = dayIndices;
           const plans = days.map((d, slot) =>
             scheduleCombo(
               combo,

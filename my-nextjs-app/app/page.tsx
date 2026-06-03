@@ -1,5 +1,5 @@
-import ActivityCombinations from "@/app/components/ActivityCombinations";
+import PlannerClient from "@/app/components/ActivityCombinations/PlannerClient";
 
 export default function Home() {
-  return <ActivityCombinations />;
+  return <PlannerClient />;
 }

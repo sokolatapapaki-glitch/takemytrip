@@ -164,8 +164,12 @@ export function TripDashboard({
         <span className="font-medium text-zinc-600 dark:text-zinc-300">
           {trip.evaluated.toLocaleString()}
         </span>{" "}
-        legal assignments — each activity on at most one day, every day a schedulable
-        combo — and this one maximizes that objective
+        legal assignments in{" "}
+        <span className="font-medium text-zinc-600 dark:text-zinc-300">
+          {trip.elapsedMs < 1 ? "<1" : Math.round(trip.elapsedMs).toLocaleString()} ms
+        </span>{" "}
+        — each activity on at most one day, every day a schedulable combo — and this
+        one maximizes that objective
         {trip.exact ? (
           <span>
             , so it is the <span className="font-medium">true optimum</span>.

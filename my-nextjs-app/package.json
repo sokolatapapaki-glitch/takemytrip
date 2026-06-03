@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "git": "git add . && git commit -m 'Update' && git push origin updates"
+    "git": "next build && git add . && git commit -m 'Update' && git push origin updates"
   },
   "dependencies": {
     "next": "16.2.6",

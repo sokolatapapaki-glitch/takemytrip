@@ -2,10 +2,15 @@ import Link from "next/link";
 import { ACTIVITIES, DAYS } from "./core/activities.data";
 import { formatTime } from "./core/activities.functions";
 import { Filter, Selection, isTripLevel } from "./core/filters.functions";
+import { mondayIndex } from "./core/calendar.functions";
+import { Calendar } from "./Calendar";
 import { RequiredActivities } from "./RequiredActivities";
 
 // Hours the day can start at (whole hours, 06:00–18:00).
 const START_HOUR_CHOICES = Array.from({ length: 13 }, (_, i) => 6 + i);
+
+// Short label for a chosen date, e.g. "Wed 3".
+const dateLabel = (d: Date) => `${DAYS[mondayIndex(d)]} ${d.getDate()}`;
 
 function FilterButton({
   active,
@@ -30,7 +35,8 @@ function FilterButton({
   );
 }
 
-// Filter sidebar — the scoring filters plus the hard "must include" filter.
+// Filter sidebar — the date picker, the per-day filter tabs + their controls, and
+// the hard "must include" filter.
 export function FilterSidebar({
   filters,
   selection,
@@ -39,10 +45,12 @@ export function FilterSidebar({
   onToggleRequired,
   startHour,
   onStartHourChange,
-  day,
-  onDayChange,
-  daysAfter,
-  onDaysAfterChange,
+  rangeStart,
+  rangeEnd,
+  onRangeChange,
+  minDate,
+  maxDays,
+  dates,
   activeDay,
   onActiveDayChange,
 }: {
@@ -53,11 +61,13 @@ export function FilterSidebar({
   onToggleRequired: (name: string) => void;
   startHour: number;
   onStartHourChange: (hour: number) => void;
-  day: number;
-  onDayChange: (day: number) => void;
-  daysAfter: number;
-  onDaysAfterChange: (n: number) => void;
-  activeDay: number; // which day tab is selected (0..daysAfter)
+  rangeStart: Date;
+  rangeEnd: Date | null;
+  onRangeChange: (start: Date, end: Date | null) => void;
+  minDate?: Date;
+  maxDays: number;
+  dates: Date[]; // the chosen dates, in order
+  activeDay: number; // which day tab is selected (0..dates.length-1)
   onActiveDayChange: (slot: number) => void;
 }) {
   return (
@@ -74,90 +84,59 @@ export function FilterSidebar({
         </Link>
       </div>
 
-      {/* Day of the week — picks each activity's opening hours for that day. */}
+      {/* Date picker — click a start date, then an end date (up to maxDays). Each
+          chosen date's weekday drives that day's opening hours. */}
       <div className="flex flex-col gap-2">
         <div>
           <h3 className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
-            Day
+            Dates
           </h3>
           <p className="text-xs text-zinc-400 dark:text-zinc-500">
-            Which day of the week
+            {rangeEnd === null
+              ? "Pick the end date"
+              : `${dates.length} day${dates.length === 1 ? "" : "s"}: ${dateLabel(dates[0])} → ${dateLabel(dates[dates.length - 1])}`}
+            {" "}· up to {maxDays}
           </p>
         </div>
-        <select
-          value={day}
-          onChange={(e) => onDayChange(Number(e.target.value))}
-          className="w-full rounded-lg border border-black/[.08] bg-white px-3 py-2 text-sm text-zinc-700 dark:border-white/[.145] dark:bg-zinc-900 dark:text-zinc-300"
-        >
-          {DAYS.map((name, i) => (
-            <option key={name} value={i}>
-              {name}
-            </option>
-          ))}
-        </select>
+        <Calendar
+          start={rangeStart}
+          end={rangeEnd}
+          onChange={onRangeChange}
+          maxDays={maxDays}
+          minDate={minDate}
+        />
       </div>
 
-      {/* How many days AFTER the selected day to also lay out each combo for.
-          Total itineraries per combo = daysAfter + 1 (0 = just the selected day). */}
-      <div className="flex flex-col gap-2">
-        <div>
-          <h3 className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
-            Days after
-          </h3>
-          <p className="text-xs text-zinc-400 dark:text-zinc-500">
-            Extra days after the selected to show
-          </p>
-        </div>
-        <div className="flex gap-1.5">
-          {[0, 1, 2, 3, 4].map((n) => (
-            <button
-              key={n}
-              type="button"
-              onClick={() => onDaysAfterChange(n)}
-              aria-pressed={daysAfter === n}
-              className={`flex-1 rounded-lg border py-2 text-sm transition-colors ${
-                daysAfter === n
-                  ? "border-blue-600 bg-blue-50 text-blue-700 dark:border-blue-400 dark:bg-blue-950/50 dark:text-blue-300"
-                  : "border-black/[.08] text-zinc-700 hover:bg-zinc-50 dark:border-white/[.145] dark:text-zinc-300 dark:hover:bg-zinc-800"
-              }`}
-            >
-              {n}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Day tabs — one per day the trip spans (selected day + daysAfter). The
-          active tab's filters/start time/required are what the controls below
-          edit, and the active day ranks the combos list. */}
+      {/* Day tabs — one per chosen date. The active tab's filters/start time/
+          required are what the controls below edit, and the active day ranks the
+          combos list. */}
       <div className="flex flex-col gap-2 border-t border-black/[.08] pt-4 dark:border-white/[.145]">
         <h3 className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
           Per-day filters
         </h3>
         <div className="flex flex-wrap gap-1.5">
-          {Array.from({ length: daysAfter + 1 }, (_, slot) => {
-            const weekday = (day + slot) % 7;
-            return (
-              <button
-                key={slot}
-                type="button"
-                onClick={() => onActiveDayChange(slot)}
-                aria-pressed={activeDay === slot}
-                className={`rounded-lg border px-3 py-1.5 text-sm transition-colors ${
-                  activeDay === slot
-                    ? "border-blue-600 bg-blue-50 text-blue-700 dark:border-blue-400 dark:bg-blue-950/50 dark:text-blue-300"
-                    : "border-black/[.08] text-zinc-700 hover:bg-zinc-50 dark:border-white/[.145] dark:text-zinc-300 dark:hover:bg-zinc-800"
+          {dates.map((d, slot) => (
+            <button
+              key={slot}
+              type="button"
+              onClick={() => onActiveDayChange(slot)}
+              aria-pressed={activeDay === slot}
+              className={`rounded-lg border px-3 py-1.5 text-sm transition-colors ${activeDay === slot
+                ? "border-blue-600 bg-blue-50 text-blue-700 dark:border-blue-400 dark:bg-blue-950/50 dark:text-blue-300"
+                : "border-black/[.08] text-zinc-700 hover:bg-zinc-50 dark:border-white/[.145] dark:text-zinc-300 dark:hover:bg-zinc-800"
                 }`}
-              >
-                {DAYS[weekday]}
-              </button>
-            );
-          })}
+            >
+              {dateLabel(d)}
+            </button>
+          ))}
         </div>
         <p className="text-xs text-zinc-400 dark:text-zinc-500">
-          Editing <span className="font-medium text-zinc-600 dark:text-zinc-300">{DAYS[(day + activeDay) % 7]}</span>
-          {activeDay === 0 ? " (selected day)" : ` (day ${activeDay + 1})`} — applies to
-          this day in the combos and the trip.
+          Editing{" "}
+          <span className="font-medium text-zinc-600 dark:text-zinc-300">
+            {dates[activeDay] ? dateLabel(dates[activeDay]) : "—"}
+          </span>{" "}
+          {activeDay === 0 ? "(first day)" : `(day ${activeDay + 1})`} — applies to this
+          day in the combos and the trip.
         </p>
       </div>
 
@@ -168,7 +147,7 @@ export function FilterSidebar({
             Start time
           </h3>
           <p className="text-xs text-zinc-400 dark:text-zinc-500">
-            When {DAYS[(day + activeDay) % 7]} begins
+            When {dates[activeDay] ? dateLabel(dates[activeDay]) : "this day"} begins
           </p>
         </div>
         <select
@@ -190,27 +169,27 @@ export function FilterSidebar({
         // they're not shown here. Returning null keeps `fi` aligned with the
         // selection.
         isTripLevel(filter) ? null : (
-        <div key={filter.name} className="flex flex-col gap-2">
-          <div>
-            <h3 className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
-              {filter.name}
-            </h3>
-            <p className="text-xs text-zinc-400 dark:text-zinc-500">
-              {filter.hint ?? (filter.multi ? "Pick any" : "Pick one")}
-            </p>
+          <div key={filter.name} className="flex flex-col gap-2">
+            <div>
+              <h3 className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
+                {filter.name}
+              </h3>
+              <p className="text-xs text-zinc-400 dark:text-zinc-500">
+                {filter.hint ?? (filter.multi ? "Pick any" : "Pick one")}
+              </p>
+            </div>
+            <div className="flex flex-col gap-1.5">
+              {filter.options.map((opt, i) => (
+                <FilterButton
+                  key={opt.name}
+                  active={(selection[fi] ?? []).includes(i)}
+                  onClick={() => onChoose(fi, i)}
+                >
+                  {opt.name}
+                </FilterButton>
+              ))}
+            </div>
           </div>
-          <div className="flex flex-col gap-1.5">
-            {filter.options.map((opt, i) => (
-              <FilterButton
-                key={opt.name}
-                active={(selection[fi] ?? []).includes(i)}
-                onClick={() => onChoose(fi, i)}
-              >
-                {opt.name}
-              </FilterButton>
-            ))}
-          </div>
-        </div>
         )
       )}
 
