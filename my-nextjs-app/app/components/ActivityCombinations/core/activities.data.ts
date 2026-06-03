@@ -49,13 +49,13 @@ export const ACTIVITIES: Activity[] = [
   { name: "Villa Borghese bike ride", description: "Rent a bike and loop the city's big central park.", hours: 2, cost: 12, coords: { lat: 41.9142, lng: 12.4923 }, program: [CLOSED, at(9, 19), at(9, 19), at(9, 19), at(9, 19), at(9, 19), at(9, 19)], cultural: 2, foodie: 1, adventurous: 8, relaxing: 6 },
   // Open-air market, mornings only: 07:00–14:00 Mon–Sat, CLOSED Sundays. Open
   // over midday on weekdays, so it can fill the lunch slot.
-  //{ name: "Campo de' Fiori market", description: "Browse the morning produce and street-food stalls.", hours: 1, cost: 0, coords: { lat: 41.8956, lng: 12.4722 }, program: weekdaysThenSun(at(7, 14), CLOSED), cultural: 4, foodie: 8, adventurous: 2, relaxing: 5, is_lunch: true },
+  { name: "Campo de' Fiori market", description: "Browse the morning produce and street-food stalls.", hours: 1, cost: 0, coords: { lat: 41.8956, lng: 12.4722 }, program: weekdaysThenSun(at(7, 14), CLOSED), cultural: 4, foodie: 8, adventurous: 2, relaxing: 5, is_lunch: true },
   // Catacombs tour 09:00–17:00; CLOSED on Wednesdays.
-  //{ name: "Catacombs of San Callisto", description: "Descend into the early-Christian underground tunnels.", hours: 2, cost: 10, coords: { lat: 41.8589, lng: 12.5103 }, program: [at(9, 17), at(9, 17), CLOSED, at(9, 17), at(9, 17), at(9, 17), at(9, 17)], cultural: 9, foodie: 0, adventurous: 6, relaxing: 1 },
+  { name: "Catacombs of San Callisto", description: "Descend into the early-Christian underground tunnels.", hours: 2, cost: 10, coords: { lat: 41.8589, lng: 12.5103 }, program: [at(9, 17), at(9, 17), CLOSED, at(9, 17), at(9, 17), at(9, 17), at(9, 17)], cultural: 9, foodie: 0, adventurous: 6, relaxing: 1 },
   // Cooking class, single afternoon session 15:00–18:00 daily.
-  //{ name: "Pasta-making cooking class", description: "Hands-on class rolling fresh pasta with a local chef.", hours: 3, cost: 65, coords: { lat: 41.8919, lng: 12.4646 }, program: everyDay(at(15, 18)), cultural: 3, foodie: 10, adventurous: 4, relaxing: 4 },
+  { name: "Pasta-making cooking class", description: "Hands-on class rolling fresh pasta with a local chef.", hours: 3, cost: 65, coords: { lat: 41.8919, lng: 12.4646 }, program: everyDay(at(15, 18)), cultural: 3, foodie: 10, adventurous: 4, relaxing: 4 },
   // Rooftop aperitivo bar, evenings 18:00–24:00 every day.
-  //{ name: "Rooftop aperitivo", description: "Sip a spritz with sunset views over the rooftops.", hours: 2, cost: 30, coords: { lat: 41.9011, lng: 12.4707 }, program: everyDay(at(18, 24)), cultural: 1, foodie: 7, adventurous: 2, relaxing: 9 },
+  { name: "Rooftop aperitivo", description: "Sip a spritz with sunset views over the rooftops.", hours: 2, cost: 30, coords: { lat: 41.9011, lng: 12.4707 }, program: everyDay(at(18, 24)), cultural: 1, foodie: 7, adventurous: 2, relaxing: 9 },
   // Riverside thermal spa, open daily 10:00–22:00.
-  //{ name: "Terme spa & wellness", description: "Unwind in the thermal pools and steam rooms.", hours: 3, cost: 45, coords: { lat: 41.8847, lng: 12.4712 }, program: everyDay(at(10, 22)), cultural: 0, foodie: 1, adventurous: 1, relaxing: 10 },
+  { name: "Terme spa & wellness", description: "Unwind in the thermal pools and steam rooms.", hours: 3, cost: 45, coords: { lat: 41.8847, lng: 12.4712 }, program: everyDay(at(10, 22)), cultural: 0, foodie: 1, adventurous: 1, relaxing: 10 },
 ];
