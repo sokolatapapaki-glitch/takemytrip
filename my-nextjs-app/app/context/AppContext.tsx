@@ -97,6 +97,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
             >
               ×
             </button>
+
             <div className="p-6">{modalContent}</div>
           </div>
         </div>
