@@ -330,20 +330,42 @@ export function scoreBreakdown(
   };
 }
 
+// Hard ceiling on how many activities the all-subsets combos list enumerates over.
+// Enumeration is 2^n subsets AND each combo's route-directness score is a factorial
+// over its stops, so both explode well before the 50-activity catalogue. The combos
+// list is a separate browsing aid — the multi-day trip planner does NOT use it — so
+// for a larger pool we simply bound it to the top activities (by single-activity
+// score) to keep the UI responsive. A no-op for pools up to this size (the previous
+// catalogue and all unit tests), so their behaviour is unchanged.
+const MAX_COMBO_ENUM = 12;
+
 // Enumerate every non-empty subset, then order by score for the given filters.
+// (Bounded to the top MAX_COMBO_ENUM activities for oversized pools — see above.)
 export function buildCombinations(
   activities: Activity[],
   selection: Selection,
   filters: Filter[]
 ): Activity[][] {
+  // For a large pool, enumerate only over its highest-scoring activities so the
+  // 2^n subset sweep (and the per-combo factorial route metric) stays bounded.
+  const pool =
+    activities.length <= MAX_COMBO_ENUM
+      ? activities
+      : [...activities]
+          .sort(
+            (a, b) =>
+              comboScore([b], selection, filters) - comboScore([a], selection, filters)
+          )
+          .slice(0, MAX_COMBO_ENUM);
+
   const result: Activity[][] = [];
-  const total = 1 << activities.length;
+  const total = 1 << pool.length;
 
   for (let mask = 1; mask < total; mask++) {
     const combo: Activity[] = [];
-    for (let i = 0; i < activities.length; i++) {
+    for (let i = 0; i < pool.length; i++) {
       if (mask & (1 << i)) {
-        combo.push(activities[i]);
+        combo.push(pool[i]);
       }
     }
     result.push(combo);

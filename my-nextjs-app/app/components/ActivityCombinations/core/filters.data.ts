@@ -19,6 +19,19 @@ import type { Params } from "./curves.functions";
 export const HOURS_UNIT: Unit = { label: "Hours", suffix: "h", toIndex: hoursToIndex };
 export const COST_UNIT: Unit = { label: "Euros", suffix: "€", toIndex: costToIndex };
 
+// ===========================================================================
+// HOW IMPORTANT IS "tourist priority"?  ← the one knob to turn.
+// ===========================================================================
+// The weight of the "Tourist priority" filter below. A combo's priority score is
+// the average `priority` (0–10) of its activities, so this filter contributes
+// PRIORITY_WEIGHT × avgPriority to each day's score. Because the trip planner
+// maximizes the day-score average, a high weight makes it fill the trip's limited
+// slots with the must-see, high-priority sights first. For scale: the other
+// filters' weights are ~0.2–0.9, so the default 3 already makes priority the
+// single biggest factor. Raise it to make priority dominate even harder, lower it
+// to soften it, 0 to ignore priority entirely.
+export const PRIORITY_WEIGHT = 3;
+
 // Asymmetric-linear ceiling: free below target, very steep above.
 const CEILING_PARAMS: Params = { under: 0, over: 100 };
 
@@ -95,6 +108,25 @@ export const DEFAULT_FILTERS: Filter[] = [
       { name: "very direct", target: 8 },
       { name: "near-straight", target: 10 },
     ],
+  },
+  {
+    // TOURIST PRIORITY: how must-see the combo's activities are, on average. The
+    // value is the mean of each activity's `priority` (0–10); the target is 10 (a
+    // combo of all must-sees). Scored with symmetric linear toward 10, so for any
+    // value in 0–10 the contribution is simply weight × avgPriority — i.e. higher
+    // priority always scores higher. Weighted by PRIORITY_WEIGHT (heavy by
+    // default), this is what pushes the planner to include the big sights over
+    // the niche ones when slots are limited. Edit the weight via PRIORITY_WEIGHT.
+    name: "Tourist priority",
+    weight: PRIORITY_WEIGHT,
+    scoreName: "Linear (symmetric)",
+    params: { slope: 1 },
+    hint: "Favour the big must-see sights",
+    value: averageIndex("priority"),
+    format: (combo) =>
+      `${(combo.reduce((s, a) => s + a.priority, 0) / (combo.length || 1)).toFixed(1)}/10`,
+    // Targets are already 0–10 priority indexes (no unit conversion).
+    options: [{ name: "must-see", target: 10 }],
   },
   {
     // TRIP-LEVEL index (not per-combo): controls how easily the planner LEAVES

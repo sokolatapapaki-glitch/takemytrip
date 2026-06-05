@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "test:unit": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 dist-test/app/components/ActivityCombinations/core/__tests__/",
     "git": "next build && git add . && git commit -m 'Update' && git push origin updates"
   },
   "dependencies": {

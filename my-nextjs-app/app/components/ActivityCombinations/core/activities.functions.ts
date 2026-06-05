@@ -25,6 +25,13 @@ export type Activity = {
   foodie: number; // 0–10
   adventurous: number; // 0–10
   relaxing: number; // 0–10
+  // How important / must-see this activity is for a typical tourist, 0–10 (10 = a
+  // bucket-list landmark like the Colosseum, low = a niche or skippable stop). It
+  // is NOT a vibe — it's an intrinsic importance the planner uses to favour
+  // including the big sights. Scored by the "Tourist priority" filter (see
+  // filters.data / PRIORITY_WEIGHT), which is weighted heavily so high-priority
+  // activities win the limited slots in a trip.
+  priority: number; // 0–10
   // Optional (foodie activities only): if true, this activity can stand in for
   // the midday lunch break when it's open during the 1–4 PM slot.
   is_lunch?: boolean;
@@ -34,7 +41,7 @@ export type Activity = {
 export type VibeKey = "cultural" | "foodie" | "adventurous" | "relaxing";
 
 // Any numeric activity field an index can be built from.
-export type NumericKey = "hours" | "cost" | VibeKey;
+export type NumericKey = "hours" | "cost" | "priority" | VibeKey;
 
 // The window for a given day index (0=Mon..6=Sun); closed if out of range.
 export function dayHours(a: Activity, day: number): DayHours {
