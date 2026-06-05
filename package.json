@@ -1,0 +1,13 @@
+{
+  "name": "ttk-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "cd my-nextjs-app && npm run dev",
+    "build": "cd my-nextjs-app && npm run build",
+    "start": "cd my-nextjs-app && npm run start",
+    "lint": "cd my-nextjs-app && npm run lint",
+    "install:app": "cd my-nextjs-app && npm install",
+    "git": "cd my-nextjs-app && npm run git"
+  }
+}
