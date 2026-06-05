@@ -8,7 +8,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-black/[.08] px-6 py-6 text-sm text-zinc-600 dark:border-white/[.145] dark:text-zinc-400">
       <div className="flex items-center justify-between">
-        <span>© {new Date().getFullYear()} My App. All rights reserved.</span>
+        <span>© {new Date().getFullYear()} My App. All rights reserveds</span>
         <span className="capitalize">{theme} mode</span>
       </div>
     </footer>
