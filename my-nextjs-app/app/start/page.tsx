@@ -23,10 +23,13 @@ export default function StartPage() {
 
       <div className="relative z-10 w-full max-w-3xl">
         <header className="mb-8 text-center">
-          <h1 className="text-3xl font-semibold tracking-tight text-zinc-800 sm:text-4xl">
+          <h1 className="animate-pop-in text-3xl font-semibold tracking-tight text-zinc-800 sm:text-4xl">
             Where to next?
           </h1>
-          <p className="mt-2 text-zinc-500">
+          <p
+            className="animate-pop-in mt-2 text-zinc-500"
+            style={{ animationDelay: "60ms" }}
+          >
             Pick a destination, your dates, and who&apos;s coming along.
           </p>
         </header>

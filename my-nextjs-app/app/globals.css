@@ -24,3 +24,98 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* --- /start page entrance: fast "pop up" + typewriter caret --- */
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  70% {
+    transform: scale(1.06);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Starts hidden, then pops with a slight overshoot. `both` keeps the
+   from-state before the (optional) delay so nothing flashes first. */
+.animate-pop-in {
+  opacity: 0;
+  animation: pop-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Quick fade + small rise — used for the bar so it stays a stable container
+   that the icons can visibly pop into (a scaling bar would mask their pop). */
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in-up {
+  opacity: 0;
+  animation: fade-in-up 0.3s ease-out both;
+}
+
+/* Stronger, springier pop just for the input icons: from nothing, overshoot
+   past full size, settle. Clearly reads on its own against the static bar. */
+@keyframes icon-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.animate-icon-pop {
+  opacity: 0;
+  animation: icon-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Thin text-coloured caret. Solid while typing; blinks once typing is done. */
+.type-caret {
+  display: inline-block;
+  width: 1px;
+  height: 1em;
+  transform: translateY(0.15em);
+  background-color: currentColor;
+}
+.type-caret[data-done="true"] {
+  animation: caret-blink 1s step-end infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-pop-in,
+  .animate-fade-in-up,
+  .animate-icon-pop {
+    animation: none;
+    opacity: 1;
+  }
+  .type-caret {
+    animation: none;
+  }
+}

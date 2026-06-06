@@ -12,6 +12,7 @@ import type { DateRange, DestinationSelection, Travelers } from "../data/types";
 import { DestinationModal } from "./DestinationModal";
 import { CalendarModal } from "./CalendarModal";
 import { TravelersModal } from "./TravelersModal";
+import { Typewriter } from "./Typewriter";
 import {
   CalendarIcon,
   MapPinIcon,
@@ -85,12 +86,15 @@ export default function StartTripSearch() {
 
   return (
     <div ref={rootRef} className="relative">
-      <div className="flex items-stretch gap-2 rounded-2xl border border-white/50 bg-white/60 p-2 shadow-xl shadow-orange-900/5 backdrop-blur-md">
+      <div className="animate-fade-in-up flex items-stretch gap-2 rounded-2xl border border-white/50 bg-white/60 p-2 shadow-xl shadow-orange-900/5 backdrop-blur-md" style={{ animationDelay: "100ms" }}>
         <Field
           active={open === "dest"}
           icon={<MapPinIcon className="h-5 w-5" />}
           placeholder="Search destination"
           value={destLabel}
+          iconDelay={400}
+          typeDelay={820}
+          typewriter
           onClick={() => toggle("dest")}
           onClear={dest ? () => setDest(null) : undefined}
         >
@@ -112,6 +116,7 @@ export default function StartTripSearch() {
           icon={<CalendarIcon className="h-5 w-5" />}
           placeholder="From — To"
           value={dateLabel}
+          iconDelay={490}
           onClick={() => toggle("dates")}
           onClear={range.start ? () => setRange({ start: null, end: null }) : undefined}
         >
@@ -131,6 +136,7 @@ export default function StartTripSearch() {
           icon={<UsersIcon className="h-5 w-5" />}
           placeholder="Travelers"
           value={travelersLabel}
+          iconDelay={580}
           onClick={() => toggle("travelers")}
         >
           {open === "travelers" && (
@@ -143,7 +149,8 @@ export default function StartTripSearch() {
         <button
           type="button"
           onClick={handleSearch}
-          className="flex shrink-0 items-center gap-2 rounded-xl bg-orange-500 px-6 py-3 font-medium text-white shadow-sm transition-colors hover:bg-orange-600"
+          style={{ animationDelay: "440ms" }}
+          className="animate-pop-in flex shrink-0 items-center gap-2 rounded-xl bg-orange-500 px-6 py-3 font-medium text-white shadow-sm transition-colors hover:bg-orange-600"
         >
           <SearchIcon className="h-5 w-5" />
           <span className="hidden sm:inline">Search</span>
@@ -163,6 +170,9 @@ function Field({
   onClick,
   onClear,
   children,
+  iconDelay = 0,
+  typeDelay = 0,
+  typewriter = false,
 }: {
   active: boolean;
   icon: React.ReactNode;
@@ -171,6 +181,9 @@ function Field({
   onClick: () => void;
   onClear?: () => void;
   children?: React.ReactNode;
+  iconDelay?: number;
+  typeDelay?: number;
+  typewriter?: boolean;
 }) {
   return (
     <div className="group relative flex-1">
@@ -183,13 +196,22 @@ function Field({
             : "bg-white/70 hover:bg-white"
         }`}
       >
-        <span className="shrink-0 text-zinc-400">{icon}</span>
+        <span
+          className="animate-icon-pop inline-flex shrink-0 text-zinc-400"
+          style={{ animationDelay: `${iconDelay}ms` }}
+        >
+          {icon}
+        </span>
         <span
           className={`flex-1 truncate text-sm ${value ? "text-zinc-800" : "text-zinc-400"} ${
             onClear ? "pr-6" : ""
           }`}
         >
-          {value ?? placeholder}
+          {value
+            ? value
+            : typewriter
+              ? <Typewriter text={placeholder} startDelay={typeDelay} />
+              : placeholder}
         </span>
       </button>
       {onClear && (
