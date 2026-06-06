@@ -125,7 +125,8 @@ function makeDayEvaluator(
   startHours: number[],
   endHours: number[],
   selections: Selection[],
-  filters: Filter[]
+  filters: Filter[],
+  circulars: boolean[] = []
 ) {
   const memo = new Map<number, DayEval>();
   return (slot: number, mask: number): DayEval => {
@@ -142,7 +143,7 @@ function makeDayEvaluator(
     if (set.length === 0) {
       evalResult = { feasible: true, plan: emptyPlan(startHours[slot]), load: 0, score: 0 };
     } else {
-      const plan = scheduleCombo(set, dayIndices[slot], startHours[slot], endHours[slot]);
+      const plan = scheduleCombo(set, dayIndices[slot], startHours[slot], endHours[slot], circulars[slot] ?? false);
       evalResult = {
         feasible: plan.feasible,
         plan,
@@ -254,9 +255,10 @@ function planExhaustive(
   startHours: number[],
   endHours: number[],
   selections: Selection[],
-  filters: Filter[]
+  filters: Filter[],
+  circulars: boolean[] = []
 ): Trip {
-  const evalDay = makeDayEvaluator(pool, dayIndices, startHours, endHours, selections, filters);
+  const evalDay = makeDayEvaluator(pool, dayIndices, startHours, endHours, selections, filters, circulars);
   const useAll = tripUseAllFilter(filters);
   const n = pool.length;
   const D = dayIndices.length;
@@ -385,7 +387,8 @@ function makePrunedDayEvaluator(
   startHours: number[],
   endHours: number[],
   selections: Selection[],
-  filters: Filter[]
+  filters: Filter[],
+  circulars: boolean[] = []
 ) {
   const memo = new Map<number, DayEval>();
   return (slot: number, mask: number): DayEval => {
@@ -414,7 +417,7 @@ function makePrunedDayEvaluator(
       if (sumHours + forcedLunch > budget + EPS) {
         evalResult = { feasible: false, plan: emptyPlan(startHours[slot]), load: 0, score: 0 };
       } else {
-        const plan = scheduleCombo(set, dayIndices[slot], startHours[slot], endHours[slot]);
+        const plan = scheduleCombo(set, dayIndices[slot], startHours[slot], endHours[slot], circulars[slot] ?? false);
         evalResult = {
           feasible: plan.feasible,
           plan,
@@ -510,9 +513,10 @@ function planPruned(
   startHours: number[],
   endHours: number[],
   selections: Selection[],
-  filters: Filter[]
+  filters: Filter[],
+  circulars: boolean[] = []
 ): Trip {
-  const evalDay = makePrunedDayEvaluator(pool, dayIndices, startHours, endHours, selections, filters);
+  const evalDay = makePrunedDayEvaluator(pool, dayIndices, startHours, endHours, selections, filters, circulars);
   const useAll = tripUseAllFilter(filters);
   const n = pool.length;
   const D = dayIndices.length;
@@ -653,9 +657,10 @@ function planSubsetDP(
   startHours: number[],
   endHours: number[],
   selections: Selection[],
-  filters: Filter[]
+  filters: Filter[],
+  circulars: boolean[] = []
 ): Trip {
-  const evalDay = makePrunedDayEvaluator(pool, dayIndices, startHours, endHours, selections, filters);
+  const evalDay = makePrunedDayEvaluator(pool, dayIndices, startHours, endHours, selections, filters, circulars);
   const useAll = tripUseAllFilter(filters);
   const { top, evaluated } = subsetDPTop(pool, dayIndices, evalDay, useAll);
   return assembleTopK(pool, dayIndices, top, evaluated, true, evalDay, useAll);
@@ -686,9 +691,10 @@ function makeLinearDayEvaluator(
   startHours: number[],
   endHours: number[],
   selections: Selection[],
-  filters: Filter[]
+  filters: Filter[],
+  circulars: boolean[] = []
 ) {
-  const base = makePrunedDayEvaluator(pool, dayIndices, startHours, endHours, selections, filters);
+  const base = makePrunedDayEvaluator(pool, dayIndices, startHours, endHours, selections, filters, circulars);
   const memo = new Map<number, DayEval>();
   return (slot: number, mask: number): DayEval => {
     // Numeric memo key (slot < 8 -> 3 bits) — far cheaper than a string at the
@@ -715,9 +721,10 @@ function planLinear(
   startHours: number[],
   endHours: number[],
   selections: Selection[],
-  filters: Filter[]
+  filters: Filter[],
+  circulars: boolean[] = []
 ): Trip {
-  const evalDay = makeLinearDayEvaluator(pool, dayIndices, startHours, endHours, selections, filters);
+  const evalDay = makeLinearDayEvaluator(pool, dayIndices, startHours, endHours, selections, filters, circulars);
   const useAll = tripUseAllFilter(filters);
   const { top, evaluated } = subsetDPTop(pool, dayIndices, evalDay, useAll);
   return assembleTopK(pool, dayIndices, top, evaluated, true, evalDay, useAll);
@@ -732,9 +739,10 @@ export function planHeuristic(
   startHours: number[],
   endHours: number[],
   selections: Selection[],
-  filters: Filter[]
+  filters: Filter[],
+  circulars: boolean[] = []
 ): Trip {
-  const evalDay = makeDayEvaluator(pool, dayIndices, startHours, endHours, selections, filters);
+  const evalDay = makeDayEvaluator(pool, dayIndices, startHours, endHours, selections, filters, circulars);
   const useAll = tripUseAllFilter(filters);
   const D = dayIndices.length;
   const masks = new Array<number>(D).fill(0);
@@ -842,7 +850,8 @@ export function planLargeHeuristic(
   startHours: number[],
   endHours: number[],
   selections: Selection[],
-  filters: Filter[]
+  filters: Filter[],
+  circulars: boolean[] = []
 ): Trip {
   const n = pool.length;
   const D = dayIndices.length;
@@ -876,7 +885,7 @@ export function planLargeHeuristic(
     if (sumHours + forcedLunch > budget + EPS) {
       res = { feasible: false, plan: emptyPlan(startHours[slot]), load: 0, score: 0 };
     } else {
-      const plan = scheduleCombo(set, dayIndices[slot], startHours[slot], endHours[slot]);
+      const plan = scheduleCombo(set, dayIndices[slot], startHours[slot], endHours[slot], circulars[slot] ?? false);
       let score = comboScore(set, selections[slot], filters);
       if (plan.feasible && set.length >= LINEARITY_MIN_STOPS) {
         score += LINEARITY_WEIGHT * plan.linearity;
@@ -1216,7 +1225,8 @@ type TripPlanner = (
   startHours: number[],
   endHours: number[],
   selections: Selection[],
-  filters: Filter[]
+  filters: Filter[],
+  circulars?: boolean[]
 ) => Trip;
 
 // Exported so the test suite can verify the planners agree (the three base
@@ -1260,9 +1270,12 @@ export function planTrip(
   startHours: number[], // per day slot
   endHours: number[], // per day slot (start + that day's time budget)
   selections: Selection[], // per day slot (each day's filter choices)
-  filters: Filter[]
+  filters: Filter[],
+  // Per day slot: true = score that day as a circular trip (start AND return to
+  // the centre). Defaults to all one-way, so existing callers are unchanged.
+  circulars: boolean[] = []
 ): Trip {
-  const args = [pool, dayIndices, startHours, endHours, selections, filters] as const;
+  const args = [pool, dayIndices, startHours, endHours, selections, filters, circulars] as const;
   // Exact only while the ACTIVE planner's own state-space estimate stays within
   // its budget; otherwise the greedy heuristic. Empty day set (no days) → cost 0
   // for the DP (days·3^pool), so it stays exact and trivially returns no days.

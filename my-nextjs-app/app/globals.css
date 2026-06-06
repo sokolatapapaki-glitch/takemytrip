@@ -85,6 +85,72 @@ body {
   animation: icon-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
+/* Slow, subtle drift for the background colour blobs (homepage + map), so the
+   glass surfaces have gentle motion to blur over. Two speeds/directions keeps it
+   from looking synchronised. */
+@keyframes drift-slow {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(22px, -18px);
+  }
+}
+.animate-drift-slow {
+  animation: drift-slow 18s ease-in-out infinite;
+}
+
+@keyframes drift-slower {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-26px, 20px);
+  }
+}
+.animate-drift-slower {
+  animation: drift-slower 24s ease-in-out infinite;
+}
+
+/* Result-card pop: scales up to (never past) full size, so it can't overflow
+   and get clipped by the results container's edges while animating. */
+@keyframes card-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+.animate-card-pop {
+  opacity: 0;
+  animation: card-pop 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Small pop for map markers / cards as they appear. */
+@keyframes marker-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0) translateY(4px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.animate-marker-pop {
+  opacity: 0;
+  animation: marker-pop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
 @keyframes caret-blink {
   0%,
   49% {
@@ -111,9 +177,15 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .animate-pop-in,
   .animate-fade-in-up,
-  .animate-icon-pop {
+  .animate-icon-pop,
+  .animate-marker-pop,
+  .animate-card-pop {
     animation: none;
     opacity: 1;
+  }
+  .animate-drift-slow,
+  .animate-drift-slower {
+    animation: none;
   }
   .type-caret {
     animation: none;

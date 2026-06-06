@@ -20,21 +20,40 @@ const HOVER_SCROLLBAR =
 export function DestinationModal({
   value,
   onSelect,
+  query = "",
 }: {
   value: DestinationSelection | null;
   onSelect: (destinationId: string, areaId: string) => void;
+  // Optional free-text filter coming from the writable destination input on the
+  // homepage. Matches destination name or country (case-insensitive).
+  query?: string;
 }) {
   // Which destination's areas are shown in the flyout — null until a row is
   // hovered/focused, so the area modal never shows on its own.
   const [activeId, setActiveId] = useState<string | null>(null);
-  const active = activeId ? DESTINATIONS.find((d) => d.id === activeId) ?? null : null;
+
+  const q = query.trim().toLowerCase();
+  const shown = q
+    ? DESTINATIONS.filter(
+        (d) =>
+          d.name.toLowerCase().includes(q) || d.country.toLowerCase().includes(q)
+      )
+    : DESTINATIONS;
+  // Don't show a stale flyout for a destination filtered out of the list.
+  const active =
+    activeId && shown.some((d) => d.id === activeId)
+      ? DESTINATIONS.find((d) => d.id === activeId) ?? null
+      : null;
 
   return (
     // Clearing on leaving the whole modal (not each row) keeps the flyout open
     // while the cursor travels from a row into it.
     <div className="flex" onMouseLeave={() => setActiveId(null)}>
       <ul className={`max-h-72 w-56 shrink-0 overflow-y-auto p-2 ${HOVER_SCROLLBAR}`}>
-        {DESTINATIONS.map((d) => {
+        {shown.length === 0 && (
+          <li className="px-3 py-2 text-sm text-zinc-400">No matches</li>
+        )}
+        {shown.map((d) => {
           const selected = value?.destinationId === d.id;
           const isActive = activeId === d.id;
           return (

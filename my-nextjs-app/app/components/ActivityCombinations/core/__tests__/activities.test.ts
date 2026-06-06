@@ -5,6 +5,7 @@ import {
   distanceKm,
   routeLinearity,
   bestRouteLinearity,
+  loopTightness,
   dayHours,
   isClosedDay,
   isAllDay,
@@ -84,6 +85,30 @@ test("bestRouteLinearity finds the straightest ordering (>= any fixed order)", (
   const c = makeActivity({ coords: { lat: 0, lng: 1 } });
   const best = bestRouteLinearity([a, b, c]);
   assert.ok(approx(best, 4) >= 9.99, `best ordering should be straight, got ${best}`);
+});
+
+test("loopTightness: 0–1 stop is trivially tight (10), and always within 0..10", () => {
+  const c = { lat: 0, lng: 0 };
+  assert.equal(loopTightness(c, []), 10);
+  assert.equal(loopTightness(c, [{ lat: 1, lng: 1 }]), 10);
+  const t = loopTightness(c, [
+    { lat: 1, lng: 1 },
+    { lat: -1, lng: 2 },
+    { lat: 0.5, lng: -1 },
+  ]);
+  assert.ok(t >= 0 && t <= 10);
+});
+
+test("loopTightness: a hull-tracing loop beats a self-crossing one (same points)", () => {
+  const center = { lat: 0, lng: 0 };
+  const A = { lat: 1, lng: 1 };
+  const B = { lat: 1, lng: -1 };
+  const C = { lat: -1, lng: -1 };
+  const D = { lat: -1, lng: 1 };
+  // A→B→C→D walks the square's boundary; A→C→B→D crosses through the middle.
+  const tight = loopTightness(center, [A, B, C, D]);
+  const crossing = loopTightness(center, [A, C, B, D]);
+  assert.ok(tight > crossing, `tight ${tight} should beat crossing ${crossing}`);
 });
 
 test("dayHours / isClosedDay / isAllDay", () => {

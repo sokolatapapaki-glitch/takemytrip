@@ -16,7 +16,7 @@
 // the midday band, THAT activity fills the slot (using its own hours); otherwise
 // a generic 3-hour break is used. The lunch always sits BETWEEN activities (one
 // before, one after); its hours count toward the day's total.
-import { Activity, dayHours, isClosedDay, maxComboValue, routeLinearity } from "./activities.functions";
+import { Activity, activeCenter, dayHours, isClosedDay, loopTightness, maxComboValue, routeLinearity } from "./activities.functions";
 import type { Filter, Selection } from "./filters.functions";
 import { LUNCH_CLOSE, LUNCH_EARLIEST, LUNCH_HOURS, LUNCH_NAME, LUNCH_OPEN } from "./schedule.data";
 
@@ -147,15 +147,27 @@ function routeStops(
   return [...order.slice(0, lunchAt), lunchActivity, ...order.slice(lunchAt)];
 }
 
-// Route directness (0–10) of an ordering: how straight the path through its
-// stops is (see routeLinearity). Order-dependent — this is what the chosen
-// ordering is maximised on, once feasibility is settled.
+// Route directness (0–10) of an ordering. Always anchored at the day's fixed
+// start point (centre of Rome). Two modes:
+//   • one-way (default): [Rome → first stop → … → last stop], scored by
+//     routeLinearity — the straightest ordering is the one whose first activity
+//     is nearest the centre with the rest radiating outward.
+//   • circular: a CLOSED loop [Rome → … → last stop → Rome], scored by
+//     loopTightness — the straightest ordering is the one tracing the tightest
+//     loop around the centre (start AND return there).
+// Either way the result is the 0–10 the chosen ordering is maximised on, and it
+// feeds plan.linearity → LINEARITY_WEIGHT, so the start point counts in the score.
 function linearityOf(
   order: Activity[],
   lunchAt: number,
-  lunchActivity: Activity | null
+  lunchActivity: Activity | null,
+  circular: boolean
 ): number {
-  return routeLinearity(routeStops(order, lunchAt, lunchActivity).map((a) => a.coords));
+  const stops = routeStops(order, lunchAt, lunchActivity).map((a) => a.coords);
+  const center = activeCenter();
+  return circular
+    ? loopTightness(center, stops)
+    : routeLinearity([center, ...stops]);
 }
 
 // Build the actual timed itinerary for a fixed ordering (+ optional lunch slot).
@@ -165,7 +177,8 @@ function layout(
   lunchActivity: Activity | null,
   day: number,
   startHour: number,
-  endHour: number
+  endHour: number,
+  circular: boolean
 ): ComboSchedule {
   const items: ScheduledItem[] = [];
   let t = startHour;
@@ -192,7 +205,7 @@ function layout(
     feasible: hard === 0 && !over,
     withinHours: hard === 0,
     endsAt: t,
-    linearity: linearityOf(order, lunchAt, lunchActivity),
+    linearity: linearityOf(order, lunchAt, lunchActivity, circular),
     feasibleOrderings: 0, // filled in by scheduleCombo (it counts across orderings)
   };
 }
@@ -270,7 +283,11 @@ export function scheduleCombo(
   combo: Activity[],
   day: number,
   startHour: number,
-  endHour: number
+  endHour: number,
+  // When true, the day's route is scored as a CLOSED loop that starts and ends
+  // at the centre (see linearityOf); when false (default) as a one-way route
+  // anchored at the centre. Defaults to false so existing callers are unchanged.
+  circular = false
 ): ComboSchedule {
   // Plain (no lunch): the best ordering on its own.
   let plain: Arrangement = {
@@ -278,7 +295,7 @@ export function scheduleCombo(
     lunchAt: -1,
     activity: null,
     ev: evaluate(combo, -1, null, day, startHour, endHour),
-    lin: linearityOf(combo, -1, null),
+    lin: linearityOf(combo, -1, null, circular),
   };
   // Best generic-break arrangement whose midday slot is valid.
   let generic: Best = null;
@@ -292,7 +309,7 @@ export function scheduleCombo(
       lunchAt: -1,
       activity: null,
       ev: e,
-      lin: linearityOf(perm, -1, null),
+      lin: linearityOf(perm, -1, null, circular),
     };
     if (betterArrangement(plainCand, plain)) plain = plainCand;
 
@@ -310,7 +327,7 @@ export function scheduleCombo(
           lunchAt: p,
           activity: null,
           ev: e2,
-          lin: linearityOf(perm, p, null),
+          lin: linearityOf(perm, p, null, circular),
         };
         if (!generic || betterArrangement(g, generic)) generic = g;
       }
@@ -341,7 +358,7 @@ export function scheduleCombo(
             lunchAt: p,
             activity: lunch,
             ev: e2,
-            lin: linearityOf(perm, p, lunch),
+            lin: linearityOf(perm, p, lunch, circular),
           };
           if (!foodie || betterArrangement(f, foodie)) foodie = f;
         }
@@ -361,7 +378,7 @@ export function scheduleCombo(
     // lunch by design, so that's a fine plain plan. A 2+ combo, though, can't
     // meet the "lunch required, by 4 PM" rule, so it isn't a valid plan — lay it
     // out plain but mark it unschedulable so the list hides it.
-    const sched = layout(plain.order, -1, null, day, startHour, endHour);
+    const sched = layout(plain.order, -1, null, day, startHour, endHour, circular);
     return combo.length >= 2
       ? { ...sched, feasible: false, withinHours: false, feasibleOrderings }
       : { ...sched, feasibleOrderings };
@@ -370,5 +387,5 @@ export function scheduleCombo(
   let best = candidates[0];
   for (const c of candidates) if (betterArrangement(c, best)) best = c;
 
-  return { ...layout(best.order, best.lunchAt, best.activity, day, startHour, endHour), feasibleOrderings };
+  return { ...layout(best.order, best.lunchAt, best.activity, day, startHour, endHour, circular), feasibleOrderings };
 }

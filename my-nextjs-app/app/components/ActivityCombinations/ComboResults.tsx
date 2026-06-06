@@ -2,8 +2,9 @@
 
 import { Fragment, useState } from "react";
 import type { Activity, Coords } from "./core/activities.functions";
-import { distanceKm, formatDistance, formatTime } from "./core/activities.functions";
-import { ACTIVITIES, DAYS } from "./core/activities.data";
+import { distanceKm, formatDistance, formatTime, setActiveCity } from "./core/activities.functions";
+import { DAYS } from "./core/activities.data";
+import { ALL_ACTIVITIES, type City, type Area } from "./core/cities.data";
 import { Filter, Selection, comboScore, filterApplies, optionValue } from "./core/filters.functions";
 import { scheduleCombo, scheduleEndHour, type ComboSchedule } from "./core/schedule.functions";
 import { ComboDashboard } from "./ComboDashboard";
@@ -11,16 +12,17 @@ import { ComboMap } from "./ComboMap";
 import { ScheduledName } from "./ScheduledName";
 
 // Look up an activity's map location by name (scheduled items carry only names).
-// The generic lunch break has no entry here — and lunch slots are skipped for
-// distances anyway.
+// Built from EVERY city's catalogue (names are unique across cities), so the
+// lookup is city-agnostic. The generic lunch break has no entry here — and lunch
+// slots are skipped for distances anyway.
 const COORDS_BY_NAME = new Map<string, Coords>(
-  ACTIVITIES.map((a) => [a.name, a.coords])
+  ALL_ACTIVITIES.map((a) => [a.name, a.coords])
 );
 
 // Look up the full activity by name, so a scheduled row can show its weekly
 // opening hours. Lunch slots have no entry (they aren't catalogue activities).
 const ACTIVITY_BY_NAME = new Map<string, Activity>(
-  ACTIVITIES.map((a) => [a.name, a])
+  ALL_ACTIVITIES.map((a) => [a.name, a])
 );
 
 // A stable identity for a combo (independent of its rank), so an open dashboard
@@ -167,29 +169,39 @@ export function DayItinerary({
 // The ranked list of activity combinations for the current filter selection.
 export function ComboResults({
   filters,
+  city,
+  area,
   combinations,
   selections,
   startHours,
+  circulars,
   dayIndices,
   activeDay,
   evaluated,
   elapsedMs,
 }: {
   filters: Filter[];
+  city: City; // the selected city (catalogue)
+  area: Area; // the selected start area (route anchor + map start marker)
   combinations: Activity[][];
   selections: Selection[]; // per day slot (each day's filter choices)
   startHours: number[]; // per day slot
+  circulars: boolean[]; // per day slot — circular (loop) trip toggle
   dayIndices: number[]; // weekday (Mon=0) per chosen day, in order
   activeDay: number; // the day tab that ranks + scores the list
   evaluated: number; // how many subsets were evaluated when calculated
   elapsedMs: number; // wall-clock time the calculation took
 }) {
+  // Make sure the scoring engine (maxComboValue's catalogue + the route anchor)
+  // is on this city + area before the live comboScore / scheduleCombo calls below.
+  setActiveCity(city, area.coords);
   // The list is ranked + scored for the ACTIVE day's filters; each combo card
   // still lays out every day, each with its own day's start hour + time budget.
   const activeSelection = selections[activeDay];
   const activeStart = startHours[activeDay];
   const activeEnd = scheduleEndHour(filters, activeSelection, activeStart);
   const activeWeekday = dayIndices[activeDay];
+  const activeCircular = circulars[activeDay] ?? false;
 
   // Which combos' "why this rank" dashboards / maps are open. Each is a Set so
   // several can stay open at once; keyed by combo identity so re-sorting doesn't
@@ -242,7 +254,8 @@ export function ComboResults({
               combo,
               d,
               startHours[slot],
-              scheduleEndHour(filters, selections[slot], startHours[slot])
+              scheduleEndHour(filters, selections[slot], startHours[slot]),
+              circulars[slot] ?? false
             )
           );
           // The ACTIVE day drives the map and the "why this rank" dashboard (it's
@@ -313,7 +326,13 @@ export function ComboResults({
                 </div>
               </div>
 
-              {mapOpen ? <ComboMap stops={stops} /> : null}
+              {mapOpen ? (
+                <ComboMap
+                  stops={stops}
+                  start={{ name: area.name, coords: area.coords }}
+                  circular={activeCircular}
+                />
+              ) : null}
 
               {open ? (
                 <ComboDashboard

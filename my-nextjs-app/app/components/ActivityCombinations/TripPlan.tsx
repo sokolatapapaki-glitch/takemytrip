@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { DAYS } from "./core/activities.data";
+import type { Area } from "./core/cities.data";
 import type { Filter, Selection } from "./core/filters.functions";
 import type { LeftoverReason, Trip } from "./core/trip.functions";
 import { DayItinerary } from "./ComboResults";
@@ -31,6 +32,8 @@ function TripView({
   selections,
   startHours,
   endHours,
+  circulars,
+  area,
   filters,
 }: {
   trip: Trip;
@@ -40,6 +43,8 @@ function TripView({
   selections: Selection[];
   startHours: number[];
   endHours: number[];
+  circulars: boolean[];
+  area: Area;
   filters: Filter[];
 }) {
   const [open, setOpen] = useState(false);
@@ -129,6 +134,8 @@ function TripView({
               filters={filters}
               startHours={startHours}
               endHours={endHours}
+              circulars={circulars}
+              area={area}
             />
           ) : null}
         </>
@@ -146,6 +153,8 @@ function TripAlternatives({
   selections,
   startHours,
   endHours,
+  circulars,
+  area,
   filters,
 }: {
   alternatives: Trip[];
@@ -153,6 +162,8 @@ function TripAlternatives({
   selections: Selection[];
   startHours: number[];
   endHours: number[];
+  circulars: boolean[];
+  area: Area;
   filters: Filter[];
 }) {
   const [shown, setShown] = useState(0);
@@ -178,6 +189,8 @@ function TripAlternatives({
           selections={selections}
           startHours={startHours}
           endHours={endHours}
+          circulars={circulars}
+          area={area}
           filters={filters}
         />
       ))}
@@ -201,16 +214,20 @@ function TripAlternatives({
 // reveals the next-best trips one at a time.
 export function TripPlan({
   trip,
+  area,
   selections,
   filters,
   startHours,
   endHours,
+  circulars,
 }: {
   trip: Trip;
+  area: Area; // the selected start area (map start marker)
   selections: Selection[]; // per day slot (each day's filter choices)
   filters: Filter[];
   startHours: number[]; // per day slot
   endHours: number[]; // per day slot
+  circulars: boolean[]; // per day slot — circular (loop) trip toggle
 }) {
   // Identity of the current best trip — when it changes, remount the reveal so it
   // resets to showing none.
@@ -229,6 +246,8 @@ export function TripPlan({
         selections={selections}
         startHours={startHours}
         endHours={endHours}
+        circulars={circulars}
+        area={area}
         filters={filters}
       />
       <TripAlternatives
@@ -238,6 +257,8 @@ export function TripPlan({
         selections={selections}
         startHours={startHours}
         endHours={endHours}
+        circulars={circulars}
+        area={area}
         filters={filters}
       />
     </section>

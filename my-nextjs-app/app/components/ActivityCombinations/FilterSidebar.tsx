@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { ACTIVITIES, DAYS } from "./core/activities.data";
-import { formatTime } from "./core/activities.functions";
+import { DAYS } from "./core/activities.data";
+import { formatTime, type Activity } from "./core/activities.functions";
+import type { Area } from "./core/cities.data";
 import { Filter, Selection, isTripLevel } from "./core/filters.functions";
 import { mondayIndex } from "./core/calendar.functions";
 import { Calendar } from "./Calendar";
@@ -45,6 +46,13 @@ export function FilterSidebar({
   onToggleRequired,
   startHour,
   onStartHourChange,
+  circular,
+  onToggleCircular,
+  activities,
+  areas,
+  area,
+  areaNoun,
+  onAreaChange,
   rangeStart,
   rangeEnd,
   onRangeChange,
@@ -61,6 +69,13 @@ export function FilterSidebar({
   onToggleRequired: (name: string) => void;
   startHour: number;
   onStartHourChange: (hour: number) => void;
+  circular: boolean;
+  onToggleCircular: () => void;
+  activities: Activity[]; // the selected city's catalogue (for "must include")
+  areas: Area[]; // the selected city's start areas
+  area: Area; // the chosen start area (trip-wide anchor)
+  areaNoun: string; // "area" for cities, "city" for regions
+  onAreaChange: (area: Area) => void;
   rangeStart: Date;
   rangeEnd: Date | null;
   onRangeChange: (start: Date, end: Date | null) => void;
@@ -105,6 +120,33 @@ export function FilterSidebar({
           maxDays={maxDays}
           minDate={minDate}
         />
+      </div>
+
+      {/* Start area — trip-wide. The chosen area is where every day's distance
+          score starts from (and where a circular trip returns to). */}
+      <div className="flex flex-col gap-2">
+        <div>
+          <h3 className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
+            Start {areaNoun}
+          </h3>
+          <p className="text-xs text-zinc-400 dark:text-zinc-500">
+            Where each day&apos;s route is measured from
+          </p>
+        </div>
+        <select
+          value={area.id}
+          onChange={(e) => {
+            const next = areas.find((a) => a.id === e.target.value);
+            if (next) onAreaChange(next);
+          }}
+          className="w-full rounded-lg border border-black/[.08] bg-white px-3 py-2 text-sm text-zinc-700 dark:border-white/[.145] dark:bg-zinc-900 dark:text-zinc-300"
+        >
+          {areas.map((a) => (
+            <option key={a.id} value={a.id}>
+              {a.name}
+            </option>
+          ))}
+        </select>
       </div>
 
       {/* Day tabs — one per chosen date. The active tab's filters/start time/
@@ -163,6 +205,27 @@ export function FilterSidebar({
         </select>
       </div>
 
+      {/* Circular trip — when on, THIS day's route is scored as a loop that
+          starts AND returns to the centre, instead of a one-way route. */}
+      <div className="flex flex-col gap-2">
+        <label className="flex cursor-pointer items-start gap-2.5">
+          <input
+            type="checkbox"
+            checked={circular}
+            onChange={onToggleCircular}
+            className="mt-0.5 h-4 w-4 shrink-0 accent-orange-500"
+          />
+          <span className="flex flex-col">
+            <span className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
+              Circular trip
+            </span>
+            <span className="text-xs text-zinc-400 dark:text-zinc-500">
+              Start and return to the centre (loop). Off = one-way from the centre.
+            </span>
+          </span>
+        </label>
+      </div>
+
       {filters.map((filter, fi) =>
         // Trip-level filters (e.g. "Use every activity") have no per-option
         // choice — they're tuned in the editor and applied to the whole trip, so
@@ -194,7 +257,7 @@ export function FilterSidebar({
       )}
 
       <RequiredActivities
-        activities={ACTIVITIES}
+        activities={activities}
         required={required}
         onToggle={onToggleRequired}
       />

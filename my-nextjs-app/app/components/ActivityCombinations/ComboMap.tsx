@@ -1,4 +1,4 @@
-import { routeLinearity, type Coords } from "./core/activities.functions";
+import { loopTightness, routeLinearity, type Coords } from "./core/activities.functions";
 
 // One activity to plot: its name and map location, already in time order.
 export type Stop = { name: string; coords: Coords };
@@ -12,17 +12,38 @@ const PAD = 30; // keep markers/labels off the edges
 // scaled position, joined by a line in the order the day visits them. No real
 // map, city, or lunch slot — just relative positions and the route order.
 //
+// An optional `start` (the day's fixed start point, e.g. the centre of Rome) is
+// drawn as a distinct marker and joined to the first activity by a dashed leg,
+// so the route reads "begin here → activity 1 → …". It is included in the
+// displayed index so the number matches the drawn path.
+//
+// When `circular` is set (and a `start` is given) the route is a CLOSED loop: a
+// dashed leg also returns from the last activity back to the start, and the
+// shown index is loop tightness rather than one-way linearity.
+//
 // Positions use a uniform scale (longitude compressed by cos(lat)) so the
 // shape isn't distorted, then centred in the grid. Lunch is excluded by the
 // caller — `stops` is already the lunch-free, time-ordered list.
-export function ComboMap({ stops }: { stops: Stop[] }) {
+export function ComboMap({
+  stops,
+  start,
+  circular = false,
+}: {
+  stops: Stop[];
+  start?: Stop;
+  circular?: boolean;
+}) {
   if (stops.length === 0) return null;
+  const loop = circular && !!start;
+
+  // Everything to fit in view: the start anchor (if any) first, then the stops.
+  const all: Stop[] = start ? [start, ...stops] : stops;
 
   // Project lat/lng to a flat, aspect-correct plane (x east, y north).
-  const lats = stops.map((s) => s.coords.lat);
+  const lats = all.map((s) => s.coords.lat);
   const meanLat = (Math.min(...lats) + Math.max(...lats)) / 2;
   const kx = Math.cos((meanLat * Math.PI) / 180); // lng degrees are shorter
-  const proj = stops.map((s) => ({ x: s.coords.lng * kx, y: s.coords.lat }));
+  const proj = all.map((s) => ({ x: s.coords.lng * kx, y: s.coords.lat }));
 
   const xs = proj.map((p) => p.x);
   const ys = proj.map((p) => p.y);
@@ -44,16 +65,26 @@ export function ComboMap({ stops }: { stops: Stop[] }) {
   // Centre the drawn extent within the padded area.
   const offX = PAD + (innerW - rangeX * s) / 2;
   const offY = PAD + (innerH - rangeY * s) / 2;
-  const pts = proj.map((p, i) => ({
+  const place = (p: { x: number; y: number }) => ({
     x: offX + (p.x - minX) * s,
     y: offY + (maxY - p.y) * s, // invert: north is up
+  });
+
+  const allPts = proj.map(place);
+  const startPt = start ? allPts[0] : null;
+  const pts = (start ? allPts.slice(1) : allPts).map((p, i) => ({
+    ...p,
     name: stops[i].name,
   }));
 
   const polyline = pts.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" ");
 
-  // Display-only index: how linear (un-backtracking) the visiting order is.
-  const linearity = routeLinearity(stops.map((s) => s.coords));
+  // Display-only index, matching the drawn route: loop tightness for a circular
+  // trip (start → … → start), otherwise one-way linearity anchored at the start.
+  const index = loop
+    ? loopTightness(start!.coords, stops.map((s) => s.coords))
+    : routeLinearity(all.map((p) => p.coords));
+  const indexLabel = loop ? "Loop tightness" : "Linearity";
 
   // Evenly spaced grid lines (8 cells each way).
   const gridXs = Array.from({ length: 9 }, (_, i) => (W / 8) * i);
@@ -63,12 +94,12 @@ export function ComboMap({ stops }: { stops: Stop[] }) {
     <div className="mt-3 rounded-lg border border-black/[.08] bg-white p-2 dark:border-white/[.145] dark:bg-zinc-950">
       <div className="mb-1 flex items-baseline justify-between px-1">
         <span className="text-xs text-zinc-400 dark:text-zinc-500">
-          Activities in visiting order
+          {loop ? "Activities in loop order" : "Activities in visiting order"}
         </span>
         <span className="text-xs text-zinc-500 dark:text-zinc-400">
-          Linearity{" "}
+          {indexLabel}{" "}
           <span className="font-mono font-medium text-zinc-700 dark:text-zinc-200">
-            {linearity.toFixed(1)}
+            {index.toFixed(1)}
           </span>
           /10
         </span>
@@ -89,6 +120,36 @@ export function ComboMap({ stops }: { stops: Stop[] }) {
           ))}
         </g>
 
+        {/* Dashed leg from the fixed start point to the first activity. */}
+        {startPt && pts.length > 0 ? (
+          <line
+            x1={startPt.x}
+            y1={startPt.y}
+            x2={pts[0].x}
+            y2={pts[0].y}
+            className="text-orange-400 dark:text-orange-300"
+            stroke="currentColor"
+            strokeWidth={1.5}
+            strokeDasharray="3 3"
+            strokeLinecap="round"
+          />
+        ) : null}
+
+        {/* Circular trip: dashed leg returning from the last activity to the start. */}
+        {loop && startPt && pts.length > 0 ? (
+          <line
+            x1={pts[pts.length - 1].x}
+            y1={pts[pts.length - 1].y}
+            x2={startPt.x}
+            y2={startPt.y}
+            className="text-orange-400 dark:text-orange-300"
+            stroke="currentColor"
+            strokeWidth={1.5}
+            strokeDasharray="3 3"
+            strokeLinecap="round"
+          />
+        ) : null}
+
         {/* Route line in time order. */}
         {pts.length > 1 ? (
           <polyline
@@ -100,6 +161,40 @@ export function ComboMap({ stops }: { stops: Stop[] }) {
             strokeLinejoin="round"
             strokeLinecap="round"
           />
+        ) : null}
+
+        {/* Fixed start point (e.g. centre of Rome): a distinct orange marker. */}
+        {startPt ? (
+          <g>
+            <circle
+              cx={startPt.x}
+              cy={startPt.y}
+              r={7}
+              className="fill-orange-500 dark:fill-orange-400"
+            />
+            <text
+              x={startPt.x}
+              y={startPt.y + 0.5}
+              textAnchor="middle"
+              dominantBaseline="middle"
+              fontSize={8}
+              fill="#fff"
+              fontWeight={700}
+            >
+              S
+            </text>
+            <text
+              x={startPt.x <= W / 2 ? startPt.x + 11 : startPt.x - 11}
+              y={startPt.y + 0.5}
+              textAnchor={startPt.x <= W / 2 ? "start" : "end"}
+              dominantBaseline="middle"
+              fontSize={8}
+              className="fill-orange-600 dark:fill-orange-300"
+              fontWeight={600}
+            >
+              {start?.name ?? "Start"}
+            </text>
+          </g>
         ) : null}
 
         {/* Numbered activity markers + labels. */}

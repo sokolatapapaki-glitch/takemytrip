@@ -1,0 +1,210 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import type { Activity } from "@/app/components/ActivityCombinations/core/activities.functions";
+import { SearchIcon } from "@/app/start/components/icons";
+import {
+  PRICE_MAX,
+  SORT_LABELS,
+  VIBES,
+  type ActivityFilters,
+  type SortKey,
+} from "./mapData";
+import { FilterDropdown } from "./FilterDropdown";
+import { ActivityResultCard } from "./ActivityResultCard";
+import { ClickedActivityPanel } from "./ClickedActivityPanel";
+
+const DISTANCE_MAX = 10; // km from city centre (slider bound)
+type FilterKey = "price" | "vibe" | "sort" | "distance";
+
+// The top-left search panel from the Penpot board: a search input that reveals
+// the results list on focus (and hides on outside-click), a row of four filter
+// chips constrained to the input's width (overflow-x), the clicked-activity
+// detail panel below the input, and the filtered results.
+export function SearchSidebar({
+  filters,
+  onFiltersChange,
+  results,
+  clicked,
+  selectedName,
+  onPick,
+  onCloseClicked,
+}: {
+  filters: ActivityFilters;
+  onFiltersChange: (next: ActivityFilters) => void;
+  results: Activity[];
+  clicked: Activity | null;
+  selectedName: string | null;
+  onPick: (a: Activity) => void;
+  onCloseClicked: () => void;
+}) {
+  const [resultsOpen, setResultsOpen] = useState(false);
+  const [openFilter, setOpenFilter] = useState<FilterKey | null>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  // Outside-click hides the results and closes any open filter popup.
+  useEffect(() => {
+    function onDown(e: MouseEvent) {
+      if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
+        setResultsOpen(false);
+        setOpenFilter(null);
+      }
+    }
+    document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
+  }, []);
+
+  const set = (patch: Partial<ActivityFilters>) =>
+    onFiltersChange({ ...filters, ...patch });
+  const toggleFilter = (k: FilterKey) =>
+    setOpenFilter((o) => (o === k ? null : k));
+
+  return (
+    <div ref={rootRef} className="flex h-full w-96 flex-col">
+      {/* Search input — its own raised glass bar (not joined to the results). */}
+      <div className="flex items-center gap-3 rounded-2xl bg-white/90 px-4 py-3.5 shadow-lg shadow-orange-900/5 ring-1 ring-inset ring-white/60 backdrop-blur-md focus-within:ring-orange-200">
+        <SearchIcon className="h-6 w-6 shrink-0 text-zinc-400" />
+        <input
+          type="text"
+          value={filters.query}
+          onChange={(e) => set({ query: e.target.value })}
+          onFocus={() => setResultsOpen(true)}
+          placeholder="Search activities"
+          className="w-full bg-transparent text-base text-zinc-800 outline-none placeholder:text-zinc-400"
+        />
+      </div>
+
+      {/* Filter chips — only while the results are open; a horizontal row that
+          scrolls in x (no visible scrollbar). The popups use fixed positioning
+          (see FilterDropdown) so this overflow doesn't clip them. */}
+      {resultsOpen && (
+      <div className="mt-2 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <FilterDropdown
+          label="Price"
+          active={filters.priceMax != null}
+          summary={filters.priceMax != null ? `≤€${filters.priceMax}` : null}
+          open={openFilter === "price"}
+          onToggle={() => toggleFilter("price")}
+        >
+          <label className="block text-xs font-medium text-zinc-600">
+            Max price: {filters.priceMax != null ? `€${filters.priceMax}` : "Any"}
+          </label>
+          <input
+            type="range"
+            min={0}
+            max={PRICE_MAX}
+            value={filters.priceMax ?? PRICE_MAX}
+            onChange={(e) => {
+              const v = Number(e.target.value);
+              set({ priceMax: v >= PRICE_MAX ? null : v });
+            }}
+            className="mt-2 w-full accent-orange-500"
+          />
+        </FilterDropdown>
+
+        <FilterDropdown
+          label="Vibe"
+          active={filters.vibe != null}
+          summary={filters.vibe ? VIBES.find((v) => v.key === filters.vibe)?.label : null}
+          open={openFilter === "vibe"}
+          onToggle={() => toggleFilter("vibe")}
+        >
+          <div className="flex flex-col gap-1">
+            <button
+              type="button"
+              onClick={() => set({ vibe: null })}
+              className={`rounded-lg px-2 py-1.5 text-left text-sm transition-colors ${
+                filters.vibe == null ? "bg-orange-50 text-orange-700" : "hover:bg-zinc-50 text-zinc-700"
+              }`}
+            >
+              Any vibe
+            </button>
+            {VIBES.map((v) => (
+              <button
+                key={v.key}
+                type="button"
+                onClick={() => set({ vibe: v.key })}
+                className={`rounded-lg px-2 py-1.5 text-left text-sm transition-colors ${
+                  filters.vibe === v.key ? "bg-orange-50 text-orange-700" : "hover:bg-zinc-50 text-zinc-700"
+                }`}
+              >
+                {v.emoji} {v.label}
+              </button>
+            ))}
+          </div>
+        </FilterDropdown>
+
+        <FilterDropdown
+          label="Sorted by"
+          active={filters.sortBy !== "priority"}
+          summary={filters.sortBy !== "priority" ? SORT_LABELS[filters.sortBy] : null}
+          open={openFilter === "sort"}
+          onToggle={() => toggleFilter("sort")}
+        >
+          <div className="flex flex-col gap-1">
+            {(Object.keys(SORT_LABELS) as SortKey[]).map((k) => (
+              <button
+                key={k}
+                type="button"
+                onClick={() => set({ sortBy: k })}
+                className={`rounded-lg px-2 py-1.5 text-left text-sm transition-colors ${
+                  filters.sortBy === k ? "bg-orange-50 text-orange-700" : "hover:bg-zinc-50 text-zinc-700"
+                }`}
+              >
+                {SORT_LABELS[k]}
+              </button>
+            ))}
+          </div>
+        </FilterDropdown>
+
+        <FilterDropdown
+          label="Distance from center"
+          active={filters.maxDistanceKm != null}
+          summary={filters.maxDistanceKm != null ? `≤${filters.maxDistanceKm} km` : null}
+          open={openFilter === "distance"}
+          onToggle={() => toggleFilter("distance")}
+        >
+          <label className="block text-xs font-medium text-zinc-600">
+            Within: {filters.maxDistanceKm != null ? `${filters.maxDistanceKm} km` : "Any"}
+          </label>
+          <input
+            type="range"
+            min={0}
+            max={DISTANCE_MAX}
+            step={0.5}
+            value={filters.maxDistanceKm ?? DISTANCE_MAX}
+            onChange={(e) => {
+              const v = Number(e.target.value);
+              set({ maxDistanceKm: v >= DISTANCE_MAX ? null : v });
+            }}
+            className="mt-2 w-full accent-orange-500"
+          />
+        </FilterDropdown>
+      </div>
+      )}
+
+      {/* Clicked-activity detail, directly below the search input. */}
+      {clicked && <ClickedActivityPanel activity={clicked} onClose={onCloseClicked} />}
+
+      {/* Results — separate white cards (no shared panel), filling the remaining
+          height, no visible scrollbar. */}
+      {resultsOpen && (
+        <div className="mt-2 min-h-0 flex-1 space-y-3 overflow-y-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {results.length === 0 ? (
+            <p className="px-2 py-3 text-sm text-zinc-400">No activities match.</p>
+          ) : (
+            results.map((a, i) => (
+              <ActivityResultCard
+                key={a.name}
+                activity={a}
+                active={selectedName === a.name}
+                index={i}
+                onClick={() => onPick(a)}
+              />
+            ))
+          )}
+        </div>
+      )}
+    </div>
+  );
+}

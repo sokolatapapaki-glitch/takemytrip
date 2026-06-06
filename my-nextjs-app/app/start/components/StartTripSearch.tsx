@@ -6,6 +6,7 @@
 // only logs the current selection to the console.
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { DESTINATIONS } from "../data/destinations";
 import { formatShort } from "../data/dateUtils";
 import type { DateRange, DestinationSelection, Travelers } from "../data/types";
@@ -23,9 +24,19 @@ import {
 
 type ModalKey = "dest" | "dates" | "travelers";
 
+// Local date → "YYYY-MM-DD" (no timezone shift, unlike toISOString).
+const toISODate = (d: Date) =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+
 export default function StartTripSearch() {
+  const router = useRouter();
   const [open, setOpen] = useState<ModalKey | null>(null);
   const [dest, setDest] = useState<DestinationSelection | null>(null);
+  // The destination field starts as an animated typewriter placeholder, then
+  // becomes a real writable input once the typing finishes. `destQuery` is the
+  // free text the user types, which filters the destination dropdown.
+  const [destTypingDone, setDestTypingDone] = useState(false);
+  const [destQuery, setDestQuery] = useState("");
   const [range, setRange] = useState<DateRange>({ start: null, end: null });
   const [travelers, setTravelers] = useState<Travelers>({
     adults: 2,
@@ -67,19 +78,18 @@ export default function StartTripSearch() {
     return parts.join(" · ");
   }, [travelers]);
 
+  // Hand the chosen destination/area/dates to the main planner via query params.
+  // (Travelers are one adult for now — not passed; the planner doesn't use them.)
   function handleSearch() {
-    const d = dest ? DESTINATIONS.find((x) => x.id === dest.destinationId) : null;
-    const a = d?.areas.find((x) => x.id === dest?.areaId);
-    // Standalone page: just report the selection.
-    console.log("Trip search:", {
-      destination: d?.name ?? null,
-      area: a?.name ?? null,
-      from: range.start?.toDateString() ?? null,
-      to: range.end?.toDateString() ?? null,
-      adults: travelers.adults,
-      children: travelers.children,
-      childAges: travelers.childAges,
-    });
+    const params = new URLSearchParams();
+    if (dest) {
+      params.set("dest", dest.destinationId);
+      params.set("area", dest.areaId);
+    }
+    if (range.start) params.set("start", toISODate(range.start));
+    if (range.end) params.set("end", toISODate(range.end));
+    const qs = params.toString();
+    router.push(qs ? `/plan?${qs}` : "/plan");
   }
 
   const toggle = (key: ModalKey) => setOpen((o) => (o === key ? null : key));
@@ -87,29 +97,40 @@ export default function StartTripSearch() {
   return (
     <div ref={rootRef} className="relative">
       <div className="animate-fade-in-up flex items-stretch gap-2 rounded-2xl border border-white/50 bg-white/60 p-2 shadow-xl shadow-orange-900/5 backdrop-blur-md" style={{ animationDelay: "100ms" }}>
-        <Field
+        <DestField
           active={open === "dest"}
-          icon={<MapPinIcon className="h-5 w-5" />}
-          placeholder="Search destination"
           value={destLabel}
-          iconDelay={400}
-          typeDelay={820}
-          typewriter
-          onClick={() => toggle("dest")}
-          onClear={dest ? () => setDest(null) : undefined}
+          query={destQuery}
+          onQueryChange={(q) => {
+            setDestQuery(q);
+            setOpen("dest");
+          }}
+          typingDone={destTypingDone}
+          onTypingDone={() => setDestTypingDone(true)}
+          onOpen={() => setOpen("dest")}
+          onClear={
+            dest || destQuery
+              ? () => {
+                  setDest(null);
+                  setDestQuery("");
+                }
+              : undefined
+          }
         >
           {open === "dest" && (
             <Dropdown align="left">
               <DestinationModal
                 value={dest}
+                query={destQuery}
                 onSelect={(destinationId, areaId) => {
                   setDest({ destinationId, areaId });
+                  setDestQuery("");
                   setOpen(null);
                 }}
               />
             </Dropdown>
           )}
-        </Field>
+        </DestField>
 
         <Field
           active={open === "dates"}
@@ -161,7 +182,8 @@ export default function StartTripSearch() {
 }
 
 // One input field: an icon, the value (or placeholder), a hover-revealed clear
-// button, and its dropdown modal (passed as children).
+// button, and its dropdown modal (passed as children). Used for dates/travelers;
+// the destination field is the richer DestField below.
 function Field({
   active,
   icon,
@@ -171,8 +193,6 @@ function Field({
   onClear,
   children,
   iconDelay = 0,
-  typeDelay = 0,
-  typewriter = false,
 }: {
   active: boolean;
   icon: React.ReactNode;
@@ -182,8 +202,6 @@ function Field({
   onClear?: () => void;
   children?: React.ReactNode;
   iconDelay?: number;
-  typeDelay?: number;
-  typewriter?: boolean;
 }) {
   return (
     <div className="group relative flex-1">
@@ -207,11 +225,7 @@ function Field({
             onClear ? "pr-6" : ""
           }`}
         >
-          {value
-            ? value
-            : typewriter
-              ? <Typewriter text={placeholder} startDelay={typeDelay} />
-              : placeholder}
+          {value ? value : placeholder}
         </span>
       </button>
       {onClear && (
@@ -229,7 +243,92 @@ function Field({
   );
 }
 
-// The glass dropdown panel anchored under a field.
+// The destination field: an animated typewriter placeholder that becomes a real
+// writable text input once typing finishes. A selected destination shows as a
+// (clickable) label; typing filters the dropdown via `onQueryChange`.
+function DestField({
+  active,
+  value,
+  query,
+  onQueryChange,
+  typingDone,
+  onTypingDone,
+  onOpen,
+  onClear,
+  children,
+}: {
+  active: boolean;
+  value: string | null;
+  query: string;
+  onQueryChange: (q: string) => void;
+  typingDone: boolean;
+  onTypingDone: () => void;
+  onOpen: () => void;
+  onClear?: () => void;
+  children?: React.ReactNode;
+}) {
+  return (
+    <div className="group relative flex-1">
+      <div
+        className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 transition-colors ${
+          active ? "bg-white shadow-sm ring-1 ring-orange-200" : "bg-white/70 hover:bg-white"
+        }`}
+      >
+        <span
+          className="animate-icon-pop inline-flex shrink-0 text-zinc-400"
+          style={{ animationDelay: "400ms" }}
+        >
+          <MapPinIcon className="h-5 w-5" />
+        </span>
+
+        {value ? (
+          // A destination is chosen: show it as a clickable label.
+          <button
+            type="button"
+            onClick={onOpen}
+            className={`flex-1 truncate text-left text-sm text-zinc-800 ${onClear ? "pr-6" : ""}`}
+          >
+            {value}
+          </button>
+        ) : typingDone ? (
+          // Placeholder finished typing → a real, writable input.
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => onQueryChange(e.target.value)}
+            onFocus={onOpen}
+            placeholder="Search destination"
+            className={`flex-1 bg-transparent text-sm text-zinc-800 outline-none placeholder:text-zinc-400 ${
+              onClear ? "pr-6" : ""
+            }`}
+          />
+        ) : (
+          // Still typing the placeholder out.
+          <button
+            type="button"
+            onClick={onOpen}
+            className="flex-1 truncate text-left text-sm text-zinc-400"
+          >
+            <Typewriter text="Search destination" startDelay={820} onDone={onTypingDone} />
+          </button>
+        )}
+      </div>
+      {onClear && (
+        <button
+          type="button"
+          aria-label="Clear"
+          onClick={onClear}
+          className="absolute right-3 top-1/2 hidden -translate-y-1/2 rounded-full p-0.5 text-zinc-300 transition-colors hover:bg-zinc-100 hover:text-zinc-500 group-hover:block"
+        >
+          <XIcon className="h-4 w-4" />
+        </button>
+      )}
+      {children}
+    </div>
+  );
+}
+
+// The glass dropdown panel anchored under a field. Pops in when opened.
 function Dropdown({
   align,
   children,
@@ -245,7 +344,7 @@ function Dropdown({
         : "left-1/2 -translate-x-1/2";
   return (
     <div
-      className={`absolute top-full z-30 mt-2 ${pos} overflow-hidden rounded-2xl border border-white/60 bg-white/90 shadow-2xl shadow-orange-900/10 backdrop-blur-xl`}
+      className={`animate-pop-in absolute top-full z-30 mt-2 ${pos} origin-top overflow-hidden rounded-2xl border border-white/60 bg-white/90 shadow-2xl shadow-orange-900/10 backdrop-blur-xl`}
     >
       {children}
     </div>

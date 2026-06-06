@@ -1,16 +1,16 @@
-import { ACTIVITIES, DAYS, VIBES } from "./core/activities.data";
-import { openingHoursFor } from "./core/activities.functions";
+import { DAYS, VIBES } from "./core/activities.data";
+import { openingHoursFor, type Activity } from "./core/activities.functions";
 
-// The catalogue of available activities. Opening hours are shown for the
-// currently selected day.
-export function ActivityList({ day }: { day: number }) {
+// The catalogue of available activities for the selected city. Opening hours are
+// shown for the currently selected day.
+export function ActivityList({ day, activities }: { day: number; activities: Activity[] }) {
   return (
     <section>
       <h2 className="mb-3 text-lg font-semibold text-zinc-800 dark:text-zinc-100">
         Activities <span className="text-sm font-normal text-zinc-400 dark:text-zinc-500">· hours for {DAYS[day]}</span>
       </h2>
       <div className="flex flex-col gap-2">
-        {ACTIVITIES.map((activity) => (
+        {activities.map((activity) => (
           <div
             key={activity.name}
             className="flex items-center justify-between gap-6 rounded-xl border border-black/[.08] bg-white px-5 py-3 dark:border-white/[.145] dark:bg-zinc-900"

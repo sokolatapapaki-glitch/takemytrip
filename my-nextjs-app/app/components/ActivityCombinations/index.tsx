@@ -1,8 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ACTIVITIES } from "./core/activities.data";
 import type { Activity } from "./core/activities.functions";
+import { setActiveCity } from "./core/activities.functions";
+import { CITIES, DEFAULT_CITY, type City, type Area } from "./core/cities.data";
 import { buildCombinations, defaultSelection, type Filter, Selection } from "./core/filters.functions";
 import { scheduleCombo, scheduleEndHour } from "./core/schedule.functions";
 import { toEffective, useFilterEdits } from "./core/filterStore.functions";
@@ -27,6 +28,8 @@ type ComboSnapshot = {
   list: Activity[][];
   selections: Selection[];
   startHours: number[];
+  circulars: boolean[]; // per-day circular-trip toggle
+  area: Area; // the start area the list was computed/anchored with
   dayIndices: number[]; // weekday (Mon=0) per chosen day, in order
   activeDay: number;
   filtersRef: Filter[]; // the filter config it was computed with (for staleness)
@@ -34,9 +37,56 @@ type ComboSnapshot = {
   elapsedMs: number; // wall-clock time the calculation took
 };
 
+// Hand-off params from the /start page (?dest=&area=&start=&end=). The planner
+// is client-only (ssr:false), so window.location is available on first render —
+// no useSearchParams/Suspense needed. Missing/invalid params just fall back to
+// the planner's defaults.
+function parseStartParams(): {
+  cityId?: string;
+  areaId?: string;
+  start?: Date;
+  end?: Date;
+} {
+  if (typeof window === "undefined") return {};
+  const p = new URLSearchParams(window.location.search);
+  const parseDate = (s: string | null): Date | undefined => {
+    const m = s ? /^(\d{4})-(\d{2})-(\d{2})$/.exec(s) : null;
+    if (!m) return undefined;
+    const d = startOfDay(new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3])));
+    return Number.isNaN(d.getTime()) ? undefined : d;
+  };
+  return {
+    cityId: p.get("dest") ?? undefined,
+    areaId: p.get("area") ?? undefined,
+    start: parseDate(p.get("start")),
+    end: parseDate(p.get("end")),
+  };
+}
+
 export default function ActivityCombinations() {
   const [edits] = useFilterEdits();
   const filters = useMemo(() => toEffective(edits), [edits]);
+
+  // Read the /start hand-off once (on mount).
+  const initial = useMemo(() => parseStartParams(), []);
+  const initialCity = useMemo(
+    () => CITIES.find((c) => c.id === initial.cityId) ?? DEFAULT_CITY,
+    [initial]
+  );
+
+  // The selected city. Its catalogue + centre drive the whole planner. Switching
+  // city resets everything to defaults (see changeCity), so the active city is
+  // stable across any one calculation.
+  const [city, setCity] = useState<City>(initialCity);
+  // The selected start AREA within the city (one base for the whole trip). Its
+  // coords are the route anchor; defaults to the city's "Centre" area.
+  const [area, setArea] = useState<Area>(
+    () => initialCity.areas.find((a) => a.id === initial.areaId) ?? initialCity.areas[0]
+  );
+  // Point the scoring engine (maxComboValue's catalogue + the route anchor) at
+  // the active city + selected area, synchronously during render, before any
+  // scoring runs below or in the children.
+  useMemo(() => setActiveCity(city, area.coords), [city, area]);
 
   // PER-DAY state. Each day slot (0 = first chosen date, 1 = next, …) has its own
   // filter choices, start hour, and "must include" set. Pre-allocated to MAX_DAYS;
@@ -51,15 +101,25 @@ export default function ActivityCombinations() {
   const [requireds, setRequireds] = useState<Set<string>[]>(() =>
     Array.from({ length: MAX_DAYS }, () => new Set<string>())
   );
+  // Per-day "circular trip" toggle: when true, that day's route is scored as a
+  // loop that starts AND returns to the centre (see scheduleCombo). Default off.
+  const [circulars, setCirculars] = useState<boolean[]>(() =>
+    Array.from({ length: MAX_DAYS }, () => false)
+  );
 
   // The chosen DATE RANGE (calendar). `end` is null while only the start is
   // picked; the effective range is then just the start day. The planner uses each
   // date's weekday for opening hours.
   const today = useMemo(() => startOfDay(new Date()), []);
-  const [range, setRange] = useState<{ start: Date; end: Date | null }>(() => ({
-    start: today,
-    end: addDays(today, 2),
-  }));
+  const [range, setRange] = useState<{ start: Date; end: Date | null }>(() => {
+    // From /start params when present (end ignored if before start); else the
+    // default today → +2 days.
+    if (initial.start) {
+      const end = initial.end && initial.end >= initial.start ? initial.end : null;
+      return { start: initial.start, end };
+    }
+    return { start: today, end: addDays(today, 2) };
+  });
   const rangeStart = range.start;
   const rangeEnd = range.end ?? range.start;
   const dayCount = Math.min(diffDays(rangeStart, rangeEnd) + 1, MAX_DAYS);
@@ -79,6 +139,7 @@ export default function ActivityCombinations() {
   const activeSelection = selections[activeSlot];
   const activeStartHour = startHours[activeSlot];
   const activeRequired = requireds[activeSlot];
+  const activeCircular = circulars[activeSlot];
   const activeWeekday = dayIndices[activeSlot];
 
   // The combos list is computed ON DEMAND (when the user clicks Calculate), not
@@ -91,8 +152,9 @@ export default function ActivityCombinations() {
   const stale = dirty || (combos !== null && combos.filtersRef !== filters);
 
   const calculate = () => {
+    setActiveCity(city, area.coords); // engine on this city + area before scoring
     const t0 = performance.now();
-    const scored = buildCombinations(ACTIVITIES, activeSelection, filters);
+    const scored = buildCombinations(city.activities, activeSelection, filters);
     const endHour = scheduleEndHour(filters, activeSelection, activeStartHour);
     const open = scored.filter(
       (combo) => scheduleCombo(combo, activeWeekday, activeStartHour, endHour).withinHours
@@ -103,6 +165,8 @@ export default function ActivityCombinations() {
       list,
       selections: selections.slice(),
       startHours: startHours.slice(),
+      circulars: circulars.slice(),
+      area,
       dayIndices: dayIndices.slice(),
       activeDay: activeSlot,
       filtersRef: filters,
@@ -124,13 +188,15 @@ export default function ActivityCombinations() {
   // scheduled AND scored with its own day's filters. Independent of the
   // "must include" sets (the pool is the whole catalogue).
   const trip = useMemo(() => {
+    setActiveCity(city, area.coords); // engine on this city + area before planning
     const starts = dayIndices.map((_, i) => startHours[i]);
     const ends = dayIndices.map((_, i) =>
       scheduleEndHour(filters, selections[i], startHours[i])
     );
     const sel = dayIndices.map((_, i) => selections[i]);
-    return planTrip(ACTIVITIES, dayIndices, starts, ends, sel, filters);
-  }, [dayIndices, selections, startHours, filters]);
+    const circ = dayIndices.map((_, i) => circulars[i]);
+    return planTrip(city.activities, dayIndices, starts, ends, sel, filters, circ);
+  }, [city, area, dayIndices, selections, startHours, circulars, filters]);
 
   // Per-day mutators write to the ACTIVE day's slot, leaving the others untouched,
   // and mark the combos snapshot dirty.
@@ -163,6 +229,15 @@ export default function ActivityCombinations() {
     });
   };
 
+  const toggleActiveCircular = () => {
+    setDirty(true);
+    setCirculars((prev) => {
+      const copy = prev.slice();
+      copy[activeSlot] = !copy[activeSlot];
+      return copy;
+    });
+  };
+
   const toggleRequired = (name: string) => {
     setDirty(true);
     setRequireds((prev) => {
@@ -187,6 +262,31 @@ export default function ActivityCombinations() {
     if (activeDay > cnt - 1) setActiveDay(cnt - 1);
   };
 
+  // Switching city is a clean slate: point the engine at the new catalogue and
+  // reset every per-day setting + the combos list to defaults.
+  const changeCity = (next: City) => {
+    if (next.id === city.id) return;
+    const nextArea = next.areas[0]; // Centre
+    setActiveCity(next, nextArea.coords);
+    setCity(next);
+    setArea(nextArea);
+    setSelections(Array.from({ length: MAX_DAYS }, () => defaultSelection(filters)));
+    setStartHours(Array.from({ length: MAX_DAYS }, () => DEFAULT_START_HOUR));
+    setRequireds(Array.from({ length: MAX_DAYS }, () => new Set<string>()));
+    setCirculars(Array.from({ length: MAX_DAYS }, () => false));
+    setRange({ start: today, end: addDays(today, 2) });
+    setActiveDay(0);
+    setCombos(null);
+    setDirty(true);
+  };
+
+  // Picking a start area re-anchors the distance score (and the circular return)
+  // for the whole trip. Marks the combos list stale so it's recalculated.
+  const changeArea = (next: Area) => {
+    setArea(next);
+    setDirty(true);
+  };
+
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-col gap-8 p-8 lg:flex-row">
       <FilterSidebar
@@ -197,6 +297,13 @@ export default function ActivityCombinations() {
         onToggleRequired={toggleRequired}
         startHour={activeStartHour}
         onStartHourChange={setActiveStartHour}
+        circular={activeCircular}
+        onToggleCircular={toggleActiveCircular}
+        activities={city.activities}
+        areas={city.areas}
+        area={area}
+        areaNoun={city.kind === "region" ? "city" : "area"}
+        onAreaChange={changeArea}
         rangeStart={rangeStart}
         rangeEnd={range.end}
         onRangeChange={changeRange}
@@ -207,7 +314,43 @@ export default function ActivityCombinations() {
         onActiveDayChange={changeActiveDay}
       />
       <div className="flex min-w-0 flex-1 flex-col gap-8">
-        <ActivityList day={activeWeekday} />
+        {/* Destination selector — switches the whole planner's catalogue +
+            anchor. Grouped into cities and regions. */}
+        <div className="flex items-center gap-2">
+          <label htmlFor="city-select" className="text-sm font-medium text-zinc-700 dark:text-zinc-200">
+            Destination
+          </label>
+          <select
+            id="city-select"
+            value={city.id}
+            onChange={(e) => {
+              const next = CITIES.find((c) => c.id === e.target.value);
+              if (next) changeCity(next);
+            }}
+            className="rounded-lg border border-black/[.08] bg-white px-3 py-1.5 text-sm font-medium text-zinc-700 dark:border-white/[.145] dark:bg-zinc-900 dark:text-zinc-200"
+          >
+            <optgroup label="Cities">
+              {CITIES.filter((c) => c.kind === "city").map((c) => (
+                <option key={c.id} value={c.id}>{c.name}</option>
+              ))}
+            </optgroup>
+            <optgroup label="Regions">
+              {CITIES.filter((c) => c.kind === "region").map((c) => (
+                <option key={c.id} value={c.id}>{c.name}</option>
+              ))}
+            </optgroup>
+          </select>
+        </div>
+
+        {city.activities.length === 0 ? (
+          <p className="rounded-lg border border-amber-300/60 bg-amber-50 px-4 py-3 text-sm text-amber-700 dark:border-amber-400/30 dark:bg-amber-950/30 dark:text-amber-300">
+            No activities yet for {city.name}. You can still pick a start{" "}
+            {city.kind === "region" ? "city" : "area"} below — combos &amp; trips
+            will appear here once activities are added for this destination.
+          </p>
+        ) : null}
+
+        <ActivityList day={activeWeekday} activities={city.activities} />
 
         <div className="flex flex-col gap-3">
           <div className="flex flex-wrap items-center gap-3">
@@ -228,9 +371,12 @@ export default function ActivityCombinations() {
           {combos ? (
             <ComboResults
               filters={filters}
+              city={city}
+              area={combos.area}
               combinations={combos.list}
               selections={combos.selections}
               startHours={combos.startHours}
+              circulars={combos.circulars}
               dayIndices={combos.dayIndices}
               activeDay={combos.activeDay}
               evaluated={combos.evaluated}
@@ -249,9 +395,11 @@ export default function ActivityCombinations() {
 
         <TripPlan
           trip={trip}
+          area={area}
           selections={tripSelections}
           startHours={tripStartHours}
           endHours={tripEndHours}
+          circulars={circulars.slice(0, dayCount)}
           filters={filters}
         />
       </div>

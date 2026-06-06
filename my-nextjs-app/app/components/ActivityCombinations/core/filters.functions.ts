@@ -20,11 +20,12 @@ export function averageIndex(key: NumericKey) {
 }
 
 // NORMALIZED SUM — total of a field, scaled to 0–10 against the maximum possible
-// total (magnitude, e.g. how long / how expensive the whole combo is).
+// total (magnitude, e.g. how long / how expensive the whole combo is). The max
+// is read at SCORING time (not when this closure is built) so it reflects the
+// active city's catalogue — see maxComboValue / setActiveCity.
 export function normalizedSumIndex(key: NumericKey) {
-  const max = maxComboValue(key);
   return (combo: Activity[]): number =>
-    (combo.reduce((s, a) => s + a[key], 0) / max) * 10;
+    (combo.reduce((s, a) => s + a[key], 0) / maxComboValue(key)) * 10;
 }
 
 // Raw total of a field across the combo (the real-world value, not the index).

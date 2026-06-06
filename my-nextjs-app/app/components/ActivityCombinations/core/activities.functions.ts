@@ -14,6 +14,46 @@ export type DayHours = { open: number; close: number };
 // A point on the map (WGS84 decimal degrees), used to measure distances.
 export type Coords = { lat: number; lng: number };
 
+// Rome's civic centre (Piazza Venezia, near the kilometre-zero point) — the
+// default start anchor and the fallback for the active city before any city is
+// selected. The route directness + circular loop are measured from the ACTIVE
+// city's centre (see activeCenter / setActiveCity).
+export const ROME_CENTER: Coords = { lat: 41.8925, lng: 12.4853 };
+
+// -----------------------------------------------------------------------------
+// Active city (multi-city support)
+// -----------------------------------------------------------------------------
+// Two engine-wide values depend on the selected city: the catalogue that
+// `maxComboValue` normalizes against ("do everything" in THIS city), and the
+// route anchor `activeCenter()`. They live here as module state — mirroring how
+// the engine already depended on the global ACTIVITIES — and are set by the UI
+// via setActiveCity whenever the chosen city changes (and it resets all per-day
+// state, so the active city is stable across any one calculation).
+let activeCatalogue: Activity[] = ACTIVITIES;
+let activeCenterCoords: Coords = ROME_CENTER;
+// Cache of per-key catalogue totals (see maxComboValue). The scoring hot path
+// asks for these constantly, so we compute each once per active catalogue and
+// reuse it; switching city clears the cache.
+const maxComboCache = new Map<NumericKey, number>();
+
+// Point the engine at a city's catalogue + start anchor. `city` is structurally
+// a { center, activities } (the City type lives in cities.data to avoid a
+// cycle). `anchor` overrides the route start point with the selected AREA's
+// coords; when omitted it falls back to the city centre.
+export function setActiveCity(
+  city: { center: Coords; activities: Activity[] },
+  anchor?: Coords
+): void {
+  activeCatalogue = city.activities;
+  activeCenterCoords = anchor ?? city.center;
+  maxComboCache.clear();
+}
+
+// The active city's fixed start point (route anchor + circular-loop home).
+export function activeCenter(): Coords {
+  return activeCenterCoords;
+}
+
 export type Activity = {
   name: string;
   description: string;
@@ -96,6 +136,68 @@ export function routeLinearity(path: Coords[]): number {
   return Math.max(0, Math.min(10, (endToEnd / pathLength) * 10));
 }
 
+// Perimeter (km) of the convex hull of a set of points, via Andrew's monotone
+// chain on the flat, aspect-correct plane (lng compressed by cos(lat)). The
+// shortest CLOSED tour through any point set is never shorter than its convex
+// hull, so the hull perimeter is the natural "ideal" a loop is measured against.
+function convexHullPerimeter(points: Coords[]): number {
+  const n = points.length;
+  if (n < 2) return 0;
+  if (n === 2) return 2 * distanceKm(points[0], points[1]);
+
+  const meanLat = points.reduce((s, p) => s + p.lat, 0) / n;
+  const kx = Math.cos((meanLat * Math.PI) / 180);
+  // Carry the original Coords so the perimeter is summed in real km.
+  const pts = points
+    .map((c) => ({ x: c.lng * kx, y: c.lat, c }))
+    .sort((a, b) => a.x - b.x || a.y - b.y);
+
+  type P = (typeof pts)[number];
+  const cross = (o: P, a: P, b: P) =>
+    (a.x - o.x) * (b.y - o.y) - (a.y - o.y) * (b.x - o.x);
+  const half = (src: P[]): P[] => {
+    const h: P[] = [];
+    for (const p of src) {
+      while (h.length >= 2 && cross(h[h.length - 2], h[h.length - 1], p) <= 0) h.pop();
+      h.push(p);
+    }
+    return h;
+  };
+
+  const lower = half(pts);
+  const upper = half(pts.slice().reverse());
+  // Drop each half's last point (shared with the other half's first).
+  const hull = lower.slice(0, -1).concat(upper.slice(0, -1));
+  if (hull.length < 2) return 0;
+
+  let per = 0;
+  for (let i = 0; i < hull.length; i++) {
+    per += distanceKm(hull[i].c, hull[(i + 1) % hull.length].c);
+  }
+  return per;
+}
+
+// LOOP TIGHTNESS (0–10): for a CLOSED, circular route that starts at `start`
+// (the centre of Rome), visits `stops` in order, and returns to `start`, how
+// close the loop is to the tightest possible loop around the same points.
+//   10  = the order traces the convex hull (no crossings or backtracking — the
+//         shortest sensible loop)
+//   low = a wandering / self-crossing loop that doubles back
+// It is the ideal (hull perimeter) over the actual loop length, ×10 — the
+// circular analogue of routeLinearity's directness ratio. Among orderings of the
+// SAME stops, maximising it minimises the round-trip distance. Trivially 10 for
+// 0–1 stops (the loop is a degenerate out-and-back).
+export function loopTightness(start: Coords, stops: Coords[]): number {
+  if (stops.length < 2) return 10;
+  const pts = [start, ...stops];
+  let loop = 0;
+  for (let i = 0; i < pts.length - 1; i++) loop += distanceKm(pts[i], pts[i + 1]);
+  loop += distanceKm(pts[pts.length - 1], start); // the return-to-start leg
+  if (loop === 0) return 10;
+  const ideal = convexHullPerimeter(pts);
+  return Math.max(0, Math.min(10, (ideal / loop) * 10));
+}
+
 // The BEST route linearity achievable for a SET of activities: the highest
 // `routeLinearity` over every ordering of its stops (the straightest possible
 // path through them). Unlike a single itinerary's linearity, this is a property
@@ -146,8 +248,14 @@ export function openingHoursFor(a: Activity, day: number): string {
   return `${formatTime(h.open)}–${formatTime(h.close)}`;
 }
 
-// Per-key maximum across the whole list = the value of "do everything". Used to
-// normalize summed indexes onto a 0–10 scale.
+// Per-key total across the ACTIVE city's catalogue = the value of "do
+// everything" there. Used to normalize summed indexes onto a 0–10 scale, so each
+// city is judged against its own catalogue. Cached per active catalogue (the
+// scoring loop calls this very frequently); setActiveCity clears the cache.
 export function maxComboValue(key: NumericKey): number {
-  return ACTIVITIES.reduce((s, a) => s + a[key], 0);
+  const cached = maxComboCache.get(key);
+  if (cached !== undefined) return cached;
+  const total = activeCatalogue.reduce((s, a) => s + a[key], 0);
+  maxComboCache.set(key, total);
+  return total;
 }

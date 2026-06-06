@@ -11,18 +11,22 @@ export function Typewriter({
   speed = 40,
   startDelay = 0,
   className,
+  onDone,
 }: {
   text: string;
   speed?: number;
   startDelay?: number;
   className?: string;
+  // Fired once when the full text has finished typing (used to enable the real,
+  // writable destination input on the homepage).
+  onDone?: () => void;
 }) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    setCount(0);
     let interval: ReturnType<typeof setInterval>;
     const start = setTimeout(() => {
+      setCount(0); // (re)start typing — async, so no cascading render
       interval = setInterval(() => {
         setCount((c) => {
           if (c >= text.length) {
@@ -41,6 +45,11 @@ export function Typewriter({
   }, [text, speed, startDelay]);
 
   const done = count >= text.length;
+
+  // Notify the parent once typing is complete.
+  useEffect(() => {
+    if (done) onDone?.();
+  }, [done, onDone]);
 
   return (
     <span className={className}>

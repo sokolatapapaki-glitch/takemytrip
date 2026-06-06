@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import { DAYS } from "./core/activities.data";
+import type { Area } from "./core/cities.data";
 import type {
   Filter,
   Selection,
@@ -136,12 +137,16 @@ export function TripDashboard({
   filters,
   startHours,
   endHours,
+  circulars,
+  area,
 }: {
   trip: Trip;
   selections: Selection[]; // per day slot (each day's filter choices)
   filters: Filter[];
   startHours: number[]; // per day slot
   endHours: number[]; // per day slot
+  circulars: boolean[]; // per day slot — circular (loop) trip toggle
+  area: Area; // the selected start area (map start marker)
 }) {
   const dayScores = trip.days.map((d) => d.score);
 
@@ -238,7 +243,11 @@ export function TripDashboard({
               </p>
             ) : (
               <>
-                <ComboMap stops={stops} />
+                <ComboMap
+                  stops={stops}
+                  start={{ name: area.name, coords: area.coords }}
+                  circular={circulars[slot] ?? false}
+                />
                 <ComboDashboard
                   combo={td.activities}
                   selection={selections[slot]}
