@@ -57,9 +57,9 @@ export default function ActivityCombinations() {
     [initial]
   );
 
-  // The selected city. Its catalogue + centre drive the whole planner. Switching
-  // city resets everything to defaults (see changeCity), so the active city is
-  // stable across any one calculation.
+  // The selected city. Its catalogue + centre drive the whole planner. The city
+  // is fixed for the session (set from the /start hand-off); there is no in-page
+  // destination switcher, so the active city is stable across any calculation.
   const [city] = useState<City>(initialCity);
   // The selected start AREA within the city (one base for the whole trip). Its
   // coords are the route anchor; defaults to the city's "Centre" area.
@@ -207,6 +207,8 @@ export default function ActivityCombinations() {
   // (used only by the Advanced Filters modal). Toggles base their new state on
   // slot 0, which is the value the sidebar displays.
   const chooseAll = (filterIndex: number, optionIndex: number) => {
+    // Broadcasting to every slot intentionally collapses any per-day divergence
+    // for THIS filter — the sidebar is the "default for all days" surface.
     setSelections((prev) => {
       const base = prev[0] ?? {};
       let nextOpts: number[];
