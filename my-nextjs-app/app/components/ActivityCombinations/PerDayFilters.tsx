@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { formatTime, type Activity } from "./core/activities.functions";
 import { Filter, Selection, isTripLevel } from "./core/filters.functions";
 import { RequiredActivities } from "./RequiredActivities";
@@ -30,10 +31,11 @@ export function FilterButton({
   );
 }
 
-// The controls for a SINGLE day's filters: start time, circular-trip toggle, the
-// per-option filter groups, and the hard "must include" list. Rendered both in
-// the sidebar and (per day, via tabs) in the advanced-filters modal — same props,
-// same handlers, so editing in either place updates the same day's state.
+// The controls for a SINGLE day's filters: start time, the per-option filter
+// groups, the circular-trip toggle (placed just below the "Cost budget" group),
+// and the hard "must include" list. Rendered both in the sidebar and (per day,
+// via tabs) in the advanced-filters modal — same props, same handlers, so editing
+// in either place updates the same day's state.
 export function PerDayFilters({
   filters,
   selection,
@@ -59,6 +61,34 @@ export function PerDayFilters({
   activities: Activity[];
   dayLabel?: string; // e.g. "Wed 3" — for the start-time caption
 }) {
+  // Circular-trip toggle — when on, THIS day's route is scored as a loop that
+  // starts AND returns to the centre, instead of a one-way route. Rendered just
+  // below the "Cost budget" filter group (see the map below).
+  const circularBlock = (
+    <div className="flex flex-col gap-2">
+      <label className="flex cursor-pointer items-start gap-2.5">
+        <input
+          type="checkbox"
+          checked={circular}
+          onChange={onToggleCircular}
+          className="mt-0.5 h-4 w-4 shrink-0 accent-orange-500"
+        />
+        <span className="flex flex-col">
+          <span className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
+            Circular trip
+          </span>
+          <span className="text-xs text-zinc-400 dark:text-zinc-500">
+            Start and return to the centre (loop). Off = one-way from the centre.
+          </span>
+        </span>
+      </label>
+    </div>
+  );
+
+  // Fallback: if no "Cost budget" filter exists, render the circular toggle at
+  // the end of the groups instead.
+  const hasCostBudget = filters.some((f) => f.name === "Cost budget");
+
   return (
     <>
       {/* Day start time — the hour THIS day's itinerary begins at. */}
@@ -84,56 +114,39 @@ export function PerDayFilters({
         </select>
       </div>
 
-      {/* Circular trip — when on, THIS day's route is scored as a loop that
-          starts AND returns to the centre, instead of a one-way route. */}
-      <div className="flex flex-col gap-2">
-        <label className="flex cursor-pointer items-start gap-2.5">
-          <input
-            type="checkbox"
-            checked={circular}
-            onChange={onToggleCircular}
-            className="mt-0.5 h-4 w-4 shrink-0 accent-orange-500"
-          />
-          <span className="flex flex-col">
-            <span className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
-              Circular trip
-            </span>
-            <span className="text-xs text-zinc-400 dark:text-zinc-500">
-              Start and return to the centre (loop). Off = one-way from the centre.
-            </span>
-          </span>
-        </label>
-      </div>
-
       {filters.map((filter, fi) =>
         // Trip-level filters (e.g. "Use every activity") have no per-option
         // choice — they're tuned in the editor and applied to the whole trip, so
         // they're not shown here. Returning null keeps `fi` aligned with the
         // selection.
         isTripLevel(filter) ? null : (
-          <div key={filter.name} className="flex flex-col gap-2">
-            <div>
-              <h3 className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
-                {filter.name}
-              </h3>
-              <p className="text-xs text-zinc-400 dark:text-zinc-500">
-                {filter.hint ?? (filter.multi ? "Pick any" : "Pick one")}
-              </p>
+          <Fragment key={filter.name}>
+            <div className="flex flex-col gap-2">
+              <div>
+                <h3 className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
+                  {filter.name}
+                </h3>
+                <p className="text-xs text-zinc-400 dark:text-zinc-500">
+                  {filter.hint ?? (filter.multi ? "Pick any" : "Pick one")}
+                </p>
+              </div>
+              <div className="flex flex-col gap-1.5">
+                {filter.options.map((opt, i) => (
+                  <FilterButton
+                    key={opt.name}
+                    active={(selection[fi] ?? []).includes(i)}
+                    onClick={() => onChoose(fi, i)}
+                  >
+                    {opt.name}
+                  </FilterButton>
+                ))}
+              </div>
             </div>
-            <div className="flex flex-col gap-1.5">
-              {filter.options.map((opt, i) => (
-                <FilterButton
-                  key={opt.name}
-                  active={(selection[fi] ?? []).includes(i)}
-                  onClick={() => onChoose(fi, i)}
-                >
-                  {opt.name}
-                </FilterButton>
-              ))}
-            </div>
-          </div>
+            {filter.name === "Cost budget" ? circularBlock : null}
+          </Fragment>
         )
       )}
+      {!hasCostBudget ? circularBlock : null}
 
       <RequiredActivities
         activities={activities}
