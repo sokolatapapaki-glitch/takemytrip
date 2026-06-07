@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ActivityCard } from "@/app/activities/components/ActivityCard";
 import type { Activity } from "./core/activities.functions";
 
@@ -24,6 +24,13 @@ export function ActivityList({
   query?: string;
 }) {
   const [expanded, setExpanded] = useState(false);
+
+  // Collapse back to the first few whenever the search query changes, so a new
+  // search always starts collapsed.
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setExpanded(false);
+  }, [query]);
 
   const q = query.trim().toLowerCase();
   const shown = q
