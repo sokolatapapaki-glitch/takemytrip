@@ -26,7 +26,7 @@ export function ScheduledName({
       : undefined;
 
   return (
-    <div className="flex min-w-0 flex-col gap-1">
+    <div className="relative flex min-w-0 flex-col gap-1">
       <div className="flex items-center gap-2">
         <span className={nameClass}>{item.name}</span>
         {activity ? (
@@ -42,7 +42,7 @@ export function ScheduledName({
         ) : null}
       </div>
       {open && activity ? (
-        <ul className="flex flex-col gap-0.5 rounded-lg border border-black/[.08] bg-zinc-50 p-2 text-xs dark:border-white/[.145] dark:bg-zinc-800/50">
+        <ul className="absolute left-0 top-full z-30 mt-1 flex min-w-[12rem] flex-col gap-0.5 whitespace-nowrap rounded-lg border border-black/[.08] bg-white p-2 text-xs shadow-lg dark:border-white/[.145] dark:bg-zinc-900">
           {DAYS.map((d, i) => (
             <li
               key={d}
