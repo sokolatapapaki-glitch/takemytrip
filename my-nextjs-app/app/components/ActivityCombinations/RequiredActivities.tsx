@@ -1,6 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import type { Activity } from "./core/activities.functions";
+
+// How many "Must include" options to show before the "See more" toggle reveals
+// the rest. Keeps the list short by default in both the sidebar and the modal.
+const COLLAPSED_COUNT = 5;
 
 // A HARD filter (distinct from the scoring filters): keep only combinations that
 // contain every selected activity. Selection is a set of activity names.
@@ -19,7 +24,8 @@ export function filterByRequired(
 }
 
 // Sidebar section: multi-select list of activities to require. Selecting one
-// narrows the results to combos that include it.
+// narrows the results to combos that include it. Only the first COLLAPSED_COUNT
+// are shown until "See more" is clicked.
 export function RequiredActivities({
   activities,
   required,
@@ -29,6 +35,10 @@ export function RequiredActivities({
   required: Set<string>;
   onToggle: (name: string) => void;
 }) {
+  const [expanded, setExpanded] = useState(false);
+  const shown = expanded ? activities : activities.slice(0, COLLAPSED_COUNT);
+  const hiddenCount = activities.length - shown.length;
+
   return (
     <div className="flex flex-col gap-2">
       <div>
@@ -40,7 +50,7 @@ export function RequiredActivities({
         </p>
       </div>
       <div className="flex flex-col gap-1.5">
-        {activities.map((activity) => {
+        {shown.map((activity) => {
           const active = required.has(activity.name);
           return (
             <button
@@ -58,6 +68,16 @@ export function RequiredActivities({
           );
         })}
       </div>
+      {activities.length > COLLAPSED_COUNT ? (
+        <button
+          type="button"
+          onClick={() => setExpanded((v) => !v)}
+          aria-expanded={expanded}
+          className="self-start text-xs font-medium text-orange-600 underline-offset-2 transition-colors hover:underline dark:text-orange-400"
+        >
+          {expanded ? "See less" : `See more (${hiddenCount})`}
+        </button>
+      ) : null}
     </div>
   );
 }
