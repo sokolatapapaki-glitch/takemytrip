@@ -6,18 +6,14 @@ import type { Filter, Selection } from "./core/filters.functions";
 import type { Trip } from "./core/trip.functions";
 import { TripCard } from "./TripCard";
 
-const ORDINALS = [
-  "", "1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th",
-];
-const ordinal = (n: number) => ORDINALS[n] ?? `${n}th`;
-
-// Pager over the best trip and its ranked runner-ups: shows ONE trip card at a
-// time with Previous / Next controls below it. Index 0 is the best trip (shown
-// with its proof + description); later indexes are the 2nd-best, 3rd-best, … .
-// Mounted with a key tied to the best trip, so a new best trip resets the pager
-// back to the first card.
-function TripPager({
-  trips,
+// Pager over the suggestions the planner computed: the best-scoring arrangement
+// and its ranked runner-ups (the next-best states the algorithm evaluated). Shows
+// ONE suggestion card at a time with Previous / Next controls below it. Index 0
+// is the best match (shown with its proof + description); later indexes are the
+// next suggestions in score order. Mounted with a key tied to the best result, so
+// a recomputation resets the pager back to the first suggestion.
+function SuggestionPager({
+  suggestions,
   exact,
   cityName,
   areaName,
@@ -28,7 +24,7 @@ function TripPager({
   area,
   filters,
 }: {
-  trips: Trip[]; // [best, ...ranked alternatives]
+  suggestions: Trip[]; // [best, ...ranked runner-ups]
   exact: boolean;
   cityName?: string;
   areaName?: string;
@@ -40,8 +36,8 @@ function TripPager({
   filters: Filter[];
 }) {
   const [index, setIndex] = useState(0);
-  const total = trips.length;
-  const current = trips[index];
+  const total = suggestions.length;
+  const current = suggestions[index];
   const isBest = index === 0;
 
   const pagerBtn =
@@ -49,12 +45,12 @@ function TripPager({
 
   return (
     <section className="flex flex-col gap-4">
-      {/* The trip currently being viewed. Keyed by index so navigating remounts
-          the card and it opens expanded by default. */}
+      {/* The suggestion currently being viewed. Keyed by index so navigating
+          remounts the card and it opens expanded by default. */}
       <TripCard
         key={index}
         trip={current}
-        title={isBest ? `Best ${current.days.length}-day trip` : `${ordinal(index + 1)}-best trip`}
+        title={`Suggestion ${index + 1}${isBest ? " · best match" : ""}`}
         description={
           isBest
             ? "Every activity used once, assigned to maximize the average of the days' combo scores. Same scheduling rules as the combos above."
@@ -72,7 +68,7 @@ function TripPager({
         filters={filters}
       />
 
-      {/* Previous / Next pager — step through the best trip and its alternatives. */}
+      {/* Previous / Next pager — step through the suggestions the algorithm found. */}
       <div className="flex items-center justify-between gap-3">
         <button
           type="button"
@@ -80,10 +76,10 @@ function TripPager({
           disabled={index === 0}
           className={pagerBtn}
         >
-          ← Previous trip
+          ← Previous suggestion
         </button>
         <span className="text-xs font-medium text-zinc-400 dark:text-zinc-500">
-          Trip {index + 1} of {total}
+          Suggestion {index + 1} of {total}
         </span>
         <button
           type="button"
@@ -91,15 +87,15 @@ function TripPager({
           disabled={index >= total - 1}
           className={pagerBtn}
         >
-          Next trip →
+          Next suggestion →
         </button>
       </div>
 
       {total === 1 ? (
         <p className="text-center text-xs text-zinc-400">
           {exact
-            ? "No alternative trips at this day count."
-            : "Alternative trips aren't available in fast mode (try fewer days)."}
+            ? "No other suggestions at this day count."
+            : "More suggestions aren't available in fast mode (try fewer days)."}
         </p>
       ) : null}
     </section>
@@ -107,9 +103,9 @@ function TripPager({
 }
 
 // The multi-day trip: each pooled activity used once, assigned so the AVERAGE of
-// the days' combo scores is the highest possible. The best trip and its ranked
-// runner-ups are browsed one at a time with the Previous / Next pager below the
-// card.
+// the days' combo scores is the highest possible. The best-scoring arrangement
+// and its ranked runner-ups are browsed one at a time as "suggestions" with the
+// Previous / Next pager below the card.
 export function TripPlan({
   trip,
   area,
@@ -129,17 +125,17 @@ export function TripPlan({
   endHours: number[]; // per day slot
   circulars: boolean[]; // per day slot — circular (loop) trip toggle
 }) {
-  // Identity of the current best trip — when it changes, remount the pager so it
-  // resets to the first (best) trip.
+  // Identity of the current best result — when it changes, remount the pager so
+  // it resets to the first (best) suggestion.
   const tripKey =
     trip.days.map((d) => d.activities.map((a) => a.name).join("·")).join("|") +
     ":" +
     trip.score.toFixed(3);
 
   return (
-    <TripPager
+    <SuggestionPager
       key={tripKey}
-      trips={[trip, ...trip.alternatives]}
+      suggestions={[trip, ...trip.alternatives]}
       exact={trip.exact}
       cityName={cityName}
       areaName={area.name}
