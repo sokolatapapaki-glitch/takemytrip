@@ -77,7 +77,7 @@ export function TripCard({
     : title;
 
   const cardClass =
-    "animate-card-pop overflow-hidden rounded-3xl border border-white/60 bg-white/80 shadow-lg shadow-orange-900/5 backdrop-blur-md";
+    "animate-card-pop overflow-hidden rounded-3xl border border-white/80 bg-white/80 shadow-xl shadow-orange-900/10 ring-1 ring-black/5 backdrop-blur-md";
   const imageClass =
     "flex shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-400 via-rose-400 to-fuchsia-500 text-white";
   // Borderless, intense, white-text toggle (matches the brighter button style).
