@@ -309,7 +309,7 @@ export default function ActivityCombinations() {
               onClick={() => setShowActivities((s) => !s)}
               aria-expanded={showActivities}
               disabled={city.activities.length === 0}
-              className="shrink-0 rounded-lg bg-black px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-800 disabled:cursor-not-allowed disabled:bg-zinc-300 dark:bg-white dark:text-black dark:hover:bg-zinc-200 dark:disabled:bg-zinc-700"
+              className="shrink-0 rounded-full bg-orange-500 px-4 py-2 text-sm font-medium text-white shadow-sm shadow-orange-900/10 transition-colors hover:bg-orange-600 disabled:cursor-not-allowed disabled:bg-zinc-300 disabled:shadow-none"
             >
               {showActivities ? "Hide activities" : "Select activities"}
             </button>

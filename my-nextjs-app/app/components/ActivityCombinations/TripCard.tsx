@@ -114,7 +114,7 @@ export function TripCard({
             <button
               type="button"
               onClick={() => setOpen(true)}
-              className="mt-auto self-end rounded-full bg-orange-500 px-4 py-2 text-sm font-medium text-white shadow-sm shadow-orange-900/10 transition-colors hover:bg-orange-600"
+              className="mt-auto self-end text-sm font-medium text-orange-600 underline-offset-2 transition-colors hover:underline"
             >
               See Activities
             </button>
@@ -150,7 +150,7 @@ export function TripCard({
           type="button"
           onClick={() => setOpen(false)}
           aria-expanded
-          className={`shrink-0 ${toggleBtn}`}
+          className="inline-flex shrink-0 items-center gap-1.5 text-xs font-medium text-orange-600 underline-offset-2 transition-colors hover:underline"
         >
           Hide <FaChevronUp className="h-3 w-3" />
         </button>
