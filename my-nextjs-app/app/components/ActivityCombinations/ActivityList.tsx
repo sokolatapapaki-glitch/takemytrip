@@ -1,11 +1,20 @@
-import { VIBES } from "./core/activities.data";
-import { openingHoursFor, type Activity } from "./core/activities.functions";
+"use client";
+
+import { useState } from "react";
+import { ActivityCard } from "@/app/activities/components/ActivityCard";
+import type { Activity } from "./core/activities.functions";
+
+// How many activity cards to show before the "See more" toggle reveals the rest.
+const COLLAPSED_COUNT = 3;
 
 // The catalogue of available activities for the selected city, optionally
-// filtered by a free-text `query` (matches name or description). Opening hours
-// are shown for the currently selected day. The section heading lives in the
-// parent (it sits next to the "Select activities" toggle).
+// filtered by a free-text `query` (matches name or description). Shown as a grid
+// of ActivityCard tiles — the same card used on the Activities page, including
+// its top-left select checkbox (inert here for now). Only the first
+// COLLAPSED_COUNT cards are shown until "See more" is clicked. The section
+// heading lives in the parent (next to the "Select activities" toggle).
 export function ActivityList({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   day,
   activities,
   query = "",
@@ -14,6 +23,8 @@ export function ActivityList({
   activities: Activity[];
   query?: string;
 }) {
+  const [expanded, setExpanded] = useState(false);
+
   const q = query.trim().toLowerCase();
   const shown = q
     ? activities.filter(
@@ -23,39 +34,35 @@ export function ActivityList({
       )
     : activities;
 
+  const visible = expanded ? shown : shown.slice(0, COLLAPSED_COUNT);
+  const hiddenCount = shown.length - visible.length;
+
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-4">
       {shown.length === 0 && (
         <p className="rounded-xl border border-black/[.08] px-5 py-3 text-sm text-zinc-400 dark:border-white/[.145] dark:text-zinc-500">
-          No activities match “{query}”.
+          No activities match &quot;{query}&quot;.
         </p>
       )}
-      {shown.map((activity) => (
-        <div
-          key={activity.name}
-          className="flex items-center justify-between gap-6 rounded-xl border border-black/[.08] bg-white px-5 py-3 dark:border-white/[.145] dark:bg-zinc-900"
-        >
-          <div className="min-w-0">
-            <p className="font-medium text-zinc-800 dark:text-zinc-100">
-              {activity.name}
-            </p>
-            <p className="text-sm text-zinc-500 dark:text-zinc-400">
-              {activity.description}
-            </p>
-            <p className="mt-1 text-xs text-zinc-400 dark:text-zinc-500">
-              {VIBES.map((v) => `${v.name} ${activity[v.key]}`).join(" · ")}
-            </p>
-          </div>
-          <div className="flex shrink-0 flex-col items-end gap-0.5">
-            <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
-              {activity.hours}h · €{activity.cost}
-            </span>
-            <span className="text-xs text-zinc-400 dark:text-zinc-500">
-              {openingHoursFor(activity, day)}
-            </span>
-          </div>
+
+      {visible.length > 0 && (
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {visible.map((activity, i) => (
+            <ActivityCard key={activity.name} activity={activity} index={i} />
+          ))}
         </div>
-      ))}
+      )}
+
+      {shown.length > COLLAPSED_COUNT && (
+        <button
+          type="button"
+          onClick={() => setExpanded((v) => !v)}
+          aria-expanded={expanded}
+          className="mx-auto text-sm font-medium text-orange-600 underline-offset-2 transition-colors hover:underline dark:text-orange-400"
+        >
+          {expanded ? "See less" : `See more (${hiddenCount})`}
+        </button>
+      )}
     </div>
   );
 }
