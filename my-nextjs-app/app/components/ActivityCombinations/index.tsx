@@ -1,41 +1,24 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { Activity } from "./core/activities.functions";
 import { setActiveCity } from "./core/activities.functions";
+import { DAYS } from "./core/activities.data";
 import { CITIES, DEFAULT_CITY, type City, type Area } from "./core/cities.data";
-import { buildCombinations, defaultSelection, type Filter, Selection } from "./core/filters.functions";
-import { scheduleCombo, scheduleEndHour } from "./core/schedule.functions";
+import { defaultSelection, Selection } from "./core/filters.functions";
+import { scheduleEndHour } from "./core/schedule.functions";
 import { toEffective, useFilterEdits } from "./core/filterStore.functions";
 import { addDays, diffDays, mondayIndex, startOfDay } from "./core/calendar.functions";
 import { FilterSidebar } from "./FilterSidebar";
 import { ActivityList } from "./ActivityList";
-import { ComboResults } from "./ComboResults";
+import { AdvancedFiltersModal } from "./AdvancedFiltersModal";
 import { TripPlan } from "./TripPlan";
 import { planTrip } from "./core/trip.functions";
-import { filterByRequired } from "./RequiredActivities";
 import { DEFAULT_START_HOUR } from "./core/schedule.data";
 
 // The most days a trip can span (the date range is capped at this length). Per-day
 // state arrays are pre-allocated to this length so changing the range never needs
 // to resize them — the range's length just decides how many slots are USED.
 const MAX_DAYS = 7;
-
-// A frozen snapshot of the combos list and the per-day settings it was computed
-// with. The combos view renders from this (not live state), so it only changes
-// when the user clicks Calculate.
-type ComboSnapshot = {
-  list: Activity[][];
-  selections: Selection[];
-  startHours: number[];
-  circulars: boolean[]; // per-day circular-trip toggle
-  area: Area; // the start area the list was computed/anchored with
-  dayIndices: number[]; // weekday (Mon=0) per chosen day, in order
-  activeDay: number;
-  filtersRef: Filter[]; // the filter config it was computed with (for staleness)
-  evaluated: number; // how many subsets were evaluated
-  elapsedMs: number; // wall-clock time the calculation took
-};
 
 // Hand-off params from the /start page (?dest=&area=&start=&end=). The planner
 // is client-only (ssr:false), so window.location is available on first render —
@@ -131,8 +114,9 @@ export default function ActivityCombinations() {
   );
   const dayIndices = useMemo(() => dates.map(mondayIndex), [dates]);
 
-  // Which day tab is active (0..dayCount-1). Its filters rank the combos list and
-  // its values are what the sidebar controls edit. Clamped in case the range shrank.
+  // Which day tab is active (0..dayCount-1). Its filters/start time/required are
+  // what the sidebar + advanced modal edit, and its weekday drives the activity
+  // hours and that day's leg of the trip. Clamped in case the range shrank.
   const [activeDay, setActiveDay] = useState<number>(0);
   const activeSlot = Math.min(activeDay, dayCount - 1);
 
@@ -142,39 +126,12 @@ export default function ActivityCombinations() {
   const activeCircular = circulars[activeSlot];
   const activeWeekday = dayIndices[activeSlot];
 
-  // The combos list is computed ON DEMAND (when the user clicks Calculate), not
-  // reactively — enumerating + ranking every subset is the expensive part. A click
-  // snapshots the current per-day settings together with the computed list; the
-  // view stays frozen on that snapshot until the next click. `dirty`/`stale` flag
-  // that settings have changed since the last calculation.
-  const [combos, setCombos] = useState<ComboSnapshot | null>(null);
-  const [dirty, setDirty] = useState(true);
-  const stale = dirty || (combos !== null && combos.filtersRef !== filters);
-
-  const calculate = () => {
-    setActiveCity(city, area.coords); // engine on this city + area before scoring
-    const t0 = performance.now();
-    const scored = buildCombinations(city.activities, activeSelection, filters);
-    const endHour = scheduleEndHour(filters, activeSelection, activeStartHour);
-    const open = scored.filter(
-      (combo) => scheduleCombo(combo, activeWeekday, activeStartHour, endHour).withinHours
-    );
-    const list = filterByRequired(open, activeRequired);
-    const elapsedMs = performance.now() - t0;
-    setCombos({
-      list,
-      selections: selections.slice(),
-      startHours: startHours.slice(),
-      circulars: circulars.slice(),
-      area,
-      dayIndices: dayIndices.slice(),
-      activeDay: activeSlot,
-      filtersRef: filters,
-      evaluated: scored.length,
-      elapsedMs,
-    });
-    setDirty(false);
-  };
+  // The activities catalogue + its search box are hidden until the user clicks
+  // "Select activities". `activityQuery` filters the shown list.
+  const [showActivities, setShowActivities] = useState(false);
+  const [activityQuery, setActivityQuery] = useState("");
+  // The advanced (per-day) filters modal — same controls as the sidebar, by day.
+  const [showAdvanced, setShowAdvanced] = useState(false);
 
   // Per-day settings for the trip, in chosen-date order.
   const tripSelections = selections.slice(0, dayCount);
@@ -198,10 +155,8 @@ export default function ActivityCombinations() {
     return planTrip(city.activities, dayIndices, starts, ends, sel, filters, circ);
   }, [city, area, dayIndices, selections, startHours, circulars, filters]);
 
-  // Per-day mutators write to the ACTIVE day's slot, leaving the others untouched,
-  // and mark the combos snapshot dirty.
+  // Per-day mutators write to the ACTIVE day's slot, leaving the others untouched.
   const choose = (filterIndex: number, optionIndex: number) => {
-    setDirty(true);
     setSelections((prev) => {
       const cur = prev[activeSlot] ?? {};
       let nextSel: Selection;
@@ -221,7 +176,6 @@ export default function ActivityCombinations() {
   };
 
   const setActiveStartHour = (hour: number) => {
-    setDirty(true);
     setStartHours((prev) => {
       const copy = prev.slice();
       copy[activeSlot] = hour;
@@ -230,7 +184,6 @@ export default function ActivityCombinations() {
   };
 
   const toggleActiveCircular = () => {
-    setDirty(true);
     setCirculars((prev) => {
       const copy = prev.slice();
       copy[activeSlot] = !copy[activeSlot];
@@ -239,7 +192,6 @@ export default function ActivityCombinations() {
   };
 
   const toggleRequired = (name: string) => {
-    setDirty(true);
     setRequireds((prev) => {
       const copy = prev.slice();
       const next = new Set(copy[activeSlot]);
@@ -250,20 +202,16 @@ export default function ActivityCombinations() {
     });
   };
 
-  const changeActiveDay = (slot: number) => {
-    setDirty(true);
-    setActiveDay(slot);
-  };
+  const changeActiveDay = (slot: number) => setActiveDay(slot);
 
   const changeRange = (start: Date, end: Date | null) => {
-    setDirty(true);
     setRange({ start, end });
     const cnt = Math.min((end ? diffDays(start, end) : 0) + 1, MAX_DAYS);
     if (activeDay > cnt - 1) setActiveDay(cnt - 1);
   };
 
   // Switching city is a clean slate: point the engine at the new catalogue and
-  // reset every per-day setting + the combos list to defaults.
+  // reset every per-day setting to defaults.
   const changeCity = (next: City) => {
     if (next.id === city.id) return;
     const nextArea = next.areas[0]; // Centre
@@ -276,18 +224,14 @@ export default function ActivityCombinations() {
     setCirculars(Array.from({ length: MAX_DAYS }, () => false));
     setRange({ start: today, end: addDays(today, 2) });
     setActiveDay(0);
-    setCombos(null);
-    setDirty(true);
   };
 
   // Picking a start area re-anchors the distance score (and the circular return)
-  // for the whole trip. Marks the combos list stale so it's recalculated.
-  const changeArea = (next: Area) => {
-    setArea(next);
-    setDirty(true);
-  };
+  // for the whole trip.
+  const changeArea = (next: Area) => setArea(next);
 
   return (
+    <>
     <div className="mx-auto flex w-full max-w-5xl flex-col gap-8 p-8 lg:flex-row">
       <FilterSidebar
         filters={filters}
@@ -312,6 +256,7 @@ export default function ActivityCombinations() {
         dates={dates}
         activeDay={activeSlot}
         onActiveDayChange={changeActiveDay}
+        onOpenAdvanced={() => setShowAdvanced(true)}
       />
       <div className="flex min-w-0 flex-1 flex-col gap-8">
         {/* Destination selector — switches the whole planner's catalogue +
@@ -345,53 +290,48 @@ export default function ActivityCombinations() {
         {city.activities.length === 0 ? (
           <p className="rounded-lg border border-amber-300/60 bg-amber-50 px-4 py-3 text-sm text-amber-700 dark:border-amber-400/30 dark:bg-amber-950/30 dark:text-amber-300">
             No activities yet for {city.name}. You can still pick a start{" "}
-            {city.kind === "region" ? "city" : "area"} below — combos &amp; trips
-            will appear here once activities are added for this destination.
+            {city.kind === "region" ? "city" : "area"} below — your trip will
+            appear here once activities are added for this destination.
           </p>
         ) : null}
 
-        <ActivityList day={activeWeekday} activities={city.activities} />
-
-        <div className="flex flex-col gap-3">
-          <div className="flex flex-wrap items-center gap-3">
+        {/* Activities catalogue — hidden until "Select activities" is clicked,
+            then revealed in place (with a search box) above the trip plan. */}
+        <section className="flex flex-col gap-3">
+          <div className="flex items-center justify-between gap-3">
+            <h2 className="text-lg font-semibold text-zinc-800 dark:text-zinc-100">
+              Activities in {city.name}{" "}
+              <span className="text-sm font-normal text-zinc-400 dark:text-zinc-500">
+                · hours for {DAYS[activeWeekday]}
+              </span>
+            </h2>
             <button
               type="button"
-              onClick={calculate}
-              className="rounded-lg bg-black px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200"
+              onClick={() => setShowActivities((s) => !s)}
+              aria-expanded={showActivities}
+              disabled={city.activities.length === 0}
+              className="shrink-0 rounded-lg bg-black px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-800 disabled:cursor-not-allowed disabled:bg-zinc-300 dark:bg-white dark:text-black dark:hover:bg-zinc-200 dark:disabled:bg-zinc-700"
             >
-              {combos ? "Recalculate combinations" : "Calculate combinations"}
+              {showActivities ? "Hide activities" : "Select activities"}
             </button>
-            {combos && stale ? (
-              <span className="text-xs font-medium text-amber-600 dark:text-amber-400">
-                Settings changed — recalculate to update the list.
-              </span>
-            ) : null}
           </div>
-
-          {combos ? (
-            <ComboResults
-              filters={filters}
-              city={city}
-              area={combos.area}
-              combinations={combos.list}
-              selections={combos.selections}
-              startHours={combos.startHours}
-              circulars={combos.circulars}
-              dayIndices={combos.dayIndices}
-              activeDay={combos.activeDay}
-              evaluated={combos.evaluated}
-              elapsedMs={combos.elapsedMs}
-            />
-          ) : (
-            <p className="text-sm text-zinc-500 dark:text-zinc-400">
-              Pick your dates and filters, then click{" "}
-              <span className="font-medium text-zinc-700 dark:text-zinc-200">
-                Calculate combinations
-              </span>{" "}
-              to see the ranked list.
-            </p>
+          {showActivities && (
+            <>
+              <input
+                type="text"
+                value={activityQuery}
+                onChange={(e) => setActivityQuery(e.target.value)}
+                placeholder="Search activities"
+                className="w-full rounded-lg border border-black/[.08] bg-white px-4 py-2.5 text-sm text-zinc-800 outline-none placeholder:text-zinc-400 focus:border-zinc-300 dark:border-white/[.145] dark:bg-zinc-900 dark:text-zinc-100"
+              />
+              <ActivityList
+                day={activeWeekday}
+                activities={city.activities}
+                query={activityQuery}
+              />
+            </>
           )}
-        </div>
+        </section>
 
         <TripPlan
           trip={trip}
@@ -405,5 +345,25 @@ export default function ActivityCombinations() {
         />
       </div>
     </div>
+
+    {showAdvanced && (
+      <AdvancedFiltersModal
+        filters={filters}
+        selection={activeSelection}
+        onChoose={choose}
+        required={activeRequired}
+        onToggleRequired={toggleRequired}
+        startHour={activeStartHour}
+        onStartHourChange={setActiveStartHour}
+        circular={activeCircular}
+        onToggleCircular={toggleActiveCircular}
+        activities={city.activities}
+        dates={dates}
+        activeDay={activeSlot}
+        onActiveDayChange={changeActiveDay}
+        onClose={() => setShowAdvanced(false)}
+      />
+    )}
+    </>
   );
 }

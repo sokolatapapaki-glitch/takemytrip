@@ -8,7 +8,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { DESTINATIONS } from "../data/destinations";
-import { formatShort } from "../data/dateUtils";
+import { homeStyles } from "../data/palette";
+import { formatShort, isSameDay } from "../data/dateUtils";
 import type { DateRange, DestinationSelection, Travelers } from "../data/types";
 import { DestinationModal } from "./DestinationModal";
 import { CalendarModal } from "./CalendarModal";
@@ -18,6 +19,7 @@ import {
   CalendarIcon,
   MapPinIcon,
   SearchIcon,
+  UserIcon,
   UsersIcon,
   XIcon,
 } from "./icons";
@@ -28,7 +30,13 @@ type ModalKey = "dest" | "dates" | "travelers";
 const toISODate = (d: Date) =>
   `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 
-export default function StartTripSearch() {
+export default function StartTripSearch({
+  // The hero backdrop shows photos of the chosen city's activities, so it needs
+  // to know which destination is selected (null = nothing picked yet).
+  onDestChange,
+}: {
+  onDestChange?: (destinationId: string | null) => void;
+} = {}) {
   const router = useRouter();
   const [open, setOpen] = useState<ModalKey | null>(null);
   const [dest, setDest] = useState<DestinationSelection | null>(null);
@@ -57,17 +65,29 @@ export default function StartTripSearch() {
     return () => document.removeEventListener("mousedown", onDown);
   }, [open]);
 
+  // Let the hero backdrop follow the chosen city (see onDestChange prop).
+  useEffect(() => {
+    onDestChange?.(dest?.destinationId ?? null);
+  }, [dest, onDestChange]);
+
   const destLabel = useMemo(() => {
     if (!dest) return null;
     const d = DESTINATIONS.find((x) => x.id === dest.destinationId);
-    const a = d?.areas.find((x) => x.id === dest.areaId);
-    return d ? `${d.name}${a ? ` · ${a.name}` : ""}` : null;
+    if (!d) return null;
+    const a = d.areas.find((x) => x.id === dest.areaId);
+    // The city centre (a city's default first area, named "Centre") shows just
+    // the city name — e.g. "Rome", not "Rome · Centre". Any other area keeps the
+    // "City · Area" form. (Regions always show "Region · City".)
+    const isCityCentre = d.kind === "city" && d.areas[0]?.id === dest.areaId;
+    return a && !isCityCentre ? `${d.name} · ${a.name}` : d.name;
   }, [dest]);
 
+  // A single chosen day (start only, or start === end) shows just that date —
+  // not "Jun 7 — …" or "Jun 7 — Jun 7".
   const dateLabel = !range.start
     ? null
-    : !range.end
-      ? `${formatShort(range.start)} — …`
+    : !range.end || isSameDay(range.start, range.end)
+      ? formatShort(range.start)
       : `${formatShort(range.start)} — ${formatShort(range.end)}`;
 
   const travelersLabel = useMemo(() => {
@@ -78,9 +98,17 @@ export default function StartTripSearch() {
     return parts.join(" · ");
   }, [travelers]);
 
+  // Total people in the party — drives the one/two-person traveller icon.
+  const travelerCount = travelers.adults + travelers.children;
+
+  // Search is only allowed once all three fields are filled: a destination, at
+  // least one date, and a valid party (always ≥ 1 adult, so dest + date gate it).
+  const canSearch = !!dest && !!range.start && travelers.adults >= 1;
+
   // Hand the chosen destination/area/dates to the main planner via query params.
   // (Travelers are one adult for now — not passed; the planner doesn't use them.)
   function handleSearch() {
+    if (!canSearch) return;
     const params = new URLSearchParams();
     if (dest) {
       params.set("dest", dest.destinationId);
@@ -96,7 +124,7 @@ export default function StartTripSearch() {
 
   return (
     <div ref={rootRef} className="relative">
-      <div className="animate-fade-in-up flex items-stretch gap-2 rounded-2xl border border-white/50 bg-white/60 p-2 shadow-xl shadow-orange-900/5 backdrop-blur-md" style={{ animationDelay: "100ms" }}>
+      <div className="animate-fade-in-up flex items-center gap-2" style={{ animationDelay: "100ms" }}>
         <DestField
           active={open === "dest"}
           value={destLabel}
@@ -154,7 +182,7 @@ export default function StartTripSearch() {
 
         <Field
           active={open === "travelers"}
-          icon={<UsersIcon className="h-5 w-5" />}
+          icon={<TravelersIcon multiple={travelerCount > 1} />}
           placeholder="Travelers"
           value={travelersLabel}
           iconDelay={580}
@@ -170,8 +198,11 @@ export default function StartTripSearch() {
         <button
           type="button"
           onClick={handleSearch}
+          disabled={!canSearch}
+          aria-disabled={!canSearch}
+          title={canSearch ? undefined : "Pick a destination, dates and travellers first"}
           style={{ animationDelay: "440ms" }}
-          className="animate-pop-in flex shrink-0 items-center gap-2 rounded-xl bg-orange-500 px-6 py-3 font-medium text-white shadow-sm transition-colors hover:bg-orange-600"
+          className={`animate-pop-in flex shrink-0 items-center gap-2 rounded-xl px-6 py-3 font-medium ${homeStyles.primaryButton} ${homeStyles.primaryButtonDisabled}`}
         >
           <SearchIcon className="h-5 w-5" />
           <span className="hidden sm:inline">Search</span>
@@ -204,14 +235,12 @@ function Field({
   iconDelay?: number;
 }) {
   return (
-    <div className="group relative flex-1">
+    <div className="group relative min-w-0 flex-1">
       <button
         type="button"
         onClick={onClick}
-        className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left transition-colors ${
-          active
-            ? "bg-white shadow-sm ring-1 ring-orange-200"
-            : "bg-white/70 hover:bg-white"
+        className={`flex w-full items-center gap-3 rounded-xl border border-black px-4 py-3 text-left transition-colors ${
+          active ? homeStyles.fieldActive : homeStyles.fieldIdle
         }`}
       >
         <span
@@ -267,18 +296,35 @@ function DestField({
   onClear?: () => void;
   children?: React.ReactNode;
 }) {
+  // Give the pin a little jump each time a place is freshly picked (null → set).
+  const [jump, setJump] = useState(false);
+  const prevValue = useRef<string | null>(value);
+  useEffect(() => {
+    if (!prevValue.current && value) {
+      setJump(true);
+      const t = setTimeout(() => setJump(false), 500);
+      prevValue.current = value;
+      return () => clearTimeout(t);
+    }
+    prevValue.current = value;
+  }, [value]);
+
   return (
-    <div className="group relative flex-1">
+    <div className="group relative min-w-0 flex-1">
       <div
-        className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 transition-colors ${
-          active ? "bg-white shadow-sm ring-1 ring-orange-200" : "bg-white/70 hover:bg-white"
+        className={`flex w-full items-center gap-3 rounded-xl border border-black px-4 py-3 transition-colors ${
+          active ? homeStyles.fieldActive : homeStyles.fieldIdle
         }`}
       >
         <span
           className="animate-icon-pop inline-flex shrink-0 text-zinc-400"
           style={{ animationDelay: "400ms" }}
         >
-          <MapPinIcon className="h-5 w-5" />
+          {/* Inner span carries the one-shot jump so it can't clash with the
+              entrance pop on the outer span. */}
+          <span className={`inline-flex ${jump ? "animate-pin-jump" : ""}`}>
+            <MapPinIcon className="h-5 w-5" />
+          </span>
         </span>
 
         {value ? (
@@ -298,7 +344,8 @@ function DestField({
             onChange={(e) => onQueryChange(e.target.value)}
             onFocus={onOpen}
             placeholder="Search destination"
-            className={`flex-1 bg-transparent text-sm text-zinc-800 outline-none placeholder:text-zinc-400 ${
+            size={1}
+            className={`w-full min-w-0 flex-1 bg-transparent text-sm text-zinc-800 outline-none placeholder:text-zinc-400 ${
               onClear ? "pr-6" : ""
             }`}
           />
@@ -348,5 +395,22 @@ function Dropdown({
     >
       {children}
     </div>
+  );
+}
+
+// Travellers field icon: a single person when the party is one, crossfading into
+// the two-person icon when it grows past one (and back again when it shrinks).
+// The CSS transition plays in reverse for free when `multiple` flips back.
+function TravelersIcon({ multiple }: { multiple: boolean }) {
+  const base = "absolute inset-0 h-5 w-5 transition-all duration-300 ease-out";
+  return (
+    <span className="relative inline-flex h-5 w-5">
+      <UserIcon
+        className={`${base} ${multiple ? "scale-75 opacity-0" : "scale-100 opacity-100"}`}
+      />
+      <UsersIcon
+        className={`${base} ${multiple ? "scale-100 opacity-100" : "scale-75 opacity-0"}`}
+      />
+    </span>
   );
 }

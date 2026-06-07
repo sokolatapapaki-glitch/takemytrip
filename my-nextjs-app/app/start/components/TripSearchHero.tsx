@@ -1,21 +1,18 @@
-import StartTripSearch from "./StartTripSearch";
+"use client";
 
-// The trip-search landing hero: a destination / dates / travelers search bar over
-// a soft white–orange–green glassmorphism backdrop. This is the app's homepage
-// (rendered at `/`) and is also kept reachable at `/start`. The two soft colour
-// blobs drift slowly so the glass surfaces have subtle motion to blur over.
+// The trip-search landing hero (homepage `/`, also at `/start`).
+//
+// Background: a plain white page with small, faded images drifting slowly at
+// random spots (HomeBackground). Paste your own image URLs in data/bgImages.
+
+import StartTripSearch from "./StartTripSearch";
+import HomeBackground from "./HomeBackground";
+
 export default function TripSearchHero() {
   return (
-    <section className="relative flex flex-1 flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-orange-50 via-white to-emerald-50 px-4 py-24">
-      {/* Soft colour blobs give the glass surfaces something to blur over. */}
-      <div
-        aria-hidden
-        className="animate-drift-slow pointer-events-none absolute -left-24 top-12 h-72 w-72 rounded-full bg-orange-200/40 blur-3xl"
-      />
-      <div
-        aria-hidden
-        className="animate-drift-slower pointer-events-none absolute -right-24 bottom-12 h-72 w-72 rounded-full bg-emerald-200/40 blur-3xl"
-      />
+    <section className="relative flex flex-1 flex-col items-center justify-center overflow-hidden bg-white px-4 py-24">
+      {/* Small faded images scattered across the white background. */}
+      <HomeBackground />
 
       <div className="relative z-10 w-full max-w-3xl">
         <header className="mb-8 text-center">

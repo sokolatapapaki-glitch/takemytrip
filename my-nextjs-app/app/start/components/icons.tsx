@@ -36,6 +36,15 @@ export const CalendarIcon = (p: IconProps) => (
   </Svg>
 );
 
+// Single traveller — shown when exactly one person is selected (animates into
+// the two-person UsersIcon as the party grows; see TravelersIcon).
+export const UserIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M19 20v-1.5a5 5 0 0 0-5-5h-4a5 5 0 0 0-5 5V20" />
+    <circle cx="12" cy="7" r="3.6" />
+  </Svg>
+);
+
 export const UsersIcon = (p: IconProps) => (
   <Svg {...p}>
     <path d="M16 19v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V19" />
