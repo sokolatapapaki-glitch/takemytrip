@@ -66,7 +66,7 @@ export function FilterSidebar({
   const [showCalendar, setShowCalendar] = useState(false);
 
   return (
-    <aside className="flex w-full shrink-0 flex-col gap-6 lg:sticky lg:top-8 lg:max-h-[calc(100vh-4rem)] lg:w-64 lg:self-start lg:overflow-y-auto lg:pr-2">
+    <aside className="flex w-full shrink-0 flex-col gap-6 rounded-3xl border border-white/80 bg-white/80 p-5 shadow-xl shadow-orange-900/10 ring-1 ring-black/5 backdrop-blur-md lg:sticky lg:top-8 lg:max-h-[calc(100vh-4rem)] lg:w-64 lg:self-start lg:overflow-y-auto [scrollbar-color:rgba(0,0,0,0.12)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/10 [&::-webkit-scrollbar-track]:bg-transparent">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold text-zinc-800 dark:text-zinc-100">
           Filters
