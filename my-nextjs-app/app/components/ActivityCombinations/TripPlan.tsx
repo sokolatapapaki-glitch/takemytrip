@@ -6,15 +6,17 @@ import type { Filter, Selection } from "./core/filters.functions";
 import type { Trip } from "./core/trip.functions";
 import { TripCard } from "./TripCard";
 
-// Pager over the states the planner kept: the best-scoring arrangement and its
-// ranked runner-ups (the next-best states the algorithm found, up to TOP_K). Note
-// the proof line's "N states" is the total the search EVALUATED — only the top
-// distinct ones by score are retained, and those are what this pager walks. Shows
-// ONE state card at a time with Previous / Next controls below it. Index 0 is the
-// best match (with its proof + description). Mounted with a key tied to the best
-// result, so a recomputation resets the pager back to the first state.
-function StatePager({
-  states,
+const ORDINALS = [
+  "", "1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th",
+];
+const ordinal = (n: number) => ORDINALS[n] ?? `${n}th`;
+
+// Progressive "show next-best trip" reveal. Each click reveals one more ranked
+// runner-up (2nd-best, 3rd-best, …), each rendered as its own collapsed TripCard.
+// Mounted with a key tied to the best trip, so switching the best trip resets the
+// reveal back to none.
+function TripAlternatives({
+  alternatives,
   exact,
   cityName,
   areaName,
@@ -25,7 +27,7 @@ function StatePager({
   area,
   filters,
 }: {
-  states: Trip[]; // [best, ...ranked runner-up states]
+  alternatives: Trip[];
   exact: boolean;
   cityName?: string;
   areaName?: string;
@@ -36,77 +38,55 @@ function StatePager({
   area: Area;
   filters: Filter[];
 }) {
-  const [index, setIndex] = useState(0);
-  const total = states.length;
-  const current = states[index];
-  const isBest = index === 0;
+  const [shown, setShown] = useState(0);
 
-  const pagerBtn =
-    "inline-flex items-center gap-1.5 rounded-full border border-black/[.08] px-4 py-2 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-50 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent dark:border-white/[.145] dark:text-zinc-300 dark:hover:bg-zinc-800";
+  if (alternatives.length === 0) {
+    return (
+      <p className="text-xs text-zinc-400">
+        {exact
+          ? "No alternative trips at this day count."
+          : "Alternative trips aren't available in fast mode (try fewer days)."}
+      </p>
+    );
+  }
 
   return (
-    <section className="flex flex-col gap-4">
-      {/* The state currently being viewed. Keyed by index so navigating remounts
-          the card and it opens expanded by default. */}
-      <TripCard
-        key={index}
-        trip={current}
-        title={`State ${index + 1}${isBest ? " · best match" : ""}`}
-        description={
-          isBest
-            ? "Every activity used once, assigned to maximize the average of the days' combo scores. Same scheduling rules as the combos above."
-            : undefined
-        }
-        showProof={isBest}
-        defaultOpen
-        cityName={cityName}
-        areaName={areaName}
-        selections={selections}
-        startHours={startHours}
-        endHours={endHours}
-        circulars={circulars}
-        area={area}
-        filters={filters}
-      />
-
-      {/* Previous / Next pager — step through the states the algorithm kept. */}
-      <div className="flex items-center justify-between gap-3">
+    <div className="flex flex-col gap-4">
+      {alternatives.slice(0, shown).map((alt, i) => (
+        <TripCard
+          key={i}
+          trip={alt}
+          title={`${ordinal(i + 2)}-best trip`}
+          showProof={false}
+          cityName={cityName}
+          areaName={areaName}
+          selections={selections}
+          startHours={startHours}
+          endHours={endHours}
+          circulars={circulars}
+          area={area}
+          filters={filters}
+        />
+      ))}
+      {shown < alternatives.length ? (
         <button
           type="button"
-          onClick={() => setIndex((i) => Math.max(0, i - 1))}
-          disabled={index === 0}
-          className={pagerBtn}
+          onClick={() => setShown((s) => s + 1)}
+          className="self-start rounded-full bg-orange-500 px-4 py-2 text-sm font-medium text-white shadow-sm shadow-orange-900/10 transition-colors hover:bg-orange-600"
         >
-          ← Previous state
+          Show {ordinal(shown + 2)}-best trip
         </button>
-        <span className="text-xs font-medium text-zinc-400 dark:text-zinc-500">
-          State {index + 1} of {total}
-        </span>
-        <button
-          type="button"
-          onClick={() => setIndex((i) => Math.min(total - 1, i + 1))}
-          disabled={index >= total - 1}
-          className={pagerBtn}
-        >
-          Next state →
-        </button>
-      </div>
-
-      {total === 1 ? (
-        <p className="text-center text-xs text-zinc-400">
-          {exact
-            ? "No other states at this day count."
-            : "More states aren't available in fast mode (try fewer days)."}
-        </p>
-      ) : null}
-    </section>
+      ) : (
+        <p className="text-xs text-zinc-400">No more trips to show.</p>
+      )}
+    </div>
   );
 }
 
 // The multi-day trip: each pooled activity used once, assigned so the AVERAGE of
-// the days' combo scores is the highest possible. The best-scoring state and its
-// ranked runner-ups are browsed one at a time with the Previous / Next pager
-// below the card.
+// the days' combo scores is the highest possible. The best trip is shown expanded
+// by default; below it, a button reveals the next-best trips one at a time (each
+// a collapsed TripCard).
 export function TripPlan({
   trip,
   area,
@@ -126,26 +106,43 @@ export function TripPlan({
   endHours: number[]; // per day slot
   circulars: boolean[]; // per day slot — circular (loop) trip toggle
 }) {
-  // Identity of the current best result — when it changes, remount the pager so
-  // it resets to the first (best) state.
+  // Identity of the current best trip — when it changes, remount the reveal so it
+  // resets to showing none.
   const tripKey =
     trip.days.map((d) => d.activities.map((a) => a.name).join("·")).join("|") +
     ":" +
     trip.score.toFixed(3);
 
   return (
-    <StatePager
-      key={tripKey}
-      states={[trip, ...trip.alternatives]}
-      exact={trip.exact}
-      cityName={cityName}
-      areaName={area.name}
-      selections={selections}
-      startHours={startHours}
-      endHours={endHours}
-      circulars={circulars}
-      area={area}
-      filters={filters}
-    />
+    <section className="flex flex-col gap-4">
+      <TripCard
+        trip={trip}
+        title={`Best ${trip.days.length}-day trip`}
+        description="Every activity used once, assigned to maximize the average of the days' combo scores. Same scheduling rules as the combos above."
+        showProof
+        defaultOpen
+        cityName={cityName}
+        areaName={area.name}
+        selections={selections}
+        startHours={startHours}
+        endHours={endHours}
+        circulars={circulars}
+        area={area}
+        filters={filters}
+      />
+      <TripAlternatives
+        key={tripKey}
+        alternatives={trip.alternatives}
+        exact={trip.exact}
+        cityName={cityName}
+        areaName={area.name}
+        selections={selections}
+        startHours={startHours}
+        endHours={endHours}
+        circulars={circulars}
+        area={area}
+        filters={filters}
+      />
+    </section>
   );
 }
