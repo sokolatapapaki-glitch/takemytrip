@@ -45,10 +45,10 @@ export function FilterDropdown({
         ref={btnRef}
         type="button"
         onClick={onToggle}
-        className={`flex items-center gap-1 whitespace-nowrap rounded-full border px-3 py-1 text-xs transition-colors ${
+        className={`flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium transition-colors ${
           active || open
-            ? "border-orange-300 bg-orange-50 text-orange-700"
-            : "border-zinc-200 bg-white/80 text-zinc-600 hover:bg-white"
+            ? "bg-orange-500 text-white shadow-sm shadow-orange-900/10"
+            : "bg-white/80 text-zinc-600 hover:bg-white"
         }`}
       >
         <span>{summary ? `${label}: ${summary}` : label}</span>

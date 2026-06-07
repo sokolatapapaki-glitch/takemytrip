@@ -5,11 +5,11 @@ import { usePathname } from "next/navigation";
 import { useApp } from "../context/AppContext";
 
 // Right-side navigation buttons (Sitemap/Navbar note). Each navigates to the page
-// named by its label. Only Map is live for now; Cities and My trips are shown as
-// disabled placeholders until those pages exist.
+// named by its label. Map and Cities are live; My trips is a disabled placeholder
+// until that page exists.
 const NAV_ITEMS = [
   { label: "Map", href: "/map", enabled: true },
-  { label: "Cities", href: "/cities", enabled: false },
+  { label: "Cities", href: "/cities", enabled: true },
   { label: "My trips", href: "/my-trips", enabled: false },
 ] as const;
 

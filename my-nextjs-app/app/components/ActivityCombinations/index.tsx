@@ -396,6 +396,7 @@ export default function ActivityCombinations() {
         <TripPlan
           trip={trip}
           area={area}
+          cityName={city.name}
           selections={tripSelections}
           startHours={tripStartHours}
           endHours={tripEndHours}

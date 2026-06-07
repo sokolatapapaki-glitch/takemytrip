@@ -63,10 +63,18 @@ export function DayItinerary({
   plan,
   day,
   note,
+  showSeeMore = false,
+  connectors = false,
 }: {
   plan: ComboSchedule;
   day: number;
   note?: string;
+  // Opt-in (Trip component only): render a placeholder "See more" button on each
+  // real activity row. Default off, so the combos list is unchanged.
+  showSeeMore?: boolean;
+  // Opt-in (Trip component only): draw a timeline rail (a dot per stop joined by a
+  // vertical line) on the left, like the Penpot board. Default off.
+  connectors?: boolean;
 }) {
   return (
     <div className="flex flex-col gap-1">
@@ -85,9 +93,11 @@ export function DayItinerary({
           directly-adjacent activities we show the straight-line distance. When a
           lunch slot sits between two activities, we bridge it: the distance shown
           is between the activity before lunch and the one after it. */}
-      <ol className="flex flex-col gap-0.5">
+      <ol className={`flex flex-col ${connectors ? "gap-0" : "gap-0.5"}`}>
         {plan.items.map((item, i) => {
           const next = plan.items[i + 1];
+          const isFirst = i === 0;
+          const isLast = i === plan.items.length - 1;
           let leg: { km: number; label?: string } | null = null;
           if (next && !item.lunch && !next.lunch) {
             // Two directly-adjacent activities.
@@ -105,7 +115,33 @@ export function DayItinerary({
           }
           return (
             <Fragment key={item.name}>
-              <li className="flex items-baseline gap-3 text-zinc-800 dark:text-zinc-100">
+              <li
+                className={`flex gap-3 text-zinc-800 dark:text-zinc-100 ${
+                  connectors ? "items-start" : "items-baseline"
+                }`}
+              >
+                {connectors ? (
+                  // Timeline rail: a dot for this stop, joined to the stops above
+                  // and below by a vertical line (trimmed at the first/last stop).
+                  <span
+                    className="relative flex w-4 shrink-0 self-stretch justify-center"
+                    aria-hidden
+                  >
+                    {!isFirst ? (
+                      <span className="absolute left-1/2 top-0 h-3 w-px -translate-x-1/2 bg-orange-200" />
+                    ) : null}
+                    {!isLast ? (
+                      <span className="absolute bottom-0 left-1/2 top-3 w-px -translate-x-1/2 bg-orange-200" />
+                    ) : null}
+                    <span
+                      className={`relative z-10 mt-[7px] h-2.5 w-2.5 rounded-full border-2 ${
+                        item.lunch
+                          ? "border-zinc-300 bg-white"
+                          : "border-orange-400 bg-white"
+                      }`}
+                    />
+                  </span>
+                ) : null}
                 <span
                   className={`w-28 shrink-0 font-mono text-xs ${
                     item.closed
@@ -122,10 +158,30 @@ export function DayItinerary({
                   activity={ACTIVITY_BY_NAME.get(item.name)}
                   day={day}
                 />
+                {showSeeMore && !item.lunch && ACTIVITY_BY_NAME.has(item.name) ? (
+                  <button
+                    type="button"
+                    aria-disabled="true"
+                    title="Coming soon"
+                    className="ml-auto shrink-0 rounded-full bg-orange-500 px-2.5 py-0.5 text-[11px] font-medium text-white shadow-sm shadow-orange-900/10 transition-colors hover:bg-orange-600"
+                  >
+                    See more
+                  </button>
+                ) : null}
               </li>
               {leg != null ? (
                 <li className="flex items-baseline gap-3 text-xs text-zinc-400 dark:text-zinc-500">
-                  <span className="w-28 shrink-0" />
+                  {connectors ? (
+                    // The connecting line continues through the distance leg.
+                    <span
+                      className="relative flex w-4 shrink-0 self-stretch justify-center"
+                      aria-hidden
+                    >
+                      <span className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-orange-200" />
+                    </span>
+                  ) : (
+                    <span className="w-28 shrink-0" />
+                  )}
                   <span>
                     ↓ {formatDistance(leg.km)}
                     {leg.label ? (
