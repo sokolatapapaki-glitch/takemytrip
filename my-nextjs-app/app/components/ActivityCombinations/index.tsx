@@ -60,7 +60,7 @@ export default function ActivityCombinations() {
   // The selected city. Its catalogue + centre drive the whole planner. Switching
   // city resets everything to defaults (see changeCity), so the active city is
   // stable across any one calculation.
-  const [city, setCity] = useState<City>(initialCity);
+  const [city] = useState<City>(initialCity);
   // The selected start AREA within the city (one base for the whole trip). Its
   // coords are the route anchor; defaults to the city's "Centre" area.
   const [area, setArea] = useState<Area>(
@@ -202,28 +202,55 @@ export default function ActivityCombinations() {
     });
   };
 
+  // SIDEBAR handlers — edits here are the GLOBAL DEFAULT: the change is applied to
+  // every day slot. Per-day overrides are made with the active-day handlers above
+  // (used only by the Advanced Filters modal). Toggles base their new state on
+  // slot 0, which is the value the sidebar displays.
+  const chooseAll = (filterIndex: number, optionIndex: number) => {
+    setSelections((prev) => {
+      const base = prev[0] ?? {};
+      let nextOpts: number[];
+      if (filters[filterIndex]?.multi) {
+        const current = base[filterIndex] ?? [];
+        nextOpts = current.includes(optionIndex)
+          ? current.filter((i) => i !== optionIndex)
+          : [...current, optionIndex];
+      } else {
+        nextOpts = [optionIndex];
+      }
+      return prev.map((sel) => ({ ...sel, [filterIndex]: nextOpts }));
+    });
+  };
+
+  const setAllStartHour = (hour: number) => {
+    setStartHours((prev) => prev.map(() => hour));
+  };
+
+  const toggleAllCircular = () => {
+    setCirculars((prev) => {
+      const next = !prev[0];
+      return prev.map(() => next);
+    });
+  };
+
+  const toggleAllRequired = (name: string) => {
+    setRequireds((prev) => {
+      const add = !prev[0].has(name);
+      return prev.map((set) => {
+        const copy = new Set(set);
+        if (add) copy.add(name);
+        else copy.delete(name);
+        return copy;
+      });
+    });
+  };
+
   const changeActiveDay = (slot: number) => setActiveDay(slot);
 
   const changeRange = (start: Date, end: Date | null) => {
     setRange({ start, end });
     const cnt = Math.min((end ? diffDays(start, end) : 0) + 1, MAX_DAYS);
     if (activeDay > cnt - 1) setActiveDay(cnt - 1);
-  };
-
-  // Switching city is a clean slate: point the engine at the new catalogue and
-  // reset every per-day setting to defaults.
-  const changeCity = (next: City) => {
-    if (next.id === city.id) return;
-    const nextArea = next.areas[0]; // Centre
-    setActiveCity(next, nextArea.coords);
-    setCity(next);
-    setArea(nextArea);
-    setSelections(Array.from({ length: MAX_DAYS }, () => defaultSelection(filters)));
-    setStartHours(Array.from({ length: MAX_DAYS }, () => DEFAULT_START_HOUR));
-    setRequireds(Array.from({ length: MAX_DAYS }, () => new Set<string>()));
-    setCirculars(Array.from({ length: MAX_DAYS }, () => false));
-    setRange({ start: today, end: addDays(today, 2) });
-    setActiveDay(0);
   };
 
   // Picking a start area re-anchors the distance score (and the circular return)
@@ -235,14 +262,14 @@ export default function ActivityCombinations() {
     <div className="mx-auto flex w-full max-w-5xl flex-col gap-8 p-8 lg:flex-row">
       <FilterSidebar
         filters={filters}
-        selection={activeSelection}
-        onChoose={choose}
-        required={activeRequired}
-        onToggleRequired={toggleRequired}
-        startHour={activeStartHour}
-        onStartHourChange={setActiveStartHour}
-        circular={activeCircular}
-        onToggleCircular={toggleActiveCircular}
+        selection={selections[0]}
+        onChoose={chooseAll}
+        required={requireds[0]}
+        onToggleRequired={toggleAllRequired}
+        startHour={startHours[0]}
+        onStartHourChange={setAllStartHour}
+        circular={circulars[0]}
+        onToggleCircular={toggleAllCircular}
         activities={city.activities}
         areas={city.areas}
         area={area}
@@ -254,39 +281,9 @@ export default function ActivityCombinations() {
         minDate={today}
         maxDays={MAX_DAYS}
         dates={dates}
-        activeDay={activeSlot}
-        onActiveDayChange={changeActiveDay}
         onOpenAdvanced={() => setShowAdvanced(true)}
       />
       <div className="flex min-w-0 flex-1 flex-col gap-8">
-        {/* Destination selector — switches the whole planner's catalogue +
-            anchor. Grouped into cities and regions. */}
-        <div className="flex items-center gap-2">
-          <label htmlFor="city-select" className="text-sm font-medium text-zinc-700 dark:text-zinc-200">
-            Destination
-          </label>
-          <select
-            id="city-select"
-            value={city.id}
-            onChange={(e) => {
-              const next = CITIES.find((c) => c.id === e.target.value);
-              if (next) changeCity(next);
-            }}
-            className="rounded-lg border border-black/[.08] bg-white px-3 py-1.5 text-sm font-medium text-zinc-700 dark:border-white/[.145] dark:bg-zinc-900 dark:text-zinc-200"
-          >
-            <optgroup label="Cities">
-              {CITIES.filter((c) => c.kind === "city").map((c) => (
-                <option key={c.id} value={c.id}>{c.name}</option>
-              ))}
-            </optgroup>
-            <optgroup label="Regions">
-              {CITIES.filter((c) => c.kind === "region").map((c) => (
-                <option key={c.id} value={c.id}>{c.name}</option>
-              ))}
-            </optgroup>
-          </select>
-        </div>
-
         {city.activities.length === 0 ? (
           <p className="rounded-lg border border-amber-300/60 bg-amber-50 px-4 py-3 text-sm text-amber-700 dark:border-amber-400/30 dark:bg-amber-950/30 dark:text-amber-300">
             No activities yet for {city.name}. You can still pick a start{" "}

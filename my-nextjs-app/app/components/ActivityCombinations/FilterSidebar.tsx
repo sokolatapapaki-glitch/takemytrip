@@ -13,9 +13,10 @@ import { PerDayFilters } from "./PerDayFilters";
 // Short label for a chosen date, e.g. "Wed 3".
 const dateLabel = (d: Date) => `${DAYS[mondayIndex(d)]} ${d.getDate()}`;
 
-// Filter sidebar — the date picker (collapsed behind "Change dates"), the per-day
-// filter tabs + their controls, and a button to open the roomier advanced
-// (per-day) filters modal.
+// Filter sidebar — the date picker (collapsed behind "Change dates"), the start
+// area, and the filter controls. Filters set here are the DEFAULT applied to
+// EVERY day; per-day overrides are made in the advanced (per-day) filters modal,
+// opened from the button at the bottom.
 export function FilterSidebar({
   filters,
   selection,
@@ -37,8 +38,6 @@ export function FilterSidebar({
   minDate,
   maxDays,
   dates,
-  activeDay,
-  onActiveDayChange,
   onOpenAdvanced,
 }: {
   filters: Filter[];
@@ -60,9 +59,7 @@ export function FilterSidebar({
   onRangeChange: (start: Date, end: Date | null) => void;
   minDate?: Date;
   maxDays: number;
-  dates: Date[]; // the chosen dates, in order
-  activeDay: number; // which day tab is selected (0..dates.length-1)
-  onActiveDayChange: (slot: number) => void;
+  dates: Date[]; // the chosen dates, in order (for the date summary)
   onOpenAdvanced: () => void; // open the advanced (per-day) filters modal
 }) {
   // The calendar is hidden by default and revealed by "Change dates".
@@ -144,40 +141,17 @@ export function FilterSidebar({
         </select>
       </div>
 
-      {/* Day tabs — one per chosen date. The active tab's filters/start time/
-          required are what the controls below edit, and the active day ranks the
-          combos list. */}
-      <div className="flex flex-col gap-2 border-t border-black/[.08] pt-4 dark:border-white/[.145]">
-        <h3 className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
-          Per-day filters
-        </h3>
-        <div className="flex flex-wrap gap-1.5">
-          {dates.map((d, slot) => (
-            <button
-              key={slot}
-              type="button"
-              onClick={() => onActiveDayChange(slot)}
-              aria-pressed={activeDay === slot}
-              className={`rounded-lg border px-3 py-1.5 text-sm transition-colors ${activeDay === slot
-                ? "border-blue-600 bg-blue-50 text-blue-700 dark:border-blue-400 dark:bg-blue-950/50 dark:text-blue-300"
-                : "border-black/[.08] text-zinc-700 hover:bg-zinc-50 dark:border-white/[.145] dark:text-zinc-300 dark:hover:bg-zinc-800"
-                }`}
-            >
-              {dateLabel(d)}
-            </button>
-          ))}
-        </div>
+      {/* Filters set here apply to ALL days by default; override a specific day in
+          the advanced (per-day) modal opened below. */}
+      <div className="border-t border-black/[.08] pt-4 dark:border-white/[.145]">
         <p className="text-xs text-zinc-400 dark:text-zinc-500">
-          Editing{" "}
-          <span className="font-medium text-zinc-600 dark:text-zinc-300">
-            {dates[activeDay] ? dateLabel(dates[activeDay]) : "—"}
-          </span>{" "}
-          {activeDay === 0 ? "(first day)" : `(day ${activeDay + 1})`} — applies to this
-          day in the combos and the trip.
+          These filters apply to all days. Override a specific day in Advanced
+          Filters.
         </p>
       </div>
 
-      {/* The active day's controls (shared with the advanced modal). */}
+      {/* The filter controls (shared with the advanced modal). Edits here are
+          broadcast to every day by the parent. */}
       <PerDayFilters
         filters={filters}
         selection={selection}
@@ -189,7 +163,6 @@ export function FilterSidebar({
         circular={circular}
         onToggleCircular={onToggleCircular}
         activities={activities}
-        dayLabel={dates[activeDay] ? dateLabel(dates[activeDay]) : undefined}
       />
 
       {/* Open the same controls, per day, in a roomier modal with day tabs. */}
