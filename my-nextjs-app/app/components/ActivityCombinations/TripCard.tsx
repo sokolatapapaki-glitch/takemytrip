@@ -128,7 +128,7 @@ export function TripCard({
   return (
     <article className={cardClass}>
       {/* Header — same summary, with a collapse control. */}
-      <header className="flex items-start gap-4 border-b border-white/60 p-4">
+      <header className="flex items-start gap-4 border-b border-black/[.08] bg-white/55 p-4">
         <div className={`${imageClass} h-16 w-20`} aria-hidden>
           <FaRoute className="h-7 w-7 drop-shadow" />
         </div>
