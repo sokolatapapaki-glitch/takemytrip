@@ -163,7 +163,7 @@ export function DayItinerary({
                     type="button"
                     aria-disabled="true"
                     title="Coming soon"
-                    className="ml-auto shrink-0 rounded-full bg-orange-500 px-2.5 py-0.5 text-[11px] font-medium text-white shadow-sm shadow-orange-900/10 transition-colors hover:bg-orange-600"
+                    className="ml-auto shrink-0 text-[11px] font-medium text-orange-600 underline-offset-2 transition-colors hover:underline"
                   >
                     See more
                   </button>
