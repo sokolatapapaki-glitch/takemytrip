@@ -10,6 +10,7 @@ import { scheduleCombo, scheduleEndHour, type ComboSchedule } from "./core/sched
 import { ComboDashboard } from "./ComboDashboard";
 import { ComboMap } from "./ComboMap";
 import { ScheduledName } from "./ScheduledName";
+import { buttonStyles } from "@/app/components/ui/buttonStyles";
 
 // Look up an activity's map location by name (scheduled items carry only names).
 // Built from EVERY city's catalogue (names are unique across cities), so the
@@ -163,7 +164,7 @@ export function DayItinerary({
                     type="button"
                     aria-disabled="true"
                     title="Coming soon"
-                    className="ml-auto shrink-0 cursor-not-allowed text-[11px] font-medium text-orange-600 underline-offset-2 transition-colors hover:underline dark:text-orange-400"
+                    className={`ml-auto shrink-0 cursor-not-allowed ${buttonStyles.common}`}
                   >
                     See more
                   </button>

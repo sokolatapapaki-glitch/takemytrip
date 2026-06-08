@@ -4,6 +4,7 @@ import { useState } from "react";
 import { DAYS } from "./core/activities.data";
 import { openingHoursFor, type Activity } from "./core/activities.functions";
 import type { ScheduledItem } from "./core/schedule.functions";
+import { buttonStyles } from "@/app/components/ui/buttonStyles";
 
 // One scheduled row's label: the activity name plus, for real activities, a
 // toggle that reveals its opening hours for every day of the week (the trip's
@@ -35,7 +36,7 @@ export function ScheduledName({
             onClick={() => setOpen((o) => !o)}
             aria-expanded={open}
             title="Opening hours by day"
-            className="shrink-0 rounded border border-black/[.08] px-1.5 py-0.5 text-[10px] font-medium text-zinc-500 transition-colors hover:bg-zinc-50 dark:border-white/[.145] dark:text-zinc-400 dark:hover:bg-zinc-800"
+            className={`shrink-0 ${buttonStyles.underline}`}
           >
             {open ? "Hours ▲" : "Hours ▼"}
           </button>

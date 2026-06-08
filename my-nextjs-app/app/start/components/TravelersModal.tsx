@@ -68,7 +68,7 @@ export function TravelersModal({
   };
 
   return (
-    <div className="w-72 p-4">
+    <div className="w-full p-4 sm:w-72">
       <Stepper
         label="Adults"
         caption="Ages 18+"

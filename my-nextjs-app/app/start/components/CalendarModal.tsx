@@ -70,7 +70,7 @@ export function CalendarModal({
   }
 
   return (
-    <div className="w-80 p-3">
+    <div className="w-full p-3 sm:w-80">
       <div className="mb-2 flex items-center justify-between">
         <button
           type="button"

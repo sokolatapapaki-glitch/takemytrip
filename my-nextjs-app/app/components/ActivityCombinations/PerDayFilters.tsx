@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import { formatTime, type Activity } from "./core/activities.functions";
 import { Filter, Selection, isTripLevel } from "./core/filters.functions";
 import { RequiredActivities } from "./RequiredActivities";
+import { CheckRow } from "./CheckRow";
 
 // Hours the day can start at (whole hours, 06:00–18:00).
 const START_HOUR_CHOICES = Array.from({ length: 13 }, (_, i) => 6 + i);
@@ -131,15 +132,28 @@ export function PerDayFilters({
                 </p>
               </div>
               <div className="flex flex-col gap-1.5">
-                {filter.options.map((opt, i) => (
-                  <FilterButton
-                    key={opt.name}
-                    active={(selection[fi] ?? []).includes(i)}
-                    onClick={() => onChoose(fi, i)}
-                  >
-                    {opt.name}
-                  </FilterButton>
-                ))}
+                {filter.options.map((opt, i) => {
+                  const active = (selection[fi] ?? []).includes(i);
+                  // The Vibe filter reads as a multi-select tick list (CheckRow);
+                  // all other groups keep the bordered FilterButton.
+                  return filter.name === "Vibe" ? (
+                    <CheckRow
+                      key={opt.name}
+                      active={active}
+                      onClick={() => onChoose(fi, i)}
+                    >
+                      {opt.name}
+                    </CheckRow>
+                  ) : (
+                    <FilterButton
+                      key={opt.name}
+                      active={active}
+                      onClick={() => onChoose(fi, i)}
+                    >
+                      {opt.name}
+                    </FilterButton>
+                  );
+                })}
               </div>
             </div>
             {filter.name === "Cost budget" ? circularBlock : null}

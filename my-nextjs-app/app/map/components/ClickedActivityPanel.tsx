@@ -1,5 +1,6 @@
+import { FaStar } from "react-icons/fa6";
 import type { Activity } from "@/app/components/ActivityCombinations/core/activities.functions";
-import { bestVibe, cityOf, emojiOf, starsOf } from "./mapData";
+import { bestVibe, cityOf, iconOf, starsOf } from "./mapData";
 import { XIcon } from "@/app/start/components/icons";
 
 // The detailed activity card shown below the search input when an activity is
@@ -14,6 +15,7 @@ export function ClickedActivityPanel({
   onClose: () => void;
 }) {
   const city = cityOf(activity);
+  const Icon = iconOf(activity);
   return (
     <div className="animate-pop-in relative mt-2 rounded-xl border border-white/60 bg-white/80 p-3 shadow-lg shadow-orange-900/5 backdrop-blur">
       <button
@@ -25,8 +27,8 @@ export function ClickedActivityPanel({
         <XIcon className="h-4 w-4" />
       </button>
 
-      <div className="flex h-48 items-center justify-center rounded-lg bg-gradient-to-br from-orange-100 to-emerald-100 text-6xl">
-        {emojiOf(activity)}
+      <div className="flex h-48 items-center justify-center rounded-lg bg-gradient-to-br from-orange-100 to-emerald-100 text-green-500">
+        <Icon className="h-16 w-16" />
       </div>
 
       <h3 className="mt-3 pr-6 text-lg font-semibold leading-tight text-zinc-800">
@@ -35,7 +37,9 @@ export function ClickedActivityPanel({
       </h3>
 
       <div className="mt-1.5 flex items-center gap-3 text-sm text-zinc-500">
-        <span>★ {starsOf(activity).toFixed(1)}/5</span>
+        <span className="flex items-center gap-1">
+          <FaStar className="text-yellow-400" /> {starsOf(activity).toFixed(1)}/5
+        </span>
         <span>{activity.cost === 0 ? "Free" : `€${activity.cost}`}</span>
         <span>{activity.hours}h</span>
       </div>

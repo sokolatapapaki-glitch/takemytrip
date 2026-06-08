@@ -9,6 +9,7 @@ import { Filter, Selection } from "./core/filters.functions";
 import { mondayIndex } from "./core/calendar.functions";
 import { Calendar } from "./Calendar";
 import { PerDayFilters } from "./PerDayFilters";
+import { buttonStyles } from "@/app/components/ui/buttonStyles";
 
 // Short label for a chosen date, e.g. "Wed 3".
 const dateLabel = (d: Date) => `${DAYS[mondayIndex(d)]} ${d.getDate()}`;
@@ -73,7 +74,7 @@ export function FilterSidebar({
         </h2>
         <Link
           href="/filters"
-          className="rounded-lg border border-black/[.08] px-3 py-1.5 text-xs font-medium text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-white/[.145] dark:text-zinc-300 dark:hover:bg-zinc-800"
+          className="relative text-xs font-medium text-zinc-700 after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-zinc-700 after:transition-transform after:duration-300 after:ease-out after:content-[''] hover:after:scale-x-100 dark:text-zinc-300 dark:after:bg-zinc-300"
         >
           Edit filters
         </Link>
@@ -98,7 +99,7 @@ export function FilterSidebar({
             type="button"
             onClick={() => setShowCalendar((s) => !s)}
             aria-expanded={showCalendar}
-            className="shrink-0 rounded-lg border border-black/[.08] px-3 py-1.5 text-xs font-medium text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-white/[.145] dark:text-zinc-300 dark:hover:bg-zinc-800"
+            className="relative shrink-0 text-xs font-medium text-zinc-700 after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-zinc-700 after:transition-transform after:duration-300 after:ease-out after:content-[''] hover:after:scale-x-100 dark:text-zinc-300 dark:after:bg-zinc-300"
           >
             {showCalendar ? "Done" : "Change dates"}
           </button>
@@ -169,7 +170,7 @@ export function FilterSidebar({
       <button
         type="button"
         onClick={onOpenAdvanced}
-        className="rounded-lg border border-black/[.08] px-4 py-2 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-white/[.145] dark:text-zinc-300 dark:hover:bg-zinc-800"
+        className={buttonStyles.secondary}
       >
         Advanced Filters (per day)
       </button>

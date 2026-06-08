@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { ActivityCard } from "@/app/activities/components/ActivityCard";
 import type { Activity } from "./core/activities.functions";
+import { buttonStyles } from "@/app/components/ui/buttonStyles";
 
 // How many activity cards to show before the "See more" toggle reveals the rest.
 const COLLAPSED_COUNT = 3;
@@ -18,10 +19,14 @@ export function ActivityList({
   day,
   activities,
   query = "",
+  selected,
+  onToggleSelect,
 }: {
   day: number;
   activities: Activity[];
   query?: string;
+  selected?: Set<string>;
+  onToggleSelect?: (activity: Activity) => void;
 }) {
   const [expanded, setExpanded] = useState(false);
 
@@ -55,7 +60,13 @@ export function ActivityList({
       {visible.length > 0 && (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {visible.map((activity, i) => (
-            <ActivityCard key={activity.name} activity={activity} index={i} />
+            <ActivityCard
+              key={activity.name}
+              activity={activity}
+              index={i}
+              selected={selected?.has(activity.name) ?? false}
+              onToggleSelect={onToggleSelect}
+            />
           ))}
         </div>
       )}
@@ -65,7 +76,7 @@ export function ActivityList({
           type="button"
           onClick={() => setExpanded((v) => !v)}
           aria-expanded={expanded}
-          className="mx-auto text-sm font-medium text-orange-600 underline-offset-2 transition-colors hover:underline dark:text-orange-400"
+          className={`mx-auto ${buttonStyles.underline}`}
         >
           {expanded ? "See less" : `See more (${hiddenCount})`}
         </button>

@@ -3,6 +3,7 @@ import { FaEuroSign, FaLocationDot, FaPlane } from "react-icons/fa6";
 import type { City } from "@/app/components/ActivityCombinations/core/cities.data";
 import {
   cityDescription,
+  cityImage,
   cityPriceTier,
   flightTimeFromAthens,
 } from "./citiesData";
@@ -13,14 +14,26 @@ import {
 export function CityCard({ city, index = 0 }: { city: City; index?: number }) {
   const tier = cityPriceTier(city);
   const flight = flightTimeFromAthens(city);
+  const image = cityImage(city);
   return (
     <div
       style={{ animationDelay: `${Math.min(index * 40, 300)}ms` }}
       className="animate-card-pop flex flex-col overflow-hidden rounded-3xl border border-white/60 bg-white/80 shadow-lg shadow-orange-900/5 backdrop-blur-md transition-shadow hover:shadow-xl hover:shadow-orange-900/10"
     >
-      {/* Image placeholder (no city image yet) — vivid gradient + pin icon. */}
-      <div className="relative flex h-40 items-center justify-center bg-gradient-to-br from-orange-400 via-amber-300 to-emerald-400">
-        <FaLocationDot className="h-10 w-10 text-white drop-shadow" />
+      {/* City photo over a gradient/pin fallback (shown while loading or if the
+          city has no image). */}
+      <div className="relative flex h-40 items-center justify-center overflow-hidden bg-gradient-to-br from-orange-400 via-amber-300 to-emerald-400">
+        {image ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={image}
+            alt={`${city.name}, ${city.country}`}
+            loading="lazy"
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          <FaLocationDot className="h-10 w-10 text-white drop-shadow" />
+        )}
         {city.activities.length > 0 && (
           <span className="absolute right-3 top-3 rounded-full bg-white/85 px-2.5 py-1 text-xs font-medium text-zinc-700 backdrop-blur">
             {city.activities.length} activities

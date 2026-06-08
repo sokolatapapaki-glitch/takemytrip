@@ -4,6 +4,7 @@ import {
   type Activity,
 } from "@/app/components/ActivityCombinations/core/activities.functions";
 import { bestVibe, starsOf } from "@/app/map/components/mapData";
+import { buttonStyles } from "@/app/components/ui/buttonStyles";
 import { VIBE_GRADIENT, VIBE_ICONS } from "./vibeStyle";
 
 // A single activity tile from the Penpot "Activities in list" board: a select
@@ -70,7 +71,7 @@ export function ActivityCard({
           type="button"
           aria-disabled="true"
           title="Coming soon"
-          className="mt-auto w-full rounded-3xl bg-orange-500 px-4 py-2.5 text-sm font-medium text-white shadow-sm shadow-orange-900/10 transition-colors hover:bg-orange-600"
+          className={`mt-auto w-full ${buttonStyles.secondary}`}
         >
           See more
         </button>

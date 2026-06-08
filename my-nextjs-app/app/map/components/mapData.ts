@@ -15,13 +15,15 @@ import {
   type Activity,
   type VibeKey,
 } from "@/app/components/ActivityCombinations/core/activities.functions";
+import type { IconType } from "react-icons";
+import { FaCompass, FaLandmark, FaLeaf, FaUtensils } from "react-icons/fa6";
 
 // The 4 "Vibe" buttons on the map = the 4 activity vibe dimensions.
-export const VIBES: { key: VibeKey; label: string; emoji: string }[] = [
-  { key: "cultural", label: "Cultural", emoji: "🏛️" },
-  { key: "foodie", label: "Foodie", emoji: "🍽️" },
-  { key: "adventurous", label: "Adventurous", emoji: "🧭" },
-  { key: "relaxing", label: "Relaxing", emoji: "🌿" },
+export const VIBES: { key: VibeKey; label: string; Icon: IconType }[] = [
+  { key: "cultural", label: "Cultural", Icon: FaLandmark },
+  { key: "foodie", label: "Foodie", Icon: FaUtensils },
+  { key: "adventurous", label: "Adventurous", Icon: FaCompass },
+  { key: "relaxing", label: "Relaxing", Icon: FaLeaf },
 ];
 
 // Activity → its city. Activity names are unique across the app, so a flat map is
@@ -43,7 +45,7 @@ export const starsOf = (a: Activity): number => Math.round((a.priority / 2) * 10
 // The activity's strongest vibe dimension ("Best for:" + marker glyph).
 export const bestVibe = (a: Activity) =>
   VIBES.reduce((best, v) => (a[v.key] > a[best.key] ? v : best), VIBES[0]);
-export const emojiOf = (a: Activity): string => bestVibe(a).emoji;
+export const iconOf = (a: Activity): IconType => bestVibe(a).Icon;
 
 export type SortKey = "priority" | "price" | "vibe" | "distance";
 export const SORT_LABELS: Record<SortKey, string> = {

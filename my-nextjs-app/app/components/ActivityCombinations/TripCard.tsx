@@ -9,6 +9,7 @@ import type { Filter, Selection } from "./core/filters.functions";
 import type { LeftoverReason, Trip } from "./core/trip.functions";
 import { DayItinerary } from "./ComboResults";
 import { TripDashboard } from "./TripDashboard";
+import { buttonStyles } from "@/app/components/ui/buttonStyles";
 
 function leftoverText(reason: LeftoverReason): string {
   return reason === "closed"
@@ -82,81 +83,56 @@ export function TripCard({
     "animate-card-pop overflow-hidden rounded-3xl border border-white/80 bg-white/80 shadow-xl shadow-orange-900/10 ring-1 ring-black/5 backdrop-blur-md";
   const imageClass =
     "flex shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-400 via-rose-400 to-fuchsia-500 text-white";
-  // Borderless, intense, white-text toggle (matches the brighter button style).
-  const toggleBtn =
-    "inline-flex items-center gap-1.5 rounded-full bg-orange-500 px-3 py-1.5 text-xs font-medium text-white shadow-sm shadow-orange-900/10 transition-colors hover:bg-orange-600";
-  const scoreChip = (
-    <span className="rounded-full bg-emerald-500 px-2 py-0.5 font-mono text-xs font-medium text-white">
-      score {trip.score.toFixed(2)}
-    </span>
+  // Common button (see buttonStyles.ts) + the inline-flex layout for its arrow.
+  const toggleBtn = `inline-flex items-center gap-1.5 ${buttonStyles.common}`;
+  // The header looks identical whether the card is open or closed; only the
+  // toggle's label/arrow flips. (The divider below it shows only when a body
+  // follows, i.e. when open.)
+  const header = (
+    <header
+      className={`flex items-start gap-4 p-4 ${
+        open ? "border-b border-black/[.08] bg-white/55" : ""
+      }`}
+    >
+      <div className={`${imageClass} h-16 w-20`} aria-hidden>
+        <FaRoute className="h-7 w-7 drop-shadow" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <span className="text-[11px] font-semibold uppercase tracking-wide text-zinc-400">
+          {title}
+        </span>
+        <h3 className="mt-0.5 truncate text-lg font-semibold text-zinc-800">
+          {cityArea}
+        </h3>
+        <p className="text-sm text-zinc-500">
+          Total price: €{totalPrice} · Total days: {totalDays}
+        </p>
+      </div>
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        className={`inline-flex shrink-0 items-center gap-1.5 ${buttonStyles.underline}`}
+      >
+        {open ? "Hide" : "See Activities"}
+        {open ? (
+          <FaChevronUp className="h-3 w-3" />
+        ) : (
+          <FaChevronDown className="h-3 w-3" />
+        )}
+      </button>
+    </header>
   );
 
-  // -- Closed (compact) ------------------------------------------------------
+  // -- Closed (compact) — just the shared header. ----------------------------
   if (!open) {
-    return (
-      <article className={cardClass}>
-        <div className="flex gap-4 p-4">
-          <div className={`${imageClass} h-24 w-28`} aria-hidden>
-            <FaRoute className="h-9 w-9 drop-shadow" />
-          </div>
-          <div className="flex min-w-0 flex-1 flex-col">
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] font-semibold uppercase tracking-wide text-zinc-400">
-                {title}
-              </span>
-              {scoreChip}
-            </div>
-            <h3 className="mt-0.5 truncate text-lg font-semibold text-zinc-800">
-              {cityArea}
-            </h3>
-            <p className="text-sm text-zinc-500">Total price: €{totalPrice}</p>
-            <p className="text-sm text-zinc-500">
-              Total days: {totalDays}
-            </p>
-            <button
-              type="button"
-              onClick={() => setOpen(true)}
-              className="mt-auto self-end text-sm font-medium text-orange-600 underline-offset-2 transition-colors hover:underline"
-            >
-              See Activities
-            </button>
-          </div>
-        </div>
-      </article>
-    );
+    return <article className={cardClass}>{header}</article>;
   }
 
   // -- Open (expanded) -------------------------------------------------------
   return (
     <article className={cardClass}>
-      {/* Header — same summary, with a collapse control. */}
-      <header className="flex items-start gap-4 border-b border-black/[.08] bg-white/55 p-4">
-        <div className={`${imageClass} h-16 w-20`} aria-hidden>
-          <FaRoute className="h-7 w-7 drop-shadow" />
-        </div>
-        <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] font-semibold uppercase tracking-wide text-zinc-400">
-              {title}
-            </span>
-            {scoreChip}
-          </div>
-          <h3 className="mt-0.5 truncate text-lg font-semibold text-zinc-800">
-            {cityArea}
-          </h3>
-          <p className="text-sm text-zinc-500">
-            Total price: €{totalPrice} · Total days: {totalDays}
-          </p>
-        </div>
-        <button
-          type="button"
-          onClick={() => setOpen(false)}
-          aria-expanded
-          className="inline-flex shrink-0 items-center gap-1.5 text-xs font-medium text-orange-600 underline-offset-2 transition-colors hover:underline"
-        >
-          Hide <FaChevronUp className="h-3 w-3" />
-        </button>
-      </header>
+      {header}
 
       <div className="flex flex-col gap-3 p-4">
         {showProof ? (

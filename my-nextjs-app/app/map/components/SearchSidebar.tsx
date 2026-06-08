@@ -128,7 +128,10 @@ export function SearchSidebar({
                   filters.vibe === v.key ? "bg-orange-50 text-orange-700" : "hover:bg-zinc-50 text-zinc-700"
                 }`}
               >
-                {v.emoji} {v.label}
+                <span className="flex items-center gap-1.5">
+                  <v.Icon className="h-3.5 w-3.5 shrink-0" />
+                  {v.label}
+                </span>
               </button>
             ))}
           </div>
@@ -195,7 +198,7 @@ export function SearchSidebar({
           ) : (
             results.map((a, i) => (
               <ActivityResultCard
-                key={a.name}
+                key={`${a.name}-${a.coords.lat}-${a.coords.lng}`}
                 activity={a}
                 active={selectedName === a.name}
                 index={i}

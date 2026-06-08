@@ -49,7 +49,7 @@ export function DestinationModal({
     // Clearing on leaving the whole modal (not each row) keeps the flyout open
     // while the cursor travels from a row into it.
     <div className="flex" onMouseLeave={() => setActiveId(null)}>
-      <ul className={`max-h-72 w-56 shrink-0 overflow-y-auto p-2 ${HOVER_SCROLLBAR}`}>
+      <ul className={`max-h-72 w-full shrink-0 overflow-y-auto p-2 sm:w-56 ${HOVER_SCROLLBAR}`}>
         {shown.length === 0 && (
           <li className="px-3 py-2 text-sm text-zinc-400">No matches</li>
         )}

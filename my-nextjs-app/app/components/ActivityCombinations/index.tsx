@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useSearchParams, type ReadonlyURLSearchParams } from "next/navigation";
-import { setActiveCity, setActiveParty, type Party } from "./core/activities.functions";
+import { setActiveCity, setActiveParty, type Activity, type Party } from "./core/activities.functions";
 import { DAYS } from "./core/activities.data";
 import { CITIES, DEFAULT_CITY, type City, type Area } from "./core/cities.data";
 import { defaultSelection, Selection } from "./core/filters.functions";
@@ -15,6 +15,8 @@ import { AdvancedFiltersModal } from "./AdvancedFiltersModal";
 import { TripPlan } from "./TripPlan";
 import { planTrip } from "./core/trip.functions";
 import { DEFAULT_START_HOUR } from "./core/schedule.data";
+import { buttonStyles } from "@/app/components/ui/buttonStyles";
+import { SearchIcon } from "@/app/start/components/icons";
 
 // The most days a trip can span (the date range is capped at this length). Per-day
 // state arrays are pre-allocated to this length so changing the range never needs
@@ -148,6 +150,34 @@ export default function ActivityCombinations() {
   // "Select activities". `activityQuery` filters the shown list.
   const [showActivities, setShowActivities] = useState(false);
   const [activityQuery, setActivityQuery] = useState("");
+  // Activities the user has ticked in the catalogue (by name), plus the set
+  // "locked in" by Submit. While `submitted` is null the trip is built from the
+  // whole catalogue; once submitted, it's built from ONLY the chosen activities.
+  const [selectedActivities, setSelectedActivities] = useState<Set<string>>(
+    () => new Set()
+  );
+  const [submitted, setSubmitted] = useState<Set<string> | null>(null);
+
+  const toggleSelectedActivity = (a: Activity) =>
+    setSelectedActivities((prev) => {
+      const next = new Set(prev);
+      if (next.has(a.name)) next.delete(a.name);
+      else next.add(a.name);
+      return next;
+    });
+
+  // Build the trip from only the ticked activities. Nothing ticked → alert and
+  // bail (no empty trip).
+  const submitSelection = () => {
+    if (selectedActivities.size === 0) {
+      alert("Please select at least one activity first.");
+      return;
+    }
+    setSubmitted(new Set(selectedActivities));
+  };
+
+  // Reverse the submit: drop back to the full-catalogue trip.
+  const undoSelection = () => setSubmitted(null);
   // The advanced (per-day) filters modal — same controls as the sidebar, by day.
   const [showAdvanced, setShowAdvanced] = useState(false);
 
@@ -158,10 +188,20 @@ export default function ActivityCombinations() {
     scheduleEndHour(filters, tripSelections[i], sh)
   );
 
+  // The pool the trip is planned from: the whole catalogue by default, or just
+  // the submitted (ticked) activities once the user has clicked Submit.
+  const activityPool = useMemo(
+    () =>
+      submitted
+        ? city.activities.filter((a) => submitted.has(a.name))
+        : city.activities,
+    [submitted, city]
+  );
+
   // The best multi-day trip across the chosen dates: every activity used once,
   // assigned to maximize the average of the days' combo scores. Each day is
   // scheduled AND scored with its own day's filters. Independent of the
-  // "must include" sets (the pool is the whole catalogue).
+  // "must include" sets (the pool is `activityPool`).
   const trip = useMemo(() => {
     setActiveCity(city, area.coords); // engine on this city + area before planning
     setActiveParty(party); // and on the chosen party, for price totals
@@ -171,8 +211,8 @@ export default function ActivityCombinations() {
     );
     const sel = dayIndices.map((_, i) => selections[i]);
     const circ = dayIndices.map((_, i) => circulars[i]);
-    return planTrip(city.activities, dayIndices, starts, ends, sel, filters, circ);
-  }, [city, area, party, dayIndices, selections, startHours, circulars, filters]);
+    return planTrip(activityPool, dayIndices, starts, ends, sel, filters, circ);
+  }, [city, area, party, dayIndices, selections, startHours, circulars, filters, activityPool]);
 
   // Per-day mutators write to the ACTIVE day's slot, leaving the others untouched.
   const choose = (filterIndex: number, optionIndex: number) => {
@@ -280,6 +320,27 @@ export default function ActivityCombinations() {
 
   return (
     <>
+    {/* Reference implementation of the four named button styles — the class
+        strings come from `buttonStyles` (app/components/ui/buttonStyles.ts);
+        only per-use layout is added here. */}
+    <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center gap-3 px-8 pt-8">
+      <button type="button" className={buttonStyles.underline}>
+        Reset
+      </button>
+      <button type="button" className={buttonStyles.secondary}>
+        Save trip
+      </button>
+      <button type="button" className={buttonStyles.common}>
+        Cancel
+      </button>
+      <button
+        type="button"
+        className={`group flex shrink-0 cursor-pointer items-center justify-center gap-2 ${buttonStyles.primary}`}
+      >
+        <SearchIcon className="h-5 w-5 transition-transform duration-200 ease-out group-hover:scale-110 group-hover:-rotate-12" />
+        <span>Search</span>
+      </button>
+    </div>
     <div className="mx-auto flex w-full max-w-5xl flex-col gap-8 p-8 lg:flex-row">
       <FilterSidebar
         filters={filters}
@@ -328,25 +389,57 @@ export default function ActivityCombinations() {
               onClick={() => setShowActivities((s) => !s)}
               aria-expanded={showActivities}
               disabled={city.activities.length === 0}
-              className="shrink-0 rounded-full bg-orange-500 px-4 py-2 text-sm font-medium text-white shadow-sm shadow-orange-900/10 transition-colors hover:bg-orange-600 disabled:cursor-not-allowed disabled:bg-zinc-300 disabled:shadow-none"
+              className={`shrink-0 ${buttonStyles.common} disabled:cursor-not-allowed disabled:text-zinc-300 disabled:hover:bg-transparent`}
             >
               {showActivities ? "Hide activities" : "Select activities"}
             </button>
           </div>
           {showActivities && (
             <>
-              <input
-                type="text"
-                value={activityQuery}
-                onChange={(e) => setActivityQuery(e.target.value)}
-                placeholder="Search activities"
-                className="w-full rounded-lg border border-black/[.08] bg-white px-4 py-2.5 text-sm text-zinc-800 outline-none placeholder:text-zinc-400 focus:border-zinc-300 dark:border-white/[.145] dark:bg-zinc-900 dark:text-zinc-100"
-              />
+              <div className="flex items-center gap-3 rounded-2xl bg-white/90 px-4 py-3.5 shadow-lg shadow-orange-900/5 ring-1 ring-inset ring-white/60 backdrop-blur-md focus-within:ring-orange-200">
+                <SearchIcon className="h-6 w-6 shrink-0 text-zinc-400" />
+                <input
+                  type="text"
+                  value={activityQuery}
+                  onChange={(e) => setActivityQuery(e.target.value)}
+                  placeholder="Search activities"
+                  className="w-full bg-transparent text-base text-zinc-800 outline-none placeholder:text-zinc-400"
+                />
+              </div>
               <ActivityList
                 day={activeWeekday}
                 activities={city.activities}
                 query={activityQuery}
+                selected={selectedActivities}
+                onToggleSelect={toggleSelectedActivity}
               />
+
+              {/* Build the trip from only the ticked activities (Submit), and
+                  reverse back to the full-catalogue trip (Undo). */}
+              <div className="flex flex-wrap items-center gap-3">
+                <button
+                  type="button"
+                  onClick={submitSelection}
+                  className={buttonStyles.secondary}
+                >
+                  Submit selection
+                </button>
+                {submitted ? (
+                  <button
+                    type="button"
+                    onClick={undoSelection}
+                    className={buttonStyles.common}
+                  >
+                    Undo submission
+                  </button>
+                ) : null}
+                {submitted ? (
+                  <span className="text-sm text-zinc-500">
+                    Trip built from {submitted.size} selected{" "}
+                    {submitted.size === 1 ? "activity" : "activities"}.
+                  </span>
+                ) : null}
+              </div>
             </>
           )}
         </section>

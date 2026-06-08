@@ -5,6 +5,7 @@ import type { Area } from "./core/cities.data";
 import type { Filter, Selection } from "./core/filters.functions";
 import type { Trip } from "./core/trip.functions";
 import { TripCard } from "./TripCard";
+import { buttonStyles } from "@/app/components/ui/buttonStyles";
 
 const ORDINALS = [
   "", "1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th",
@@ -72,7 +73,7 @@ function TripAlternatives({
         <button
           type="button"
           onClick={() => setShown((s) => s + 1)}
-          className="self-start rounded-full bg-orange-500 px-4 py-2 text-sm font-medium text-white shadow-sm shadow-orange-900/10 transition-colors hover:bg-orange-600"
+          className={`self-start ${buttonStyles.secondary}`}
         >
           Show {ordinal(shown + 2)}-best trip
         </button>

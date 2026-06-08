@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Map as LeafletMap } from "leaflet";
 import { Marker, useMap, useMapEvents } from "react-leaflet";
 import {
@@ -9,7 +9,7 @@ import {
 } from "@/app/components/ActivityCombinations/core/activities.functions";
 import type { City } from "@/app/components/ActivityCombinations/core/cities.data";
 import { activityIcon, cityIcon } from "./markerIcons";
-import { emojiOf } from "./mapData";
+import { iconOf } from "./mapData";
 
 // The Leaflet layers + map-event wiring. Lives INSIDE <MapContainer>, so it can
 // use the map hooks. Shows city pills when zoomed out and activity pins when
@@ -46,6 +46,23 @@ export function MapLayers({
 }) {
   const map = useMap();
   const [zoom, setZoom] = useState(map.getZoom());
+
+  // Reuse the same DivIcon instance across re-renders (keyed by name + selected
+  // state). Without this, a re-render — e.g. when hovering one marker updates the
+  // parent — would build a fresh icon for every marker, making react-leaflet swap
+  // each marker's DOM and replay the `marker-pop` animation on ALL of them.
+  const iconCache = useRef(new Map<string, ReturnType<typeof activityIcon>>());
+  const getActivityIcon = (a: Activity) => {
+    const active = selectedName === a.name;
+    const key = `${a.name}|${active}`;
+    const cache = iconCache.current;
+    let icon = cache.get(key);
+    if (!icon) {
+      icon = activityIcon(iconOf(a), active);
+      cache.set(key, icon);
+    }
+    return icon;
+  };
 
   // The city whose centre is nearest the current map centre → corner label, and
   // (when zoomed in) the focused city used to scope the results.
@@ -89,7 +106,7 @@ export function MapLayers({
           <Marker
             key={city.id}
             position={[city.center.lat, city.center.lng]}
-            icon={cityIcon(city.name, city.activities.length)}
+            icon={cityIcon(city.name)}
             eventHandlers={{
               click: () => {
                 map.flyTo([city.center.lat, city.center.lng], activityZoom + 1);
@@ -108,7 +125,7 @@ export function MapLayers({
         <Marker
           key={a.name}
           position={[a.coords.lat, a.coords.lng]}
-          icon={activityIcon(emojiOf(a), selectedName === a.name)}
+          icon={getActivityIcon(a)}
           eventHandlers={{
             click: () => onActivityClick(a),
             mouseover: () => {

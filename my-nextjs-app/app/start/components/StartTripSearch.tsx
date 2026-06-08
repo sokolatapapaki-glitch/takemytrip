@@ -198,7 +198,7 @@ export default function StartTripSearch({
           }
         >
           {open === "dest" && (
-            <Dropdown align="left">
+            <Dropdown align="left" onClose={() => setOpen(null)}>
               <DestinationModal
                 value={dest}
                 query={destQuery}
@@ -223,7 +223,7 @@ export default function StartTripSearch({
           onClear={range.start ? () => setRange({ start: null, end: null }) : undefined}
         >
           {open === "dates" && (
-            <Dropdown align="center">
+            <Dropdown align="center" onClose={() => setOpen(null)}>
               <CalendarModal
                 value={range}
                 onChange={setRange}
@@ -243,7 +243,7 @@ export default function StartTripSearch({
           onClick={() => toggle("travelers")}
         >
           {open === "travelers" && (
-            <Dropdown align="right">
+            <Dropdown align="right" onClose={() => setOpen(null)}>
               <TravelersModal value={travelers} onChange={setTravelers} />
             </Dropdown>
           )}
@@ -436,26 +436,34 @@ function DestField({
   );
 }
 
-// The glass dropdown panel anchored under a field. Pops in when opened.
+// The glass dropdown panel. On desktop it's anchored under its field (`align`
+// picks the side). On mobile it becomes a fixed, full-width overlay pinned near
+// the top of the screen, over a dimmed tap-to-close backdrop.
 function Dropdown({
   align,
+  onClose,
   children,
 }: {
   align: "left" | "center" | "right";
+  onClose?: () => void;
   children: React.ReactNode;
 }) {
-  const pos =
+  const desktopPos =
     align === "left"
-      ? "left-0"
+      ? "sm:left-0"
       : align === "right"
-        ? "right-0"
-        : "left-1/2 -translate-x-1/2";
+        ? "sm:right-0"
+        : "sm:left-1/2 sm:-translate-x-1/2";
   return (
-    <div
-      className={`animate-pop-in absolute top-full z-[100] mt-2 ${pos} origin-top overflow-hidden rounded-2xl border border-white/60 bg-white/90 shadow-2xl shadow-orange-900/10 backdrop-blur-xl`}
-    >
-      {children}
-    </div>
+    <>
+      {/* Mobile-only dimmed backdrop; tap anywhere to close. */}
+      <div className="fixed inset-0 z-[90] bg-black/40 sm:hidden" onClick={onClose} />
+      <div
+        className={`animate-pop-in z-[100] origin-top rounded-2xl border border-white/60 bg-white/90 shadow-2xl shadow-orange-900/10 backdrop-blur-xl fixed inset-x-4 top-20 mx-auto max-h-[calc(100vh-6rem)] max-w-md overflow-y-auto sm:absolute sm:inset-x-auto sm:top-full sm:mx-0 sm:mt-2 sm:max-h-none sm:max-w-none sm:overflow-hidden ${desktopPos}`}
+      >
+        {children}
+      </div>
+    </>
   );
 }
 
