@@ -143,68 +143,33 @@ export default function ActivitiesExperience() {
             </button>
 
             <div className="flex flex-wrap gap-2">
-            <FilterDropdown
-              label="Select Vibe"
-              active={filters.vibes.length > 0}
-              summary={
-                filters.vibes.length > 0 ? `${filters.vibes.length} selected` : null
-              }
-              open={open === "vibe"}
-              onToggle={() => toggleMenu("vibe")}
-            >
-              <div className="flex flex-col gap-1">
-                {VIBES.map((v) => {
-                  const on = filters.vibes.includes(v.key);
-                  const Icon = VIBE_ICONS[v.key];
-                  return (
+
+              <FilterDropdown
+                label="Sorted by"
+                active={filters.sortBy !== DEFAULT_ACT_FILTERS.sortBy}
+                summary={ACT_SORT_LABELS[filters.sortBy]}
+                open={open === "sort"}
+                onToggle={() => toggleMenu("sort")}
+              >
+                <div className="flex flex-col gap-1">
+                  {(Object.keys(ACT_SORT_LABELS) as ActSortKey[]).map((k) => (
                     <button
-                      key={v.key}
+                      key={k}
                       type="button"
-                      onClick={() => toggleVibe(v.key)}
-                      className={`flex items-center justify-between gap-3 rounded-lg px-2 py-1.5 text-left text-sm transition-colors ${
-                        on
+                      onClick={() => {
+                        set({ sortBy: k });
+                        setOpen(null);
+                      }}
+                      className={`rounded-lg px-2 py-1.5 text-left text-sm transition-colors ${filters.sortBy === k
                           ? "bg-orange-50 text-orange-700"
                           : "text-zinc-700 hover:bg-zinc-50"
-                      }`}
+                        }`}
                     >
-                      <span className="flex items-center gap-2">
-                        <Icon className="h-4 w-4" />
-                        {v.label}
-                      </span>
-                      {on && <FaCheck className="h-3 w-3" aria-hidden />}
+                      {ACT_SORT_LABELS[k]}
                     </button>
-                  );
-                })}
-              </div>
-            </FilterDropdown>
-
-            <FilterDropdown
-              label="Sorted by"
-              active={filters.sortBy !== DEFAULT_ACT_FILTERS.sortBy}
-              summary={ACT_SORT_LABELS[filters.sortBy]}
-              open={open === "sort"}
-              onToggle={() => toggleMenu("sort")}
-            >
-              <div className="flex flex-col gap-1">
-                {(Object.keys(ACT_SORT_LABELS) as ActSortKey[]).map((k) => (
-                  <button
-                    key={k}
-                    type="button"
-                    onClick={() => {
-                      set({ sortBy: k });
-                      setOpen(null);
-                    }}
-                    className={`rounded-lg px-2 py-1.5 text-left text-sm transition-colors ${
-                      filters.sortBy === k
-                        ? "bg-orange-50 text-orange-700"
-                        : "text-zinc-700 hover:bg-zinc-50"
-                    }`}
-                  >
-                    {ACT_SORT_LABELS[k]}
-                  </button>
-                ))}
-              </div>
-            </FilterDropdown>
+                  ))}
+                </div>
+              </FilterDropdown>
             </div>
           </div>
 

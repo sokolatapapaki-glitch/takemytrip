@@ -2,7 +2,7 @@
 
 import { useLayoutEffect, useRef, useState } from "react";
 import { ChevronRightIcon } from "@/app/start/components/icons";
-
+import { buttonStyles } from "@/app/components/ui/buttonStyles";
 // A single filter "chip" (Price / Vibe / Sorted by / Distance) that opens a glass
 // popup with its options. Controlled by the parent so only one is open at a time.
 // The chips live in a horizontally-scrolling row (which clips overflow), so the
@@ -45,11 +45,10 @@ export function FilterDropdown({
         ref={btnRef}
         type="button"
         onClick={onToggle}
-        className={`flex items-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium transition-colors ${
-          active || open
-            ? "bg-orange-500 text-white shadow-sm shadow-orange-900/10"
-            : "bg-white/80 text-zinc-600 hover:bg-white"
-        }`}
+        className={buttonStyles.common + `flex gap-2 ${open
+          ? "bg-gray-100"
+          : ""
+          }`}
       >
         <span>{summary ? `${label}: ${summary}` : label}</span>
         <ChevronRightIcon

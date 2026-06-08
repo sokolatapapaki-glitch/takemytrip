@@ -1,4 +1,4 @@
-import { FaStar } from "react-icons/fa6";
+import { FaCheck, FaStar } from "react-icons/fa6";
 import {
   adultPrice,
   type Activity,
@@ -40,15 +40,18 @@ export function ActivityCard({
         <VibeIcon className="h-12 w-12 text-white drop-shadow" />
       </div>
 
-      {/* Select checkbox — top-left, on a glass chip for contrast over the image. */}
-      <label className="absolute left-3 top-3 flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg bg-white/85 shadow-sm backdrop-blur">
+      {/* Select checkbox — top-left, kept small and simple over the image. */}
+      <label className="absolute left-3 top-3 flex h-5 w-5 cursor-pointer items-center justify-center">
         <input
           type="checkbox"
           checked={selected}
           onChange={() => onToggleSelect?.(activity)}
           aria-label={`Select ${activity.name}`}
-          className="h-4 w-4 cursor-pointer accent-orange-500"
+          className="peer sr-only"
         />
+        <span className="flex h-5 w-5 items-center justify-center rounded border border-white/80 bg-black/15 text-white shadow-sm backdrop-blur-sm transition-colors peer-checked:border-orange-500 peer-checked:bg-orange-500">
+          {selected && <FaCheck className="h-3 w-3" aria-hidden />}
+        </span>
       </label>
 
       <div className="flex flex-1 flex-col p-3">

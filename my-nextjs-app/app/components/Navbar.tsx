@@ -84,23 +84,23 @@ export default function Navbar() {
             aria-label="Menu"
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((o) => !o)}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-black/[.08] text-zinc-700 transition-colors hover:bg-black/[.04] dark:border-white/[.145] dark:text-zinc-200 dark:hover:bg-white/[.06]"
+            className="-mr-2 flex h-11 w-11 items-center justify-center text-zinc-700 transition-colors hover:text-orange-600 dark:text-zinc-200 dark:hover:text-orange-300"
           >
             {/* Three bars; on open the top/bottom rotate into an X and the
                 middle fades out. */}
-            <span className="relative block h-4 w-5">
+            <span className="relative block h-5 w-7">
               <span
-                className={`absolute left-0 block h-0.5 w-5 rounded-full bg-current transition-all duration-300 ${
+                className={`absolute left-0 block h-0.5 w-7 rounded-full bg-current transition-all duration-300 ${
                   menuOpen ? "top-1/2 -translate-y-1/2 rotate-45" : "top-0"
                 }`}
               />
               <span
-                className={`absolute left-0 top-1/2 block h-0.5 w-5 -translate-y-1/2 rounded-full bg-current transition-all duration-300 ${
+                className={`absolute left-0 top-1/2 block h-0.5 w-7 -translate-y-1/2 rounded-full bg-current transition-all duration-300 ${
                   menuOpen ? "opacity-0" : "opacity-100"
                 }`}
               />
               <span
-                className={`absolute left-0 block h-0.5 w-5 rounded-full bg-current transition-all duration-300 ${
+                className={`absolute left-0 block h-0.5 w-7 rounded-full bg-current transition-all duration-300 ${
                   menuOpen ? "top-1/2 -translate-y-1/2 -rotate-45" : "bottom-0"
                 }`}
               />

@@ -7,6 +7,7 @@ import {
   cityPriceTier,
   flightTimeFromAthens,
 } from "./citiesData";
+import { buttonStyles } from "@/app/components/ui/buttonStyles";
 
 // A single city tile from the Penpot "Cities" board: image placeholder, name +
 // country, description, a flight-time/price meta line, and a "See Activities"
@@ -16,7 +17,8 @@ export function CityCard({ city, index = 0 }: { city: City; index?: number }) {
   const flight = flightTimeFromAthens(city);
   const image = cityImage(city);
   return (
-    <div
+    <Link
+      href={`/activities?city=${city.id}`}
       style={{ animationDelay: `${Math.min(index * 40, 300)}ms` }}
       className="animate-card-pop flex flex-col overflow-hidden rounded-3xl border border-white/60 bg-white/80 shadow-lg shadow-orange-900/5 backdrop-blur-md transition-shadow hover:shadow-xl hover:shadow-orange-900/10"
     >
@@ -41,16 +43,15 @@ export function CityCard({ city, index = 0 }: { city: City; index?: number }) {
         )}
       </div>
 
-      <div className="flex flex-1 flex-col p-4">
+      <div className="flex flex-1 flex-col p-4 gap-2">
         <div className="flex items-baseline justify-between gap-2">
           <h3 className="text-lg font-semibold text-zinc-800">{city.name}</h3>
           <span className="shrink-0 text-xs font-medium uppercase tracking-wide text-zinc-400">
             {city.country}
           </span>
         </div>
-        <p className="mt-1 text-sm text-zinc-500">{cityDescription(city)}</p>
 
-        <div className="mb-4 mt-3 flex items-center gap-2 text-xs text-zinc-400">
+        <div className="flex items-center gap-2 text-xs text-zinc-400">
           <span className="flex items-center gap-1">
             <FaPlane className="h-3 w-3 text-orange-400" />~{flight.label} from
             Athens
@@ -67,16 +68,16 @@ export function CityCard({ city, index = 0 }: { city: City; index?: number }) {
             )}
           </span>
         </div>
+        <p className="text-sm text-zinc-500">{cityDescription(city)}</p>
 
         {/* See Activities — opens the activities list scoped to this city.
             mt-auto keeps it pinned to the bottom even when the text is short. */}
-        <Link
-          href={`/activities?city=${city.id}`}
-          className="mt-auto block w-full rounded-full bg-orange-500 px-4 py-2 text-center text-sm font-medium text-white shadow-sm shadow-orange-900/10 transition-colors hover:bg-orange-600"
+        <div
+          className={buttonStyles.secondary}
         >
           See Activities
-        </Link>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }

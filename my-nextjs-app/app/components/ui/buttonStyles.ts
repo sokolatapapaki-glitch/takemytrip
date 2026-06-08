@@ -30,7 +30,7 @@ export const buttonStyles = {
 
   // secondary button — a green→emerald gradient pill.
   secondary:
-    "rounded-xl bg-gradient-to-r from-emerald-400 to-emerald-500 px-4 py-2 text-sm font-medium text-white shadow-sm shadow-green-900/10 transition-[background,box-shadow] hover:from-emerald-500 hover:to-emerald-600",
+    "rounded-xl text-center bg-gradient-to-r from-emerald-400 to-emerald-500 px-4 py-2 text-sm font-medium text-white shadow-sm shadow-green-900/10 transition-[background,box-shadow] hover:from-emerald-500 hover:to-emerald-600",
 
   // common button — quiet: black text, no resting bg, light gray bg on hover.
   common:
