@@ -34,8 +34,10 @@ export default function StartTripSearch({
   // The hero backdrop shows photos of the chosen city's activities, so it needs
   // to know which destination is selected (null = nothing picked yet).
   onDestChange,
+  playEntranceAnimations = true,
 }: {
   onDestChange?: (destinationId: string | null) => void;
+  playEntranceAnimations?: boolean;
 } = {}) {
   const router = useRouter();
   const [open, setOpen] = useState<ModalKey | null>(null);
@@ -43,7 +45,7 @@ export default function StartTripSearch({
   // The destination field starts as an animated typewriter placeholder, then
   // becomes a real writable input once the typing finishes. `destQuery` is the
   // free text the user types, which filters the destination dropdown.
-  const [destTypingDone, setDestTypingDone] = useState(false);
+  const [destTypingDone, setDestTypingDone] = useState(!playEntranceAnimations);
   const [destQuery, setDestQuery] = useState("");
   const [range, setRange] = useState<DateRange>({ start: null, end: null });
   const [travelers, setTravelers] = useState<Travelers>({
@@ -51,6 +53,8 @@ export default function StartTripSearch({
     children: 0,
     childAges: [],
   });
+  const [searchIconAlert, setSearchIconAlert] = useState(false);
+  const searchIconAlertTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Close the open modal when clicking anywhere outside the bar.
   const rootRef = useRef<HTMLDivElement>(null);
@@ -64,6 +68,20 @@ export default function StartTripSearch({
     document.addEventListener("mousedown", onDown);
     return () => document.removeEventListener("mousedown", onDown);
   }, [open]);
+
+  useEffect(() => {
+    return () => {
+      if (searchIconAlertTimeout.current) {
+        clearTimeout(searchIconAlertTimeout.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (playEntranceAnimations && !dest) {
+      setDestTypingDone(false);
+    }
+  }, [playEntranceAnimations, dest]);
 
   // Let the hero backdrop follow the chosen city (see onDestChange prop).
   useEffect(() => {
@@ -101,15 +119,36 @@ export default function StartTripSearch({
   // Total people in the party — drives the one/two-person traveller icon.
   const travelerCount = travelers.adults + travelers.children;
 
-  // Search is only allowed once all three fields are filled: a destination, at
-  // least one date, and a valid party (always ≥ 1 adult, so dest + date gate it).
+  // Search is complete once all required fields are filled: a destination, at
+  // least one date, and a valid party.
   const canSearch = !!dest && !!range.start && travelers.adults >= 1;
+
+  const missingInputs = useMemo(() => {
+    const missing: string[] = [];
+    if (!dest) missing.push("destination");
+    if (!range.start) missing.push("dates");
+    if (travelers.adults < 1) missing.push("travelers");
+    return missing;
+  }, [dest, range.start, travelers.adults]);
 
   // Hand the chosen destination/area/dates AND party to the main planner via query
   // params. The party (adults + each child's age) drives the planner's price totals
   // (see activityPrice / setActiveParty); ages go as a comma list, unset → 0.
   function handleSearch() {
-    if (!canSearch) return;
+    if (!canSearch) {
+      window.alert(`Please fill in: ${missingInputs.join(", ")}.`);
+      if (searchIconAlertTimeout.current) {
+        clearTimeout(searchIconAlertTimeout.current);
+      }
+      setSearchIconAlert(true);
+      searchIconAlertTimeout.current = setTimeout(() => {
+        setSearchIconAlert(false);
+      }, 900);
+      if (!dest) setOpen("dest");
+      else if (!range.start) setOpen("dates");
+      else if (travelers.adults < 1) setOpen("travelers");
+      return;
+    }
     const params = new URLSearchParams();
     if (dest) {
       params.set("dest", dest.destinationId);
@@ -129,7 +168,14 @@ export default function StartTripSearch({
 
   return (
     <div ref={rootRef} className="relative">
-      <div className="animate-fade-in-up flex items-center gap-2" style={{ animationDelay: "100ms" }}>
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -inset-x-8 -inset-y-5 rounded-[2rem] bg-gradient-to-r from-orange-300/30 via-pink-300/25 to-sky-300/25 blur-2xl"
+      />
+      <div
+        className={`${playEntranceAnimations ? "animate-fade-in-up" : ""} relative grid grid-cols-1 items-center gap-2 sm:grid-cols-2 lg:grid-cols-[repeat(3,minmax(0,1fr))_auto]`}
+        style={{ animationDelay: "100ms" }}
+      >
         <DestField
           active={open === "dest"}
           value={destLabel}
@@ -138,6 +184,7 @@ export default function StartTripSearch({
             setDestQuery(q);
             setOpen("dest");
           }}
+          playEntranceAnimations={playEntranceAnimations}
           typingDone={destTypingDone}
           onTypingDone={() => setDestTypingDone(true)}
           onOpen={() => setOpen("dest")}
@@ -171,6 +218,7 @@ export default function StartTripSearch({
           placeholder="From — To"
           value={dateLabel}
           iconDelay={490}
+          playEntranceAnimations={playEntranceAnimations}
           onClick={() => toggle("dates")}
           onClear={range.start ? () => setRange({ start: null, end: null }) : undefined}
         >
@@ -191,6 +239,7 @@ export default function StartTripSearch({
           placeholder="Travelers"
           value={travelersLabel}
           iconDelay={580}
+          playEntranceAnimations={playEntranceAnimations}
           onClick={() => toggle("travelers")}
         >
           {open === "travelers" && (
@@ -203,14 +252,17 @@ export default function StartTripSearch({
         <button
           type="button"
           onClick={handleSearch}
-          disabled={!canSearch}
           aria-disabled={!canSearch}
-          title={canSearch ? undefined : "Pick a destination, dates and travellers first"}
+          title={canSearch ? undefined : "Search"}
           style={{ animationDelay: "440ms" }}
-          className={`animate-pop-in flex shrink-0 items-center gap-2 rounded-xl px-6 py-3 font-medium ${homeStyles.primaryButton} ${homeStyles.primaryButtonDisabled}`}
+          className={`${playEntranceAnimations ? "animate-pop-in" : ""} group flex w-full shrink-0 cursor-pointer items-center justify-center gap-2 rounded-xl px-6 py-3 font-medium lg:w-auto ${homeStyles.primaryButton}`}
         >
-          <SearchIcon className="h-5 w-5" />
-          <span className="hidden sm:inline">Search</span>
+          <SearchIcon
+            className={`h-5 w-5 transition-transform duration-200 ease-out group-hover:scale-110 group-hover:-rotate-12 ${
+              searchIconAlert ? "animate-bounce" : ""
+            }`}
+          />
+          <span>Search</span>
         </button>
       </div>
     </div>
@@ -229,6 +281,7 @@ function Field({
   onClear,
   children,
   iconDelay = 0,
+  playEntranceAnimations,
 }: {
   active: boolean;
   icon: React.ReactNode;
@@ -238,18 +291,19 @@ function Field({
   onClear?: () => void;
   children?: React.ReactNode;
   iconDelay?: number;
+  playEntranceAnimations: boolean;
 }) {
   return (
     <div className="group relative min-w-0 flex-1">
       <button
         type="button"
         onClick={onClick}
-        className={`flex w-full items-center gap-3 rounded-xl border border-black px-4 py-3 text-left transition-colors ${
+        className={`flex w-full cursor-pointer items-center gap-3 rounded-xl border border-black px-4 py-3 text-left transition-colors ${
           active ? homeStyles.fieldActive : homeStyles.fieldIdle
         }`}
       >
         <span
-          className="animate-icon-pop inline-flex shrink-0 text-zinc-400"
+          className={`${playEntranceAnimations ? "animate-icon-pop" : ""} inline-flex shrink-0 text-zinc-400 transition-transform duration-200 ease-out group-hover:scale-110 group-hover:-translate-y-0.5`}
           style={{ animationDelay: `${iconDelay}ms` }}
         >
           {icon}
@@ -285,6 +339,7 @@ function DestField({
   value,
   query,
   onQueryChange,
+  playEntranceAnimations,
   typingDone,
   onTypingDone,
   onOpen,
@@ -295,6 +350,7 @@ function DestField({
   value: string | null;
   query: string;
   onQueryChange: (q: string) => void;
+  playEntranceAnimations: boolean;
   typingDone: boolean;
   onTypingDone: () => void;
   onOpen: () => void;
@@ -322,7 +378,7 @@ function DestField({
         }`}
       >
         <span
-          className="animate-icon-pop inline-flex shrink-0 text-zinc-400"
+          className={`${playEntranceAnimations ? "animate-icon-pop" : ""} inline-flex shrink-0 text-zinc-400 transition-transform duration-200 ease-out group-hover:scale-110 group-hover:-translate-y-0.5`}
           style={{ animationDelay: "400ms" }}
         >
           {/* Inner span carries the one-shot jump so it can't clash with the
@@ -396,7 +452,7 @@ function Dropdown({
         : "left-1/2 -translate-x-1/2";
   return (
     <div
-      className={`animate-pop-in absolute top-full z-30 mt-2 ${pos} origin-top overflow-hidden rounded-2xl border border-white/60 bg-white/90 shadow-2xl shadow-orange-900/10 backdrop-blur-xl`}
+      className={`animate-pop-in absolute top-full z-[100] mt-2 ${pos} origin-top overflow-hidden rounded-2xl border border-white/60 bg-white/90 shadow-2xl shadow-orange-900/10 backdrop-blur-xl`}
     >
       {children}
     </div>
