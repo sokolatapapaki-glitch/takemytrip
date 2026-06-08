@@ -35,12 +35,12 @@ test("maxComboValue follows the active city's catalogue", () => {
   assert.equal(maxComboValue("cost"), romeCost);
 });
 
-test("every destination's centre equals its first area, and has 2+ areas", () => {
+test("every destination's centre equals its first area, with at least one area", () => {
   for (const c of CITIES) {
     // center is the default anchor = the first area's coords.
     assert.deepEqual(c.areas[0].coords, c.center, `${c.name} centre`);
-    assert.ok(c.areas.length >= 2, `${c.name} should have selectable areas`);
-    // Cities default to "Centre"; regions default to their main city.
+    assert.ok(c.areas.length >= 1, `${c.name} should have a selectable area`);
+    // Cities anchor on "Centre" by default.
     if (c.kind === "city") assert.equal(c.areas[0].id, "centre");
   }
 });
@@ -48,10 +48,6 @@ test("every destination's centre equals its first area, and has 2+ areas", () =>
 test("destinations without a catalogue are scaffolded (empty, still selectable)", () => {
   const scaffolded = CITIES.filter((c) => c.activities.length === 0);
   assert.ok(scaffolded.length > 0, "some destinations are scaffolded");
-  // Regions are included as destinations, each with sub-city areas.
-  const regions = CITIES.filter((c) => c.kind === "region");
-  assert.ok(regions.length >= 4);
-  for (const r of regions) assert.ok(r.areas.length >= 2);
   // Only Rome + Paris carry activities for now.
   const withActivities = CITIES.filter((c) => c.activities.length > 0).map((c) => c.id);
   assert.deepEqual(withActivities.sort(), ["paris", "rome"]);

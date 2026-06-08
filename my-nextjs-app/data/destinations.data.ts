@@ -1,17 +1,14 @@
 // -----------------------------------------------------------------------------
 // Destinations (DATA ONLY)
 // -----------------------------------------------------------------------------
-// The selectable cities/regions + their areas (with coords) — the single shared
-// list behind BOTH the /start trip-search input and the main planner. Types live
-// in app/components/ActivityCombinations/core/destinations.data; the small
-// `A`/`dest` builders only assemble these literals, so they stay with the data
-// they build. core/destinations.data.ts re-exports DESTINATIONS so every existing
-// import keeps working.
-// Self-contained: this file imports NOTHING so it never participates in the
-// planner's type/value module graph. The shared TYPES live in
-// core/destinations.data.ts; the local aliases below mirror them structurally so
-// the data is still type-checked here, and core re-exports DESTINATIONS as the
-// canonical `Destination[]`.
+// The selectable cities + their areas (with coords) — the single shared list
+// behind BOTH the /start trip-search input and the main planner. The city list +
+// names/countries mirror the takemytrip dataset (Greek names as in the source).
+// takemytrip has no neighbourhoods, so cities that already had hand-authored areas
+// keep them; the rest get a single "Centre" at the city centre. Types live in
+// core/destinations.data; the `A`/`dest` builders only assemble these literals, so
+// they stay with the data they build. core/destinations.data.ts re-exports
+// DESTINATIONS so every existing import keeps working.
 type Coords = { lat: number; lng: number };
 type DestArea = { id: string; name: string; coords: Coords };
 type Destination = {
@@ -51,19 +48,11 @@ function dest(
 }
 
 export const DESTINATIONS: Destination[] = [
-  dest("rome", "Rome", "Italy", "city", [
-    A("Centre", 41.8925, 12.4853),
-    A("Trastevere", 41.8890, 12.4680),
-    A("Vatican", 41.9039, 12.4549),
-    A("Monti", 41.8946, 12.4920),
-    A("Testaccio", 41.8730, 12.4760),
-  ]),
-  dest("paris", "Paris", "France", "city", [
-    A("Centre", 48.8530, 2.3499),
-    A("Montmartre", 48.8867, 2.3431),
-    A("Le Marais", 48.8571, 2.3590),
-    A("Latin Quarter", 48.8499, 2.3470),
-    A("Champs-Élysées", 48.8698, 2.3078),
+  dest("amsterdam", "Άμστερνταμ", "Ολλανδία", "city", [
+    A("Centre", 52.3730, 4.8924),
+    A("Jordaan", 52.3740, 4.8800),
+    A("De Pijp", 52.3550, 4.8920),
+    A("Oud-West", 52.3650, 4.8650),
   ]),
   dest("barcelona", "Barcelona", "Spain", "city", [
     A("Centre", 41.3870, 2.1701),
@@ -72,43 +61,55 @@ export const DESTINATIONS: Destination[] = [
     A("Gràcia", 41.4030, 2.1560),
     A("Barceloneta", 41.3797, 2.1894),
   ]),
-  dest("amsterdam", "Amsterdam", "Netherlands", "city", [
-    A("Centre", 52.3730, 4.8924),
-    A("Jordaan", 52.3740, 4.8800),
-    A("De Pijp", 52.3550, 4.8920),
-    A("Oud-West", 52.3650, 4.8650),
+  dest("berlin", "Βερολίνο", "Γερμανία", "city", [
+    A("Centre", 52.5200, 13.4050),
   ]),
-  dest("london", "London", "United Kingdom", "city", [
+  dest("bucharest", "Βουκουρέστι", "Ρουμανία", "city", [
+    A("Centre", 44.4268, 26.1025),
+  ]),
+  dest("budapest", "Βουδαπέστη", "Ουγγαρία", "city", [
+    A("Centre", 47.4979, 19.0402),
+  ]),
+  dest("istanbul", "Κωνσταντινούπολη", "Τουρκία", "city", [
+    A("Centre", 41.0086, 28.9802),
+  ]),
+  dest("krakow", "Krakow", "Poland", "city", [
+    A("Centre", 50.0647, 19.9450),
+  ]),
+  dest("lisbon", "Λισαβόνα", "Πορτογαλία", "city", [
+    A("Centre", 38.7223, -9.1393),
+  ]),
+  dest("london", "Λονδίνο", "Ηνωμένο Βασίλειο", "city", [
     A("Centre", 51.5074, -0.1278),
     A("Soho", 51.5137, -0.1340),
     A("Camden", 51.5390, -0.1426),
     A("Notting Hill", 51.5090, -0.1960),
     A("Shoreditch", 51.5265, -0.0780),
   ]),
-  dest("sicily", "Sicily", "Italy", "region", [
-    A("Palermo", 38.1157, 13.3615),
-    A("Catania", 37.5079, 15.0830),
-    A("Taormina", 37.8516, 15.2853),
-    A("Syracuse", 37.0755, 15.2866),
-    A("Agrigento", 37.3111, 13.5765),
+  dest("madrid", "Μαδρίτη", "Ισπανία", "city", [
+    A("Centre", 40.4168, -3.7038),
   ]),
-  dest("tuscany", "Tuscany", "Italy", "region", [
-    A("Florence", 43.7696, 11.2558),
-    A("Siena", 43.3188, 11.3308),
-    A("Pisa", 43.7228, 10.4017),
-    A("Lucca", 43.8430, 10.5076),
-    A("San Gimignano", 43.4677, 11.0431),
+  dest("paris", "Παρίσι", "Γαλλία", "city", [
+    A("Centre", 48.8530, 2.3499),
+    A("Montmartre", 48.8867, 2.3431),
+    A("Le Marais", 48.8571, 2.3590),
+    A("Latin Quarter", 48.8499, 2.3470),
+    A("Champs-Élysées", 48.8698, 2.3078),
   ]),
-  dest("andalusia", "Andalusia", "Spain", "region", [
-    A("Seville", 37.3891, -5.9845),
-    A("Granada", 37.1773, -3.5986),
-    A("Málaga", 36.7213, -4.4214),
-    A("Córdoba", 37.8882, -4.7794),
+  dest("prague", "Πράγα", "Τσεχία", "city", [
+    A("Centre", 50.0875, 14.4213),
   ]),
-  dest("amalfi-coast", "Amalfi Coast", "Italy", "region", [
-    A("Amalfi", 40.6340, 14.6027),
-    A("Positano", 40.6280, 14.4850),
-    A("Sorrento", 40.6263, 14.3757),
-    A("Ravello", 40.6494, 14.6118),
+  dest("rome", "Ρώμη", "Ιταλία", "city", [
+    A("Centre", 41.8925, 12.4853),
+    A("Trastevere", 41.8890, 12.4680),
+    A("Vatican", 41.9039, 12.4549),
+    A("Monti", 41.8946, 12.4920),
+    A("Testaccio", 41.8730, 12.4760),
+  ]),
+  dest("vienna", "Βιέννη", "Αυστρία", "city", [
+    A("Centre", 48.2082, 16.3738),
+  ]),
+  dest("warsaw", "Warsaw", "Poland", "city", [
+    A("Centre", 52.2297, 21.0122),
   ]),
 ];
