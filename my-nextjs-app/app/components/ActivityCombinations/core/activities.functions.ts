@@ -54,6 +54,26 @@ export function activeCenter(): Coords {
   return activeCenterCoords;
 }
 
+// --- takemytrip-aligned metadata shapes (carried on every activity) ----------
+// Per-age and per-family-type prices (euros), keyed as in the takemytrip JSON
+// (e.g. ages: { "0": 0, "adult": 21.5 }, family: { "2_adults_2_children": 84 }).
+export type PriceTable = {
+  ages: Record<string, number>;
+  family: Record<string, number>;
+};
+// An external link for the activity (the site URL + a display name).
+export type WebsiteLink = { url: string; name: string };
+// A nearby eatery tied to the activity. `type` distinguishes a sit-down spot
+// ("food") from a "cafe". `link` is a maps/website URL.
+export type Restaurant = {
+  type: "food" | "cafe";
+  price: number | null;
+  name: string;
+  description: string;
+  link: string | null;
+  emoji: string | null;
+};
+
 export type Activity = {
   name: string;
   description: string;
@@ -75,6 +95,43 @@ export type Activity = {
   // Optional (foodie activities only): if true, this activity can stand in for
   // the midday lunch break when it's open during the 1–4 PM slot.
   is_lunch?: boolean;
+  // --- takemytrip-aligned metadata (null/empty on the hand-authored Rome/Paris
+  // catalogues for now; the planner doesn't read these — they're display data).
+  // Opening hours stay in `program`; there is no openHour/closeHour field.
+  id: number | null;
+  prices: PriceTable | null;
+  websites: WebsiteLink[];
+  googleMapUrl: string | null;
+  notes: string[];
+  tags: string[];
+  best_time: string | null;
+  restaurants: Restaurant[];
+  emoji: string | null;
+};
+
+// The empty defaults for the metadata fields above — so hand-authored and test
+// activities can stay valid without repeating the nine null/empty values.
+export const EMPTY_ACTIVITY_META: Pick<
+  Activity,
+  | "id"
+  | "prices"
+  | "websites"
+  | "googleMapUrl"
+  | "notes"
+  | "tags"
+  | "best_time"
+  | "restaurants"
+  | "emoji"
+> = {
+  id: null,
+  prices: null,
+  websites: [],
+  googleMapUrl: null,
+  notes: [],
+  tags: [],
+  best_time: null,
+  restaurants: [],
+  emoji: null,
 };
 
 // Independent vibe dimensions — one index each.

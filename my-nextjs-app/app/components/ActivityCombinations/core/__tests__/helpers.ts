@@ -1,6 +1,7 @@
 // Shared builders + utilities for the trip-planner unit tests. Pure data only —
 // no test framework imports here, so it can be reused by every test file.
 import type { Activity, DayHours } from "../activities.functions";
+import { EMPTY_ACTIVITY_META } from "../activities.functions";
 import type { Filter } from "../filters.functions";
 
 // A window open every day of the week.
@@ -26,6 +27,7 @@ export function makeActivity(over: Partial<Activity> = {}): Activity {
     adventurous: over.adventurous ?? 5,
     relaxing: over.relaxing ?? 5,
     priority: over.priority ?? 5,
+    ...EMPTY_ACTIVITY_META,
     ...(over.is_lunch !== undefined ? { is_lunch: over.is_lunch } : {}),
   };
 }

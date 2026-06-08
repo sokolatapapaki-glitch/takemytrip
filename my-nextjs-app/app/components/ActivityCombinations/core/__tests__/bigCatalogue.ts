@@ -8,6 +8,7 @@
 // closed day here and there), and a handful of midday-open foodie spots are
 // flagged `is_lunch`. Pure data — no test-framework imports — so any test can use it.
 import type { Activity, DayHours } from "../activities.functions";
+import { EMPTY_ACTIVITY_META } from "../activities.functions";
 
 const at = (open: number, close: number): DayHours => ({ open, close });
 const CLOSED: DayHours = { open: 0, close: 0 };
@@ -44,6 +45,7 @@ function mk(
     // Deterministic spread of tourist priority (0–10) so the big fixture exercises
     // the priority scoring too: name-hash into 2..10.
     priority: 2 + (Math.abs([...name].reduce((h, c) => (h * 31 + c.charCodeAt(0)) | 0, 7)) % 9),
+    ...EMPTY_ACTIVITY_META,
     ...(is_lunch ? { is_lunch: true } : {}),
   };
 }

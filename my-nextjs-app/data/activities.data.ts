@@ -26,6 +26,22 @@ const weekdaysThenSun = (week: Window, sun: Window): Window[] => [
   week, week, week, week, week, week, sun,
 ];
 
+// Attach the takemytrip-aligned metadata fields (empty/null for now) to a
+// hand-authored catalogue entry. Fresh arrays per call so no two entries share
+// the same empty array reference. The core re-applies the Activity type on import.
+const withMeta = <T,>(a: T) => ({
+  ...a,
+  id: null,
+  prices: null,
+  websites: [],
+  googleMapUrl: null,
+  notes: [],
+  tags: [],
+  best_time: null,
+  restaurants: [],
+  emoji: null,
+});
+
 // -----------------------------------------------------------------------------
 // Rome — the full 50-activity catalogue.
 // -----------------------------------------------------------------------------
@@ -34,7 +50,7 @@ const weekdaysThenSun = (week: Window, sun: Window): Window[] => [
 // solid stops at 5–6; niche / skippable ones at 2–4. The "Tourist priority"
 // filter (filters.data) scores it heavily, so the planner fills a trip's limited
 // slots with the high-priority sights first.
-export const ROME_ACTIVITIES = [
+const ROME_BASE = [
   // Open daily 08:30–19:00 year-round.
   { name: "Colosseum & Roman Forum", description: "Tour the ancient arena and the ruins of the old city centre.", hours: 3, cost: 18, coords: { lat: 41.8902, lng: 12.4922 }, program: everyDay(at(8.5, 19)), cultural: 9, foodie: 0, adventurous: 4, relaxing: 2, priority: 10 },
   // Mon–Sat 09:00–18:00; CLOSED on Sundays (and most religious holidays).
@@ -128,7 +144,7 @@ export const ROME_ACTIVITIES = [
 // Paris — 10 activities (same object shape as Rome's). Three midday-open foodie
 // spots are flagged is_lunch so the lunch mechanic keeps working.
 // -----------------------------------------------------------------------------
-export const PARIS_ACTIVITIES = [
+const PARIS_BASE = [
   { name: "Eiffel Tower", description: "Ride to the top of Paris's iron icon for sweeping city views.", hours: 2.5, cost: 28, coords: { lat: 48.8584, lng: 2.2945 }, program: everyDay(at(9.5, 23)), cultural: 7, foodie: 0, adventurous: 6, relaxing: 3, priority: 10 },
   { name: "Louvre Museum", description: "The world's largest art museum, from the Mona Lisa to antiquities.", hours: 4, cost: 17, coords: { lat: 48.8606, lng: 2.3376 }, program: [at(9, 18), CLOSED, at(9, 18), at(9, 18), at(9, 18), at(9, 18), at(9, 18)], cultural: 10, foodie: 0, adventurous: 1, relaxing: 2, priority: 10 },
   { name: "Notre-Dame & Île de la Cité", description: "Walk the medieval island around the great cathedral.", hours: 1.5, cost: 0, coords: { lat: 48.8530, lng: 2.3499 }, program: everyDay(ALL_DAY), cultural: 9, foodie: 0, adventurous: 2, relaxing: 4, priority: 9 },
@@ -140,3 +156,9 @@ export const PARIS_ACTIVITIES = [
   { name: "Luxembourg Gardens", description: "Relax by the fountains in Paris's most elegant park.", hours: 1.5, cost: 0, coords: { lat: 48.8462, lng: 2.3372 }, program: everyDay(at(8, 18)), cultural: 3, foodie: 0, adventurous: 2, relaxing: 9, priority: 6 },
   { name: "Macaron & pâtisserie tasting", description: "Sample macarons and pastries at storied Paris patisseries.", hours: 1, cost: 22, coords: { lat: 48.8540, lng: 2.3340 }, program: everyDay(at(10, 19)), cultural: 2, foodie: 9, adventurous: 1, relaxing: 7, priority: 5, is_lunch: true },
 ];
+
+// Public catalogues: the hand-authored entries above, each carrying the empty
+// takemytrip-aligned metadata fields (id, prices, websites, notes, tags,
+// best_time, restaurants, emoji, googleMapUrl).
+export const ROME_ACTIVITIES = ROME_BASE.map((a) => withMeta(a));
+export const PARIS_ACTIVITIES = PARIS_BASE.map((a) => withMeta(a));
