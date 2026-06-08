@@ -5,19 +5,23 @@
 // and types they reference live in filters.functions.
 import {
   averageIndex,
-  costToIndex,
   hoursToIndex,
   normalizedSumIndex,
+  normalizedPartyCostIndex,
+  partyCostToIndex,
   sumOf,
+  sumPartyCost,
   type Filter,
   type Unit,
 } from "./filters.functions";
 import { VIBES } from "./activities.data";
-import { bestRouteLinearity, maxComboValue } from "./activities.functions";
+import { bestRouteLinearity, maxComboValue, maxPartyPrice } from "./activities.functions";
 import type { Params } from "./curves.functions";
 
 export const HOURS_UNIT: Unit = { label: "Hours", suffix: "h", toIndex: hoursToIndex };
-export const COST_UNIT: Unit = { label: "Euros", suffix: "€", toIndex: costToIndex };
+// Targets are euros, converted to the 0–10 budget index against the active
+// party's catalogue total (so a bigger party shifts the whole budget scale).
+export const COST_UNIT: Unit = { label: "Euros", suffix: "€", toIndex: partyCostToIndex };
 
 // ===========================================================================
 // HOW IMPORTANT IS "tourist priority"?  ← the one knob to turn.
@@ -75,10 +79,12 @@ export const DEFAULT_FILTERS: Filter[] = [
     params: CEILING_PARAMS,
     hint: "Stay within this budget",
     unit: COST_UNIT,
-    value: normalizedSumIndex("cost"),
-    format: (combo) => `€${sumOf("cost")(combo)}`,
+    // Cost = what the chosen traveller party pays (per-age prices, cheaper family
+    // bundle when it matches), not the flat adult `cost` — see activityPrice.
+    value: normalizedPartyCostIndex,
+    format: (combo) => `€${sumPartyCost(combo)}`,
     // Targets are stored in EUROS (the unit); converted to index when scoring.
-    options: [20, 50, 90, maxComboValue("cost")].map((eur) => ({
+    options: [20, 50, 90, maxPartyPrice()].map((eur) => ({
       name: `up to €${eur}`,
       target: eur,
     })),

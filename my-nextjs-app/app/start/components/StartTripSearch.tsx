@@ -105,8 +105,9 @@ export default function StartTripSearch({
   // least one date, and a valid party (always ≥ 1 adult, so dest + date gate it).
   const canSearch = !!dest && !!range.start && travelers.adults >= 1;
 
-  // Hand the chosen destination/area/dates to the main planner via query params.
-  // (Travelers are one adult for now — not passed; the planner doesn't use them.)
+  // Hand the chosen destination/area/dates AND party to the main planner via query
+  // params. The party (adults + each child's age) drives the planner's price totals
+  // (see activityPrice / setActiveParty); ages go as a comma list, unset → 0.
   function handleSearch() {
     if (!canSearch) return;
     const params = new URLSearchParams();
@@ -116,6 +117,10 @@ export default function StartTripSearch({
     }
     if (range.start) params.set("start", toISODate(range.start));
     if (range.end) params.set("end", toISODate(range.end));
+    params.set("adults", String(travelers.adults));
+    if (travelers.children > 0) {
+      params.set("ages", travelers.childAges.map((a) => a ?? 0).join(","));
+    }
     const qs = params.toString();
     router.push(qs ? `/plan?${qs}` : "/plan");
   }

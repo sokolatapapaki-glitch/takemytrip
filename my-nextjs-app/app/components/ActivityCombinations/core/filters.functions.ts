@@ -4,7 +4,13 @@
 // The filter config objects themselves (units, DEFAULT_FILTERS) live in
 // filters.data. This file holds the reusable index calculators, the scoring
 // math, and the types.
-import { Activity, NumericKey, maxComboValue } from "./activities.functions";
+import {
+  Activity,
+  NumericKey,
+  maxComboValue,
+  activityPrice,
+  maxPartyPrice,
+} from "./activities.functions";
 import { CURVE_BY_NAME } from "./curves.data";
 import type { Curve, Params, ScaleScore } from "./curves.functions";
 
@@ -37,6 +43,17 @@ export function sumOf(key: NumericKey) {
 export const hoursToIndex = (hours: number) =>
   (hours / maxComboValue("hours")) * 10;
 export const costToIndex = (cost: number) => (cost / maxComboValue("cost")) * 10;
+
+// PARTY COST — the same magnitude as a normalised sum, but using each activity's
+// price for the active traveller party (see activityPrice) instead of the flat
+// `cost` field. The catalogue total (maxPartyPrice) is read at scoring time so it
+// tracks the active city AND party. `|| 1` guards an all-free catalogue (÷0).
+export const sumPartyCost = (combo: Activity[]): number =>
+  combo.reduce((s, a) => s + activityPrice(a), 0);
+export const normalizedPartyCostIndex = (combo: Activity[]): number =>
+  (sumPartyCost(combo) / (maxPartyPrice() || 1)) * 10;
+export const partyCostToIndex = (cost: number): number =>
+  (cost / (maxPartyPrice() || 1)) * 10;
 
 // A real-world UNIT for a filter's option targets. When present, option targets
 // are entered/stored in this unit (e.g. hours, euros) and converted to the 0–10

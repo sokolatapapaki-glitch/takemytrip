@@ -23,7 +23,11 @@ test("Paris has 10 activities and a centre distinct from Rome", () => {
   assert.equal(PARIS.activities.length, 10);
   assert.notDeepEqual(PARIS.center, ROME.center);
   assert.ok(CITIES.includes(PARIS) && CITIES.includes(ROME));
-  assert.equal(ALL_ACTIVITIES.length, ROME.activities.length + PARIS.activities.length);
+  // ALL_ACTIVITIES is the flat union of every city's catalogue.
+  assert.equal(
+    ALL_ACTIVITIES.length,
+    CITIES.reduce((s, c) => s + c.activities.length, 0)
+  );
 });
 
 test("maxComboValue follows the active city's catalogue", () => {
@@ -45,12 +49,12 @@ test("every destination's centre equals its first area, with at least one area",
   }
 });
 
-test("destinations without a catalogue are scaffolded (empty, still selectable)", () => {
-  const scaffolded = CITIES.filter((c) => c.activities.length === 0);
-  assert.ok(scaffolded.length > 0, "some destinations are scaffolded");
-  // Only Rome + Paris carry activities for now.
-  const withActivities = CITIES.filter((c) => c.activities.length > 0).map((c) => c.id);
-  assert.deepEqual(withActivities.sort(), ["paris", "rome"]);
+test("every destination carries a non-empty activity catalogue", () => {
+  // Rome/Paris are curated; the other cities come from the generated catalogues
+  // in data/activities/ — so every selectable destination now has activities.
+  for (const c of CITIES) {
+    assert.ok(c.activities.length > 0, `${c.name} should have activities`);
+  }
 });
 
 test("setActiveCity's area anchor overrides the city centre", () => {

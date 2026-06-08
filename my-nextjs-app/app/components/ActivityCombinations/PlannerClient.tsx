@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import dynamic from "next/dynamic";
 
 // The planner is fully interactive and depends on client-only runtime values
@@ -15,5 +16,14 @@ const ActivityCombinations = dynamic(() => import("./index"), {
 });
 
 export default function PlannerClient() {
-  return <ActivityCombinations />;
+  // Suspense boundary for the planner's useSearchParams (reads the /start hand-off).
+  return (
+    <Suspense
+      fallback={
+        <div className="p-8 text-sm text-zinc-500 dark:text-zinc-400">Loading planner…</div>
+      }
+    >
+      <ActivityCombinations />
+    </Suspense>
+  );
 }

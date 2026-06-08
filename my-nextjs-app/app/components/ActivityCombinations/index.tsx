@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { setActiveCity } from "./core/activities.functions";
+import { useSearchParams, type ReadonlyURLSearchParams } from "next/navigation";
+import { setActiveCity, setActiveParty, type Party } from "./core/activities.functions";
 import { DAYS } from "./core/activities.data";
 import { CITIES, DEFAULT_CITY, type City, type Area } from "./core/cities.data";
 import { defaultSelection, Selection } from "./core/filters.functions";
@@ -20,29 +21,37 @@ import { DEFAULT_START_HOUR } from "./core/schedule.data";
 // to resize them — the range's length just decides how many slots are USED.
 const MAX_DAYS = 7;
 
-// Hand-off params from the /start page (?dest=&area=&start=&end=). The planner
-// is client-only (ssr:false), so window.location is available on first render —
-// no useSearchParams/Suspense needed. Missing/invalid params just fall back to
+// Hand-off params from the /start page (?dest=&area=&start=&end=&adults=&ages=).
+// Read from Next's reactive `useSearchParams()` (passed in) rather than a one-time
+// window.location snapshot, so a client-side navigation from the homepage always
+// lands on the chosen city — not the default. Missing/invalid params fall back to
 // the planner's defaults.
-function parseStartParams(): {
+function parseStartParams(p: ReadonlyURLSearchParams): {
   cityId?: string;
   areaId?: string;
   start?: Date;
   end?: Date;
+  party: Party;
 } {
-  if (typeof window === "undefined") return {};
-  const p = new URLSearchParams(window.location.search);
   const parseDate = (s: string | null): Date | undefined => {
     const m = s ? /^(\d{4})-(\d{2})-(\d{2})$/.exec(s) : null;
     if (!m) return undefined;
     const d = startOfDay(new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3])));
     return Number.isNaN(d.getTime()) ? undefined : d;
   };
+  // The party from ?adults=&ages= (ages = comma list of each child's age). Always
+  // at least one adult; non-numeric ages are dropped.
+  const adults = Math.max(1, Math.floor(Number(p.get("adults"))) || 1);
+  const childAges = (p.get("ages") ?? "")
+    .split(",")
+    .map((s) => Number(s))
+    .filter((n) => Number.isInteger(n) && n >= 0);
   return {
     cityId: p.get("dest") ?? undefined,
     areaId: p.get("area") ?? undefined,
     start: parseDate(p.get("start")),
     end: parseDate(p.get("end")),
+    party: { adults, childAges },
   };
 }
 
@@ -50,8 +59,10 @@ export default function ActivityCombinations() {
   const [edits] = useFilterEdits();
   const filters = useMemo(() => toEffective(edits), [edits]);
 
-  // Read the /start hand-off once (on mount).
-  const initial = useMemo(() => parseStartParams(), []);
+  // Read the /start hand-off from the live URL query (reactive — correct after a
+  // client-side navigation from the homepage search).
+  const searchParams = useSearchParams();
+  const initial = useMemo(() => parseStartParams(searchParams), [searchParams]);
   const initialCity = useMemo(
     () => CITIES.find((c) => c.id === initial.cityId) ?? DEFAULT_CITY,
     [initial]
@@ -66,10 +77,17 @@ export default function ActivityCombinations() {
   const [area, setArea] = useState<Area>(
     () => initialCity.areas.find((a) => a.id === initial.areaId) ?? initialCity.areas[0]
   );
-  // Point the scoring engine (maxComboValue's catalogue + the route anchor) at
-  // the active city + selected area, synchronously during render, before any
-  // scoring runs below or in the children.
-  useMemo(() => setActiveCity(city, area.coords), [city, area]);
+  // The traveller party from the /start hand-off (drives price totals); fixed for
+  // the session like the city.
+  const party = initial.party;
+  // Point the scoring engine (maxComboValue's catalogue + the route anchor + the
+  // party's price totals) at the active city + selected area + party, synchronously
+  // during render, before any scoring runs below or in the children. setActiveParty
+  // comes AFTER setActiveCity — the latter clears the party-price cache.
+  useMemo(() => {
+    setActiveCity(city, area.coords);
+    setActiveParty(party);
+  }, [city, area, party]);
 
   // PER-DAY state. Each day slot (0 = first chosen date, 1 = next, …) has its own
   // filter choices, start hour, and "must include" set. Pre-allocated to MAX_DAYS;
@@ -146,6 +164,7 @@ export default function ActivityCombinations() {
   // "must include" sets (the pool is the whole catalogue).
   const trip = useMemo(() => {
     setActiveCity(city, area.coords); // engine on this city + area before planning
+    setActiveParty(party); // and on the chosen party, for price totals
     const starts = dayIndices.map((_, i) => startHours[i]);
     const ends = dayIndices.map((_, i) =>
       scheduleEndHour(filters, selections[i], startHours[i])
@@ -153,7 +172,7 @@ export default function ActivityCombinations() {
     const sel = dayIndices.map((_, i) => selections[i]);
     const circ = dayIndices.map((_, i) => circulars[i]);
     return planTrip(city.activities, dayIndices, starts, ends, sel, filters, circ);
-  }, [city, area, dayIndices, selections, startHours, circulars, filters]);
+  }, [city, area, party, dayIndices, selections, startHours, circulars, filters]);
 
   // Per-day mutators write to the ACTIVE day's slot, leaving the others untouched.
   const choose = (filterIndex: number, optionIndex: number) => {

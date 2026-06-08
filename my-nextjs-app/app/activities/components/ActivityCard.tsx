@@ -1,5 +1,8 @@
 import { FaStar } from "react-icons/fa6";
-import type { Activity } from "@/app/components/ActivityCombinations/core/activities.functions";
+import {
+  adultPrice,
+  type Activity,
+} from "@/app/components/ActivityCombinations/core/activities.functions";
 import { bestVibe, starsOf } from "@/app/map/components/mapData";
 import { VIBE_GRADIENT, VIBE_ICONS } from "./vibeStyle";
 
@@ -21,6 +24,8 @@ export function ActivityCard({
 }) {
   const stars = starsOf(activity);
   const vibe = bestVibe(activity);
+  // The card shows the price for ONE adult; the trip total reflects the party.
+  const price = adultPrice(activity);
   const VibeIcon = VIBE_ICONS[vibe.key];
   return (
     <div
@@ -53,7 +58,7 @@ export function ActivityCard({
             {stars.toFixed(1)}/5
           </span>
           <span aria-hidden>·</span>
-          <span>{activity.cost === 0 ? "Free" : `€${activity.cost}`}</span>
+          <span>{price === 0 ? "Free" : `€${price}`}</span>
         </div>
         <p className="mb-3 mt-1 line-clamp-2 text-sm text-zinc-400">
           {activity.description}

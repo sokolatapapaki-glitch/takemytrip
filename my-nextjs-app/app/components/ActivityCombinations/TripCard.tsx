@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { FaChevronDown, FaChevronUp, FaRoute } from "react-icons/fa6";
 import { DAYS } from "./core/activities.data";
+import { activityPrice } from "./core/activities.functions";
 import type { Area } from "./core/cities.data";
 import type { Filter, Selection } from "./core/filters.functions";
 import type { LeftoverReason, Trip } from "./core/trip.functions";
@@ -17,11 +18,12 @@ function leftoverText(reason: LeftoverReason): string {
       : "would lower the average score";
 }
 
-// Total price = sum of every scheduled activity's cost across all days (each
-// activity is used once in a trip). Display-only; the planner is untouched.
+// Total price = what the chosen traveller party pays across every scheduled
+// activity (each used once in a trip) — per-age prices with the cheaper family
+// bundle when it matches; see activityPrice. Uses the engine's active party.
 function totalPriceOf(trip: Trip): number {
   return trip.days.reduce(
-    (sum, d) => sum + d.activities.reduce((s, a) => s + a.cost, 0),
+    (sum, d) => sum + d.activities.reduce((s, a) => s + activityPrice(a), 0),
     0
   );
 }

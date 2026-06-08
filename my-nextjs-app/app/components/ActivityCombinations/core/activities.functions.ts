@@ -36,6 +36,16 @@ let activeCenterCoords: Coords = ROME_CENTER;
 // reuse it; switching city clears the cache.
 const maxComboCache = new Map<NumericKey, number>();
 
+// The chosen traveller party (from the /start hand-off) drives every price total:
+// each adult pays the "adult" age-price, each child its own age's price, and a
+// matching family bundle wins when it's cheaper (see activityPrice). It's engine
+// module state — like activeCatalogue — set by the UI via setActiveParty before
+// any scoring. `maxPartyCache` is the active catalogue's total at the active party
+// (the budget normaliser); both setActiveCity and setActiveParty clear it.
+export type Party = { adults: number; childAges: number[] };
+let activeParty: Party = { adults: 1, childAges: [] };
+let maxPartyCache: number | null = null;
+
 // Point the engine at a city's catalogue + start anchor. `city` is structurally
 // a { center, activities } (the City type lives in cities.data to avoid a
 // cycle). `anchor` overrides the route start point with the selected AREA's
@@ -47,6 +57,7 @@ export function setActiveCity(
   activeCatalogue = city.activities;
   activeCenterCoords = anchor ?? city.center;
   maxComboCache.clear();
+  maxPartyCache = null; // the party-price total depends on the catalogue
 }
 
 // The active city's fixed start point (route anchor + circular-loop home).
@@ -315,4 +326,58 @@ export function maxComboValue(key: NumericKey): number {
   const total = activeCatalogue.reduce((s, a) => s + a[key], 0);
   maxComboCache.set(key, total);
   return total;
+}
+
+// -----------------------------------------------------------------------------
+// Traveller-party pricing
+// -----------------------------------------------------------------------------
+// Point the engine at the chosen party (set from the /start hand-off before any
+// scoring). Clears the cached party-price total — it depends on the party.
+export function setActiveParty(party: Party): void {
+  activeParty = party;
+  maxPartyCache = null;
+}
+
+export function getActiveParty(): Party {
+  return activeParty;
+}
+
+// The price one traveller of a given age key pays, falling back to the adult
+// price (then 0) when that exact age isn't listed in the table.
+function agePrice(table: PriceTable, ageKey: string): number {
+  const exact = table.ages[ageKey];
+  if (typeof exact === "number") return exact;
+  const adult = table.ages.adult;
+  return typeof adult === "number" ? adult : 0;
+}
+
+// The canonical family-bundle key for a party, e.g. "2_adults_2_children".
+function familyKey(party: Party): string {
+  return `${party.adults}_adults_${party.childAges.length}_children`;
+}
+
+// The 1-adult price of an activity — what the activity cards display. Falls back
+// to the flat `cost` when the activity has no price table.
+export function adultPrice(a: Activity): number {
+  return a.prices ? agePrice(a.prices, "adult") : a.cost;
+}
+
+// What `party` pays for ONE activity: the cheaper of (a) summing each member's
+// age-price and (b) the matching family bundle, when one exists. An activity with
+// no price table falls back to its flat `cost` (party-independent).
+export function activityPrice(a: Activity, party: Party = activeParty): number {
+  if (!a.prices) return a.cost;
+  let sum = party.adults * agePrice(a.prices, "adult");
+  for (const age of party.childAges) sum += agePrice(a.prices, String(age));
+  const bundle = a.prices.family[familyKey(party)];
+  return typeof bundle === "number" && bundle > 0 ? Math.min(sum, bundle) : sum;
+}
+
+// Total the active party pays across the ACTIVE city's catalogue — the cost-budget
+// analogue of maxComboValue, used to normalise the budget index onto 0–10. Cached
+// per (active catalogue × active party); setActiveCity / setActiveParty clear it.
+export function maxPartyPrice(): number {
+  if (maxPartyCache !== null) return maxPartyCache;
+  maxPartyCache = activeCatalogue.reduce((s, a) => s + activityPrice(a, activeParty), 0);
+  return maxPartyCache;
 }
