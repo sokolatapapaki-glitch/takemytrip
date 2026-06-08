@@ -40,6 +40,7 @@ export function FilterSidebar({
   maxDays,
   dates,
   onOpenAdvanced,
+  mobile,
 }: {
   filters: Filter[];
   selection: Selection;
@@ -62,12 +63,17 @@ export function FilterSidebar({
   maxDays: number;
   dates: Date[]; // the chosen dates, in order (for the date summary)
   onOpenAdvanced: () => void; // open the advanced (per-day) filters modal
+  mobile?: boolean;
 }) {
   // The calendar is hidden by default and revealed by "Change dates".
   const [showCalendar, setShowCalendar] = useState(false);
 
+  const wrapperClass = mobile
+    ? "flex h-full w-full flex-col gap-6 bg-white p-5 shadow-2xl ring-1 ring-black/5"
+    : "flex w-full shrink-0 flex-col gap-6 rounded-3xl border border-white/80 bg-white/80 p-5 shadow-xl shadow-orange-900/10 ring-1 ring-black/5 backdrop-blur-md lg:sticky lg:top-8 lg:max-h-[calc(100vh-4rem)] lg:w-64 lg:self-start lg:overflow-y-auto [scrollbar-color:rgba(0,0,0,0.12)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/10 [&::-webkit-scrollbar-track]:bg-transparent";
+
   return (
-    <aside className="flex w-full shrink-0 flex-col gap-6 rounded-3xl border border-white/80 bg-white/80 p-5 shadow-xl shadow-orange-900/10 ring-1 ring-black/5 backdrop-blur-md lg:sticky lg:top-8 lg:max-h-[calc(100vh-4rem)] lg:w-64 lg:self-start lg:overflow-y-auto [scrollbar-color:rgba(0,0,0,0.12)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/10 [&::-webkit-scrollbar-track]:bg-transparent">
+    <aside className={wrapperClass}>
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold text-zinc-800 dark:text-zinc-100">
           Filters

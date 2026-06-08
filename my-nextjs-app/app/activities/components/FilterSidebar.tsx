@@ -45,10 +45,10 @@ export function FilterSidebar({
       </h2>
 
       {/* Price — max-price slider (actual euro cost). */}
-      <div className="mt-5">
+      <div className="mt-5 rounded-3xl">
         <label className="flex items-center justify-between text-sm font-medium text-zinc-700">
           <span>Price</span>
-          <span className="text-zinc-400">
+          <span className="text-zinc-500">
             {filters.priceMax != null ? `≤ €${filters.priceMax}` : "Any"}
           </span>
         </label>
@@ -61,7 +61,7 @@ export function FilterSidebar({
             const v = Number(e.target.value);
             onChange({ priceMax: v >= priceMax ? null : v });
           }}
-          className="mt-2 w-full accent-orange-500"
+          className="mt-4 w-full accent-emerald-500"
         />
       </div>
 
@@ -79,11 +79,10 @@ export function FilterSidebar({
                 type="button"
                 onClick={() => onToggleVibe(v.key)}
                 aria-pressed={on}
-                className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
-                  on
-                    ? "bg-orange-500 text-white shadow-sm shadow-orange-900/10"
-                    : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
-                }`}
+                className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${on
+                  ? "bg-emerald-500 text-white shadow-sm shadow-emerald-900/10"
+                  : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
+                  }`}
               >
                 <Icon className="h-3.5 w-3.5" />
                 {v.label}
@@ -111,11 +110,10 @@ export function FilterSidebar({
                   key={a.id}
                   type="button"
                   onClick={() => onAreaSelect(a.id)}
-                  className={`rounded-lg px-2 py-1.5 text-left text-sm transition-colors ${
-                    currentAreaId === a.id
-                      ? "bg-orange-50 text-orange-700"
-                      : "text-zinc-700 hover:bg-zinc-50"
-                  }`}
+                  className={`rounded-lg px-2 py-1.5 text-left text-sm transition-colors ${currentAreaId === a.id
+                    ? "bg-emerald-50 text-emerald-700"
+                    : "text-zinc-700 hover:bg-zinc-50"
+                    }`}
                 >
                   {a.name}
                   {a.id === centerId ? " (centre)" : ""}

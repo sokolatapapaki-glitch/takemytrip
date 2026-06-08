@@ -5,6 +5,7 @@ import type { Activity } from "./core/activities.functions";
 import { Filter, Selection } from "./core/filters.functions";
 import { mondayIndex } from "./core/calendar.functions";
 import { PerDayFilters } from "./PerDayFilters";
+import { buttonStyles } from "@/app/components/ui/buttonStyles";
 
 // Short label for a chosen date, e.g. "Wed 3".
 const dateLabel = (d: Date) => `${DAYS[mondayIndex(d)]} ${d.getDate()}`;
@@ -119,7 +120,7 @@ export function AdvancedFiltersModal({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg bg-black px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200"
+            className={`rounded-lg px-4 py-2 text-sm font-medium ${buttonStyles.secondary}`}
           >
             Done
           </button>

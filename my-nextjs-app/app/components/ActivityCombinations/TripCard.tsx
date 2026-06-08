@@ -80,7 +80,7 @@ export function TripCard({
     : title;
 
   const cardClass =
-    "animate-card-pop overflow-hidden rounded-3xl border border-white/80 bg-white/80 shadow-xl shadow-orange-900/10 ring-1 ring-black/5 backdrop-blur-md";
+    "animate-card-pop overflow-hidden rounded-none sm:rounded-3xl border border-white/80 bg-white/80 shadow-xl shadow-orange-900/10 ring-1 ring-black/5 backdrop-blur-md transition duration-200 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-900/10";
   const imageClass =
     "flex shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-400 via-rose-400 to-fuchsia-500 text-white";
   // Common button (see buttonStyles.ts) + the inline-flex layout for its arrow.
@@ -90,12 +90,11 @@ export function TripCard({
   // follows, i.e. when open.)
   const header = (
     <header
-      className={`flex items-start gap-4 p-4 ${
-        open ? "border-b border-black/[.08] bg-white/55" : ""
-      }`}
+      className={`flex items-start gap-4 p-3 ${open ? "border-b border-black/[.08] bg-white/55" : ""
+        }`}
     >
-      <div className={`${imageClass} h-16 w-20`} aria-hidden>
-        <FaRoute className="h-7 w-7 drop-shadow" />
+      <div className={`${imageClass} h-20 w-20`} aria-hidden>
+        <FaRoute className="h-9 w-9 drop-shadow" />
       </div>
       <div className="min-w-0 flex-1">
         <span className="text-[11px] font-semibold uppercase tracking-wide text-zinc-400">
@@ -108,19 +107,21 @@ export function TripCard({
           Total price: €{totalPrice} · Total days: {totalDays}
         </p>
       </div>
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-expanded={open}
-        className={`inline-flex shrink-0 items-center gap-1.5 ${buttonStyles.underline}`}
-      >
-        {open ? "Hide" : "See Activities"}
-        {open ? (
-          <FaChevronUp className="h-3 w-3" />
-        ) : (
-          <FaChevronDown className="h-3 w-3" />
-        )}
-      </button>
+      <div className="flex flex-col items-end gap-2 sm:flex-row sm:items-center">
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          className={`inline-flex shrink-0 items-center gap-1.5 ${buttonStyles.underline}`}
+        >
+          {open ? "Hide" : "See Activities"}
+          {open ? (
+            <FaChevronUp className="h-3 w-3" />
+          ) : (
+            <FaChevronDown className="h-3 w-3" />
+          )}
+        </button>
+      </div>
     </header>
   );
 
@@ -135,26 +136,24 @@ export function TripCard({
       {header}
 
       <div className="flex flex-col gap-3 p-4">
-        {showProof ? (
-          <p className="font-mono text-xs text-zinc-400">
-            {trip.exact ? "exhaustive" : "heuristic"} ·{" "}
-            {trip.evaluated.toLocaleString()} states ·{" "}
-            {trip.elapsedMs < 1
-              ? "<1"
-              : Math.round(trip.elapsedMs).toLocaleString()}{" "}
-            ms
-          </p>
-        ) : null}
-        {description ? (
-          <p className="text-sm text-zinc-500">{description}</p>
-        ) : null}
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          Trip
+          <div className="flex justify-end gap-3">
+            <button type="button" className={`${buttonStyles.common} whitespace-nowrap`}>
+              Save Trip
+            </button>
+            <button type="button" className={`${buttonStyles.secondary} whitespace-nowrap`}>
+              Download PDF
+            </button>
+          </div>
+        </div>
 
         {/* The day-by-day program (timeline reused as-is). */}
         <div className="flex flex-col gap-3">
           {trip.days.map((td) => (
             <div
               key={td.day}
-              className="rounded-2xl border border-white/60 bg-white/70 px-4 py-3"
+              className="rounded-2xl border border-white/60 bg-white/70 px-4 py-0"
             >
               {td.activities.length === 0 ? (
                 <>

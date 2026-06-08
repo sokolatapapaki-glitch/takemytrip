@@ -24,15 +24,25 @@ function vibeSvg(Icon: IconType): string {
 }
 
 // A round activity pin with a vibe icon. Pops in via the shared `marker-pop`.
-export function activityIcon(Icon: IconType, active = false): L.DivIcon {
+export function activityIcon(Icon: IconType, active = false, hovered = false): L.DivIcon {
+  const innerColor = active
+    ? "text-orange-500"
+    : hovered
+    ? "text-emerald-500"
+    : "text-zinc-700";
+  const innerBorder = active
+    ? "border-orange-300"
+    : hovered
+    ? "border-emerald-300"
+    : "border-white/70";
+  const outerShadow = active ? "shadow-orange-200/50" : "shadow-slate-900/10";
+
   return L.divIcon({
     className: "", // clear Leaflet's default styling
-    html: `<div class="animate-marker-pop flex h-8 w-8 items-center justify-center rounded-full border ${
-      active ? "border-orange-400 bg-orange-500 text-white" : "border-white/70 bg-white/90 text-zinc-700"
-    } shadow-md shadow-orange-900/10 backdrop-blur">${vibeSvg(Icon)}</div>`,
-    iconSize: [32, 32],
-    iconAnchor: [16, 16],
-    tooltipAnchor: [0, -16],
+    html: `<div class="animate-marker-pop relative flex h-10 w-10 items-center justify-center rounded-full border border-white/70 bg-white/95 shadow-md ${outerShadow} backdrop-blur-sm"><div class="flex h-8 w-8 items-center justify-center rounded-full border ${innerBorder} bg-white ${innerColor}">${vibeSvg(Icon)}</div></div>`,
+    iconSize: [40, 40],
+    iconAnchor: [20, 20],
+    tooltipAnchor: [0, -20],
   });
 }
 
@@ -43,7 +53,7 @@ export function activityIcon(Icon: IconType, active = false): L.DivIcon {
 export function cityIcon(name: string): L.DivIcon {
   return L.divIcon({
     className: "",
-    html: `<div style="width: max-content; transform: translate(-50%, -50%)"><div class="animate-marker-pop flex items-center gap-1 whitespace-nowrap rounded-full bg-white/40 px-2.5 py-1 text-xs font-semibold text-zinc-800 backdrop-blur-sm"><span class="text-emerald-500">${CITY_PIN_SVG}</span>${name}</div></div>`,
+    html: `<div style="width: max-content; transform: translate(-50%, -50%)"><div class="flex items-center gap-1 whitespace-nowrap rounded-full bg-white/40 px-2.5 py-1 text-xs font-semibold text-zinc-800 backdrop-blur-sm"><span class="text-emerald-500">${CITY_PIN_SVG}</span>${name}</div></div>`,
     iconSize: [0, 0], // 0×0 origin; the wrapper's translate centres the content
     iconAnchor: [0, 0],
   });

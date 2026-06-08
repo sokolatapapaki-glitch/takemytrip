@@ -83,11 +83,6 @@ export function DayItinerary({
         <h4 className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
           {DAYS[day]}
         </h4>
-        {note ? (
-          <span className="font-mono text-[11px] text-zinc-400 dark:text-zinc-500">
-            {note}
-          </span>
-        ) : null}
       </div>
 
       {/* Timed itinerary: ordered to respect each activity's hours. Between two
@@ -117,9 +112,8 @@ export function DayItinerary({
           return (
             <Fragment key={item.name}>
               <li
-                className={`flex gap-3 text-zinc-800 dark:text-zinc-100 ${
-                  connectors ? "items-start" : "items-baseline"
-                }`}
+                className={`flex gap-3 text-zinc-800 dark:text-zinc-100 ${connectors ? "items-start" : "items-baseline"
+                  }`}
               >
                 {connectors ? (
                   // Timeline rail: a dot for this stop, joined to the stops above
@@ -135,20 +129,18 @@ export function DayItinerary({
                       <span className="absolute bottom-0 left-1/2 top-3 w-px -translate-x-1/2 bg-orange-200" />
                     ) : null}
                     <span
-                      className={`relative z-10 mt-[7px] h-2.5 w-2.5 rounded-full border-2 ${
-                        item.lunch
-                          ? "border-zinc-300 bg-white"
-                          : "border-orange-400 bg-white"
-                      }`}
+                      className={`relative z-10 mt-[7px] h-2.5 w-2.5 rounded-full border-2 ${item.lunch
+                        ? "border-zinc-300 bg-white"
+                        : "border-orange-400 bg-white"
+                        }`}
                     />
                   </span>
                 ) : null}
                 <span
-                  className={`w-28 shrink-0 font-mono text-xs ${
-                    item.closed
-                      ? "text-amber-600 dark:text-amber-400"
-                      : "text-zinc-500 dark:text-zinc-400"
-                  }`}
+                  className={`w-28 shrink-0 font-mono text-xs ${item.closed
+                    ? "text-amber-600 dark:text-amber-400"
+                    : "text-zinc-500 dark:text-zinc-400"
+                    }`}
                 >
                   {item.closed
                     ? "closed"
@@ -164,7 +156,7 @@ export function DayItinerary({
                     type="button"
                     aria-disabled="true"
                     title="Coming soon"
-                    className={`ml-auto shrink-0 cursor-not-allowed ${buttonStyles.common}`}
+                    className={`ml-auto shrink-0 cursor-not-allowed ${buttonStyles.underline}`}
                   >
                     See more
                   </button>
@@ -197,28 +189,6 @@ export function DayItinerary({
           );
         })}
       </ol>
-
-      <p className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs">
-        {plan.feasible ? (
-          <span className="text-zinc-400 dark:text-zinc-500">
-            Ends {formatTime(plan.endsAt)} · fits the day
-          </span>
-        ) : (
-          <span className="text-amber-600 dark:text-amber-400">
-            Ends {formatTime(plan.endsAt)} · doesn&apos;t fit (opening hours or
-            budget)
-          </span>
-        )}
-        {/* The chosen route is the straightest of the legal orderings; show how
-            direct it is and how many orderings were legal. */}
-        <span className="text-zinc-400 dark:text-zinc-500">
-          · linearity {plan.linearity.toFixed(1)}/10
-        </span>
-        <span className="text-zinc-400 dark:text-zinc-500">
-          · {plan.feasibleOrderings}{" "}
-          {plan.feasibleOrderings === 1 ? "feasible ordering" : "feasible orderings"}
-        </span>
-      </p>
     </div>
   );
 }
@@ -351,7 +321,7 @@ export function ComboResults({
 
               {/* One timed itinerary per day: the selected day plus the chosen
                   number of following days. Each reflects that day's opening hours. */}
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-0">
                 {plans.map((p, i) => (
                   <DayItinerary
                     key={days[i]}

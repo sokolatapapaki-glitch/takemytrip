@@ -70,6 +70,16 @@ export default function StartTripSearch({
   }, [open]);
 
   useEffect(() => {
+    if (!open) return;
+    rootRef.current?.scrollIntoView({ block: "center", behavior: "smooth" });
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [open]);
+
+  useEffect(() => {
     return () => {
       if (searchIconAlertTimeout.current) {
         clearTimeout(searchIconAlertTimeout.current);
@@ -191,9 +201,9 @@ export default function StartTripSearch({
           onClear={
             dest || destQuery
               ? () => {
-                  setDest(null);
-                  setDestQuery("");
-                }
+                setDest(null);
+                setDestQuery("");
+              }
               : undefined
           }
         >
@@ -223,13 +233,37 @@ export default function StartTripSearch({
           onClear={range.start ? () => setRange({ start: null, end: null }) : undefined}
         >
           {open === "dates" && (
-            <Dropdown align="center" onClose={() => setOpen(null)}>
-              <CalendarModal
-                value={range}
-                onChange={setRange}
-                onClose={() => setOpen(null)}
-              />
-            </Dropdown>
+            <>
+              <div className="fixed inset-0 z-[100] bg-white dark:bg-zinc-950 flex flex-col sm:hidden">
+                <div className="flex items-center justify-end border-b border-black/5 px-4 py-4">
+                  <button
+                    type="button"
+                    onClick={() => setOpen(null)}
+                    className="rounded-full border border-black/[.08] px-3 py-2 text-sm font-medium transition-colors hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-white/[.06]"
+                  >
+                    <XIcon className="h-4 w-4" />
+                  </button>
+                </div>
+                <div className="flex-grow overflow-y-auto p-4 pt-0">
+                  <div className="h-full">
+                    <CalendarModal
+                      value={range}
+                      onChange={setRange}
+                      onClose={() => setOpen(null)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="hidden sm:block">
+                <Dropdown align="center" onClose={() => setOpen(null)}>
+                  <CalendarModal
+                    value={range}
+                    onChange={setRange}
+                    onClose={() => setOpen(null)}
+                  />
+                </Dropdown>
+              </div>
+            </>
           )}
         </Field>
 
@@ -258,9 +292,8 @@ export default function StartTripSearch({
           className={`${playEntranceAnimations ? "animate-pop-in" : ""} group flex w-full shrink-0 cursor-pointer items-center justify-center gap-2 rounded-xl px-6 py-3 font-medium lg:w-auto ${homeStyles.primaryButton}`}
         >
           <SearchIcon
-            className={`h-5 w-5 transition-transform duration-200 ease-out group-hover:scale-110 group-hover:-rotate-12 ${
-              searchIconAlert ? "animate-bounce" : ""
-            }`}
+            className={`h-5 w-5 transition-transform duration-200 ease-out group-hover:scale-110 group-hover:-rotate-12 ${searchIconAlert ? "animate-bounce" : ""
+              }`}
           />
           <span>Search</span>
         </button>
@@ -298,9 +331,8 @@ function Field({
       <button
         type="button"
         onClick={onClick}
-        className={`flex w-full cursor-pointer items-center gap-3 rounded-xl border border-black px-4 py-3 text-left transition-colors ${
-          active ? homeStyles.fieldActive : homeStyles.fieldIdle
-        }`}
+        className={`flex w-full cursor-pointer items-center gap-3 rounded-xl border border-zinc-300 px-4 py-3 text-left transition-colors ${active ? homeStyles.fieldActive : homeStyles.fieldIdle
+          }`}
       >
         <span
           className={`${playEntranceAnimations ? "animate-icon-pop" : ""} inline-flex shrink-0 text-zinc-400 transition-transform duration-200 ease-out group-hover:scale-110 group-hover:-translate-y-0.5`}
@@ -309,9 +341,8 @@ function Field({
           {icon}
         </span>
         <span
-          className={`flex-1 truncate text-sm ${value ? "text-zinc-800" : "text-zinc-400"} ${
-            onClear ? "pr-6" : ""
-          }`}
+          className={`flex-1 truncate text-sm ${value ? "text-zinc-800" : "text-zinc-400"} ${onClear ? "pr-6" : ""
+            }`}
         >
           {value ? value : placeholder}
         </span>
@@ -373,9 +404,8 @@ function DestField({
   return (
     <div className="group relative min-w-0 flex-1">
       <div
-        className={`flex w-full items-center gap-3 rounded-xl border border-black px-4 py-3 transition-colors ${
-          active ? homeStyles.fieldActive : homeStyles.fieldIdle
-        }`}
+        className={`flex w-full items-center gap-3 rounded-xl border border-zinc-300 px-4 py-3 transition-colors ${active ? homeStyles.fieldActive : homeStyles.fieldIdle
+          }`}
       >
         <span
           className={`${playEntranceAnimations ? "animate-icon-pop" : ""} inline-flex shrink-0 text-zinc-400 transition-transform duration-200 ease-out group-hover:scale-110 group-hover:-translate-y-0.5`}
@@ -406,9 +436,8 @@ function DestField({
             onFocus={onOpen}
             placeholder="Search destination"
             size={1}
-            className={`w-full min-w-0 flex-1 bg-transparent text-sm text-zinc-800 outline-none placeholder:text-zinc-400 ${
-              onClear ? "pr-6" : ""
-            }`}
+            className={`w-full min-w-0 flex-1 bg-transparent text-sm text-zinc-800 outline-none placeholder:text-zinc-400 ${onClear ? "pr-6" : ""
+              }`}
           />
         ) : (
           // Still typing the placeholder out.
@@ -456,10 +485,10 @@ function Dropdown({
         : "sm:left-1/2 sm:-translate-x-1/2";
   return (
     <>
-      {/* Mobile-only dimmed backdrop; tap anywhere to close. */}
-      <div className="fixed inset-0 z-[90] bg-black/40 sm:hidden" onClick={onClose} />
+      {/* Mobile-only transparent backdrop; tap anywhere to close. */}
+      <div className="fixed inset-0 z-[90] bg-transparent sm:hidden" onClick={onClose} />
       <div
-        className={`animate-pop-in z-[100] origin-top rounded-2xl border border-white/60 bg-white/90 shadow-2xl shadow-orange-900/10 backdrop-blur-xl fixed inset-x-4 top-20 mx-auto max-h-[calc(100vh-6rem)] max-w-md overflow-y-auto sm:absolute sm:inset-x-auto sm:top-full sm:mx-0 sm:mt-2 sm:max-h-none sm:max-w-none sm:overflow-hidden ${desktopPos}`}
+        className={`animate-pop-in z-[100] origin-top rounded-2xl border border-white/60 bg-white/90 shadow-2xl shadow-orange-900/10 backdrop-blur-xl absolute inset-x-0 top-full mx-auto max-h-[calc(100vh-6rem)] overflow-y-auto sm:inset-x-auto sm:top-full sm:mx-0 sm:mt-2 sm:max-h-none sm:max-w-none sm:overflow-hidden ${desktopPos}`}
       >
         {children}
       </div>

@@ -32,7 +32,8 @@ const ACTIVITY_ZOOM = 12; // at/after this zoom, activity pins replace city pill
 // Loaded client-only (see MapClient) because Leaflet needs the browser.
 export default function MapExperience() {
   const [filters, setFilters] = useState<ActivityFilters>(DEFAULT_FILTERS);
-  const [clicked, setClicked] = useState<Activity | null>(null);
+  const [openActivities, setOpenActivities] = useState<Set<string>>(new Set());
+  const [selectedName, setSelectedName] = useState<string | null>(null);
   const [centeredCity, setCenteredCity] = useState<string | null>(null);
   // The city the map is zoomed into (null when zoomed out) — scopes the results.
   const [focusedCityId, setFocusedCityId] = useState<string | null>(null);
@@ -40,6 +41,7 @@ export default function MapExperience() {
   const [hovered, setHovered] = useState<{ activity: Activity; x: number; y: number } | null>(
     null
   );
+  const hoveredName = hovered?.activity.name ?? null;
   const mapRef = useRef<LeafletMap | null>(null);
   // A short close delay lets the cursor travel from the pin onto the card
   // without it disappearing; hovering the card cancels it.
@@ -72,7 +74,12 @@ export default function MapExperience() {
 
   // Open an activity's detail and fly the map to it (used by markers + results).
   const openActivity = (a: Activity) => {
-    setClicked(a);
+    setSelectedName(a.name);
+    setOpenActivities((prev) => {
+      const next = new Set(prev);
+      next.add(a.name);
+      return next;
+    });
     const map = mapRef.current;
     if (map) {
       const z = Math.max(map.getZoom(), ACTIVITY_ZOOM);
@@ -80,8 +87,40 @@ export default function MapExperience() {
     }
   };
 
-  // Clear any open detail when jumping to a new city.
-  const onCityClick = () => setClicked(null);
+  const toggleOpenActivity = (a: Activity) => {
+    setSelectedName(a.name);
+    setOpenActivities((prev) => {
+      const next = new Set(prev);
+      if (next.has(a.name)) next.delete(a.name);
+      else next.add(a.name);
+      return next;
+    });
+  };
+
+  const closeActivity = (name: string) => {
+    setOpenActivities((prev) => {
+      const next = new Set(prev);
+      next.delete(name);
+      return next;
+    });
+  };
+
+  // Clear the selected activity when jumping to a new city.
+  const onCityClick = () => {
+    setSelectedName(null);
+    setOpenActivities(new Set());
+  };
+
+  const onCitySelect = (city: typeof ALL_CITIES[number]) => {
+    setSelectedName(null);
+    setOpenActivities(new Set());
+    setCenteredCity(city.name);
+    setFocusedCityId(city.id);
+    const map = mapRef.current;
+    if (map) {
+      map.flyTo([city.lat, city.lng], ACTIVITY_ZOOM + 1, { animate: true });
+    }
+  };
 
   return (
     <div className="relative isolate flex-1">
@@ -99,7 +138,8 @@ export default function MapExperience() {
           activities={results}
           cities={ALL_CITIES}
           activityZoom={ACTIVITY_ZOOM}
-          selectedName={clicked?.name ?? null}
+          selectedName={selectedName}
+          hoveredName={hoveredName}
           onCityClick={onCityClick}
           onActivityClick={openActivity}
           onActivityHover={showHover}
@@ -115,19 +155,19 @@ export default function MapExperience() {
       {/* Overlays. The wrapper ignores pointer events so the map stays draggable;
           each panel re-enables them for itself. */}
       <div className="pointer-events-none absolute inset-0 z-[1000]">
-        <div className="pointer-events-auto absolute bottom-4 left-4 top-4">
+        <div className="pointer-events-auto absolute left-0 right-0 top-4 px-4 sm:left-4 sm:right-auto sm:top-4 sm:bottom-4 sm:px-0">
           <SearchSidebar
             filters={filters}
             onFiltersChange={setFilters}
             results={results}
-            clicked={clicked}
-            selectedName={clicked?.name ?? null}
-            onPick={openActivity}
-            onCloseClicked={() => setClicked(null)}
+            selectedName={selectedName}
+            openActivities={openActivities}
+            onToggleActivity={toggleOpenActivity}
+            onCloseActivity={closeActivity}
           />
         </div>
 
-        <div className="pointer-events-auto absolute left-1/2 top-4 -translate-x-1/2">
+        <div className="pointer-events-auto absolute left-1/2 top-4 hidden -translate-x-1/2 sm:block">
           <VibeBar
             active={filters.vibe}
             onChange={(vibe: VibeKey | null) => setFilters((f) => ({ ...f, vibe }))}
@@ -135,7 +175,11 @@ export default function MapExperience() {
         </div>
 
         <div className="pointer-events-auto absolute bottom-4 right-4">
-          <CityLabel name={centeredCity} />
+          <CityLabel
+            currentCityName={centeredCity}
+            cities={ALL_CITIES}
+            onCitySelect={onCitySelect}
+          />
         </div>
 
         {/* Floating hover card — stays open while the cursor is over it, and

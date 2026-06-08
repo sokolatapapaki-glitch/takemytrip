@@ -40,10 +40,10 @@ export function ActivityList({
   const q = query.trim().toLowerCase();
   const shown = q
     ? activities.filter(
-        (a) =>
-          a.name.toLowerCase().includes(q) ||
-          a.description.toLowerCase().includes(q)
-      )
+      (a) =>
+        a.name.toLowerCase().includes(q) ||
+        a.description.toLowerCase().includes(q)
+    )
     : activities;
 
   const visible = expanded ? shown : shown.slice(0, COLLAPSED_COUNT);
@@ -65,6 +65,7 @@ export function ActivityList({
               activity={activity}
               index={i}
               selected={selected?.has(activity.name) ?? false}
+              compact
               onToggleSelect={onToggleSelect}
             />
           ))}

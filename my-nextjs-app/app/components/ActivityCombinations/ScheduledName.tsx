@@ -36,7 +36,7 @@ export function ScheduledName({
             onClick={() => setOpen((o) => !o)}
             aria-expanded={open}
             title="Opening hours by day"
-            className={`shrink-0 ${buttonStyles.underline}`}
+            className={`shrink-0 ${buttonStyles.underline} hidden`}
           >
             {open ? "Hours ▲" : "Hours ▼"}
           </button>
@@ -47,11 +47,10 @@ export function ScheduledName({
           {DAYS.map((d, i) => (
             <li
               key={d}
-              className={`flex justify-between gap-4 ${
-                i === day
-                  ? "font-medium text-zinc-800 dark:text-zinc-100"
-                  : "text-zinc-500 dark:text-zinc-400"
-              }`}
+              className={`flex justify-between gap-4 ${i === day
+                ? "font-medium text-zinc-800 dark:text-zinc-100"
+                : "text-zinc-500 dark:text-zinc-400"
+                }`}
             >
               <span>{d}</span>
               <span className="font-mono">{openingHoursFor(activity, i)}</span>

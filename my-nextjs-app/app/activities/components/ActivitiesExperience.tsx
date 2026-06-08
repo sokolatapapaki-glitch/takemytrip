@@ -8,6 +8,7 @@ import type { VibeKey } from "@/app/components/ActivityCombinations/core/activit
 import { SearchIcon } from "@/app/start/components/icons";
 import { FilterDropdown } from "@/app/map/components/FilterDropdown";
 import { VIBES } from "@/app/map/components/mapData";
+import { buttonStyles } from "@/app/components/ui/buttonStyles";
 import {
   ACT_SORT_LABELS,
   DEFAULT_ACT_FILTERS,
@@ -94,105 +95,105 @@ export default function ActivitiesExperience() {
 
       <div
         ref={rootRef}
-        className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-6 lg:flex-row"
+        className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-6"
       >
-        {/* Left filter sidebar. */}
-        <FilterSidebar
-          city={city}
-          filters={filters}
-          priceMax={priceMax}
-          areaOpen={open === "area"}
-          onAreaToggle={() => toggleMenu("area")}
-          onAreaSelect={(areaId) => {
-            set({ areaId });
-            setOpen(null);
-          }}
-          onChange={set}
-          onToggleVibe={toggleVibe}
-        />
-
-        {/* Main column. */}
-        <div className="min-w-0 flex-1">
-          {/* Title. */}
-          <h1 className="text-2xl font-semibold tracking-tight text-zinc-800 sm:text-3xl">
-            Activities in {city.name}
-          </h1>
-
-          {/* Search input (matches the Cities page search). */}
-          <div className="mt-4 flex items-center gap-3 rounded-2xl bg-white/90 px-4 py-3.5 shadow-lg shadow-orange-900/5 ring-1 ring-inset ring-white/60 backdrop-blur-md focus-within:ring-orange-200">
-            <SearchIcon className="h-6 w-6 shrink-0 text-zinc-400" />
-            <input
-              type="text"
-              value={filters.query}
-              onChange={(e) => set({ query: e.target.value })}
-              placeholder="Search activities"
-              className="w-full bg-transparent text-base text-zinc-800 outline-none placeholder:text-zinc-400"
-            />
+        <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
+          <div>
+            <h1 className="text-2xl font-semibold tracking-tight text-zinc-800 sm:text-3xl">
+              Activities in {city.name}
+            </h1>
           </div>
 
-          {/* Below the search: Make Trip on the left, Select Vibe + Sorted by
-              on the right. */}
-          <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
+          <div className="flex flex-wrap items-center justify-end gap-2">
+            <FilterDropdown
+              label="Sorted by"
+              active={filters.sortBy !== DEFAULT_ACT_FILTERS.sortBy}
+              summary={ACT_SORT_LABELS[filters.sortBy]}
+              open={open === "sort"}
+              onToggle={() => toggleMenu("sort")}
+            >
+              <div className="flex flex-col gap-1">
+                {(Object.keys(ACT_SORT_LABELS) as ActSortKey[]).map((k) => (
+                  <button
+                    key={k}
+                    type="button"
+                    onClick={() => {
+                      set({ sortBy: k });
+                      setOpen(null);
+                    }}
+                    className={`rounded-lg px-2 py-1.5 text-left text-sm transition-colors ${filters.sortBy === k
+                        ? "bg-emerald-50 text-emerald-700"
+                        : "text-zinc-700 hover:bg-zinc-50"
+                      }`}
+                  >
+                    {ACT_SORT_LABELS[k]}
+                  </button>
+                ))}
+              </div>
+            </FilterDropdown>
+
             <button
               type="button"
-              aria-disabled="true"
+              disabled
               title="Coming soon"
-              className="shrink-0 rounded-full bg-orange-500 px-4 py-2 text-sm font-medium text-white shadow-sm shadow-orange-900/10 transition-colors hover:bg-orange-600"
+              className={`${buttonStyles.primary} shrink-0 opacity-90 hover:opacity-100`}
             >
               Make Trip
             </button>
-
-            <div className="flex flex-wrap gap-2">
-
-              <FilterDropdown
-                label="Sorted by"
-                active={filters.sortBy !== DEFAULT_ACT_FILTERS.sortBy}
-                summary={ACT_SORT_LABELS[filters.sortBy]}
-                open={open === "sort"}
-                onToggle={() => toggleMenu("sort")}
-              >
-                <div className="flex flex-col gap-1">
-                  {(Object.keys(ACT_SORT_LABELS) as ActSortKey[]).map((k) => (
-                    <button
-                      key={k}
-                      type="button"
-                      onClick={() => {
-                        set({ sortBy: k });
-                        setOpen(null);
-                      }}
-                      className={`rounded-lg px-2 py-1.5 text-left text-sm transition-colors ${filters.sortBy === k
-                          ? "bg-orange-50 text-orange-700"
-                          : "text-zinc-700 hover:bg-zinc-50"
-                        }`}
-                    >
-                      {ACT_SORT_LABELS[k]}
-                    </button>
-                  ))}
-                </div>
-              </FilterDropdown>
-            </div>
           </div>
+        </div>
 
-          {/* Activity cards grid. */}
-          {results.length === 0 ? (
-            <p className="mt-10 text-sm text-zinc-400">
-              {city.activities.length === 0
-                ? `No activities for ${city.name} yet.`
-                : "No activities match your filters."}
-            </p>
-          ) : (
-            <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2">
-              {results.map((a, i) => (
-                <ActivityCard
-                  key={a.name}
-                  activity={a}
-                  index={i}
-                  selected={selected.has(a.name)}
-                  onToggleSelect={(act) => toggleSelect(act.name)}
-                />
-              ))}
+        <div className="grid gap-6 lg:grid-cols-[272px_minmax(0,1fr)]">
+          {/* Left filter sidebar. */}
+          <FilterSidebar
+            city={city}
+            filters={filters}
+            priceMax={priceMax}
+            areaOpen={open === "area"}
+            onAreaToggle={() => toggleMenu("area")}
+            onAreaSelect={(areaId) => {
+              set({ areaId });
+              setOpen(null);
+            }}
+            onChange={set}
+            onToggleVibe={toggleVibe}
+          />
+
+          {/* Main column. */}
+          <div className="min-w-0">
+            {/* Search input (matches the Cities page search). */}
+            <div className="flex items-center gap-3 rounded-2xl bg-white/90 px-4 py-3.5 shadow-lg shadow-orange-900/5 ring-1 ring-inset ring-white/60 backdrop-blur-md focus-within:ring-emerald-200">
+              <SearchIcon className="h-6 w-6 shrink-0 text-zinc-400" />
+              <input
+                type="text"
+                value={filters.query}
+                onChange={(e) => set({ query: e.target.value })}
+                placeholder="Search activities"
+                className="w-full bg-transparent text-base text-zinc-800 outline-none placeholder:text-zinc-400"
+              />
             </div>
-          )}
+
+            {/* Activity cards grid. */}
+            {results.length === 0 ? (
+              <p className="mt-10 text-sm text-zinc-400">
+                {city.activities.length === 0
+                  ? `No activities for ${city.name} yet.`
+                  : "No activities match your filters."}
+              </p>
+            ) : (
+              <div className="mt-6 grid grid-cols-1 justify-items-center gap-5 sm:grid-cols-2">
+                {results.map((a, i) => (
+                  <ActivityCard
+                    key={a.name}
+                    activity={a}
+                    index={i}
+                    selected={selected.has(a.name)}
+                    onToggleSelect={(act) => toggleSelect(act.name)}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </section>

@@ -25,6 +25,7 @@ export function FilterDropdown({
 }) {
   const btnRef = useRef<HTMLButtonElement>(null);
   const [coords, setCoords] = useState<{ top: number; left: number } | null>(null);
+  const popupWidth = 224;
 
   // Anchor the popup to the chip's on-screen position whenever it opens (and on
   // resize), so the scrolling row can't clip it.
@@ -32,7 +33,12 @@ export function FilterDropdown({
     if (!open) return;
     const place = () => {
       const r = btnRef.current?.getBoundingClientRect();
-      if (r) setCoords({ top: r.bottom + 8, left: r.left });
+      if (!r) return;
+      const left =
+        r.left + popupWidth > window.innerWidth - 16
+          ? Math.max(16, r.right - popupWidth)
+          : r.left;
+      setCoords({ top: r.bottom + 8, left });
     };
     place();
     window.addEventListener("resize", place);
@@ -45,20 +51,17 @@ export function FilterDropdown({
         ref={btnRef}
         type="button"
         onClick={onToggle}
-        className={buttonStyles.common + `flex gap-2 ${open
-          ? "bg-gray-100"
-          : ""
-          }`}
+        className={buttonStyles.common + ` flex items-center gap-2 ${open ? "bg-gray-100" : ""}`}
       >
         <span>{summary ? `${label}: ${summary}` : label}</span>
         <ChevronRightIcon
-          className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-90" : "rotate-90 opacity-50"}`}
+          className={`h-4 w-4 text-current transition-transform ${open ? "rotate-90" : "rotate-0 opacity-50"}`}
         />
       </button>
       {open && coords && (
         <div
-          style={{ position: "fixed", top: coords.top, left: coords.left }}
-          className="animate-pop-in z-[1100] w-56 origin-top rounded-2xl border border-white/60 bg-white/95 p-3 shadow-2xl shadow-orange-900/10 backdrop-blur-xl"
+          style={{ position: "fixed", top: coords.top, left: coords.left, width: popupWidth }}
+          className="animate-pop-in z-[1100] origin-top rounded-2xl border border-white/60 bg-white/95 p-3 shadow-2xl shadow-slate-900/10 backdrop-blur-xl"
         >
           {children}
         </div>

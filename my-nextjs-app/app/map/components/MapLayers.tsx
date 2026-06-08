@@ -20,6 +20,7 @@ export function MapLayers({
   cities,
   activityZoom,
   selectedName,
+  hoveredName,
   onCityClick,
   onActivityClick,
   onActivityHover,
@@ -32,6 +33,7 @@ export function MapLayers({
   cities: City[];
   activityZoom: number;
   selectedName: string | null;
+  hoveredName: string | null;
   onCityClick: (city: City) => void;
   onActivityClick: (a: Activity) => void;
   // Marker hover: reports the activity and its on-screen (container) position so
@@ -54,11 +56,12 @@ export function MapLayers({
   const iconCache = useRef(new Map<string, ReturnType<typeof activityIcon>>());
   const getActivityIcon = (a: Activity) => {
     const active = selectedName === a.name;
-    const key = `${a.name}|${active}`;
+    const hovered = hoveredName === a.name;
+    const key = `${a.name}|${active}|${hovered}`;
     const cache = iconCache.current;
     let icon = cache.get(key);
     if (!icon) {
-      icon = activityIcon(iconOf(a), active);
+      icon = activityIcon(iconOf(a), active, hovered);
       cache.set(key, icon);
     }
     return icon;

@@ -180,6 +180,7 @@ export default function ActivityCombinations() {
   const undoSelection = () => setSubmitted(null);
   // The advanced (per-day) filters modal — same controls as the sidebar, by day.
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   // Per-day settings for the trip, in chosen-date order.
   const tripSelections = selections.slice(0, dayCount);
@@ -320,161 +321,201 @@ export default function ActivityCombinations() {
 
   return (
     <>
-    {/* Reference implementation of the four named button styles — the class
-        strings come from `buttonStyles` (app/components/ui/buttonStyles.ts);
-        only per-use layout is added here. */}
-    <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center gap-3 px-8 pt-8">
-      <button type="button" className={buttonStyles.underline}>
-        Reset
-      </button>
-      <button type="button" className={buttonStyles.secondary}>
-        Save trip
-      </button>
-      <button type="button" className={buttonStyles.common}>
-        Cancel
-      </button>
-      <button
-        type="button"
-        className={`group flex shrink-0 cursor-pointer items-center justify-center gap-2 ${buttonStyles.primary}`}
-      >
-        <SearchIcon className="h-5 w-5 transition-transform duration-200 ease-out group-hover:scale-110 group-hover:-rotate-12" />
-        <span>Search</span>
-      </button>
-    </div>
-    <div className="mx-auto flex w-full max-w-5xl flex-col gap-8 p-8 lg:flex-row">
-      <FilterSidebar
-        filters={filters}
-        selection={selections[0]}
-        onChoose={chooseAll}
-        required={requireds[0]}
-        onToggleRequired={toggleAllRequired}
-        startHour={startHours[0]}
-        onStartHourChange={setAllStartHour}
-        circular={circulars[0]}
-        onToggleCircular={toggleAllCircular}
-        activities={city.activities}
-        areas={city.areas}
-        area={area}
-        areaNoun={city.kind === "region" ? "city" : "area"}
-        onAreaChange={changeArea}
-        rangeStart={rangeStart}
-        rangeEnd={range.end}
-        onRangeChange={changeRange}
-        minDate={today}
-        maxDays={MAX_DAYS}
-        dates={dates}
-        onOpenAdvanced={() => setShowAdvanced(true)}
-      />
-      <div className="flex min-w-0 flex-1 flex-col gap-8">
-        {city.activities.length === 0 ? (
-          <p className="rounded-lg border border-amber-300/60 bg-amber-50 px-4 py-3 text-sm text-amber-700 dark:border-amber-400/30 dark:bg-amber-950/30 dark:text-amber-300">
-            No activities yet for {city.name}. You can still pick a start{" "}
-            {city.kind === "region" ? "city" : "area"} below — your trip will
-            appear here once activities are added for this destination.
-          </p>
-        ) : null}
-
-        {/* Activities catalogue — hidden until "Select activities" is clicked,
-            then revealed in place (with a search box) above the trip plan. */}
-        <section className="flex flex-col gap-3">
-          <div className="flex items-center justify-between gap-3">
-            <h2 className="text-lg font-semibold text-zinc-800 dark:text-zinc-100">
-              Activities in {city.name}{" "}
-              <span className="text-sm font-normal text-zinc-400 dark:text-zinc-500">
-                · hours for {DAYS[activeWeekday]}
-              </span>
-            </h2>
-            <button
-              type="button"
-              onClick={() => setShowActivities((s) => !s)}
-              aria-expanded={showActivities}
-              disabled={city.activities.length === 0}
-              className={`shrink-0 ${buttonStyles.common} disabled:cursor-not-allowed disabled:text-zinc-300 disabled:hover:bg-transparent`}
-            >
-              {showActivities ? "Hide activities" : "Select activities"}
-            </button>
-          </div>
-          {showActivities && (
-            <>
-              <div className="flex items-center gap-3 rounded-2xl bg-white/90 px-4 py-3.5 shadow-lg shadow-orange-900/5 ring-1 ring-inset ring-white/60 backdrop-blur-md focus-within:ring-orange-200">
-                <SearchIcon className="h-6 w-6 shrink-0 text-zinc-400" />
-                <input
-                  type="text"
-                  value={activityQuery}
-                  onChange={(e) => setActivityQuery(e.target.value)}
-                  placeholder="Search activities"
-                  className="w-full bg-transparent text-base text-zinc-800 outline-none placeholder:text-zinc-400"
-                />
-              </div>
-              <ActivityList
-                day={activeWeekday}
-                activities={city.activities}
-                query={activityQuery}
-                selected={selectedActivities}
-                onToggleSelect={toggleSelectedActivity}
-              />
-
-              {/* Build the trip from only the ticked activities (Submit), and
-                  reverse back to the full-catalogue trip (Undo). */}
-              <div className="flex flex-wrap items-center gap-3">
-                <button
-                  type="button"
-                  onClick={submitSelection}
-                  className={buttonStyles.secondary}
-                >
-                  Submit selection
-                </button>
-                {submitted ? (
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-6 sm:px-8 sm:py-8">
+        <div className="flex flex-col gap-8">
+          <section className="flex flex-col gap-3">
+            <div className="flex items-center justify-between gap-3">
+              <h2 className="text-lg font-semibold text-zinc-800 dark:text-zinc-100">
+                Activities in {city.name}{" "}
+                <span className="text-sm font-normal text-zinc-400 dark:text-zinc-500">
+                  · hours for {DAYS[activeWeekday]}
+                </span>
+              </h2>
+              <button
+                type="button"
+                onClick={() => setShowActivities((s) => !s)}
+                aria-expanded={showActivities}
+                disabled={city.activities.length === 0}
+                className={`shrink-0 ${buttonStyles.common} disabled:cursor-not-allowed disabled:text-zinc-300 disabled:hover:bg-transparent`}
+              >
+                {showActivities ? "Hide activities" : "Select activities"}
+              </button>
+            </div>
+            {showActivities && (
+              <>
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center gap-3 rounded-2xl bg-white/90 px-4 py-3.5 shadow-lg shadow-orange-900/5 ring-1 ring-inset ring-white/60 backdrop-blur-md focus-within:ring-orange-200">
+                    <SearchIcon className="h-6 w-6 shrink-0 text-zinc-400" />
+                    <input
+                      type="text"
+                      value={activityQuery}
+                      onChange={(e) => setActivityQuery(e.target.value)}
+                      placeholder="Search activities"
+                      className="w-full bg-transparent text-base text-zinc-800 outline-none placeholder:text-zinc-400"
+                    />
+                  </div>
                   <button
                     type="button"
-                    onClick={undoSelection}
-                    className={buttonStyles.common}
+                    onClick={() => setShowMobileFilters(true)}
+                    className={`${buttonStyles.secondary} w-full sm:hidden`}
                   >
-                    Undo submission
+                    Filters
                   </button>
-                ) : null}
-                {submitted ? (
-                  <span className="text-sm text-zinc-500">
-                    Trip built from {submitted.size} selected{" "}
-                    {submitted.size === 1 ? "activity" : "activities"}.
-                  </span>
-                ) : null}
-              </div>
-            </>
-          )}
-        </section>
+                </div>
+                <ActivityList
+                  day={activeWeekday}
+                  activities={city.activities}
+                  query={activityQuery}
+                  selected={selectedActivities}
+                  onToggleSelect={toggleSelectedActivity}
+                />
 
-        <TripPlan
-          trip={trip}
-          area={area}
-          cityName={city.name}
-          selections={tripSelections}
-          startHours={tripStartHours}
-          endHours={tripEndHours}
-          circulars={circulars.slice(0, dayCount)}
-          filters={filters}
-        />
+                <div className="flex flex-wrap items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={submitSelection}
+                    className={`mx-auto sm:mx-0 ${buttonStyles.secondary}`}
+                  >
+                    Submit selection
+                  </button>
+                  {submitted ? (
+                    <button
+                      type="button"
+                      onClick={undoSelection}
+                      className={buttonStyles.common}
+                    >
+                      Undo submission
+                    </button>
+                  ) : null}
+                  {submitted ? (
+                    <span className="text-sm text-zinc-500">
+                      Trip built from {submitted.size} selected{" "}
+                      {submitted.size === 1 ? "activity" : "activities"}.
+                    </span>
+                  ) : null}
+                </div>
+              </>
+            )}
+          </section>
+
+          <div className="lg:flex lg:items-start lg:gap-8">
+            <div className="hidden lg:block lg:w-80 lg:shrink-0">
+              <FilterSidebar
+                filters={filters}
+                selection={selections[0]}
+                onChoose={chooseAll}
+                required={requireds[0]}
+                onToggleRequired={toggleAllRequired}
+                startHour={startHours[0]}
+                onStartHourChange={setAllStartHour}
+                circular={circulars[0]}
+                onToggleCircular={toggleAllCircular}
+                activities={city.activities}
+                areas={city.areas}
+                area={area}
+                areaNoun={city.kind === "region" ? "city" : "area"}
+                onAreaChange={changeArea}
+                rangeStart={rangeStart}
+                rangeEnd={range.end}
+                onRangeChange={changeRange}
+                minDate={today}
+                maxDays={MAX_DAYS}
+                dates={dates}
+                onOpenAdvanced={() => setShowAdvanced(true)}
+              />
+            </div>
+
+            <div className="flex min-w-0 flex-1 flex-col gap-8">
+              {city.activities.length === 0 ? (
+                <p className="rounded-lg border border-amber-300/60 bg-amber-50 px-4 py-3 text-sm text-amber-700 dark:border-amber-400/30 dark:bg-amber-950/30 dark:text-amber-300">
+                  No activities yet for {city.name}. You can still pick a start{" "}
+                  {city.kind === "region" ? "city" : "area"} below — your trip will
+                  appear here once activities are added for this destination.
+                </p>
+              ) : null}
+
+              <TripPlan
+                trip={trip}
+                area={area}
+                cityName={city.name}
+                selections={tripSelections}
+                startHours={tripStartHours}
+                endHours={tripEndHours}
+                circulars={circulars.slice(0, dayCount)}
+                filters={filters}
+              />
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
 
-    {showAdvanced && (
-      <AdvancedFiltersModal
-        filters={filters}
-        selection={activeSelection}
-        onChoose={choose}
-        required={activeRequired}
-        onToggleRequired={toggleRequired}
-        startHour={activeStartHour}
-        onStartHourChange={setActiveStartHour}
-        circular={activeCircular}
-        onToggleCircular={toggleActiveCircular}
-        activities={city.activities}
-        dates={dates}
-        activeDay={activeSlot}
-        onActiveDayChange={changeActiveDay}
-        onClose={() => setShowAdvanced(false)}
-      />
-    )}
+      {showMobileFilters && (
+        <div className="fixed inset-0 z-50 flex">
+          <div
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+            onClick={() => setShowMobileFilters(false)}
+          />
+          <div className="relative ml-auto flex h-full w-full max-w-[420px] flex-col bg-white text-zinc-900 shadow-2xl transition-transform duration-300 sm:max-w-[480px]">
+            <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-4">
+              <h2 className="text-lg font-semibold">Filters</h2>
+              <button
+                type="button"
+                onClick={() => setShowMobileFilters(false)}
+                className="rounded-full p-2 text-zinc-600 transition-colors hover:bg-zinc-100"
+                aria-label="Close filters"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5">
+                  <path d="M6 6l12 12M18 6 6 18" />
+                </svg>
+              </button>
+            </div>
+            <div className="flex-1 overflow-y-auto">
+              <FilterSidebar
+                filters={filters}
+                selection={selections[0]}
+                onChoose={chooseAll}
+                required={requireds[0]}
+                onToggleRequired={toggleAllRequired}
+                startHour={startHours[0]}
+                onStartHourChange={setAllStartHour}
+                circular={circulars[0]}
+                onToggleCircular={toggleAllCircular}
+                activities={city.activities}
+                areas={city.areas}
+                area={area}
+                areaNoun={city.kind === "region" ? "city" : "area"}
+                onAreaChange={changeArea}
+                rangeStart={rangeStart}
+                rangeEnd={range.end}
+                onRangeChange={changeRange}
+                minDate={today}
+                maxDays={MAX_DAYS}
+                dates={dates}
+                onOpenAdvanced={() => setShowAdvanced(true)}
+                mobile
+              />
+            </div>
+          </div>
+        </div>
+      )}
+      {showAdvanced && (
+        <AdvancedFiltersModal
+          filters={filters}
+          selection={activeSelection}
+          onChoose={choose}
+          required={activeRequired}
+          onToggleRequired={toggleRequired}
+          startHour={activeStartHour}
+          onStartHourChange={setActiveStartHour}
+          circular={activeCircular}
+          onToggleCircular={toggleActiveCircular}
+          activities={city.activities}
+          dates={dates}
+          activeDay={activeSlot}
+          onActiveDayChange={changeActiveDay}
+          onClose={() => setShowAdvanced(false)}
+        />
+      )}
     </>
   );
 }

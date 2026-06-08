@@ -20,7 +20,7 @@ export function CityCard({ city, index = 0 }: { city: City; index?: number }) {
     <Link
       href={`/activities?city=${city.id}`}
       style={{ animationDelay: `${Math.min(index * 40, 300)}ms` }}
-      className="animate-card-pop flex flex-col overflow-hidden rounded-3xl border border-white/60 bg-white/80 shadow-lg shadow-orange-900/5 backdrop-blur-md transition-shadow hover:shadow-xl hover:shadow-orange-900/10"
+      className="animate-card-pop flex flex-col overflow-hidden rounded-3xl border border-white/60 bg-white/80 shadow-lg shadow-orange-900/5 backdrop-blur-md transition duration-200 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-900/10"
     >
       {/* City photo over a gradient/pin fallback (shown while loading or if the
           city has no image). */}
