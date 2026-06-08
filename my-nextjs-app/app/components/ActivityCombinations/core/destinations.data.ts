@@ -16,14 +16,33 @@ import { DESTINATIONS as RAW_DESTINATIONS } from "../../../../data/destinations.
 // Its coords are the route anchor when chosen in the planner.
 export type DestArea = { id: string; name: string; coords: Coords };
 
+// --- takemytrip destination metadata shapes (mirrored from the source JSON) ---
+// These are null on every destination for now; the types are here so they can be
+// populated from takemytrip later without further type changes.
+export type CityPass = { name: string; description: string; discountPercent: number; url: string };
+export type Pass = { name: string; description: string; prices: Record<string, number>; website: string };
+export type InfoBoxLink = { text: string; url: string };
+export type InfoBox = { color: string; title: string; body: string; links: InfoBoxLink[] };
+
 export type Destination = {
   id: string;
   name: string;
   country: string;
   kind: "city" | "region";
   subLabel: "Areas" | "Cities"; // flyout heading on /start
-  center: Coords; // = areas[0].coords (the default anchor)
+  center: Coords; // = areas[0].coords (the default anchor); also the takemytrip `location`
   areas: DestArea[]; // areas[0] is the default (centre / main city)
+  // Extra fields mirrored from the takemytrip JSON, null until populated. The
+  // takemytrip `location` is intentionally omitted (it IS `center`), and
+  // `activities` are attached separately in cities.data.ts.
+  currency: string | null;
+  emoji: string | null;
+  pricing_model: string | null;
+  description: string | null;
+  cityPass: CityPass | null;
+  passes: Pass[] | null;
+  notes: string | null;
+  infoBoxes: InfoBox[] | null;
 };
 
 // Re-export the data-folder list, typed as the canonical Destination[].

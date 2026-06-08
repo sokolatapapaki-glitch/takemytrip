@@ -11,6 +11,10 @@
 // DESTINATIONS so every existing import keeps working.
 type Coords = { lat: number; lng: number };
 type DestArea = { id: string; name: string; coords: Coords };
+type CityPass = { name: string; description: string; discountPercent: number; url: string };
+type Pass = { name: string; description: string; prices: Record<string, number>; website: string };
+type InfoBoxLink = { text: string; url: string };
+type InfoBox = { color: string; title: string; body: string; links: InfoBoxLink[] };
 type Destination = {
   id: string;
   name: string;
@@ -19,6 +23,17 @@ type Destination = {
   subLabel: "Areas" | "Cities";
   center: Coords;
   areas: DestArea[];
+  // Extra fields mirrored from the takemytrip JSON — null for now (the `location`
+  // field is omitted because it IS `center`, and activities are attached in
+  // cities.data.ts, not here).
+  currency: string | null;
+  emoji: string | null;
+  pricing_model: string | null;
+  description: string | null;
+  cityPass: CityPass | null;
+  passes: Pass[] | null;
+  notes: string | null;
+  infoBoxes: InfoBox[] | null;
 };
 
 // Build an area from a name + lat/lng (id is a kebab-cased slug of the name).
@@ -44,6 +59,15 @@ function dest(
     subLabel: kind === "region" ? "Cities" : "Areas",
     center: areas[0].coords,
     areas,
+    // takemytrip metadata — null for now (populate from the source JSON later).
+    currency: null,
+    emoji: null,
+    pricing_model: null,
+    description: null,
+    cityPass: null,
+    passes: null,
+    notes: null,
+    infoBoxes: null,
   };
 }
 
