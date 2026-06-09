@@ -32,11 +32,11 @@ export default function MyTripsPage() {
         </p>
       </div>
 
-      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <section className="flex flex-col gap-4">
         {SAVED_TRIPS.map((trip) => (
           <article
             key={trip.title}
-            className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-lg shadow-orange-900/5 transition duration-200 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-900/10"
+            className="rounded-3xl border border-white/80 bg-white/80 shadow-xl shadow-orange-900/10 ring-1 ring-black/5 backdrop-blur-md p-6 transition duration-200 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-900/10"
           >
             <div className="mb-4 flex items-center justify-between gap-4 text-sm text-zinc-500">
               <span>{trip.date}</span>
@@ -44,11 +44,11 @@ export default function MyTripsPage() {
             </div>
             <h2 className="text-xl font-semibold text-zinc-900">{trip.title}</h2>
             <p className="mt-2 text-sm text-zinc-500">{trip.subtitle}</p>
-            <div className="mt-5 flex items-center justify-between gap-3">
-              <button className="rounded-full border border-zinc-200 bg-zinc-50 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:border-orange-300 hover:bg-orange-50">
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <button className="rounded-full border border-zinc-200 bg-zinc-50 px-4 py-2 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-50 hover:text-zinc-900">
                 View
               </button>
-              <button className="rounded-full bg-orange-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-orange-600">
+              <button className="rounded-full bg-orange-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-orange-600">
                 Share
               </button>
             </div>

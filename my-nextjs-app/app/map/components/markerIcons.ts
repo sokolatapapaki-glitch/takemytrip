@@ -30,19 +30,15 @@ export function activityIcon(Icon: IconType, active = false, hovered = false): L
     : hovered
     ? "text-emerald-500"
     : "text-zinc-700";
-  const innerBorder = active
-    ? "border-orange-300"
-    : hovered
-    ? "border-emerald-300"
-    : "border-white/70";
+  const innerBorder = active ? "border-orange-300" : "border-white/70";
   const outerShadow = active ? "shadow-orange-200/50" : "shadow-slate-900/10";
 
   return L.divIcon({
     className: "", // clear Leaflet's default styling
-    html: `<div class="animate-marker-pop relative flex h-10 w-10 items-center justify-center rounded-full border border-white/70 bg-white/95 shadow-md ${outerShadow} backdrop-blur-sm"><div class="flex h-8 w-8 items-center justify-center rounded-full border ${innerBorder} bg-white ${innerColor}">${vibeSvg(Icon)}</div></div>`,
-    iconSize: [40, 40],
-    iconAnchor: [20, 20],
-    tooltipAnchor: [0, -20],
+    html: `<div class="animate-marker-pop relative flex h-9 w-9 items-center justify-center rounded-full border border-white/70 bg-white/95 shadow-md ${outerShadow} backdrop-blur-sm"><div class="flex h-7 w-7 items-center justify-center rounded-full border ${innerBorder} bg-white ${innerColor}">${vibeSvg(Icon)}</div></div>`,
+    iconSize: [36, 36],
+    iconAnchor: [18, 18],
+    tooltipAnchor: [0, -18],
   });
 }
 

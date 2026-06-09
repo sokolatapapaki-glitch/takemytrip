@@ -51,7 +51,7 @@ export function FilterDropdown({
         ref={btnRef}
         type="button"
         onClick={onToggle}
-        className={buttonStyles.common + ` flex items-center gap-2 ${open ? "bg-gray-100" : ""}`}
+        className={buttonStyles.common + ` flex items-center gap-2 ${open ? "bg-zinc-50" : ""}`}
       >
         <span>{summary ? `${label}: ${summary}` : label}</span>
         <ChevronRightIcon

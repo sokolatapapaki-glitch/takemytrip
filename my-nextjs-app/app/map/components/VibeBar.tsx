@@ -21,11 +21,10 @@ export function VibeBar({
             key={v.key}
             type="button"
             onClick={() => onChange(on ? null : v.key)}
-            className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-medium transition-colors ${
-              on
+            className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-medium transition-colors ${on
                 ? "bg-orange-500 text-white shadow-sm"
-                : "text-zinc-600 hover:bg-green-50 hover:text-green-700"
-            }`}
+                : "text-zinc-600 hover:bg-zinc-50 hover:text-zinc-700"
+              }`}
           >
             <v.Icon aria-hidden className="h-3.5 w-3.5 shrink-0" />
             {v.label}

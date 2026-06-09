@@ -24,7 +24,7 @@ import {
   XIcon,
 } from "./icons";
 
-type ModalKey = "dest" | "dates" | "travelers";
+type ModalKey = "dest" | "datesFrom" | "datesTo" | "travelers";
 
 // Local date → "YYYY-MM-DD" (no timezone shift, unlike toISOString).
 const toISODate = (d: Date) =>
@@ -155,7 +155,7 @@ export default function StartTripSearch({
         setSearchIconAlert(false);
       }, 900);
       if (!dest) setOpen("dest");
-      else if (!range.start) setOpen("dates");
+      else if (!range.start) setOpen("datesFrom");
       else if (travelers.adults < 1) setOpen("travelers");
       return;
     }
@@ -222,39 +222,19 @@ export default function StartTripSearch({
           )}
         </DestField>
 
-        <Field
-          active={open === "dates"}
-          icon={<CalendarIcon className="h-5 w-5" />}
-          placeholder="From — To"
-          value={dateLabel}
-          iconDelay={490}
-          playEntranceAnimations={playEntranceAnimations}
-          onClick={() => toggle("dates")}
-          onClear={range.start ? () => setRange({ start: null, end: null }) : undefined}
-        >
-          {open === "dates" && (
-            <>
-              <div className="fixed inset-0 z-[100] bg-white dark:bg-zinc-950 flex flex-col sm:hidden">
-                <div className="flex items-center justify-end border-b border-black/5 px-4 py-4">
-                  <button
-                    type="button"
-                    onClick={() => setOpen(null)}
-                    className="rounded-full border border-black/[.08] px-3 py-2 text-sm font-medium transition-colors hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-white/[.06]"
-                  >
-                    <XIcon className="h-4 w-4" />
-                  </button>
-                </div>
-                <div className="flex-grow overflow-y-auto p-4 pt-0">
-                  <div className="h-full">
-                    <CalendarModal
-                      value={range}
-                      onChange={setRange}
-                      onClose={() => setOpen(null)}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="hidden sm:block">
+        <div className="group relative min-w-0 flex-1">
+          <div className="hidden sm:block">
+            <Field
+              active={open === "datesFrom" || open === "datesTo"}
+              icon={<CalendarIcon className="h-5 w-5" />}
+              placeholder="From — To"
+              value={dateLabel}
+              iconDelay={490}
+              playEntranceAnimations={playEntranceAnimations}
+              onClick={() => toggle("datesFrom")}
+              onClear={range.start ? () => setRange({ start: null, end: null }) : undefined}
+            >
+              {(open === "datesFrom" || open === "datesTo") && (
                 <Dropdown align="center" onClose={() => setOpen(null)}>
                   <CalendarModal
                     value={range}
@@ -262,10 +242,80 @@ export default function StartTripSearch({
                     onClose={() => setOpen(null)}
                   />
                 </Dropdown>
-              </div>
-            </>
-          )}
-        </Field>
+              )}
+            </Field>
+          </div>
+
+          <div className="flex gap-2 sm:hidden">
+            <Field
+              active={open === "datesFrom"}
+              icon={<CalendarIcon className="h-5 w-5" />}
+              placeholder="From"
+              value={range.start ? formatShort(range.start) : null}
+              iconDelay={490}
+              playEntranceAnimations={playEntranceAnimations}
+              onClick={() => toggle("datesFrom")}
+              onClear={range.start ? () => setRange({ start: null, end: range.end }) : undefined}
+            >
+              {open === "datesFrom" && (
+                <div className="fixed inset-0 z-[100] bg-white dark:bg-zinc-950 flex flex-col">
+                  <div className="flex items-center justify-end border-b border-black/5 px-4 py-4">
+                    <button
+                      type="button"
+                      onClick={() => setOpen(null)}
+                      className="rounded-full border border-black/[.08] px-3 py-2 text-sm font-medium transition-colors hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-white/[.06]"
+                    >
+                      <XIcon className="h-4 w-4" />
+                    </button>
+                  </div>
+                  <div className="flex-grow overflow-y-auto p-4 pt-0">
+                    <div className="h-full">
+                      <CalendarModal
+                        value={range}
+                        onChange={setRange}
+                        onClose={() => setOpen(null)}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </Field>
+
+            <Field
+              active={open === "datesTo"}
+              icon={<CalendarIcon className="h-5 w-5" />}
+              placeholder="To"
+              value={range.end ? formatShort(range.end) : null}
+              iconDelay={490}
+              playEntranceAnimations={playEntranceAnimations}
+              onClick={() => toggle("datesTo")}
+              onClear={range.end ? () => setRange({ start: range.start, end: null }) : undefined}
+            >
+              {open === "datesTo" && (
+                <div className="fixed inset-0 z-[100] bg-white dark:bg-zinc-950 flex flex-col">
+                  <div className="flex items-center justify-end border-b border-black/5 px-4 py-4">
+                    <button
+                      type="button"
+                      onClick={() => setOpen(null)}
+                      className="rounded-full border border-black/[.08] px-3 py-2 text-sm font-medium transition-colors hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-white/[.06]"
+                    >
+                      <XIcon className="h-4 w-4" />
+                    </button>
+                  </div>
+                  <div className="flex-grow overflow-y-auto p-4 pt-0">
+                    <div className="h-full">
+                      <CalendarModal
+                        value={range}
+                        onChange={setRange}
+                        onClose={() => setOpen(null)}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </Field>
+          </div>
+        </div>
 
         <Field
           active={open === "travelers"}

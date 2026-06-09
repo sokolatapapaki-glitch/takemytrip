@@ -62,7 +62,7 @@ export function SearchSidebar({
   return (
     <div ref={rootRef} className="flex h-auto w-full max-w-[calc(100vw-2rem)] flex-col sm:h-full sm:w-96">
       {/* Search input — its own raised glass bar (not joined to the results). */}
-      <div className="flex items-center gap-3 rounded-2xl bg-white/90 px-4 py-3.5 shadow-lg shadow-orange-900/5 ring-1 ring-inset ring-white/60 backdrop-blur-md focus-within:ring-orange-200">
+      <div className="flex items-center gap-3 rounded-2xl bg-white/90 px-4 py-3.5 h-14 shadow-lg shadow-orange-900/5 ring-1 ring-inset ring-white/60 backdrop-blur-md focus-within:ring-orange-200">
         <SearchIcon className="h-6 w-6 shrink-0 text-zinc-400" />
         <input
           type="text"
@@ -70,20 +70,19 @@ export function SearchSidebar({
           onChange={(e) => set({ query: e.target.value })}
           onFocus={() => setResultsOpen(true)}
           placeholder="Search activities"
-          className="w-full bg-transparent text-base text-zinc-800 outline-none placeholder:text-zinc-400"
+          className="h-full w-full bg-transparent text-base text-zinc-800 outline-none placeholder:text-zinc-400"
         />
-        {resultsOpen ? (
-          <button
-            type="button"
-            onClick={() => setResultsOpen(false)}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-zinc-100"
-            aria-label="Close search results"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4">
-              <path d="M6 6l12 12M18 6 6 18" />
-            </svg>
-          </button>
-        ) : null}
+        <button
+          type="button"
+          onClick={() => setResultsOpen(false)}
+          className={`inline-flex h-9 w-9 items-center justify-center rounded-full text-zinc-500 transition-colors ${resultsOpen ? "hover:bg-zinc-50 opacity-100" : "opacity-0 pointer-events-none"
+            }`}
+          aria-label="Close search results"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4">
+            <path d="M6 6l12 12M18 6 6 18" />
+          </svg>
+        </button>
       </div>
 
       {/* Filter chips — only while the results are open; a horizontal row that

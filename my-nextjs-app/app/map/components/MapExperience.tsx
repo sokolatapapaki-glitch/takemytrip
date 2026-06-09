@@ -118,7 +118,7 @@ export default function MapExperience() {
     setFocusedCityId(city.id);
     const map = mapRef.current;
     if (map) {
-      map.flyTo([city.lat, city.lng], ACTIVITY_ZOOM + 1, { animate: true });
+      map.flyTo([city.center.lat, city.center.lng], ACTIVITY_ZOOM + 1, { animate: true });
     }
   };
 

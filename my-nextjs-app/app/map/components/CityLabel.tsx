@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { FaChevronDown, FaLocationDot } from "react-icons/fa6";
-import type { City } from "./mapData";
+import {
+  type City,
+} from "@/app/components/ActivityCombinations/core/cities.data";
 
 // The bottom-right pill showing which city the map is currently centred on.
 // Clicking it opens a dropdown list of cities to jump to.

@@ -3,8 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { BiMoon, BiSun } from "react-icons/bi";
-import { useApp } from "../context/AppContext";
+import { buttonStyles } from "./ui/buttonStyles";
 
 // Right-side navigation buttons (Sitemap/Navbar note). Each navigates to the page
 // named by its label. Map and Cities are live; My trips is a disabled placeholder
@@ -12,11 +11,9 @@ import { useApp } from "../context/AppContext";
 const NAV_ITEMS = [
   { label: "Map", href: "/map", enabled: true },
   { label: "Cities", href: "/cities", enabled: true },
-  { label: "My trips", href: "/my-trips", enabled: true },
 ] as const;
 
 export default function Navbar() {
-  const { theme, toggleTheme } = useApp();
   const pathname = usePathname();
   // On mobile the links + theme toggle collapse into a hamburger dropdown.
   const [menuOpen, setMenuOpen] = useState(false);
@@ -37,7 +34,7 @@ export default function Navbar() {
   return (
     <div ref={menuRef} className="relative">
       <nav className="grid grid-cols-[auto_1fr_auto] items-center border-b border-black/[.08] bg-white/70 px-4 py-2 sm:px-6 backdrop-blur-md dark:border-white/[.145] dark:bg-zinc-950/60 w-full">
-        <Link href="/" className="text-lg font-semibold tracking-tight w-fit">
+        <Link href="/" className="text-xl sm:text-lg font-semibold tracking-tight w-fit">
           Take My Trip
         </Link>
 
@@ -72,12 +69,12 @@ export default function Navbar() {
 
         {/* Right cell: theme toggle on desktop, hamburger on mobile. */}
         <div className="justify-self-end">
-          <button
-            onClick={toggleTheme}
-            className="hidden rounded-full border border-black/[.08] px-3 py-1.5 text-sm font-medium transition-colors hover:bg-black/[.04] sm:block dark:border-white/[.145] dark:hover:bg-white/[.06]"
+          <Link
+            href="/my-trips"
+            className={buttonStyles.secondary + " hidden sm:inline-flex" /* Hidden on mobile, in the hamburger menu. */}
           >
-            {theme === "light" ? "🌙 Dark" : "☀️ Light"}
-          </button>
+            My Trips
+          </Link>
 
           {/* Mobile: animated hamburger ↔ X that opens the menu modal. */}
           <div className="flex justify-end sm:hidden">
@@ -133,28 +130,19 @@ export default function Navbar() {
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   onClick={() => setMenuOpen(false)}
-                  className="block rounded-2xl bg-white px-4 py-4 text-sm text-zinc-700 transition-colors hover:bg-orange-50 hover:text-orange-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-white/[.06]"
+                  className="block rounded-2xl bg-white px-4 py-4 text-base text-zinc-700 transition-colors hover:bg-orange-50 hover:text-orange-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-white/[.06]"
                 >
                   {item.label}
                 </Link>
               );
             })}
-            <button
-              type="button"
-              onClick={() => {
-                toggleTheme();
-                setMenuOpen(false);
-              }}
-              aria-label={theme === "light" ? "Switch to dark theme" : "Switch to light theme"}
-              className="mt-2 flex items-center justify-between rounded-2xl bg-white px-4 py-4 text-left text-sm text-zinc-700 transition-colors hover:bg-orange-50 hover:text-orange-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-white/[.06]"
+            <Link
+              href="/my-trips"
+              onClick={() => setMenuOpen(false)}
+              className="block rounded-2xl bg-white px-4 py-4 text-base text-zinc-700 transition-colors hover:bg-orange-50 hover:text-orange-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-white/[.06]"
             >
-              <span>{theme === "light" ? "Dark mode" : "Light mode"}</span>
-              {theme === "light" ? (
-                <BiMoon className="h-5 w-5" />
-              ) : (
-                <BiSun className="h-5 w-5" />
-              )}
-            </button>
+              My Trips
+            </Link>
           </div>
         </div>
       )}
