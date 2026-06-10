@@ -6,6 +6,7 @@
 // only logs the current selection to the console.
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { DESTINATIONS } from "../data/destinations";
 import { homeStyles } from "../data/palette";
@@ -56,12 +57,16 @@ export default function StartTripSearch({
   const [searchIconAlert, setSearchIconAlert] = useState(false);
   const searchIconAlertTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Close the open modal when clicking anywhere outside the bar.
+  // Close the open modal when clicking anywhere outside the bar. The mobile
+  // full-screen pickers are PORTALED to <body> (outside rootRef), so taps
+  // inside them must not count as "outside".
   const rootRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!open) return;
     function onDown(e: MouseEvent) {
-      if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
+      const target = e.target as Element;
+      if (target.closest?.("[data-fullscreen-picker]")) return;
+      if (rootRef.current && !rootRef.current.contains(target)) {
         setOpen(null);
       }
     }
@@ -69,14 +74,12 @@ export default function StartTripSearch({
     return () => document.removeEventListener("mousedown", onDown);
   }, [open]);
 
+  // Bring the bar into view when a field opens. The page's scrollbar is left
+  // alone on purpose — locking body overflow here made the scrollbar vanish
+  // (and the layout jump) every time an input was focused.
   useEffect(() => {
     if (!open) return;
     rootRef.current?.scrollIntoView({ block: "center", behavior: "smooth" });
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = originalOverflow;
-    };
   }, [open]);
 
   useEffect(() => {
@@ -258,26 +261,14 @@ export default function StartTripSearch({
               onClear={range.start ? () => setRange({ start: null, end: range.end }) : undefined}
             >
               {open === "datesFrom" && (
-                <div className="fixed inset-0 z-[100] bg-white dark:bg-zinc-950 flex flex-col">
-                  <div className="flex items-center justify-end border-b border-black/5 px-4 py-4">
-                    <button
-                      type="button"
-                      onClick={() => setOpen(null)}
-                      className="rounded-full border border-black/[.08] px-3 py-2 text-sm font-medium transition-colors hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-white/[.06]"
-                    >
-                      <XIcon className="h-4 w-4" />
-                    </button>
-                  </div>
-                  <div className="flex-grow overflow-y-auto p-4 pt-0">
-                    <div className="h-full">
-                      <CalendarModal
-                        value={range}
-                        onChange={setRange}
-                        onClose={() => setOpen(null)}
-                      />
-                    </div>
-                  </div>
-                </div>
+                <FullScreenPicker title="From date" onClose={() => setOpen(null)}>
+                  <CalendarModal
+                    value={range}
+                    onChange={setRange}
+                    editing="start"
+                    onClose={() => setOpen(null)}
+                  />
+                </FullScreenPicker>
               )}
             </Field>
 
@@ -292,26 +283,14 @@ export default function StartTripSearch({
               onClear={range.end ? () => setRange({ start: range.start, end: null }) : undefined}
             >
               {open === "datesTo" && (
-                <div className="fixed inset-0 z-[100] bg-white dark:bg-zinc-950 flex flex-col">
-                  <div className="flex items-center justify-end border-b border-black/5 px-4 py-4">
-                    <button
-                      type="button"
-                      onClick={() => setOpen(null)}
-                      className="rounded-full border border-black/[.08] px-3 py-2 text-sm font-medium transition-colors hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-white/[.06]"
-                    >
-                      <XIcon className="h-4 w-4" />
-                    </button>
-                  </div>
-                  <div className="flex-grow overflow-y-auto p-4 pt-0">
-                    <div className="h-full">
-                      <CalendarModal
-                        value={range}
-                        onChange={setRange}
-                        onClose={() => setOpen(null)}
-                      />
-                    </div>
-                  </div>
-                </div>
+                <FullScreenPicker title="To date" onClose={() => setOpen(null)}>
+                  <CalendarModal
+                    value={range}
+                    onChange={setRange}
+                    editing="end"
+                    onClose={() => setOpen(null)}
+                  />
+                </FullScreenPicker>
               )}
             </Field>
           </div>
@@ -349,6 +328,46 @@ export default function StartTripSearch({
         </button>
       </div>
     </div>
+  );
+}
+
+// The mobile From/To date pickers: a true full-screen sheet (title + X header,
+// scrollable body). PORTALED to <body> — the search bar's entrance animation
+// leaves a transform on an ancestor, which would otherwise trap `fixed`
+// positioning inside it (the modal showed up tiny instead of full screen).
+// `data-fullscreen-picker` keeps the bar's outside-click handler from treating
+// taps inside the portal as outside.
+function FullScreenPicker({
+  title,
+  onClose,
+  children,
+}: {
+  title: string;
+  onClose: () => void;
+  children: React.ReactNode;
+}) {
+  return createPortal(
+    <div
+      data-fullscreen-picker
+      className="fixed inset-0 z-[100] flex flex-col bg-white dark:bg-zinc-950"
+    >
+      <div className="flex items-center justify-between border-b border-black/5 px-4 py-4">
+        <span className="text-base font-semibold text-zinc-800 dark:text-zinc-100">
+          {title}
+        </span>
+        <button
+          type="button"
+          onClick={onClose}
+          className="rounded-full border border-black/[.08] px-3 py-2 text-sm font-medium transition-colors hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-white/[.06]"
+        >
+          <XIcon className="h-4 w-4" />
+        </button>
+      </div>
+      <div className="flex-grow overflow-y-auto p-4 pt-0">
+        <div className="h-full">{children}</div>
+      </div>
+    </div>,
+    document.body
   );
 }
 

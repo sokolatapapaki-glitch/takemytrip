@@ -15,7 +15,7 @@ const NAV_ITEMS = [
 
 export default function Navbar() {
   const pathname = usePathname();
-  // On mobile the links + theme toggle collapse into a hamburger dropdown.
+  // On mobile the links + My Trips collapse into a hamburger dropdown.
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -32,43 +32,46 @@ export default function Navbar() {
   }, [menuOpen]);
 
   return (
-    <div ref={menuRef} className="relative">
-      <nav className="grid grid-cols-[auto_1fr_auto] items-center border-b border-black/[.08] bg-white/70 px-4 py-2 sm:px-6 backdrop-blur-md dark:border-white/[.145] dark:bg-zinc-950/60 w-full">
-        <Link href="/" className="text-xl sm:text-lg font-semibold tracking-tight w-fit">
+    // Sticky: the navbar stays pinned to the top of the viewport on every page.
+    // z-40 keeps it above page content but BELOW the app modal overlay (z-50).
+    <div ref={menuRef} className="sticky top-0 z-40">
+      <nav className="flex items-center justify-between border-b border-black/[.08] bg-white/70 px-4 py-2 sm:px-6 backdrop-blur-md dark:border-white/[.145] dark:bg-zinc-950/60 w-full">
+        {/* Mobile gets the larger title (text-2xl); desktop keeps text-lg. */}
+        <Link href="/" className="text-2xl sm:text-lg font-semibold tracking-tight w-fit">
           Take My Trip
         </Link>
 
-        {/* Desktop: centered nav links. Hidden on mobile (in the hamburger). */}
-        <div className="hidden items-center justify-center gap-2 text-base font-medium sm:flex">
-          {NAV_ITEMS.map((item) => {
-            const active = pathname === item.href;
-            if (!item.enabled) {
+        {/* Right group: Map + Cities links next to the My Trips button (not
+            centered). On mobile everything collapses into the hamburger. */}
+        <div className="flex items-center gap-2">
+          <div className="hidden items-center gap-2 text-base font-medium sm:flex">
+            {NAV_ITEMS.map((item) => {
+              const active = pathname === item.href;
+              if (!item.enabled) {
+                return (
+                  <span
+                    key={item.label}
+                    aria-disabled="true"
+                    title="Coming soon"
+                    className="cursor-not-allowed rounded-full px-3 py-1.5 text-zinc-300 dark:text-zinc-600"
+                  >
+                    {item.label}
+                  </span>
+                );
+              }
               return (
-                <span
+                <Link
                   key={item.label}
-                  aria-disabled="true"
-                  title="Coming soon"
-                  className="cursor-not-allowed rounded-full px-3 py-1.5 text-zinc-300 dark:text-zinc-600"
+                  href={item.href}
+                  aria-current={active ? "page" : undefined}
+                  className="rounded-full px-3 py-1.5 text-zinc-600 transition-colors hover:text-green-500 dark:text-zinc-300"
                 >
                   {item.label}
-                </span>
+                </Link>
               );
-            }
-            return (
-              <Link
-                key={item.label}
-                href={item.href}
-                aria-current={active ? "page" : undefined}
-                className="rounded-full px-3 py-1.5 text-zinc-600 transition-colors hover:bg-orange-50 hover:text-orange-600 dark:text-zinc-300 dark:hover:bg-white/[.06]"
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </div>
+            })}
+          </div>
 
-        {/* Right cell: theme toggle on desktop, hamburger on mobile. */}
-        <div className="justify-self-end">
           <Link
             href="/my-trips"
             className={buttonStyles.secondary + " hidden sm:inline-flex" /* Hidden on mobile, in the hamburger menu. */}
@@ -118,7 +121,7 @@ export default function Navbar() {
                     key={item.label}
                     aria-disabled="true"
                     title="Coming soon"
-                    className="block rounded-2xl bg-zinc-50 px-4 py-4 text-sm text-zinc-400 dark:bg-white/5 dark:text-zinc-500"
+                    className="block rounded-2xl bg-zinc-50 px-4 py-4 text-lg text-zinc-400 dark:bg-white/5 dark:text-zinc-500"
                   >
                     {item.label}
                   </span>
@@ -130,16 +133,17 @@ export default function Navbar() {
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   onClick={() => setMenuOpen(false)}
-                  className="block rounded-2xl bg-white px-4 py-4 text-base text-zinc-700 transition-colors hover:bg-orange-50 hover:text-orange-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-white/[.06]"
+                  className="block rounded-2xl bg-white px-4 py-4 text-lg text-zinc-700 transition-colors hover:text-green-500 dark:bg-zinc-900 dark:text-zinc-100"
                 >
                   {item.label}
                 </Link>
               );
             })}
+            {/* My Trips: the secondary button (matches the desktop navbar). */}
             <Link
               href="/my-trips"
               onClick={() => setMenuOpen(false)}
-              className="block rounded-2xl bg-white px-4 py-4 text-base text-zinc-700 transition-colors hover:bg-orange-50 hover:text-orange-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-white/[.06]"
+              className={`block w-full ${buttonStyles.secondary}`}
             >
               My Trips
             </Link>

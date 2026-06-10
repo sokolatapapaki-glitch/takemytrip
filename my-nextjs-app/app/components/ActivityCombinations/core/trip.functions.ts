@@ -39,7 +39,11 @@ export type TripDay = {
 
 // closed: shut on all chosen days · no-room: can't fit any day legally · score:
 // could be placed, but adding it anywhere would lower the average day score.
-export type LeftoverReason = "closed" | "no-room" | "score";
+// removed: never produced by the planner — set when the user removes an
+// activity from a SAVED trip on /my-trips (see trips.storage).
+// bumped: never produced by the planner — set when a must-include activity
+// displaced this one to claim its slot (see trip.required.ts).
+export type LeftoverReason = "closed" | "no-room" | "score" | "removed" | "bumped";
 export type Leftover = { activity: Activity; reason: LeftoverReason };
 
 export type Trip = {

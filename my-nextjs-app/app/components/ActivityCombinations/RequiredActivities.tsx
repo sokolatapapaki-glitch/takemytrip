@@ -48,7 +48,7 @@ export function RequiredActivities({
           Must include
         </h3>
         <p className="text-xs text-zinc-400 dark:text-zinc-500">
-          Only show plans with these
+          Your trip will always contain these
         </p>
       </div>
       <div className="flex flex-col gap-1.5">

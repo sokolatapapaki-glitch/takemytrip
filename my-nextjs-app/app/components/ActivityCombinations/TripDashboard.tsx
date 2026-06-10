@@ -123,6 +123,12 @@ function leftoverText(reason: LeftoverReason): string {
       return "can't fit any day within the time budget";
     case "score":
       return "left out — placing it anywhere would lower the average score";
+    case "removed":
+      // Only on /my-trips saved trips (user removal) — the proof never shows
+      // there, but the type requires the case.
+      return "removed from the plan";
+    case "bumped":
+      return "made room for a must-include activity";
   }
 }
 

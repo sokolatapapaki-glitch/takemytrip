@@ -23,22 +23,23 @@ function vibeSvg(Icon: IconType): string {
   return svg;
 }
 
-// A round activity pin with a vibe icon. Pops in via the shared `marker-pop`.
+// A round activity pin with a vibe icon: a single compact white circle (no
+// inner ring), so the padding around the icon stays tight. Hover changes ONLY
+// the icon color (green); the selected pin's icon is orange. Pops in via the
+// shared `marker-pop`.
 export function activityIcon(Icon: IconType, active = false, hovered = false): L.DivIcon {
-  const innerColor = active
+  const iconColor = active
     ? "text-orange-500"
     : hovered
     ? "text-emerald-500"
     : "text-zinc-700";
-  const innerBorder = active ? "border-orange-300" : "border-white/70";
-  const outerShadow = active ? "shadow-orange-200/50" : "shadow-slate-900/10";
 
   return L.divIcon({
     className: "", // clear Leaflet's default styling
-    html: `<div class="animate-marker-pop relative flex h-9 w-9 items-center justify-center rounded-full border border-white/70 bg-white/95 shadow-md ${outerShadow} backdrop-blur-sm"><div class="flex h-7 w-7 items-center justify-center rounded-full border ${innerBorder} bg-white ${innerColor}">${vibeSvg(Icon)}</div></div>`,
-    iconSize: [36, 36],
-    iconAnchor: [18, 18],
-    tooltipAnchor: [0, -18],
+    html: `<div class="animate-marker-pop flex h-7 w-7 items-center justify-center rounded-full bg-white shadow-md shadow-slate-900/10 ${iconColor}">${vibeSvg(Icon)}</div>`,
+    iconSize: [28, 28],
+    iconAnchor: [14, 14],
+    tooltipAnchor: [0, -14],
   });
 }
 

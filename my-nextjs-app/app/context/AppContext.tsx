@@ -9,13 +9,22 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import type { Activity } from "../components/ActivityCombinations/core/activities.functions";
+import { ActivityDetail } from "../components/ActivityDetail";
 
 type Theme = "light" | "dark";
+
+// "wide" is for content with a two-column layout (e.g. the activity detail
+// modal); the default stays the original max-w-lg sheet.
+type ModalSize = "default" | "wide";
 
 type AppContextValue = {
   theme: Theme;
   toggleTheme: () => void;
-  openModal: (content: ReactNode) => void;
+  openModal: (content: ReactNode, options?: { size?: ModalSize }) => void;
+  // Opens the activity detail modal (wide) for the given activity — usable from
+  // any "See more" trigger anywhere in the app.
+  openActivity: (activity: Activity) => void;
   closeModal: () => void;
   isModalOpen: boolean;
 };
@@ -24,12 +33,12 @@ const AppContext = createContext<AppContextValue | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>("light");
-  const [modalContent, setModalContent] = useState<ReactNode | null>(null);
+  const [modal, setModal] = useState<{ content: ReactNode; size: ModalSize } | null>(null);
   // True only when a pointer press actually started on the backdrop, so the
   // synthetic "ghost click" from the opening tap can't immediately dismiss it.
   const backdropPressed = useRef(false);
 
-  const isModalOpen = modalContent !== null;
+  const isModalOpen = modal !== null;
 
   // Keep the <html> class in sync so Tailwind's dark: variants apply.
   useEffect(() => {
@@ -49,12 +58,30 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const toggleTheme = () =>
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
 
-  const openModal = useCallback((content: ReactNode) => {
-    setModalContent(content);
-  }, []);
+  const openModal = useCallback(
+    (content: ReactNode, options?: { size?: ModalSize }) => {
+      setModal({ content, size: options?.size ?? "default" });
+    },
+    []
+  );
 
   const closeModal = useCallback(() => {
-    setModalContent(null);
+    setModal(null);
+  }, []);
+
+  const openActivity = useCallback((activity: Activity) => {
+    setModal({
+      // key remounts the detail (resetting its history) when opening a
+      // different activity while the modal is already up.
+      content: (
+        <ActivityDetail
+          key={activity.name}
+          activity={activity}
+          onClose={() => setModal(null)}
+        />
+      ),
+      size: "wide",
+    });
   }, []);
 
   // Close on Escape key.
@@ -69,7 +96,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   return (
     <AppContext.Provider
-      value={{ theme, toggleTheme, openModal, closeModal, isModalOpen }}
+      value={{ theme, toggleTheme, openModal, openActivity, closeModal, isModalOpen }}
     >
       {children}
 
@@ -88,7 +115,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
           }}
         >
           <div
-            className="relative flex h-full w-full flex-col overflow-y-auto bg-white text-black shadow-xl dark:bg-zinc-900 dark:text-zinc-50 sm:h-auto sm:max-h-full sm:w-full sm:max-w-lg sm:rounded-2xl"
+            className={`relative flex h-full w-full flex-col overflow-y-auto bg-white text-black shadow-xl dark:bg-zinc-900 dark:text-zinc-50 sm:h-auto sm:max-h-full sm:w-full sm:rounded-2xl ${
+              modal.size === "wide" ? "sm:max-w-4xl" : "sm:max-w-lg"
+            }`}
           >
             <button
               onClick={closeModal}
@@ -98,7 +127,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
               ×
             </button>
 
-            <div className="p-6">{modalContent}</div>
+            <div className="p-6">{modal.content}</div>
           </div>
         </div>
       )}

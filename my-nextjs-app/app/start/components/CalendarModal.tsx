@@ -32,10 +32,16 @@ export function CalendarModal({
   value,
   onChange,
   onClose,
+  editing,
 }: {
   value: DateRange;
   onChange: (r: DateRange) => void;
   onClose?: () => void;
+  // Which endpoint this picker edits (the mobile split From/To fields). When
+  // set, a single tap updates THAT endpoint and closes — tapping "To" with a
+  // full range no longer resets the start. Omitted (desktop): the classic
+  // two-click range flow below.
+  editing?: "start" | "end";
 }) {
   const today = startOfToday();
   const [view, setView] = useState<Date>(() => value.start ?? today);
@@ -50,6 +56,20 @@ export function CalendarModal({
   const hi = start && previewEnd ? (previewEnd < start ? start : previewEnd) : null;
 
   function pick(day: Date) {
+    if (editing === "start") {
+      // Keep the end only if it still comes after the new start.
+      onChange({ start: day, end: end && end >= day ? end : null });
+      onClose?.();
+      return;
+    }
+    if (editing === "end") {
+      // No start yet → the tap sets it (an end alone isn't a range).
+      if (!start) onChange({ start: day, end: null });
+      else if (day < start) onChange({ start: day, end: start });
+      else onChange({ start, end: day });
+      onClose?.();
+      return;
+    }
     if (!start || (start && end)) {
       onChange({ start: day, end: null });
       return;
@@ -80,7 +100,7 @@ export function CalendarModal({
         >
           <ChevronLeftIcon className="h-4 w-4" />
         </button>
-        <span className="text-sm font-semibold text-zinc-800">{monthLabel(view)}</span>
+        <span className="text-base font-semibold text-zinc-800 sm:text-sm">{monthLabel(view)}</span>
         <button
           type="button"
           aria-label="Next month"
@@ -119,7 +139,7 @@ export function CalendarModal({
                 disabled={past}
                 onMouseEnter={() => !past && setHover(day)}
                 onClick={() => !past && pick(day)}
-                className={`my-0.5 flex h-9 w-9 items-center justify-center rounded-full text-sm transition-colors ${
+                className={`my-0.5 flex h-11 w-11 items-center justify-center rounded-full text-base transition-colors sm:h-9 sm:w-9 sm:text-sm ${
                   past ? "cursor-default text-zinc-300" : "text-zinc-700"
                 } ${
                   isSelected

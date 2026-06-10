@@ -1,29 +1,42 @@
-import { FaCheck, FaStar } from "react-icons/fa6";
+import { FaCheck } from "react-icons/fa6";
 import {
   adultPrice,
   type Activity,
 } from "@/app/components/ActivityCombinations/core/activities.functions";
 import { bestVibe, starsOf } from "@/app/map/components/mapData";
 import { buttonStyles } from "@/app/components/ui/buttonStyles";
+import { Stars } from "@/app/components/ui/Stars";
 import { VIBE_GRADIENT, VIBE_ICONS } from "./vibeStyle";
 
 // A single activity tile from the Penpot "Activities in list" board: a select
 // checkbox (top-left), a bright vibe-coloured image placeholder, the activity
 // name, Stars/5, Price, a short description, and a "See more" action. "See more"
-// is a placeholder for now (no detail page yet); the checkbox marks activities
-// (for a future "Make Trip").
+// opens the activity detail modal when the parent passes `onSeeMore` (e.g.
+// useApp().openActivity); the checkbox marks activities (for a future "Make
+// Trip") and can be hidden where selection makes no sense (the modal's strip).
 export function ActivityCard({
   activity,
   index = 0,
   selected = false,
   compact = false,
+  hideSelect = false,
+  showUse = false,
+  onUse,
   onToggleSelect,
+  onSeeMore,
 }: {
   activity: Activity;
   index?: number;
   selected?: boolean;
   compact?: boolean;
+  hideSelect?: boolean;
+  // Opt-in (My Trips strip only): a "Use" button at the card's top-right.
+  // With `onUse` it's live (replace mode: "use this one instead"); without a
+  // handler it stays an inert placeholder.
+  showUse?: boolean;
+  onUse?: (activity: Activity) => void;
   onToggleSelect?: (activity: Activity) => void;
+  onSeeMore?: (activity: Activity) => void;
 }) {
   const stars = starsOf(activity);
   const vibe = bestVibe(activity);
@@ -49,6 +62,7 @@ export function ActivityCard({
       </div>
 
       {/* Select checkbox — top-left, kept small and simple over the image. */}
+      {!hideSelect && (
       <label className="absolute left-3 top-3 flex h-5 w-5 cursor-pointer items-center justify-center">
         <input
           type="checkbox"
@@ -61,35 +75,41 @@ export function ActivityCard({
           {selected && <FaCheck className="h-3 w-3" aria-hidden />}
         </span>
       </label>
+      )}
+
+      {/* Use — top-right over the image (My Trips strip). Live in replace mode
+          (onUse), inert placeholder otherwise. */}
+      {showUse && (
+        <button
+          type="button"
+          onClick={onUse ? () => onUse(activity) : undefined}
+          aria-disabled={!onUse}
+          title={onUse ? "Use this activity instead" : "Click Replace on a trip activity first"}
+          className={`absolute right-3 top-3 rounded-full px-3 py-1 text-xs font-medium shadow-sm backdrop-blur-sm transition-colors ${
+            onUse
+              ? "bg-orange-500 text-white hover:bg-orange-600"
+              : "bg-white/90 text-zinc-800 hover:bg-white"
+          }`}
+        >
+          Use
+        </button>
+      )}
 
       <div className="flex flex-1 min-w-0 flex-col p-3">
         <h3 className="text-lg font-semibold text-zinc-800">{activity.name}</h3>
         <div className="mt-0.5 flex flex-wrap items-center gap-3 text-sm text-zinc-500">
-          <div className="relative inline-flex text-zinc-300">
-            <span className="sr-only">{stars.toFixed(1)} out of 5 stars</span>
-            {Array.from({ length: 5 }).map((_, i) => (
-              <FaStar key={`empty-${i}`} className="h-3.5 w-3.5" aria-hidden />
-            ))}
-            <div
-              className="pointer-events-none absolute inset-0 overflow-hidden text-amber-400"
-              style={{ width: `${Math.min(100, Math.max(0, (stars / 5) * 100))}%` }}
-            >
-              <div className="inline-flex">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <FaStar key={`filled-${i}`} className="h-3.5 w-3.5" aria-hidden />
-                ))}
-              </div>
-            </div>
-          </div>
+          <Stars value={stars} />
           <span>{price === 0 ? "Free" : `€${price}`}</span>
         </div>
         <p className={descriptionClass}>{activity.description}</p>
 
-        {/* See more — placeholder for now (no activity detail page yet). */}
+        {/* See more — opens the activity detail modal (stays a no-op until the
+            parent provides the handler). */}
         <button
           type="button"
-          aria-disabled="true"
-          title="Coming soon"
+          onClick={onSeeMore ? () => onSeeMore(activity) : undefined}
+          aria-disabled={!onSeeMore}
+          title={onSeeMore ? undefined : "Coming soon"}
           className={`mt-auto self-start ${buttonStyles.underline}`}
         >
           See more

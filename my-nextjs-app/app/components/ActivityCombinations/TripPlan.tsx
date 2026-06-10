@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { Area } from "./core/cities.data";
 import type { Filter, Selection } from "./core/filters.functions";
 import type { Trip } from "./core/trip.functions";
+import { saveTrip } from "./core/trips.storage";
 import { TripCard } from "./TripCard";
 import { buttonStyles } from "@/app/components/ui/buttonStyles";
 
@@ -59,6 +60,7 @@ function TripAlternatives({
           trip={alt}
           title={`${ordinal(i + 2)}-best trip`}
           showProof={false}
+          onSave={() => saveTrip({ trip: alt, cityName, areaName })}
           cityName={cityName}
           areaName={areaName}
           selections={selections}
@@ -122,6 +124,7 @@ export function TripPlan({
         description="Every activity used once, assigned to maximize the average of the days' combo scores. Same scheduling rules as the combos above."
         showProof
         defaultOpen
+        onSave={() => saveTrip({ trip, cityName, areaName: area.name })}
         cityName={cityName}
         areaName={area.name}
         selections={selections}

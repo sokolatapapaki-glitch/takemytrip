@@ -5,6 +5,7 @@ import "leaflet/dist/leaflet.css";
 import { useMemo, useRef, useState } from "react";
 import type { Map as LeafletMap } from "leaflet";
 import { MapContainer, TileLayer } from "react-leaflet";
+import { useApp } from "@/app/context/AppContext";
 import type {
   Activity,
   VibeKey,
@@ -31,6 +32,9 @@ const ACTIVITY_ZOOM = 12; // at/after this zoom, activity pins replace city pill
 // markers under a glass search sidebar, a vibe bar, and a current-city label.
 // Loaded client-only (see MapClient) because Leaflet needs the browser.
 export default function MapExperience() {
+  // The app-wide activity detail modal (the map's own openActivity below only
+  // selects/flies — the hover card's "See more" opens the full modal).
+  const { openActivity: openActivityModal } = useApp();
   const [filters, setFilters] = useState<ActivityFilters>(DEFAULT_FILTERS);
   const [openActivities, setOpenActivities] = useState<Set<string>>(new Set());
   const [selectedName, setSelectedName] = useState<string | null>(null);
@@ -192,6 +196,7 @@ export default function MapExperience() {
             onMouseLeave={scheduleHide}
             onClick={() => {
               openActivity(hovered.activity);
+              openActivityModal(hovered.activity);
               setHovered(null);
             }}
           >

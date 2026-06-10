@@ -6,11 +6,17 @@ import { distanceKm, formatDistance, formatTime, setActiveCity } from "./core/ac
 import { DAYS } from "./core/activities.data";
 import { ALL_ACTIVITIES, type City, type Area } from "./core/cities.data";
 import { Filter, Selection, comboScore, filterApplies, optionValue } from "./core/filters.functions";
-import { scheduleCombo, scheduleEndHour, type ComboSchedule } from "./core/schedule.functions";
+import {
+  scheduleCombo,
+  scheduleEndHour,
+  type ComboSchedule,
+  type ScheduledItem,
+} from "./core/schedule.functions";
 import { ComboDashboard } from "./ComboDashboard";
 import { ComboMap } from "./ComboMap";
 import { ScheduledName } from "./ScheduledName";
 import { buttonStyles } from "@/app/components/ui/buttonStyles";
+import { useApp } from "@/app/context/AppContext";
 
 // Look up an activity's map location by name (scheduled items carry only names).
 // Built from EVERY city's catalogue (names are unique across cities), so the
@@ -25,6 +31,14 @@ const COORDS_BY_NAME = new Map<string, Coords>(
 const ACTIVITY_BY_NAME = new Map<string, Activity>(
   ALL_ACTIVITIES.map((a) => [a.name, a])
 );
+
+// A free-time window an Add button offers on /my-trips. `placeLate` anchors the
+// inserted activity to the window's END (used before the day's first item, so
+// the newcomer finishes right when the schedule starts).
+export type AddWindow = { start: number; end: number; placeLate?: boolean };
+
+// Free time must fit at least a short visit for an Add button to make sense.
+const MIN_ADD_GAP = 1; // hours
 
 // A stable identity for a combo (independent of its rank), so an open dashboard
 // stays open even when re-sorting moves the combo up or down the list.
@@ -65,18 +79,47 @@ export function DayItinerary({
   day,
   note,
   showSeeMore = false,
+  onReplace,
+  onRemove,
+  onAdd,
   connectors = false,
 }: {
   plan: ComboSchedule;
   day: number;
   note?: string;
-  // Opt-in (Trip component only): render a placeholder "See more" button on each
-  // real activity row. Default off, so the combos list is unchanged.
+  // Opt-in (Trip component only): render a "See more" button on each real
+  // activity row that opens the activity detail modal. Default off, so the
+  // combos list is unchanged.
   showSeeMore?: boolean;
+  // Opt-in (My Trips page only): a "Replace" button left of "See more" on each
+  // real activity row. The handler gets the scheduled slot so the caller can
+  // offer replacements that fit it.
+  onReplace?: (item: ScheduledItem, day: number) => void;
+  // Opt-in (My Trips page only): a "Remove" button on each real activity row —
+  // takes the activity out of this day's plan.
+  onRemove?: (item: ScheduledItem, day: number) => void;
+  // Opt-in (My Trips page only): "+ Add" buttons in the free time before the
+  // first item, in any ≥1h gap between items, and after the last item.
+  onAdd?: (win: AddWindow, day: number) => void;
   // Opt-in (Trip component only): draw a timeline rail (a dot per stop joined by a
   // vertical line) on the left, like the Penpot board. Default off.
   connectors?: boolean;
 }) {
+  const { openActivity } = useApp();
+  const first = plan.items[0];
+  const last = plan.items[plan.items.length - 1];
+  // An "+ Add" row offering the given free-time window.
+  const addRow = (win: AddWindow, key: string) => (
+    <li key={key} className={`flex items-baseline gap-3 ${connectors ? "pl-7" : ""}`}>
+      <button
+        type="button"
+        onClick={() => onAdd?.(win, day)}
+        className={`my-0.5 inline-flex items-center gap-1 ${buttonStyles.common}`}
+      >
+        + Add ({formatTime(win.start)}–{formatTime(win.end)})
+      </button>
+    </li>
+  );
   return (
     <div className="flex flex-col gap-1">
       <div className="flex items-baseline justify-between gap-2">
@@ -90,6 +133,11 @@ export function DayItinerary({
           lunch slot sits between two activities, we bridge it: the distance shown
           is between the activity before lunch and the one after it. */}
       <ol className={`flex flex-col ${connectors ? "gap-0" : "gap-0.5"}`}>
+        {/* Free time before the schedule starts (from 06:00, ending exactly at
+            the first item — the inserted activity is anchored to the end). */}
+        {onAdd && first && first.start - 6 >= MIN_ADD_GAP
+          ? addRow({ start: 6, end: first.start, placeLate: true }, "add-before")
+          : null}
         {plan.items.map((item, i) => {
           const next = plan.items[i + 1];
           const isFirst = i === 0;
@@ -152,14 +200,34 @@ export function DayItinerary({
                   day={day}
                 />
                 {showSeeMore && !item.lunch && ACTIVITY_BY_NAME.has(item.name) ? (
-                  <button
-                    type="button"
-                    aria-disabled="true"
-                    title="Coming soon"
-                    className={`ml-auto shrink-0 cursor-not-allowed ${buttonStyles.underline}`}
-                  >
-                    See more
-                  </button>
+                  <span className="ml-auto flex shrink-0 items-center gap-3">
+                    {onReplace ? (
+                      <button
+                        type="button"
+                        onClick={() => onReplace(item, day)}
+                        className={buttonStyles.common}
+                      >
+                        Replace
+                      </button>
+                    ) : null}
+                    {onRemove ? (
+                      <button
+                        type="button"
+                        onClick={() => onRemove(item, day)}
+                        title="Remove from this day"
+                        className={buttonStyles.common}
+                      >
+                        Remove
+                      </button>
+                    ) : null}
+                    <button
+                      type="button"
+                      onClick={() => openActivity(ACTIVITY_BY_NAME.get(item.name)!)}
+                      className={buttonStyles.underline}
+                    >
+                      See more
+                    </button>
+                  </span>
                 ) : null}
               </li>
               {leg != null ? (
@@ -185,9 +253,18 @@ export function DayItinerary({
                   </span>
                 </li>
               ) : null}
+              {/* Free time between this item and the next (e.g. where a removed
+                  activity used to be) — big enough gaps get an Add button. */}
+              {onAdd && next && next.start - item.end >= MIN_ADD_GAP
+                ? addRow({ start: item.end, end: next.start }, `add-gap-${i}`)
+                : null}
             </Fragment>
           );
         })}
+        {/* Free time after the last item, until midnight. */}
+        {onAdd && last && 24 - last.end >= MIN_ADD_GAP
+          ? addRow({ start: last.end, end: 24 }, "add-after")
+          : null}
       </ol>
     </div>
   );

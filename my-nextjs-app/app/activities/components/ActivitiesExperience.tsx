@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FaCheck } from "react-icons/fa6";
 import { useSearchParams } from "next/navigation";
+import { useApp } from "@/app/context/AppContext";
 import { CITIES } from "@/app/components/ActivityCombinations/core/cities.data";
 import type { VibeKey } from "@/app/components/ActivityCombinations/core/activities.functions";
 import { SearchIcon } from "@/app/start/components/icons";
@@ -20,6 +21,7 @@ import {
 } from "./activitiesData";
 import { FilterSidebar } from "./FilterSidebar";
 import { ActivityCard } from "./ActivityCard";
+import { MakeTripModal } from "./MakeTripModal";
 import { VIBE_ICONS } from "./vibeStyle";
 
 type OpenMenu = "vibe" | "sort" | "area" | null;
@@ -31,6 +33,7 @@ type OpenMenu = "vibe" | "sort" | "area" | null;
 // the first city so the page is still reachable directly.
 export default function ActivitiesExperience() {
   const params = useSearchParams();
+  const { openActivity, openModal } = useApp();
   const cityId = params.get("city");
   const city = getCityById(cityId) ?? CITIES[0];
 
@@ -132,13 +135,21 @@ export default function ActivitiesExperience() {
               </div>
             </FilterDropdown>
 
+            {/* Live once at least one activity is checked: opens the centered
+                trip-search modal (dates/travelers; destination = this city)
+                whose Search builds a plan that MUST include the selection. */}
             <button
               type="button"
-              disabled
-              title="Coming soon"
-              className={`${buttonStyles.primary} shrink-0 opacity-90 hover:opacity-100`}
+              disabled={selected.size === 0}
+              title={selected.size === 0 ? "Select activities first" : undefined}
+              onClick={() =>
+                openModal(
+                  <MakeTripModal city={city} selectedNames={[...selected]} />
+                )
+              }
+              className={`${buttonStyles.primary} shrink-0 disabled:cursor-not-allowed disabled:opacity-50`}
             >
-              Make Trip
+              Make Trip{selected.size > 0 ? ` (${selected.size})` : ""}
             </button>
           </div>
         </div>
@@ -189,6 +200,7 @@ export default function ActivitiesExperience() {
                     index={i}
                     selected={selected.has(a.name)}
                     onToggleSelect={(act) => toggleSelect(act.name)}
+                    onSeeMore={openActivity}
                   />
                 ))}
               </div>

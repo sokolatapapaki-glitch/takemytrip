@@ -14,6 +14,7 @@ import { ActivityList } from "./ActivityList";
 import { AdvancedFiltersModal } from "./AdvancedFiltersModal";
 import { TripPlan } from "./TripPlan";
 import { planTrip } from "./core/trip.functions";
+import { enforceRequired } from "./core/trip.required";
 import { DEFAULT_START_HOUR } from "./core/schedule.data";
 import { buttonStyles } from "@/app/components/ui/buttonStyles";
 import { SearchIcon } from "@/app/start/components/icons";
@@ -34,6 +35,9 @@ function parseStartParams(p: ReadonlyURLSearchParams): {
   start?: Date;
   end?: Date;
   party: Party;
+  // Activity names the trip MUST contain (?include=, repeated) — the activities
+  // page's "Make Trip" hand-off. They pre-check the "Must include" filter.
+  include: string[];
 } {
   const parseDate = (s: string | null): Date | undefined => {
     const m = s ? /^(\d{4})-(\d{2})-(\d{2})$/.exec(s) : null;
@@ -54,6 +58,7 @@ function parseStartParams(p: ReadonlyURLSearchParams): {
     start: parseDate(p.get("start")),
     end: parseDate(p.get("end")),
     party: { adults, childAges },
+    include: p.getAll("include"),
   };
 }
 
@@ -101,9 +106,14 @@ export default function ActivityCombinations() {
   const [startHours, setStartHours] = useState<number[]>(() =>
     Array.from({ length: MAX_DAYS }, () => DEFAULT_START_HOUR)
   );
-  const [requireds, setRequireds] = useState<Set<string>[]>(() =>
-    Array.from({ length: MAX_DAYS }, () => new Set<string>())
-  );
+  const [requireds, setRequireds] = useState<Set<string>[]>(() => {
+    // Pre-check the "Must include" filter with the ?include= hand-off from the
+    // activities page's Make Trip (unknown names are dropped).
+    const fromParams = new Set(
+      initial.include.filter((n) => initialCity.activities.some((a) => a.name === n))
+    );
+    return Array.from({ length: MAX_DAYS }, () => new Set(fromParams));
+  });
   // Per-day "circular trip" toggle: when true, that day's route is scored as a
   // loop that starts AND returns to the centre (see scheduleCombo). Default off.
   const [circulars, setCirculars] = useState<boolean[]>(() =>
@@ -201,8 +211,10 @@ export default function ActivityCombinations() {
 
   // The best multi-day trip across the chosen dates: every activity used once,
   // assigned to maximize the average of the days' combo scores. Each day is
-  // scheduled AND scored with its own day's filters. Independent of the
-  // "must include" sets (the pool is `activityPool`).
+  // scheduled AND scored with its own day's filters. The "must include" sets
+  // are then enforced as a HARD constraint on the result (see trip.required.ts):
+  // every checked activity is slotted into a free window or takes over a
+  // non-required activity's slot — trip-level, so the union over the days.
   const trip = useMemo(() => {
     setActiveCity(city, area.coords); // engine on this city + area before planning
     setActiveParty(party); // and on the chosen party, for price totals
@@ -212,8 +224,12 @@ export default function ActivityCombinations() {
     );
     const sel = dayIndices.map((_, i) => selections[i]);
     const circ = dayIndices.map((_, i) => circulars[i]);
-    return planTrip(activityPool, dayIndices, starts, ends, sel, filters, circ);
-  }, [city, area, party, dayIndices, selections, startHours, circulars, filters, activityPool]);
+    const planned = planTrip(activityPool, dayIndices, starts, ends, sel, filters, circ);
+    const required = new Set<string>();
+    for (const set of requireds.slice(0, dayIndices.length))
+      for (const name of set) required.add(name);
+    return enforceRequired(planned, required, starts, ends);
+  }, [city, area, party, dayIndices, selections, startHours, circulars, filters, activityPool, requireds]);
 
   // Per-day mutators write to the ACTIVE day's slot, leaving the others untouched.
   const choose = (filterIndex: number, optionIndex: number) => {

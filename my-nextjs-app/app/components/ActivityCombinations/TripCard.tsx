@@ -7,8 +7,10 @@ import { activityPrice } from "./core/activities.functions";
 import type { Area } from "./core/cities.data";
 import type { Filter, Selection } from "./core/filters.functions";
 import type { LeftoverReason, Trip } from "./core/trip.functions";
-import { DayItinerary } from "./ComboResults";
+import type { ScheduledItem } from "./core/schedule.functions";
+import { DayItinerary, type AddWindow } from "./ComboResults";
 import { TripDashboard } from "./TripDashboard";
+import { printTrip } from "./tripPrint";
 import { buttonStyles } from "@/app/components/ui/buttonStyles";
 
 function leftoverText(reason: LeftoverReason): string {
@@ -16,7 +18,11 @@ function leftoverText(reason: LeftoverReason): string {
     ? "closed on all selected days"
     : reason === "no-room"
       ? "no room within the time budget"
-      : "would lower the average score";
+      : reason === "removed"
+        ? "removed from the plan"
+        : reason === "bumped"
+          ? "made room for a must-include activity"
+          : "would lower the average score";
 }
 
 // Total price = what the chosen traveller party pays across every scheduled
@@ -46,6 +52,11 @@ export function TripCard({
   areaName,
   showProof,
   defaultOpen = false,
+  onReplace,
+  onRemove,
+  onAdd,
+  onSave,
+  onDelete,
   selections,
   startHours,
   endHours,
@@ -60,16 +71,33 @@ export function TripCard({
   areaName?: string;
   showProof: boolean;
   defaultOpen?: boolean;
-  selections: Selection[];
-  startHours: number[];
-  endHours: number[];
-  circulars: boolean[];
-  area: Area;
-  filters: Filter[];
+  // Opt-in (My Trips page): a "Replace" button on each activity row, left of
+  // "See more". The handler gets the row's scheduled slot + day.
+  onReplace?: (item: ScheduledItem, day: number) => void;
+  // Opt-in (My Trips page): a "Remove" button on each activity row.
+  onRemove?: (item: ScheduledItem, day: number) => void;
+  // Opt-in (My Trips page): "+ Add" buttons in each day's free time.
+  onAdd?: (win: AddWindow, day: number) => void;
+  // Makes the "Save Trip" button live; omitted (e.g. on /my-trips, where the
+  // trip IS the saved copy) the button is hidden.
+  onSave?: () => void;
+  // Renders a "Delete" button in the card header (My Trips page) — removes the
+  // saved trip. Omitted elsewhere, so plan-page cards show no Delete.
+  onDelete?: () => void;
+  // The proof inputs — only needed when showProof is true (the plan page).
+  // Saved trips can't carry them (filters hold functions), so they're optional.
+  selections?: Selection[];
+  startHours?: number[];
+  endHours?: number[];
+  circulars?: boolean[];
+  area?: Area;
+  filters?: Filter[];
 }) {
   const [open, setOpen] = useState(defaultOpen);
   const [proofOpen, setProofOpen] = useState(false);
   const [leftoverOpen, setLeftoverOpen] = useState(false);
+  // Brief "Saved ✓" feedback on the Save Trip button.
+  const [justSaved, setJustSaved] = useState(false);
 
   const totalPrice = totalPriceOf(trip);
   const totalDays = trip.days.length;
@@ -108,6 +136,15 @@ export function TripCard({
         </p>
       </div>
       <div className="flex flex-col items-end gap-2 sm:flex-row sm:items-center">
+        {onDelete ? (
+          <button
+            type="button"
+            onClick={onDelete}
+            className={`shrink-0 ${buttonStyles.common}`}
+          >
+            Delete
+          </button>
+        ) : null}
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
@@ -139,10 +176,24 @@ export function TripCard({
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           Trip
           <div className="flex justify-end gap-3">
-            <button type="button" className={`${buttonStyles.common} whitespace-nowrap`}>
-              Save Trip
-            </button>
-            <button type="button" className={`${buttonStyles.secondary} whitespace-nowrap`}>
+            {onSave ? (
+              <button
+                type="button"
+                onClick={() => {
+                  onSave();
+                  setJustSaved(true);
+                  setTimeout(() => setJustSaved(false), 2000);
+                }}
+                className={`${buttonStyles.common} whitespace-nowrap`}
+              >
+                {justSaved ? "Saved ✓" : "Save Trip"}
+              </button>
+            ) : null}
+            <button
+              type="button"
+              onClick={() => printTrip(trip, cityArea)}
+              className={`${buttonStyles.secondary} whitespace-nowrap`}
+            >
               Download PDF
             </button>
           </div>
@@ -163,6 +214,15 @@ export function TripCard({
                   <p className="mt-1 text-xs italic text-zinc-400">
                     No activities placed.
                   </p>
+                  {onAdd ? (
+                    <button
+                      type="button"
+                      onClick={() => onAdd({ start: 9, end: 21 }, td.day)}
+                      className={`mb-2 mt-1 ${buttonStyles.common}`}
+                    >
+                      + Add (09:00–21:00)
+                    </button>
+                  ) : null}
                 </>
               ) : (
                 <DayItinerary
@@ -170,6 +230,9 @@ export function TripCard({
                   day={td.day}
                   note={`score ${td.score.toFixed(2)} · ${td.load.toFixed(1)}h · incl. lunch`}
                   showSeeMore
+                  onReplace={onReplace}
+                  onRemove={onRemove}
+                  onAdd={onAdd}
                   connectors
                 />
               )}
@@ -177,8 +240,9 @@ export function TripCard({
           ))}
         </div>
 
-        {/* "Why this trip?" — BELOW the days (not inline with them). */}
-        {showProof ? (
+        {/* "Why this trip?" — BELOW the days (not inline with them). Needs the
+            live proof inputs, which saved trips don't carry. */}
+        {showProof && selections && startHours && endHours && circulars && area && filters ? (
           <div>
             <button
               type="button"

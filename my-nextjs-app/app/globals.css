@@ -147,6 +147,23 @@ body {
   animation: card-pop 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* Replace mode (My Trips): the candidate cards wiggle to say "pick me".
+   Finite (≈6 shakes) so the cards settle into stable click targets. */
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(-0.6deg) translateY(0);
+  }
+
+  50% {
+    transform: rotate(0.8deg) translateY(-2px);
+  }
+}
+
+.animate-wiggle {
+  animation: wiggle 0.45s ease-in-out 6;
+}
+
 @keyframes slide-down {
   0% {
     opacity: 0;
