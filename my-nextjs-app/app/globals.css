@@ -19,11 +19,21 @@
   }
 }
 
+/* Clip any horizontal overflow at the document root so a too-wide element can
+   never make mobile browsers zoom the page out (which leaves the full-width
+   navbar/footer looking inset with empty space on the sides). `clip` — not
+   `hidden` — avoids turning these into scroll containers, so the sticky navbar
+   keeps sticking to the viewport. */
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-  overflow-x: hidden;
 }
 
 /* --- /start page entrance: fast "pop up" + typewriter caret --- */

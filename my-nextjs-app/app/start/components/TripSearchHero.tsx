@@ -46,7 +46,7 @@ export default function TripSearchHero() {
     // stacking context that traps the field dropdowns beneath the z-30 Take-the-
     // Kids / Footer sections. Without it, each dropdown's own z-[100] reaches the
     // page's top stacking level and opens in front of everything.
-    <section className="relative flex min-h-screen flex-1 flex-col items-center justify-center bg-zinc-950 px-0 py-24 sm:px-4">
+    <section className="relative flex min-h-screen flex-1 flex-col items-center justify-center bg-zinc-950 px-4 py-24">
       {/* Fixed background layer: the image scrolls slower than the page (parallax)
           and picks up a little blur the further down you go. The image is taller
           than the viewport so the upward drift never reveals an edge. */}

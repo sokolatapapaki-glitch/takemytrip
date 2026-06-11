@@ -192,16 +192,20 @@ export default function ActivitiesExperience() {
                   : "No activities match your filters."}
               </p>
             ) : (
-              <div className="mt-6 grid grid-cols-1 justify-items-center gap-5 sm:grid-cols-2">
+              // Fixed-width cards (matching the City card's ~20rem render width)
+              // that wrap and centre, with equal heights per row, so the
+              // Activities grid reads at the same size as the Cities grid.
+              <div className="mt-6 flex flex-wrap justify-center gap-5">
                 {results.map((a, i) => (
-                  <ActivityCard
-                    key={a.name}
-                    activity={a}
-                    index={i}
-                    selected={selected.has(a.name)}
-                    onToggleSelect={(act) => toggleSelect(act.name)}
-                    onSeeMore={openActivity}
-                  />
+                  <div key={a.name} className="w-[20rem] max-w-full">
+                    <ActivityCard
+                      activity={a}
+                      index={i}
+                      selected={selected.has(a.name)}
+                      onToggleSelect={(act) => toggleSelect(act.name)}
+                      onSeeMore={openActivity}
+                    />
+                  </div>
                 ))}
               </div>
             )}

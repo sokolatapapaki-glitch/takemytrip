@@ -44,15 +44,23 @@ export function ActivityCard({
   const price = adultPrice(activity);
   const VibeIcon = VIBE_ICONS[vibe.key];
   const cardLayout = compact ? "flex-row sm:flex-col" : "flex-col";
+  // Non-compact cards match the City card: same image height, full grid-cell
+  // width (no max cap), and the same lift+tilt hover.
   const imageClass = compact
     ? "h-full w-28 shrink-0 sm:h-32 sm:w-full"
-    : "h-44 w-full";
-  const descriptionClass = compact ? "hidden" : "mb-3 mt-1 line-clamp-2 text-sm text-zinc-400";
+    : "h-40 w-full";
+  // Non-compact cards fill their cell's height (like City cards in a grid) so a
+  // row of them is uniformly tall and the bottom button stays pinned together.
+  const widthClass = compact ? "w-full max-w-[34rem]" : "h-full w-full";
+  const hoverClass = compact
+    ? "hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-900/10"
+    : "hover:-translate-y-1 hover:rotate-1 hover:shadow-xl hover:shadow-orange-900/10";
+  const descriptionClass = compact ? "hidden" : "line-clamp-2 text-sm text-zinc-400";
 
   return (
     <div
       style={{ animationDelay: `${Math.min(index * 40, 300)}ms` }}
-      className={`animate-card-pop relative flex w-full max-w-[34rem] ${cardLayout} overflow-hidden rounded-3xl border border-white/60 bg-white/80 shadow-lg shadow-orange-900/5 backdrop-blur-md transition duration-200 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-900/10`}
+      className={`group animate-card-pop relative flex ${widthClass} ${cardLayout} overflow-hidden rounded-3xl border border-white/60 bg-white/80 shadow-lg shadow-orange-900/5 backdrop-blur-md transition duration-200 ease-out ${hoverClass}`}
     >
       {/* Image placeholder — bright gradient coloured by the activity's vibe. */}
       <div
@@ -95,22 +103,66 @@ export function ActivityCard({
         </button>
       )}
 
-      <div className="flex flex-1 min-w-0 flex-col p-3">
+      {/* `isolate` + `-z-10` keeps the decorative hover shapes BEHIND the text
+          while still above the card's own background. */}
+      <div
+        className={`relative isolate flex flex-1 min-w-0 flex-col ${
+          compact ? "p-3" : "gap-2 p-4"
+        }`}
+      >
+        {/* Decorative accents — invisible until hovered, then they fade/drift in
+            behind the content. Like the City card's, but a different set: a pair
+            of concentric rings rising from the bottom-RIGHT corner, a short dash
+            sweeping under the title, and a stagger of dots down the left edge. */}
+        {!compact && (
+          <>
+            <span
+              aria-hidden
+              className="pointer-events-none absolute -bottom-20 -right-16 -z-10 h-48 w-48 scale-75 rounded-full border-2 border-emerald-500/20 opacity-0 transition-all duration-300 ease-out group-hover:scale-100 group-hover:opacity-100"
+            />
+            <span
+              aria-hidden
+              className="pointer-events-none absolute -bottom-14 -right-10 -z-10 h-32 w-32 scale-75 rounded-full border-2 border-orange-500/20 opacity-0 transition-all delay-75 duration-300 ease-out group-hover:scale-100 group-hover:opacity-100"
+            />
+            <span
+              aria-hidden
+              className="pointer-events-none absolute right-3 top-9 -z-10 h-0.5 w-14 rotate-[14deg] translate-y-1 rounded-full bg-emerald-500/15 opacity-0 transition-all delay-100 duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100"
+            />
+            <span
+              aria-hidden
+              className="pointer-events-none absolute left-4 top-12 -z-10 h-1.5 w-1.5 scale-0 rounded-full bg-orange-500/20 opacity-0 transition-all delay-100 duration-300 ease-out group-hover:scale-100 group-hover:opacity-100"
+            />
+            <span
+              aria-hidden
+              className="pointer-events-none absolute left-8 top-[4.25rem] -z-10 h-2 w-2 scale-0 rounded-full bg-emerald-500/15 opacity-0 transition-all delay-150 duration-300 ease-out group-hover:scale-100 group-hover:opacity-100"
+            />
+            <span
+              aria-hidden
+              className="pointer-events-none absolute left-5 top-24 -z-10 h-1 w-1 scale-0 rounded-full bg-orange-500/20 opacity-0 transition-all delay-200 duration-300 ease-out group-hover:scale-100 group-hover:opacity-100"
+            />
+          </>
+        )}
         <h3 className="text-lg font-semibold text-zinc-800">{activity.name}</h3>
-        <div className="mt-0.5 flex flex-wrap items-center gap-3 text-sm text-zinc-500">
+        <div className="flex flex-wrap items-center gap-3 text-sm text-zinc-500">
           <Stars value={stars} />
           <span>{price === 0 ? "Free" : `€${price}`}</span>
         </div>
         <p className={descriptionClass}>{activity.description}</p>
 
         {/* See more — opens the activity detail modal (stays a no-op until the
-            parent provides the handler). */}
+            parent provides the handler). Full cards use a secondary button
+            matching the City card's "See Activities" (pinned to the bottom);
+            compact strips keep the quiet underline. */}
         <button
           type="button"
           onClick={onSeeMore ? () => onSeeMore(activity) : undefined}
           aria-disabled={!onSeeMore}
           title={onSeeMore ? undefined : "Coming soon"}
-          className={`mt-auto self-start ${buttonStyles.underline}`}
+          className={
+            compact
+              ? `mt-auto self-start ${buttonStyles.underline}`
+              : `mt-auto block w-full ${buttonStyles.secondary}`
+          }
         >
           See more
         </button>

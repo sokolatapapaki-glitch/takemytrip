@@ -105,12 +105,13 @@ export default function MyTripsExperience() {
 
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col gap-8 px-6 py-10 sm:px-10">
-      <div className="rounded-3xl border border-zinc-200 bg-white p-8 shadow-xl shadow-orange-900/5">
+      {/* Plain page title with a "Make Trip" CTA on the opposite side that
+          sends the user to the homepage trip search. */}
+      <div className="flex items-center justify-between gap-4">
         <h1 className="text-3xl font-semibold tracking-tight text-zinc-900">My trips</h1>
-        <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600">
-          Trips you saved from the planner. Expand one to review its day-by-day
-          program.
-        </p>
+        <Link href="/" className={`${buttonStyles.primary} shrink-0`}>
+          Make Trip
+        </Link>
       </div>
 
       {trips.length === 0 ? (
@@ -239,14 +240,24 @@ export default function MyTripsExperience() {
                 </div>
               ) : null}
 
+              {/* "Activities" label above the trip's own activities (hidden in
+                  replace/add mode, where the banner already explains the strip).
+                  mt-2 nudges the strip a little lower for breathing room. */}
+              {!inMode ? (
+                <h3 className="mt-2 text-lg font-semibold text-zinc-800">
+                  Activities
+                </h3>
+              ) : null}
+
               {/* The activities strip: the trip's own activities, or — in
-                  replace mode — the wiggling candidates. */}
+                  replace mode — the wiggling candidates. py-3 gives the cards
+                  top room so their hover lift/tilt isn't clipped. */}
               <div
                 ref={(el) => {
                   if (el) stripRefs.current.set(t.id, el);
                   else stripRefs.current.delete(t.id);
                 }}
-                className="flex gap-4 overflow-x-auto pb-2"
+                className="flex gap-4 overflow-x-auto py-3"
               >
                 {inMode && stripActivities.length === 0 ? (
                   <p className="py-6 text-sm text-zinc-500">
