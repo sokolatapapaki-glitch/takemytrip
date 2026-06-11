@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test:unit": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 dist-test/app/components/ActivityCombinations/core/__tests__/",
+    "test:planner": "vitest run --config vitest.config.mts",
+    "test:planner:watch": "vitest --config vitest.config.mts",
     "git": "next build && git add . && git commit -m 'Update' && git push origin updates"
   },
   "dependencies": {
@@ -24,9 +26,12 @@
     "@types/node": "20.19.42",
     "@types/react": "19.2.17",
     "@types/react-dom": "^19",
+    "@vitest/coverage-v8": "^4.1.8",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
+    "fast-check": "^4.8.0",
     "tailwindcss": "^4",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "vitest": "^4.1.8"
   }
 }

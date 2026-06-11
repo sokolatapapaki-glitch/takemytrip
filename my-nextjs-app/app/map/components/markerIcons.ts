@@ -23,20 +23,41 @@ function vibeSvg(Icon: IconType): string {
   return svg;
 }
 
-// A round activity pin with a vibe icon: a single compact white circle (no
-// inner ring), so the padding around the icon stays tight. Hover changes ONLY
-// the icon color (green); the selected pin's icon is orange. Pops in via the
-// shared `marker-pop`.
-export function activityIcon(Icon: IconType, active = false, hovered = false): L.DivIcon {
+// Escape text before injecting it into the divIcon HTML string.
+const escapeHtml = (s: string): string =>
+  s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+
+// A round activity pin with a vibe icon + the activity name beside it, shown the
+// way Google Maps labels places: small dark text with a white halo so it reads
+// over any tiles. The label is absolutely positioned, so it never shifts the
+// pin off its coordinate. Hover changes ONLY the icon color (green); the
+// selected pin's icon is orange. Pops in via the shared `marker-pop`.
+export function activityIcon(
+  Icon: IconType,
+  name: string,
+  active = false,
+  hovered = false
+): L.DivIcon {
   const iconColor = active
     ? "text-orange-500"
     : hovered
     ? "text-emerald-500"
     : "text-zinc-700";
 
+  // White outline around the label (4 directional shadows) — the Google-Maps look.
+  const halo =
+    "text-shadow: -1px -1px 1.5px #fff, 1px -1px 1.5px #fff, -1px 1px 1.5px #fff, 1px 1px 1.5px #fff;";
+
   return L.divIcon({
     className: "", // clear Leaflet's default styling
-    html: `<div class="animate-marker-pop flex h-7 w-7 items-center justify-center rounded-full bg-white shadow-md shadow-slate-900/10 ${iconColor}">${vibeSvg(Icon)}</div>`,
+    html: `<div class="animate-marker-pop relative">
+      <div class="flex h-7 w-7 items-center justify-center rounded-full bg-white shadow-md shadow-slate-900/10 ${iconColor}">${vibeSvg(Icon)}</div>
+      <span class="absolute left-8 top-1/2 -translate-y-1/2 whitespace-nowrap text-xs font-medium leading-none text-zinc-800 underline underline-offset-2" style="${halo}">${escapeHtml(name)}</span>
+    </div>`,
     iconSize: [28, 28],
     iconAnchor: [14, 14],
     tooltipAnchor: [0, -14],

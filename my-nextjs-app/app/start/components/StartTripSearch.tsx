@@ -336,7 +336,10 @@ export default function StartTripSearch({
 // leaves a transform on an ancestor, which would otherwise trap `fixed`
 // positioning inside it (the modal showed up tiny instead of full screen).
 // `data-fullscreen-picker` keeps the bar's outside-click handler from treating
-// taps inside the portal as outside.
+// taps inside the portal as outside. The portal also escapes the mobile-only
+// `sm:hidden` wrapper around the From/To fields, so the sheet itself carries
+// `sm:hidden` — without it, it covers the desktop dropdown and a single tap
+// closes the calendar before a second date can be picked.
 function FullScreenPicker({
   title,
   onClose,
@@ -349,7 +352,7 @@ function FullScreenPicker({
   return createPortal(
     <div
       data-fullscreen-picker
-      className="fixed inset-0 z-[100] flex flex-col bg-white dark:bg-zinc-950"
+      className="fixed inset-0 z-[100] flex flex-col bg-white sm:hidden dark:bg-zinc-950"
     >
       <div className="flex items-center justify-between border-b border-black/5 px-4 py-4">
         <span className="text-base font-semibold text-zinc-800 dark:text-zinc-100">
@@ -557,7 +560,7 @@ function Dropdown({
       {/* Mobile-only transparent backdrop; tap anywhere to close. */}
       <div className="fixed inset-0 z-[90] bg-transparent sm:hidden" onClick={onClose} />
       <div
-        className={`animate-pop-in z-[100] origin-top rounded-2xl border border-white/60 bg-white/90 shadow-2xl shadow-orange-900/10 backdrop-blur-xl absolute inset-x-0 top-full mx-auto max-h-[calc(100vh-6rem)] overflow-y-auto sm:inset-x-auto sm:top-full sm:mx-0 sm:mt-2 sm:max-h-none sm:max-w-none sm:overflow-hidden ${desktopPos}`}
+        className={`animate-pop-in z-[100] origin-top rounded-2xl border border-zinc-200 bg-white shadow-2xl shadow-orange-900/10 absolute inset-x-0 top-full mx-auto max-h-[calc(100vh-6rem)] overflow-y-auto sm:inset-x-auto sm:top-full sm:mx-0 sm:mt-2 sm:max-h-none sm:max-w-none sm:overflow-hidden ${desktopPos}`}
       >
         {children}
       </div>

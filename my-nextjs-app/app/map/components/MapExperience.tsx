@@ -171,12 +171,16 @@ export default function MapExperience() {
           />
         </div>
 
-        <div className="pointer-events-auto absolute left-1/2 top-4 hidden -translate-x-1/2 sm:block">
-          <VibeBar
-            active={filters.vibe}
-            onChange={(vibe: VibeKey | null) => setFilters((f) => ({ ...f, vibe }))}
-          />
-        </div>
+        {/* The vibe bar (top-center) only makes sense once a city is focused and
+            its activities are showing on the map — hidden while zoomed out. */}
+        {focusedCityId !== null && (
+          <div className="pointer-events-auto absolute left-1/2 top-4 hidden -translate-x-1/2 sm:block">
+            <VibeBar
+              active={filters.vibe}
+              onChange={(vibe: VibeKey | null) => setFilters((f) => ({ ...f, vibe }))}
+            />
+          </div>
+        )}
 
         <div className="pointer-events-auto absolute bottom-4 right-4">
           <CityLabel

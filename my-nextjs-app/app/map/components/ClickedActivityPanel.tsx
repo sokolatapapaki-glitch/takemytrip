@@ -1,7 +1,8 @@
+import { useEffect, useRef } from "react";
 import { FaStar } from "react-icons/fa6";
 import type { Activity } from "@/app/components/ActivityCombinations/core/activities.functions";
 import { bestVibe, cityOf, iconOf, starsOf } from "./mapData";
-import { XIcon } from "@/app/start/components/icons";
+import { ChevronLeftIcon } from "@/app/start/components/icons";
 
 // The detailed activity card shown below the search input when an activity is
 // clicked (on the map or in the results). Mirrors the "Clicked/searched activity"
@@ -16,8 +17,39 @@ export function ClickedActivityPanel({
 }) {
   const city = cityOf(activity);
   const Icon = iconOf(activity);
+  const ref = useRef<HTMLDivElement>(null);
+
+  // When opened, scroll the results list (only that container, never the page)
+  // by exactly as much as needed so this detail panel's top lands at the top of
+  // the list — i.e. right below the filter buttons — and is fully visible.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const container = el.closest<HTMLElement>("[data-results-list]");
+    if (!container) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    const delta = el.getBoundingClientRect().top - container.getBoundingClientRect().top;
+    container.scrollBy({ top: delta, behavior: "smooth" });
+  }, []);
+
   return (
-    <div className="animate-pop-in relative mt-2 rounded-3xl border border-zinc-200 bg-white p-4 shadow-xl shadow-orange-900/10">
+    <div
+      ref={ref}
+      className="relative mt-2 rounded-3xl border border-zinc-200 bg-white p-4 shadow-xl shadow-orange-900/10"
+    >
+      {/* Top-left back arrow — collapses the detail back to the result card
+          (same effect the old "See less" button had). */}
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label="Back"
+        className="absolute left-3 top-3 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-zinc-700 shadow-sm ring-1 ring-black/5 transition-colors hover:bg-white hover:text-zinc-900"
+      >
+        <ChevronLeftIcon className="h-5 w-5" />
+      </button>
+
       <div className="flex h-40 items-center justify-center rounded-3xl bg-gradient-to-br from-orange-100 to-emerald-100 text-green-500">
         <Icon className="h-16 w-16" />
       </div>
@@ -39,16 +71,6 @@ export function ClickedActivityPanel({
         <span className="font-medium text-zinc-600">Best for:</span> {bestVibe(activity).label}
       </p>
       <p className="mt-2 text-sm leading-relaxed text-zinc-600">{activity.description}</p>
-
-      <div className="mt-4 flex justify-end">
-        <button
-          type="button"
-          onClick={onClose}
-          className="rounded-full bg-zinc-100 px-3 py-2 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-200"
-        >
-          See less
-        </button>
-      </div>
     </div>
   );
 }

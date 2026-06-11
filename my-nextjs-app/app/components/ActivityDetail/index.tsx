@@ -24,6 +24,11 @@ import { VIBE_GRADIENT, VIBE_ICONS } from "@/app/activities/components/vibeStyle
 import { ActivityCard } from "@/app/activities/components/ActivityCard";
 import { Stars } from "@/app/components/ui/Stars";
 import { buttonStyles } from "@/app/components/ui/buttonStyles";
+import { hoverScrollbar } from "@/app/components/ui/scrollbar";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/app/start/components/icons";
+
+// How many thumbnail images the gallery shows (placeholders for now).
+const THUMB_COUNT = 5;
 
 // The activity detail modal, from the Penpot "Activity Modal Full" board:
 // image placeholder + thumbnails on the left; name/stars/fav-bookmark, the
@@ -142,6 +147,8 @@ export function ActivityDetail({
   const [moreOpen, setMoreOpen] = useState<"price" | "hours" | "websites" | null>(null);
   // Bookmark is a visual placeholder for now (no persistence).
   const [saved, setSaved] = useState(false);
+  // Which gallery image is selected (drives the hover arrows + thumbnail highlight).
+  const [activeImage, setActiveImage] = useState(0);
   const topRef = useRef<HTMLDivElement>(null);
   const descriptionRef = useRef<HTMLDivElement>(null);
 
@@ -173,9 +180,11 @@ export function ActivityDetail({
   const toggleMore = (key: "price" | "hours" | "websites") =>
     setMoreOpen((m) => (m === key ? null : key));
 
-  // Jump back to the top when navigating between activities in place.
+  // Jump back to the top when navigating between activities in place, and reset
+  // the gallery to its first image.
   useEffect(() => {
     topRef.current?.scrollIntoView({ block: "nearest" });
+    setActiveImage(0);
   }, [current]);
 
   return (
@@ -187,24 +196,53 @@ export function ActivityDetail({
       )}
 
       <div className="grid gap-6 md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
-        {/* Image placeholder (vibe gradient, like the cards) + thumbnail dots. */}
+        {/* Image placeholder (vibe gradient, like the cards) + thumbnail row. */}
         <div className="flex flex-col gap-3">
           <div
-            className={`flex h-56 w-full items-center justify-center rounded-3xl bg-gradient-to-br ${VIBE_GRADIENT[vibe.key]} md:h-72`}
+            className={`group relative flex h-56 w-full items-center justify-center overflow-hidden rounded-3xl bg-gradient-to-br ${VIBE_GRADIENT[vibe.key]} md:h-72`}
           >
             <VibeIcon className="h-16 w-16 text-white drop-shadow" />
+
+            {/* Hover-only, low-opacity prev/next arrows that cycle the gallery. */}
+            <button
+              type="button"
+              onClick={() => setActiveImage((i) => (i - 1 + THUMB_COUNT) % THUMB_COUNT)}
+              aria-label="Previous image"
+              className="absolute left-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-white opacity-0 transition-opacity duration-200 hover:bg-black/60 group-hover:opacity-60"
+            >
+              <ChevronLeftIcon className="h-5 w-5" />
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveImage((i) => (i + 1) % THUMB_COUNT)}
+              aria-label="Next image"
+              className="absolute right-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-white opacity-0 transition-opacity duration-200 hover:bg-black/60 group-hover:opacity-60"
+            >
+              <ChevronRightIcon className="h-5 w-5" />
+            </button>
           </div>
-          <div className="flex gap-2" aria-hidden>
-            {Array.from({ length: 5 }).map((_, i) => (
-              <div
+
+          <div className="flex justify-center gap-2">
+            {Array.from({ length: THUMB_COUNT }).map((_, i) => (
+              <button
                 key={i}
-                className={`h-12 w-12 rounded-xl bg-gradient-to-br ${VIBE_GRADIENT[vibe.key]} opacity-60`}
+                type="button"
+                onClick={() => setActiveImage(i)}
+                aria-label={`Image ${i + 1}`}
+                className={`h-12 w-12 rounded-xl bg-gradient-to-br ${VIBE_GRADIENT[vibe.key]} transition ${i === activeImage
+                  ? "opacity-100 ring-2 ring-orange-400 ring-offset-2 dark:ring-offset-zinc-900"
+                  : "opacity-60 hover:opacity-80"
+                  }`}
               />
             ))}
           </div>
         </div>
 
-        <div className="flex min-w-0 flex-col gap-5">
+        {/* Right column is capped to the left column's height (image md:h-72 +
+            gap-3 + thumbnails h-12 = 21.75rem) and scrolls internally, so the
+            Related Activities strip below the grid sits just under the image
+            instead of far down. Only at md+, where the columns sit side by side. */}
+        <div className={`flex min-w-0 flex-col gap-5 md:max-h-[21.75rem] md:overflow-y-auto md:pr-1 ${hoverScrollbar}`}>
           {/* Header: name, stars, bookmark. pr-8 clears the modal's × button. */}
           <div className="flex items-start justify-between gap-3 pr-8">
             <div>
@@ -362,23 +400,6 @@ export function ActivityDetail({
             </button>
           </div>
 
-          {/* Notes — one amber bar per note, like the board's yellow bars. */}
-          {current.notes.length > 0 && (
-            <div>
-              <h3 className="text-base font-semibold text-zinc-800 dark:text-zinc-100">Notes</h3>
-              <ul className="mt-2 flex flex-col gap-2">
-                {current.notes.map((n) => (
-                  <li
-                    key={n}
-                    className="rounded-xl bg-amber-200/90 px-4 py-2 text-sm text-amber-950"
-                  >
-                    {n}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
           {/* Nearby restaurants/cafés tied to this activity. */}
           {current.restaurants.length > 0 && (
             <div>
@@ -417,6 +438,23 @@ export function ActivityDetail({
               </div>
             </div>
           )}
+
+          {/* Notes — one amber bar per note, below the restaurants. */}
+          {current.notes.length > 0 && (
+            <div>
+              <h3 className="text-base font-semibold text-zinc-800 dark:text-zinc-100">Notes</h3>
+              <ul className="mt-2 flex flex-col gap-2">
+                {current.notes.map((n) => (
+                  <li
+                    key={n}
+                    className="rounded-xl bg-amber-200/90 px-4 py-2 text-sm text-amber-950"
+                  >
+                    {n}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
 
@@ -438,7 +476,7 @@ export function ActivityDetail({
               </Link>
             )}
           </div>
-          <div className="mt-3 flex gap-4 overflow-x-auto pb-2">
+          <div className={`mt-3 flex gap-4 overflow-x-auto pb-2 ${hoverScrollbar}`}>
             {related.map((a, i) => (
               <div key={a.name} className="w-64 shrink-0">
                 <ActivityCard activity={a} index={i} hideSelect onSeeMore={push} />

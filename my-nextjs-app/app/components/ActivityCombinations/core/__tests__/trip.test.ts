@@ -190,7 +190,9 @@ test("budget gate keeps a ≤13-activity pool exact, the full 50-catalogue heuri
   // so the fast large-pool heuristic handles it.
   assert.ok(isExactWithinBudget(3, 13));
   assert.ok(!isExactWithinBudget(3, ACTIVITIES.length)); // 50 -> heuristic
-  assert.equal(PLANNER_COST.planSubsetDP(3, 13), 3 * 3 ** 13);
+  // The DP cost = the d·3^n submask states PLUS the per-day-set scheduling work
+  // (360 ≈ 6!/2 orderings for each of the 2^n distinct sets) — see PLANNER_COST.
+  assert.equal(PLANNER_COST.planSubsetDP(3, 13), 3 * 3 ** 13 + 360 * 2 ** 13);
 });
 
 test("budget gate falls back to the heuristic just past the catalogue size", () => {

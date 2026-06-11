@@ -14,14 +14,14 @@ export default function TakeTheKids() {
   // The map page is a full-viewport experience — no banner there.
   if (pathname === "/map") return null;
   return (
-    <section className="px-6 py-10">
+    <section className="relative z-30 px-0 py-10 sm:px-6">
       <a
         href="https://www.takethekids.info"
         target="_blank"
         rel="noreferrer noopener"
-        className="group mx-auto flex max-w-5xl flex-col items-center gap-4 rounded-3xl border border-white/60 bg-white/80 px-6 py-10 text-center shadow-lg shadow-orange-900/5 backdrop-blur-md transition duration-200 ease-out hover:-translate-y-1 hover:border-orange-300/70 hover:shadow-2xl hover:shadow-orange-900/15 dark:border-white/[.08] dark:bg-white/[.04]"
+        className="group mx-auto flex max-w-5xl flex-col items-center gap-4 rounded-none border border-white/60 bg-white/80 px-6 py-10 text-center shadow-lg shadow-orange-900/5 backdrop-blur-md transition duration-200 ease-out hover:-translate-y-1 hover:border-orange-300/70 hover:shadow-2xl hover:shadow-orange-900/15 sm:rounded-3xl dark:border-white/[.08] dark:bg-white/[.04]"
       >
-        <h2 className="text-3xl font-semibold text-zinc-800 transition-colors group-hover:text-orange-600 dark:text-zinc-100">
+        <h2 className="text-3xl font-semibold text-zinc-800 dark:text-zinc-100">
           Title here
         </h2>
 
@@ -30,7 +30,8 @@ export default function TakeTheKids() {
           with the kids. Replace this with your real copy.
         </p>
 
-        <span className={`mt-2 inline-flex ${buttonStyles.primary}`}>
+        {/* The button pops up on its own hover (separate from the card lift). */}
+        <span className={`mt-2 inline-flex ${buttonStyles.primary} hover:-translate-y-1 hover:scale-105`}>
           Take The Kids
         </span>
       </a>

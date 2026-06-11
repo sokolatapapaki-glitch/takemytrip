@@ -146,6 +146,12 @@ function makeDayEvaluator(
     let evalResult: DayEval;
     if (set.length === 0) {
       evalResult = { feasible: true, plan: emptyPlan(startHours[slot]), load: 0, score: 0 };
+    } else if (set.length > MAX_DAY_ACTIVITIES) {
+      // fix: a pool of many SHORT activities let 10+ of them fit one day's time
+      // budget, and scheduleCombo's O(k!) ordering sweep then hung the exact
+      // planners for minutes. Enforce the same documented per-day cap the large
+      // heuristic uses, so every day's schedule stays bounded at 6! orderings.
+      evalResult = { feasible: false, plan: emptyPlan(startHours[slot]), load: 0, score: 0 };
     } else {
       const plan = scheduleCombo(set, dayIndices[slot], startHours[slot], endHours[slot], circulars[slot] ?? false);
       evalResult = {
@@ -408,6 +414,11 @@ function makePrunedDayEvaluator(
     let evalResult: DayEval;
     if (set.length === 0) {
       evalResult = { feasible: true, plan: emptyPlan(startHours[slot]), load: 0, score: 0 };
+    } else if (set.length > MAX_DAY_ACTIVITIES) {
+      // fix: same per-day cap as makeDayEvaluator — without it, day-sets of 10+
+      // short activities passed the duration prune and scheduleCombo's factorial
+      // ordering sweep hung the exact planners on valid inputs.
+      evalResult = { feasible: false, plan: emptyPlan(startHours[slot]), load: 0, score: 0 };
     } else {
       // The day's occupied time is AT LEAST Σ(activity hours) plus a forced lunch
       // (3h, only when there are 2+ activities and none can itself fill the midday
@@ -846,6 +857,8 @@ export function planHeuristic(
 // caps near 4 via the duration prune, so this only bites on pathologically short
 // activities; capping at 6 keeps the worst-case schedule at 6! = 720 orderings,
 // which stays fast even when the search explores many full days.
+// fix: ALL planners (the exact day evaluators too, not just this large-pool
+// heuristic) now enforce this cap — see makeDayEvaluator / makePrunedDayEvaluator.
 export const MAX_DAY_ACTIVITIES = 6;
 
 export function planLargeHeuristic(
@@ -1243,11 +1256,20 @@ export type PlannerName = keyof typeof PLANNERS;
 // explores (days+1)^pool assignments; the subset-DP sweeps days · 3^pool submasks.
 // planTrip gates the ACTIVE planner on its own cost vs the matching budget, so a
 // cheap planner isn't demoted to the heuristic on pools it can still solve exactly.
+// fix: the DP gate counted only the d·3^n submask STATES, so a 14-activity
+// 1-day pool (3^14 ≈ 4.8M states) passed as "exact" even though the real cost —
+// scheduling each of the 2^n distinct day-sets, up to MAX_DAY_ACTIVITIES!
+// orderings each — made it far slower than the 13-activity 3-day case the
+// budget was tuned for. Charge that per-set scheduling work explicitly:
+// ~360 ≈ 6!/2 average orderings per set. Boundaries preserved: (3 days, 13)
+// stays exact (7.7M ≤ 10M); (1 day, 14) now correctly falls to the heuristic
+// (10.7M > 10M), which solves it in milliseconds.
+const SCHEDULE_COST_PER_SET = 360;
 export const PLANNER_COST: Record<PlannerName, (days: number, pool: number) => number> = {
   planExhaustive: (d, n) => Math.pow(d + 1, n),
   planPruned: (d, n) => Math.pow(d + 1, n),
-  planSubsetDP: (d, n) => d * Math.pow(3, n),
-  planLinear: (d, n) => d * Math.pow(3, n),
+  planSubsetDP: (d, n) => d * Math.pow(3, n) + SCHEDULE_COST_PER_SET * Math.pow(2, n),
+  planLinear: (d, n) => d * Math.pow(3, n) + SCHEDULE_COST_PER_SET * Math.pow(2, n),
 };
 
 // Each planner's matching ceiling (backtracking vs subset-DP). See the budgets above.

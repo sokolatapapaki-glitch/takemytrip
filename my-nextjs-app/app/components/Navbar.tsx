@@ -15,9 +15,30 @@ const NAV_ITEMS = [
 
 export default function Navbar() {
   const pathname = usePathname();
+  // The homepage hero has a full-bleed fixed background that sits behind the
+  // navbar. On desktop the navbar floats transparently over it at the very top,
+  // then transitions to its solid look once the user scrolls past a small
+  // threshold. Mobile keeps the solid navbar at all times.
+  const isHome = pathname === "/" || pathname === "/start";
+  const [scrolled, setScrolled] = useState(false);
   // On mobile the links + My Trips collapse into a hamburger dropdown.
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+
+  // Track scroll only where the transparent treatment applies (the home hero).
+  useEffect(() => {
+    if (!isHome) {
+      setScrolled(false);
+      return;
+    }
+    const onScroll = () => setScrolled(window.scrollY > 30);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [isHome]);
+
+  // Desktop-only: transparent over the hero while at the top of the homepage.
+  const transparentTop = isHome && !scrolled;
 
   // Close the mobile menu when tapping anywhere outside it.
   useEffect(() => {
@@ -35,16 +56,27 @@ export default function Navbar() {
     // Sticky: the navbar stays pinned to the top of the viewport on every page.
     // z-40 keeps it above page content but BELOW the app modal overlay (z-50).
     <div ref={menuRef} className="sticky top-0 z-40">
-      <nav className="flex items-center justify-between border-b border-black/[.08] bg-white/70 px-4 py-2 sm:px-6 backdrop-blur-md dark:border-white/[.145] dark:bg-zinc-950/60 w-full">
+      <nav
+        className={`flex w-full items-center justify-between border-b px-4 py-2 transition-all duration-300 ${transparentTop
+          ? // Mobile stays solid; desktop (sm:) goes transparent at the top AND
+          // a touch roomier (more padding) since it's floating over the hero.
+          "border-black/[.08] bg-white dark:border-white/[.145] dark:bg-zinc-950 sm:border-transparent sm:bg-transparent sm:px-5 sm:py-2.5 sm:dark:border-transparent sm:dark:bg-transparent"
+          : "border-black/[.08] bg-white dark:border-white/[.145] dark:bg-zinc-950 sm:px-4 sm:py-2"
+          }`}
+      >
         {/* Mobile gets the larger title (text-2xl); desktop keeps text-lg. */}
-        <Link href="/" className="text-2xl sm:text-lg font-semibold tracking-tight w-fit">
+        <Link
+          href="/"
+          className={`w-fit text-2xl font-semibold tracking-tight transition-colors duration-300 sm:text-lg ${transparentTop ? "sm:text-white test-3xl" : ""
+            }`}
+        >
           Take My Trip
         </Link>
 
         {/* Right group: Map + Cities links next to the My Trips button (not
             centered). On mobile everything collapses into the hamburger. */}
-        <div className="flex items-center gap-2">
-          <div className="hidden items-center gap-2 text-base font-medium sm:flex">
+        <div className={`flex items-center transition-all duration-300 ${transparentTop ? "gap-3" : "gap-2"}`}>
+          <div className={`hidden items-center font-medium transition-all duration-300 sm:flex ${transparentTop ? "gap-3 text-lg" : "gap-2 text-base"}`}>
             {NAV_ITEMS.map((item) => {
               const active = pathname === item.href;
               if (!item.enabled) {
@@ -64,7 +96,8 @@ export default function Navbar() {
                   key={item.label}
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className="rounded-full px-3 py-1.5 text-zinc-600 transition-colors hover:text-green-500 dark:text-zinc-300"
+                  className={`rounded-full text-zinc-600 transition-all duration-300 hover:text-green-500 dark:text-zinc-300 ${transparentTop ? "px-3 py-1.5 sm:text-white sm:hover:text-green-300" : "px-3 py-1.5"
+                    }`}
                 >
                   {item.label}
                 </Link>
@@ -74,7 +107,10 @@ export default function Navbar() {
 
           <Link
             href="/my-trips"
-            className={buttonStyles.secondary + " hidden sm:inline-flex" /* Hidden on mobile, in the hamburger menu. */}
+            /* Hidden on mobile (in the hamburger menu). A touch larger while the
+               navbar floats transparently over the hero. */
+            className={`${buttonStyles.secondary} hidden transition-all duration-300 sm:inline-flex ${transparentTop ? "sm:px-4 sm:py-2 sm:text-base" : ""
+              }`}
           >
             My Trips
           </Link>

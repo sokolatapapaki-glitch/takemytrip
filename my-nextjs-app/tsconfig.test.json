@@ -21,5 +21,7 @@
     "app/components/ActivityCombinations/core/**/*.ts",
     "app/components/ActivityCombinations/core/__tests__/**/*.ts"
   ],
-  "exclude": ["node_modules", "dist-test"]
+  // The Vitest property suite (*.planner.test.ts) imports vitest/fast-check
+  // (ESM-only), which this CommonJS build can't compile — Vitest runs it instead.
+  "exclude": ["node_modules", "dist-test", "**/*.planner.test.ts"]
 }

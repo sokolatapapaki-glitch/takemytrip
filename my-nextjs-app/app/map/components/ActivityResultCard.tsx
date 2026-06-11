@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { FaStar } from "react-icons/fa6";
 import type { Activity } from "@/app/components/ActivityCombinations/core/activities.functions";
+import { buttonStyles } from "@/app/components/ui/buttonStyles";
 import { cityOf, iconOf, starsOf } from "./mapData";
 
 // A row in the search-results list: thumbnail + name/city + stars/price. Mirrors
@@ -51,7 +52,7 @@ export function ActivityResultCard({
             {activity.cost === 0 ? "Free" : `€${activity.cost}`}
           </span>
         </span>
-        <span className="self-end text-sm font-medium text-orange-500 underline underline-offset-2">
+        <span className={`self-end ${buttonStyles.underline}`}>
           see more
         </span>
       </span>

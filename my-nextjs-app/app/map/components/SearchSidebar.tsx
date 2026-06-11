@@ -197,23 +197,28 @@ export function SearchSidebar({
       {/* Results — separate white cards (no shared panel), filling the remaining
           height, no visible scrollbar. */}
       {resultsOpen && (
-        <div className="mt-2 min-h-0 flex-1 max-h-[60vh] space-y-3 overflow-y-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div
+          data-results-list
+          className="mt-2 min-h-0 flex-1 space-y-3 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
           {results.length === 0 ? (
             <p className="px-2 py-3 text-sm text-zinc-400">No activities match.</p>
           ) : (
             results.map((a, i) => (
               <div key={`${a.name}-${a.coords.lat}-${a.coords.lng}`} className="space-y-2">
-                <ActivityResultCard
-                  activity={a}
-                  active={selectedName === a.name}
-                  open={openActivities.has(a.name)}
-                  index={i}
-                  onClick={() => onToggleActivity(a)}
-                />
-                {openActivities.has(a.name) && (
+                {/* When opened, the résumé card is replaced by the detail panel —
+                    only the details show until "See less" collapses it back. */}
+                {openActivities.has(a.name) ? (
                   <ClickedActivityPanel
                     activity={a}
                     onClose={() => onCloseActivity(a.name)}
+                  />
+                ) : (
+                  <ActivityResultCard
+                    activity={a}
+                    active={selectedName === a.name}
+                    index={i}
+                    onClick={() => onToggleActivity(a)}
                   />
                 )}
               </div>

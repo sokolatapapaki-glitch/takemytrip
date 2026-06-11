@@ -12,7 +12,8 @@
 // The URLs below are placeholders just so the effect is visible — replace them
 // with your own. Add as many as you like; positions are assigned automatically.
 export const BG_IMAGE_URLS: string[] = [
-  "https://picsum.photos/seed/ttk-1/240/240",
+  // Homepage hero background — local image in /public.
+  "/homeImage.jpeg",
   "https://picsum.photos/seed/ttk-2/240/240",
   "https://picsum.photos/seed/ttk-3/240/240",
   "https://picsum.photos/seed/ttk-4/240/240",

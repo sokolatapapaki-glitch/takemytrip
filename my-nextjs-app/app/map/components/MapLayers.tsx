@@ -61,7 +61,7 @@ export function MapLayers({
     const cache = iconCache.current;
     let icon = cache.get(key);
     if (!icon) {
-      icon = activityIcon(iconOf(a), active, hovered);
+      icon = activityIcon(iconOf(a), a.name, active, hovered);
       cache.set(key, icon);
     }
     return icon;

@@ -52,14 +52,14 @@ export const homeStyles = {
   // The glass search bar wrapper: soft warm border, no shadow.
   searchBar: "border border-orange-200/80 bg-white/70",
 
-  // Idle vs. open field surfaces.
-  fieldIdle: "bg-white/70 hover:bg-white",
-  fieldActive: "bg-white shadow-sm ring-1 ring-orange-300",
+  // Idle vs. open field surfaces. Fully white background, dark-gray text.
+  fieldIdle: "bg-white text-zinc-800 hover:bg-white",
+  fieldActive: "bg-white text-zinc-800 shadow-sm ring-1 ring-orange-300",
 
   // Primary CTA: a coral→pink gradient that brightens on hover, with a flat
   // grey fallback while disabled (bg-none drops the gradient).
   primaryButton:
-    "bg-gradient-to-r from-orange-500 to-pink-500 text-white shadow-sm shadow-orange-500/30 transition-[background,box-shadow] hover:from-orange-600 hover:to-pink-600",
+    "bg-gradient-to-r from-orange-500 to-pink-500 text-white shadow-sm shadow-orange-500/30 transition-[background,box-shadow,transform] hover:from-orange-600 hover:to-pink-600",
   primaryButtonDisabled:
     "disabled:cursor-not-allowed disabled:bg-none disabled:bg-zinc-300 disabled:text-white/80 disabled:shadow-none",
 } as const;
