@@ -447,7 +447,7 @@ export function ActivityDetail({
                 {current.notes.map((n) => (
                   <li
                     key={n}
-                    className="rounded-xl border border-l-4 border-orange-300 border-l-orange-500 bg-orange-50 px-5 py-3.5 text-sm text-orange-950 shadow-sm shadow-orange-900/10 dark:border-orange-500/30 dark:border-l-orange-500 dark:bg-orange-500/10 dark:text-orange-100"
+                    className="rounded-xl border border-l-4 border-amber-300 border-l-amber-400 bg-amber-100 px-5 py-3.5 text-sm text-amber-900 shadow-sm shadow-amber-900/10 transition duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md dark:border-amber-400/30 dark:border-l-amber-400 dark:bg-amber-400/10 dark:text-amber-100"
                   >
                     {n}
                   </li>
@@ -463,8 +463,8 @@ export function ActivityDetail({
       {related.length > 0 && (
         <div>
           <div className="flex items-baseline justify-between gap-3">
-            <h3 className="text-base font-semibold text-zinc-800 dark:text-zinc-100">
-              Activities
+            <h3 className="text-xl font-semibold text-zinc-800 dark:text-zinc-100">
+              Related Activities
             </h3>
             {city && (
               <Link
@@ -476,7 +476,7 @@ export function ActivityDetail({
               </Link>
             )}
           </div>
-          <div className={`mt-3 flex gap-4 overflow-x-auto pb-2 ${hoverScrollbar}`}>
+          <div className={`mt-3 flex gap-4 overflow-x-auto py-3 ${hoverScrollbar}`}>
             {related.map((a, i) => (
               <div key={a.name} className="w-64 shrink-0">
                 <ActivityCard activity={a} index={i} hideSelect onSeeMore={push} />
