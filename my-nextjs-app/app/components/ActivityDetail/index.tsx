@@ -410,7 +410,7 @@ export function ActivityDetail({
                 {current.restaurants.map((r) => (
                   <div
                     key={r.name}
-                    className="rounded-2xl border border-zinc-200 bg-white p-3 dark:border-white/10 dark:bg-zinc-800"
+                    className="rounded-2xl bg-white p-3 shadow-sm shadow-zinc-900/5 transition duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md dark:bg-zinc-800"
                   >
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-medium text-zinc-800 dark:text-zinc-100">
@@ -447,7 +447,7 @@ export function ActivityDetail({
                 {current.notes.map((n) => (
                   <li
                     key={n}
-                    className="rounded-xl bg-amber-200/90 px-4 py-2 text-sm text-amber-950"
+                    className="rounded-xl border border-l-4 border-orange-300 border-l-orange-500 bg-orange-50 px-5 py-3.5 text-sm text-orange-950 shadow-sm shadow-orange-900/10 dark:border-orange-500/30 dark:border-l-orange-500 dark:bg-orange-500/10 dark:text-orange-100"
                   >
                     {n}
                   </li>
