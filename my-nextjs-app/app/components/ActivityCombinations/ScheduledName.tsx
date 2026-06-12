@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import { DAYS } from "./core/activities.data";
 import { openingHoursFor, type Activity } from "./core/activities.functions";
 import type { ScheduledItem } from "./core/schedule.functions";
@@ -36,9 +37,9 @@ export function ScheduledName({
             onClick={() => setOpen((o) => !o)}
             aria-expanded={open}
             title="Opening hours by day"
-            className={`shrink-0 ${buttonStyles.underline} hidden`}
+            className={`inline-flex items-center gap-1 shrink-0 ${buttonStyles.underline} hidden`}
           >
-            {open ? "Hours ▲" : "Hours ▼"}
+            Hours {open ? <FaChevronUp className="h-3 w-3" /> : <FaChevronDown className="h-3 w-3" />}
           </button>
         ) : null}
       </div>

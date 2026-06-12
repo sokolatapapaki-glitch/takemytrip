@@ -6,8 +6,16 @@ import {
   cityImage,
   cityPriceTier,
   flightTimeFromAthens,
+  type PriceTier,
 } from "./citiesData";
 import { buttonStyles } from "@/app/components/ui/buttonStyles";
+
+// Display names for the price tiers (the tier KEYS stay English in the data).
+const TIER_LABELS: Record<PriceTier, string> = {
+  Low: "Χαμηλή",
+  Medium: "Μεσαία",
+  High: "Υψηλή",
+};
 
 // A single city tile from the Penpot "Cities" board: image placeholder, name +
 // country, description, a flight-time/price meta line, and a "See Activities"
@@ -20,8 +28,44 @@ export function CityCard({ city, index = 0 }: { city: City; index?: number }) {
     <Link
       href={`/activities?city=${city.id}`}
       style={{ animationDelay: `${Math.min(index * 40, 300)}ms` }}
-      className="group animate-card-pop flex flex-col overflow-hidden rounded-3xl border border-white/60 bg-white/80 shadow-lg shadow-orange-900/5 backdrop-blur-md transition duration-200 ease-out hover:-translate-y-1 hover:rotate-1 hover:shadow-xl hover:shadow-orange-900/10"
+      className="group animate-card-pop block h-full"
     >
+      {/* Mobile: a compact horizontal row, mirroring the map page's
+          search-result cards — image thumbnail on the left, name + a short meta
+          line, and a quiet "See Activities". */}
+      <div className="flex min-h-24 items-stretch overflow-hidden rounded-2xl border border-zinc-100 bg-white shadow-sm shadow-orange-900/5 transition duration-200 ease-out hover:-translate-y-0.5 hover:border-orange-200 sm:hidden">
+        <div className="relative flex aspect-square w-24 shrink-0 items-center justify-center self-center overflow-hidden rounded-l-2xl bg-gradient-to-br from-orange-400 via-amber-300 to-emerald-400 text-white">
+          {image ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={image}
+              alt={`${city.name}, ${city.country}`}
+              loading="lazy"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          ) : (
+            <FaLocationDot className="h-7 w-7 drop-shadow" />
+          )}
+        </div>
+        <div className="flex min-w-0 flex-1 flex-col justify-between p-3">
+          <div>
+            <span className="block truncate text-base font-medium text-zinc-800">
+              {city.name}
+            </span>
+            <span className="mt-0.5 block truncate text-sm text-zinc-400">
+              {city.country} · ~{flight.label} ·{" "}
+              {tier ? TIER_LABELS[tier] : "Τιμή σύντομα"}
+            </span>
+          </div>
+          <span className={`mt-1 self-end ${buttonStyles.underline}`}>
+            Δες δραστηριότητες
+          </span>
+        </div>
+      </div>
+
+      {/* Desktop (sm+): the full glass card. h-full makes every card fill its
+          grid cell so the whole grid is uniformly tall. */}
+      <div className="relative hidden flex-col overflow-hidden rounded-3xl border border-white/60 bg-white/80 shadow-lg shadow-orange-900/5 backdrop-blur-md transition duration-200 ease-out hover:-translate-y-1 hover:rotate-1 hover:shadow-xl hover:shadow-orange-900/10 sm:flex sm:h-full">
       {/* City photo over a gradient/pin fallback (shown while loading or if the
           city has no image). */}
       <div className="relative flex h-40 items-center justify-center overflow-hidden bg-gradient-to-br from-orange-400 via-amber-300 to-emerald-400">
@@ -38,7 +82,7 @@ export function CityCard({ city, index = 0 }: { city: City; index?: number }) {
         )}
         {city.activities.length > 0 && (
           <span className="absolute right-3 top-3 rounded-full bg-white/85 px-2.5 py-1 text-xs font-medium text-zinc-700 backdrop-blur">
-            {city.activities.length} activities
+            {city.activities.length} δραστηριότητες
           </span>
         )}
       </div>
@@ -83,29 +127,36 @@ export function CityCard({ city, index = 0 }: { city: City; index?: number }) {
 
         <div className="flex items-center gap-2 text-xs text-zinc-400">
           <span className="flex items-center gap-1">
-            <FaPlane className="h-3 w-3 text-orange-400" />~{flight.label} from
-            Athens
+            <FaPlane className="h-3 w-3 text-orange-400" />~{flight.label} από
+            Αθήνα
           </span>
           <span aria-hidden>·</span>
           <span className="flex items-center gap-1">
             {tier != null ? (
               <>
                 <FaEuroSign className="h-3 w-3 text-emerald-500" />
-                {tier}
+                {TIER_LABELS[tier]}
               </>
             ) : (
-              "Price coming soon"
+              "Τιμή σύντομα"
             )}
           </span>
         </div>
-        <p className="text-sm text-zinc-500">{cityDescription(city)}</p>
+        {/* Description always occupies exactly two lines of space: longer text
+            clamps, shorter text keeps the same footprint (min-h-10 = 2 lines of
+            text-sm) — so every card is the same height, with the button below
+            sitting at the same spot on all of them. */}
+        <p className="line-clamp-2 min-h-10 text-sm text-zinc-500">
+          {cityDescription(city)}
+        </p>
 
         {/* See Activities — opens the activities list scoped to this city.
             mt-auto keeps it pinned to the bottom even when the text is short,
             so the gap below the button is identical on every card. */}
         <div className={`mt-auto pt-2 ${buttonStyles.secondary}`}>
-          See Activities
+          Δες δραστηριότητες
         </div>
+      </div>
       </div>
     </Link>
   );

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import MapClient from "./MapClient";
 
 export const metadata: Metadata = {
-  title: "Map",
+  title: "Χάρτης",
 };
 
 // The Map page from the Penpot board: an interactive map of all cities and their

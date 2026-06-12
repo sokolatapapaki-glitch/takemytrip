@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { FaSliders } from "react-icons/fa6";
 import { SearchIcon } from "@/app/start/components/icons";
 import { FilterDropdown } from "@/app/map/components/FilterDropdown";
+import { buttonStyles } from "@/app/components/ui/buttonStyles";
+import { useScrollLock } from "@/app/components/ui/useScrollLock";
 import { CityCard } from "./CityCard";
 import {
   CITY_SORT_LABELS,
@@ -17,7 +20,12 @@ export default function CitiesExperience() {
   const [query, setQuery] = useState("");
   const [sortBy, setSortBy] = useState<CitySortKey>("name");
   const [sortOpen, setSortOpen] = useState(false);
+  // Mobile/tablet only: sorting moves into a right-side slide-in drawer.
+  const [showSort, setShowSort] = useState(false);
   const sortRef = useRef<HTMLDivElement>(null);
+
+  // Lock the page scroll while the mobile sort drawer is open.
+  useScrollLock(showSort);
 
   // Outside-click closes the sort dropdown.
   useEffect(() => {
@@ -48,11 +56,13 @@ export default function CitiesExperience() {
         {/* Header: title + sort. */}
         <div className="flex items-center justify-between gap-4">
           <h1 className="text-3xl font-semibold tracking-tight text-zinc-800">
-            Cities
+            Πόλεις
           </h1>
-          <div ref={sortRef}>
+          {/* Sorted-by chip — desktop only; on mobile sorting lives in the
+              drawer opened by the button below the search. */}
+          <div ref={sortRef} className="hidden lg:block">
             <FilterDropdown
-              label="Sorted by"
+              label="Ταξινόμηση"
               active={sortBy !== "name"}
               summary={sortBy !== "name" ? CITY_SORT_LABELS[sortBy] : null}
               open={sortOpen}
@@ -88,21 +98,77 @@ export default function CitiesExperience() {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search cities"
+            placeholder="Αναζήτησε πόλεις"
             className="w-full bg-transparent text-base text-zinc-800 outline-none placeholder:text-zinc-400"
           />
         </div>
 
+        {/* Sort — opens the right-side drawer (mobile/tablet only). */}
+        <button
+          type="button"
+          onClick={() => setShowSort(true)}
+          className={`mt-3 flex w-full items-center justify-center gap-2 lg:hidden ${buttonStyles.secondary}`}
+        >
+          <FaSliders className="h-4 w-4" />
+          Ταξινόμηση
+          {sortBy !== "name" ? `: ${CITY_SORT_LABELS[sortBy]}` : ""}
+        </button>
+
         {/* Grid of city cards. */}
         {cities.length === 0 ? (
           <p className="mt-12 text-center text-sm text-zinc-400">
-            No cities match “{query}”.
+            Καμία πόλη δεν ταιριάζει με «{query}».
           </p>
         ) : (
-          <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
             {cities.map((c, i) => (
               <CityCard key={c.id} city={c} index={i} />
             ))}
+          </div>
+        )}
+
+        {/* Mobile/tablet sort drawer — slides in from the right, fullscreen but
+            BELOW the navbar (top-14). overflow-hidden clips the off-screen panel
+            during the slide-in (no transient horizontal scrollbar). */}
+        {showSort && (
+          <div className="fixed inset-x-0 bottom-0 top-14 z-30 overflow-hidden lg:hidden">
+            <div
+              className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+              onClick={() => setShowSort(false)}
+            />
+            <div className="animate-slide-in-right absolute right-0 top-0 flex h-full w-full flex-col bg-white shadow-2xl sm:max-w-[420px]">
+              <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-4">
+                <h2 className="text-lg font-semibold text-zinc-800">Ταξινόμηση</h2>
+                <button
+                  type="button"
+                  onClick={() => setShowSort(false)}
+                  className={buttonStyles.underline}
+                >
+                  Έγινε
+                </button>
+              </div>
+              <div className="flex-1 overflow-y-auto p-4">
+                <div className="flex flex-col gap-1">
+                  {(Object.keys(CITY_SORT_LABELS) as CitySortKey[]).map((k) => (
+                    <button
+                      key={k}
+                      type="button"
+                      onClick={() => {
+                        setSortBy(k);
+                        setShowSort(false);
+                      }}
+                      className={`rounded-lg px-3 py-2 text-left text-sm transition-colors ${
+                        sortBy === k
+                          ? "bg-orange-50 text-orange-700"
+                          : "text-zinc-700 hover:bg-zinc-50"
+                      }`}
+                    >
+                      {CITY_SORT_LABELS[k]}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </div>

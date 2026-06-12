@@ -16,6 +16,7 @@ import { DestinationModal } from "./DestinationModal";
 import { CalendarModal } from "./CalendarModal";
 import { TravelersModal } from "./TravelersModal";
 import { Typewriter } from "./Typewriter";
+import { StatusToast, type StatusState } from "@/app/components/ui/StatusToast";
 import {
   CalendarIcon,
   MapPinIcon,
@@ -56,6 +57,10 @@ export default function StartTripSearch({
   });
   const [searchIconAlert, setSearchIconAlert] = useState(false);
   const searchIconAlertTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // The status toast (info/success/error) — currently used for the "fill in the
+  // required fields" error when Search is pressed too early. `id` gives each
+  // trigger a fresh key so the toast restarts its timer/animation.
+  const [notice, setNotice] = useState<{ id: number; state: StatusState; message: string } | null>(null);
 
   // Close the open modal when clicking anywhere outside the bar. The mobile
   // full-screen pickers are PORTALED to <body> (outside rootRef), so taps
@@ -122,9 +127,13 @@ export default function StartTripSearch({
       : `${formatShort(range.start)} — ${formatShort(range.end)}`;
 
   const travelersLabel = useMemo(() => {
-    const parts = [`${travelers.adults} adult${travelers.adults !== 1 ? "s" : ""}`];
+    const parts = [
+      `${travelers.adults} ${travelers.adults === 1 ? "ενήλικας" : "ενήλικες"}`,
+    ];
     if (travelers.children > 0) {
-      parts.push(`${travelers.children} child${travelers.children !== 1 ? "ren" : ""}`);
+      parts.push(
+        `${travelers.children} ${travelers.children === 1 ? "παιδί" : "παιδιά"}`
+      );
     }
     return parts.join(" · ");
   }, [travelers]);
@@ -138,9 +147,9 @@ export default function StartTripSearch({
 
   const missingInputs = useMemo(() => {
     const missing: string[] = [];
-    if (!dest) missing.push("destination");
-    if (!range.start) missing.push("dates");
-    if (travelers.adults < 1) missing.push("travelers");
+    if (!dest) missing.push("προορισμό");
+    if (!range.start) missing.push("ημερομηνίες");
+    if (travelers.adults < 1) missing.push("ταξιδιώτες");
     return missing;
   }, [dest, range.start, travelers.adults]);
 
@@ -149,7 +158,11 @@ export default function StartTripSearch({
   // (see activityPrice / setActiveParty); ages go as a comma list, unset → 0.
   function handleSearch() {
     if (!canSearch) {
-      window.alert(`Please fill in: ${missingInputs.join(", ")}.`);
+      setNotice({
+        id: Date.now(),
+        state: "error",
+        message: `Συμπλήρωσε: ${missingInputs.join(", ")}.`,
+      });
       if (searchIconAlertTimeout.current) {
         clearTimeout(searchIconAlertTimeout.current);
       }
@@ -230,7 +243,7 @@ export default function StartTripSearch({
             <Field
               active={open === "datesFrom" || open === "datesTo"}
               icon={<CalendarIcon className="h-5 w-5" />}
-              placeholder="From — To"
+              placeholder="Από — Έως"
               value={dateLabel}
               iconDelay={490}
               playEntranceAnimations={playEntranceAnimations}
@@ -253,7 +266,7 @@ export default function StartTripSearch({
             <Field
               active={open === "datesFrom"}
               icon={<CalendarIcon className="h-5 w-5" />}
-              placeholder="From"
+              placeholder="Από"
               value={range.start ? formatShort(range.start) : null}
               iconDelay={490}
               playEntranceAnimations={playEntranceAnimations}
@@ -261,7 +274,7 @@ export default function StartTripSearch({
               onClear={range.start ? () => setRange({ start: null, end: range.end }) : undefined}
             >
               {open === "datesFrom" && (
-                <FullScreenPicker title="From date" onClose={() => setOpen(null)}>
+                <FullScreenPicker title="Ημερομηνία από" onClose={() => setOpen(null)}>
                   <CalendarModal
                     value={range}
                     onChange={setRange}
@@ -275,7 +288,7 @@ export default function StartTripSearch({
             <Field
               active={open === "datesTo"}
               icon={<CalendarIcon className="h-5 w-5" />}
-              placeholder="To"
+              placeholder="Έως"
               value={range.end ? formatShort(range.end) : null}
               iconDelay={490}
               playEntranceAnimations={playEntranceAnimations}
@@ -283,7 +296,7 @@ export default function StartTripSearch({
               onClear={range.end ? () => setRange({ start: range.start, end: null }) : undefined}
             >
               {open === "datesTo" && (
-                <FullScreenPicker title="To date" onClose={() => setOpen(null)}>
+                <FullScreenPicker title="Ημερομηνία έως" onClose={() => setOpen(null)}>
                   <CalendarModal
                     value={range}
                     onChange={setRange}
@@ -299,7 +312,7 @@ export default function StartTripSearch({
         <Field
           active={open === "travelers"}
           icon={<TravelersIcon multiple={travelerCount > 1} />}
-          placeholder="Travelers"
+          placeholder="Ταξιδιώτες"
           value={travelersLabel}
           iconDelay={580}
           playEntranceAnimations={playEntranceAnimations}
@@ -312,21 +325,37 @@ export default function StartTripSearch({
           )}
         </Field>
 
+        {/* The button itself rides the bar's fade-in-up like every input (no
+            separate late pop); only its icon pops, continuing the field icons'
+            stagger (490 → 580 → 670ms). */}
         <button
           type="button"
           onClick={handleSearch}
           aria-disabled={!canSearch}
-          title={canSearch ? undefined : "Search"}
-          style={{ animationDelay: "440ms" }}
-          className={`${playEntranceAnimations ? "animate-pop-in" : ""} group flex w-full shrink-0 cursor-pointer items-center justify-center gap-2 rounded-xl px-6 py-3 font-medium lg:w-auto ${homeStyles.primaryButton}`}
+          title={canSearch ? undefined : "Αναζήτηση"}
+          className={`group flex w-full shrink-0 cursor-pointer items-center justify-center gap-2 rounded-xl px-6 py-3 font-medium lg:w-auto ${homeStyles.primaryButton}`}
         >
-          <SearchIcon
-            className={`h-5 w-5 transition-transform duration-200 ease-out group-hover:scale-110 group-hover:-rotate-12 ${searchIconAlert ? "animate-bounce" : ""
-              }`}
-          />
-          <span>Search</span>
+          <span
+            className={`${playEntranceAnimations ? "animate-icon-pop" : ""} inline-flex shrink-0`}
+            style={{ animationDelay: "670ms" }}
+          >
+            <SearchIcon
+              className={`h-5 w-5 transition-transform duration-200 ease-out group-hover:scale-110 group-hover:-rotate-12 ${searchIconAlert ? "animate-bounce" : ""
+                }`}
+            />
+          </span>
+          <span>Αναζήτηση</span>
         </button>
       </div>
+
+      {notice && (
+        <StatusToast
+          key={notice.id}
+          state={notice.state}
+          message={notice.message}
+          onClose={() => setNotice(null)}
+        />
+      )}
     </div>
   );
 }
@@ -422,7 +451,7 @@ function Field({
       {onClear && (
         <button
           type="button"
-          aria-label="Clear"
+          aria-label="Καθαρισμός"
           onClick={onClear}
           className="absolute right-3 top-1/2 hidden -translate-y-1/2 rounded-full p-0.5 text-zinc-300 transition-colors hover:bg-zinc-100 hover:text-zinc-500 group-hover:block"
         >
@@ -506,7 +535,7 @@ function DestField({
             value={query}
             onChange={(e) => onQueryChange(e.target.value)}
             onFocus={onOpen}
-            placeholder="Search destination"
+            placeholder="Αναζήτησε προορισμό"
             size={1}
             className={`w-full min-w-0 flex-1 bg-transparent text-sm text-zinc-800 outline-none placeholder:text-zinc-400 ${onClear ? "pr-6" : ""
               }`}
@@ -518,14 +547,14 @@ function DestField({
             onClick={onOpen}
             className="flex-1 truncate text-left text-sm text-zinc-400"
           >
-            <Typewriter text="Search destination" startDelay={820} onDone={onTypingDone} />
+            <Typewriter text="Αναζήτησε προορισμό" startDelay={820} onDone={onTypingDone} />
           </button>
         )}
       </div>
       {onClear && (
         <button
           type="button"
-          aria-label="Clear"
+          aria-label="Καθαρισμός"
           onClick={onClear}
           className="absolute right-3 top-1/2 hidden -translate-y-1/2 rounded-full p-0.5 text-zinc-300 transition-colors hover:bg-zinc-100 hover:text-zinc-500 group-hover:block"
         >

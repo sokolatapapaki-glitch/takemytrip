@@ -3,17 +3,17 @@
 // -----------------------------------------------------------------------------
 
 export const MONTHS = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December",
+  "Ιανουάριος", "Φεβρουάριος", "Μάρτιος", "Απρίλιος", "Μάιος", "Ιούνιος",
+  "Ιούλιος", "Αύγουστος", "Σεπτέμβριος", "Οκτώβριος", "Νοέμβριος", "Δεκέμβριος",
 ];
 
 export const MONTHS_SHORT = [
-  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+  "Ιαν", "Φεβ", "Μάρ", "Απρ", "Μάι", "Ιούν",
+  "Ιούλ", "Αύγ", "Σεπ", "Οκτ", "Νοέ", "Δεκ",
 ];
 
 // Monday-first weekday labels (matches the rest of the app's Monday indexing).
-export const WEEKDAYS = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
+export const WEEKDAYS = ["Δε", "Τρ", "Τε", "Πέ", "Πα", "Σά", "Κυ"];
 
 export function startOfToday(): Date {
   const n = new Date();
@@ -50,7 +50,8 @@ export function monthLabel(view: Date): string {
 }
 
 export function formatShort(d: Date): string {
-  return `${MONTHS_SHORT[d.getMonth()]} ${d.getDate()}`;
+  // Greek order: day before month ("7 Ιουν").
+  return `${d.getDate()} ${MONTHS_SHORT[d.getMonth()]}`;
 }
 
 // The cells of a month grid: leading nulls pad to the Monday-first start, then

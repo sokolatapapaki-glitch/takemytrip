@@ -37,9 +37,9 @@ export const priceMaxFor = (city: City): number =>
 
 export type ActSortKey = "stars" | "price" | "distance";
 export const ACT_SORT_LABELS: Record<ActSortKey, string> = {
-  stars: "Stars",
-  price: "Price",
-  distance: "Distance from center",
+  stars: "Αστέρια",
+  price: "Τιμή",
+  distance: "Απόσταση από το κέντρο",
 };
 
 export type ActivityListFilters = {

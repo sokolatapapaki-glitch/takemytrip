@@ -17,15 +17,15 @@ import {
   nextDow,
   startOfToday,
 } from "../data/dateUtils";
-import { ChevronLeftIcon, ChevronRightIcon } from "./icons";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 const PRESETS: { label: string; days: number }[] = [
-  { label: "Weekend", days: 2 },
-  { label: "1 day", days: 1 },
-  { label: "2 days", days: 2 },
-  { label: "3 days", days: 3 },
-  { label: "4 days", days: 4 },
-  { label: "5 days", days: 5 },
+  { label: "Σαββατοκύριακο", days: 2 },
+  { label: "1 ημέρα", days: 1 },
+  { label: "2 ημέρες", days: 2 },
+  { label: "3 ημέρες", days: 3 },
+  { label: "4 ημέρες", days: 4 },
+  { label: "5 ημέρες", days: 5 },
 ];
 
 export function CalendarModal({
@@ -94,20 +94,20 @@ export function CalendarModal({
       <div className="mb-2 flex items-center justify-between">
         <button
           type="button"
-          aria-label="Previous month"
+          aria-label="Προηγούμενος μήνας"
           onClick={() => setView(addMonths(view, -1))}
           className="rounded-lg p-1.5 text-zinc-500 transition-colors hover:bg-orange-50 hover:text-orange-600"
         >
-          <ChevronLeftIcon className="h-4 w-4" />
+          <FaChevronLeft className="h-4 w-4" />
         </button>
         <span className="text-base font-semibold text-zinc-800 sm:text-sm">{monthLabel(view)}</span>
         <button
           type="button"
-          aria-label="Next month"
+          aria-label="Επόμενος μήνας"
           onClick={() => setView(addMonths(view, 1))}
           className="rounded-lg p-1.5 text-zinc-500 transition-colors hover:bg-orange-50 hover:text-orange-600"
         >
-          <ChevronRightIcon className="h-4 w-4" />
+          <FaChevronRight className="h-4 w-4" />
         </button>
       </div>
 
@@ -164,7 +164,7 @@ export function CalendarModal({
           onClick={() => setShowPresets((s) => !s)}
           className="text-sm font-medium text-orange-600 transition-colors hover:text-orange-700"
         >
-          No dates decided yet?
+          Δεν έχεις αποφασίσει ημερομηνίες;
         </button>
         {showPresets && (
           <div className="mt-2 flex flex-wrap gap-2">

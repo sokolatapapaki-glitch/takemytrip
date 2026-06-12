@@ -21,13 +21,18 @@
 
 /* Clip any horizontal overflow at the document root so a too-wide element can
    never make mobile browsers zoom the page out (which leaves the full-width
-   navbar/footer looking inset with empty space on the sides). `clip` — not
-   `hidden` — avoids turning these into scroll containers, so the sticky navbar
-   keeps sticking to the viewport. */
-html,
-body {
+   navbar/footer looking inset with empty space on the sides). The clip lives on
+   <html> ONLY — never on <body>. On mobile engines that don't support
+   `overflow: clip`, a clip on <body> falls back to `hidden`, which turns <body>
+   into a scroll container and breaks the sticky navbar (it sticks to a box that
+   never scrolls). <html> is the real page scroller, so clipping it is safe. */
+html {
   max-width: 100%;
   overflow-x: clip;
+}
+
+body {
+  max-width: 100%;
 }
 
 body {
@@ -189,6 +194,45 @@ body {
 .animate-slide-down {
   opacity: 0;
   animation: slide-down 0.25s ease-out both;
+}
+
+/* Drawer sliding in from the right edge (mobile filter panels). */
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.28s ease-out both;
+}
+
+/* Toast exits — reverse of the slide-down (mobile) / slide-in-right (desktop)
+   entrances, fading out as they leave. */
+@keyframes toast-out-right {
+  to {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+}
+
+.animate-toast-out-right {
+  animation: toast-out-right 0.3s ease-in both;
+}
+
+@keyframes toast-out-up {
+  to {
+    transform: translateY(-140%);
+    opacity: 0;
+  }
+}
+
+.animate-toast-out-up {
+  animation: toast-out-up 0.3s ease-in both;
 }
 
 /* Small pop for map markers / cards as they appear. */

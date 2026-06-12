@@ -7,6 +7,7 @@ import { bestVibe, starsOf } from "@/app/map/components/mapData";
 import { buttonStyles } from "@/app/components/ui/buttonStyles";
 import { Stars } from "@/app/components/ui/Stars";
 import { VIBE_GRADIENT, VIBE_ICONS } from "./vibeStyle";
+import { activityImages } from "./activityImages";
 
 // A single activity tile from the Penpot "Activities in list" board: a select
 // checkbox (top-left), a bright vibe-coloured image placeholder, the activity
@@ -58,15 +59,93 @@ export function ActivityCard({
   const descriptionClass = compact ? "hidden" : "line-clamp-2 text-sm text-zinc-400";
 
   return (
-    <div
-      style={{ animationDelay: `${Math.min(index * 40, 300)}ms` }}
-      className={`group animate-card-pop relative flex ${widthClass} ${cardLayout} overflow-hidden rounded-3xl border border-white/60 bg-white/80 shadow-lg shadow-orange-900/5 backdrop-blur-md transition duration-200 ease-out ${hoverClass}`}
-    >
-      {/* Image placeholder — bright gradient coloured by the activity's vibe. */}
+    <>
+      {/* Mobile (non-compact pages only): a compact horizontal row, mirroring
+          the map page's search-result cards — image thumbnail on the left, name
+          + stars/price, and a quiet "See more". Tapping the row opens the modal;
+          the select checkbox sits over the thumbnail (and stops the tap). */}
+      {!compact && (
+        <div
+          onClick={onSeeMore ? () => onSeeMore(activity) : undefined}
+          role="button"
+          tabIndex={0}
+          style={{ animationDelay: `${Math.min(index * 35, 250)}ms` }}
+          className="animate-card-pop relative flex min-h-24 w-full cursor-pointer items-stretch overflow-hidden rounded-2xl border border-zinc-100 bg-white text-left shadow-sm shadow-orange-900/5 transition duration-200 ease-out hover:-translate-y-0.5 hover:border-orange-200 sm:hidden"
+        >
+          <div
+            className={`relative flex aspect-square w-24 shrink-0 items-center justify-center self-center overflow-hidden rounded-l-2xl bg-gradient-to-br ${VIBE_GRADIENT[vibe.key]} text-white`}
+          >
+            <VibeIcon className="h-7 w-7 drop-shadow" />
+            {activityImages(activity)[0] && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={activityImages(activity)[0]}
+                alt={activity.name}
+                loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.style.display = "none";
+                }}
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            )}
+            {!hideSelect && (
+              <label
+                onClick={(e) => e.stopPropagation()}
+                className="absolute left-1.5 top-1.5 flex h-5 w-5 cursor-pointer items-center justify-center"
+              >
+                <input
+                  type="checkbox"
+                  checked={selected}
+                  onChange={() => onToggleSelect?.(activity)}
+                  aria-label={`Επιλογή: ${activity.name}`}
+                  className="peer sr-only"
+                />
+                <span className="flex h-5 w-5 items-center justify-center rounded border border-white/80 bg-black/15 text-white shadow-sm backdrop-blur-sm transition-colors peer-checked:border-orange-500 peer-checked:bg-orange-500">
+                  {selected && <FaCheck className="h-3 w-3" aria-hidden />}
+                </span>
+              </label>
+            )}
+          </div>
+          <div className="flex min-w-0 flex-1 flex-col justify-between p-3">
+            <div>
+              <span className="block truncate text-base font-medium text-zinc-800">
+                {activity.name}
+              </span>
+              <span className="mt-0.5 flex items-center gap-2 text-sm text-zinc-400">
+                <Stars value={stars} />
+                <span>{price === 0 ? "Δωρεάν" : `€${price}`}</span>
+              </span>
+            </div>
+            <span className={`mt-1 self-end ${buttonStyles.underline}`}>
+              Δες περισσότερα
+            </span>
+          </div>
+        </div>
+      )}
+
       <div
-        className={`flex ${imageClass} items-center justify-center bg-gradient-to-br ${VIBE_GRADIENT[vibe.key]}`}
+        style={{ animationDelay: `${Math.min(index * 40, 300)}ms` }}
+        className={`group animate-card-pop relative ${compact ? "flex" : "hidden sm:flex"} ${widthClass} ${cardLayout} overflow-hidden rounded-3xl border border-white/60 bg-white/80 shadow-lg shadow-orange-900/5 backdrop-blur-md transition duration-200 ease-out ${hoverClass}`}
+      >
+      {/* Image placeholder — bright gradient coloured by the activity's vibe,
+          with the first real photo (if any) layered over it. A load failure
+          hides the <img> so the gradient + icon show through. */}
+      <div
+        className={`relative flex ${imageClass} items-center justify-center overflow-hidden bg-gradient-to-br ${VIBE_GRADIENT[vibe.key]}`}
       >
         <VibeIcon className="h-12 w-12 text-white drop-shadow" />
+        {activityImages(activity)[0] && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={activityImages(activity)[0]}
+            alt={activity.name}
+            loading="lazy"
+            onError={(e) => {
+              e.currentTarget.style.display = "none";
+            }}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        )}
       </div>
 
       {/* Select checkbox — top-left, kept small and simple over the image. */}
@@ -76,7 +155,7 @@ export function ActivityCard({
           type="checkbox"
           checked={selected}
           onChange={() => onToggleSelect?.(activity)}
-          aria-label={`Select ${activity.name}`}
+          aria-label={`Επιλογή: ${activity.name}`}
           className="peer sr-only"
         />
         <span className="flex h-5 w-5 items-center justify-center rounded border border-white/80 bg-black/15 text-white shadow-sm backdrop-blur-sm transition-colors peer-checked:border-orange-500 peer-checked:bg-orange-500">
@@ -92,14 +171,14 @@ export function ActivityCard({
           type="button"
           onClick={onUse ? () => onUse(activity) : undefined}
           aria-disabled={!onUse}
-          title={onUse ? "Use this activity instead" : "Click Replace on a trip activity first"}
+          title={onUse ? "Χρησιμοποίησε αυτή τη δραστηριότητα" : "Πάτησε πρώτα Αντικατάσταση σε μια δραστηριότητα του ταξιδιού"}
           className={`absolute right-3 top-3 rounded-full px-3 py-1 text-xs font-medium shadow-sm backdrop-blur-sm transition-colors ${
             onUse
               ? "bg-orange-500 text-white hover:bg-orange-600"
               : "bg-white/90 text-zinc-800 hover:bg-white"
           }`}
         >
-          Use
+          Χρήση
         </button>
       )}
 
@@ -145,7 +224,7 @@ export function ActivityCard({
         <h3 className="text-lg font-semibold text-zinc-800">{activity.name}</h3>
         <div className="flex flex-wrap items-center gap-3 text-sm text-zinc-500">
           <Stars value={stars} />
-          <span>{price === 0 ? "Free" : `€${price}`}</span>
+          <span>{price === 0 ? "Δωρεάν" : `€${price}`}</span>
         </div>
         <p className={descriptionClass}>{activity.description}</p>
 
@@ -157,16 +236,17 @@ export function ActivityCard({
           type="button"
           onClick={onSeeMore ? () => onSeeMore(activity) : undefined}
           aria-disabled={!onSeeMore}
-          title={onSeeMore ? undefined : "Coming soon"}
+          title={onSeeMore ? undefined : "Έρχεται σύντομα"}
           className={
             compact
               ? `mt-auto self-start ${buttonStyles.underline}`
               : `mt-auto block w-full ${buttonStyles.secondary}`
           }
         >
-          See more
+          Δες περισσότερα
         </button>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

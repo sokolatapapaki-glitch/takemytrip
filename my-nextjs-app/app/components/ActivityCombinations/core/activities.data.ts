@@ -18,11 +18,11 @@ export const ACTIVITIES: Activity[] = ROME_ACTIVITIES;
 
 // Days of the week, Monday-first. A `program` holds one entry per day IN THIS
 // ORDER (index 0 = Mon … 6 = Sun).
-export const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as const;
+export const DAYS = ["Δευ", "Τρί", "Τετ", "Πέμ", "Παρ", "Σάβ", "Κυρ"] as const;
 
 export const VIBES: { key: VibeKey; name: string }[] = [
-  { key: "cultural", name: "Cultural" },
-  { key: "foodie", name: "Foodie" },
-  { key: "adventurous", name: "Adventurous" },
-  { key: "relaxing", name: "Relaxing" },
+  { key: "cultural", name: "Πολιτισμός" },
+  { key: "foodie", name: "Φαγητό" },
+  { key: "adventurous", name: "Περιπέτεια" },
+  { key: "relaxing", name: "Χαλάρωση" },
 ];

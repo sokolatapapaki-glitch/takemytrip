@@ -41,7 +41,7 @@ export function CityLabel({
         className="inline-flex items-center gap-1.5 rounded-full border border-white/60 bg-white/90 px-4 py-1.5 font-medium text-zinc-700 shadow-lg shadow-orange-900/5 transition-colors hover:bg-orange-50"
       >
         <FaLocationDot className="text-emerald-500" />
-        <span>{current ? current.name : "All cities"}</span>
+        <span>{current ? current.name : "Όλες οι πόλεις"}</span>
         <FaChevronDown className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : "rotate-0"}`} />
       </button>
 

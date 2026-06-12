@@ -1,7 +1,7 @@
 "use client";
 
 import { useLayoutEffect, useRef, useState } from "react";
-import { ChevronRightIcon } from "@/app/start/components/icons";
+import { FaChevronRight } from "react-icons/fa6";
 import { buttonStyles } from "@/app/components/ui/buttonStyles";
 // A single filter "chip" (Price / Vibe / Sorted by / Distance) that opens a glass
 // popup with its options. Controlled by the parent so only one is open at a time.
@@ -54,7 +54,7 @@ export function FilterDropdown({
         className={buttonStyles.common + ` flex items-center gap-2 ${open ? "bg-zinc-50" : ""}`}
       >
         <span>{summary ? `${label}: ${summary}` : label}</span>
-        <ChevronRightIcon
+        <FaChevronRight
           className={`h-4 w-4 text-current transition-transform ${open ? "rotate-90" : "rotate-0 opacity-50"}`}
         />
       </button>

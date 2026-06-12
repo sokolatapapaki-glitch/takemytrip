@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment, useState } from "react";
+import { FaArrowsRotate, FaChevronDown, FaChevronUp, FaTrashCan } from "react-icons/fa6";
 import type { Activity, Coords } from "./core/activities.functions";
 import { distanceKm, formatDistance, formatTime, setActiveCity } from "./core/activities.functions";
 import { DAYS } from "./core/activities.data";
@@ -205,9 +206,11 @@ export function DayItinerary({
                       <button
                         type="button"
                         onClick={() => onReplace(item, day)}
-                        className={buttonStyles.common}
+                        title="Replace this activity"
+                        aria-label="Replace this activity"
+                        className="flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-black/[.05] hover:text-zinc-800 dark:hover:bg-white/[.08] dark:hover:text-zinc-100"
                       >
-                        Replace
+                        <FaArrowsRotate className="h-4 w-4" />
                       </button>
                     ) : null}
                     {onRemove ? (
@@ -215,9 +218,10 @@ export function DayItinerary({
                         type="button"
                         onClick={() => onRemove(item, day)}
                         title="Remove from this day"
-                        className={buttonStyles.common}
+                        aria-label="Remove from this day"
+                        className="flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-black/[.05] hover:text-red-600 dark:hover:bg-white/[.08] dark:hover:text-red-400"
                       >
-                        Remove
+                        <FaTrashCan className="h-4 w-4" />
                       </button>
                     ) : null}
                     <button
@@ -243,8 +247,8 @@ export function DayItinerary({
                   ) : (
                     <span className="w-28 shrink-0" />
                   )}
-                  <span>
-                    ↓ {formatDistance(leg.km)}
+                  <span className="inline-flex items-center gap-1">
+                    <FaChevronDown className="h-3 w-3 shrink-0" /> {formatDistance(leg.km)}
                     {leg.label ? (
                       <span className="text-zinc-300 dark:text-zinc-600">
                         {" "}· {leg.label}
@@ -417,7 +421,11 @@ export function ComboResults({
                     aria-expanded={mapOpen}
                     className="rounded-lg border border-black/[.08] px-2.5 py-1 text-xs font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-white/[.145] dark:text-zinc-300 dark:hover:bg-zinc-800"
                   >
-                    {mapOpen ? "Hide map ▲" : "Map ▼"}
+                    {mapOpen ? (
+                      <span className="inline-flex items-center gap-1">Hide map <FaChevronUp className="h-3 w-3" /></span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1">Map <FaChevronDown className="h-3 w-3" /></span>
+                    )}
                   </button>
                   <button
                     type="button"
@@ -425,7 +433,11 @@ export function ComboResults({
                     aria-expanded={open}
                     className="rounded-lg border border-black/[.08] px-2.5 py-1 text-xs font-medium text-zinc-600 transition-colors hover:bg-zinc-50 dark:border-white/[.145] dark:text-zinc-300 dark:hover:bg-zinc-800"
                   >
-                    {open ? "Hide breakdown ▲" : "Why this rank? ▼"}
+                    {open ? (
+                      <span className="inline-flex items-center gap-1">Hide breakdown <FaChevronUp className="h-3 w-3" /></span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1">Why this rank? <FaChevronDown className="h-3 w-3" /></span>
+                    )}
                   </button>
                 </div>
               </div>

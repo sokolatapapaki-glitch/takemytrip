@@ -125,12 +125,13 @@ export function MakeTripModal({
     <div className="flex flex-col gap-3">
       <div className="pr-8">
         <h3 className="text-lg font-semibold text-zinc-800">
-          Make a trip in {city.name}
+          Φτιάξε ταξίδι στην πόλη: {city.name}
         </h3>
         <p className="text-sm text-zinc-500">
-          {selectedNames.length} selected{" "}
-          {selectedNames.length === 1 ? "activity" : "activities"} will be included
-          in your plan.
+          {selectedNames.length === 1
+            ? "1 επιλεγμένη δραστηριότητα θα συμπεριληφθεί"
+            : `${selectedNames.length} επιλεγμένες δραστηριότητες θα συμπεριληφθούν`}{" "}
+          στο πλάνο σου.
         </p>
       </div>
 
@@ -139,7 +140,7 @@ export function MakeTripModal({
         active={open === "area"}
         icon={<MapPinIcon className="h-5 w-5" />}
         value={`${city.name} · ${area.name}`}
-        placeholder="Destination"
+        placeholder="Προορισμός"
         onClick={() => toggle("area")}
       />
       {open === "area" ? (
@@ -168,11 +169,11 @@ export function MakeTripModal({
         active={open === "dates"}
         icon={<CalendarIcon className="h-5 w-5" />}
         value={dateLabel}
-        placeholder="From — To"
+        placeholder="Από — Έως"
         onClick={() => toggle("dates")}
       />
       {open === "dates" ? (
-        <div className={panelClass}>
+        <div className={`${panelClass} flex justify-center`}>
           <CalendarModal
             value={range}
             onChange={(r) => {
@@ -184,18 +185,18 @@ export function MakeTripModal({
         </div>
       ) : null}
       {dateAlert ? (
-        <p className="text-sm text-orange-600">Please pick your dates first.</p>
+        <p className="text-sm text-orange-600">Διάλεξε πρώτα τις ημερομηνίες σου.</p>
       ) : null}
 
       <FieldRow
         active={open === "travelers"}
         icon={<UsersIcon className="h-5 w-5" />}
         value={travelersLabel}
-        placeholder="Travelers"
+        placeholder="Ταξιδιώτες"
         onClick={() => toggle("travelers")}
       />
       {open === "travelers" ? (
-        <div className={panelClass}>
+        <div className={`${panelClass} flex justify-center`}>
           <TravelersModal value={travelers} onChange={setTravelers} />
         </div>
       ) : null}
@@ -206,7 +207,7 @@ export function MakeTripModal({
         className={`mt-1 flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3 font-medium ${homeStyles.primaryButton}`}
       >
         <SearchIcon className="h-5 w-5" />
-        <span>Search</span>
+        <span>Αναζήτηση</span>
       </button>
     </div>
   );

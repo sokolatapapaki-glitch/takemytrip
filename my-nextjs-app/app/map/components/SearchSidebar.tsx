@@ -69,7 +69,7 @@ export function SearchSidebar({
           value={filters.query}
           onChange={(e) => set({ query: e.target.value })}
           onFocus={() => setResultsOpen(true)}
-          placeholder="Search activities"
+          placeholder="Αναζήτησε δραστηριότητες"
           className="h-full w-full bg-transparent text-base text-zinc-800 outline-none placeholder:text-zinc-400"
         />
         <button
@@ -77,7 +77,7 @@ export function SearchSidebar({
           onClick={() => setResultsOpen(false)}
           className={`inline-flex h-9 w-9 items-center justify-center rounded-full text-zinc-500 transition-colors ${resultsOpen ? "hover:bg-zinc-50 opacity-100" : "opacity-0 pointer-events-none"
             }`}
-          aria-label="Close search results"
+          aria-label="Κλείσιμο αποτελεσμάτων"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4">
             <path d="M6 6l12 12M18 6 6 18" />
@@ -91,14 +91,14 @@ export function SearchSidebar({
       {resultsOpen && (
         <div className="mt-2 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <FilterDropdown
-            label="Price"
+            label="Τιμή"
             active={filters.priceMax != null}
             summary={filters.priceMax != null ? `≤€${filters.priceMax}` : null}
             open={openFilter === "price"}
             onToggle={() => toggleFilter("price")}
           >
             <label className="block text-xs font-medium text-zinc-600">
-              Max price: {filters.priceMax != null ? `€${filters.priceMax}` : "Any"}
+              Μέγιστη τιμή: {filters.priceMax != null ? `€${filters.priceMax}` : "Χωρίς όριο"}
             </label>
             <input
               type="range"
@@ -127,7 +127,7 @@ export function SearchSidebar({
                 className={`rounded-lg px-2 py-1.5 text-left text-sm transition-colors ${filters.vibe == null ? "bg-orange-50 text-orange-700" : "hover:bg-zinc-50 text-zinc-700"
                   }`}
               >
-                Any vibe
+                Όλα τα vibes
               </button>
               {VIBES.map((v) => (
                 <button
@@ -147,7 +147,7 @@ export function SearchSidebar({
           </FilterDropdown>
 
           <FilterDropdown
-            label="Sorted by"
+            label="Ταξινόμηση"
             active={filters.sortBy !== "priority"}
             summary={filters.sortBy !== "priority" ? SORT_LABELS[filters.sortBy] : null}
             open={openFilter === "sort"}
@@ -169,14 +169,14 @@ export function SearchSidebar({
           </FilterDropdown>
 
           <FilterDropdown
-            label="Distance from center"
+            label="Απόσταση από το κέντρο"
             active={filters.maxDistanceKm != null}
-            summary={filters.maxDistanceKm != null ? `≤${filters.maxDistanceKm} km` : null}
+            summary={filters.maxDistanceKm != null ? `≤${filters.maxDistanceKm} χλμ` : null}
             open={openFilter === "distance"}
             onToggle={() => toggleFilter("distance")}
           >
             <label className="block text-xs font-medium text-zinc-600">
-              Within: {filters.maxDistanceKm != null ? `${filters.maxDistanceKm} km` : "Any"}
+              Έως: {filters.maxDistanceKm != null ? `${filters.maxDistanceKm} χλμ` : "Χωρίς όριο"}
             </label>
             <input
               type="range"
@@ -202,7 +202,7 @@ export function SearchSidebar({
           className="mt-2 min-h-0 flex-1 space-y-3 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {results.length === 0 ? (
-            <p className="px-2 py-3 text-sm text-zinc-400">No activities match.</p>
+            <p className="px-2 py-3 text-sm text-zinc-400">Καμία δραστηριότητα δεν ταιριάζει.</p>
           ) : (
             results.map((a, i) => (
               <div key={`${a.name}-${a.coords.lat}-${a.coords.lng}`} className="space-y-2">

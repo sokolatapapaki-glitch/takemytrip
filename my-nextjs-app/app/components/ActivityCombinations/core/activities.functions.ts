@@ -181,9 +181,9 @@ export function distanceKm(a: Coords, b: Coords): number {
   return 2 * R * Math.asin(Math.sqrt(h));
 }
 
-// Format a distance in km for display, e.g. "0.4 km" or "1.2 km".
+// Format a distance in km for display, e.g. "0.4 χλμ" or "1.2 χλμ".
 export function formatDistance(km: number): string {
-  return `${km.toFixed(1)} km`;
+  return `${km.toFixed(1)} χλμ`;
 }
 
 // Route LINEARITY (Option A — detour ratio): how directly a route progresses

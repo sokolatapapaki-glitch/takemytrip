@@ -19,12 +19,12 @@ export function HoveredActivityCard({ activity }: { activity: Activity }) {
         <span className="flex items-center gap-1">
           <FaStar className="text-yellow-400" /> {starsOf(activity).toFixed(1)}/5
         </span>
-        <span>{activity.cost === 0 ? "Free" : `€${activity.cost}`}</span>
+        <span>{activity.cost === 0 ? "Δωρεάν" : `€${activity.cost}`}</span>
       </div>
       <p className="mt-1.5 line-clamp-3 text-xs leading-snug text-zinc-500">
         {activity.description}
       </p>
-      <div className="mt-1 text-right text-xs font-medium text-orange-600">See more</div>
+      <div className="mt-1 text-right text-xs font-medium text-orange-600">Δες περισσότερα</div>
     </div>
   );
 }

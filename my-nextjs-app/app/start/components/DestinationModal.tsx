@@ -9,7 +9,7 @@
 import { useEffect, useState } from "react";
 import { DESTINATIONS } from "../data/destinations";
 import type { DestinationSelection } from "../data/types";
-import { ChevronRightIcon } from "./icons";
+import { FaChevronRight } from "react-icons/fa6";
 
 // Thin, faded scrollbar that only shows while the list is hovered.
 const HOVER_SCROLLBAR =
@@ -61,7 +61,7 @@ export function DestinationModal({
     <div className="flex flex-col gap-2 sm:flex-row" onMouseLeave={() => setActiveId(null)}>
       <ul className={`max-h-72 w-full shrink-0 overflow-y-auto p-2 sm:w-56 ${HOVER_SCROLLBAR}`}>
         {shown.length === 0 && (
-          <li className="px-3 py-2 text-sm text-zinc-400">No matches</li>
+          <li className="px-3 py-2 text-sm text-zinc-400">Κανένα αποτέλεσμα</li>
         )}
         {shown.map((d) => {
           const selected = value?.destinationId === d.id;
@@ -88,10 +88,10 @@ export function DestinationModal({
                 <span className="flex flex-col">
                   <span className="text-sm font-medium text-zinc-800">{d.name}</span>
                   <span className="text-xs text-zinc-400">
-                    {d.kind === "region" ? "Region" : "City"} · {d.country}
+                    {d.kind === "region" ? "Περιφέρεια" : "Πόλη"} · {d.country}
                   </span>
                 </span>
-                <ChevronRightIcon
+                <FaChevronRight
                   className={`ml-auto h-4 w-4 shrink-0 text-orange-500 transition-opacity ${
                     isActive ? "opacity-100" : "opacity-0"
                   }`}
@@ -101,7 +101,7 @@ export function DestinationModal({
               {isMobile && isExpanded ? (
                 <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-2 text-sm text-zinc-700 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100">
                   <p className="mb-2 px-2 text-xs font-semibold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">
-                    {d.subLabel}
+                    {d.subLabel === "Cities" ? "Πόλεις" : "Περιοχές"}
                   </p>
                   <ul className="space-y-1">
                     {d.areas.map((a, i) => {
@@ -123,7 +123,7 @@ export function DestinationModal({
                           >
                             <span>{a.name}</span>
                             {i === 0 && !selectedArea ? (
-                              <span className="text-[10px] text-emerald-500">default</span>
+                              <span className="text-[10px] text-emerald-500">προεπιλογή</span>
                             ) : null}
                           </button>
                         </li>
@@ -140,7 +140,7 @@ export function DestinationModal({
       {active && !isMobile && (
         <div className="w-full shrink-0 border-t border-black/5 p-2 sm:w-48 sm:border-l sm:border-t-0">
           <p className="px-2 pb-1 pt-2 text-xs font-semibold uppercase tracking-wide text-zinc-400">
-            {active.subLabel}
+            {active.subLabel === "Cities" ? "Πόλεις" : "Περιοχές"}
           </p>
           <ul className={`max-h-60 overflow-y-auto ${HOVER_SCROLLBAR}`}>
             {active.areas.map((a, i) => {
@@ -160,7 +160,7 @@ export function DestinationModal({
                   >
                     <span>{a.name}</span>
                     {isDefault && !selected && (
-                      <span className="text-[10px] text-emerald-500">default</span>
+                      <span className="text-[10px] text-emerald-500">προεπιλογή</span>
                     )}
                   </button>
                 </li>

@@ -18,6 +18,8 @@ import { enforceRequired } from "./core/trip.required";
 import { DEFAULT_START_HOUR } from "./core/schedule.data";
 import { buttonStyles } from "@/app/components/ui/buttonStyles";
 import { SearchIcon } from "@/app/start/components/icons";
+import { FaSliders } from "react-icons/fa6";
+import { useScrollLock } from "@/app/components/ui/useScrollLock";
 
 // The most days a trip can span (the date range is capped at this length). Per-day
 // state arrays are pre-allocated to this length so changing the range never needs
@@ -180,7 +182,7 @@ export default function ActivityCombinations() {
   // bail (no empty trip).
   const submitSelection = () => {
     if (selectedActivities.size === 0) {
-      alert("Please select at least one activity first.");
+      alert("Διάλεξε πρώτα τουλάχιστον μία δραστηριότητα.");
       return;
     }
     setSubmitted(new Set(selectedActivities));
@@ -191,6 +193,9 @@ export default function ActivityCombinations() {
   // The advanced (per-day) filters modal — same controls as the sidebar, by day.
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
+
+  // Lock the page scroll while the mobile filter drawer is open.
+  useScrollLock(showMobileFilters);
 
   // Per-day settings for the trip, in chosen-date order.
   const tripSelections = selections.slice(0, dayCount);
@@ -342,9 +347,9 @@ export default function ActivityCombinations() {
           <section className="flex flex-col gap-3">
             <div className="flex items-center justify-between gap-3">
               <h2 className="text-lg font-semibold text-zinc-800 dark:text-zinc-100">
-                Activities in {city.name}{" "}
+                Δραστηριότητες στην πόλη: {city.name}{" "}
                 <span className="text-sm font-normal text-zinc-400 dark:text-zinc-500">
-                  · hours for {DAYS[activeWeekday]}
+                  · ωράρια για {DAYS[activeWeekday]}
                 </span>
               </h2>
               <button
@@ -354,7 +359,7 @@ export default function ActivityCombinations() {
                 disabled={city.activities.length === 0}
                 className={`shrink-0 ${buttonStyles.common} disabled:cursor-not-allowed disabled:text-zinc-300 disabled:hover:bg-transparent`}
               >
-                {showActivities ? "Hide activities" : "Select activities"}
+                {showActivities ? "Απόκρυψη δραστηριοτήτων" : "Επιλογή δραστηριοτήτων"}
               </button>
             </div>
             {showActivities && (
@@ -366,16 +371,17 @@ export default function ActivityCombinations() {
                       type="text"
                       value={activityQuery}
                       onChange={(e) => setActivityQuery(e.target.value)}
-                      placeholder="Search activities"
+                      placeholder="Αναζήτησε δραστηριότητες"
                       className="w-full bg-transparent text-base text-zinc-800 outline-none placeholder:text-zinc-400"
                     />
                   </div>
                   <button
                     type="button"
                     onClick={() => setShowMobileFilters(true)}
-                    className={`${buttonStyles.secondary} w-full sm:hidden`}
+                    className={`flex w-full items-center justify-center gap-2 lg:hidden ${buttonStyles.secondary}`}
                   >
-                    Filters
+                    <FaSliders className="h-4 w-4" />
+                    Φίλτρα
                   </button>
                 </div>
                 <ActivityList
@@ -392,7 +398,7 @@ export default function ActivityCombinations() {
                     onClick={submitSelection}
                     className={`mx-auto sm:mx-0 ${buttonStyles.secondary}`}
                   >
-                    Submit selection
+                    Υποβολή επιλογής
                   </button>
                   {submitted ? (
                     <button
@@ -400,13 +406,16 @@ export default function ActivityCombinations() {
                       onClick={undoSelection}
                       className={buttonStyles.common}
                     >
-                      Undo submission
+                      Αναίρεση υποβολής
                     </button>
                   ) : null}
                   {submitted ? (
                     <span className="text-sm text-zinc-500">
-                      Trip built from {submitted.size} selected{" "}
-                      {submitted.size === 1 ? "activity" : "activities"}.
+                      Το ταξίδι φτιάχτηκε από {submitted.size}{" "}
+                      {submitted.size === 1
+                        ? "επιλεγμένη δραστηριότητα"
+                        : "επιλεγμένες δραστηριότητες"}
+                      .
                     </span>
                   ) : null}
                 </div>
@@ -444,9 +453,10 @@ export default function ActivityCombinations() {
             <div className="flex min-w-0 flex-1 flex-col gap-8">
               {city.activities.length === 0 ? (
                 <p className="rounded-lg border border-amber-300/60 bg-amber-50 px-4 py-3 text-sm text-amber-700 dark:border-amber-400/30 dark:bg-amber-950/30 dark:text-amber-300">
-                  No activities yet for {city.name}. You can still pick a start{" "}
-                  {city.kind === "region" ? "city" : "area"} below — your trip will
-                  appear here once activities are added for this destination.
+                  Δεν υπάρχουν ακόμη δραστηριότητες για: {city.name}. Μπορείς όμως
+                  να διαλέξεις {city.kind === "region" ? "πόλη" : "περιοχή"}{" "}
+                  αφετηρίας παρακάτω — το ταξίδι σου θα εμφανιστεί εδώ μόλις
+                  προστεθούν δραστηριότητες για αυτόν τον προορισμό.
                 </p>
               ) : null}
 
@@ -466,23 +476,20 @@ export default function ActivityCombinations() {
       </div>
 
       {showMobileFilters && (
-        <div className="fixed inset-0 z-50 flex">
+        <div className="fixed inset-x-0 bottom-0 top-14 z-30 overflow-hidden lg:hidden">
           <div
             className="absolute inset-0 bg-black/40 backdrop-blur-sm"
             onClick={() => setShowMobileFilters(false)}
           />
-          <div className="relative ml-auto flex h-full w-full max-w-[420px] flex-col bg-white text-zinc-900 shadow-2xl transition-transform duration-300 sm:max-w-[480px]">
+          <div className="animate-slide-in-right absolute right-0 top-0 flex h-full w-full flex-col bg-white text-zinc-900 shadow-2xl sm:max-w-[420px]">
             <div className="flex items-center justify-between border-b border-zinc-200 px-4 py-4">
-              <h2 className="text-lg font-semibold">Filters</h2>
+              <h2 className="text-lg font-semibold">Φίλτρα</h2>
               <button
                 type="button"
                 onClick={() => setShowMobileFilters(false)}
-                className="rounded-full p-2 text-zinc-600 transition-colors hover:bg-zinc-100"
-                aria-label="Close filters"
+                className={buttonStyles.underline}
               >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5">
-                  <path d="M6 6l12 12M18 6 6 18" />
-                </svg>
+                Έγινε
               </button>
             </div>
             <div className="flex-1 overflow-y-auto">

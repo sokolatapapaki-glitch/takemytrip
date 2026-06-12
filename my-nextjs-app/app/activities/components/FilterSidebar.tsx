@@ -1,9 +1,10 @@
 "use client";
 
+import { FaChevronRight } from "react-icons/fa6";
 import type { City } from "@/app/components/ActivityCombinations/core/cities.data";
 import type { VibeKey } from "@/app/components/ActivityCombinations/core/activities.functions";
 import { VIBES } from "@/app/map/components/mapData";
-import { FilterDropdown } from "@/app/map/components/FilterDropdown";
+import { buttonStyles } from "@/app/components/ui/buttonStyles";
 import type { ActivityListFilters } from "./activitiesData";
 import { VIBE_ICONS } from "./vibeStyle";
 
@@ -18,38 +19,48 @@ export function FilterSidebar({
   city,
   filters,
   priceMax,
-  areaOpen,
-  onAreaToggle,
-  onAreaSelect,
+  onOpenAreaModal,
   onChange,
   onToggleVibe,
+  mobile = false,
 }: {
   city: City;
   filters: ActivityListFilters;
   priceMax: number;
-  areaOpen: boolean;
-  onAreaToggle: () => void;
-  onAreaSelect: (areaId: string) => void;
+  // Opens the "Distance from" area picker as an app modal (the parent owns the
+  // modal so it can list the destination's areas and set the chosen one).
+  onOpenAreaModal: () => void;
   onChange: (patch: Partial<ActivityListFilters>) => void;
   onToggleVibe: (vibe: VibeKey) => void;
+  // In the mobile drawer the panel chrome (card border/shadow/rounded corners +
+  // the redundant "Filters" heading) is dropped — just the bare filter content.
+  mobile?: boolean;
 }) {
   const centerId = city.areas[0].id;
   const currentAreaId = filters.areaId ?? centerId;
   const currentAreaName =
-    city.areas.find((a) => a.id === currentAreaId)?.name ?? "Centre";
+    city.areas.find((a) => a.id === currentAreaId)?.name ?? "Κέντρο";
 
   return (
-    <aside className="h-fit shrink-0 rounded-3xl border border-white/60 bg-white/80 p-5 shadow-lg shadow-orange-900/5 backdrop-blur-md lg:w-72">
-      <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-500">
-        Filters
-      </h2>
+    <aside
+      className={
+        mobile
+          ? "h-fit"
+          : "h-fit shrink-0 rounded-3xl border border-white/60 bg-white/80 p-5 shadow-lg shadow-orange-900/5 backdrop-blur-md lg:w-72"
+      }
+    >
+      {!mobile && (
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-500">
+          Φίλτρα
+        </h2>
+      )}
 
       {/* Price — max-price slider (actual euro cost). */}
       <div className="mt-5 rounded-3xl">
         <label className="flex items-center justify-between text-sm font-medium text-zinc-700">
-          <span>Price</span>
+          <span>Τιμή</span>
           <span className="text-zinc-500">
-            {filters.priceMax != null ? `≤ €${filters.priceMax}` : "Any"}
+            {filters.priceMax != null ? `≤ €${filters.priceMax}` : "Χωρίς όριο"}
           </span>
         </label>
         <input
@@ -68,7 +79,7 @@ export function FilterSidebar({
       {/* Vibe — multiple select. */}
       <div className="mt-6">
         <p className="text-sm font-medium text-zinc-700">Vibe</p>
-        <p className="text-xs text-zinc-400">Select one or more</p>
+        <p className="text-xs text-zinc-400">Διάλεξε ένα ή περισσότερα</p>
         <div className="mt-2 flex flex-wrap gap-2">
           {VIBES.map((v) => {
             const on = filters.vibes.includes(v.key);
@@ -92,36 +103,23 @@ export function FilterSidebar({
         </div>
       </div>
 
-      {/* Distance from — pick the reference area (default = centre). */}
+      {/* Distance from — opens the area picker modal (reference point for the
+          "Distance from center" sort; default = centre). */}
       <div className="mt-6">
-        <p className="text-sm font-medium text-zinc-700">Distance from</p>
-        <p className="text-xs text-zinc-400">Used by the “Distance from center” sort</p>
-        <div className="mt-2">
-          <FilterDropdown
-            label="Area"
-            active={currentAreaId !== centerId}
-            summary={currentAreaName}
-            open={areaOpen}
-            onToggle={onAreaToggle}
-          >
-            <div className="flex flex-col gap-1">
-              {city.areas.map((a) => (
-                <button
-                  key={a.id}
-                  type="button"
-                  onClick={() => onAreaSelect(a.id)}
-                  className={`rounded-lg px-2 py-1.5 text-left text-sm transition-colors ${currentAreaId === a.id
-                    ? "bg-emerald-50 text-emerald-700"
-                    : "text-zinc-700 hover:bg-zinc-50"
-                    }`}
-                >
-                  {a.name}
-                  {a.id === centerId ? " (centre)" : ""}
-                </button>
-              ))}
-            </div>
-          </FilterDropdown>
-        </div>
+        <p className="text-sm font-medium text-zinc-700">Απόσταση από</p>
+        <p className="text-xs text-zinc-400">
+          Χρησιμοποιείται από την ταξινόμηση «Απόσταση από το κέντρο»
+        </p>
+        <button
+          type="button"
+          onClick={onOpenAreaModal}
+          className={`${buttonStyles.common} mt-2 flex w-full items-center justify-between gap-2 ${
+            currentAreaId !== centerId ? "text-emerald-700" : ""
+          }`}
+        >
+          <span className="truncate">{currentAreaName}</span>
+          <FaChevronRight className="h-4 w-4 shrink-0 opacity-50" />
+        </button>
       </div>
     </aside>
   );

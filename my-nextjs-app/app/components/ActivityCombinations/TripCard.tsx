@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { FaChevronDown, FaChevronUp, FaRoute } from "react-icons/fa6";
+import { FaChevronDown, FaChevronUp, FaRoute, FaTrashCan } from "react-icons/fa6";
 import { DAYS } from "./core/activities.data";
 import { activityPrice } from "./core/activities.functions";
-import type { Area } from "./core/cities.data";
+import { CITIES, type Area } from "./core/cities.data";
+import { DESTINATION_IMAGES } from "@/app/cities/components/destinationImages.generated";
 import type { Filter, Selection } from "./core/filters.functions";
 import type { LeftoverReason, Trip } from "./core/trip.functions";
 import type { ScheduledItem } from "./core/schedule.functions";
@@ -15,14 +16,14 @@ import { buttonStyles } from "@/app/components/ui/buttonStyles";
 
 function leftoverText(reason: LeftoverReason): string {
   return reason === "closed"
-    ? "closed on all selected days"
+    ? "κλειστό όλες τις επιλεγμένες ημέρες"
     : reason === "no-room"
-      ? "no room within the time budget"
+      ? "δεν χωράει στον διαθέσιμο χρόνο"
       : reason === "removed"
-        ? "removed from the plan"
+        ? "αφαιρέθηκε από το πλάνο"
         : reason === "bumped"
-          ? "made room for a must-include activity"
-          : "would lower the average score";
+          ? "έκανε χώρο για μια υποχρεωτική δραστηριότητα"
+          : "θα χαμήλωνε τη μέση βαθμολογία";
 }
 
 // Total price = what the chosen traveller party pays across every scheduled
@@ -100,17 +101,21 @@ export function TripCard({
   const [justSaved, setJustSaved] = useState(false);
 
   const totalPrice = totalPriceOf(trip);
-  const totalDays = trip.days.length;
   const cityArea = cityName
     ? areaName
       ? `${cityName} – ${areaName}`
       : cityName
     : title;
+  // The destination's cover photo (cities are matched by name — TripCard only
+  // receives cityName). Missing → the gradient + route-icon placeholder.
+  const coverImage = cityName
+    ? DESTINATION_IMAGES[CITIES.find((c) => c.name === cityName)?.id ?? ""] ?? null
+    : null;
 
   const cardClass =
     "animate-card-pop overflow-hidden rounded-none sm:rounded-3xl border border-white/80 bg-white/80 shadow-xl shadow-orange-900/10 ring-1 ring-black/5 backdrop-blur-md transition duration-200 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-900/10";
   const imageClass =
-    "flex shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-400 via-rose-400 to-fuchsia-500 text-white";
+    "relative flex shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-orange-400 via-rose-400 to-fuchsia-500 text-white";
   // Common button (see buttonStyles.ts) + the inline-flex layout for its arrow.
   const toggleBtn = `inline-flex items-center gap-1.5 ${buttonStyles.common}`;
   // The header looks identical whether the card is open or closed; only the
@@ -121,8 +126,22 @@ export function TripCard({
       className={`flex items-start gap-4 p-3 ${open ? "border-b border-black/[.08] bg-white/55" : ""
         }`}
     >
-      <div className={`${imageClass} h-20 w-20`} aria-hidden>
+      {/* Destination cover — a bigger square (height = width); falls back to
+          the gradient + route icon when the city has no cover. */}
+      <div className={`${imageClass} aspect-square h-24 w-24`} aria-hidden>
         <FaRoute className="h-9 w-9 drop-shadow" />
+        {coverImage && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={coverImage}
+            alt=""
+            loading="lazy"
+            onError={(e) => {
+              e.currentTarget.style.display = "none";
+            }}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        )}
       </div>
       <div className="min-w-0 flex-1">
         <span className="text-[11px] font-semibold uppercase tracking-wide text-zinc-400">
@@ -131,18 +150,18 @@ export function TripCard({
         <h3 className="mt-0.5 truncate text-lg font-semibold text-zinc-800">
           {cityArea}
         </h3>
-        <p className="text-sm text-zinc-500">
-          Total price: €{totalPrice} · Total days: {totalDays}
-        </p>
+        <p className="text-sm text-zinc-500">Συνολική τιμή: €{totalPrice}</p>
       </div>
       <div className="flex flex-col items-end gap-2 sm:flex-row sm:items-center">
         {onDelete ? (
           <button
             type="button"
             onClick={onDelete}
-            className={`shrink-0 ${buttonStyles.common}`}
+            title="Διαγραφή ταξιδιού"
+            aria-label="Διαγραφή ταξιδιού"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-black/[.05] hover:text-red-600 dark:hover:bg-white/[.08] dark:hover:text-red-400"
           >
-            Delete
+            <FaTrashCan className="h-4 w-4" />
           </button>
         ) : null}
         <button
@@ -151,7 +170,7 @@ export function TripCard({
           aria-expanded={open}
           className={`inline-flex shrink-0 items-center gap-1.5 ${buttonStyles.underline}`}
         >
-          {open ? "Hide" : "See Activities"}
+          {open ? "Απόκρυψη" : "Δες δραστηριότητες"}
           {open ? (
             <FaChevronUp className="h-3 w-3" />
           ) : (
@@ -174,7 +193,7 @@ export function TripCard({
 
       <div className="flex flex-col gap-3 p-4">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          Trip
+          Ταξίδι
           <div className="flex justify-end gap-3">
             {onSave ? (
               <button
@@ -186,7 +205,7 @@ export function TripCard({
                 }}
                 className={`${buttonStyles.common} whitespace-nowrap`}
               >
-                {justSaved ? "Saved ✓" : "Save Trip"}
+                {justSaved ? "Αποθηκεύτηκε ✓" : "Αποθήκευση ταξιδιού"}
               </button>
             ) : null}
             <button
@@ -194,7 +213,7 @@ export function TripCard({
               onClick={() => printTrip(trip, cityArea)}
               className={`${buttonStyles.secondary} whitespace-nowrap`}
             >
-              Download PDF
+              Λήψη PDF
             </button>
           </div>
         </div>
@@ -212,7 +231,7 @@ export function TripCard({
                     {DAYS[td.day]}
                   </h4>
                   <p className="mt-1 text-xs italic text-zinc-400">
-                    No activities placed.
+                    Δεν έχουν τοποθετηθεί δραστηριότητες.
                   </p>
                   {onAdd ? (
                     <button
@@ -220,7 +239,7 @@ export function TripCard({
                       onClick={() => onAdd({ start: 9, end: 21 }, td.day)}
                       className={`mb-2 mt-1 ${buttonStyles.common}`}
                     >
-                      + Add (09:00–21:00)
+                      + Προσθήκη (09:00–21:00)
                     </button>
                   ) : null}
                 </>
@@ -228,7 +247,7 @@ export function TripCard({
                 <DayItinerary
                   plan={td.plan}
                   day={td.day}
-                  note={`score ${td.score.toFixed(2)} · ${td.load.toFixed(1)}h · incl. lunch`}
+                  note={`βαθμός ${td.score.toFixed(2)} · ${td.load.toFixed(1)}ω · με μεσημεριανό`}
                   showSeeMore
                   onReplace={onReplace}
                   onRemove={onRemove}
@@ -250,7 +269,7 @@ export function TripCard({
               aria-expanded={proofOpen}
               className={toggleBtn}
             >
-              {proofOpen ? "Hide breakdown" : "Why this trip?"}
+              {proofOpen ? "Απόκρυψη ανάλυσης" : "Γιατί αυτό το ταξίδι;"}
               {proofOpen ? (
                 <FaChevronUp className="h-3 w-3" />
               ) : (
@@ -281,8 +300,8 @@ export function TripCard({
               className={toggleBtn}
             >
               {leftoverOpen
-                ? `Hide not scheduled (${trip.leftover.length})`
-                : `Not scheduled (${trip.leftover.length})`}
+                ? `Απόκρυψη μη προγραμματισμένων (${trip.leftover.length})`
+                : `Μη προγραμματισμένες (${trip.leftover.length})`}
               {leftoverOpen ? (
                 <FaChevronUp className="h-3 w-3" />
               ) : (

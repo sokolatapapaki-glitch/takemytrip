@@ -34,11 +34,11 @@ function Stepper({
         <p className="text-xs text-zinc-400">{caption}</p>
       </div>
       <div className="flex items-center gap-3">
-        <button type="button" aria-label={`Fewer ${label}`} onClick={onDec} disabled={value <= min} className={btn}>
+        <button type="button" aria-label={`Λιγότεροι: ${label}`} onClick={onDec} disabled={value <= min} className={btn}>
           <MinusIcon className="h-4 w-4" />
         </button>
         <span className="w-5 text-center text-sm font-semibold text-zinc-800">{value}</span>
-        <button type="button" aria-label={`More ${label}`} onClick={onInc} disabled={value >= MAX} className={btn}>
+        <button type="button" aria-label={`Περισσότεροι: ${label}`} onClick={onInc} disabled={value >= MAX} className={btn}>
           <PlusIcon className="h-4 w-4" />
         </button>
       </div>
@@ -70,8 +70,8 @@ export function TravelersModal({
   return (
     <div className="w-full p-4 sm:w-72">
       <Stepper
-        label="Adults"
-        caption="Ages 18+"
+        label="Ενήλικες"
+        caption="18 ετών και άνω"
         value={value.adults}
         min={1}
         onDec={() => setAdults(value.adults - 1)}
@@ -79,8 +79,8 @@ export function TravelersModal({
       />
       <div className="border-t border-black/5" />
       <Stepper
-        label="Children"
-        caption="Ages 0–17"
+        label="Παιδιά"
+        caption="0–17 ετών"
         value={value.children}
         min={0}
         onDec={() => setChildren(value.children - 1)}
@@ -90,14 +90,14 @@ export function TravelersModal({
       {value.children > 0 && (
         <div className="mt-2 border-t border-black/5 pt-3">
           <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-400">
-            Age of each child
+            Ηλικία κάθε παιδιού
           </p>
           <div className="flex flex-wrap gap-2">
             {value.childAges.map((age, i) => (
               <select
                 key={i}
                 required
-                aria-label={`Child ${i + 1} age`}
+                aria-label={`Ηλικία παιδιού ${i + 1}`}
                 value={age ?? ""}
                 onChange={(e) => setAge(i, Number(e.target.value))}
                 className={`w-16 rounded-lg border px-2 py-1.5 text-sm transition-colors ${
@@ -107,7 +107,7 @@ export function TravelersModal({
                 }`}
               >
                 <option value="" disabled>
-                  Age
+                  Ηλικία
                 </option>
                 {CHILD_AGES.map((a) => (
                   <option key={a} value={a}>

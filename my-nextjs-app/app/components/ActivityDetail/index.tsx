@@ -2,12 +2,13 @@
 
 import {
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
   type ReactNode,
 } from "react";
 import Link from "next/link";
-import { FaBookmark, FaRegBookmark } from "react-icons/fa6";
+import { FaChevronLeft, FaChevronRight, FaXmark } from "react-icons/fa6";
 import {
   adultPrice,
   dayHours,
@@ -22,10 +23,10 @@ import { CITIES } from "@/app/components/ActivityCombinations/core/cities.data";
 import { bestVibe, starsOf } from "@/app/map/components/mapData";
 import { VIBE_GRADIENT, VIBE_ICONS } from "@/app/activities/components/vibeStyle";
 import { ActivityCard } from "@/app/activities/components/ActivityCard";
+import { activityImages } from "@/app/activities/components/activityImages";
 import { Stars } from "@/app/components/ui/Stars";
 import { buttonStyles } from "@/app/components/ui/buttonStyles";
 import { hoverScrollbar } from "@/app/components/ui/scrollbar";
-import { ChevronLeftIcon, ChevronRightIcon } from "@/app/start/components/icons";
 
 // How many thumbnail images the gallery shows (placeholders for now).
 const THUMB_COUNT = 5;
@@ -145,8 +146,6 @@ export function ActivityDetail({
   const [stack, setStack] = useState<Activity[]>([activity]);
   const current = stack[stack.length - 1];
   const [moreOpen, setMoreOpen] = useState<"price" | "hours" | "websites" | null>(null);
-  // Bookmark is a visual placeholder for now (no persistence).
-  const [saved, setSaved] = useState(false);
   // Which gallery image is selected (drives the hover arrows + thumbnail highlight).
   const [activeImage, setActiveImage] = useState(0);
   const topRef = useRef<HTMLDivElement>(null);
@@ -155,6 +154,8 @@ export function ActivityDetail({
   const vibe = bestVibe(current);
   const VibeIcon = VIBE_ICONS[vibe.key];
   const stars = starsOf(current);
+  // The activity's photo gallery (empty → gradient fallback in the UI).
+  const images = activityImages(current);
   // The city this activity belongs to (names are unique across catalogues) —
   // drives the related-activities strip and the "See all" link.
   const city = CITIES.find((c) => c.activities.some((a) => a.name === current.name));
@@ -170,30 +171,52 @@ export function ActivityDetail({
   const push = (a: Activity) => {
     setStack((s) => [...s, a]);
     setMoreOpen(null);
-    setSaved(false);
   };
   const pop = () => {
     setStack((s) => (s.length > 1 ? s.slice(0, -1) : s));
     setMoreOpen(null);
-    setSaved(false);
   };
   const toggleMore = (key: "price" | "hours" | "websites") =>
     setMoreOpen((m) => (m === key ? null : key));
 
-  // Jump back to the top when navigating between activities in place, and reset
-  // the gallery to its first image.
-  useEffect(() => {
-    topRef.current?.scrollIntoView({ block: "nearest" });
+  // Pin the modal's scroll container to the very top on open AND whenever we
+  // navigate to another activity in place; reset the gallery to its first image.
+  // useLayoutEffect runs before paint, so there's no visible "already scrolled"
+  // flash. scrolling the container to 0 (not scrollIntoView) lands exactly at
+  // the top, keeping the panel's top padding visible.
+  useLayoutEffect(() => {
+    topRef.current?.closest("[data-modal-scroll]")?.scrollTo({ top: 0 });
     setActiveImage(0);
   }, [current]);
 
   return (
     <div ref={topRef} className="flex flex-col gap-6">
-      {stack.length > 1 && (
-        <button type="button" onClick={pop} className={`self-start ${buttonStyles.underline}`}>
-          ← Previous Activity
-        </button>
-      )}
+      {/* Header bar above all content: the "Previous Activity" back button on the
+          left (when there's history) and the close × on the right, at the same
+          height. */}
+      <div className="flex items-center justify-between gap-3">
+        {stack.length > 1 ? (
+          <button
+            type="button"
+            onClick={pop}
+            className={`inline-flex items-center gap-1 ${buttonStyles.underline}`}
+          >
+            <FaChevronLeft className="h-3 w-3" /> Previous Activity
+          </button>
+        ) : (
+          <span />
+        )}
+        {onClose && (
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-black/[.06] hover:text-zinc-800 dark:hover:bg-white/[.08] dark:hover:text-zinc-100"
+          >
+            <FaXmark className="h-5 w-5" />
+          </button>
+        )}
+      </div>
 
       <div className="grid gap-6 md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
         {/* Image placeholder (vibe gradient, like the cards) + thumbnail row. */}
@@ -203,37 +226,77 @@ export function ActivityDetail({
           >
             <VibeIcon className="h-16 w-16 text-white drop-shadow" />
 
-            {/* Hover-only, low-opacity prev/next arrows that cycle the gallery. */}
-            <button
-              type="button"
-              onClick={() => setActiveImage((i) => (i - 1 + THUMB_COUNT) % THUMB_COUNT)}
-              aria-label="Previous image"
-              className="absolute left-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-white opacity-0 transition-opacity duration-200 hover:bg-black/60 group-hover:opacity-60"
-            >
-              <ChevronLeftIcon className="h-5 w-5" />
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveImage((i) => (i + 1) % THUMB_COUNT)}
-              aria-label="Next image"
-              className="absolute right-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-white opacity-0 transition-opacity duration-200 hover:bg-black/60 group-hover:opacity-60"
-            >
-              <ChevronRightIcon className="h-5 w-5" />
-            </button>
+            {/* Real photo over the gradient when available; a load failure hides
+                it (gradient + icon show through). key forces a fresh element per
+                src so a previous failure's display:none can't carry over. */}
+            {images[activeImage] && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                key={images[activeImage]}
+                src={images[activeImage]}
+                alt={current.name}
+                loading="lazy"
+                onError={(e) => {
+                  e.currentTarget.style.display = "none";
+                }}
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            )}
+
+            {/* Hover-only, low-opacity prev/next arrows — only when there's more
+                than one image to cycle through. */}
+            {images.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setActiveImage((i) => (i - 1 + images.length) % images.length)
+                  }
+                  aria-label="Previous image"
+                  className="absolute left-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-white opacity-0 transition-opacity duration-200 hover:bg-black/60 group-hover:opacity-60"
+                >
+                  <FaChevronLeft className="h-5 w-5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveImage((i) => (i + 1) % images.length)}
+                  aria-label="Next image"
+                  className="absolute right-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-white opacity-0 transition-opacity duration-200 hover:bg-black/60 group-hover:opacity-60"
+                >
+                  <FaChevronRight className="h-5 w-5" />
+                </button>
+              </>
+            )}
           </div>
 
           <div className="flex justify-center gap-2">
-            {Array.from({ length: THUMB_COUNT }).map((_, i) => (
+            {(images.length > 0
+              ? images
+              : (Array.from({ length: THUMB_COUNT }) as undefined[])
+            ).map((src, i) => (
               <button
                 key={i}
                 type="button"
                 onClick={() => setActiveImage(i)}
                 aria-label={`Image ${i + 1}`}
-                className={`h-12 w-12 rounded-xl bg-gradient-to-br ${VIBE_GRADIENT[vibe.key]} transition ${i === activeImage
+                className={`relative h-12 w-12 overflow-hidden rounded-xl bg-gradient-to-br ${VIBE_GRADIENT[vibe.key]} transition ${i === activeImage
                   ? "opacity-100 ring-2 ring-orange-400 ring-offset-2 dark:ring-offset-zinc-900"
                   : "opacity-60 hover:opacity-80"
                   }`}
-              />
+              >
+                {src && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={src}
+                    alt=""
+                    loading="lazy"
+                    onError={(e) => {
+                      e.currentTarget.style.display = "none";
+                    }}
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                )}
+              </button>
             ))}
           </div>
         </div>
@@ -243,25 +306,15 @@ export function ActivityDetail({
             Related Activities strip below the grid sits just under the image
             instead of far down. Only at md+, where the columns sit side by side. */}
         <div className={`flex min-w-0 flex-col gap-5 md:max-h-[21.75rem] md:overflow-y-auto md:pr-1 ${hoverScrollbar}`}>
-          {/* Header: name, stars, bookmark. pr-8 clears the modal's × button. */}
-          <div className="flex items-start justify-between gap-3 pr-8">
-            <div>
-              <h2 className="text-2xl font-semibold text-zinc-800 dark:text-zinc-100">
-                {current.name}
-              </h2>
-              <div className="mt-1 flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400">
-                <Stars value={stars} />
-                <span>{stars.toFixed(1)}/5</span>
-              </div>
+          {/* Header: name + stars. */}
+          <div>
+            <h2 className="text-2xl font-semibold text-zinc-800 dark:text-zinc-100">
+              {current.name}
+            </h2>
+            <div className="mt-1 flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400">
+              <Stars value={stars} />
+              <span>{stars.toFixed(1)}/5</span>
             </div>
-            <button
-              type="button"
-              onClick={() => setSaved((s) => !s)}
-              aria-label={saved ? "Remove from favourites" : "Add to favourites"}
-              className="mt-1 shrink-0 text-xl text-orange-500 transition-transform hover:scale-110"
-            >
-              {saved ? <FaBookmark /> : <FaRegBookmark />}
-            </button>
           </div>
 
           {/* Important Info table. */}

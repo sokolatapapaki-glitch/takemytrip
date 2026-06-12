@@ -13,6 +13,7 @@ import { FaXmark } from "react-icons/fa6";
 import type { Activity } from "../components/ActivityCombinations/core/activities.functions";
 import { ActivityDetail } from "../components/ActivityDetail";
 import { hoverScrollbar } from "../components/ui/scrollbar";
+import { useScrollLock } from "../components/ui/useScrollLock";
 
 type Theme = "light" | "dark";
 
@@ -23,7 +24,10 @@ type ModalSize = "default" | "wide";
 type AppContextValue = {
   theme: Theme;
   toggleTheme: () => void;
-  openModal: (content: ReactNode, options?: { size?: ModalSize }) => void;
+  openModal: (
+    content: ReactNode,
+    options?: { size?: ModalSize; hideClose?: boolean }
+  ) => void;
   // Opens the activity detail modal (wide) for the given activity — usable from
   // any "See more" trigger anywhere in the app.
   openActivity: (activity: Activity) => void;
@@ -35,7 +39,13 @@ const AppContext = createContext<AppContextValue | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>("light");
-  const [modal, setModal] = useState<{ content: ReactNode; size: ModalSize } | null>(null);
+  const [modal, setModal] = useState<{
+    content: ReactNode;
+    size: ModalSize;
+    // When true the modal's own × is hidden (the content renders its own close
+    // control — e.g. the activity detail's header X next to "Previous Activity").
+    hideClose?: boolean;
+  } | null>(null);
   // True only when a pointer press actually started on the backdrop, so the
   // synthetic "ghost click" from the opening tap can't immediately dismiss it.
   const backdropPressed = useRef(false);
@@ -54,22 +64,19 @@ export function AppProvider({ children }: { children: ReactNode }) {
     document.documentElement.classList.toggle("dark", theme === "dark");
   }, [theme]);
 
-  // Lock body scroll while the modal is open.
-  useEffect(() => {
-    if (!isModalOpen) return;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = previous;
-    };
-  }, [isModalOpen]);
+  // Lock the page scroll while the modal is open.
+  useScrollLock(isModalOpen);
 
   const toggleTheme = () =>
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
 
   const openModal = useCallback(
-    (content: ReactNode, options?: { size?: ModalSize }) => {
-      setModal({ content, size: options?.size ?? "default" });
+    (content: ReactNode, options?: { size?: ModalSize; hideClose?: boolean }) => {
+      setModal({
+        content,
+        size: options?.size ?? "default",
+        hideClose: options?.hideClose,
+      });
     },
     []
   );
@@ -90,6 +97,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
         />
       ),
       size: "wide",
+      // The detail renders its own header X (aligned with "Previous Activity").
+      hideClose: true,
     });
   }, []);
 
@@ -125,17 +134,20 @@ export function AppProvider({ children }: { children: ReactNode }) {
         >
           <div
             ref={panelRef}
+            data-modal-scroll
             className={`relative flex h-full w-full flex-col overflow-y-auto bg-white text-black shadow-xl dark:bg-zinc-900 dark:text-zinc-50 sm:h-auto sm:max-h-full sm:w-full sm:rounded-2xl ${hoverScrollbar} ${
               modal.size === "wide" ? "sm:max-w-4xl" : "sm:max-w-lg"
             }`}
           >
-            <button
-              onClick={closeModal}
-              aria-label="Close modal"
-              className="absolute right-2 top-2 z-10 flex h-11 w-11 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-black/[.06] hover:text-zinc-800 dark:hover:bg-white/[.08] dark:hover:text-zinc-100"
-            >
-              <FaXmark className="h-6 w-6" />
-            </button>
+            {!modal.hideClose && (
+              <button
+                onClick={closeModal}
+                aria-label="Close modal"
+                className="absolute right-2 top-2 z-10 flex h-11 w-11 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-black/[.06] hover:text-zinc-800 dark:hover:bg-white/[.08] dark:hover:text-zinc-100"
+              >
+                <FaXmark className="h-6 w-6" />
+              </button>
+            )}
 
             <div className="p-6">{modal.content}</div>
           </div>

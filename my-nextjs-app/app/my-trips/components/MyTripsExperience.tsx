@@ -108,19 +108,20 @@ export default function MyTripsExperience() {
       {/* Plain page title with a "Make Trip" CTA on the opposite side that
           sends the user to the homepage trip search. */}
       <div className="flex items-center justify-between gap-4">
-        <h1 className="text-3xl font-semibold tracking-tight text-zinc-900">My trips</h1>
+        <h1 className="text-3xl font-semibold tracking-tight text-zinc-900">Τα ταξίδια μου</h1>
         <Link href="/" className={`${buttonStyles.primary} shrink-0`}>
-          Make Trip
+          Φτιάξε ταξίδι
         </Link>
       </div>
 
       {trips.length === 0 ? (
         <div className="rounded-3xl border border-white/80 bg-white/80 p-8 text-center shadow-xl shadow-orange-900/10 ring-1 ring-black/5 backdrop-blur-md">
           <p className="text-sm text-zinc-500">
-            No saved trips yet. Plan one and hit &quot;Save Trip&quot;.
+            Δεν έχεις αποθηκευμένα ταξίδια ακόμη. Σχεδίασε ένα και πάτησε
+            «Αποθήκευση ταξιδιού».
           </p>
-          <Link href="/plan" className={`mt-4 inline-flex ${buttonStyles.primary}`}>
-            Plan a trip
+          <Link href="/" className={`mt-4 inline-flex ${buttonStyles.primary}`}>
+            Φτιάξε ταξίδι
           </Link>
         </div>
       ) : null}
@@ -155,8 +156,8 @@ export default function MyTripsExperience() {
           return (
             <div key={t.id} className="flex flex-col gap-3">
               <span className="text-sm text-zinc-500">
-                Saved{" "}
-                {new Date(t.savedAt).toLocaleDateString(undefined, {
+                Αποθηκεύτηκε{" "}
+                {new Date(t.savedAt).toLocaleDateString("el-GR", {
                   day: "numeric",
                   month: "short",
                   year: "numeric",
@@ -166,7 +167,7 @@ export default function MyTripsExperience() {
               {/* The exact plan-page Trip component, collapsed by default. */}
               <TripCard
                 trip={t.trip}
-                title={`${t.trip.days.length}-day trip`}
+                title={`Ταξίδι ${t.trip.days.length} ${t.trip.days.length === 1 ? "ημέρας" : "ημερών"}`}
                 cityName={t.cityName}
                 areaName={t.areaName}
                 showProof={false}
@@ -218,24 +219,24 @@ export default function MyTripsExperience() {
                   <span>
                     {inMode.kind === "replace" ? (
                       <>
-                        Pick a replacement for <strong>{inMode.name}</strong> ·{" "}
+                        Διάλεξε αντικαταστάτη για: <strong>{inMode.name}</strong> ·{" "}
                         {DAYS[inMode.day]} {formatTime(inMode.start)}–
                         {formatTime(inMode.end)}
                       </>
                     ) : (
                       <>
-                        Pick an activity to add · {DAYS[inMode.day]}{" "}
+                        Διάλεξε δραστηριότητα για προσθήκη · {DAYS[inMode.day]}{" "}
                         {formatTime(inMode.winStart)}–{formatTime(inMode.winEnd)}
                       </>
                     )}{" "}
-                    — showing only activities open for this slot.
+                    — εμφανίζονται μόνο δραστηριότητες ανοιχτές σε αυτό το διάστημα.
                   </span>
                   <button
                     type="button"
                     onClick={() => setMode(null)}
                     className={buttonStyles.underline}
                   >
-                    Cancel
+                    Ακύρωση
                   </button>
                 </div>
               ) : null}
@@ -245,7 +246,7 @@ export default function MyTripsExperience() {
                   mt-2 nudges the strip a little lower for breathing room. */}
               {!inMode ? (
                 <h3 className="mt-2 text-lg font-semibold text-zinc-800">
-                  Activities
+                  Δραστηριότητες
                 </h3>
               ) : null}
 
@@ -261,7 +262,7 @@ export default function MyTripsExperience() {
               >
                 {inMode && stripActivities.length === 0 ? (
                   <p className="py-6 text-sm text-zinc-500">
-                    No other activity fits this time slot.
+                    Καμία άλλη δραστηριότητα δεν χωράει σε αυτό το διάστημα.
                   </p>
                 ) : (
                   stripActivities.map((a, i) => (
@@ -274,7 +275,7 @@ export default function MyTripsExperience() {
                         activity={a}
                         index={i}
                         hideSelect
-                        showUse
+                        showUse={!!inMode}
                         onUse={
                           inMode
                             ? (act) => {

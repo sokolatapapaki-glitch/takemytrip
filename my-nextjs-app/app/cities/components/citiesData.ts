@@ -9,25 +9,26 @@ import {
   type City,
 } from "@/app/components/ActivityCombinations/core/cities.data";
 import { distanceKm } from "@/app/components/ActivityCombinations/core/activities.functions";
+import { DESTINATION_IMAGES } from "./destinationImages.generated";
 
 // Athens — the fixed reference point for the "distance from Athens" sort.
 export const ATHENS = { lat: 37.9838, lng: 23.7275 };
 
 // Short blurbs per destination (no description field exists on Destination yet).
 const CITY_DESCRIPTIONS: Record<string, string> = {
-  rome: "Ancient ruins, Renaissance art and timeless piazzas.",
-  paris: "Iconic boulevards, world-class museums and café culture.",
-  barcelona: "Gaudí landmarks, golden beaches and buzzing tapas bars.",
-  amsterdam: "Canals, bikes and Golden-Age art galleries.",
-  london: "Royal landmarks, lively markets and endless museums.",
-  sicily: "Volcanoes, baroque towns and Mediterranean flavours.",
-  tuscany: "Rolling vineyards, hill towns and Renaissance cities.",
-  andalusia: "Moorish palaces, flamenco and sun-baked plazas.",
-  "amalfi-coast": "Cliffside villages above a sparkling turquoise sea.",
+  rome: "Αρχαία ερείπια, αναγεννησιακή τέχνη και διαχρονικές πλατείες.",
+  paris: "Εμβληματικές λεωφόροι, κορυφαία μουσεία και κουλτούρα καφέ.",
+  barcelona: "Έργα του Γκαουντί, χρυσές παραλίες και ζωντανά tapas bars.",
+  amsterdam: "Κανάλια, ποδήλατα και γκαλερί του Χρυσού Αιώνα.",
+  london: "Βασιλικά αξιοθέατα, ζωντανές αγορές και αμέτρητα μουσεία.",
+  sicily: "Ηφαίστεια, μπαρόκ πόλεις και μεσογειακές γεύσεις.",
+  tuscany: "Αμπελώνες, λόφοι με χωριά και αναγεννησιακές πόλεις.",
+  andalusia: "Μαυριτανικά παλάτια, φλαμένκο και ηλιόλουστες πλατείες.",
+  "amalfi-coast": "Χωριά πάνω σε βράχια με θέα σε γαλαζοπράσινη θάλασσα.",
 };
 
 export const cityDescription = (c: City): string =>
-  CITY_DESCRIPTIONS[c.id] ?? `Explore ${c.name}, ${c.country}.`;
+  CITY_DESCRIPTIONS[c.id] ?? `Εξερεύνησε: ${c.name}, ${c.country}.`;
 
 // Representative city photos — each city's Wikipedia lead image, served as an
 // 800px-wide thumbnail from Wikimedia Commons (free-licensed, hotlinkable via a
@@ -66,7 +67,10 @@ const CITY_IMAGES: Record<string, string> = {
     "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Aleja_Niepdleglosci_Warsaw_2022_aerial_%28cropped%29.jpg/800px-Aleja_Niepdleglosci_Warsaw_2022_aerial_%28cropped%29.jpg",
 };
 
-export const cityImage = (c: City): string | null => CITY_IMAGES[c.id] ?? null;
+// Prefer the locally-downloaded destination cover (generated), then the curated
+// remote Wikipedia image, then null (card falls back to its gradient + pin).
+export const cityImage = (c: City): string | null =>
+  DESTINATION_IMAGES[c.id] ?? CITY_IMAGES[c.id] ?? null;
 
 // Distance from Athens in km (rounded) — the basis for the flight-time estimate
 // and the flight-time sort.
@@ -97,9 +101,9 @@ const TIER_RANK: Record<PriceTier, number> = { Low: 0, Medium: 1, High: 2 };
 
 export type CitySortKey = "name" | "price" | "flight";
 export const CITY_SORT_LABELS: Record<CitySortKey, string> = {
-  name: "Name (A–Z)",
-  price: "Price",
-  flight: "Flight time from Athens",
+  name: "Όνομα (Α–Ω)",
+  price: "Τιμή",
+  flight: "Χρόνος πτήσης από Αθήνα",
 };
 
 // Search (by name or country) + sort. Cities without a price tier sort to the

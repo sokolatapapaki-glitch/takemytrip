@@ -1,8 +1,7 @@
 import { useEffect, useRef } from "react";
-import { FaStar } from "react-icons/fa6";
+import { FaStar, FaChevronLeft } from "react-icons/fa6";
 import type { Activity } from "@/app/components/ActivityCombinations/core/activities.functions";
 import { bestVibe, cityOf, iconOf, starsOf } from "./mapData";
-import { ChevronLeftIcon } from "@/app/start/components/icons";
 
 // The detailed activity card shown below the search input when an activity is
 // clicked (on the map or in the results). Mirrors the "Clicked/searched activity"
@@ -44,10 +43,10 @@ export function ClickedActivityPanel({
       <button
         type="button"
         onClick={onClose}
-        aria-label="Back"
+        aria-label="Πίσω"
         className="absolute left-3 top-3 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-zinc-700 shadow-sm ring-1 ring-black/5 transition-colors hover:bg-white hover:text-zinc-900"
       >
-        <ChevronLeftIcon className="h-5 w-5" />
+        <FaChevronLeft className="h-5 w-5" />
       </button>
 
       <div className="flex h-40 items-center justify-center rounded-3xl bg-gradient-to-br from-orange-100 to-emerald-100 text-green-500">
@@ -63,12 +62,12 @@ export function ClickedActivityPanel({
         <span className="flex items-center gap-1">
           <FaStar className="text-yellow-400" /> {starsOf(activity).toFixed(1)}/5
         </span>
-        <span>{activity.cost === 0 ? "Free" : `€${activity.cost}`}</span>
-        <span>{activity.hours}h</span>
+        <span>{activity.cost === 0 ? "Δωρεάν" : `€${activity.cost}`}</span>
+        <span>{activity.hours}ω</span>
       </div>
 
       <p className="mt-3 text-sm text-zinc-500">
-        <span className="font-medium text-zinc-600">Best for:</span> {bestVibe(activity).label}
+        <span className="font-medium text-zinc-600">Ιδανικό για:</span> {bestVibe(activity).label}
       </p>
       <p className="mt-2 text-sm leading-relaxed text-zinc-600">{activity.description}</p>
     </div>

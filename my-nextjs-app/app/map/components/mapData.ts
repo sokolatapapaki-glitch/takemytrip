@@ -20,10 +20,10 @@ import { FaCompass, FaLandmark, FaLeaf, FaUtensils } from "react-icons/fa6";
 
 // The 4 "Vibe" buttons on the map = the 4 activity vibe dimensions.
 export const VIBES: { key: VibeKey; label: string; Icon: IconType }[] = [
-  { key: "cultural", label: "Cultural", Icon: FaLandmark },
-  { key: "foodie", label: "Foodie", Icon: FaUtensils },
-  { key: "adventurous", label: "Adventurous", Icon: FaCompass },
-  { key: "relaxing", label: "Relaxing", Icon: FaLeaf },
+  { key: "cultural", label: "Πολιτισμός", Icon: FaLandmark },
+  { key: "foodie", label: "Φαγητό", Icon: FaUtensils },
+  { key: "adventurous", label: "Περιπέτεια", Icon: FaCompass },
+  { key: "relaxing", label: "Χαλάρωση", Icon: FaLeaf },
 ];
 
 // Activity → its city. Activity names are unique across the app, so a flat map is
@@ -49,10 +49,10 @@ export const iconOf = (a: Activity): IconType => bestVibe(a).Icon;
 
 export type SortKey = "priority" | "price" | "vibe" | "distance";
 export const SORT_LABELS: Record<SortKey, string> = {
-  priority: "Top picks",
-  price: "Price",
-  vibe: "Vibe match",
-  distance: "Distance",
+  priority: "Κορυφαίες επιλογές",
+  price: "Τιμή",
+  vibe: "Ταίριασμα vibe",
+  distance: "Απόσταση",
 };
 
 export type ActivityFilters = {
