@@ -1,4 +1,7 @@
-import { Fragment } from "react";
+"use client";
+
+import { Fragment, useState } from "react";
+import { FaCircleInfo } from "react-icons/fa6";
 import { formatTime, type Activity } from "./core/activities.functions";
 import { Filter, Selection, isTripLevel } from "./core/filters.functions";
 import { RequiredActivities } from "./RequiredActivities";
@@ -6,6 +9,40 @@ import { CheckRow } from "./CheckRow";
 
 // Hours the day can start at (whole hours, 06:00–18:00).
 const START_HOUR_CHOICES = Array.from({ length: 13 }, (_, i) => 6 + i);
+
+// A filter section title with an info icon to its right. The hint is HIDDEN by
+// default: on desktop it reveals on hover (group-hover); on mobile (no hover) it
+// toggles when the icon is tapped. Both work together — tapping pins it open.
+function HintTitle({ name, hint }: { name: string; hint?: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="group">
+      <div className="flex items-center gap-1.5">
+        <h3 className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
+          {name}
+        </h3>
+        {hint ? (
+          <button
+            type="button"
+            onClick={() => setOpen((o) => !o)}
+            aria-label="Περισσότερες πληροφορίες"
+            aria-expanded={open}
+            className="inline-flex shrink-0 items-center justify-center text-black transition-opacity hover:opacity-70 dark:text-white"
+          >
+            <FaCircleInfo className="h-4 w-4" />
+          </button>
+        ) : null}
+      </div>
+      {hint ? (
+        <p
+          className={`mt-0.5 text-xs text-zinc-400 dark:text-zinc-500 ${open ? "block" : "hidden"} group-hover:block`}
+        >
+          {hint}
+        </p>
+      ) : null}
+    </div>
+  );
+}
 
 // One option button in a filter group. Shared by the sidebar and the advanced
 // (per-day) modal so both render identical controls.
@@ -125,14 +162,10 @@ export function PerDayFilters({
         isTripLevel(filter) ? null : (
           <Fragment key={filter.name}>
             <div className="flex flex-col gap-2">
-              <div>
-                <h3 className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
-                  {filter.name}
-                </h3>
-                <p className="text-xs text-zinc-400 dark:text-zinc-500">
-                  {filter.hint ?? (filter.multi ? "Διάλεξε όσα θες" : "Διάλεξε ένα")}
-                </p>
-              </div>
+              <HintTitle
+                name={filter.name}
+                hint={filter.hint ?? (filter.multi ? "Διάλεξε όσα θες" : "Διάλεξε ένα")}
+              />
               <div className="flex flex-col gap-1.5">
                 {filter.options.map((opt, i) => {
                   const active = (selection[fi] ?? []).includes(i);
@@ -157,6 +190,13 @@ export function PerDayFilters({
                   );
                 })}
               </div>
+              {/* Clarify what the budget covers — one day's activities for the
+                  whole party, not per person (see activityPrice / sumPartyCost). */}
+              {filter.name === "Κόστος" ? (
+                <p className="text-xs italic text-zinc-400 dark:text-zinc-500">
+                  Το ποσό αφορά μία ημέρα, για όλα τα άτομα μαζί.
+                </p>
+              ) : null}
             </div>
             {filter.name === "Cost budget" ? circularBlock : null}
           </Fragment>

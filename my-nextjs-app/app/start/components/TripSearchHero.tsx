@@ -148,7 +148,7 @@ export default function TripSearchHero() {
 
       {/* Carousel card: scroll-styled directly via carouselRef (see the rAF loop
           above) — drifts up, shrinks and fades as you scroll. */}
-      <div ref={carouselRef} className="relative w-full max-w-3xl">
+      <div ref={carouselRef} className="relative w-full max-w-3xl lg:max-w-4xl">
         {/* Low-opacity dark panel behind the title + inputs + button — no glassy
             backdrop-blur "glare", just a quiet veil like the dimmed look the
             hero takes while scrolling down. (Skipping backdrop-filter here also
@@ -165,13 +165,13 @@ export default function TripSearchHero() {
             {/* Title is intentionally static (no entrance animation) — only the
               search inputs animate in. */}
             <h1 className="text-3xl font-semibold tracking-tight text-white drop-shadow-lg sm:text-4xl">
-              Πού πάμε μετά;
+              Οργανώσε το ταξίδι σου
             </h1>
             <p
               className={`${playEntranceAnimations ? "animate-pop-in" : ""} mt-2 text-zinc-100 drop-shadow`}
               style={{ animationDelay: "60ms" }}
             >
-              Διάλεξε προορισμό, ημερομηνίες και ποιοι έρχονται μαζί σου.
+              Διάλεξε προορισμό, ημερομηνίες και ποιοι είναι οι ταξιδιώτες.
             </p>
           </header>
 

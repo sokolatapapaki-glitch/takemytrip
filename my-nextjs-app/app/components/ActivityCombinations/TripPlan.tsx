@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import type { Party } from "./core/activities.functions";
 import type { Area } from "./core/cities.data";
 import type { Filter, Selection } from "./core/filters.functions";
 import type { Trip } from "./core/trip.functions";
@@ -21,6 +22,7 @@ function TripAlternatives({
   exact,
   cityName,
   areaName,
+  party,
   selections,
   startHours,
   endHours,
@@ -32,6 +34,7 @@ function TripAlternatives({
   exact: boolean;
   cityName?: string;
   areaName?: string;
+  party?: Party;
   selections: Selection[];
   startHours: number[];
   endHours: number[];
@@ -43,7 +46,7 @@ function TripAlternatives({
 
   if (alternatives.length === 0) {
     return (
-      <p className="text-xs text-zinc-400">
+      <p className="text-xs text-zinc-400 hidden">
         {exact
           ? "Δεν υπάρχουν εναλλακτικά ταξίδια για αυτόν τον αριθμό ημερών."
           : "Τα εναλλακτικά ταξίδια δεν είναι διαθέσιμα στη γρήγορη λειτουργία (δοκίμασε λιγότερες ημέρες)."}
@@ -52,7 +55,7 @@ function TripAlternatives({
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 hidden">
       {alternatives.slice(0, shown).map((alt, i) => (
         <TripCard
           key={i}
@@ -63,6 +66,7 @@ function TripAlternatives({
           onSave={() => saveTrip({ trip: alt, cityName, areaName })}
           cityName={cityName}
           areaName={areaName}
+          party={party}
           selections={selections}
           startHours={startHours}
           endHours={endHours}
@@ -101,6 +105,10 @@ export function TripPlan({
   trip,
   area,
   cityName,
+  dateLabel,
+  party,
+  expanded,
+  onExpandedChange,
   selections,
   filters,
   startHours,
@@ -110,6 +118,10 @@ export function TripPlan({
   trip: Trip;
   area: Area; // the selected start area (map start marker)
   cityName?: string; // for the "City – Area" line on each card
+  dateLabel: string; // the chosen date range — shown as the main card's header label
+  party?: Party; // the traveller party — shown in each card's header
+  expanded?: boolean; // controlled open state of the MAIN trip card (plan page)
+  onExpandedChange?: (open: boolean) => void;
   selections: Selection[]; // per day slot (each day's filter choices)
   filters: Filter[];
   startHours: number[]; // per day slot
@@ -127,13 +139,16 @@ export function TripPlan({
     <section className="flex flex-col gap-4">
       <TripCard
         trip={trip}
-        title={`Πρόγραμμα ταξιδιου ${trip.days.length} ${trip.days.length === 1 ? "ημέρας" : "ημερών"}`}
+        title={dateLabel}
         showProof={false}
         showLeftover={false}
         defaultOpen
+        open={expanded}
+        onOpenChange={onExpandedChange}
         onSave={() => saveTrip({ trip, cityName, areaName: area.name })}
         cityName={cityName}
         areaName={area.name}
+        party={party}
         selections={selections}
         startHours={startHours}
         endHours={endHours}
@@ -147,6 +162,7 @@ export function TripPlan({
         exact={trip.exact}
         cityName={cityName}
         areaName={area.name}
+        party={party}
         selections={selections}
         startHours={startHours}
         endHours={endHours}

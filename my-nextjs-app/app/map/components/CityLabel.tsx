@@ -46,7 +46,7 @@ export function CityLabel({
       </button>
 
       {open && (
-        <div className="absolute bottom-full mb-2 min-w-[16rem] rounded-3xl border border-white/80 bg-white/95 p-2 shadow-2xl shadow-orange-900/10 backdrop-blur-xl">
+        <div className="absolute bottom-full right-0 mb-2 min-w-[16rem] rounded-3xl border border-white/80 bg-white/95 p-2 shadow-2xl shadow-orange-900/10 backdrop-blur-xl">
           {cities.map((city) => (
             <button
               key={city.id}

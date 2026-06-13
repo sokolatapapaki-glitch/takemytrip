@@ -709,7 +709,7 @@ function planSubsetDP(
 // pull toward bigger, straighter days. The bonus is baked into the day SCORE, so
 // every reported number (per-day score, day average, trip score) stays consistent
 // with what the search optimized. Raise LINEARITY_WEIGHT to push directness harder.
-const LINEARITY_WEIGHT = 1.0; // reward per directness point (0–10) on a 3+ stop day
+const LINEARITY_WEIGHT = 0; // reward per directness point (0–10) on a 3+ stop day
 const LINEARITY_MIN_STOPS = 3; // below this a route is trivially "straight" → no bonus
 
 // makePrunedDayEvaluator + a route-directness reward folded into the day score.
@@ -1186,60 +1186,94 @@ export function planLargeHeuristic(
   let lcg = (0x9e3779b9 ^ (n * 2654435761) ^ (D << 16)) >>> 0;
   const rng = () => { lcg = (lcg * 1664525 + 1013904223) >>> 0; return lcg / 0x100000000; };
 
-  let best: State = freshState();
-  greedyConstruct(best);
-  localSearch(best);
+  // Collect EVERY restart's local optimum. The best is chosen EXACTLY as before
+  // (so the displayed plan is byte-for-byte unchanged); the best DISTINCT runner-
+  // ups — a by-product the multi-start already computed and used to discard — are
+  // then kept as ranked alternatives, giving the "next best trip" reveal a result
+  // even in this heuristic path (where the exact planners' TOP_K list is absent).
+  const seeds: State[] = [];
+  const greedy = freshState();
+  greedyConstruct(greedy);
+  localSearch(greedy);
+  seeds.push(greedy);
+  let best: State = greedy;
   for (let r = 0; r < NUM_RANDOM_STARTS; r++) {
     const st = freshState();
     randomFill(st, rng);
     localSearch(st);
+    seeds.push(st);
     const better =
       objOf(st) > objOf(best) + EPS ||
       (Math.abs(objOf(st) - objOf(best)) <= EPS && placedOf(st) > placedOf(best));
     if (better) best = st;
   }
 
-  const members = best.members;
-  const slotOf = best.slotOf;
+  // A solution's identity: the sorted activity indices per day. Two solutions with
+  // the same signature are the SAME trip (same activities on the same days).
+  const sigOf = (st: State) => st.members.map((m) => m.join(",")).join("|");
 
-  // ---- Assemble the Trip (mask-free) ----
-  const days: TripDay[] = dayIndices.map((d, slot) => {
-    const idxs = members[slot];
-    const e = evalDay(slot, idxs);
-    return { day: d, activities: idxs.map((i) => pool[i]), plan: e.plan, load: e.load, score: e.score };
-  });
+  // The best DISTINCT runner-ups (a different assignment than the chosen best),
+  // ranked by the same objective → placed-count order and capped at TOP_K-1 like
+  // the exact planners. This never reads or mutates `best`, so the plan shown is
+  // unchanged — we only stop throwing these away.
+  const seen = new Set<string>([sigOf(best)]);
+  const runnerStates = seeds
+    .filter((st) => {
+      const sig = sigOf(st);
+      if (seen.has(sig)) return false;
+      seen.add(sig);
+      return true;
+    })
+    .sort((a, b) => objOf(b) - objOf(a) || placedOf(b) - placedOf(a))
+    .slice(0, TOP_K - 1);
 
-  const leftover: Leftover[] = [];
-  for (let i = 0; i < n; i++) {
-    if (slotOf[i] >= 0) continue;
-    let reason: LeftoverReason;
-    if (!placeable[i]) {
-      reason = "closed";
-    } else {
-      const fitsSomewhere = dayIndices.some((_, slot) => evalDay(slot, [i]).feasible);
-      reason = fitsSomewhere ? "score" : "no-room";
+  // ---- Assemble a Trip from one solution State (mask-free) ----
+  const tripFromState = (st: State, secondBest: number | null): Trip => {
+    const { members, slotOf } = st;
+    const days: TripDay[] = dayIndices.map((d, slot) => {
+      const idxs = members[slot];
+      const e = evalDay(slot, idxs);
+      return { day: d, activities: idxs.map((i) => pool[i]), plan: e.plan, load: e.load, score: e.score };
+    });
+
+    const leftover: Leftover[] = [];
+    for (let i = 0; i < n; i++) {
+      if (slotOf[i] >= 0) continue;
+      let reason: LeftoverReason;
+      if (!placeable[i]) {
+        reason = "closed";
+      } else {
+        const fitsSomewhere = dayIndices.some((_, slot) => evalDay(slot, [i]).feasible);
+        reason = fitsSomewhere ? "score" : "no-room";
+      }
+      leftover.push({ activity: pool[i], reason });
     }
-    leftover.push({ activity: pool[i], reason });
-  }
 
-  const dayAverage = days.reduce((s, d) => s + d.score, 0) / (days.length || 1);
-  const placedCount = days.reduce((s, d) => s + d.activities.length, 0);
-  const leftoverCount = leftover.filter((l) => l.reason !== "closed").length;
-  const useAllBreak = useAll ? usageBreakdown(useAll.filter, leftoverCount, placedCount) : null;
-  const score = dayAverage + (useAllBreak?.contribution ?? 0);
+    const dayAverage = days.reduce((s, d) => s + d.score, 0) / (days.length || 1);
+    const placedCount = days.reduce((s, d) => s + d.activities.length, 0);
+    const leftoverCount = leftover.filter((l) => l.reason !== "closed").length;
+    const useAllBreak = useAll ? usageBreakdown(useAll.filter, leftoverCount, placedCount) : null;
+    const score = dayAverage + (useAllBreak?.contribution ?? 0);
 
-  return {
-    days,
-    leftover,
-    score,
-    dayAverage,
-    useAll: useAllBreak,
-    secondBest: null,
-    alternatives: [],
-    evaluated,
-    exact: false,
-    elapsedMs: 0, // filled in by planTrip
+    return {
+      days,
+      leftover,
+      score,
+      dayAverage,
+      useAll: useAllBreak,
+      secondBest,
+      alternatives: [],
+      evaluated,
+      exact: false,
+      elapsedMs: 0, // filled in by planTrip
+    };
   };
+
+  const bestTrip = tripFromState(best, runnerStates[0] ? objOf(runnerStates[0]) : null);
+  bestTrip.alternatives = runnerStates.map((st, i) =>
+    tripFromState(st, runnerStates[i + 1] ? objOf(runnerStates[i + 1]) : null)
+  );
+  return bestTrip;
 }
 
 // === Pick the exact (within-budget) planner HERE =============================

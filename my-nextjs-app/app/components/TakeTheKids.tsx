@@ -101,78 +101,77 @@ export default function TakeTheKids() {
         style={
           isHome
             ? {
-                transform: "translateY(90px) scale(0.82)",
-                opacity: 0.4,
-                willChange: "transform",
-              }
+              transform: "translateY(90px) scale(0.82)",
+              opacity: 0.4,
+              willChange: "transform",
+            }
             : undefined
         }
       >
-      <a
-        href="https://www.takethekids.info"
-        target="_blank"
-        rel="noreferrer noopener"
-        className="group relative isolate mx-auto flex max-w-5xl flex-col items-center gap-4 overflow-hidden rounded-3xl border border-white/60 bg-white px-6 py-10 text-center shadow-lg shadow-orange-900/5 transition duration-200 ease-out hover:-translate-y-1 hover:border-orange-300/70 hover:shadow-2xl hover:shadow-orange-900/15 dark:border-white/[.08] dark:bg-zinc-900"
-      >
-        {/* Decorative hover accents — invisible until hovered, then they fade/
+        <a
+          href="https://www.takethekids.info"
+          target="_blank"
+          rel="noreferrer noopener"
+          className="group relative isolate mx-auto flex max-w-5xl flex-col items-center gap-4 overflow-hidden rounded-3xl border border-white/60 bg-white px-6 py-10 text-center shadow-lg shadow-orange-900/5 transition duration-200 ease-out hover:-translate-y-1 hover:border-orange-300/70 hover:shadow-2xl hover:shadow-orange-900/15 dark:border-white/[.08] dark:bg-zinc-900"
+        >
+          {/* Decorative hover accents — invisible until hovered, then they fade/
             drift in behind the text (same family as the City/Activity cards):
             concentric rings rising from each bottom corner, a tilted dash near
             the title, and a small trail of dots down each side. */}
-        <span
-          aria-hidden
-          className="pointer-events-none absolute -bottom-24 -left-20 -z-10 h-56 w-56 scale-75 rounded-full border-2 border-orange-500/20 opacity-0 transition-all duration-300 ease-out group-hover:scale-100 group-hover:opacity-100"
-        />
-        <span
-          aria-hidden
-          className="pointer-events-none absolute -bottom-16 -left-12 -z-10 h-36 w-36 scale-75 rounded-full border-2 border-green-500/20 opacity-0 transition-all delay-75 duration-300 ease-out group-hover:scale-100 group-hover:opacity-100"
-        />
-        <span
-          aria-hidden
-          className="pointer-events-none absolute -bottom-24 -right-20 -z-10 h-56 w-56 scale-75 rounded-full border-2 border-green-500/20 opacity-0 transition-all delay-75 duration-300 ease-out group-hover:scale-100 group-hover:opacity-100"
-        />
-        <span
-          aria-hidden
-          className="pointer-events-none absolute -bottom-16 -right-12 -z-10 h-36 w-36 scale-75 rounded-full border-2 border-orange-500/20 opacity-0 transition-all delay-100 duration-300 ease-out group-hover:scale-100 group-hover:opacity-100"
-        />
-        <span
-          aria-hidden
-          className="pointer-events-none absolute left-10 top-8 -z-10 h-0.5 w-16 -rotate-[14deg] translate-y-1 rounded-full bg-orange-500/15 opacity-0 transition-all delay-100 duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100"
-        />
-        <span
-          aria-hidden
-          className="pointer-events-none absolute right-10 top-8 -z-10 h-0.5 w-16 rotate-[14deg] translate-y-1 rounded-full bg-emerald-500/15 opacity-0 transition-all delay-100 duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100"
-        />
-        <span
-          aria-hidden
-          className="pointer-events-none absolute left-16 top-1/2 -z-10 h-2 w-2 scale-0 rounded-full bg-green-500/20 opacity-0 transition-all delay-150 duration-300 ease-out group-hover:scale-100 group-hover:opacity-100"
-        />
-        <span
-          aria-hidden
-          className="pointer-events-none absolute right-16 top-1/2 -z-10 h-2 w-2 scale-0 rounded-full bg-orange-500/20 opacity-0 transition-all delay-150 duration-300 ease-out group-hover:scale-100 group-hover:opacity-100"
-        />
-        <span
-          aria-hidden
-          className="pointer-events-none absolute left-24 top-2/3 -z-10 h-1.5 w-1.5 scale-0 rounded-full bg-orange-500/20 opacity-0 transition-all delay-200 duration-300 ease-out group-hover:scale-100 group-hover:opacity-100"
-        />
-        <span
-          aria-hidden
-          className="pointer-events-none absolute right-24 top-2/3 -z-10 h-1.5 w-1.5 scale-0 rounded-full bg-emerald-500/20 opacity-0 transition-all delay-200 duration-300 ease-out group-hover:scale-100 group-hover:opacity-100"
-        />
+          <span
+            aria-hidden
+            className="pointer-events-none absolute -bottom-24 -left-20 -z-10 h-56 w-56 scale-75 rounded-full border-2 border-orange-500/20 opacity-0 transition-all duration-300 ease-out group-hover:scale-100 group-hover:opacity-100"
+          />
+          <span
+            aria-hidden
+            className="pointer-events-none absolute -bottom-16 -left-12 -z-10 h-36 w-36 scale-75 rounded-full border-2 border-green-500/20 opacity-0 transition-all delay-75 duration-300 ease-out group-hover:scale-100 group-hover:opacity-100"
+          />
+          <span
+            aria-hidden
+            className="pointer-events-none absolute -bottom-24 -right-20 -z-10 h-56 w-56 scale-75 rounded-full border-2 border-green-500/20 opacity-0 transition-all delay-75 duration-300 ease-out group-hover:scale-100 group-hover:opacity-100"
+          />
+          <span
+            aria-hidden
+            className="pointer-events-none absolute -bottom-16 -right-12 -z-10 h-36 w-36 scale-75 rounded-full border-2 border-orange-500/20 opacity-0 transition-all delay-100 duration-300 ease-out group-hover:scale-100 group-hover:opacity-100"
+          />
+          <span
+            aria-hidden
+            className="pointer-events-none absolute left-10 top-8 -z-10 h-0.5 w-16 -rotate-[14deg] translate-y-1 rounded-full bg-orange-500/15 opacity-0 transition-all delay-100 duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100"
+          />
+          <span
+            aria-hidden
+            className="pointer-events-none absolute right-10 top-8 -z-10 h-0.5 w-16 rotate-[14deg] translate-y-1 rounded-full bg-emerald-500/15 opacity-0 transition-all delay-100 duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100"
+          />
+          <span
+            aria-hidden
+            className="pointer-events-none absolute left-16 top-1/2 -z-10 h-2 w-2 scale-0 rounded-full bg-green-500/20 opacity-0 transition-all delay-150 duration-300 ease-out group-hover:scale-100 group-hover:opacity-100"
+          />
+          <span
+            aria-hidden
+            className="pointer-events-none absolute right-16 top-1/2 -z-10 h-2 w-2 scale-0 rounded-full bg-orange-500/20 opacity-0 transition-all delay-150 duration-300 ease-out group-hover:scale-100 group-hover:opacity-100"
+          />
+          <span
+            aria-hidden
+            className="pointer-events-none absolute left-24 top-2/3 -z-10 h-1.5 w-1.5 scale-0 rounded-full bg-orange-500/20 opacity-0 transition-all delay-200 duration-300 ease-out group-hover:scale-100 group-hover:opacity-100"
+          />
+          <span
+            aria-hidden
+            className="pointer-events-none absolute right-24 top-2/3 -z-10 h-1.5 w-1.5 scale-0 rounded-full bg-emerald-500/20 opacity-0 transition-all delay-200 duration-300 ease-out group-hover:scale-100 group-hover:opacity-100"
+          />
 
-        <h2 className="text-3xl font-semibold text-zinc-800 dark:text-zinc-100">
-          Τίτλος εδώ
-        </h2>
+          <h2 className="text-3xl font-semibold text-zinc-800 dark:text-zinc-100">
+            Take the kids
+          </h2>
 
-        <p className="max-w-xl text-sm text-zinc-500 dark:text-zinc-400">
-          Περιγραφή εδώ — μια σύντομη γραμμή για την τέλεια οικογενειακή
-          εξόρμηση. Αντικατέστησέ τη με το πραγματικό σου κείμενο.
-        </p>
+          <p className="max-w-xl text-sm text-zinc-500 dark:text-zinc-400">
+            Μάθε περισσότερα για τα οικογενειακά ταξίδια που οργανώνουμε!
+          </p>
 
-        {/* The button pops up on its own hover (separate from the card lift). */}
-        <span className={`mt-2 inline-flex ${buttonStyles.primary} hover:-translate-y-1 hover:scale-105`}>
-          Take The Kids
-        </span>
-      </a>
+          {/* The button pops up on its own hover (separate from the card lift). */}
+          <span className={`mt-2 inline-flex ${buttonStyles.primary} hover:-translate-y-1 hover:scale-105`}>
+            Δες τη σελίδα μας
+          </span>
+        </a>
       </div>
     </section>
   );

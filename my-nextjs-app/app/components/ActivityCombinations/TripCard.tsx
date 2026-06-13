@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { FaChevronDown, FaChevronUp, FaRoute, FaTrashCan } from "react-icons/fa6";
 import { DAYS } from "./core/activities.data";
-import { activityPrice } from "./core/activities.functions";
+import { activityPrice, type Party } from "./core/activities.functions";
 import { ALL_ACTIVITIES, CITIES, type Area } from "./core/cities.data";
 import { DESTINATION_IMAGES } from "@/app/cities/components/destinationImages.generated";
 import type { Filter, Selection } from "./core/filters.functions";
@@ -54,6 +54,16 @@ function totalPriceOf(trip: Trip): number {
   );
 }
 
+// The traveller party in Greek, e.g. "2 ενήλικες, 1 παιδί" (children dropped when
+// there are none). Singular/plural agree: ενήλικας/ενήλικες, παιδί/παιδιά.
+function travelersLabel(party: Party): string {
+  const adults = party.adults;
+  const kids = party.childAges.length;
+  const adultPart = `${adults} ${adults === 1 ? "ενήλικας" : "ενήλικες"}`;
+  if (kids === 0) return adultPart;
+  return `${adultPart}, ${kids} ${kids === 1 ? "παιδί" : "παιδιά"}`;
+}
+
 // A reusable trip card with two states toggled within the SAME component:
 //   • closed (default) — the compact summary: image, City – Area, total price,
 //     total days, and a "See Activities" button that expands it.
@@ -69,9 +79,12 @@ export function TripCard({
   description,
   cityName,
   areaName,
+  party,
   showProof,
   showLeftover = true,
   defaultOpen = false,
+  open: controlledOpen,
+  onOpenChange,
   onReplace,
   onRemove,
   onAdd,
@@ -89,11 +102,17 @@ export function TripCard({
   description?: string;
   cityName?: string; // for the "City – Area" line
   areaName?: string;
+  party?: Party; // the traveller party — shown in the header (adults + children)
   showProof: boolean;
   // The "Not scheduled" (Μη προγραμματισμένες) section at the bottom. Shown on
   // My Trips; the plan page hides it via showLeftover={false}.
   showLeftover?: boolean;
   defaultOpen?: boolean;
+  // Optional CONTROLLED open state: when `open` is provided the card's expansion
+  // is driven by the parent (and `onOpenChange` fires on toggle). Omitted = the
+  // card manages its own open state from `defaultOpen`.
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
   // Opt-in (My Trips page): a "Replace" button on each activity row, left of
   // "See more". The handler gets the row's scheduled slot + day.
   onReplace?: (item: ScheduledItem, day: number) => void;
@@ -116,7 +135,13 @@ export function TripCard({
   area?: Area;
   filters?: Filter[];
 }) {
-  const [open, setOpen] = useState(defaultOpen);
+  const [openState, setOpenState] = useState(defaultOpen);
+  const open = controlledOpen ?? openState;
+  const toggleOpen = () => {
+    const next = !open;
+    if (controlledOpen === undefined) setOpenState(next);
+    onOpenChange?.(next);
+  };
   const [proofOpen, setProofOpen] = useState(false);
   const [leftoverOpen, setLeftoverOpen] = useState(false);
   // Which day's route map is open (by day SLOT index, so the slot's circular
@@ -169,13 +194,16 @@ export function TripCard({
         )}
       </div>
       <div className="min-w-0 flex-1">
-        <span className="text-[11px] font-semibold uppercase tracking-wide text-zinc-400 hidden md:block">
+        <span className="block text-[11px] font-semibold uppercase tracking-wide text-zinc-400">
           {title}
         </span>
         <h3 className="mt-0.5 truncate text-lg font-semibold text-zinc-800">
           {cityArea}
         </h3>
         <p className="text-sm text-zinc-500">Συνολική τιμή: €{totalPrice}</p>
+        {party ? (
+          <p className="text-sm text-zinc-500">Ταξιδιώτες: {travelersLabel(party)}</p>
+        ) : null}
       </div>
       <div className="flex w-full items-center justify-end gap-2 sm:w-auto sm:flex-row sm:items-center">
         {onDelete ? (
@@ -191,7 +219,7 @@ export function TripCard({
         ) : null}
         <button
           type="button"
-          onClick={() => setOpen((v) => !v)}
+          onClick={toggleOpen}
           aria-expanded={open}
           className={`inline-flex shrink-0 items-center gap-1.5 ${buttonStyles.underline}`}
         >

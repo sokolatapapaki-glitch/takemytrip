@@ -41,6 +41,10 @@ function placedNames(trip: Trip): string[] {
 function placedCount(trip: Trip): number {
   return trip.days.reduce((s, d) => s + d.activities.length, 0);
 }
+// A trip's identity: the sorted activity names per day. Distinct trips differ here.
+function tripSig(trip: Trip): string {
+  return trip.days.map((d) => d.activities.map((a) => a.name).sort().join(",")).join("|");
+}
 
 // A random-but-reproducible pool of `n` activities, mostly open all week.
 function randomPool(rng: () => number, n: number, prefix = "A"): Activity[] {
@@ -70,9 +74,22 @@ function assertValidTrip(trip: Trip, days: number[], pool: Activity[], label: st
     trip.days.every((d) => d.activities.length <= MAX_DAY_ACTIVITIES),
     `${label}: day cap respected`
   );
-  // The heuristic always reports exact:false and offers no ranked alternatives.
+  // The heuristic always reports exact:false. It MAY now surface ranked
+  // alternatives — the best DISTINCT runner-ups found across its multi-start
+  // restarts — and each must itself be a structurally valid, distinct trip.
   assert.equal(trip.exact, false, `${label}: exact flag`);
-  assert.deepEqual(trip.alternatives, [], `${label}: no alternatives`);
+  const bestSig = tripSig(trip);
+  const altSigs = new Set<string>();
+  for (const alt of trip.alternatives) {
+    assert.equal(alt.days.length, days.length, `${label}: alt day count`);
+    assert.ok(alt.days.every((d) => d.plan.feasible), `${label}: alt days legal`);
+    assert.ok(alt.score <= trip.score + 1e-9, `${label}: alt no better than best`);
+    assert.equal(alt.alternatives.length, 0, `${label}: alt has no nested alternatives`);
+    const sig = tripSig(alt);
+    assert.notEqual(sig, bestSig, `${label}: alt distinct from best`);
+    assert.ok(!altSigs.has(sig), `${label}: alts distinct from each other`);
+    altSigs.add(sig);
+  }
 }
 
 // ---------------------------------------------------------------------------

@@ -112,6 +112,9 @@ export type Filter = {
   // options are inert). Excluded from combo scores + the sidebar. See
   // tripBalanceFilter / the planner's per-day balance term. Code-bound.
   tripBalance?: boolean;
+  // Which option index is pre-selected by defaultSelection (single-select only).
+  // Omitted = the middle option. Code-bound (not user-edited).
+  defaultOption?: number;
   options: FilterOption[];
 };
 
@@ -134,7 +137,9 @@ export function defaultSelection(filters: Filter[]): Selection {
   return Object.fromEntries(
     filters.map((f, i) => [
       i,
-      f.multi ? [0] : [Math.floor((f.options.length - 1) / 2)],
+      f.multi
+        ? [0]
+        : [f.defaultOption ?? Math.floor((f.options.length - 1) / 2)],
     ])
   );
 }

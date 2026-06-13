@@ -5,6 +5,7 @@ import { useSearchParams, type ReadonlyURLSearchParams } from "next/navigation";
 import { setActiveCity, setActiveParty, type Activity, type Party } from "./core/activities.functions";
 import { CITIES, DEFAULT_CITY, type City, type Area } from "./core/cities.data";
 import { defaultSelection, Selection } from "./core/filters.functions";
+import { costOptionsForParty } from "./core/filters.data";
 import { scheduleEndHour } from "./core/schedule.functions";
 import { toEffective, useFilterEdits } from "./core/filterStore.functions";
 import { addDays, diffDays, mondayIndex, startOfDay } from "./core/calendar.functions";
@@ -101,7 +102,6 @@ function TripResultsLoading() {
 
 export default function ActivityCombinations() {
   const [edits] = useFilterEdits();
-  const filters = useMemo(() => toEffective(edits), [edits]);
 
   // Read the /start hand-off from the live URL query (reactive — correct after a
   // client-side navigation from the homepage search).
@@ -132,6 +132,18 @@ export default function ActivityCombinations() {
     setActiveCity(city, area.coords);
     setActiveParty(party);
   }, [city, area, party]);
+
+  // Runtime filters: editor edits merged onto the code defaults, then the cost
+  // filter's budget buckets rebuilt for the actual party so they read as party
+  // totals (€50/person → "έως €150" for three travellers). Built AFTER the engine
+  // setup above so maxPartyPrice() inside costOptionsForParty sees this party.
+  const filters = useMemo(() => {
+    const base = toEffective(edits);
+    const travelers = party.adults + party.childAges.length;
+    return base.map((f) =>
+      f.name === "Κόστος" ? { ...f, options: costOptionsForParty(travelers) } : f
+    );
+  }, [edits, party]);
 
   // PER-DAY state. Each day slot (0 = first chosen date, 1 = next, …) has its own
   // filter choices, start hour, and "must include" set. Pre-allocated to MAX_DAYS;
@@ -181,6 +193,18 @@ export default function ActivityCombinations() {
   );
   const dayIndices = useMemo(() => dates.map(mondayIndex), [dates]);
 
+  // The chosen dates as a short Greek range, shown in the trip card header
+  // instead of a "trip of N days" label — e.g. "3 Ιουν – 5 Ιουν" (single date
+  // when the trip is one day).
+  const tripDateLabel = useMemo(() => {
+    if (dates.length === 0) return "";
+    const fmt = (d: Date) =>
+      d.toLocaleDateString("el-GR", { day: "numeric", month: "short" });
+    return dates.length === 1
+      ? fmt(dates[0])
+      : `${fmt(dates[0])} – ${fmt(dates[dates.length - 1])}`;
+  }, [dates]);
+
   // Which day tab is active (0..dayCount-1). Its filters/start time/required are
   // what the sidebar + advanced modal edit, and its weekday drives the activity
   // hours and that day's leg of the trip. Clamped in case the range shrank.
@@ -228,6 +252,9 @@ export default function ActivityCombinations() {
   // The advanced (per-day) filters modal — same controls as the sidebar, by day.
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
+  // Whether the main trip card is expanded (it opens by default). When it is, the
+  // desktop filter sidebar stretches to the trip's height and scrolls internally.
+  const [tripExpanded, setTripExpanded] = useState(true);
 
   // Lock the page scroll while the mobile filter drawer is open.
   useScrollLock(showMobileFilters);
@@ -402,148 +429,159 @@ export default function ActivityCombinations() {
           aria-hidden
           className="animate-drift-slower pointer-events-none absolute -right-24 bottom-12 h-72 w-72 rounded-full bg-emerald-200/40 blur-3xl"
         />
-        <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-6 sm:px-8 sm:py-8">
-        <div className="flex flex-col gap-8">
-          <section className="flex flex-col gap-3">
-            <div className="flex items-center justify-between gap-3">
-              <h2 className="text-lg font-semibold text-zinc-800 dark:text-zinc-100">
-                Προορισμός: {city.name}
-              </h2>
+        <div className="relative z-10 mx-auto flex w-full flex-col gap-8 md:px-24 py-6 sm:px-8 sm:py-8">
+          <div className="flex flex-col gap-8">
+            <section className="flex flex-col gap-3">
+              <div className="flex items-center justify-between gap-3">
+                <h2 className="text-xl font-semibold text-zinc-800 dark:text-zinc-100">
+                  {city.name}
+                </h2>
+                <button
+                  type="button"
+                  onClick={() => setShowActivities((s) => !s)}
+                  aria-expanded={showActivities}
+                  disabled={city.activities.length === 0}
+                  className={`shrink-0 ${buttonStyles.common} disabled:cursor-not-allowed disabled:text-zinc-300 disabled:hover:bg-transparent`}
+                >
+                  {showActivities ? "Απόκρυψη δραστηριοτήτων" : "Επιλογή δραστηριοτήτων"}
+                </button>
+              </div>
+              {/* Mobile filters button — always below the header, regardless of
+                whether the activity list is open. */}
               <button
                 type="button"
-                onClick={() => setShowActivities((s) => !s)}
-                aria-expanded={showActivities}
-                disabled={city.activities.length === 0}
-                className={`shrink-0 ${buttonStyles.common} disabled:cursor-not-allowed disabled:text-zinc-300 disabled:hover:bg-transparent`}
+                onClick={() => setShowMobileFilters(true)}
+                className={`flex w-full items-center justify-center gap-2 lg:hidden ${buttonStyles.secondary}`}
               >
-                {showActivities ? "Απόκρυψη δραστηριοτήτων" : "Επιλογή δραστηριοτήτων"}
+                <FaSliders className="h-4 w-4" />
+                Φίλτρα
               </button>
-            </div>
-            {showActivities && (
-              <>
-                <div className="flex flex-col gap-3">
-                  <div className="flex items-center gap-3 rounded-2xl bg-white/90 px-4 py-3.5 shadow-lg shadow-orange-900/5 ring-1 ring-inset ring-white/60 backdrop-blur-md focus-within:ring-orange-200">
-                    <SearchIcon className="h-6 w-6 shrink-0 text-zinc-400" />
-                    <input
-                      type="text"
-                      value={activityQuery}
-                      onChange={(e) => setActivityQuery(e.target.value)}
-                      placeholder="Αναζήτησε δραστηριότητες"
-                      className="w-full bg-transparent text-base text-zinc-800 outline-none placeholder:text-zinc-400"
-                    />
-                  </div>
-                  {/* Explains what "Υποβολή επιλογής" does: it restricts the trip
+              {showActivities && (
+                <>
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center gap-3 rounded-2xl bg-white/90 px-4 py-3.5 shadow-lg shadow-orange-900/5 ring-1 ring-inset ring-white/60 backdrop-blur-md focus-within:ring-orange-200">
+                      <SearchIcon className="h-6 w-6 shrink-0 text-zinc-400" />
+                      <input
+                        type="text"
+                        value={activityQuery}
+                        onChange={(e) => setActivityQuery(e.target.value)}
+                        placeholder="Αναζήτησε δραστηριότητες"
+                        className="w-full bg-transparent text-base text-zinc-800 outline-none placeholder:text-zinc-400"
+                      />
+                    </div>
+                    {/* Explains what "Υποβολή επιλογής" does: it restricts the trip
                       to ONLY the ticked activities (not a "must include"). */}
-                  <div className="flex items-start gap-2 rounded-xl border border-orange-200/70 bg-orange-50/70 px-4 py-2.5 text-sm text-zinc-600 dark:border-orange-400/20 dark:bg-orange-950/20 dark:text-zinc-300">
-                    <FaCircleInfo className="mt-0.5 h-4 w-4 shrink-0 text-orange-500" />
-                    <span>
-                      Διάλεξε δραστηριότητες και πάτησε «Υποβολή επιλογής»: το
-                      πρόγραμμα θα δημιουργηθεί αποκλειστικά από τις δραστηριότητες
-                      που επέλεξες.
-                    </span>
+                    <div className="flex items-start gap-2 rounded-xl border border-orange-200/70 bg-orange-50/70 px-4 py-2.5 text-sm text-zinc-600 dark:border-orange-400/20 dark:bg-orange-950/20 dark:text-zinc-300">
+                      <FaCircleInfo className="mt-0.5 h-4 w-4 shrink-0 text-orange-500" />
+                      <span>
+                        Διάλεξε δραστηριότητες και πάτησε «Υποβολή επιλογής»: το
+                        πρόγραμμα θα δημιουργηθεί αποκλειστικά από τις δραστηριότητες
+                        που επέλεξες.
+                      </span>
+                    </div>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => setShowMobileFilters(true)}
-                    className={`flex w-full items-center justify-center gap-2 lg:hidden ${buttonStyles.secondary}`}
-                  >
-                    <FaSliders className="h-4 w-4" />
-                    Φίλτρα
-                  </button>
-                </div>
-                <ActivityList
-                  day={activeWeekday}
-                  activities={city.activities}
-                  query={activityQuery}
-                  selected={selectedActivities}
-                  onToggleSelect={toggleSelectedActivity}
-                />
+                  <ActivityList
+                    day={activeWeekday}
+                    activities={city.activities}
+                    query={activityQuery}
+                    selected={selectedActivities}
+                    onToggleSelect={toggleSelectedActivity}
+                  />
 
-                <div className="flex flex-wrap items-center justify-center gap-3">
-                  <button
-                    type="button"
-                    onClick={submitSelection}
-                    className={buttonStyles.secondary}
-                  >
-                    Υποβολή επιλογής
-                  </button>
-                  {submitted ? (
+                  <div className="flex flex-wrap items-center justify-center gap-3">
                     <button
                       type="button"
-                      onClick={undoSelection}
-                      className={buttonStyles.common}
+                      onClick={submitSelection}
+                      className={buttonStyles.secondary}
                     >
-                      Αναίρεση υποβολής
+                      Υποβολή επιλογής
                     </button>
-                  ) : null}
-                  {submitted ? (
-                    <span className="text-sm text-zinc-500">
-                      Το ταξίδι φτιάχτηκε από {submitted.size}{" "}
-                      {submitted.size === 1
-                        ? "επιλεγμένη δραστηριότητα"
-                        : "επιλεγμένες δραστηριότητες"}
-                      .
-                    </span>
-                  ) : null}
-                </div>
-              </>
-            )}
-          </section>
-
-          <div className="lg:flex lg:items-start lg:gap-8">
-            <div className="hidden lg:block lg:w-80 lg:shrink-0">
-              <FilterSidebar
-                filters={filters}
-                selection={selections[0]}
-                onChoose={chooseAll}
-                required={requireds[0]}
-                onToggleRequired={toggleAllRequired}
-                startHour={startHours[0]}
-                onStartHourChange={setAllStartHour}
-                circular={circulars[0]}
-                onToggleCircular={toggleAllCircular}
-                activities={city.activities}
-                areas={city.areas}
-                area={area}
-                areaNoun={city.kind === "region" ? "πόλη" : "περιοχή"}
-                onAreaChange={changeArea}
-                rangeStart={rangeStart}
-                rangeEnd={range.end}
-                onRangeChange={changeRange}
-                minDate={today}
-                maxDays={MAX_DAYS}
-                dates={dates}
-                onOpenAdvanced={() => setShowAdvanced(true)}
-              />
-            </div>
-
-            <div className="flex min-w-0 flex-1 flex-col gap-8">
-              {city.activities.length === 0 ? (
-                <p className="rounded-lg border border-amber-300/60 bg-amber-50 px-4 py-3 text-sm text-amber-700 dark:border-amber-400/30 dark:bg-amber-950/30 dark:text-amber-300">
-                  Δεν υπάρχουν ακόμη δραστηριότητες για: {city.name}. Μπορείς όμως
-                  να διαλέξεις {city.kind === "region" ? "πόλη" : "περιοχή"}{" "}
-                  αφετηρίας παρακάτω — το ταξίδι σου θα εμφανιστεί εδώ μόλις
-                  προστεθούν δραστηριότητες για αυτόν τον προορισμό.
-                </p>
-              ) : null}
-
-              {isRecalculating ? (
-                <TripResultsLoading />
-              ) : (
-                <TripPlan
-                  trip={trip}
-                  area={area}
-                  cityName={city.name}
-                  selections={tripSelections}
-                  startHours={tripStartHours}
-                  endHours={tripEndHours}
-                  circulars={circulars.slice(0, dayCount)}
-                  filters={filters}
-                />
+                    {submitted ? (
+                      <button
+                        type="button"
+                        onClick={undoSelection}
+                        className={buttonStyles.common}
+                      >
+                        Αναίρεση υποβολής
+                      </button>
+                    ) : null}
+                    {submitted ? (
+                      <span className="text-sm text-zinc-500">
+                        Το ταξίδι φτιάχτηκε από {submitted.size}{" "}
+                        {submitted.size === 1
+                          ? "επιλεγμένη δραστηριότητα"
+                          : "επιλεγμένες δραστηριότητες"}
+                        .
+                      </span>
+                    ) : null}
+                  </div>
+                </>
               )}
+            </section>
+
+            <div
+              className={`lg:flex lg:gap-8 ${tripExpanded ? "lg:items-stretch" : "lg:items-start"}`}
+            >
+              <div
+                className={`hidden lg:block lg:w-80 lg:shrink-0 ${tripExpanded ? "lg:relative" : ""}`}
+              >
+                <FilterSidebar
+                  fillHeight={tripExpanded}
+                  filters={filters}
+                  selection={selections[0]}
+                  onChoose={chooseAll}
+                  required={requireds[0]}
+                  onToggleRequired={toggleAllRequired}
+                  startHour={startHours[0]}
+                  onStartHourChange={setAllStartHour}
+                  circular={circulars[0]}
+                  onToggleCircular={toggleAllCircular}
+                  activities={city.activities}
+                  areas={city.areas}
+                  area={area}
+                  areaNoun={city.kind === "region" ? "πόλη" : "περιοχή"}
+                  onAreaChange={changeArea}
+                  rangeStart={rangeStart}
+                  rangeEnd={range.end}
+                  onRangeChange={changeRange}
+                  minDate={today}
+                  maxDays={MAX_DAYS}
+                  dates={dates}
+                  onOpenAdvanced={() => setShowAdvanced(true)}
+                />
+              </div>
+
+              <div className="flex min-w-0 flex-1 flex-col gap-8">
+                {city.activities.length === 0 ? (
+                  <p className="rounded-lg border border-amber-300/60 bg-amber-50 px-4 py-3 text-sm text-amber-700 dark:border-amber-400/30 dark:bg-amber-950/30 dark:text-amber-300">
+                    Δεν υπάρχουν ακόμη δραστηριότητες για: {city.name}. Μπορείς όμως
+                    να διαλέξεις {city.kind === "region" ? "πόλη" : "περιοχή"}{" "}
+                    αφετηρίας παρακάτω — το ταξίδι σου θα εμφανιστεί εδώ μόλις
+                    προστεθούν δραστηριότητες για αυτόν τον προορισμό.
+                  </p>
+                ) : null}
+
+                {isRecalculating ? (
+                  <TripResultsLoading />
+                ) : (
+                  <TripPlan
+                    trip={trip}
+                    area={area}
+                    cityName={city.name}
+                    dateLabel={tripDateLabel}
+                    party={party}
+                    expanded={tripExpanded}
+                    onExpandedChange={setTripExpanded}
+                    selections={tripSelections}
+                    startHours={tripStartHours}
+                    endHours={tripEndHours}
+                    circulars={circulars.slice(0, dayCount)}
+                    filters={filters}
+                  />
+                )}
+              </div>
             </div>
           </div>
-        </div>
         </div>
       </section>
 

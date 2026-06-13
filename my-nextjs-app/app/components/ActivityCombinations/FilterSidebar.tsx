@@ -42,6 +42,7 @@ export function FilterSidebar({
   dates,
   onOpenAdvanced,
   mobile,
+  fillHeight,
 }: {
   filters: Filter[];
   selection: Selection;
@@ -65,15 +66,27 @@ export function FilterSidebar({
   dates: Date[]; // the chosen dates, in order (for the date summary)
   onOpenAdvanced: () => void; // open the advanced (per-day) filters modal
   mobile?: boolean;
+  // Desktop only: when true the sidebar fills its (stretched) column and scrolls
+  // internally instead of being a sticky natural-height card — so it matches the
+  // expanded trip card's height. Set by the plan page when the trip is expanded.
+  fillHeight?: boolean;
 }) {
   // The calendar is hidden by default and revealed by "Change dates".
   const [showCalendar, setShowCalendar] = useState(false);
 
+  // Shared glass-card chrome for the desktop sidebar (both modes).
+  const desktopCard =
+    "flex w-full shrink-0 flex-col gap-6 rounded-3xl border border-white/80 bg-white/80 p-5 shadow-xl shadow-orange-900/10 ring-1 ring-black/5 backdrop-blur-md";
   const wrapperClass = mobile
     ? // In the drawer: bare content only — no card chrome (the drawer panel
       // already provides the white surface + shadow).
       "flex h-full w-full flex-col gap-6 p-5"
-    : "flex w-full shrink-0 flex-col gap-6 rounded-3xl border border-white/80 bg-white/80 p-5 shadow-xl shadow-orange-900/10 ring-1 ring-black/5 backdrop-blur-md lg:sticky lg:top-8 lg:w-72 lg:self-start";
+    : fillHeight
+      ? // Fill the stretched column (matching the expanded trip card's height) and
+        // scroll internally when the filters are taller than the trip.
+        `${desktopCard} lg:absolute lg:inset-0 lg:overflow-y-auto`
+      : // Default: a natural-height card that sticks as the page scrolls.
+        `${desktopCard} lg:sticky lg:top-8 lg:w-72 lg:self-start`;
 
   return (
     <aside className={wrapperClass}>

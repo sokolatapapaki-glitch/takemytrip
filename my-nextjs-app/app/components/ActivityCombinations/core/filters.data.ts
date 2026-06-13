@@ -23,6 +23,20 @@ export const HOURS_UNIT: Unit = { label: "Ώρες", suffix: "ω", toIndex: hour
 // party's catalogue total (so a bigger party shifts the whole budget scale).
 export const COST_UNIT: Unit = { label: "Ευρώ", suffix: "€", toIndex: partyCostToIndex };
 
+// Per-person budget tiers (euros). The cost filter's options are rebuilt from
+// these × the party headcount at runtime (see index.tsx), so the buckets shown
+// read as PARTY totals — e.g. €50/person → "έως €150" for three travellers. The
+// top bucket is open-ended ("€N+"): its target is the catalogue max so nothing
+// above it is penalised, while only its LABEL scales with the party.
+export const COST_TIERS = [20, 50, 90];
+export function costOptionsForParty(travelers: number) {
+  const n = Math.max(1, travelers);
+  return [
+    ...COST_TIERS.map((eur) => ({ name: `έως €${eur * n}`, target: eur * n })),
+    { name: `€${90 * n}+`, target: maxPartyPrice() },
+  ];
+}
+
 // ===========================================================================
 // HOW IMPORTANT IS "tourist priority"?  ← the one knob to turn.
 // ===========================================================================
@@ -66,16 +80,18 @@ export const DEFAULT_FILTERS: Filter[] = [
     unit: HOURS_UNIT,
     value: normalizedSumIndex("hours"),
     format: (combo) => `${sumOf("hours")(combo)}ω`,
+    // Default to the 9h option (index 2 of the array below).
+    defaultOption: 2,
     // Targets are stored in HOURS (the unit); converted to index when scoring.
     // Capped at 15h — the most a single day can realistically hold.
-    options: [3, 6, 9, 12, 15].map((h) => ({
+    options: [3, 6, 9, 12].map((h) => ({
       name: `έως ${h}ω`,
       target: h,
     })),
   },
   {
     name: "Κόστος",
-    weight: 0.9,
+    weight: 10,
     scoreName: "Asymmetric linear",
     params: CEILING_PARAMS,
     hint: "Μείνε μέσα σε αυτό το όριο",
@@ -84,11 +100,12 @@ export const DEFAULT_FILTERS: Filter[] = [
     // bundle when it matches), not the flat adult `cost` — see activityPrice.
     value: normalizedPartyCostIndex,
     format: (combo) => `€${sumPartyCost(combo)}`,
+    // Default to the third option (index 2 — the "€90×party" bucket).
+    defaultOption: 2,
     // Targets are stored in EUROS (the unit); converted to index when scoring.
-    options: [20, 50, 90, maxPartyPrice()].map((eur) => ({
-      name: `έως €${eur}`,
-      target: eur,
-    })),
+    // Seeded per-person (travelers = 1); index.tsx rebuilds these for the actual
+    // party so the buckets read as party totals (see costOptionsForParty).
+    options: costOptionsForParty(1),
   },
   {
     // TOURIST PRIORITY: how must-see the combo's activities are, on average. The
@@ -120,7 +137,7 @@ export const DEFAULT_FILTERS: Filter[] = [
     // if a day gets fuller (lower leave-out sensitivity); weight 0 = off.
     // DEFAULT 0 so behaviour is unchanged until you tune it on the editor page.
     name: "Χρήση όλων των δραστηριοτήτων",
-    weight: 0,
+    weight: 5,
     scoreName: "Asymmetric linear",
     params: { under: 0, over: 1 },
     hint: "Ανέβασε το βάρος για να μένουν έξω λιγότερες δραστηριότητες",

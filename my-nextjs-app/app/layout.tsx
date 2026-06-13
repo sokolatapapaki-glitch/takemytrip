@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AppProvider } from "./context/AppContext";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import ConditionalFooter from "./components/ConditionalFooter";
 import TakeTheKids from "./components/TakeTheKids";
 
 const geistSans = Geist({
@@ -36,7 +36,7 @@ export default function RootLayout({
           <Navbar />
           <main className="flex flex-1 flex-col">{children}</main>
           <TakeTheKids />
-          <Footer />
+          <ConditionalFooter />
         </AppProvider>
       </body>
     </html>

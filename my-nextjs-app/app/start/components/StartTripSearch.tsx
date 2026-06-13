@@ -212,7 +212,7 @@ export default function StartTripSearch({
         className="pointer-events-none absolute -inset-x-8 -inset-y-5 rounded-[2rem] bg-gradient-to-r from-orange-300/30 via-pink-300/25 to-sky-300/25 blur-2xl"
       />
       <div
-        className={`${playEntranceAnimations ? "animate-fade-in-up" : ""} relative grid grid-cols-1 items-center gap-2 sm:grid-cols-2 lg:grid-cols-[1.4fr_minmax(0,1fr)_minmax(0,1fr)_auto]`}
+        className={`${playEntranceAnimations ? "animate-fade-in-up" : ""} relative grid grid-cols-1 items-center gap-2 sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_auto]`}
         style={{ animationDelay: "100ms" }}
       >
         <DestField
@@ -327,7 +327,6 @@ export default function StartTripSearch({
           icon={<TravelersIcon multiple={travelerCount > 1} />}
           placeholder="Ταξιδιώτες"
           value={travelersLabel}
-          muted
           iconDelay={580}
           playEntranceAnimations={playEntranceAnimations}
           onClick={() => toggle("travelers")}
