@@ -1,9 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useDeferredValue, useMemo, useState } from "react";
 import { useSearchParams, type ReadonlyURLSearchParams } from "next/navigation";
 import { setActiveCity, setActiveParty, type Activity, type Party } from "./core/activities.functions";
-import { DAYS } from "./core/activities.data";
 import { CITIES, DEFAULT_CITY, type City, type Area } from "./core/cities.data";
 import { defaultSelection, Selection } from "./core/filters.functions";
 import { scheduleEndHour } from "./core/schedule.functions";
@@ -18,7 +17,7 @@ import { enforceRequired } from "./core/trip.required";
 import { DEFAULT_START_HOUR } from "./core/schedule.data";
 import { buttonStyles } from "@/app/components/ui/buttonStyles";
 import { SearchIcon } from "@/app/start/components/icons";
-import { FaSliders } from "react-icons/fa6";
+import { FaSliders, FaCircleInfo } from "react-icons/fa6";
 import { useScrollLock } from "@/app/components/ui/useScrollLock";
 
 // The most days a trip can span (the date range is capped at this length). Per-day
@@ -62,6 +61,42 @@ function parseStartParams(p: ReadonlyURLSearchParams): {
     party: { adults, childAges },
     include: p.getAll("include"),
   };
+}
+
+// Shown in the results column while the trip is being recalculated after a filter
+// change. Skeleton cards keep the layout stable while planTrip runs.
+function TripResultsLoading() {
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-col items-center gap-3 py-6 text-center">
+        <span
+          className="h-9 w-9 animate-spin rounded-full border-[3px] border-orange-200 border-t-orange-500"
+          aria-hidden
+        />
+        <div>
+          <p className="text-base font-semibold text-zinc-800 dark:text-zinc-100">
+            Υπολογίζουμε ξανά το πρόγραμμα…
+          </p>
+          <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+            Εφαρμόζουμε τα νέα φίλτρα στις δραστηριότητες κάθε ημέρας.
+          </p>
+        </div>
+      </div>
+      {[0, 1].map((i) => (
+        <div
+          key={i}
+          className="flex gap-4 rounded-3xl border border-white/80 bg-white/70 p-4 shadow-xl shadow-orange-900/10"
+        >
+          <div className="h-24 w-24 shrink-0 animate-pulse rounded-2xl bg-zinc-200/70" />
+          <div className="flex min-w-0 flex-1 flex-col gap-3 py-1">
+            <div className="h-3 w-20 animate-pulse rounded bg-zinc-200/80" />
+            <div className="h-5 w-2/3 animate-pulse rounded bg-zinc-200/70" />
+            <div className="h-4 w-24 animate-pulse rounded bg-zinc-200/70" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 export default function ActivityCombinations() {
@@ -220,7 +255,21 @@ export default function ActivityCombinations() {
   // are then enforced as a HARD constraint on the result (see trip.required.ts):
   // every checked activity is slotted into a free window or takes over a
   // non-required activity's slot — trip-level, so the union over the days.
+  // Bundle every input the trip depends on into one object so it can be deferred
+  // as a single unit (a new object only when one of the inputs actually changes).
+  const tripInputs = useMemo(
+    () => ({ city, area, party, dayIndices, selections, startHours, circulars, filters, activityPool, requireds }),
+    [city, area, party, dayIndices, selections, startHours, circulars, filters, activityPool, requireds]
+  );
+  // Defer the heavy recompute so the "recalculating" loading state can paint
+  // first, before planTrip blocks the thread. While the deferred snapshot lags
+  // the live inputs, a recalculation is in flight.
+  const deferredInputs = useDeferredValue(tripInputs);
+  const isRecalculating = deferredInputs !== tripInputs;
+
   const trip = useMemo(() => {
+    const { city, area, party, dayIndices, selections, startHours, circulars, filters, activityPool, requireds } =
+      deferredInputs;
     setActiveCity(city, area.coords); // engine on this city + area before planning
     setActiveParty(party); // and on the chosen party, for price totals
     const starts = dayIndices.map((_, i) => startHours[i]);
@@ -234,7 +283,7 @@ export default function ActivityCombinations() {
     for (const set of requireds.slice(0, dayIndices.length))
       for (const name of set) required.add(name);
     return enforceRequired(planned, required, starts, ends);
-  }, [city, area, party, dayIndices, selections, startHours, circulars, filters, activityPool, requireds]);
+  }, [deferredInputs]);
 
   // Per-day mutators write to the ACTIVE day's slot, leaving the others untouched.
   const choose = (filterIndex: number, optionIndex: number) => {
@@ -342,15 +391,23 @@ export default function ActivityCombinations() {
 
   return (
     <>
-      <div className="mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-6 sm:px-8 sm:py-8">
+      {/* Soft orange→white→emerald backdrop matching the Cities page, with two
+          drifting blurred colour blobs for the glass surfaces to blur over. */}
+      <section className="relative flex-1 overflow-hidden bg-gradient-to-br from-orange-50 via-white to-emerald-50">
+        <div
+          aria-hidden
+          className="animate-drift-slow pointer-events-none absolute -left-24 top-12 h-72 w-72 rounded-full bg-orange-200/40 blur-3xl"
+        />
+        <div
+          aria-hidden
+          className="animate-drift-slower pointer-events-none absolute -right-24 bottom-12 h-72 w-72 rounded-full bg-emerald-200/40 blur-3xl"
+        />
+        <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-6 sm:px-8 sm:py-8">
         <div className="flex flex-col gap-8">
           <section className="flex flex-col gap-3">
             <div className="flex items-center justify-between gap-3">
               <h2 className="text-lg font-semibold text-zinc-800 dark:text-zinc-100">
-                Δραστηριότητες στην πόλη: {city.name}{" "}
-                <span className="text-sm font-normal text-zinc-400 dark:text-zinc-500">
-                  · ωράρια για {DAYS[activeWeekday]}
-                </span>
+                Προορισμός: {city.name}
               </h2>
               <button
                 type="button"
@@ -375,6 +432,16 @@ export default function ActivityCombinations() {
                       className="w-full bg-transparent text-base text-zinc-800 outline-none placeholder:text-zinc-400"
                     />
                   </div>
+                  {/* Explains what "Υποβολή επιλογής" does: it restricts the trip
+                      to ONLY the ticked activities (not a "must include"). */}
+                  <div className="flex items-start gap-2 rounded-xl border border-orange-200/70 bg-orange-50/70 px-4 py-2.5 text-sm text-zinc-600 dark:border-orange-400/20 dark:bg-orange-950/20 dark:text-zinc-300">
+                    <FaCircleInfo className="mt-0.5 h-4 w-4 shrink-0 text-orange-500" />
+                    <span>
+                      Διάλεξε δραστηριότητες και πάτησε «Υποβολή επιλογής»: το
+                      πρόγραμμα θα δημιουργηθεί αποκλειστικά από τις δραστηριότητες
+                      που επέλεξες.
+                    </span>
+                  </div>
                   <button
                     type="button"
                     onClick={() => setShowMobileFilters(true)}
@@ -392,11 +459,11 @@ export default function ActivityCombinations() {
                   onToggleSelect={toggleSelectedActivity}
                 />
 
-                <div className="flex flex-wrap items-center gap-3">
+                <div className="flex flex-wrap items-center justify-center gap-3">
                   <button
                     type="button"
                     onClick={submitSelection}
-                    className={`mx-auto sm:mx-0 ${buttonStyles.secondary}`}
+                    className={buttonStyles.secondary}
                   >
                     Υποβολή επιλογής
                   </button>
@@ -438,7 +505,7 @@ export default function ActivityCombinations() {
                 activities={city.activities}
                 areas={city.areas}
                 area={area}
-                areaNoun={city.kind === "region" ? "city" : "area"}
+                areaNoun={city.kind === "region" ? "πόλη" : "περιοχή"}
                 onAreaChange={changeArea}
                 rangeStart={rangeStart}
                 rangeEnd={range.end}
@@ -460,20 +527,25 @@ export default function ActivityCombinations() {
                 </p>
               ) : null}
 
-              <TripPlan
-                trip={trip}
-                area={area}
-                cityName={city.name}
-                selections={tripSelections}
-                startHours={tripStartHours}
-                endHours={tripEndHours}
-                circulars={circulars.slice(0, dayCount)}
-                filters={filters}
-              />
+              {isRecalculating ? (
+                <TripResultsLoading />
+              ) : (
+                <TripPlan
+                  trip={trip}
+                  area={area}
+                  cityName={city.name}
+                  selections={tripSelections}
+                  startHours={tripStartHours}
+                  endHours={tripEndHours}
+                  circulars={circulars.slice(0, dayCount)}
+                  filters={filters}
+                />
+              )}
             </div>
           </div>
         </div>
-      </div>
+        </div>
+      </section>
 
       {showMobileFilters && (
         <div className="fixed inset-x-0 bottom-0 top-14 z-30 overflow-hidden lg:hidden">
@@ -506,7 +578,7 @@ export default function ActivityCombinations() {
                 activities={city.activities}
                 areas={city.areas}
                 area={area}
-                areaNoun={city.kind === "region" ? "city" : "area"}
+                areaNoun={city.kind === "region" ? "πόλη" : "περιοχή"}
                 onAreaChange={changeArea}
                 rangeStart={rangeStart}
                 rangeEnd={range.end}
@@ -537,6 +609,7 @@ export default function ActivityCombinations() {
           activeDay={activeSlot}
           onActiveDayChange={changeActiveDay}
           onClose={() => setShowAdvanced(false)}
+          areaName={area.name}
         />
       )}
     </>

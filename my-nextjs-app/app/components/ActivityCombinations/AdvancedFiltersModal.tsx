@@ -30,6 +30,7 @@ export function AdvancedFiltersModal({
   activeDay,
   onActiveDayChange,
   onClose,
+  areaName,
 }: {
   filters: Filter[];
   selection: Selection;
@@ -45,13 +46,14 @@ export function AdvancedFiltersModal({
   activeDay: number;
   onActiveDayChange: (slot: number) => void;
   onClose: () => void;
+  areaName?: string; // the chosen start area — for the circular-trip caption
 }) {
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
       role="dialog"
       aria-modal="true"
-      aria-label="Advanced filters"
+      aria-label="Σύνθετα φίλτρα"
       onClick={onClose}
     >
       <div
@@ -62,15 +64,15 @@ export function AdvancedFiltersModal({
         <div className="flex items-center justify-between border-b border-black/[.08] px-5 py-4 dark:border-white/[.145]">
           <div>
             <h2 className="text-lg font-semibold text-zinc-800 dark:text-zinc-100">
-              Advanced filters
+              Σύνθετα φίλτρα
             </h2>
             <p className="text-xs text-zinc-400 dark:text-zinc-500">
-              Tune each day separately — pick a day below.
+              Ρύθμισε κάθε ημέρα ξεχωριστά — διάλεξε ημέρα παρακάτω.
             </p>
           </div>
           <button
             type="button"
-            aria-label="Close"
+            aria-label="Κλείσιμο"
             onClick={onClose}
             className="rounded-lg p-1.5 text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
           >
@@ -112,6 +114,7 @@ export function AdvancedFiltersModal({
             onToggleCircular={onToggleCircular}
             activities={activities}
             dayLabel={dates[activeDay] ? dateLabel(dates[activeDay]) : undefined}
+            areaName={areaName}
           />
         </div>
 
@@ -122,7 +125,7 @@ export function AdvancedFiltersModal({
             onClick={onClose}
             className={`rounded-lg px-4 py-2 text-sm font-medium ${buttonStyles.secondary}`}
           >
-            Done
+            Έγινε
           </button>
         </div>
       </div>

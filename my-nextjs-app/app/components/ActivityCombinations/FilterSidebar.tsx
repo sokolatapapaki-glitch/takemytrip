@@ -1,13 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { DAYS } from "./core/activities.data";
 import type { Activity } from "./core/activities.functions";
 import type { Area } from "./core/cities.data";
 import { Filter, Selection } from "./core/filters.functions";
 import { mondayIndex } from "./core/calendar.functions";
-import { Calendar } from "./Calendar";
+// Reuse the EXACT calendar from the homepage trip search (the "main filters"),
+// so the plan-page date picker behaves and looks identical.
+import { CalendarModal } from "@/app/start/components/CalendarModal";
+import type { DateRange } from "@/app/start/data/types";
 import { PerDayFilters } from "./PerDayFilters";
 import { buttonStyles } from "@/app/components/ui/buttonStyles";
 
@@ -36,7 +38,6 @@ export function FilterSidebar({
   rangeStart,
   rangeEnd,
   onRangeChange,
-  minDate,
   maxDays,
   dates,
   onOpenAdvanced,
@@ -72,20 +73,14 @@ export function FilterSidebar({
     ? // In the drawer: bare content only — no card chrome (the drawer panel
       // already provides the white surface + shadow).
       "flex h-full w-full flex-col gap-6 p-5"
-    : "flex w-full shrink-0 flex-col gap-6 rounded-3xl border border-white/80 bg-white/80 p-5 shadow-xl shadow-orange-900/10 ring-1 ring-black/5 backdrop-blur-md lg:sticky lg:top-8 lg:max-h-[calc(100vh-4rem)] lg:w-64 lg:self-start lg:overflow-y-auto [scrollbar-color:rgba(0,0,0,0.12)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/10 [&::-webkit-scrollbar-track]:bg-transparent";
+    : "flex w-full shrink-0 flex-col gap-6 rounded-3xl border border-white/80 bg-white/80 p-5 shadow-xl shadow-orange-900/10 ring-1 ring-black/5 backdrop-blur-md lg:sticky lg:top-8 lg:w-72 lg:self-start";
 
   return (
     <aside className={wrapperClass}>
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold text-zinc-800 dark:text-zinc-100">
-          Filters
+          Φίλτρα
         </h2>
-        <Link
-          href="/filters"
-          className="relative text-xs font-medium text-zinc-700 after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-zinc-700 after:transition-transform after:duration-300 after:ease-out after:content-[''] hover:after:scale-x-100 dark:text-zinc-300 dark:after:bg-zinc-300"
-        >
-          Edit filters
-        </Link>
       </div>
 
       {/* Dates — collapsed by default. "Change dates" reveals the calendar; each
@@ -94,13 +89,13 @@ export function FilterSidebar({
         <div className="flex items-start justify-between gap-2">
           <div>
             <h3 className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
-              Dates
+              Ημερομηνίες
             </h3>
             <p className="text-xs text-zinc-400 dark:text-zinc-500">
               {rangeEnd === null
-                ? "Pick the end date"
-                : `${dates.length} day${dates.length === 1 ? "" : "s"}: ${dateLabel(dates[0])} → ${dateLabel(dates[dates.length - 1])}`}
-              {" "}· up to {maxDays}
+                ? "Διάλεξε ημερομηνία λήξης"
+                : `${dates.length} ${dates.length === 1 ? "ημέρα" : "ημέρες"}: ${dateLabel(dates[0])} → ${dateLabel(dates[dates.length - 1])}`}
+              {" "}· έως {maxDays}
             </p>
           </div>
           <button
@@ -109,17 +104,18 @@ export function FilterSidebar({
             aria-expanded={showCalendar}
             className="relative shrink-0 text-xs font-medium text-zinc-700 after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-zinc-700 after:transition-transform after:duration-300 after:ease-out after:content-[''] hover:after:scale-x-100 dark:text-zinc-300 dark:after:bg-zinc-300"
           >
-            {showCalendar ? "Done" : "Change dates"}
+            {showCalendar ? "Έγινε" : "Αλλαγή ημερομηνιών"}
           </button>
         </div>
         {showCalendar && (
-          <Calendar
-            start={rangeStart}
-            end={rangeEnd}
-            onChange={onRangeChange}
-            maxDays={maxDays}
-            minDate={minDate}
-          />
+          // Force the calendar to fill the sidebar width (its own sm:w-80 would
+          // otherwise overflow the narrow column).
+          <div className="[&>div]:!w-full">
+            <CalendarModal
+              value={{ start: rangeStart, end: rangeEnd } as DateRange}
+              onChange={(r) => onRangeChange(r.start ?? rangeStart, r.end)}
+            />
+          </div>
         )}
       </div>
 
@@ -128,10 +124,10 @@ export function FilterSidebar({
       <div className="flex flex-col gap-2">
         <div>
           <h3 className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
-            Start {areaNoun}
+            Σημείο εκκίνησης ({areaNoun})
           </h3>
           <p className="text-xs text-zinc-400 dark:text-zinc-500">
-            Where each day&apos;s route is measured from
+            Από εδώ μετριέται η διαδρομή κάθε ημέρας
           </p>
         </div>
         <select
@@ -154,8 +150,8 @@ export function FilterSidebar({
           the advanced (per-day) modal opened below. */}
       <div className="border-t border-black/[.08] pt-4 dark:border-white/[.145]">
         <p className="text-xs text-zinc-400 dark:text-zinc-500">
-          These filters apply to all days. Override a specific day in Advanced
-          Filters.
+          Αυτά τα φίλτρα ισχύουν για όλες τις ημέρες. Άλλαξε μια συγκεκριμένη
+          ημέρα στα σύνθετα φίλτρα.
         </p>
       </div>
 
@@ -172,6 +168,7 @@ export function FilterSidebar({
         circular={circular}
         onToggleCircular={onToggleCircular}
         activities={activities}
+        areaName={area.name}
       />
 
       {/* Open the same controls, per day, in a roomier modal with day tabs. */}
@@ -180,7 +177,7 @@ export function FilterSidebar({
         onClick={onOpenAdvanced}
         className={buttonStyles.secondary}
       >
-        Advanced Filters (per day)
+        Σύνθετα φίλτρα (ανά ημέρα)
       </button>
     </aside>
   );

@@ -90,7 +90,7 @@ export default function TakeTheKids() {
   // The map page is a full-viewport experience — no banner there.
   if (pathname === "/map") return null;
   return (
-    <section ref={ref} className="relative z-30 px-0 py-10 sm:px-6">
+    <section ref={ref} className="relative z-30 px-4 py-10 sm:px-6">
       {/* The rise lives on this wrapper (not the <a>) so the card's own hover
           lift transform keeps working. Styled directly via innerRef from the
           rAF loop above; the inline style below is just the first-paint state
@@ -112,7 +112,7 @@ export default function TakeTheKids() {
         href="https://www.takethekids.info"
         target="_blank"
         rel="noreferrer noopener"
-        className="group relative isolate mx-auto flex max-w-5xl flex-col items-center gap-4 overflow-hidden rounded-none border border-white/60 bg-white px-6 py-10 text-center shadow-lg shadow-orange-900/5 transition duration-200 ease-out hover:-translate-y-1 hover:border-orange-300/70 hover:shadow-2xl hover:shadow-orange-900/15 sm:rounded-3xl dark:border-white/[.08] dark:bg-zinc-900"
+        className="group relative isolate mx-auto flex max-w-5xl flex-col items-center gap-4 overflow-hidden rounded-3xl border border-white/60 bg-white px-6 py-10 text-center shadow-lg shadow-orange-900/5 transition duration-200 ease-out hover:-translate-y-1 hover:border-orange-300/70 hover:shadow-2xl hover:shadow-orange-900/15 dark:border-white/[.08] dark:bg-zinc-900"
       >
         {/* Decorative hover accents — invisible until hovered, then they fade/
             drift in behind the text (same family as the City/Activity cards):

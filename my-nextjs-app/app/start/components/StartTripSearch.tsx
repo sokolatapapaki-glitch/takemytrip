@@ -101,6 +101,19 @@ export default function StartTripSearch({
     }
   }, [playEntranceAnimations, dest]);
 
+  // Flag on <body> while any input dropdown is open so the homepage hero's
+  // scroll fade leaves the open modal fully opaque (it lives inside the faded
+  // search block). Dispatch a scroll event so the hero re-applies immediately,
+  // even if the user isn't actively scrolling.
+  useEffect(() => {
+    if (open) document.body.dataset.searchModalOpen = "1";
+    else delete document.body.dataset.searchModalOpen;
+    window.dispatchEvent(new Event("scroll"));
+    return () => {
+      delete document.body.dataset.searchModalOpen;
+    };
+  }, [open]);
+
   // Let the hero backdrop follow the chosen city (see onDestChange prop).
   useEffect(() => {
     onDestChange?.(dest?.destinationId ?? null);
@@ -199,7 +212,7 @@ export default function StartTripSearch({
         className="pointer-events-none absolute -inset-x-8 -inset-y-5 rounded-[2rem] bg-gradient-to-r from-orange-300/30 via-pink-300/25 to-sky-300/25 blur-2xl"
       />
       <div
-        className={`${playEntranceAnimations ? "animate-fade-in-up" : ""} relative grid grid-cols-1 items-center gap-2 sm:grid-cols-2 lg:grid-cols-[repeat(3,minmax(0,1fr))_auto]`}
+        className={`${playEntranceAnimations ? "animate-fade-in-up" : ""} relative grid grid-cols-1 items-center gap-2 sm:grid-cols-2 lg:grid-cols-[1.4fr_minmax(0,1fr)_minmax(0,1fr)_auto]`}
         style={{ animationDelay: "100ms" }}
       >
         <DestField
@@ -314,6 +327,7 @@ export default function StartTripSearch({
           icon={<TravelersIcon multiple={travelerCount > 1} />}
           placeholder="Ταξιδιώτες"
           value={travelersLabel}
+          muted
           iconDelay={580}
           playEntranceAnimations={playEntranceAnimations}
           onClick={() => toggle("travelers")}
@@ -416,6 +430,7 @@ function Field({
   children,
   iconDelay = 0,
   playEntranceAnimations,
+  muted = false,
 }: {
   active: boolean;
   icon: React.ReactNode;
@@ -426,6 +441,9 @@ function Field({
   children?: React.ReactNode;
   iconDelay?: number;
   playEntranceAnimations: boolean;
+  // When true the chosen value is rendered in the muted placeholder gray
+  // instead of the usual dark text (used for the travellers default party).
+  muted?: boolean;
 }) {
   return (
     <div className="group relative min-w-0 flex-1">
@@ -442,7 +460,7 @@ function Field({
           {icon}
         </span>
         <span
-          className={`flex-1 truncate text-sm ${value ? "text-zinc-800" : "text-zinc-400"} ${onClear ? "pr-6" : ""
+          className={`flex-1 truncate text-sm ${value && !muted ? "text-zinc-800" : "text-zinc-400"} ${onClear ? "pr-6" : ""
             }`}
         >
           {value ? value : placeholder}
@@ -589,7 +607,7 @@ function Dropdown({
       {/* Mobile-only transparent backdrop; tap anywhere to close. */}
       <div className="fixed inset-0 z-[90] bg-transparent sm:hidden" onClick={onClose} />
       <div
-        className={`animate-pop-in z-[100] origin-top rounded-2xl border border-zinc-200 bg-white shadow-2xl shadow-orange-900/10 absolute inset-x-0 top-full mx-auto max-h-[calc(100vh-6rem)] overflow-y-auto sm:inset-x-auto sm:top-full sm:mx-0 sm:mt-2 sm:max-h-none sm:max-w-none sm:overflow-hidden ${desktopPos}`}
+        className={`animate-pop-in z-[100] origin-top rounded-2xl border border-zinc-200 bg-white shadow-2xl shadow-orange-900/10 absolute inset-x-0 top-full mx-auto max-h-[calc(100vh-6rem)] max-w-[calc(100vw-1rem)] overflow-y-auto overflow-x-hidden sm:inset-x-auto sm:top-full sm:mx-0 sm:mt-2 sm:max-h-none sm:max-w-none sm:overflow-hidden ${desktopPos}`}
       >
         {children}
       </div>

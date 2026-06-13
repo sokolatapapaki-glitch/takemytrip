@@ -117,7 +117,7 @@ export function DayItinerary({
         onClick={() => onAdd?.(win, day)}
         className={`my-0.5 inline-flex items-center gap-1 ${buttonStyles.common}`}
       >
-        + Add ({formatTime(win.start)}–{formatTime(win.end)})
+        + Προσθήκη ({formatTime(win.start)}–{formatTime(win.end)})
       </button>
     </li>
   );
@@ -185,54 +185,62 @@ export function DayItinerary({
                     />
                   </span>
                 ) : null}
-                <span
-                  className={`w-28 shrink-0 font-mono text-xs ${item.closed
-                    ? "text-amber-600 dark:text-amber-400"
-                    : "text-zinc-500 dark:text-zinc-400"
-                    }`}
-                >
-                  {item.closed
-                    ? "closed"
-                    : `${formatTime(item.start)}–${formatTime(item.end)}`}
-                </span>
-                <ScheduledName
-                  item={item}
-                  activity={ACTIVITY_BY_NAME.get(item.name)}
-                  day={day}
-                />
-                {showSeeMore && !item.lunch && ACTIVITY_BY_NAME.has(item.name) ? (
-                  <span className="ml-auto flex shrink-0 items-center gap-3">
-                    {onReplace ? (
-                      <button
-                        type="button"
-                        onClick={() => onReplace(item, day)}
-                        title="Replace this activity"
-                        aria-label="Replace this activity"
-                        className="flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-black/[.05] hover:text-zinc-800 dark:hover:bg-white/[.08] dark:hover:text-zinc-100"
-                      >
-                        <FaArrowsRotate className="h-4 w-4" />
-                      </button>
-                    ) : null}
-                    {onRemove ? (
-                      <button
-                        type="button"
-                        onClick={() => onRemove(item, day)}
-                        title="Remove from this day"
-                        aria-label="Remove from this day"
-                        className="flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-black/[.05] hover:text-red-600 dark:hover:bg-white/[.08] dark:hover:text-red-400"
-                      >
-                        <FaTrashCan className="h-4 w-4" />
-                      </button>
-                    ) : null}
-                    <button
-                      type="button"
-                      onClick={() => openActivity(ACTIVITY_BY_NAME.get(item.name)!)}
-                      className={buttonStyles.underline}
-                    >
-                      See more
-                    </button>
+                {/* Hour, name and "See more" share one row on sm+ (hour · name ·
+                    action). On mobile they reflow: the hour (and the See-more
+                    action) sit on the top line, the name wraps onto the line
+                    below — see the order-/basis- utilities. */}
+                <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-3 gap-y-0.5">
+                  <span
+                    className={`order-1 w-auto shrink-0 font-mono text-xs sm:w-28 ${item.closed
+                      ? "text-amber-600 dark:text-amber-400"
+                      : "text-zinc-500 dark:text-zinc-400"
+                      }`}
+                  >
+                    {item.closed
+                      ? "κλειστό"
+                      : `${formatTime(item.start)}–${formatTime(item.end)}`}
                   </span>
-                ) : null}
+                  <div className="order-3 min-w-0 basis-full sm:order-2 sm:flex-1 sm:basis-auto">
+                    <ScheduledName
+                      item={item}
+                      activity={ACTIVITY_BY_NAME.get(item.name)}
+                      day={day}
+                    />
+                  </div>
+                  {showSeeMore && !item.lunch && ACTIVITY_BY_NAME.has(item.name) ? (
+                    <span className="order-2 ml-auto flex shrink-0 items-center gap-3 sm:order-3">
+                      {onReplace ? (
+                        <button
+                          type="button"
+                          onClick={() => onReplace(item, day)}
+                          title="Αντικατάσταση δραστηριότητας"
+                          aria-label="Αντικατάσταση δραστηριότητας"
+                          className="flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-black/[.05] hover:text-zinc-800 dark:hover:bg-white/[.08] dark:hover:text-zinc-100"
+                        >
+                          <FaArrowsRotate className="h-4 w-4" />
+                        </button>
+                      ) : null}
+                      {onRemove ? (
+                        <button
+                          type="button"
+                          onClick={() => onRemove(item, day)}
+                          title="Αφαίρεση από αυτή την ημέρα"
+                          aria-label="Αφαίρεση από αυτή την ημέρα"
+                          className="flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-black/[.05] hover:text-red-600 dark:hover:bg-white/[.08] dark:hover:text-red-400"
+                        >
+                          <FaTrashCan className="h-4 w-4" />
+                        </button>
+                      ) : null}
+                      <button
+                        type="button"
+                        onClick={() => openActivity(ACTIVITY_BY_NAME.get(item.name)!)}
+                        className={buttonStyles.underline}
+                      >
+                        Δες περισσότερα
+                      </button>
+                    </span>
+                  ) : null}
+                </div>
               </li>
               {leg != null ? (
                 <li className="flex items-baseline gap-3 text-xs text-zinc-400 dark:text-zinc-500">
@@ -248,7 +256,7 @@ export function DayItinerary({
                     <span className="w-28 shrink-0" />
                   )}
                   <span className="inline-flex items-center gap-1">
-                    <FaChevronDown className="h-3 w-3 shrink-0" /> {formatDistance(leg.km)}
+                    {formatDistance(leg.km)}
                     {leg.label ? (
                       <span className="text-zinc-300 dark:text-zinc-600">
                         {" "}· {leg.label}

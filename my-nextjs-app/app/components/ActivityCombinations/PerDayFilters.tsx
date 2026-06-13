@@ -49,6 +49,7 @@ export function PerDayFilters({
   onToggleCircular,
   activities,
   dayLabel,
+  areaName = "το κέντρο",
 }: {
   filters: Filter[];
   selection: Selection;
@@ -61,6 +62,7 @@ export function PerDayFilters({
   onToggleCircular: () => void;
   activities: Activity[];
   dayLabel?: string; // e.g. "Wed 3" — for the start-time caption
+  areaName?: string; // the chosen start area — for the circular-trip caption
 }) {
   // Circular-trip toggle — when on, THIS day's route is scored as a loop that
   // starts AND returns to the centre, instead of a one-way route. Rendered just
@@ -76,10 +78,10 @@ export function PerDayFilters({
         />
         <span className="flex flex-col">
           <span className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
-            Circular trip
+            Κυκλική διαδρομή
           </span>
           <span className="text-xs text-zinc-400 dark:text-zinc-500">
-            Start and return to the centre (loop). Off = one-way from the centre.
+            Ξεκινά και επιστρέφει στο {areaName}
           </span>
         </span>
       </label>
@@ -96,10 +98,10 @@ export function PerDayFilters({
       <div className="flex flex-col gap-2">
         <div>
           <h3 className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
-            Start time
+            Ώρα έναρξης
           </h3>
           <p className="text-xs text-zinc-400 dark:text-zinc-500">
-            When {dayLabel ?? "this day"} begins
+            Πότε ξεκινά {dayLabel ?? "η ημέρα"}
           </p>
         </div>
         <select
@@ -128,7 +130,7 @@ export function PerDayFilters({
                   {filter.name}
                 </h3>
                 <p className="text-xs text-zinc-400 dark:text-zinc-500">
-                  {filter.hint ?? (filter.multi ? "Pick any" : "Pick one")}
+                  {filter.hint ?? (filter.multi ? "Διάλεξε όσα θες" : "Διάλεξε ένα")}
                 </p>
               </div>
               <div className="flex flex-col gap-1.5">

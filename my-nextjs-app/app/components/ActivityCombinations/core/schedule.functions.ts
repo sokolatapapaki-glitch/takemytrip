@@ -17,6 +17,7 @@
 // a generic 3-hour break is used. The lunch always sits BETWEEN activities (one
 // before, one after); its hours count toward the day's total.
 import { Activity, activeCenter, dayHours, isClosedDay, loopTightness, maxComboValue, routeLinearity } from "./activities.functions";
+import { hoursToIndex } from "./filters.functions";
 import type { Filter, Selection } from "./filters.functions";
 import { LUNCH_CLOSE, LUNCH_EARLIEST, LUNCH_HOURS, LUNCH_NAME, LUNCH_OPEN } from "./schedule.data";
 
@@ -46,7 +47,9 @@ export function scheduleEndHour(
   selection: Selection,
   startHour: number
 ): number {
-  const fi = filters.findIndex((f) => f.unit?.label === "Hours");
+  // Identify the time-budget filter by its unit's index fn (stable across UI
+  // relabeling — the unit's label was once "Hours", now "Ώρες").
+  const fi = filters.findIndex((f) => f.unit?.toIndex === hoursToIndex);
   if (fi < 0) return startHour + maxComboValue("hours");
   const picked = selection[fi] ?? [];
   const option = filters[fi].options[picked[0]];

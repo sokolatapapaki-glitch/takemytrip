@@ -139,7 +139,7 @@ export function CalendarModal({
                 disabled={past}
                 onMouseEnter={() => !past && setHover(day)}
                 onClick={() => !past && pick(day)}
-                className={`my-0.5 flex h-11 w-11 items-center justify-center rounded-full text-base transition-colors sm:h-9 sm:w-9 sm:text-sm ${
+                className={`my-0.5 flex h-11 w-11 max-w-full items-center justify-center rounded-full text-base transition-colors sm:h-9 sm:w-9 sm:text-sm ${
                   past ? "cursor-default text-zinc-300" : "text-zinc-700"
                 } ${
                   isSelected

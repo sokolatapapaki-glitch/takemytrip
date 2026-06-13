@@ -15,7 +15,7 @@ import {
   type Unit,
 } from "./filters.functions";
 import { VIBES } from "./activities.data";
-import { bestRouteLinearity, maxComboValue, maxPartyPrice } from "./activities.functions";
+import { maxPartyPrice } from "./activities.functions";
 import type { Params } from "./curves.functions";
 
 export const HOURS_UNIT: Unit = { label: "Ώρες", suffix: "ω", toIndex: hoursToIndex };
@@ -67,7 +67,8 @@ export const DEFAULT_FILTERS: Filter[] = [
     value: normalizedSumIndex("hours"),
     format: (combo) => `${sumOf("hours")(combo)}ω`,
     // Targets are stored in HOURS (the unit); converted to index when scoring.
-    options: [3, 6, 9, 12, maxComboValue("hours")].map((h) => ({
+    // Capped at 15h — the most a single day can realistically hold.
+    options: [3, 6, 9, 12, 15].map((h) => ({
       name: `έως ${h}ω`,
       target: h,
     })),
@@ -88,32 +89,6 @@ export const DEFAULT_FILTERS: Filter[] = [
       name: `έως €${eur}`,
       target: eur,
     })),
-  },
-  {
-    // Route directness: how straight the best path through the combo is (0–10,
-    // see bestRouteLinearity). The value is the SET's best achievable linearity,
-    // so it's order-independent like every other index. "Asymmetric linear" with
-    // a below-target slope but ZERO above-target slope means: being straighter
-    // than the target is free (capped at 10), being less direct is penalised —
-    // so a higher target demands a straighter route. Edit weight/curve/targets
-    // in the filter editor like any other filter.
-    name: "Αμεσότητα διαδρομής",
-    weight: 0.4,
-    scoreName: "Asymmetric linear",
-    params: { under: 1, over: 0 },
-    hint: "Προτίμησε άμεσες διαδρομές (λιγότερο πήγαινε-έλα)",
-    value: (combo) => bestRouteLinearity(combo),
-    format: (combo) => `${bestRouteLinearity(combo).toFixed(1)}/10`,
-    // Directness is meaningless for 1–2 stops (any two points are trivially
-    // "straight"), so this filter is left out of those combos' scores entirely
-    // — not scored 0 — so it never inflates a short combo's rank.
-    appliesTo: (combo) => combo.length >= 3,
-    // Targets are already 0–10 directness indexes (no unit conversion).
-    options: [
-      { name: "αρκετά άμεση", target: 6 },
-      { name: "πολύ άμεση", target: 8 },
-      { name: "σχεδόν ευθεία", target: 10 },
-    ],
   },
   {
     // TOURIST PRIORITY: how must-see the combo's activities are, on average. The
@@ -154,5 +129,24 @@ export const DEFAULT_FILTERS: Filter[] = [
     appliesTo: () => false,
     // One target: how many left-out activities are acceptable (0 = use them all).
     options: [{ name: "χρησιμοποίησέ τες όλες", target: 0 }],
+  },
+  {
+    // TRIP-LEVEL "day balance": pushes the planner to even out the NUMBER of
+    // activities across the days (no near-empty first day). Implemented as a
+    // per-day reward `weight × (count − count²/(2·MAX_DAY_ACTIVITIES))` folded
+    // into each day's score — concave, so for a given set of placed activities the
+    // total is highest when the per-day counts are equal, and increasing in count
+    // so it never makes the planner drop activities. Only the WEIGHT is used (the
+    // curve/options are inert); weight 0 = off. Tune the weight in the editor.
+    name: "Ισορροπία ημερών",
+    weight: 2,
+    scoreName: "Linear (symmetric)",
+    params: { slope: 1 },
+    hint: "Ανέβασε το βάρος για πιο ίσο αριθμό δραστηριοτήτων ανά ημέρα",
+    tripBalance: true,
+    // Never scored at the combo level — it's a whole-trip measure.
+    appliesTo: () => false,
+    // Inert placeholder option (the term uses only the filter's weight).
+    options: [{ name: "ισορροπημένες ημέρες", target: 0 }],
   },
 ];

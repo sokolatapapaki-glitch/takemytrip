@@ -105,13 +105,20 @@ export type Filter = {
   // from every combo score and the results sidebar, and applied only by planTrip.
   // See usageBreakdown / tripUseAllFilter below. Code-bound (not user-edited).
   tripUseAll?: boolean;
+  // TRIP-LEVEL flag: "day balance". Like tripUseAll it scores the whole trip, but
+  // its effect is a per-day reward folded into each day's score by the planner:
+  // raising its weight pushes the optimizer to even out the NUMBER of activities
+  // across the days (no near-empty day). It only uses its `weight` (the curve /
+  // options are inert). Excluded from combo scores + the sidebar. See
+  // tripBalanceFilter / the planner's per-day balance term. Code-bound.
+  tripBalance?: boolean;
   options: FilterOption[];
 };
 
 // Whether a filter scores the whole trip (not a single combo) — so it's left out
 // of every combo score and the results sidebar, and applied only by planTrip.
 export function isTripLevel(filter: Filter): boolean {
-  return !!filter.tripUseAll;
+  return !!filter.tripUseAll || !!filter.tripBalance;
 }
 
 // Whether a filter contributes to a given combo's score at all (see appliesTo).
@@ -199,6 +206,13 @@ export function tripUseAllFilter(
 ): { filter: Filter; index: number } | null {
   const index = filters.findIndex((f) => f.tripUseAll);
   return index === -1 ? null : { filter: filters[index], index };
+}
+
+// Locate the (single) "day balance" filter and read its weight (0 when absent or
+// off). The planner folds `weight × perDayBalance(count)` into each day's score.
+export function tripBalanceWeight(filters: Filter[]): number {
+  const f = filters.find((x) => x.tripBalance);
+  return f ? f.weight : 0;
 }
 
 // The shared proof of one trip-level index: the value, the target, and the curve

@@ -66,6 +66,10 @@ export default function TripSearchHero() {
       // (see the note on the section below).
       const el = carouselRef.current;
       if (el) {
+        // While an input dropdown is open (flagged on <body> by StartTripSearch),
+        // keep the search block fully opaque — the dropdowns are its children, so
+        // the scroll fade would otherwise dim the open modal too.
+        const modalOpen = document.body.dataset.searchModalOpen === "1";
         const p = Math.min(1, Math.max(0, current / (window.innerHeight * 0.7)));
         if (p < 0.001) {
           el.style.transform = "";
@@ -73,7 +77,7 @@ export default function TripSearchHero() {
           el.style.willChange = "";
         } else {
           el.style.transform = `translateY(${p * -70}px) scale(${1 - p * 0.18})`;
-          el.style.opacity = String(1 - p * 0.6);
+          el.style.opacity = modalOpen ? "1" : String(1 - p * 0.6);
           el.style.willChange = "transform";
         }
       }

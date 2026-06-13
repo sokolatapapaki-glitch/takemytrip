@@ -20,6 +20,7 @@
 import { Activity, dayHours, isClosedDay } from "./activities.functions";
 import {
   comboScore,
+  tripBalanceWeight,
   tripUseAllFilter,
   usageBreakdown,
   type Filter,
@@ -132,6 +133,7 @@ function makeDayEvaluator(
   filters: Filter[],
   circulars: boolean[] = []
 ) {
+  const balanceWeight = tripBalanceWeight(filters);
   const memo = new Map<number, DayEval>();
   return (slot: number, mask: number): DayEval => {
     // Numeric memo key (slot < 8 -> 3 bits) — far cheaper than a string at the
@@ -158,7 +160,7 @@ function makeDayEvaluator(
         feasible: plan.feasible,
         plan,
         load: loadOf(plan),
-        score: comboScore(set, selections[slot], filters),
+        score: comboScore(set, selections[slot], filters) + balanceWeight * perDayBalance(set.length),
       };
     }
     memo.set(key, evalResult);
@@ -173,6 +175,16 @@ function popcount(mask: number): number {
     n++;
   }
   return n;
+}
+
+// Per-day "day balance" reward (count-based), folded into a day's score and scaled
+// by the "Ισορροπία ημερών" filter weight. Concave in the day's activity count, so
+// for a FIXED set of placed activities the total over days is largest when the
+// per-day counts are EVEN — pushing the planner to spread activities rather than
+// pile them onto later days. It is increasing on 0..MAX_DAY_ACTIVITIES (marginal
+// ≥ 0), so it never makes the planner drop an activity to "balance".
+function perDayBalance(count: number): number {
+  return count - (count * count) / (2 * MAX_DAY_ACTIVITIES);
 }
 
 type Candidate = { masks: number[]; objective: number; placed: number; spread: number };
@@ -400,6 +412,7 @@ function makePrunedDayEvaluator(
   filters: Filter[],
   circulars: boolean[] = []
 ) {
+  const balanceWeight = tripBalanceWeight(filters);
   const memo = new Map<number, DayEval>();
   return (slot: number, mask: number): DayEval => {
     // Numeric memo key (slot < 8 -> 3 bits) — far cheaper than a string at the
@@ -437,7 +450,7 @@ function makePrunedDayEvaluator(
           feasible: plan.feasible,
           plan,
           load: loadOf(plan),
-          score: comboScore(set, selections[slot], filters),
+          score: comboScore(set, selections[slot], filters) + balanceWeight * perDayBalance(set.length),
         };
       }
     }
@@ -873,6 +886,7 @@ export function planLargeHeuristic(
   const n = pool.length;
   const D = dayIndices.length;
   const useAll = tripUseAllFilter(filters);
+  const balanceWeight = tripBalanceWeight(filters);
   let evaluated = 0;
 
   // Precompute, per activity, which chosen day slots it is open on (and whether
@@ -903,7 +917,7 @@ export function planLargeHeuristic(
       res = { feasible: false, plan: emptyPlan(startHours[slot]), load: 0, score: 0 };
     } else {
       const plan = scheduleCombo(set, dayIndices[slot], startHours[slot], endHours[slot], circulars[slot] ?? false);
-      let score = comboScore(set, selections[slot], filters);
+      let score = comboScore(set, selections[slot], filters) + balanceWeight * perDayBalance(set.length);
       if (plan.feasible && set.length >= LINEARITY_MIN_STOPS) {
         score += LINEARITY_WEIGHT * plan.linearity;
       }

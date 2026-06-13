@@ -36,10 +36,10 @@ export function ScheduledName({
             type="button"
             onClick={() => setOpen((o) => !o)}
             aria-expanded={open}
-            title="Opening hours by day"
-            className={`inline-flex items-center gap-1 shrink-0 ${buttonStyles.underline} hidden`}
+            title="Ωράριο ανά ημέρα"
+            className={`inline-flex items-center gap-1 shrink-0 ${buttonStyles.underline}`}
           >
-            Hours {open ? <FaChevronUp className="h-3 w-3" /> : <FaChevronDown className="h-3 w-3" />}
+            Ωράριο {open ? <FaChevronUp className="h-3 w-3" /> : <FaChevronDown className="h-3 w-3" />}
           </button>
         ) : null}
       </div>

@@ -10,7 +10,7 @@ import { buttonStyles } from "./ui/buttonStyles";
 // until that page exists.
 const NAV_ITEMS = [
   { label: "Χάρτης", href: "/map", enabled: true },
-  { label: "Πόλεις", href: "/cities", enabled: true },
+  { label: "Προορισμοί", href: "/cities", enabled: true },
 ] as const;
 
 export default function Navbar() {

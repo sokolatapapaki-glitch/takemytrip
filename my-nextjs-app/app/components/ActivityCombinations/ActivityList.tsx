@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ActivityCard } from "@/app/activities/components/ActivityCard";
 import type { Activity } from "./core/activities.functions";
 import { buttonStyles } from "@/app/components/ui/buttonStyles";
+import { useApp } from "@/app/context/AppContext";
 
 // How many activity cards to show before the "See more" toggle reveals the rest.
 const COLLAPSED_COUNT = 3;
@@ -28,6 +29,7 @@ export function ActivityList({
   selected?: Set<string>;
   onToggleSelect?: (activity: Activity) => void;
 }) {
+  const { openActivity } = useApp();
   const [expanded, setExpanded] = useState(false);
 
   // Collapse back to the first few whenever the search query changes, so a new
@@ -53,11 +55,14 @@ export function ActivityList({
     <div className="flex flex-col gap-4">
       {shown.length === 0 && (
         <p className="rounded-xl border border-black/[.08] px-5 py-3 text-sm text-zinc-400 dark:border-white/[.145] dark:text-zinc-500">
-          No activities match &quot;{query}&quot;.
+          Καμία δραστηριότητα δεν ταιριάζει με «{query}».
         </p>
       )}
 
       {visible.length > 0 && (
+        // Same activity cards as the Activities page: on mobile a single column
+        // of horizontal cards (grid-cols-1), on larger screens a vertical-card
+        // grid. Tapping a card opens its detail modal.
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {visible.map((activity, i) => (
             <ActivityCard
@@ -65,8 +70,8 @@ export function ActivityList({
               activity={activity}
               index={i}
               selected={selected?.has(activity.name) ?? false}
-              compact
               onToggleSelect={onToggleSelect}
+              onSeeMore={openActivity}
             />
           ))}
         </div>
@@ -79,7 +84,7 @@ export function ActivityList({
           aria-expanded={expanded}
           className={`mx-auto ${buttonStyles.underline}`}
         >
-          {expanded ? "See less" : `See more (${hiddenCount})`}
+          {expanded ? "Δες λιγότερα" : `Δες περισσότερα (${hiddenCount})`}
         </button>
       )}
     </div>

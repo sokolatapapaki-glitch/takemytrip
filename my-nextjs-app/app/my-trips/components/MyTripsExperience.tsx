@@ -109,9 +109,13 @@ export default function MyTripsExperience() {
           sends the user to the homepage trip search. */}
       <div className="flex items-center justify-between gap-4">
         <h1 className="text-3xl font-semibold tracking-tight text-zinc-900">Τα ταξίδια μου</h1>
-        <Link href="/" className={`${buttonStyles.primary} shrink-0`}>
-          Φτιάξε ταξίδι
-        </Link>
+        {/* The header CTA only shows once there are saved trips; on the empty
+            state the single button lives inside the empty-state card below. */}
+        {trips.length > 0 ? (
+          <Link href="/" className={`${buttonStyles.primary} shrink-0`}>
+            Φτιάξε ταξίδι
+          </Link>
+        ) : null}
       </div>
 
       {trips.length === 0 ? (

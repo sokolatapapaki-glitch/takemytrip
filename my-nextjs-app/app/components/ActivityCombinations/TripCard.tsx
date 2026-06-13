@@ -4,15 +4,33 @@ import { useState } from "react";
 import { FaChevronDown, FaChevronUp, FaRoute, FaTrashCan } from "react-icons/fa6";
 import { DAYS } from "./core/activities.data";
 import { activityPrice } from "./core/activities.functions";
-import { CITIES, type Area } from "./core/cities.data";
+import { ALL_ACTIVITIES, CITIES, type Area } from "./core/cities.data";
 import { DESTINATION_IMAGES } from "@/app/cities/components/destinationImages.generated";
 import type { Filter, Selection } from "./core/filters.functions";
 import type { LeftoverReason, Trip } from "./core/trip.functions";
 import type { ScheduledItem } from "./core/schedule.functions";
 import { DayItinerary, type AddWindow } from "./ComboResults";
 import { TripDashboard } from "./TripDashboard";
+import { DayMapModal } from "./DayMapModal";
+import type { MapStop } from "./DayMap";
 import { printTrip } from "./tripPrint";
 import { buttonStyles } from "@/app/components/ui/buttonStyles";
+
+// Map an activity name → its coordinates (names are unique across every city's
+// catalogue), so a scheduled day can be plotted on the per-day map. Lunch slots
+// have no entry and are skipped.
+const COORDS_BY_NAME = new Map(
+  ALL_ACTIVITIES.map((a) => [a.name, a.coords] as const)
+);
+
+// The mappable stops of one day's plan, in visiting order (lunch + anything
+// without known coords dropped).
+function dayMapStops(plan: { items: { name: string; lunch?: boolean }[] }): MapStop[] {
+  return plan.items
+    .filter((it) => !it.lunch)
+    .map((it) => ({ name: it.name, coords: COORDS_BY_NAME.get(it.name) }))
+    .filter((s): s is MapStop => !!s.coords);
+}
 
 function leftoverText(reason: LeftoverReason): string {
   return reason === "closed"
@@ -52,6 +70,7 @@ export function TripCard({
   cityName,
   areaName,
   showProof,
+  showLeftover = true,
   defaultOpen = false,
   onReplace,
   onRemove,
@@ -71,6 +90,9 @@ export function TripCard({
   cityName?: string; // for the "City – Area" line
   areaName?: string;
   showProof: boolean;
+  // The "Not scheduled" (Μη προγραμματισμένες) section at the bottom. Shown on
+  // My Trips; the plan page hides it via showLeftover={false}.
+  showLeftover?: boolean;
   defaultOpen?: boolean;
   // Opt-in (My Trips page): a "Replace" button on each activity row, left of
   // "See more". The handler gets the row's scheduled slot + day.
@@ -97,6 +119,9 @@ export function TripCard({
   const [open, setOpen] = useState(defaultOpen);
   const [proofOpen, setProofOpen] = useState(false);
   const [leftoverOpen, setLeftoverOpen] = useState(false);
+  // Which day's route map is open (by day SLOT index, so the slot's circular
+  // flag lines up), or null when closed.
+  const [mapSlot, setMapSlot] = useState<number | null>(null);
   // Brief "Saved ✓" feedback on the Save Trip button.
   const [justSaved, setJustSaved] = useState(false);
 
@@ -113,7 +138,7 @@ export function TripCard({
     : null;
 
   const cardClass =
-    "animate-card-pop overflow-hidden rounded-none sm:rounded-3xl border border-white/80 bg-white/80 shadow-xl shadow-orange-900/10 ring-1 ring-black/5 backdrop-blur-md transition duration-200 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-900/10";
+    "animate-card-pop overflow-hidden rounded-3xl border border-white/80 bg-white/80 shadow-xl shadow-orange-900/10 ring-1 ring-black/5 backdrop-blur-md transition duration-200 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-900/10";
   const imageClass =
     "relative flex shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-orange-400 via-rose-400 to-fuchsia-500 text-white";
   // Common button (see buttonStyles.ts) + the inline-flex layout for its arrow.
@@ -123,7 +148,7 @@ export function TripCard({
   // follows, i.e. when open.)
   const header = (
     <header
-      className={`flex items-start gap-4 p-3 ${open ? "border-b border-black/[.08] bg-white/55" : ""
+      className={`flex flex-wrap items-start gap-4 p-3 sm:flex-nowrap ${open ? "border-b border-black/[.08] bg-white/55" : ""
         }`}
     >
       {/* Destination cover — a bigger square (height = width); falls back to
@@ -144,7 +169,7 @@ export function TripCard({
         )}
       </div>
       <div className="min-w-0 flex-1">
-        <span className="text-[11px] font-semibold uppercase tracking-wide text-zinc-400">
+        <span className="text-[11px] font-semibold uppercase tracking-wide text-zinc-400 hidden md:block">
           {title}
         </span>
         <h3 className="mt-0.5 truncate text-lg font-semibold text-zinc-800">
@@ -152,7 +177,7 @@ export function TripCard({
         </h3>
         <p className="text-sm text-zinc-500">Συνολική τιμή: €{totalPrice}</p>
       </div>
-      <div className="flex flex-col items-end gap-2 sm:flex-row sm:items-center">
+      <div className="flex w-full items-center justify-end gap-2 sm:w-auto sm:flex-row sm:items-center">
         {onDelete ? (
           <button
             type="button"
@@ -193,8 +218,7 @@ export function TripCard({
 
       <div className="flex flex-col gap-3 p-4">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          Ταξίδι
-          <div className="flex justify-end gap-3">
+          <div className="flex justify-center md:justify-end gap-3 w-full ">
             {onSave ? (
               <button
                 type="button"
@@ -220,7 +244,7 @@ export function TripCard({
 
         {/* The day-by-day program (timeline reused as-is). */}
         <div className="flex flex-col gap-3">
-          {trip.days.map((td) => (
+          {trip.days.map((td, slot) => (
             <div
               key={td.day}
               className="rounded-2xl border border-white/60 bg-white/70 px-4 py-0"
@@ -244,16 +268,29 @@ export function TripCard({
                   ) : null}
                 </>
               ) : (
-                <DayItinerary
-                  plan={td.plan}
-                  day={td.day}
-                  note={`βαθμός ${td.score.toFixed(2)} · ${td.load.toFixed(1)}ω · με μεσημεριανό`}
-                  showSeeMore
-                  onReplace={onReplace}
-                  onRemove={onRemove}
-                  onAdd={onAdd}
-                  connectors
-                />
+                <>
+                  <DayItinerary
+                    plan={td.plan}
+                    day={td.day}
+                    note={`βαθμός ${td.score.toFixed(2)} · ${td.load.toFixed(1)}ω · με μεσημεριανό`}
+                    showSeeMore
+                    onReplace={onReplace}
+                    onRemove={onRemove}
+                    onAdd={onAdd}
+                    connectors
+                  />
+                  {dayMapStops(td.plan).length > 0 ? (
+                    <div className="pb-3 pl-7">
+                      <button
+                        type="button"
+                        onClick={() => setMapSlot(slot)}
+                        className={buttonStyles.underline}
+                      >
+                        Δες τη διαδρομή στον χάρτη
+                      </button>
+                    </div>
+                  ) : null}
+                </>
               )}
             </div>
           ))}
@@ -291,7 +328,7 @@ export function TripCard({
         ) : null}
 
         {/* Not scheduled — a toggle at the bottom of the expanded card. */}
-        {trip.leftover.length > 0 ? (
+        {showLeftover && trip.leftover.length > 0 ? (
           <div className="border-t border-white/60 pt-3">
             <button
               type="button"
@@ -324,6 +361,24 @@ export function TripCard({
           </div>
         ) : null}
       </div>
+
+      {/* Per-day route map (Leaflet), opened by a day's "Δες τη διαδρομή στον
+          χάρτη" button. */}
+      {mapSlot !== null
+        ? (() => {
+            const td = trip.days[mapSlot];
+            if (!td) return null;
+            return (
+              <DayMapModal
+                title={`Διαδρομή — ${DAYS[td.day]}`}
+                stops={dayMapStops(td.plan)}
+                start={area ? { name: area.name, coords: area.coords } : undefined}
+                circular={circulars?.[mapSlot] ?? false}
+                onClose={() => setMapSlot(null)}
+              />
+            );
+          })()
+        : null}
     </article>
   );
 }

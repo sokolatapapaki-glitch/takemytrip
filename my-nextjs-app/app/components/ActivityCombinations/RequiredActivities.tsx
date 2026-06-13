@@ -45,10 +45,10 @@ export function RequiredActivities({
     <div className="flex flex-col gap-2">
       <div>
         <h3 className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
-          Must include
+          Υποχρεωτικές δραστηριότητες
         </h3>
         <p className="text-xs text-zinc-400 dark:text-zinc-500">
-          Your trip will always contain these
+          Το ταξίδι σου θα τις περιλαμβάνει πάντα
         </p>
       </div>
       <div className="flex flex-col gap-1.5">
@@ -69,7 +69,7 @@ export function RequiredActivities({
           aria-expanded={expanded}
           className={`self-start ${buttonStyles.underline}`}
         >
-          {expanded ? "See less" : `See more (${hiddenCount})`}
+          {expanded ? "Δες λιγότερα" : `Δες περισσότερα (${hiddenCount})`}
         </button>
       ) : null}
     </div>

@@ -8,10 +8,9 @@ import { saveTrip } from "./core/trips.storage";
 import { TripCard } from "./TripCard";
 import { buttonStyles } from "@/app/components/ui/buttonStyles";
 
-const ORDINALS = [
-  "", "1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th",
-];
-const ordinal = (n: number) => ORDINALS[n] ?? `${n}th`;
+// Greek ordinal for the runner-up trips ("2η", "3η", … feminine, agreeing with
+// "επιλογή"/"ταξίδι" labels below).
+const ordinal = (n: number) => `${n}η`;
 
 // Progressive "show next-best trip" reveal. Each click reveals one more ranked
 // runner-up (2nd-best, 3rd-best, …), each rendered as its own collapsed TripCard.
@@ -46,8 +45,8 @@ function TripAlternatives({
     return (
       <p className="text-xs text-zinc-400">
         {exact
-          ? "No alternative trips at this day count."
-          : "Alternative trips aren't available in fast mode (try fewer days)."}
+          ? "Δεν υπάρχουν εναλλακτικά ταξίδια για αυτόν τον αριθμό ημερών."
+          : "Τα εναλλακτικά ταξίδια δεν είναι διαθέσιμα στη γρήγορη λειτουργία (δοκίμασε λιγότερες ημέρες)."}
       </p>
     );
   }
@@ -58,8 +57,9 @@ function TripAlternatives({
         <TripCard
           key={i}
           trip={alt}
-          title={`${ordinal(i + 2)}-best trip`}
+          title={`${ordinal(i + 2)} καλύτερη επιλογή`}
           showProof={false}
+          showLeftover={false}
           onSave={() => saveTrip({ trip: alt, cityName, areaName })}
           cityName={cityName}
           areaName={areaName}
@@ -72,15 +72,22 @@ function TripAlternatives({
         />
       ))}
       {shown < alternatives.length ? (
+        // The "Next best trip" reveal — prominent (primary CTA), centred under
+        // the best trip. Each click reveals the next runner-up from the existing
+        // ranking (trip.alternatives).
         <button
           type="button"
           onClick={() => setShown((s) => s + 1)}
-          className={`self-start ${buttonStyles.secondary}`}
+          className={`mx-auto ${buttonStyles.primary}`}
         >
-          Show {ordinal(shown + 2)}-best trip
+          {shown === 0
+            ? "Επόμενο καλύτερο ταξίδι"
+            : `Δες την ${ordinal(shown + 2)} καλύτερη επιλογή`}
         </button>
       ) : (
-        <p className="text-xs text-zinc-400">No more trips to show.</p>
+        <p className="text-center text-xs text-zinc-400">
+          Δεν υπάρχουν άλλα ταξίδια για εμφάνιση.
+        </p>
       )}
     </div>
   );
@@ -120,9 +127,9 @@ export function TripPlan({
     <section className="flex flex-col gap-4">
       <TripCard
         trip={trip}
-        title={`Best ${trip.days.length}-day trip`}
-        description="Every activity used once, assigned to maximize the average of the days' combo scores. Same scheduling rules as the combos above."
-        showProof
+        title={`Πρόγραμμα ταξιδιου ${trip.days.length} ${trip.days.length === 1 ? "ημέρας" : "ημερών"}`}
+        showProof={false}
+        showLeftover={false}
         defaultOpen
         onSave={() => saveTrip({ trip, cityName, areaName: area.name })}
         cityName={cityName}
