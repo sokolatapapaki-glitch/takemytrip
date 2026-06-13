@@ -141,9 +141,11 @@ export default function TripSearchHero() {
           className="absolute left-0 top-0 h-[140%] w-full object-cover opacity-0 blur-md will-change-[transform,opacity]"
           style={{ transform: "translate3d(0, 0, 0) scale(1.05)" }}
         />
-        {/* Light scrim only — keeps the night Duomo photo clearly visible while
-            giving the text enough contrast to read. */}
-        <div className="absolute inset-0 bg-black/30" />
+        {/* Scrim is a vertical gradient, not a flat fill: it stays light across
+            the middle so the photo reads at full clarity, and only deepens at the
+            very top/bottom edges where the header text and lower content need
+            contrast. Keeps the high-res image looking crisp and vivid. */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/10 to-black/40" />
       </div>
 
       {/* Carousel card: scroll-styled directly via carouselRef (see the rAF loop
