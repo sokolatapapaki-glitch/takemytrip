@@ -87,8 +87,9 @@ export default function TakeTheKids() {
     };
   }, [isHome]);
 
-  // The map page is a full-viewport experience — no banner there.
-  if (pathname === "/map") return null;
+  // The map page is a full-viewport experience — no banner there. The plan page
+  // is a focused planning tool, so the CTA banner is hidden there too.
+  if (pathname === "/map" || pathname === "/plan") return null;
   return (
     <section ref={ref} className="relative z-30 px-4 py-10 sm:px-6">
       {/* The rise lives on this wrapper (not the <a>) so the card's own hover

@@ -429,7 +429,7 @@ export default function ActivityCombinations() {
           aria-hidden
           className="animate-drift-slower pointer-events-none absolute -right-24 bottom-12 h-72 w-72 rounded-full bg-emerald-200/40 blur-3xl"
         />
-        <div className="relative z-10 mx-auto flex w-full flex-col gap-8 md:px-24 py-6 sm:px-8 sm:py-8">
+        <div className="relative z-10 mx-auto flex w-full flex-col gap-8 px-4 py-6 sm:px-8 sm:py-8 md:px-24">
           <div className="flex flex-col gap-8">
             <section className="flex flex-col gap-3">
               <div className="flex items-center justify-between gap-3">

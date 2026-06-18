@@ -41,7 +41,7 @@ const THUMB_COUNT = 5;
 // Navigation happens IN PLACE: clicking a related card switches the modal to
 // that activity (pushing history) and "Previous Activity" pops back.
 
-const fmtPrice = (n: number): string => (n === 0 ? "Free" : `€${n}`);
+const fmtPrice = (n: number): string => (n === 0 ? "Δωρεάν" : `€${n}`);
 
 // Collapse the per-age price map (e.g. {"0":0,…,"17":21.5,"adult":21.5}) into
 // readable rows: consecutive ages with the same price become one "4–17" range.
@@ -61,11 +61,11 @@ function ageRows(prices: PriceTable): { label: string; price: number }[] {
   }
 
   const out = rows.map((r) => ({
-    label: r.from === r.to ? `Age ${r.from}` : `Ages ${r.from}–${r.to}`,
+    label: r.from === r.to ? `Ηλικία ${r.from}` : `Ηλικίες ${r.from}–${r.to}`,
     price: r.price,
   }));
   if (typeof prices.ages.adult === "number") {
-    out.push({ label: "Adults", price: prices.ages.adult });
+    out.push({ label: "Ενήλικες", price: prices.ages.adult });
   }
   return out;
 }
@@ -99,7 +99,7 @@ function MorePopover({
   return (
     <div ref={ref} className="relative shrink-0">
       <button type="button" onClick={onToggle} className={buttonStyles.common}>
-        More
+        Περισσότερα
       </button>
       {open && (
         <div className="absolute right-0 top-full z-20 mt-1 w-72 rounded-2xl border border-white/60 bg-white/95 p-4 shadow-2xl shadow-orange-900/10 backdrop-blur-xl dark:border-white/10 dark:bg-zinc-800/95">
@@ -201,7 +201,7 @@ export function ActivityDetail({
             onClick={pop}
             className={`inline-flex items-center gap-1 ${buttonStyles.underline}`}
           >
-            <FaChevronLeft className="h-3 w-3" /> Previous Activity
+            <FaChevronLeft className="h-3 w-3" /> Προηγούμενη δραστηριότητα
           </button>
         ) : (
           <span />
@@ -210,7 +210,7 @@ export function ActivityDetail({
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close"
+            aria-label="Κλείσιμο"
             className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-black/[.06] hover:text-zinc-800 dark:hover:bg-white/[.08] dark:hover:text-zinc-100"
           >
             <FaXmark className="h-5 w-5" />
@@ -252,7 +252,7 @@ export function ActivityDetail({
                   onClick={() =>
                     setActiveImage((i) => (i - 1 + images.length) % images.length)
                   }
-                  aria-label="Previous image"
+                  aria-label="Προηγούμενη εικόνα"
                   className="absolute left-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-white opacity-0 transition-opacity duration-200 hover:bg-black/60 group-hover:opacity-60"
                 >
                   <FaChevronLeft className="h-5 w-5" />
@@ -260,7 +260,7 @@ export function ActivityDetail({
                 <button
                   type="button"
                   onClick={() => setActiveImage((i) => (i + 1) % images.length)}
-                  aria-label="Next image"
+                  aria-label="Επόμενη εικόνα"
                   className="absolute right-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-white opacity-0 transition-opacity duration-200 hover:bg-black/60 group-hover:opacity-60"
                 >
                   <FaChevronRight className="h-5 w-5" />
@@ -278,7 +278,7 @@ export function ActivityDetail({
                 key={i}
                 type="button"
                 onClick={() => setActiveImage(i)}
-                aria-label={`Image ${i + 1}`}
+                aria-label={`Εικόνα ${i + 1}`}
                 className={`relative h-12 w-12 overflow-hidden rounded-xl bg-gradient-to-br ${VIBE_GRADIENT[vibe.key]} transition ${i === activeImage
                   ? "opacity-100 ring-2 ring-orange-400 ring-offset-2 dark:ring-offset-zinc-900"
                   : "opacity-60 hover:opacity-80"
@@ -320,11 +320,18 @@ export function ActivityDetail({
           {/* Important Info table. */}
           <div>
             <h3 className="text-base font-semibold text-zinc-800 dark:text-zinc-100">
-              Important Info
+              Σημαντικές πληροφορίες
             </h3>
             <div className="mt-1">
+              <InfoRow label="Ατμόσφαιρα">
+                <span className="inline-flex items-center gap-1.5">
+                  <VibeIcon className="h-4 w-4" />
+                  {vibe.label}
+                </span>
+              </InfoRow>
+
               <InfoRow
-                label="Price"
+                label="Τιμή"
                 more={
                   current.prices && (
                     <MorePopover
@@ -354,7 +361,7 @@ export function ActivityDetail({
               </InfoRow>
 
               <InfoRow
-                label="Hours"
+                label="Ωράριο"
                 more={
                   <MorePopover
                     open={moreOpen === "hours"}
@@ -369,9 +376,9 @@ export function ActivityDetail({
                             <span className={i === today ? "font-semibold" : undefined}>{d}</span>
                             <span>
                               {isClosedDay(h)
-                                ? "Closed"
+                                ? "Κλειστό"
                                 : isAllDay(h)
-                                  ? "Open all day"
+                                  ? "Ανοιχτό όλη μέρα"
                                   : `${formatTime(h.open)}–${formatTime(h.close)}`}
                             </span>
                           </div>
@@ -382,13 +389,13 @@ export function ActivityDetail({
                 }
               >
                 {isClosedDay(todayHours)
-                  ? "Closed today"
+                  ? "Κλειστό σήμερα"
                   : isAllDay(todayHours)
-                    ? "Open all day"
-                    : `Today ${formatTime(todayHours.open)}–${formatTime(todayHours.close)}`}
+                    ? "Ανοιχτό όλη μέρα"
+                    : `Σήμερα ${formatTime(todayHours.open)}–${formatTime(todayHours.close)}`}
               </InfoRow>
 
-              <InfoRow label="Time needed">~{current.hours}h</InfoRow>
+              <InfoRow label="Διάρκεια">~{current.hours}h</InfoRow>
 
               {current.googleMapUrl && (
                 <InfoRow label="Google Maps">
@@ -398,14 +405,14 @@ export function ActivityDetail({
                     rel="noreferrer noopener"
                     className="text-orange-600 hover:underline"
                   >
-                    Open in Maps
+                    Άνοιγμα στους χάρτες
                   </a>
                 </InfoRow>
               )}
 
               {current.websites.length > 0 && (
                 <InfoRow
-                  label="Websites"
+                  label="Ιστότοποι"
                   more={
                     current.websites.length > 1 && (
                       <MorePopover
@@ -449,7 +456,7 @@ export function ActivityDetail({
               }
               className={`mt-3 ${buttonStyles.underline}`}
             >
-              See Description
+              Δες την περιγραφή
             </button>
           </div>
 
@@ -457,7 +464,7 @@ export function ActivityDetail({
           {current.restaurants.length > 0 && (
             <div>
               <h3 className="text-base font-semibold text-zinc-800 dark:text-zinc-100">
-                Restaurants
+                Εστιατόρια
               </h3>
               <div className="mt-2 flex flex-col gap-3">
                 {current.restaurants.map((r) => (
@@ -479,7 +486,7 @@ export function ActivityDetail({
                           rel="noreferrer noopener"
                           className={`ml-auto shrink-0 ${buttonStyles.underline}`}
                         >
-                          Link
+                          Σύνδεσμος
                         </a>
                       )}
                     </div>
@@ -495,7 +502,7 @@ export function ActivityDetail({
           {/* Notes — one amber bar per note, below the restaurants. */}
           {current.notes.length > 0 && (
             <div>
-              <h3 className="text-base font-semibold text-zinc-800 dark:text-zinc-100">Notes</h3>
+              <h3 className="text-base font-semibold text-zinc-800 dark:text-zinc-100">Σημειώσεις</h3>
               <ul className="mt-2 flex flex-col gap-2">
                 {current.notes.map((n) => (
                   <li
@@ -517,7 +524,7 @@ export function ActivityDetail({
         <div>
           <div className="flex items-baseline justify-between gap-3">
             <h3 className="text-xl font-semibold text-zinc-800 dark:text-zinc-100">
-              Related Activities
+              Σχετικές δραστηριότητες
             </h3>
             {city && (
               <Link
@@ -525,7 +532,7 @@ export function ActivityDetail({
                 onClick={onClose}
                 className={buttonStyles.underline}
               >
-                See all
+                Δες τα όλα
               </Link>
             )}
           </div>
@@ -541,7 +548,7 @@ export function ActivityDetail({
 
       {/* Full description (the "See Description" link scrolls here). */}
       <div ref={descriptionRef}>
-        <h3 className="text-base font-semibold text-zinc-800 dark:text-zinc-100">Description</h3>
+        <h3 className="text-base font-semibold text-zinc-800 dark:text-zinc-100">Περιγραφή</h3>
         <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
           {current.description}
         </p>

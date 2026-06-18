@@ -37,7 +37,7 @@ export function ScheduledName({
             onClick={() => setOpen((o) => !o)}
             aria-expanded={open}
             title="Ωράριο ανά ημέρα"
-            className={`inline-flex items-center gap-1 shrink-0 ${buttonStyles.underline}`}
+            className={`hidden sm:inline-flex items-center gap-1 shrink-0 ${buttonStyles.underline}`}
           >
             Ωράριο {open ? <FaChevronUp className="h-3 w-3" /> : <FaChevronDown className="h-3 w-3" />}
           </button>

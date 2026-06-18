@@ -57,7 +57,7 @@ const CEILING_PARAMS: Params = { under: 0, over: 100 };
 // index at target 10 ("a lot"). No unit -> targets are plain 0–10 indexes.
 const VIBE_FILTER: Filter = {
   name: "Vibe",
-  weight: 0.2,
+  weight: 3,
   scoreName: "Linear (symmetric)",
   params: { slope: 1 },
   multi: true,
