@@ -157,9 +157,11 @@ export function PerDayFilters({
       {filters.map((filter, fi) =>
         // Trip-level filters (e.g. "Use every activity") have no per-option
         // choice — they're tuned in the editor and applied to the whole trip, so
-        // they're not shown here. Returning null keeps `fi` aligned with the
+        // they're not shown here. Hidden filters (e.g. "Tourist priority", or
+        // "Vibe" when its UI is off) are retired knobs we keep scoring but don't
+        // render. Returning null in both cases keeps `fi` aligned with the
         // selection.
-        isTripLevel(filter) ? null : (
+        isTripLevel(filter) || filter.hidden ? null : (
           <Fragment key={filter.name}>
             <div className="flex flex-col gap-2">
               <HintTitle

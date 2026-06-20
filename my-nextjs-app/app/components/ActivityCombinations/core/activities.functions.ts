@@ -381,3 +381,92 @@ export function maxPartyPrice(): number {
   maxPartyCache = activeCatalogue.reduce((s, a) => s + activityPrice(a, activeParty), 0);
   return maxPartyCache;
 }
+
+// -----------------------------------------------------------------------------
+// Price breakdowns (shared display helpers — #7/#11/#10)
+// -----------------------------------------------------------------------------
+// Collapse an activity's per-age price map into readable rows: consecutive ages
+// with the same price become one "4–17" range, with the adult price last. This is
+// the GENERIC (party-independent) price list shown in the activity detail modal —
+// extracted here so the modal, the cards and the trip program share one source.
+export function ageBandRows(prices: PriceTable): { label: string; price: number }[] {
+  const ages = Object.keys(prices.ages)
+    .filter((k) => k !== "adult")
+    .map(Number)
+    .filter((n) => !Number.isNaN(n))
+    .sort((a, b) => a - b);
+
+  const rows: { from: number; to: number; price: number }[] = [];
+  for (const age of ages) {
+    const price = prices.ages[String(age)];
+    const last = rows[rows.length - 1];
+    if (last && last.price === price && age === last.to + 1) last.to = age;
+    else rows.push({ from: age, to: age, price });
+  }
+
+  const out = rows.map((r) => ({
+    label: r.from === r.to ? `Ηλικία ${r.from}` : `Ηλικίες ${r.from}–${r.to}`,
+    price: r.price,
+  }));
+  if (typeof prices.ages.adult === "number") {
+    out.push({ label: "Ενήλικες", price: prices.ages.adult });
+  }
+  return out;
+}
+
+// One member-group's share of an activity's price for a SPECIFIC party: the price
+// each such member pays, how many of them there are, and their subtotal. Adults
+// are one group; children are grouped by age. This is the "what does each member
+// pay" breakdown the user missed (#10) — restored on the trip program + cards.
+export type MemberPriceLine = {
+  label: string;
+  perPerson: number;
+  count: number;
+  subtotal: number;
+};
+
+// Per-member price lines for an activity at the given party (defaults to the
+// active party). Uses the per-age table when present, else the flat `cost` for
+// everyone. NOTE: these are the straight per-age prices; the cheaper family
+// BUNDLE (see activityPrice) can make the real total lower — callers show the
+// bundle-aware total alongside and can flag when a bundle wins.
+export function partyPriceLines(
+  a: Activity,
+  party: Party = activeParty
+): MemberPriceLine[] {
+  const priceFor = (ageKey: string): number =>
+    a.prices ? agePrice(a.prices, ageKey) : a.cost;
+  const lines: MemberPriceLine[] = [];
+  if (party.adults > 0) {
+    const per = priceFor("adult");
+    lines.push({
+      label: party.adults === 1 ? "Ενήλικας" : "Ενήλικες",
+      perPerson: per,
+      count: party.adults,
+      subtotal: per * party.adults,
+    });
+  }
+  // Group children by age so "two 4-year-olds" reads as one line ("×2").
+  const byAge = new Map<number, number>();
+  for (const age of party.childAges) byAge.set(age, (byAge.get(age) ?? 0) + 1);
+  for (const [age, count] of [...byAge.entries()].sort((x, y) => x[0] - y[0])) {
+    const per = priceFor(String(age));
+    lines.push({
+      label: count === 1 ? `Παιδί ${age} ετών` : `Παιδιά ${age} ετών`,
+      perPerson: per,
+      count,
+      subtotal: per * count,
+    });
+  }
+  return lines;
+}
+
+// The naive (pre-bundle) sum of every member's price for one activity — the total
+// of partyPriceLines' subtotals. When this exceeds activityPrice, a family bundle
+// is cheaper (so callers can show "with the family package you pay €X instead").
+export function partyPriceLinesTotal(
+  a: Activity,
+  party: Party = activeParty
+): number {
+  return partyPriceLines(a, party).reduce((s, l) => s + l.subtotal, 0);
+}

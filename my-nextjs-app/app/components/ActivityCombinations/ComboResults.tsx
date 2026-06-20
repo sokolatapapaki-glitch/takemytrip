@@ -2,8 +2,16 @@
 
 import { Fragment, useState } from "react";
 import { FaArrowsRotate, FaChevronDown, FaChevronUp, FaTrashCan } from "react-icons/fa6";
-import type { Activity, Coords } from "./core/activities.functions";
-import { distanceKm, formatDistance, formatTime, setActiveCity } from "./core/activities.functions";
+import type { Activity, Coords, Party } from "./core/activities.functions";
+import {
+  activityPrice,
+  distanceKm,
+  formatDistance,
+  formatTime,
+  partyPriceLines,
+  partyPriceLinesTotal,
+  setActiveCity,
+} from "./core/activities.functions";
 import { DAYS } from "./core/activities.data";
 import { ALL_ACTIVITIES, type City, type Area } from "./core/cities.data";
 import { Filter, Selection, comboScore, filterApplies, optionValue } from "./core/filters.functions";
@@ -75,11 +83,16 @@ function filterSummary(
 // inter-stop distances, and a one-line "fits / doesn't fit" + linearity summary.
 // Pure in `plan` (already scheduled for `day`), so it's rendered once per day.
 // `note` (optional) shows a small caption beside the weekday heading.
+// Compact euro label for the per-member price lines.
+const fmtEuro = (n: number): string => (n === 0 ? "Δωρεάν" : `€${n}`);
+
 export function DayItinerary({
   plan,
   day,
   note,
   showSeeMore = false,
+  showDetails = false,
+  party,
   onReplace,
   onRemove,
   onAdd,
@@ -88,6 +101,13 @@ export function DayItinerary({
   plan: ComboSchedule;
   day: number;
   note?: string;
+  // Opt-in (Trip component only): under each real activity row, show its short
+  // description and the per-member price breakdown (#7/#11/#10) so the user sees
+  // what each activity is AND what each traveller pays without opening the modal.
+  showDetails?: boolean;
+  // The traveller party the per-member prices are computed for (defaults to the
+  // engine's active party when omitted).
+  party?: Party;
   // Opt-in (Trip component only): render a "See more" button on each real
   // activity row that opens the activity detail modal. Default off, so the
   // combos list is unchanged.
@@ -240,6 +260,39 @@ export function DayItinerary({
                       </button>
                     </span>
                   ) : null}
+                  {/* Description + per-member cost, inline under the row (#7/#11/#10). */}
+                  {showDetails && !item.lunch && ACTIVITY_BY_NAME.get(item.name)
+                    ? (() => {
+                        const act = ACTIVITY_BY_NAME.get(item.name)!;
+                        const lines = partyPriceLines(act, party);
+                        const naive = partyPriceLinesTotal(act, party);
+                        const total = activityPrice(act, party);
+                        const bundle = total < naive;
+                        return (
+                          <div className="order-4 basis-full pt-0.5 sm:pl-28">
+                            {act.description ? (
+                              <p className="line-clamp-2 text-xs leading-snug text-zinc-500 dark:text-zinc-400">
+                                {act.description}
+                              </p>
+                            ) : null}
+                            {lines.length > 0 ? (
+                              <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-zinc-500 dark:text-zinc-400">
+                                {lines.map((l) => (
+                                  <span key={l.label}>
+                                    {l.label}
+                                    {l.count > 1 ? ` ×${l.count}` : ""}: {fmtEuro(l.perPerson)}
+                                  </span>
+                                ))}
+                                <span className="font-medium text-zinc-700 dark:text-zinc-200">
+                                  Σύνολο: {fmtEuro(total)}
+                                  {bundle ? " (οικογ. πακέτο)" : ""}
+                                </span>
+                              </div>
+                            ) : null}
+                          </div>
+                        );
+                      })()
+                    : null}
                 </div>
               </li>
               {leg != null ? (

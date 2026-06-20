@@ -130,56 +130,29 @@ export function CalendarModal({
           return (
             <div
               key={idx}
-              className={`flex justify-center ${inBand ? "bg-orange-100/70" : ""} ${
-                inBand && !!lo && isSameDay(day, lo) ? "rounded-l-full" : ""
-              } ${inBand && !!hi && isSameDay(day, hi) ? "rounded-r-full" : ""}`}
+              className={`flex justify-center ${inBand ? "bg-orange-100/70" : ""} ${inBand && !!lo && isSameDay(day, lo) ? "rounded-l-full" : ""
+                } ${inBand && !!hi && isSameDay(day, hi) ? "rounded-r-full" : ""}`}
             >
               <button
                 type="button"
                 disabled={past}
                 onMouseEnter={() => !past && setHover(day)}
                 onClick={() => !past && pick(day)}
-                className={`my-0.5 flex h-11 w-11 max-w-full items-center justify-center rounded-full text-base transition-colors sm:h-9 sm:w-9 sm:text-sm ${
-                  past ? "cursor-default text-zinc-300" : "text-zinc-700"
-                } ${
-                  isSelected
+                className={`my-0.5 flex h-11 w-11 max-w-full items-center justify-center rounded-full text-base transition-colors sm:h-9 sm:w-9 sm:text-sm ${past ? "cursor-default text-zinc-300" : "text-zinc-700"
+                  } ${isSelected
                     ? "bg-orange-500 font-semibold text-white"
                     : isPreviewEnd
                       ? "bg-orange-200 text-orange-900"
                       : !past
                         ? "hover:bg-orange-200"
                         : ""
-                }`}
+                  }`}
               >
                 {day.getDate()}
               </button>
             </div>
           );
         })}
-      </div>
-
-      <div className="mt-3 border-t border-black/5 pt-3">
-        <button
-          type="button"
-          onClick={() => setShowPresets((s) => !s)}
-          className="text-sm font-medium text-orange-600 transition-colors hover:text-orange-700"
-        >
-          Δεν έχεις αποφασίσει ημερομηνίες;
-        </button>
-        {showPresets && (
-          <div className="mt-2 flex flex-wrap gap-2">
-            {PRESETS.map((p) => (
-              <button
-                key={p.label}
-                type="button"
-                onClick={() => applyPreset(p.days)}
-                className="rounded-full border border-orange-200 bg-white/70 px-3 py-1 text-xs font-medium text-zinc-700 transition-colors hover:border-orange-400 hover:bg-orange-50"
-              >
-                {p.label}
-              </button>
-            ))}
-          </div>
-        )}
       </div>
     </div>
   );

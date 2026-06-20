@@ -5,12 +5,14 @@ import { DAYS } from "./core/activities.data";
 import type { Activity } from "./core/activities.functions";
 import type { Area } from "./core/cities.data";
 import { Filter, Selection } from "./core/filters.functions";
-import { mondayIndex } from "./core/calendar.functions";
+import { addDays, mondayIndex } from "./core/calendar.functions";
 // Reuse the EXACT calendar from the homepage trip search (the "main filters"),
 // so the plan-page date picker behaves and looks identical.
 import { CalendarModal } from "@/app/start/components/CalendarModal";
 import type { DateRange } from "@/app/start/data/types";
+import { CalendarIcon } from "@/app/start/components/icons";
 import { PerDayFilters } from "./PerDayFilters";
+import { StartPointSearch } from "./StartPointSearch";
 import { buttonStyles } from "@/app/components/ui/buttonStyles";
 
 // Short label for a chosen date, e.g. "Wed 3".
@@ -31,9 +33,8 @@ export function FilterSidebar({
   circular,
   onToggleCircular,
   activities,
-  areas,
   area,
-  areaNoun,
+  cityName,
   onAreaChange,
   rangeStart,
   rangeEnd,
@@ -54,9 +55,8 @@ export function FilterSidebar({
   circular: boolean;
   onToggleCircular: () => void;
   activities: Activity[]; // the selected city's catalogue (for "must include")
-  areas: Area[]; // the selected city's start areas
-  area: Area; // the chosen start area (trip-wide anchor)
-  areaNoun: string; // "area" for cities, "city" for regions
+  area: Area; // the chosen start anchor (a city area or a custom searched point)
+  cityName?: string; // biases the start-point geocoding search to the trip's city
   onAreaChange: (area: Area) => void;
   rangeStart: Date;
   rangeEnd: Date | null;
@@ -73,6 +73,10 @@ export function FilterSidebar({
 }) {
   // The calendar is hidden by default and revealed by "Change dates".
   const [showCalendar, setShowCalendar] = useState(false);
+  // Same days⇄calendar toggle as the homepage length field: "dates" picks a
+  // range on the calendar, "days" types a number of days (which sets the end to
+  // start + N − 1, keeping everything range-driven downstream).
+  const [lengthMode, setLengthMode] = useState<"days" | "dates">("dates");
 
   // Shared glass-card chrome for the desktop sidebar (both modes).
   const desktopCard =
@@ -102,7 +106,7 @@ export function FilterSidebar({
         <div className="flex items-start justify-between gap-2">
           <div>
             <h3 className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
-              Ημερομηνίες
+              {lengthMode === "days" ? "Διάρκεια" : "Ημερομηνίες"}
             </h3>
             <p className="text-xs text-zinc-400 dark:text-zinc-500">
               {rangeEnd === null
@@ -111,52 +115,81 @@ export function FilterSidebar({
               {" "}· έως {maxDays}
             </p>
           </div>
+          {/* Toggle between typing a day count and picking dates on the calendar. */}
           <button
             type="button"
-            onClick={() => setShowCalendar((s) => !s)}
-            aria-expanded={showCalendar}
-            className="relative shrink-0 text-xs font-medium text-zinc-700 after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-zinc-700 after:transition-transform after:duration-300 after:ease-out after:content-[''] hover:after:scale-x-100 dark:text-zinc-300 dark:after:bg-zinc-300"
+            onClick={() => {
+              setLengthMode((m) => (m === "days" ? "dates" : "days"));
+              setShowCalendar(false);
+            }}
+            aria-label="Εναλλαγή διάρκειας / ημερομηνιών"
+            title={lengthMode === "days" ? "Επίλεξε ημερομηνίες" : "Επίλεξε διάρκεια σε μέρες"}
+            className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-black/[.08] px-2 py-1 text-xs font-medium text-zinc-600 transition-colors hover:bg-zinc-50 hover:text-orange-600 dark:border-white/[.145] dark:text-zinc-300 dark:hover:bg-zinc-800"
           >
-            {showCalendar ? "Έγινε" : "Αλλαγή ημερομηνιών"}
+            <CalendarIcon className="h-3.5 w-3.5" />
+            {lengthMode === "days" ? "Ημερομηνίες" : "Μέρες"}
           </button>
         </div>
-        {showCalendar && (
-          // Force the calendar to fill the sidebar width (its own sm:w-80 would
-          // otherwise overflow the narrow column).
-          <div className="[&>div]:!w-full">
-            <CalendarModal
-              value={{ start: rangeStart, end: rangeEnd } as DateRange}
-              onChange={(r) => onRangeChange(r.start ?? rangeStart, r.end)}
-            />
-          </div>
+
+        {lengthMode === "days" ? (
+          // Days mode: free-typed count → end = start + N − 1 (keeps the plan
+          // entirely range-driven; the start date / weekdays are preserved).
+          <input
+            type="number"
+            min={1}
+            max={maxDays}
+            inputMode="numeric"
+            value={dates.length}
+            onChange={(e) => {
+              const n = parseInt(e.target.value, 10);
+              if (Number.isFinite(n) && n >= 1)
+                onRangeChange(rangeStart, addDays(rangeStart, Math.min(n, maxDays) - 1));
+            }}
+            className="w-full rounded-lg border border-black/[.08] bg-white px-3 py-2 text-sm text-zinc-700 dark:border-white/[.145] dark:bg-zinc-900 dark:text-zinc-300 [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+          />
+        ) : (
+          <>
+            <button
+              type="button"
+              onClick={() => setShowCalendar((s) => !s)}
+              aria-expanded={showCalendar}
+              className="relative self-start shrink-0 text-xs font-medium text-zinc-700 after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-zinc-700 after:transition-transform after:duration-300 after:ease-out after:content-[''] hover:after:scale-x-100 dark:text-zinc-300 dark:after:bg-zinc-300"
+            >
+              {showCalendar ? "Έγινε" : "Αλλαγή ημερομηνιών"}
+            </button>
+            {showCalendar && (
+              // Force the calendar to fill the sidebar width (its own sm:w-80
+              // would otherwise overflow the narrow column).
+              <div className="[&>div]:!w-full">
+                <CalendarModal
+                  value={{ start: rangeStart, end: rangeEnd } as DateRange}
+                  onChange={(r) => onRangeChange(r.start ?? rangeStart, r.end)}
+                />
+              </div>
+            )}
+          </>
         )}
       </div>
 
-      {/* Start area — trip-wide. The chosen area is where every day's distance
-          score starts from (and where a circular trip returns to). */}
+      {/* Start point — trip-wide. Search a personal address or hotel name (#3);
+          the chosen point is where every day's distance score starts from (and
+          where a circular trip returns to). */}
       <div className="flex flex-col gap-2">
         <div>
           <h3 className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
-            Σημείο εκκίνησης ({areaNoun})
+            Σημείο εκκίνησης
           </h3>
           <p className="text-xs text-zinc-400 dark:text-zinc-500">
-            Από εδώ μετριέται η διαδρομή κάθε ημέρας
+            Γράψε διεύθυνση ή όνομα ξενοδοχείου — από εκεί μετριέται η διαδρομή
+            κάθε ημέρας
           </p>
         </div>
-        <select
-          value={area.id}
-          onChange={(e) => {
-            const next = areas.find((a) => a.id === e.target.value);
-            if (next) onAreaChange(next);
-          }}
-          className="w-full rounded-lg border border-black/[.08] bg-white px-3 py-2 text-sm text-zinc-700 dark:border-white/[.145] dark:bg-zinc-900 dark:text-zinc-300"
-        >
-          {areas.map((a) => (
-            <option key={a.id} value={a.id}>
-              {a.name}
-            </option>
-          ))}
-        </select>
+        <StartPointSearch
+          cityName={cityName}
+          near={area.coords}
+          currentLabel={area.id === "custom" ? area.name : undefined}
+          onSelect={(p) => onAreaChange({ id: "custom", name: p.name, coords: p.coords })}
+        />
       </div>
 
       {/* Filters set here apply to ALL days by default; override a specific day in

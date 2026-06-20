@@ -7,6 +7,7 @@ import { VIBES } from "@/app/map/components/mapData";
 import { buttonStyles } from "@/app/components/ui/buttonStyles";
 import type { ActivityListFilters } from "./activitiesData";
 import { VIBE_ICONS } from "./vibeStyle";
+import { VIBE_UI_ENABLED } from "@/app/config/features";
 
 // The left "Filters" panel from the board: a Price slider, a multi-select Vibe
 // picker, and a "Distance from" area dropdown (the reference point for the
@@ -76,32 +77,35 @@ export function FilterSidebar({
         />
       </div>
 
-      {/* Vibe — multiple select. */}
-      <div className="mt-6">
-        <p className="text-sm font-medium text-zinc-700">Vibe</p>
-        <p className="text-xs text-zinc-400">Διάλεξε ένα ή περισσότερα</p>
-        <div className="mt-2 flex flex-wrap gap-2">
-          {VIBES.map((v) => {
-            const on = filters.vibes.includes(v.key);
-            const Icon = VIBE_ICONS[v.key];
-            return (
-              <button
-                key={v.key}
-                type="button"
-                onClick={() => onToggleVibe(v.key)}
-                aria-pressed={on}
-                className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${on
-                  ? "bg-emerald-500 text-white shadow-sm shadow-emerald-900/10"
-                  : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
-                  }`}
-              >
-                <Icon className="h-3.5 w-3.5" />
-                {v.label}
-              </button>
-            );
-          })}
+      {/* Vibe — multiple select. Hidden while the vibe UI is off (#4); the
+          filters.vibes state stays (empty = all vibes). */}
+      {VIBE_UI_ENABLED && (
+        <div className="mt-6">
+          <p className="text-sm font-medium text-zinc-700">Vibe</p>
+          <p className="text-xs text-zinc-400">Διάλεξε ένα ή περισσότερα</p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {VIBES.map((v) => {
+              const on = filters.vibes.includes(v.key);
+              const Icon = VIBE_ICONS[v.key];
+              return (
+                <button
+                  key={v.key}
+                  type="button"
+                  onClick={() => onToggleVibe(v.key)}
+                  aria-pressed={on}
+                  className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${on
+                    ? "bg-emerald-500 text-white shadow-sm shadow-emerald-900/10"
+                    : "bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
+                    }`}
+                >
+                  <Icon className="h-3.5 w-3.5" />
+                  {v.label}
+                </button>
+              );
+            })}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Distance from — opens the area picker modal (reference point for the
           "Distance from center" sort; default = centre). */}

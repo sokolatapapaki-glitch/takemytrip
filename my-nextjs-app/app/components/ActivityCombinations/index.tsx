@@ -21,10 +21,12 @@ import { SearchIcon } from "@/app/start/components/icons";
 import { FaSliders, FaCircleInfo } from "react-icons/fa6";
 import { useScrollLock } from "@/app/components/ui/useScrollLock";
 
-// The most days a trip can span (the date range is capped at this length). Per-day
-// state arrays are pre-allocated to this length so changing the range never needs
-// to resize them — the range's length just decides how many slots are USED.
-const MAX_DAYS = 7;
+// The most days a trip can span (the date range / duration is capped at this
+// length). Per-day state arrays are pre-allocated to this length so changing the
+// range never needs to resize them — the range's length just decides how many
+// slots are USED. A generous safety cap (#2: "as many days as the user wants")
+// that still bounds the per-day UI/state and the planner's work.
+const MAX_DAYS = 30;
 
 // Hand-off params from the /start page (?dest=&area=&start=&end=&adults=&ages=).
 // Read from Next's reactive `useSearchParams()` (passed in) rather than a one-time
@@ -34,8 +36,15 @@ const MAX_DAYS = 7;
 function parseStartParams(p: ReadonlyURLSearchParams): {
   cityId?: string;
   areaId?: string;
+  // Personal start point handed from the homepage (?slat=&slng=&sname=). When
+  // present it overrides the area as the route anchor (#3).
+  startPoint?: { name: string; coords: { lat: number; lng: number } };
   start?: Date;
   end?: Date;
+  // Trip length in days (#2) — the PRIMARY length input from /start. When present
+  // it decides the number of days (dates become optional / illustrative); when
+  // absent the count is derived from start/end as before.
+  days?: number;
   party: Party;
   // Activity names the trip MUST contain (?include=, repeated) — the activities
   // page's "Make Trip" hand-off. They pre-check the "Must include" filter.
@@ -54,11 +63,28 @@ function parseStartParams(p: ReadonlyURLSearchParams): {
     .split(",")
     .map((s) => Number(s))
     .filter((n) => Number.isInteger(n) && n >= 0);
+  // Trip length in days from ?days= (free-typed on /start). Clamped to ≥1 and the
+  // safety cap; invalid/absent → undefined (fall back to start/end).
+  const daysRaw = Math.floor(Number(p.get("days")));
+  const days =
+    Number.isFinite(daysRaw) && daysRaw >= 1
+      ? Math.min(daysRaw, MAX_DAYS)
+      : undefined;
+  // Personal start point from ?slat=&slng=&sname= (the homepage's address/hotel
+  // search). Both coords must parse for it to count.
+  const slat = parseFloat(p.get("slat") ?? "");
+  const slng = parseFloat(p.get("slng") ?? "");
+  const startPoint =
+    Number.isFinite(slat) && Number.isFinite(slng)
+      ? { name: p.get("sname") || "Σημείο εκκίνησης", coords: { lat: slat, lng: slng } }
+      : undefined;
   return {
     cityId: p.get("dest") ?? undefined,
     areaId: p.get("area") ?? undefined,
+    startPoint,
     start: parseDate(p.get("start")),
     end: parseDate(p.get("end")),
+    days,
     party: { adults, childAges },
     include: p.getAll("include"),
   };
@@ -118,9 +144,18 @@ export default function ActivityCombinations() {
   const [city] = useState<City>(initialCity);
   // The selected start AREA within the city (one base for the whole trip). Its
   // coords are the route anchor; defaults to the city's "Centre" area.
-  const [area, setArea] = useState<Area>(
-    () => initialCity.areas.find((a) => a.id === initial.areaId) ?? initialCity.areas[0]
-  );
+  const [area, setArea] = useState<Area>(() => {
+    // A personal start point from /start wins (#3): use it as a custom anchor.
+    if (initial.startPoint) {
+      return {
+        id: "custom",
+        name: initial.startPoint.name,
+        coords: initial.startPoint.coords,
+      };
+    }
+    // Otherwise fall back to a city area by id (direct links), else the centre.
+    return initialCity.areas.find((a) => a.id === initial.areaId) ?? initialCity.areas[0];
+  });
   // The traveller party from the /start hand-off (drives price totals); fixed for
   // the session like the city.
   const party = initial.party;
@@ -175,11 +210,16 @@ export default function ActivityCombinations() {
   const today = useMemo(() => startOfDay(new Date()), []);
   const [range, setRange] = useState<{ start: Date; end: Date | null }>(() => {
     // From /start params when present (end ignored if before start); else the
-    // default today → +2 days.
+    // default today → +2 days. When a `days` duration is given it WINS for the
+    // length (#2): the end is start + days − 1, regardless of any picked dates.
     if (initial.start) {
-      const end = initial.end && initial.end >= initial.start ? initial.end : null;
+      let end = initial.end && initial.end >= initial.start ? initial.end : null;
+      if (initial.days) end = addDays(initial.start, initial.days - 1);
       return { start: initial.start, end };
     }
+    // Duration without dates: anchor at today (its weekday drives opening hours)
+    // and span `days` days. Dates stay optional.
+    if (initial.days) return { start: today, end: addDays(today, initial.days - 1) };
     return { start: today, end: addDays(today, 2) };
   });
   const rangeStart = range.start;
@@ -537,9 +577,8 @@ export default function ActivityCombinations() {
                   circular={circulars[0]}
                   onToggleCircular={toggleAllCircular}
                   activities={city.activities}
-                  areas={city.areas}
                   area={area}
-                  areaNoun={city.kind === "region" ? "πόλη" : "περιοχή"}
+                  cityName={city.name}
                   onAreaChange={changeArea}
                   rangeStart={rangeStart}
                   rangeEnd={range.end}
@@ -614,9 +653,8 @@ export default function ActivityCombinations() {
                 circular={circulars[0]}
                 onToggleCircular={toggleAllCircular}
                 activities={city.activities}
-                areas={city.areas}
                 area={area}
-                areaNoun={city.kind === "region" ? "πόλη" : "περιοχή"}
+                cityName={city.name}
                 onAreaChange={changeArea}
                 rangeStart={rangeStart}
                 rangeEnd={range.end}

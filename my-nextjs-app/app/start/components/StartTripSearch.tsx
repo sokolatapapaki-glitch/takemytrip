@@ -6,7 +6,6 @@
 // only logs the current selection to the console.
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { DESTINATIONS } from "../data/destinations";
 import { homeStyles } from "../data/palette";
@@ -26,7 +25,12 @@ import {
   XIcon,
 } from "./icons";
 
-type ModalKey = "dest" | "datesFrom" | "datesTo" | "travelers";
+type ModalKey = "dest" | "dates" | "travelers";
+
+// The combined length field shows EITHER a free-typed day count or a date range;
+// the calendar icon toggles between the two (and is the only opener of the
+// calendar modal).
+type LengthMode = "days" | "dates";
 
 // Local date → "YYYY-MM-DD" (no timezone shift, unlike toISOString).
 const toISODate = (d: Date) =>
@@ -50,6 +54,13 @@ export default function StartTripSearch({
   const [destTypingDone, setDestTypingDone] = useState(!playEntranceAnimations);
   const [destQuery, setDestQuery] = useState("");
   const [range, setRange] = useState<DateRange>({ start: null, end: null });
+  // Trip length in days — the PRIMARY way to set how long the trip is (#2). Free
+  // typing, no upper limit enforced here (the planner caps it). Dates are now
+  // OPTIONAL: a search needs a destination + EITHER a duration OR dates.
+  const [durationDays, setDurationDays] = useState<number | null>(null);
+  // Which face of the combined length field is showing. Starts on the day count
+  // (the primary length input); the calendar icon flips it to date-range mode.
+  const [lengthMode, setLengthMode] = useState<LengthMode>("days");
   const [travelers, setTravelers] = useState<Travelers>({
     adults: 2,
     children: 0,
@@ -123,12 +134,11 @@ export default function StartTripSearch({
     if (!dest) return null;
     const d = DESTINATIONS.find((x) => x.id === dest.destinationId);
     if (!d) return null;
-    const a = d.areas.find((x) => x.id === dest.areaId);
-    // The city centre (a city's default first area, named "Centre") shows just
-    // the city name — e.g. "Rome", not "Rome · Centre". Any other area keeps the
-    // "City · Area" form. (Regions always show "Region · City".)
-    const isCityCentre = d.kind === "city" && d.areas[0]?.id === dest.areaId;
-    return a && !isCityCentre ? `${d.name} · ${a.name}` : d.name;
+    // Show "City · Start point" unless the point is just the city centre (whose
+    // label is the city name), in which case show only the city.
+    return dest.pointName && dest.pointName !== d.name
+      ? `${d.name} · ${dest.pointName}`
+      : d.name;
   }, [dest]);
 
   // A single chosen day (start only, or start === end) shows just that date —
@@ -154,17 +164,20 @@ export default function StartTripSearch({
   // Total people in the party — drives the one/two-person traveller icon.
   const travelerCount = travelers.adults + travelers.children;
 
-  // Search is complete once all required fields are filled: a destination, at
-  // least one date, and a valid party.
-  const canSearch = !!dest && !!range.start && travelers.adults >= 1;
+  // Search is complete once: a destination, a length, and a valid party. The
+  // length comes from whichever mode the combined field is in — a typed day count
+  // ("days") OR a chosen start date ("dates"). (#2)
+  const hasDuration = durationDays !== null && durationDays >= 1;
+  const hasLength = lengthMode === "days" ? hasDuration : !!range.start;
+  const canSearch = !!dest && hasLength && travelers.adults >= 1;
 
   const missingInputs = useMemo(() => {
     const missing: string[] = [];
     if (!dest) missing.push("προορισμό");
-    if (!range.start) missing.push("ημερομηνίες");
+    if (!hasLength) missing.push(lengthMode === "days" ? "διάρκεια" : "ημερομηνίες");
     if (travelers.adults < 1) missing.push("ταξιδιώτες");
     return missing;
-  }, [dest, range.start, travelers.adults]);
+  }, [dest, hasLength, lengthMode, travelers.adults]);
 
   // Hand the chosen destination/area/dates AND party to the main planner via query
   // params. The party (adults + each child's age) drives the planner's price totals
@@ -184,17 +197,26 @@ export default function StartTripSearch({
         setSearchIconAlert(false);
       }, 900);
       if (!dest) setOpen("dest");
-      else if (!range.start) setOpen("datesFrom");
+      else if (!hasLength && lengthMode === "dates") setOpen("dates");
       else if (travelers.adults < 1) setOpen("travelers");
       return;
     }
     const params = new URLSearchParams();
     if (dest) {
       params.set("dest", dest.destinationId);
-      params.set("area", dest.areaId);
+      // The personal start point: its coordinates + label (the plan anchors the
+      // route here instead of a city area). See parseStartParams.
+      params.set("slat", String(dest.coords.lat));
+      params.set("slng", String(dest.coords.lng));
+      params.set("sname", dest.pointName);
     }
-    if (range.start) params.set("start", toISODate(range.start));
-    if (range.end) params.set("end", toISODate(range.end));
+    // Send only the active mode's length: a typed day count, or the picked dates.
+    if (lengthMode === "days") {
+      if (hasDuration) params.set("days", String(durationDays));
+    } else {
+      if (range.start) params.set("start", toISODate(range.start));
+      if (range.end) params.set("end", toISODate(range.end));
+    }
     params.set("adults", String(travelers.adults));
     if (travelers.children > 0) {
       params.set("ages", travelers.childAges.map((a) => a ?? 0).join(","));
@@ -204,6 +226,23 @@ export default function StartTripSearch({
   }
 
   const toggle = (key: ModalKey) => setOpen((o) => (o === key ? null : key));
+
+  // The combined length field's calendar icon — the ONLY control that opens the
+  // calendar and the toggle between the two faces:
+  //   • days mode            → switch to dates mode AND open the calendar
+  //   • dates mode, closed   → re-open the calendar (stay in dates mode)
+  //   • dates mode, open     → flip back to the day-count input (close calendar)
+  const onLengthIconClick = () => {
+    if (lengthMode === "days") {
+      setLengthMode("dates");
+      setOpen("dates");
+    } else if (open !== "dates") {
+      setOpen("dates");
+    } else {
+      setLengthMode("days");
+      setOpen(null);
+    }
+  };
 
   return (
     <div ref={rootRef} className="relative">
@@ -241,8 +280,21 @@ export default function StartTripSearch({
               <DestinationModal
                 value={dest}
                 query={destQuery}
-                onSelect={(destinationId, areaId) => {
-                  setDest({ destinationId, areaId });
+                onClose={() => setOpen(null)}
+                onChooseDestination={(destinationId) => {
+                  const d = DESTINATIONS.find((x) => x.id === destinationId);
+                  if (!d) return;
+                  // Default the start point to the city centre; keep the dropdown
+                  // open so the address/hotel search can refine it.
+                  setDest({ destinationId, pointName: d.name, coords: d.center });
+                  setDestQuery("");
+                }}
+                onChoosePoint={(destinationId, point) => {
+                  setDest({
+                    destinationId,
+                    pointName: point.name,
+                    coords: point.coords,
+                  });
                   setDestQuery("");
                   setOpen(null);
                 }}
@@ -251,76 +303,28 @@ export default function StartTripSearch({
           )}
         </DestField>
 
-        <div className="group relative min-w-0 flex-1">
-          <div className="hidden sm:block">
-            <Field
-              active={open === "datesFrom" || open === "datesTo"}
-              icon={<CalendarIcon className="h-5 w-5" />}
-              placeholder="Από — Έως"
-              value={dateLabel}
-              iconDelay={490}
-              playEntranceAnimations={playEntranceAnimations}
-              onClick={() => toggle("datesFrom")}
-              onClear={range.start ? () => setRange({ start: null, end: null }) : undefined}
-            >
-              {(open === "datesFrom" || open === "datesTo") && (
-                <Dropdown align="center" onClose={() => setOpen(null)}>
-                  <CalendarModal
-                    value={range}
-                    onChange={setRange}
-                    onClose={() => setOpen(null)}
-                  />
-                </Dropdown>
-              )}
-            </Field>
-          </div>
-
-          <div className="flex gap-2 sm:hidden">
-            <Field
-              active={open === "datesFrom"}
-              icon={<CalendarIcon className="h-5 w-5" />}
-              placeholder="Από"
-              value={range.start ? formatShort(range.start) : null}
-              iconDelay={490}
-              playEntranceAnimations={playEntranceAnimations}
-              onClick={() => toggle("datesFrom")}
-              onClear={range.start ? () => setRange({ start: null, end: range.end }) : undefined}
-            >
-              {open === "datesFrom" && (
-                <FullScreenPicker title="Ημερομηνία από" onClose={() => setOpen(null)}>
-                  <CalendarModal
-                    value={range}
-                    onChange={setRange}
-                    editing="start"
-                    onClose={() => setOpen(null)}
-                  />
-                </FullScreenPicker>
-              )}
-            </Field>
-
-            <Field
-              active={open === "datesTo"}
-              icon={<CalendarIcon className="h-5 w-5" />}
-              placeholder="Έως"
-              value={range.end ? formatShort(range.end) : null}
-              iconDelay={490}
-              playEntranceAnimations={playEntranceAnimations}
-              onClick={() => toggle("datesTo")}
-              onClear={range.end ? () => setRange({ start: range.start, end: null }) : undefined}
-            >
-              {open === "datesTo" && (
-                <FullScreenPicker title="Ημερομηνία έως" onClose={() => setOpen(null)}>
-                  <CalendarModal
-                    value={range}
-                    onChange={setRange}
-                    editing="end"
-                    onClose={() => setOpen(null)}
-                  />
-                </FullScreenPicker>
-              )}
-            </Field>
-          </div>
-        </div>
+        <TripLengthField
+          mode={lengthMode}
+          calendarOpen={open === "dates"}
+          onIconClick={onLengthIconClick}
+          onOpenCalendar={() => setOpen("dates")}
+          days={durationDays}
+          onDaysChange={setDurationDays}
+          dateLabel={dateLabel}
+          playEntranceAnimations={playEntranceAnimations}
+          onClearDays={durationDays !== null ? () => setDurationDays(null) : undefined}
+          onClearDates={range.start ? () => setRange({ start: null, end: null }) : undefined}
+        >
+          {open === "dates" && (
+            <Dropdown align="center" onClose={() => setOpen(null)}>
+              <CalendarModal
+                value={range}
+                onChange={setRange}
+                onClose={() => setOpen(null)}
+              />
+            </Dropdown>
+          )}
+        </TripLengthField>
 
         <Field
           active={open === "travelers"}
@@ -370,49 +374,6 @@ export default function StartTripSearch({
         />
       )}
     </div>
-  );
-}
-
-// The mobile From/To date pickers: a true full-screen sheet (title + X header,
-// scrollable body). PORTALED to <body> — the search bar's entrance animation
-// leaves a transform on an ancestor, which would otherwise trap `fixed`
-// positioning inside it (the modal showed up tiny instead of full screen).
-// `data-fullscreen-picker` keeps the bar's outside-click handler from treating
-// taps inside the portal as outside. The portal also escapes the mobile-only
-// `sm:hidden` wrapper around the From/To fields, so the sheet itself carries
-// `sm:hidden` — without it, it covers the desktop dropdown and a single tap
-// closes the calendar before a second date can be picked.
-function FullScreenPicker({
-  title,
-  onClose,
-  children,
-}: {
-  title: string;
-  onClose: () => void;
-  children: React.ReactNode;
-}) {
-  return createPortal(
-    <div
-      data-fullscreen-picker
-      className="fixed inset-0 z-[100] flex flex-col bg-white sm:hidden dark:bg-zinc-950"
-    >
-      <div className="flex items-center justify-between border-b border-black/5 px-4 py-4">
-        <span className="text-base font-semibold text-zinc-800 dark:text-zinc-100">
-          {title}
-        </span>
-        <button
-          type="button"
-          onClick={onClose}
-          className="rounded-full border border-black/[.08] px-3 py-2 text-sm font-medium transition-colors hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-white/[.06]"
-        >
-          <XIcon className="h-4 w-4" />
-        </button>
-      </div>
-      <div className="flex-grow overflow-y-auto p-4 pt-0">
-        <div className="h-full">{children}</div>
-      </div>
-    </div>,
-    document.body
   );
 }
 
@@ -475,6 +436,108 @@ function Field({
           <XIcon className="h-4 w-4" />
         </button>
       )}
+      {children}
+    </div>
+  );
+}
+
+// The combined trip-length field (#2): one input that flips between a free-typed
+// day count and a date range. The calendar ICON is the toggle AND the only opener
+// of the calendar modal (clicking the field body never opens it). The calendar
+// itself (passed in as `children`) is unchanged from before. Responsive: the icon
+// + body sit on one row at every size, and the calendar uses the responsive
+// Dropdown (a top overlay on mobile, an anchored panel on desktop).
+function TripLengthField({
+  mode,
+  calendarOpen,
+  onIconClick,
+  onOpenCalendar,
+  days,
+  onDaysChange,
+  dateLabel,
+  playEntranceAnimations,
+  onClearDays,
+  onClearDates,
+  children,
+}: {
+  mode: LengthMode;
+  calendarOpen: boolean;
+  onIconClick: () => void;
+  // Opens the calendar WITHOUT toggling mode — used when the body is clicked in
+  // calendar mode (so the field body behaves like the icon there).
+  onOpenCalendar: () => void;
+  days: number | null;
+  onDaysChange: (days: number | null) => void;
+  dateLabel: string | null;
+  playEntranceAnimations: boolean;
+  onClearDays?: () => void;
+  onClearDates?: () => void;
+  children?: React.ReactNode;
+}) {
+  const showClear = mode === "days" ? !!onClearDays : !!onClearDates;
+  return (
+    <div className="group relative min-w-0 flex-1">
+      <div
+        className={`flex w-full items-center gap-3 rounded-xl border border-zinc-300 px-4 py-3 transition-colors ${calendarOpen ? homeStyles.fieldActive : homeStyles.fieldIdle
+          }`}
+      >
+        {/* Calendar icon: toggles days⇄dates and is the ONLY opener of the modal. */}
+        <button
+          type="button"
+          onClick={onIconClick}
+          aria-label={
+            mode === "days"
+              ? "Άλλαξε σε ημερομηνίες και άνοιξε ημερολόγιο"
+              : "Άνοιξε ημερολόγιο ή άλλαξε σε διάρκεια"
+          }
+          title={mode === "days" ? "Διάλεξε ημερομηνίες" : "Διάλεξε διάρκεια σε μέρες"}
+          className={`${playEntranceAnimations ? "animate-icon-pop" : ""} inline-flex shrink-0 cursor-pointer text-zinc-400 transition-transform duration-200 ease-out hover:text-orange-500 group-hover:scale-110 group-hover:-translate-y-0.5`}
+          style={{ animationDelay: "490ms" }}
+        >
+          <CalendarIcon className="h-5 w-5" />
+        </button>
+
+        {mode === "days" ? (
+          <input
+            type="number"
+            min={1}
+            inputMode="numeric"
+            value={days ?? ""}
+            onChange={(e) => {
+              const n = parseInt(e.target.value, 10);
+              onDaysChange(Number.isFinite(n) && n >= 1 ? n : null);
+            }}
+            placeholder="Διάρκεια (μέρες)"
+            size={1}
+            className={`w-full min-w-0 flex-1 bg-transparent text-sm text-zinc-800 outline-none placeholder:text-zinc-400 [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none ${showClear ? "pr-6" : ""
+              }`}
+          />
+        ) : (
+          // Calendar mode: clicking the date display opens the calendar too (same
+          // as the icon). In days mode the body is the number input above, which
+          // never opens the calendar.
+          <button
+            type="button"
+            onClick={onOpenCalendar}
+            className={`flex-1 truncate text-left text-sm ${dateLabel ? "text-zinc-800" : "text-zinc-400"} ${showClear ? "pr-6" : ""
+              }`}
+          >
+            {dateLabel ?? "Από — Έως"}
+          </button>
+        )}
+      </div>
+
+      {showClear && (
+        <button
+          type="button"
+          aria-label="Καθαρισμός"
+          onClick={mode === "days" ? onClearDays : onClearDates}
+          className="absolute right-3 top-1/2 hidden -translate-y-1/2 rounded-full p-0.5 text-zinc-300 transition-colors hover:bg-zinc-100 hover:text-zinc-500 group-hover:block"
+        >
+          <XIcon className="h-4 w-4" />
+        </button>
+      )}
+
       {children}
     </div>
   );

@@ -45,10 +45,10 @@ export function RequiredActivities({
     <div className="flex flex-col gap-2">
       <div>
         <h3 className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
-          Υποχρεωτικές δραστηριότητες
+          Επιλέγω δραστηριότητες
         </h3>
         <p className="text-xs text-zinc-400 dark:text-zinc-500">
-          Το ταξίδι σου θα τις περιλαμβάνει πάντα
+          Όσες διαλέξεις θα μπουν σίγουρα στο ταξίδι
         </p>
       </div>
       <div className="flex flex-col gap-1.5">

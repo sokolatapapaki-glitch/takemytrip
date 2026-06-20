@@ -13,6 +13,7 @@ import {
 import { FilterDropdown } from "./FilterDropdown";
 import { ActivityResultCard } from "./ActivityResultCard";
 import { ClickedActivityPanel } from "./ClickedActivityPanel";
+import { VIBE_UI_ENABLED } from "@/app/config/features";
 
 const DISTANCE_MAX = 10; // km from city centre (slider bound)
 type FilterKey = "price" | "vibe" | "sort" | "distance";
@@ -113,38 +114,42 @@ export function SearchSidebar({
             />
           </FilterDropdown>
 
-          <FilterDropdown
-            label="Vibe"
-            active={filters.vibe != null}
-            summary={filters.vibe ? VIBES.find((v) => v.key === filters.vibe)?.label : null}
-            open={openFilter === "vibe"}
-            onToggle={() => toggleFilter("vibe")}
-          >
-            <div className="flex flex-col gap-1">
-              <button
-                type="button"
-                onClick={() => set({ vibe: null })}
-                className={`rounded-lg px-2 py-1.5 text-left text-sm transition-colors ${filters.vibe == null ? "bg-orange-50 text-orange-700" : "hover:bg-zinc-50 text-zinc-700"
-                  }`}
-              >
-                Όλα τα vibes
-              </button>
-              {VIBES.map((v) => (
+          {/* Vibe chip — hidden while the vibe UI is off (#4). The underlying
+              filters.vibe state stays (defaults to null = all vibes). */}
+          {VIBE_UI_ENABLED && (
+            <FilterDropdown
+              label="Vibe"
+              active={filters.vibe != null}
+              summary={filters.vibe ? VIBES.find((v) => v.key === filters.vibe)?.label : null}
+              open={openFilter === "vibe"}
+              onToggle={() => toggleFilter("vibe")}
+            >
+              <div className="flex flex-col gap-1">
                 <button
-                  key={v.key}
                   type="button"
-                  onClick={() => set({ vibe: v.key })}
-                  className={`rounded-lg px-2 py-1.5 text-left text-sm transition-colors ${filters.vibe === v.key ? "bg-orange-50 text-orange-700" : "hover:bg-zinc-50 text-zinc-700"
+                  onClick={() => set({ vibe: null })}
+                  className={`rounded-lg px-2 py-1.5 text-left text-sm transition-colors ${filters.vibe == null ? "bg-orange-50 text-orange-700" : "hover:bg-zinc-50 text-zinc-700"
                     }`}
                 >
-                  <span className="flex items-center gap-1.5">
-                    <v.Icon className="h-3.5 w-3.5 shrink-0" />
-                    {v.label}
-                  </span>
+                  Όλα τα vibes
                 </button>
-              ))}
-            </div>
-          </FilterDropdown>
+                {VIBES.map((v) => (
+                  <button
+                    key={v.key}
+                    type="button"
+                    onClick={() => set({ vibe: v.key })}
+                    className={`rounded-lg px-2 py-1.5 text-left text-sm transition-colors ${filters.vibe === v.key ? "bg-orange-50 text-orange-700" : "hover:bg-zinc-50 text-zinc-700"
+                      }`}
+                  >
+                    <span className="flex items-center gap-1.5">
+                      <v.Icon className="h-3.5 w-3.5 shrink-0" />
+                      {v.label}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </FilterDropdown>
+          )}
 
           <FilterDropdown
             label="Ταξινόμηση"

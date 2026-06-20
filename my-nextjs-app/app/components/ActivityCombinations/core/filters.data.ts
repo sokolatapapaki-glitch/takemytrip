@@ -17,6 +17,7 @@ import {
 import { VIBES } from "./activities.data";
 import { maxPartyPrice } from "./activities.functions";
 import type { Params } from "./curves.functions";
+import { VIBE_UI_ENABLED } from "@/app/config/features";
 
 export const HOURS_UNIT: Unit = { label: "Ώρες", suffix: "ω", toIndex: hoursToIndex };
 // Targets are euros, converted to the 0–10 budget index against the active
@@ -57,10 +58,15 @@ const CEILING_PARAMS: Params = { under: 0, over: 100 };
 // index at target 10 ("a lot"). No unit -> targets are plain 0–10 indexes.
 const VIBE_FILTER: Filter = {
   name: "Vibe",
-  weight: 3,
+  weight: 0,
   scoreName: "Linear (symmetric)",
   params: { slope: 1 },
   multi: true,
+  // Hidden app-wide while the vibe UI is off (#4). Kept in the list so indices
+  // and the underlying logic stay intact; as a hidden multi filter it defaults
+  // to no selection, so it scores nothing ("all vibes"). Flip VIBE_UI_ENABLED
+  // back to true to restore the control unchanged.
+  hidden: !VIBE_UI_ENABLED,
   hint: "Διάλεξε όσα θέλεις να έχει πολλά το πρόγραμμα",
   options: VIBES.map((vibe) => ({
     name: vibe.name,
@@ -119,6 +125,11 @@ export const DEFAULT_FILTERS: Filter[] = [
     weight: PRIORITY_WEIGHT,
     scoreName: "Linear (symmetric)",
     params: { slope: 1 },
+    // Retired knob (#5): the control confused users, but it's the heaviest factor
+    // in the ranking, so we KEEP it scoring (default "must-see" selected) and only
+    // hide its control. Single-select + hidden ⇒ default option stays selected, so
+    // the combo ranking is unchanged.
+    hidden: true,
     hint: "Προτίμησε τα μεγάλα must-see αξιοθέατα",
     value: averageIndex("priority"),
     format: (combo) =>

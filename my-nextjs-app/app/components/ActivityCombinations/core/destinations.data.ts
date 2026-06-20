@@ -32,6 +32,9 @@ export type Destination = {
   subLabel: "Areas" | "Cities"; // flyout heading on /start
   center: Coords; // = areas[0].coords (the default anchor); also the takemytrip `location`
   areas: DestArea[]; // areas[0] is the default (centre / main city)
+  // Latin/English spellings so the /start search still matches when the user
+  // types the English name of a city whose name/country are in Greek.
+  aliases?: string[];
   // Extra fields mirrored from the takemytrip JSON, null until populated. The
   // takemytrip `location` is intentionally omitted (it IS `center`), and
   // `activities` are attached separately in cities.data.ts.

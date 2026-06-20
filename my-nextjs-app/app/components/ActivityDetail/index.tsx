@@ -11,12 +11,12 @@ import Link from "next/link";
 import { FaChevronLeft, FaChevronRight, FaXmark } from "react-icons/fa6";
 import {
   adultPrice,
+  ageBandRows,
   dayHours,
   formatTime,
   isAllDay,
   isClosedDay,
   type Activity,
-  type PriceTable,
 } from "@/app/components/ActivityCombinations/core/activities.functions";
 import { DAYS } from "@/app/components/ActivityCombinations/core/activities.data";
 import { CITIES } from "@/app/components/ActivityCombinations/core/cities.data";
@@ -43,32 +43,8 @@ const THUMB_COUNT = 5;
 
 const fmtPrice = (n: number): string => (n === 0 ? "Δωρεάν" : `€${n}`);
 
-// Collapse the per-age price map (e.g. {"0":0,…,"17":21.5,"adult":21.5}) into
-// readable rows: consecutive ages with the same price become one "4–17" range.
-function ageRows(prices: PriceTable): { label: string; price: number }[] {
-  const ages = Object.keys(prices.ages)
-    .filter((k) => k !== "adult")
-    .map(Number)
-    .filter((n) => !Number.isNaN(n))
-    .sort((a, b) => a - b);
-
-  const rows: { from: number; to: number; price: number }[] = [];
-  for (const age of ages) {
-    const price = prices.ages[String(age)];
-    const last = rows[rows.length - 1];
-    if (last && last.price === price && age === last.to + 1) last.to = age;
-    else rows.push({ from: age, to: age, price });
-  }
-
-  const out = rows.map((r) => ({
-    label: r.from === r.to ? `Ηλικία ${r.from}` : `Ηλικίες ${r.from}–${r.to}`,
-    price: r.price,
-  }));
-  if (typeof prices.ages.adult === "number") {
-    out.push({ label: "Ενήλικες", price: prices.ages.adult });
-  }
-  return out;
-}
+// The per-age price rows (e.g. "Ηλικίες 4–17 · €13", "Ενήλικες · €21.5") now come
+// from the shared `ageBandRows` helper so the modal, cards and trip program agree.
 
 // "2_adults_2_children" → "2 adults 2 children" for the family-bundle rows.
 const familyLabel = (key: string): string => key.replaceAll("_", " ");
@@ -340,7 +316,7 @@ export function ActivityDetail({
                       onClose={() => setMoreOpen(null)}
                     >
                       <div className="flex flex-col gap-1 text-sm text-zinc-700 dark:text-zinc-200">
-                        {ageRows(current.prices).map((r) => (
+                        {ageBandRows(current.prices).map((r) => (
                           <div key={r.label} className="flex justify-between gap-3">
                             <span>{r.label}</span>
                             <span className="font-medium">{fmtPrice(r.price)}</span>
@@ -460,46 +436,7 @@ export function ActivityDetail({
             </button>
           </div>
 
-          {/* Nearby restaurants/cafés tied to this activity. */}
-          {current.restaurants.length > 0 && (
-            <div>
-              <h3 className="text-base font-semibold text-zinc-800 dark:text-zinc-100">
-                Εστιατόρια
-              </h3>
-              <div className="mt-2 flex flex-col gap-3">
-                {current.restaurants.map((r) => (
-                  <div
-                    key={r.name}
-                    className="rounded-2xl bg-white p-3 shadow-sm shadow-zinc-900/5 transition duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md dark:bg-zinc-800"
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium text-zinc-800 dark:text-zinc-100">
-                        {r.name}
-                      </span>
-                      <span className="rounded-full bg-zinc-100 px-2 py-0.5 text-xs text-zinc-600 dark:bg-white/10 dark:text-zinc-300">
-                        {r.type}
-                      </span>
-                      {r.link && (
-                        <a
-                          href={r.link}
-                          target="_blank"
-                          rel="noreferrer noopener"
-                          className={`ml-auto shrink-0 ${buttonStyles.underline}`}
-                        >
-                          Σύνδεσμος
-                        </a>
-                      )}
-                    </div>
-                    <p className="mt-1 text-xs leading-snug text-zinc-500 dark:text-zinc-400">
-                      {r.description}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Notes — one amber bar per note, below the restaurants. */}
+          {/* Notes — one amber bar per note. */}
           {current.notes.length > 0 && (
             <div>
               <h3 className="text-base font-semibold text-zinc-800 dark:text-zinc-100">Σημειώσεις</h3>
@@ -517,6 +454,48 @@ export function ActivityDetail({
           )}
         </div>
       </div>
+
+      {/* Nearby restaurants/cafés tied to this activity. Kept OUTSIDE the
+          scrollable right column (its own full-width block, like Description)
+          so they're always visible instead of clipped below the column's
+          internal scroll. */}
+      {current.restaurants.length > 0 && (
+        <div>
+          <h3 className="text-base font-semibold text-zinc-800 dark:text-zinc-100">
+            Εστιατόρια
+          </h3>
+          <div className="mt-2 grid gap-3 sm:grid-cols-2">
+            {current.restaurants.map((r) => (
+              <div
+                key={r.name}
+                className="rounded-2xl bg-white p-3 shadow-sm shadow-zinc-900/5 transition duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md dark:bg-zinc-800"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium text-zinc-800 dark:text-zinc-100">
+                    {r.name}
+                  </span>
+                  <span className="rounded-full bg-zinc-100 px-2 py-0.5 text-xs text-zinc-600 dark:bg-white/10 dark:text-zinc-300">
+                    {r.type}
+                  </span>
+                  {r.link && (
+                    <a
+                      href={r.link}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className={`ml-auto shrink-0 ${buttonStyles.underline}`}
+                    >
+                      Σύνδεσμος
+                    </a>
+                  )}
+                </div>
+                <p className="mt-1 text-xs leading-snug text-zinc-500 dark:text-zinc-400">
+                  {r.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Same-city activities strip — clicking a card's "See more" switches the
           modal to that activity in place (history via the stack above). */}

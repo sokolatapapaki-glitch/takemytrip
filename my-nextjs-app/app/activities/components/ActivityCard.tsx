@@ -56,7 +56,12 @@ export function ActivityCard({
   const hoverClass = compact
     ? "hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-900/10"
     : "hover:-translate-y-1 hover:rotate-1 hover:shadow-xl hover:shadow-orange-900/10";
-  const descriptionClass = compact ? "hidden" : "line-clamp-2 text-sm text-zinc-400";
+  // Show the description in BOTH layouts (#7/#11) — users need to know what an
+  // activity is BEFORE selecting it, not only after. Compact cards clamp tighter
+  // to stay small.
+  const descriptionClass = compact
+    ? "line-clamp-2 text-xs text-zinc-400"
+    : "line-clamp-2 text-sm text-zinc-400";
 
   return (
     <>

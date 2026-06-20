@@ -20,6 +20,7 @@ import {
 import { MapLayers } from "./MapLayers";
 import { SearchSidebar } from "./SearchSidebar";
 import { VibeBar } from "./VibeBar";
+import { VIBE_UI_ENABLED } from "@/app/config/features";
 import { CityLabel } from "./CityLabel";
 import { HoveredActivityCard } from "./HoveredActivityCard";
 
@@ -172,8 +173,9 @@ export default function MapExperience() {
         </div>
 
         {/* The vibe bar (top-center) only makes sense once a city is focused and
-            its activities are showing on the map — hidden while zoomed out. */}
-        {focusedCityId !== null && (
+            its activities are showing on the map — hidden while zoomed out. Also
+            gated off entirely while the vibe UI is disabled (#4). */}
+        {VIBE_UI_ENABLED && focusedCityId !== null && (
           <div className="pointer-events-auto absolute left-1/2 top-4 hidden -translate-x-1/2 sm:block">
             <VibeBar
               active={filters.vibe}

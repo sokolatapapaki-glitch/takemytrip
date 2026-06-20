@@ -1,15 +1,19 @@
 "use client";
 
-// Destination picker: a simple list of destinations on the left. Hovering a row
-// reveals a tail-less arrow on its right and opens an areas flyout (default =
-// the first area, i.e. a city's centre or a region's main city). The flyout only
-// shows while a result is hovered. Clicking a row selects its default area;
-// clicking an area in the flyout selects that one.
+// Destination picker: a list of destinations on the left. Clicking a destination
+// selects it (its centre as the provisional start point) and opens, on the right
+// (or inline on mobile), a search for a PERSONAL START POINT — an address or
+// hotel name within that destination (#3). No areas are shown. Picking a
+// suggestion finalises the start point; leaving it keeps the city centre.
 
 import { useEffect, useState } from "react";
 import { DESTINATIONS } from "../data/destinations";
 import type { DestinationSelection } from "../data/types";
 import { FaChevronRight } from "react-icons/fa6";
+import {
+  StartPointSearch,
+  type StartPoint,
+} from "@/app/components/ActivityCombinations/StartPointSearch";
 
 // Thin, faded scrollbar that only shows while the list is hovered.
 const HOVER_SCROLLBAR =
@@ -19,19 +23,27 @@ const HOVER_SCROLLBAR =
 
 export function DestinationModal({
   value,
-  onSelect,
+  onChooseDestination,
+  onChoosePoint,
+  onClose,
   query = "",
 }: {
   value: DestinationSelection | null;
-  onSelect: (destinationId: string, areaId: string) => void;
+  // Row click: pick the destination (start point defaults to its centre). On
+  // desktop this also closes the dropdown (onClose); the start-point search is
+  // reached by HOVERING the row instead.
+  onChooseDestination: (destinationId: string) => void;
+  // Suggestion picked in the search: finalise the personal start point + close.
+  onChoosePoint: (destinationId: string, point: StartPoint) => void;
+  // Closes the dropdown (desktop row click). Omitted on mobile flows.
+  onClose?: () => void;
   // Optional free-text filter coming from the writable destination input on the
-  // homepage. Matches destination name or country (case-insensitive).
+  // homepage. Matches destination name, country, or English aliases.
   query?: string;
 }) {
-  // Which destination's areas are shown in the flyout — null until a row is
-  // hovered/focused, so the area modal never shows on its own.
-  const [activeId, setActiveId] = useState<string | null>(null);
-  const [expandedId, setExpandedId] = useState<string | null>(null);
+  // Which destination's start-point search is shown — set on click (desktop) or
+  // expanded inline (mobile). Null until a destination is chosen.
+  const [activeId, setActiveId] = useState<string | null>(value?.destinationId ?? null);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -46,19 +58,39 @@ export function DestinationModal({
   const shown = q
     ? DESTINATIONS.filter(
         (d) =>
-          d.name.toLowerCase().includes(q) || d.country.toLowerCase().includes(q)
+          d.name.toLowerCase().includes(q) ||
+          d.country.toLowerCase().includes(q) ||
+          d.aliases?.some((a) => a.toLowerCase().includes(q))
       )
     : DESTINATIONS;
-  // Don't show a stale flyout for a destination filtered out of the list.
+  // Don't keep a stale panel open for a destination filtered out of the list.
   const active =
     activeId && shown.some((d) => d.id === activeId)
       ? DESTINATIONS.find((d) => d.id === activeId) ?? null
       : null;
 
+  // The start-point search for one destination (shared by desktop + mobile).
+  const startPointSearch = (destination: NonNullable<typeof active>) => (
+    <StartPointSearch
+      cityName={destination.name}
+      near={destination.center}
+      currentLabel={
+        value?.destinationId === destination.id &&
+        value.pointName !== destination.name
+          ? value.pointName
+          : undefined
+      }
+      onSelect={(point) => onChoosePoint(destination.id, point)}
+    />
+  );
+
   return (
-    // Clearing on leaving the whole modal (not each row) keeps the flyout open
-    // while the cursor travels from a row into it.
-    <div className="flex flex-col gap-2 sm:flex-row" onMouseLeave={() => setActiveId(null)}>
+    // Clearing on leaving the WHOLE modal (not each row) keeps the hovered panel
+    // open while the cursor travels from a row into the start-point search.
+    <div
+      className="flex flex-col gap-2 sm:flex-row"
+      onMouseLeave={() => !isMobile && setActiveId(null)}
+    >
       <ul className={`max-h-72 w-full shrink-0 overflow-y-auto p-2 sm:w-56 ${HOVER_SCROLLBAR}`}>
         {shown.length === 0 && (
           <li className="px-3 py-2 text-sm text-zinc-400">Κανένα αποτέλεσμα</li>
@@ -66,19 +98,21 @@ export function DestinationModal({
         {shown.map((d) => {
           const selected = value?.destinationId === d.id;
           const isActive = activeId === d.id;
-          const isExpanded = expandedId === d.id;
           return (
             <li key={d.id}>
               <button
                 type="button"
-                onMouseEnter={() => setActiveId(d.id)}
-                onFocus={() => setActiveId(d.id)}
+                // Desktop: hovering reveals the start-point search panel.
+                onMouseEnter={() => !isMobile && setActiveId(d.id)}
+                onFocus={() => !isMobile && setActiveId(d.id)}
                 onClick={() => {
+                  // Click selects the destination into the input (centre as the
+                  // default start point). Desktop closes; mobile expands inline.
+                  onChooseDestination(d.id);
                   if (isMobile) {
-                    setExpandedId((current) => (current === d.id ? null : d.id));
-                    setActiveId(d.id);
+                    setActiveId((cur) => (cur === d.id ? null : d.id));
                   } else {
-                    onSelect(d.id, d.areas[0].id);
+                    onClose?.();
                   }
                 }}
                 className={`flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left transition-colors ${
@@ -98,38 +132,13 @@ export function DestinationModal({
                 />
               </button>
 
-              {isMobile && isExpanded ? (
-                <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-2 text-sm text-zinc-700 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100">
-                  <p className="mb-2 px-2 text-xs font-semibold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">
-                    {d.subLabel === "Cities" ? "Πόλεις" : "Περιοχές"}
+              {/* Mobile: the start-point search expands inline under the row. */}
+              {isMobile && isActive ? (
+                <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-3 dark:border-zinc-800 dark:bg-zinc-900">
+                  <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">
+                    Σημείο εκκίνησης στη/στο {d.name}
                   </p>
-                  <ul className="space-y-1">
-                    {d.areas.map((a, i) => {
-                      const selectedArea =
-                        value?.destinationId === d.id && value?.areaId === a.id;
-                      return (
-                        <li key={a.id}>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              onSelect(d.id, a.id);
-                              setExpandedId(null);
-                            }}
-                            className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-sm transition-colors ${
-                              selectedArea
-                                ? "bg-orange-500 text-white"
-                                : "text-zinc-700 hover:bg-orange-100 dark:text-zinc-100 dark:hover:bg-zinc-800"
-                            }`}
-                          >
-                            <span>{a.name}</span>
-                            {i === 0 && !selectedArea ? (
-                              <span className="text-[10px] text-emerald-500">προεπιλογή</span>
-                            ) : null}
-                          </button>
-                        </li>
-                      );
-                    })}
-                  </ul>
+                  {startPointSearch(d)}
                 </div>
               ) : null}
             </li>
@@ -137,36 +146,13 @@ export function DestinationModal({
         })}
       </ul>
 
+      {/* Desktop: the start-point search panel for the chosen destination. */}
       {active && !isMobile && (
-        <div className="w-full shrink-0 border-t border-black/5 p-2 sm:w-48 sm:border-l sm:border-t-0">
-          <p className="px-2 pb-1 pt-2 text-xs font-semibold uppercase tracking-wide text-zinc-400">
-            {active.subLabel === "Cities" ? "Πόλεις" : "Περιοχές"}
+        <div className="w-full shrink-0 border-t border-black/5 p-3 sm:w-72 sm:border-l sm:border-t-0">
+          <p className="px-1 pb-2 text-xs font-semibold uppercase tracking-wide text-zinc-400">
+            Σημείο εκκίνησης στη/στο {active.name}
           </p>
-          <ul className={`max-h-60 overflow-y-auto ${HOVER_SCROLLBAR}`}>
-            {active.areas.map((a, i) => {
-              const selected =
-                value?.destinationId === active.id && value?.areaId === a.id;
-              const isDefault = i === 0;
-              return (
-                <li key={a.id}>
-                  <button
-                    type="button"
-                    onClick={() => onSelect(active.id, a.id)}
-                    className={`flex w-full items-center justify-between rounded-lg px-3 py-1.5 text-left text-sm transition-colors ${
-                      selected
-                        ? "bg-orange-500 text-white"
-                        : "text-zinc-700 hover:bg-orange-50"
-                    }`}
-                  >
-                    <span>{a.name}</span>
-                    {isDefault && !selected && (
-                      <span className="text-[10px] text-emerald-500">προεπιλογή</span>
-                    )}
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
+          {startPointSearch(active)}
         </div>
       )}
     </div>

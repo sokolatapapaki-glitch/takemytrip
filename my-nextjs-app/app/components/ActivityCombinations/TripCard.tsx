@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { FaChevronDown, FaChevronUp, FaRoute, FaTrashCan } from "react-icons/fa6";
 import { DAYS } from "./core/activities.data";
-import { activityPrice, type Party } from "./core/activities.functions";
+import { activityPrice, partyPriceLines, type Party } from "./core/activities.functions";
 import { ALL_ACTIVITIES, CITIES, type Area } from "./core/cities.data";
 import { DESTINATION_IMAGES } from "@/app/cities/components/destinationImages.generated";
 import type { Filter, Selection } from "./core/filters.functions";
@@ -52,6 +52,32 @@ function totalPriceOf(trip: Trip): number {
     (sum, d) => sum + d.activities.reduce((s, a) => s + activityPrice(a), 0),
     0
   );
+}
+
+// Per-member trip cost (#10): what ONE person of each group (adults, each child
+// age) pays across the WHOLE trip, summed from each activity's per-age prices.
+// These are catalogue per-age prices (family bundles, applied at the activity
+// level, can make the grand total lower) — they answer "πόσο κοστίζει το κάθε
+// άτομο", which the previous per-member view showed.
+function tripMemberLines(
+  trip: Trip,
+  party: Party
+): { label: string; count: number; perPerson: number }[] {
+  const acc = new Map<string, { label: string; count: number; perPerson: number }>();
+  for (const d of trip.days) {
+    for (const a of d.activities) {
+      for (const line of partyPriceLines(a, party)) {
+        const cur = acc.get(line.label) ?? {
+          label: line.label,
+          count: line.count,
+          perPerson: 0,
+        };
+        cur.perPerson += line.perPerson;
+        acc.set(line.label, cur);
+      }
+    }
+  }
+  return [...acc.values()];
 }
 
 // The traveller party in Greek, e.g. "2 ενήλικες, 1 παιδί" (children dropped when
@@ -162,6 +188,27 @@ export function TripCard({
     ? DESTINATION_IMAGES[CITIES.find((c) => c.name === cityName)?.id ?? ""] ?? null
     : null;
 
+  // Indicative savings (#10): the city's pass, plus any magic combo whose every
+  // activity is in this trip — its bundle price is the party's summed activity
+  // prices minus the combo's (indicative) discount. Both are clearly labelled
+  // "ενδεικτικά" in the UI.
+  const cityObj = cityName ? CITIES.find((c) => c.name === cityName) : undefined;
+  const cityPass = cityObj?.cityPass ?? null;
+  const tripActByName = new Map(
+    trip.days.flatMap((d) => d.activities).map((a) => [a.name, a] as const)
+  );
+  const applicableCombos = (cityObj?.magicCombos ?? [])
+    .filter((c) => c.activityNames.every((n) => tripActByName.has(n)))
+    .map((c) => {
+      const full = c.activityNames.reduce(
+        (s, n) => s + activityPrice(tripActByName.get(n)!, party),
+        0
+      );
+      const bundle = Math.round(full * (1 - c.discountPercent / 100));
+      return { combo: c, full, bundle, saving: full - bundle };
+    })
+    .filter((x) => x.full > 0 && x.saving > 0);
+
   const cardClass =
     "animate-card-pop overflow-hidden rounded-3xl border border-white/80 bg-white/80 shadow-xl shadow-orange-900/10 ring-1 ring-black/5 backdrop-blur-md transition duration-200 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-900/10";
   const imageClass =
@@ -203,6 +250,17 @@ export function TripCard({
         <p className="text-sm text-zinc-500">Συνολική τιμή: €{totalPrice}</p>
         {party ? (
           <p className="text-sm text-zinc-500">Ταξιδιώτες: {travelersLabel(party)}</p>
+        ) : null}
+        {party ? (
+          <p className="mt-0.5 text-xs text-zinc-500">
+            Ανά άτομο:{" "}
+            {tripMemberLines(trip, party)
+              .map(
+                (l) =>
+                  `${l.label}${l.count > 1 ? ` ×${l.count}` : ""}: €${l.perPerson}`
+              )
+              .join(" · ")}
+          </p>
         ) : null}
       </div>
       <div className="flex w-full items-center justify-end gap-2 sm:w-auto sm:flex-row sm:items-center">
@@ -302,6 +360,8 @@ export function TripCard({
                     day={td.day}
                     note={`βαθμός ${td.score.toFixed(2)} · ${td.load.toFixed(1)}ω · με μεσημεριανό`}
                     showSeeMore
+                    showDetails
+                    party={party}
                     onReplace={onReplace}
                     onRemove={onRemove}
                     onAdd={onAdd}
@@ -323,6 +383,55 @@ export function TripCard({
             </div>
           ))}
         </div>
+
+        {/* Indicative savings: city pass + magic combos (#10). */}
+        {cityPass || applicableCombos.length > 0 ? (
+          <div className="rounded-2xl border border-emerald-200/70 bg-emerald-50/60 p-4 dark:border-emerald-400/20 dark:bg-emerald-950/20">
+            <div className="flex items-baseline justify-between gap-2">
+              <h4 className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">
+                Προτάσεις εξοικονόμησης
+              </h4>
+              <span className="text-[10px] font-medium uppercase tracking-wide text-emerald-700/70 dark:text-emerald-300/70">
+                ενδεικτικά
+              </span>
+            </div>
+
+            {cityPass ? (
+              <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">
+                <span className="font-medium text-zinc-800 dark:text-zinc-100">
+                  Κάρτα πόλης: {cityPass.name}
+                </span>{" "}
+                — γλιτώνεις ~{cityPass.discountPercent}%.{" "}
+                <span className="text-zinc-500 dark:text-zinc-400">{cityPass.description}</span>{" "}
+                <a
+                  href={cityPass.url}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className={buttonStyles.underline}
+                >
+                  Δες την κάρτα
+                </a>
+              </p>
+            ) : null}
+
+            {applicableCombos.length > 0 ? (
+              <ul className="mt-2 flex flex-col gap-1.5">
+                {applicableCombos.map(({ combo, full, bundle, saving }) => (
+                  <li key={combo.name} className="text-sm text-zinc-600 dark:text-zinc-300">
+                    <span className="font-medium text-zinc-800 dark:text-zinc-100">
+                      Magic combo «{combo.name}»
+                    </span>
+                    : {combo.activityNames.length} μαζί ~€{bundle} αντί €{full}{" "}
+                    <span className="text-emerald-700 dark:text-emerald-400">(−€{saving})</span>
+                    <span className="block text-xs text-zinc-500 dark:text-zinc-400">
+                      {combo.description}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </div>
+        ) : null}
 
         {/* "Why this trip?" — BELOW the days (not inline with them). Needs the
             live proof inputs, which saved trips don't carry. */}

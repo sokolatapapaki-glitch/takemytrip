@@ -2,10 +2,17 @@
 // Shared selection types for the /start trip-search page
 // -----------------------------------------------------------------------------
 
-// Which destination + sub-area the user picked (ids reference DESTINATIONS).
+// A map point (WGS84) for the chosen personal start point.
+export type Coords = { lat: number; lng: number };
+
+// Which destination the user picked, plus their personal START POINT within it
+// (an address / hotel searched in the destination modal, or the city centre by
+// default). `pointName` is the label shown; `coords` is the route anchor handed
+// to the planner.
 export type DestinationSelection = {
   destinationId: string;
-  areaId: string;
+  pointName: string;
+  coords: Coords;
 };
 
 // The chosen trip dates. `start` is picked first; `end` stays null until the

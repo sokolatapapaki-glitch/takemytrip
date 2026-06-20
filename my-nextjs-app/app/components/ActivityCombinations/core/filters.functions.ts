@@ -115,6 +115,13 @@ export type Filter = {
   // Which option index is pre-selected by defaultSelection (single-select only).
   // Omitted = the middle option. Code-bound (not user-edited).
   defaultOption?: number;
+  // UI-HIDDEN flag: keep this filter in the array (so its index — and thus every
+  // selection key — and its scoring stay intact) but DON'T render its control.
+  // Used to retire a knob the user found confusing while preserving the ranking
+  // it produces (e.g. "Tourist priority"). A hidden MULTI filter additionally
+  // defaults to NO options selected, so it contributes nothing ("vibe off").
+  // Code-bound (not user-edited).
+  hidden?: boolean;
   options: FilterOption[];
 };
 
@@ -137,9 +144,15 @@ export function defaultSelection(filters: Filter[]): Selection {
   return Object.fromEntries(
     filters.map((f, i) => [
       i,
-      f.multi
-        ? [0]
-        : [f.defaultOption ?? Math.floor((f.options.length - 1) / 2)],
+      // A hidden multi filter (e.g. Vibe when its UI is off) starts with nothing
+      // selected, so it contributes nothing to scoring ("all vibes"). Hidden
+      // single filters (e.g. Tourist priority) keep their default so the ranking
+      // they drive is preserved even though the control isn't shown.
+      f.hidden && f.multi
+        ? []
+        : f.multi
+          ? [0]
+          : [f.defaultOption ?? Math.floor((f.options.length - 1) / 2)],
     ])
   );
 }
