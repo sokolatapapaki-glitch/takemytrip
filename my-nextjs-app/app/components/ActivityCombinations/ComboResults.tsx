@@ -1,13 +1,14 @@
 "use client";
 
 import { Fragment, useState } from "react";
-import { FaArrowsRotate, FaChevronDown, FaChevronUp, FaTrashCan } from "react-icons/fa6";
+import { FaArrowsRotate, FaChevronDown, FaChevronUp, FaRoute, FaTrashCan } from "react-icons/fa6";
 import type { Activity, Coords, Party } from "./core/activities.functions";
 import {
   activityPrice,
   distanceKm,
   formatDistance,
   formatTime,
+  googleMapsDirectionsUrl,
   partyPriceLines,
   partyPriceLinesTotal,
   setActiveCity,
@@ -163,12 +164,12 @@ export function DayItinerary({
           const next = plan.items[i + 1];
           const isFirst = i === 0;
           const isLast = i === plan.items.length - 1;
-          let leg: { km: number; label?: string } | null = null;
+          let leg: { km: number; from: Coords; to: Coords; label?: string } | null = null;
           if (next && !item.lunch && !next.lunch) {
             // Two directly-adjacent activities.
             const a = COORDS_BY_NAME.get(item.name);
             const b = COORDS_BY_NAME.get(next.name);
-            if (a && b) leg = { km: distanceKm(a, b) };
+            if (a && b) leg = { km: distanceKm(a, b), from: a, to: b };
           } else if (item.lunch && next) {
             // Bridge the lunch: distance from the activity before it to the one
             // after it (the two it sits between).
@@ -176,7 +177,7 @@ export function DayItinerary({
             const a = prev ? COORDS_BY_NAME.get(prev.name) : undefined;
             const b = COORDS_BY_NAME.get(next.name);
             if (prev && a && b)
-              leg = { km: distanceKm(a, b), label: `${prev.name} → ${next.name}` };
+              leg = { km: distanceKm(a, b), from: a, to: b, label: `${prev.name} → ${next.name}` };
           }
           return (
             <Fragment key={item.name}>
@@ -308,8 +309,19 @@ export function DayItinerary({
                   ) : (
                     <span className="w-28 shrink-0" />
                   )}
-                  <span className="inline-flex items-center gap-1">
+                  <span className="inline-flex items-center gap-1.5">
                     {formatDistance(leg.km)}
+                    <a
+                      href={googleMapsDirectionsUrl(leg.from, leg.to, leg.km)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      title="Διαδρομή στο Google Maps"
+                      aria-label="Διαδρομή στο Google Maps"
+                      className="inline-flex items-center text-orange-500 transition-colors hover:text-orange-600"
+                    >
+                      <FaRoute className="h-3.5 w-3.5" />
+                    </a>
                     {leg.label ? (
                       <span className="text-zinc-300 dark:text-zinc-600">
                         {" "}· {leg.label}

@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import L from "leaflet";
 import { MapContainer, TileLayer, Marker, Polyline, useMap } from "react-leaflet";
 import type { Coords } from "./core/activities.functions";
+import { distanceKm, googleMapsDirectionsUrl } from "./core/activities.functions";
 
 export type MapStop = { name: string; coords: Coords };
 
@@ -42,6 +43,22 @@ function pinIcon(label: string, name: string, bg: string): L.DivIcon {
     </div>`,
     iconSize: [28, 28],
     iconAnchor: [14, 14],
+  });
+}
+
+// A small clickable badge placed at the midpoint of each route leg: opens that
+// leg's Google Maps directions in a new tab.
+function dirIcon(): L.DivIcon {
+  return L.divIcon({
+    className: "",
+    html: `<div title="Διαδρομή στο Google Maps" style="cursor:pointer" class="flex h-6 w-6 items-center justify-center rounded-full border border-orange-300 bg-white shadow-md shadow-slate-900/25">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="15 10 20 15 15 20"/>
+        <path d="M4 4v7a4 4 0 0 0 4 4h12"/>
+      </svg>
+    </div>`,
+    iconSize: [24, 24],
+    iconAnchor: [12, 12],
   });
 }
 
@@ -82,6 +99,18 @@ export default function DayMap({
       : points;
   const center = points[0] ?? ([37.9838, 23.7275] as [number, number]);
 
+  // Consecutive legs of the route (start → 1 → 2 → …, plus the closing leg back
+  // to the start on a circular day), each with the midpoint where a Google Maps
+  // directions badge sits.
+  const legs: { mid: [number, number]; url: string }[] = [];
+  const pushLeg = (a: MapStop, b: MapStop) =>
+    legs.push({
+      mid: [(a.coords.lat + b.coords.lat) / 2, (a.coords.lng + b.coords.lng) / 2],
+      url: googleMapsDirectionsUrl(a.coords, b.coords, distanceKm(a.coords, b.coords)),
+    });
+  for (let i = 0; i < ordered.length - 1; i++) pushLeg(ordered[i], ordered[i + 1]);
+  if (circular && start && stops.length > 0) pushLeg(ordered[ordered.length - 1], ordered[0]);
+
   return (
     <MapContainer
       center={center}
@@ -116,6 +145,16 @@ export default function DayMap({
           key={s.name}
           position={[s.coords.lat, s.coords.lng]}
           icon={pinIcon(String(i + 1), s.name, "bg-emerald-600")}
+        />
+      ))}
+
+      {/* A Google Maps directions badge at the centre of each connecting leg. */}
+      {legs.map((leg, i) => (
+        <Marker
+          key={`leg-${i}`}
+          position={leg.mid}
+          icon={dirIcon()}
+          eventHandlers={{ click: () => window.open(leg.url, "_blank", "noopener,noreferrer") }}
         />
       ))}
 

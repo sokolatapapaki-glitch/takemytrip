@@ -186,6 +186,20 @@ export function formatDistance(km: number): string {
   return `${km.toFixed(1)} χλμ`;
 }
 
+// A Google Maps "directions" deep-link between two points. Uses the free Google
+// Maps URLs scheme (no API key, no quota): it just opens Google Maps — the app on
+// mobile if installed, else the web — with the route pre-filled and ready. Mode is
+// walking for short hops, otherwise transit; Google still lets the user switch.
+export function googleMapsDirectionsUrl(from: Coords, to: Coords, km?: number): string {
+  const mode = km != null && km <= 2 ? "walking" : "transit";
+  return (
+    "https://www.google.com/maps/dir/?api=1" +
+    `&origin=${from.lat},${from.lng}` +
+    `&destination=${to.lat},${to.lng}` +
+    `&travelmode=${mode}`
+  );
+}
+
 // Route LINEARITY (Option A — detour ratio): how directly a route progresses
 // versus zig-zagging back and forth, as a 0–10 index. It is the straight-line
 // first→last distance over the total path length, ×10:
