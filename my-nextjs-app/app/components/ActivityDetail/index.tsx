@@ -27,6 +27,7 @@ import { activityImages } from "@/app/activities/components/activityImages";
 import { Stars } from "@/app/components/ui/Stars";
 import { buttonStyles } from "@/app/components/ui/buttonStyles";
 import { hoverScrollbar } from "@/app/components/ui/scrollbar";
+import { SINGLE_ACTIVITY_IMAGE } from "@/app/config";
 
 // How many thumbnail images the gallery shows (placeholders for now).
 const THUMB_COUNT = 5;
@@ -130,8 +131,11 @@ export function ActivityDetail({
   const vibe = bestVibe(current);
   const VibeIcon = VIBE_ICONS[vibe.key];
   const stars = starsOf(current);
-  // The activity's photo gallery (empty → gradient fallback in the UI).
-  const images = activityImages(current);
+  // The activity's photo gallery (empty → gradient fallback in the UI). When the
+  // SINGLE_ACTIVITY_IMAGE flag is on, keep only the first image (and the
+  // thumbnail tabs are hidden below).
+  const allImages = activityImages(current);
+  const images = SINGLE_ACTIVITY_IMAGE ? allImages.slice(0, 1) : allImages;
   // The city this activity belongs to (names are unique across catalogues) —
   // drives the related-activities strip and the "See all" link.
   const city = CITIES.find((c) => c.activities.some((a) => a.name === current.name));
@@ -245,6 +249,7 @@ export function ActivityDetail({
             )}
           </div>
 
+          {!SINGLE_ACTIVITY_IMAGE && (
           <div className="flex justify-center gap-2">
             {(images.length > 0
               ? images
@@ -275,6 +280,7 @@ export function ActivityDetail({
               </button>
             ))}
           </div>
+          )}
         </div>
 
         {/* Right column is capped to the left column's height (image md:h-72 +
