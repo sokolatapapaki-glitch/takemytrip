@@ -12,11 +12,13 @@
 import { useState } from "react";
 import { DESTINATIONS } from "../data/destinations";
 import type { DestinationSelection } from "../data/types";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import { FaChevronLeft, FaChevronRight, FaMapLocationDot } from "react-icons/fa6";
+import { buttonStyles } from "@/app/components/ui/buttonStyles";
 import {
   StartPointSearch,
   type StartPoint,
 } from "@/app/components/ActivityCombinations/StartPointSearch";
+import { MapPickerModal } from "./MapPickerModal";
 
 // Thin, faded scrollbar that only shows while the list is hovered.
 const HOVER_SCROLLBAR =
@@ -47,6 +49,8 @@ export function DestinationModal({
   // (a changing key remounts the pane). 0 on first open → no slide (the
   // Dropdown's own pop-in covers the entrance).
   const [backCount, setBackCount] = useState(0);
+  // Whether the full-screen / fixed map picker is open over the address step.
+  const [mapOpen, setMapOpen] = useState(false);
 
   const q = query.trim().toLowerCase();
   const shown = q
@@ -137,6 +141,33 @@ export function DestinationModal({
             }
             onSelect={(point) => onChoosePoint(active.id, point)}
           />
+
+          {/* Opens the Leaflet map picker for this destination. */}
+          <button
+            type="button"
+            onClick={() => setMapOpen(true)}
+            className={`mt-2 inline-flex w-full items-center justify-center gap-2 ${buttonStyles.common}`}
+          >
+            <FaMapLocationDot className="h-4 w-4 text-orange-500" />
+            Αναζήτηση στον χάρτη
+          </button>
+
+          {mapOpen && (
+            <MapPickerModal
+              cityName={active.name}
+              cityCenter={active.center}
+              initialPoint={
+                value?.destinationId === active.id && value.pointName !== active.name
+                  ? { name: value.pointName, coords: value.coords }
+                  : null
+              }
+              onSelect={(point) => {
+                onChoosePoint(active.id, point);
+                setMapOpen(false);
+              }}
+              onClose={() => setMapOpen(false)}
+            />
+          )}
         </div>
       )}
     </div>
