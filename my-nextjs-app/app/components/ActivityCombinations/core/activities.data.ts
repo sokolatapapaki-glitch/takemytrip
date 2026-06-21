@@ -20,6 +20,18 @@ export const ACTIVITIES: Activity[] = ROME_ACTIVITIES;
 // ORDER (index 0 = Mon … 6 = Sun).
 export const DAYS = ["Δευ", "Τρί", "Τετ", "Πέμ", "Παρ", "Σάβ", "Κυρ"] as const;
 
+// Full weekday names (same Monday-first order), for places that have room for the
+// whole word — e.g. the trip card's day headings.
+export const DAYS_FULL = [
+  "Δευτέρα",
+  "Τρίτη",
+  "Τετάρτη",
+  "Πέμπτη",
+  "Παρασκευή",
+  "Σάββατο",
+  "Κυριακή",
+] as const;
+
 export const VIBES: { key: VibeKey; name: string }[] = [
   { key: "cultural", name: "Πολιτισμός" },
   { key: "foodie", name: "Φαγητό" },

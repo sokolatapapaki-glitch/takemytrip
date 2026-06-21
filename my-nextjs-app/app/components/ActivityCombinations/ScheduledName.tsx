@@ -15,10 +15,13 @@ export function ScheduledName({
   item,
   activity,
   day,
+  showHours = true,
 }: {
   item: ScheduledItem;
   activity: Activity | undefined;
   day: number;
+  // Whether to show the per-day "Ωράριο" toggle. Off on the trip card.
+  showHours?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const nameClass = item.closed
@@ -31,7 +34,7 @@ export function ScheduledName({
     <div className="relative flex min-w-0 flex-col gap-1">
       <div className="flex items-center gap-2">
         <span className={nameClass}>{item.name}</span>
-        {activity ? (
+        {activity && showHours ? (
           <button
             type="button"
             onClick={() => setOpen((o) => !o)}

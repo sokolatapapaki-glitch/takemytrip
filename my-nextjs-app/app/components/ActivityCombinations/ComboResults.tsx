@@ -13,7 +13,7 @@ import {
   partyPriceLinesTotal,
   setActiveCity,
 } from "./core/activities.functions";
-import { DAYS } from "./core/activities.data";
+import { DAYS, DAYS_FULL } from "./core/activities.data";
 import { ALL_ACTIVITIES, type City, type Area } from "./core/cities.data";
 import { Filter, Selection, comboScore, filterApplies, optionValue } from "./core/filters.functions";
 import {
@@ -93,6 +93,7 @@ export function DayItinerary({
   note,
   showSeeMore = false,
   showDetails = false,
+  fullDayName = false,
   party,
   onReplace,
   onRemove,
@@ -126,6 +127,9 @@ export function DayItinerary({
   // Opt-in (Trip component only): draw a timeline rail (a dot per stop joined by a
   // vertical line) on the left, like the Penpot board. Default off.
   connectors?: boolean;
+  // Opt-in (Trip card only): show the full weekday name in the heading instead of
+  // the 3-letter abbreviation.
+  fullDayName?: boolean;
 }) {
   const { openActivity } = useApp();
   const first = plan.items[0];
@@ -146,7 +150,7 @@ export function DayItinerary({
     <div className="flex flex-col gap-1">
       <div className="flex items-baseline justify-between gap-2">
         <h4 className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-          {DAYS[day]}
+          {fullDayName ? DAYS_FULL[day] : DAYS[day]}
         </h4>
       </div>
 
@@ -226,6 +230,7 @@ export function DayItinerary({
                       item={item}
                       activity={ACTIVITY_BY_NAME.get(item.name)}
                       day={day}
+                      showHours={!showSeeMore}
                     />
                   </div>
                   {showSeeMore && !item.lunch && ACTIVITY_BY_NAME.has(item.name) ? (
@@ -270,7 +275,7 @@ export function DayItinerary({
                         const total = activityPrice(act, party);
                         const bundle = total < naive;
                         return (
-                          <div className="order-4 basis-full pt-0.5 sm:pl-28">
+                          <div className="order-4 basis-full pt-0.5">
                             {act.description ? (
                               <p className="line-clamp-2 text-xs leading-snug text-zinc-500 dark:text-zinc-400">
                                 {act.description}
@@ -316,10 +321,10 @@ export function DayItinerary({
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}
-                      title="Διαδρομή στο Google Maps"
-                      aria-label="Διαδρομή στο Google Maps"
-                      className="inline-flex items-center text-orange-500 transition-colors hover:text-orange-600"
+                      title="Διαδρομή στον χάρτη"
+                      className="inline-flex items-center gap-1 text-orange-500 transition-colors hover:text-orange-600"
                     >
+                      Διαδρομή στον χάρτη
                       <FaRoute className="h-3.5 w-3.5" />
                     </a>
                     {leg.label ? (

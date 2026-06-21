@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { FaChevronDown, FaChevronUp, FaRoute, FaTrashCan } from "react-icons/fa6";
-import { DAYS } from "./core/activities.data";
+import { DAYS_FULL } from "./core/activities.data";
 import { activityPrice, partyPriceLines, type Party } from "./core/activities.functions";
 import { ALL_ACTIVITIES, CITIES, type Area } from "./core/cities.data";
 import { DESTINATION_IMAGES } from "@/app/cities/components/destinationImages.generated";
@@ -338,7 +338,7 @@ export function TripCard({
               {td.activities.length === 0 ? (
                 <>
                   <h4 className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
-                    {DAYS[td.day]}
+                    {DAYS_FULL[td.day]}
                   </h4>
                   <p className="mt-1 text-xs italic text-zinc-400">
                     Δεν έχουν τοποθετηθεί δραστηριότητες.
@@ -361,6 +361,7 @@ export function TripCard({
                     note={`βαθμός ${td.score.toFixed(2)} · ${td.load.toFixed(1)}ω · με μεσημεριανό`}
                     showSeeMore
                     showDetails
+                    fullDayName
                     party={party}
                     onReplace={onReplace}
                     onRemove={onRemove}
@@ -507,7 +508,7 @@ export function TripCard({
             if (!td) return null;
             return (
               <DayMapModal
-                title={`Διαδρομή — ${DAYS[td.day]}`}
+                title={`Διαδρομή — ${DAYS_FULL[td.day]}`}
                 stops={dayMapStops(td.plan)}
                 start={area ? { name: area.name, coords: area.coords } : undefined}
                 circular={circulars?.[mapSlot] ?? false}
