@@ -28,3 +28,9 @@ served crops came from `images.unsplash.com/photo-<id>?w=1280&h=830&fit=crop`.
 > Wikimedia Commons (see `scripts/gen-activity-images.mjs`) and would need a
 > credits page, or a re-run against the Unsplash/Pexels API, to be fully
 > attribution-clean.
+>
+> **Barcelona is the exception** — its activity images were re-curated one-by-one
+> (`scripts/gen-barcelona-images.mjs`): Unsplash where an accurate photo exists,
+> hand-picked Wikimedia Commons (with required attribution) elsewhere. Provenance
+> and credits: `doc/barcelona-activity-image-sources.md` and
+> `public/destinations/barcelona/_credits.json`.
