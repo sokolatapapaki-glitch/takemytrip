@@ -280,12 +280,11 @@ export default function StartTripSearch({
               <DestinationModal
                 value={dest}
                 query={destQuery}
-                onClose={() => setOpen(null)}
                 onChooseDestination={(destinationId) => {
                   const d = DESTINATIONS.find((x) => x.id === destinationId);
                   if (!d) return;
-                  // Default the start point to the city centre; keep the dropdown
-                  // open so the address/hotel search can refine it.
+                  // Default the start point to the city centre; the dropdown
+                  // stays open so the address/hotel step can refine it.
                   setDest({ destinationId, pointName: d.name, coords: d.center });
                   setDestQuery("");
                 }}

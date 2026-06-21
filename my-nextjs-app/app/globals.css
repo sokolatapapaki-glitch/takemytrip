@@ -211,6 +211,41 @@ body {
   animation: slide-in-right 0.28s ease-out both;
 }
 
+/* Two-step picker swap (destination list ⇄ address search): a slight slide+fade.
+   Forward (list → address) eases in from the right; Back (address → list) from
+   the left. Small offset = "slight". Used by the homepage destination modal. */
+@keyframes panel-in-right {
+  0% {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-panel-in-right {
+  animation: panel-in-right 0.22s ease-out both;
+}
+
+@keyframes panel-in-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-14px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-panel-in-left {
+  animation: panel-in-left 0.22s ease-out both;
+}
+
 /* Toast exits — reverse of the slide-down (mobile) / slide-in-right (desktop)
    entrances, fading out as they leave. */
 @keyframes toast-out-right {
@@ -359,7 +394,9 @@ body {
   .animate-fade-in-up,
   .animate-icon-pop,
   .animate-marker-pop,
-  .animate-card-pop {
+  .animate-card-pop,
+  .animate-panel-in-right,
+  .animate-panel-in-left {
     animation: none;
     opacity: 1;
   }
