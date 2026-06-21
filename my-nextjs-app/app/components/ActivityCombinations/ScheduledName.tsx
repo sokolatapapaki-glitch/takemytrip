@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
 import { DAYS } from "./core/activities.data";
 import { openingHoursFor, type Activity } from "./core/activities.functions";
 import type { ScheduledItem } from "./core/schedule.functions";
+import { buttonStyles } from "@/app/components/ui/buttonStyles";
 
 // One scheduled row's label: the activity name plus, for real activities, a
 // toggle that reveals its opening hours for every day of the week (the trip's
@@ -26,7 +28,7 @@ export function ScheduledName({
       : undefined;
 
   return (
-    <div className="flex min-w-0 flex-col gap-1">
+    <div className="relative flex min-w-0 flex-col gap-1">
       <div className="flex items-center gap-2">
         <span className={nameClass}>{item.name}</span>
         {activity ? (
@@ -34,23 +36,22 @@ export function ScheduledName({
             type="button"
             onClick={() => setOpen((o) => !o)}
             aria-expanded={open}
-            title="Opening hours by day"
-            className="shrink-0 rounded border border-black/[.08] px-1.5 py-0.5 text-[10px] font-medium text-zinc-500 transition-colors hover:bg-zinc-50 dark:border-white/[.145] dark:text-zinc-400 dark:hover:bg-zinc-800"
+            title="Ωράριο ανά ημέρα"
+            className={`hidden sm:inline-flex items-center gap-1 shrink-0 ${buttonStyles.underline}`}
           >
-            {open ? "Hours ▲" : "Hours ▼"}
+            Ωράριο {open ? <FaChevronUp className="h-3 w-3" /> : <FaChevronDown className="h-3 w-3" />}
           </button>
         ) : null}
       </div>
       {open && activity ? (
-        <ul className="flex flex-col gap-0.5 rounded-lg border border-black/[.08] bg-zinc-50 p-2 text-xs dark:border-white/[.145] dark:bg-zinc-800/50">
+        <ul className="absolute left-0 top-full z-30 mt-1 flex min-w-[12rem] flex-col gap-0.5 whitespace-nowrap rounded-lg border border-black/[.08] bg-white p-2 text-xs shadow-lg dark:border-white/[.145] dark:bg-zinc-900">
           {DAYS.map((d, i) => (
             <li
               key={d}
-              className={`flex justify-between gap-4 ${
-                i === day
-                  ? "font-medium text-zinc-800 dark:text-zinc-100"
-                  : "text-zinc-500 dark:text-zinc-400"
-              }`}
+              className={`flex justify-between gap-4 ${i === day
+                ? "font-medium text-zinc-800 dark:text-zinc-100"
+                : "text-zinc-500 dark:text-zinc-400"
+                }`}
             >
               <span>{d}</span>
               <span className="font-mono">{openingHoursFor(activity, i)}</span>

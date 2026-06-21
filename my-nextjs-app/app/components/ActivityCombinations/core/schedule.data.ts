@@ -13,4 +13,4 @@ export const LUNCH_CLOSE = 16; // HARD latest the lunch slot may start (4 PM)
 // ideal but may slide a little earlier (down to LUNCH_EARLIEST) so it still
 // fits; it may never start after LUNCH_CLOSE (4 PM).
 export const LUNCH_EARLIEST = 11.5; // earliest a flexed lunch may start (11:30)
-export const LUNCH_NAME = "Lunch break";
+export const LUNCH_NAME = "Διάλειμμα για φαγητό";

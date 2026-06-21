@@ -4,7 +4,13 @@
 // The filter config objects themselves (units, DEFAULT_FILTERS) live in
 // filters.data. This file holds the reusable index calculators, the scoring
 // math, and the types.
-import { Activity, NumericKey, maxComboValue } from "./activities.functions";
+import {
+  Activity,
+  NumericKey,
+  maxComboValue,
+  activityPrice,
+  maxPartyPrice,
+} from "./activities.functions";
 import { CURVE_BY_NAME } from "./curves.data";
 import type { Curve, Params, ScaleScore } from "./curves.functions";
 
@@ -20,11 +26,12 @@ export function averageIndex(key: NumericKey) {
 }
 
 // NORMALIZED SUM — total of a field, scaled to 0–10 against the maximum possible
-// total (magnitude, e.g. how long / how expensive the whole combo is).
+// total (magnitude, e.g. how long / how expensive the whole combo is). The max
+// is read at SCORING time (not when this closure is built) so it reflects the
+// active city's catalogue — see maxComboValue / setActiveCity.
 export function normalizedSumIndex(key: NumericKey) {
-  const max = maxComboValue(key);
   return (combo: Activity[]): number =>
-    (combo.reduce((s, a) => s + a[key], 0) / max) * 10;
+    (combo.reduce((s, a) => s + a[key], 0) / maxComboValue(key)) * 10;
 }
 
 // Raw total of a field across the combo (the real-world value, not the index).
@@ -36,6 +43,17 @@ export function sumOf(key: NumericKey) {
 export const hoursToIndex = (hours: number) =>
   (hours / maxComboValue("hours")) * 10;
 export const costToIndex = (cost: number) => (cost / maxComboValue("cost")) * 10;
+
+// PARTY COST — the same magnitude as a normalised sum, but using each activity's
+// price for the active traveller party (see activityPrice) instead of the flat
+// `cost` field. The catalogue total (maxPartyPrice) is read at scoring time so it
+// tracks the active city AND party. `|| 1` guards an all-free catalogue (÷0).
+export const sumPartyCost = (combo: Activity[]): number =>
+  combo.reduce((s, a) => s + activityPrice(a), 0);
+export const normalizedPartyCostIndex = (combo: Activity[]): number =>
+  (sumPartyCost(combo) / (maxPartyPrice() || 1)) * 10;
+export const partyCostToIndex = (cost: number): number =>
+  (cost / (maxPartyPrice() || 1)) * 10;
 
 // A real-world UNIT for a filter's option targets. When present, option targets
 // are entered/stored in this unit (e.g. hours, euros) and converted to the 0–10
@@ -87,13 +105,30 @@ export type Filter = {
   // from every combo score and the results sidebar, and applied only by planTrip.
   // See usageBreakdown / tripUseAllFilter below. Code-bound (not user-edited).
   tripUseAll?: boolean;
+  // TRIP-LEVEL flag: "day balance". Like tripUseAll it scores the whole trip, but
+  // its effect is a per-day reward folded into each day's score by the planner:
+  // raising its weight pushes the optimizer to even out the NUMBER of activities
+  // across the days (no near-empty day). It only uses its `weight` (the curve /
+  // options are inert). Excluded from combo scores + the sidebar. See
+  // tripBalanceFilter / the planner's per-day balance term. Code-bound.
+  tripBalance?: boolean;
+  // Which option index is pre-selected by defaultSelection (single-select only).
+  // Omitted = the middle option. Code-bound (not user-edited).
+  defaultOption?: number;
+  // UI-HIDDEN flag: keep this filter in the array (so its index — and thus every
+  // selection key — and its scoring stay intact) but DON'T render its control.
+  // Used to retire a knob the user found confusing while preserving the ranking
+  // it produces (e.g. "Tourist priority"). A hidden MULTI filter additionally
+  // defaults to NO options selected, so it contributes nothing ("vibe off").
+  // Code-bound (not user-edited).
+  hidden?: boolean;
   options: FilterOption[];
 };
 
 // Whether a filter scores the whole trip (not a single combo) — so it's left out
 // of every combo score and the results sidebar, and applied only by planTrip.
 export function isTripLevel(filter: Filter): boolean {
-  return !!filter.tripUseAll;
+  return !!filter.tripUseAll || !!filter.tripBalance;
 }
 
 // Whether a filter contributes to a given combo's score at all (see appliesTo).
@@ -109,7 +144,15 @@ export function defaultSelection(filters: Filter[]): Selection {
   return Object.fromEntries(
     filters.map((f, i) => [
       i,
-      f.multi ? [0] : [Math.floor((f.options.length - 1) / 2)],
+      // A hidden multi filter (e.g. Vibe when its UI is off) starts with nothing
+      // selected, so it contributes nothing to scoring ("all vibes"). Hidden
+      // single filters (e.g. Tourist priority) keep their default so the ranking
+      // they drive is preserved even though the control isn't shown.
+      f.hidden && f.multi
+        ? []
+        : f.multi
+          ? [0]
+          : [f.defaultOption ?? Math.floor((f.options.length - 1) / 2)],
     ])
   );
 }
@@ -181,6 +224,13 @@ export function tripUseAllFilter(
 ): { filter: Filter; index: number } | null {
   const index = filters.findIndex((f) => f.tripUseAll);
   return index === -1 ? null : { filter: filters[index], index };
+}
+
+// Locate the (single) "day balance" filter and read its weight (0 when absent or
+// off). The planner folds `weight × perDayBalance(count)` into each day's score.
+export function tripBalanceWeight(filters: Filter[]): number {
+  const f = filters.find((x) => x.tripBalance);
+  return f ? f.weight : 0;
 }
 
 // The shared proof of one trip-level index: the value, the target, and the curve
@@ -330,20 +380,42 @@ export function scoreBreakdown(
   };
 }
 
+// Hard ceiling on how many activities the all-subsets combos list enumerates over.
+// Enumeration is 2^n subsets AND each combo's route-directness score is a factorial
+// over its stops, so both explode well before the 50-activity catalogue. The combos
+// list is a separate browsing aid — the multi-day trip planner does NOT use it — so
+// for a larger pool we simply bound it to the top activities (by single-activity
+// score) to keep the UI responsive. A no-op for pools up to this size (the previous
+// catalogue and all unit tests), so their behaviour is unchanged.
+const MAX_COMBO_ENUM = 12;
+
 // Enumerate every non-empty subset, then order by score for the given filters.
+// (Bounded to the top MAX_COMBO_ENUM activities for oversized pools — see above.)
 export function buildCombinations(
   activities: Activity[],
   selection: Selection,
   filters: Filter[]
 ): Activity[][] {
+  // For a large pool, enumerate only over its highest-scoring activities so the
+  // 2^n subset sweep (and the per-combo factorial route metric) stays bounded.
+  const pool =
+    activities.length <= MAX_COMBO_ENUM
+      ? activities
+      : [...activities]
+          .sort(
+            (a, b) =>
+              comboScore([b], selection, filters) - comboScore([a], selection, filters)
+          )
+          .slice(0, MAX_COMBO_ENUM);
+
   const result: Activity[][] = [];
-  const total = 1 << activities.length;
+  const total = 1 << pool.length;
 
   for (let mask = 1; mask < total; mask++) {
     const combo: Activity[] = [];
-    for (let i = 0; i < activities.length; i++) {
+    for (let i = 0; i < pool.length; i++) {
       if (mask & (1 << i)) {
-        combo.push(activities[i]);
+        combo.push(pool[i]);
       }
     }
     result.push(combo);

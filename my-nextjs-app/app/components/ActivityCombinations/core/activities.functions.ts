@@ -14,6 +14,77 @@ export type DayHours = { open: number; close: number };
 // A point on the map (WGS84 decimal degrees), used to measure distances.
 export type Coords = { lat: number; lng: number };
 
+// Rome's civic centre (Piazza Venezia, near the kilometre-zero point) — the
+// default start anchor and the fallback for the active city before any city is
+// selected. The route directness + circular loop are measured from the ACTIVE
+// city's centre (see activeCenter / setActiveCity).
+export const ROME_CENTER: Coords = { lat: 41.8925, lng: 12.4853 };
+
+// -----------------------------------------------------------------------------
+// Active city (multi-city support)
+// -----------------------------------------------------------------------------
+// Two engine-wide values depend on the selected city: the catalogue that
+// `maxComboValue` normalizes against ("do everything" in THIS city), and the
+// route anchor `activeCenter()`. They live here as module state — mirroring how
+// the engine already depended on the global ACTIVITIES — and are set by the UI
+// via setActiveCity whenever the chosen city changes (and it resets all per-day
+// state, so the active city is stable across any one calculation).
+let activeCatalogue: Activity[] = ACTIVITIES;
+let activeCenterCoords: Coords = ROME_CENTER;
+// Cache of per-key catalogue totals (see maxComboValue). The scoring hot path
+// asks for these constantly, so we compute each once per active catalogue and
+// reuse it; switching city clears the cache.
+const maxComboCache = new Map<NumericKey, number>();
+
+// The chosen traveller party (from the /start hand-off) drives every price total:
+// each adult pays the "adult" age-price, each child its own age's price, and a
+// matching family bundle wins when it's cheaper (see activityPrice). It's engine
+// module state — like activeCatalogue — set by the UI via setActiveParty before
+// any scoring. `maxPartyCache` is the active catalogue's total at the active party
+// (the budget normaliser); both setActiveCity and setActiveParty clear it.
+export type Party = { adults: number; childAges: number[] };
+let activeParty: Party = { adults: 1, childAges: [] };
+let maxPartyCache: number | null = null;
+
+// Point the engine at a city's catalogue + start anchor. `city` is structurally
+// a { center, activities } (the City type lives in cities.data to avoid a
+// cycle). `anchor` overrides the route start point with the selected AREA's
+// coords; when omitted it falls back to the city centre.
+export function setActiveCity(
+  city: { center: Coords; activities: Activity[] },
+  anchor?: Coords
+): void {
+  activeCatalogue = city.activities;
+  activeCenterCoords = anchor ?? city.center;
+  maxComboCache.clear();
+  maxPartyCache = null; // the party-price total depends on the catalogue
+}
+
+// The active city's fixed start point (route anchor + circular-loop home).
+export function activeCenter(): Coords {
+  return activeCenterCoords;
+}
+
+// --- takemytrip-aligned metadata shapes (carried on every activity) ----------
+// Per-age and per-family-type prices (euros), keyed as in the takemytrip JSON
+// (e.g. ages: { "0": 0, "adult": 21.5 }, family: { "2_adults_2_children": 84 }).
+export type PriceTable = {
+  ages: Record<string, number>;
+  family: Record<string, number>;
+};
+// An external link for the activity (the site URL + a display name).
+export type WebsiteLink = { url: string; name: string };
+// A nearby eatery tied to the activity. `type` distinguishes a sit-down spot
+// ("food") from a "cafe". `link` is a maps/website URL.
+export type Restaurant = {
+  type: "food" | "cafe";
+  price: number | null;
+  name: string;
+  description: string;
+  link: string | null;
+  emoji: string | null;
+};
+
 export type Activity = {
   name: string;
   description: string;
@@ -25,16 +96,60 @@ export type Activity = {
   foodie: number; // 0–10
   adventurous: number; // 0–10
   relaxing: number; // 0–10
+  // How important / must-see this activity is for a typical tourist, 0–10 (10 = a
+  // bucket-list landmark like the Colosseum, low = a niche or skippable stop). It
+  // is NOT a vibe — it's an intrinsic importance the planner uses to favour
+  // including the big sights. Scored by the "Tourist priority" filter (see
+  // filters.data / PRIORITY_WEIGHT), which is weighted heavily so high-priority
+  // activities win the limited slots in a trip.
+  priority: number; // 0–10
   // Optional (foodie activities only): if true, this activity can stand in for
   // the midday lunch break when it's open during the 1–4 PM slot.
   is_lunch?: boolean;
+  // --- takemytrip-aligned metadata (null/empty on the hand-authored Rome/Paris
+  // catalogues for now; the planner doesn't read these — they're display data).
+  // Opening hours stay in `program`; there is no openHour/closeHour field.
+  id: number | null;
+  prices: PriceTable | null;
+  websites: WebsiteLink[];
+  googleMapUrl: string | null;
+  notes: string[];
+  tags: string[];
+  best_time: string | null;
+  restaurants: Restaurant[];
+  emoji: string | null;
+};
+
+// The empty defaults for the metadata fields above — so hand-authored and test
+// activities can stay valid without repeating the nine null/empty values.
+export const EMPTY_ACTIVITY_META: Pick<
+  Activity,
+  | "id"
+  | "prices"
+  | "websites"
+  | "googleMapUrl"
+  | "notes"
+  | "tags"
+  | "best_time"
+  | "restaurants"
+  | "emoji"
+> = {
+  id: null,
+  prices: null,
+  websites: [],
+  googleMapUrl: null,
+  notes: [],
+  tags: [],
+  best_time: null,
+  restaurants: [],
+  emoji: null,
 };
 
 // Independent vibe dimensions — one index each.
 export type VibeKey = "cultural" | "foodie" | "adventurous" | "relaxing";
 
 // Any numeric activity field an index can be built from.
-export type NumericKey = "hours" | "cost" | VibeKey;
+export type NumericKey = "hours" | "cost" | "priority" | VibeKey;
 
 // The window for a given day index (0=Mon..6=Sun); closed if out of range.
 export function dayHours(a: Activity, day: number): DayHours {
@@ -66,9 +181,9 @@ export function distanceKm(a: Coords, b: Coords): number {
   return 2 * R * Math.asin(Math.sqrt(h));
 }
 
-// Format a distance in km for display, e.g. "0.4 km" or "1.2 km".
+// Format a distance in km for display, e.g. "0.4 χλμ" or "1.2 χλμ".
 export function formatDistance(km: number): string {
-  return `${km.toFixed(1)} km`;
+  return `${km.toFixed(1)} χλμ`;
 }
 
 // Route LINEARITY (Option A — detour ratio): how directly a route progresses
@@ -87,6 +202,68 @@ export function routeLinearity(path: Coords[]): number {
   if (pathLength === 0) return 10;
   const endToEnd = distanceKm(path[0], path[path.length - 1]);
   return Math.max(0, Math.min(10, (endToEnd / pathLength) * 10));
+}
+
+// Perimeter (km) of the convex hull of a set of points, via Andrew's monotone
+// chain on the flat, aspect-correct plane (lng compressed by cos(lat)). The
+// shortest CLOSED tour through any point set is never shorter than its convex
+// hull, so the hull perimeter is the natural "ideal" a loop is measured against.
+function convexHullPerimeter(points: Coords[]): number {
+  const n = points.length;
+  if (n < 2) return 0;
+  if (n === 2) return 2 * distanceKm(points[0], points[1]);
+
+  const meanLat = points.reduce((s, p) => s + p.lat, 0) / n;
+  const kx = Math.cos((meanLat * Math.PI) / 180);
+  // Carry the original Coords so the perimeter is summed in real km.
+  const pts = points
+    .map((c) => ({ x: c.lng * kx, y: c.lat, c }))
+    .sort((a, b) => a.x - b.x || a.y - b.y);
+
+  type P = (typeof pts)[number];
+  const cross = (o: P, a: P, b: P) =>
+    (a.x - o.x) * (b.y - o.y) - (a.y - o.y) * (b.x - o.x);
+  const half = (src: P[]): P[] => {
+    const h: P[] = [];
+    for (const p of src) {
+      while (h.length >= 2 && cross(h[h.length - 2], h[h.length - 1], p) <= 0) h.pop();
+      h.push(p);
+    }
+    return h;
+  };
+
+  const lower = half(pts);
+  const upper = half(pts.slice().reverse());
+  // Drop each half's last point (shared with the other half's first).
+  const hull = lower.slice(0, -1).concat(upper.slice(0, -1));
+  if (hull.length < 2) return 0;
+
+  let per = 0;
+  for (let i = 0; i < hull.length; i++) {
+    per += distanceKm(hull[i].c, hull[(i + 1) % hull.length].c);
+  }
+  return per;
+}
+
+// LOOP TIGHTNESS (0–10): for a CLOSED, circular route that starts at `start`
+// (the centre of Rome), visits `stops` in order, and returns to `start`, how
+// close the loop is to the tightest possible loop around the same points.
+//   10  = the order traces the convex hull (no crossings or backtracking — the
+//         shortest sensible loop)
+//   low = a wandering / self-crossing loop that doubles back
+// It is the ideal (hull perimeter) over the actual loop length, ×10 — the
+// circular analogue of routeLinearity's directness ratio. Among orderings of the
+// SAME stops, maximising it minimises the round-trip distance. Trivially 10 for
+// 0–1 stops (the loop is a degenerate out-and-back).
+export function loopTightness(start: Coords, stops: Coords[]): number {
+  if (stops.length < 2) return 10;
+  const pts = [start, ...stops];
+  let loop = 0;
+  for (let i = 0; i < pts.length - 1; i++) loop += distanceKm(pts[i], pts[i + 1]);
+  loop += distanceKm(pts[pts.length - 1], start); // the return-to-start leg
+  if (loop === 0) return 10;
+  const ideal = convexHullPerimeter(pts);
+  return Math.max(0, Math.min(10, (ideal / loop) * 10));
 }
 
 // The BEST route linearity achievable for a SET of activities: the highest
@@ -139,8 +316,157 @@ export function openingHoursFor(a: Activity, day: number): string {
   return `${formatTime(h.open)}–${formatTime(h.close)}`;
 }
 
-// Per-key maximum across the whole list = the value of "do everything". Used to
-// normalize summed indexes onto a 0–10 scale.
+// Per-key total across the ACTIVE city's catalogue = the value of "do
+// everything" there. Used to normalize summed indexes onto a 0–10 scale, so each
+// city is judged against its own catalogue. Cached per active catalogue (the
+// scoring loop calls this very frequently); setActiveCity clears the cache.
 export function maxComboValue(key: NumericKey): number {
-  return ACTIVITIES.reduce((s, a) => s + a[key], 0);
+  const cached = maxComboCache.get(key);
+  if (cached !== undefined) return cached;
+  const total = activeCatalogue.reduce((s, a) => s + a[key], 0);
+  maxComboCache.set(key, total);
+  return total;
+}
+
+// -----------------------------------------------------------------------------
+// Traveller-party pricing
+// -----------------------------------------------------------------------------
+// Point the engine at the chosen party (set from the /start hand-off before any
+// scoring). Clears the cached party-price total — it depends on the party.
+export function setActiveParty(party: Party): void {
+  activeParty = party;
+  maxPartyCache = null;
+}
+
+export function getActiveParty(): Party {
+  return activeParty;
+}
+
+// The price one traveller of a given age key pays, falling back to the adult
+// price (then 0) when that exact age isn't listed in the table.
+function agePrice(table: PriceTable, ageKey: string): number {
+  const exact = table.ages[ageKey];
+  if (typeof exact === "number") return exact;
+  const adult = table.ages.adult;
+  return typeof adult === "number" ? adult : 0;
+}
+
+// The canonical family-bundle key for a party, e.g. "2_adults_2_children".
+function familyKey(party: Party): string {
+  return `${party.adults}_adults_${party.childAges.length}_children`;
+}
+
+// The 1-adult price of an activity — what the activity cards display. Falls back
+// to the flat `cost` when the activity has no price table.
+export function adultPrice(a: Activity): number {
+  return a.prices ? agePrice(a.prices, "adult") : a.cost;
+}
+
+// What `party` pays for ONE activity: the cheaper of (a) summing each member's
+// age-price and (b) the matching family bundle, when one exists. An activity with
+// no price table falls back to its flat `cost` (party-independent).
+export function activityPrice(a: Activity, party: Party = activeParty): number {
+  if (!a.prices) return a.cost;
+  let sum = party.adults * agePrice(a.prices, "adult");
+  for (const age of party.childAges) sum += agePrice(a.prices, String(age));
+  const bundle = a.prices.family[familyKey(party)];
+  return typeof bundle === "number" && bundle > 0 ? Math.min(sum, bundle) : sum;
+}
+
+// Total the active party pays across the ACTIVE city's catalogue — the cost-budget
+// analogue of maxComboValue, used to normalise the budget index onto 0–10. Cached
+// per (active catalogue × active party); setActiveCity / setActiveParty clear it.
+export function maxPartyPrice(): number {
+  if (maxPartyCache !== null) return maxPartyCache;
+  maxPartyCache = activeCatalogue.reduce((s, a) => s + activityPrice(a, activeParty), 0);
+  return maxPartyCache;
+}
+
+// -----------------------------------------------------------------------------
+// Price breakdowns (shared display helpers — #7/#11/#10)
+// -----------------------------------------------------------------------------
+// Collapse an activity's per-age price map into readable rows: consecutive ages
+// with the same price become one "4–17" range, with the adult price last. This is
+// the GENERIC (party-independent) price list shown in the activity detail modal —
+// extracted here so the modal, the cards and the trip program share one source.
+export function ageBandRows(prices: PriceTable): { label: string; price: number }[] {
+  const ages = Object.keys(prices.ages)
+    .filter((k) => k !== "adult")
+    .map(Number)
+    .filter((n) => !Number.isNaN(n))
+    .sort((a, b) => a - b);
+
+  const rows: { from: number; to: number; price: number }[] = [];
+  for (const age of ages) {
+    const price = prices.ages[String(age)];
+    const last = rows[rows.length - 1];
+    if (last && last.price === price && age === last.to + 1) last.to = age;
+    else rows.push({ from: age, to: age, price });
+  }
+
+  const out = rows.map((r) => ({
+    label: r.from === r.to ? `Ηλικία ${r.from}` : `Ηλικίες ${r.from}–${r.to}`,
+    price: r.price,
+  }));
+  if (typeof prices.ages.adult === "number") {
+    out.push({ label: "Ενήλικες", price: prices.ages.adult });
+  }
+  return out;
+}
+
+// One member-group's share of an activity's price for a SPECIFIC party: the price
+// each such member pays, how many of them there are, and their subtotal. Adults
+// are one group; children are grouped by age. This is the "what does each member
+// pay" breakdown the user missed (#10) — restored on the trip program + cards.
+export type MemberPriceLine = {
+  label: string;
+  perPerson: number;
+  count: number;
+  subtotal: number;
+};
+
+// Per-member price lines for an activity at the given party (defaults to the
+// active party). Uses the per-age table when present, else the flat `cost` for
+// everyone. NOTE: these are the straight per-age prices; the cheaper family
+// BUNDLE (see activityPrice) can make the real total lower — callers show the
+// bundle-aware total alongside and can flag when a bundle wins.
+export function partyPriceLines(
+  a: Activity,
+  party: Party = activeParty
+): MemberPriceLine[] {
+  const priceFor = (ageKey: string): number =>
+    a.prices ? agePrice(a.prices, ageKey) : a.cost;
+  const lines: MemberPriceLine[] = [];
+  if (party.adults > 0) {
+    const per = priceFor("adult");
+    lines.push({
+      label: party.adults === 1 ? "Ενήλικας" : "Ενήλικες",
+      perPerson: per,
+      count: party.adults,
+      subtotal: per * party.adults,
+    });
+  }
+  // Group children by age so "two 4-year-olds" reads as one line ("×2").
+  const byAge = new Map<number, number>();
+  for (const age of party.childAges) byAge.set(age, (byAge.get(age) ?? 0) + 1);
+  for (const [age, count] of [...byAge.entries()].sort((x, y) => x[0] - y[0])) {
+    const per = priceFor(String(age));
+    lines.push({
+      label: count === 1 ? `Παιδί ${age} ετών` : `Παιδιά ${age} ετών`,
+      perPerson: per,
+      count,
+      subtotal: per * count,
+    });
+  }
+  return lines;
+}
+
+// The naive (pre-bundle) sum of every member's price for one activity — the total
+// of partyPriceLines' subtotals. When this exceeds activityPrice, a family bundle
+// is cheaper (so callers can show "with the family package you pay €X instead").
+export function partyPriceLinesTotal(
+  a: Activity,
+  party: Party = activeParty
+): number {
+  return partyPriceLines(a, party).reduce((s, l) => s + l.subtotal, 0);
 }

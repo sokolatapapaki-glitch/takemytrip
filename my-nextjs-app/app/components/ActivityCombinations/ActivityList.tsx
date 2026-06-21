@@ -1,42 +1,92 @@
-import { ACTIVITIES, DAYS, VIBES } from "./core/activities.data";
-import { openingHoursFor } from "./core/activities.functions";
+"use client";
 
-// The catalogue of available activities. Opening hours are shown for the
-// currently selected day.
-export function ActivityList({ day }: { day: number }) {
+import { useEffect, useState } from "react";
+import { ActivityCard } from "@/app/activities/components/ActivityCard";
+import type { Activity } from "./core/activities.functions";
+import { buttonStyles } from "@/app/components/ui/buttonStyles";
+import { useApp } from "@/app/context/AppContext";
+
+// How many activity cards to show before the "See more" toggle reveals the rest.
+const COLLAPSED_COUNT = 3;
+
+// The catalogue of available activities for the selected city, optionally
+// filtered by a free-text `query` (matches name or description). Shown as a grid
+// of ActivityCard tiles — the same card used on the Activities page, including
+// its top-left select checkbox (inert here for now). Only the first
+// COLLAPSED_COUNT cards are shown until "See more" is clicked. The section
+// heading lives in the parent (next to the "Select activities" toggle).
+export function ActivityList({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  day,
+  activities,
+  query = "",
+  selected,
+  onToggleSelect,
+}: {
+  day: number;
+  activities: Activity[];
+  query?: string;
+  selected?: Set<string>;
+  onToggleSelect?: (activity: Activity) => void;
+}) {
+  const { openActivity } = useApp();
+  const [expanded, setExpanded] = useState(false);
+
+  // Collapse back to the first few whenever the search query changes, so a new
+  // search always starts collapsed.
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setExpanded(false);
+  }, [query]);
+
+  const q = query.trim().toLowerCase();
+  const shown = q
+    ? activities.filter(
+      (a) =>
+        a.name.toLowerCase().includes(q) ||
+        a.description.toLowerCase().includes(q)
+    )
+    : activities;
+
+  const visible = expanded ? shown : shown.slice(0, COLLAPSED_COUNT);
+  const hiddenCount = shown.length - visible.length;
+
   return (
-    <section>
-      <h2 className="mb-3 text-lg font-semibold text-zinc-800 dark:text-zinc-100">
-        Activities <span className="text-sm font-normal text-zinc-400 dark:text-zinc-500">· hours for {DAYS[day]}</span>
-      </h2>
-      <div className="flex flex-col gap-2">
-        {ACTIVITIES.map((activity) => (
-          <div
-            key={activity.name}
-            className="flex items-center justify-between gap-6 rounded-xl border border-black/[.08] bg-white px-5 py-3 dark:border-white/[.145] dark:bg-zinc-900"
-          >
-            <div className="min-w-0">
-              <p className="font-medium text-zinc-800 dark:text-zinc-100">
-                {activity.name}
-              </p>
-              <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                {activity.description}
-              </p>
-              <p className="mt-1 text-xs text-zinc-400 dark:text-zinc-500">
-                {VIBES.map((v) => `${v.name} ${activity[v.key]}`).join(" · ")}
-              </p>
-            </div>
-            <div className="flex shrink-0 flex-col items-end gap-0.5">
-              <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
-                {activity.hours}h · €{activity.cost}
-              </span>
-              <span className="text-xs text-zinc-400 dark:text-zinc-500">
-                {openingHoursFor(activity, day)}
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
+    <div className="flex flex-col gap-4">
+      {shown.length === 0 && (
+        <p className="rounded-xl border border-black/[.08] px-5 py-3 text-sm text-zinc-400 dark:border-white/[.145] dark:text-zinc-500">
+          Καμία δραστηριότητα δεν ταιριάζει με «{query}».
+        </p>
+      )}
+
+      {visible.length > 0 && (
+        // Same activity cards as the Activities page: on mobile a single column
+        // of horizontal cards (grid-cols-1), on larger screens a vertical-card
+        // grid. Tapping a card opens its detail modal.
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {visible.map((activity, i) => (
+            <ActivityCard
+              key={activity.name}
+              activity={activity}
+              index={i}
+              selected={selected?.has(activity.name) ?? false}
+              onToggleSelect={onToggleSelect}
+              onSeeMore={openActivity}
+            />
+          ))}
+        </div>
+      )}
+
+      {shown.length > COLLAPSED_COUNT && (
+        <button
+          type="button"
+          onClick={() => setExpanded((v) => !v)}
+          aria-expanded={expanded}
+          className={`mx-auto ${buttonStyles.underline}`}
+        >
+          {expanded ? "Δες λιγότερα" : `Δες περισσότερα (${hiddenCount})`}
+        </button>
+      )}
+    </div>
   );
 }

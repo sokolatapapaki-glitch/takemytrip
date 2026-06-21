@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import { diffDays, mondayIndex, sameDay, startOfDay } from "./core/calendar.functions";
 
 const WEEKDAY_LABELS = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
@@ -73,9 +74,9 @@ export function Calendar({
           type="button"
           aria-label="Previous month"
           onClick={() => setView(new Date(view.getFullYear(), view.getMonth() - 1, 1))}
-          className={navClass}
+          className={`inline-flex items-center ${navClass}`}
         >
-          ‹
+          <FaChevronLeft className="h-3.5 w-3.5" />
         </button>
         <span className="text-sm font-medium text-zinc-700 dark:text-zinc-200">
           {MONTHS[view.getMonth()]} {view.getFullYear()}
@@ -84,9 +85,9 @@ export function Calendar({
           type="button"
           aria-label="Next month"
           onClick={() => setView(new Date(view.getFullYear(), view.getMonth() + 1, 1))}
-          className={navClass}
+          className={`inline-flex items-center ${navClass}`}
         >
-          ›
+          <FaChevronRight className="h-3.5 w-3.5" />
         </button>
       </div>
 

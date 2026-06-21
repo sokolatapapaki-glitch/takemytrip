@@ -1,0 +1,27 @@
+{
+  // Standalone build used ONLY by the trip-planner unit tests. The core planner
+  // files are pure TypeScript (no React/Next), so we compile them + the tests to
+  // CommonJS and run them with Node's built-in test runner (`node --test`).
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM"],
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "outDir": "dist-test",
+    "rootDir": ".",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noEmit": false,
+    "incremental": false,
+    "isolatedModules": false,
+    "types": ["node"]
+  },
+  "include": [
+    "app/components/ActivityCombinations/core/**/*.ts",
+    "app/components/ActivityCombinations/core/__tests__/**/*.ts"
+  ],
+  // The Vitest property suite (*.planner.test.ts) imports vitest/fast-check
+  // (ESM-only), which this CommonJS build can't compile — Vitest runs it instead.
+  "exclude": ["node_modules", "dist-test", "**/*.planner.test.ts"]
+}
