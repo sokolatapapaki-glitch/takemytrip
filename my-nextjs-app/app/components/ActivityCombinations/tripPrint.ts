@@ -2,7 +2,7 @@
 // and triggers the browser's print dialog — the user picks "Save as PDF".
 // (No PDF library: keeps the bundle lean and renders Greek text natively.)
 import { DAYS } from "./core/activities.data";
-import { activityPrice, formatTime } from "./core/activities.functions";
+import { activityPrice, formatTime, openingHoursFor } from "./core/activities.functions";
 import type { Trip } from "./core/trip.functions";
 
 const esc = (s: string) =>
@@ -16,24 +16,35 @@ export function printTrip(trip: Trip, heading: string): void {
 
   const days = trip.days
     .map((td) => {
+      // Map an item's name back to its activity so we can show that day's opening
+      // hours and the cost (cost lives in the PDF only, not on the trip card).
+      const byName = new Map(td.activities.map((a) => [a.name, a]));
       const rows =
         td.plan.items.length === 0
-          ? `<tr><td class="muted" colspan="2">No activities placed.</td></tr>`
+          ? `<tr><td class="muted" colspan="4">No activities placed.</td></tr>`
           : td.plan.items
-              .map(
-                (item) => `
+              .map((item) => {
+                const act = item.lunch ? undefined : byName.get(item.name);
+                const hours = act ? esc(openingHoursFor(act, td.day)) : "";
+                const cost = act ? `€${activityPrice(act)}` : "";
+                return `
         <tr class="${item.lunch ? "lunch" : ""}">
           <td class="time">${
             item.closed ? "closed" : `${formatTime(item.start)}–${formatTime(item.end)}`
           }</td>
           <td>${esc(item.name)}</td>
-        </tr>`
-              )
+          <td class="hours">${hours}</td>
+          <td class="cost">${cost}</td>
+        </tr>`;
+              })
               .join("");
       return `
       <section>
         <h2>${DAYS[td.day]}</h2>
-        <table>${rows}</table>
+        <table>
+          <tr class="head"><td class="time">Ώρα</td><td>Δραστηριότητα</td><td class="hours">Ωράριο</td><td class="cost">Κόστος</td></tr>
+          ${rows}
+        </table>
       </section>`;
     })
     .join("");
@@ -52,6 +63,10 @@ export function printTrip(trip: Trip, heading: string): void {
   table { border-collapse: collapse; width: 100%; font-size: 14px; }
   td { padding: 3px 0; vertical-align: baseline; }
   .time { width: 110px; color: #71717a; font-variant-numeric: tabular-nums; }
+  .hours { color: #71717a; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .cost { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .head td { color: #a1a1aa; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em;
+             border-bottom: 1px solid #e4e4e7; }
   .lunch td { color: #a1a1aa; font-style: italic; }
   .muted { color: #a1a1aa; font-style: italic; }
   footer { margin-top: 28px; font-size: 11px; color: #a1a1aa; }

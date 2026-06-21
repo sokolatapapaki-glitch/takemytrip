@@ -4,13 +4,10 @@ import { Fragment, useState } from "react";
 import { FaArrowsRotate, FaChevronDown, FaChevronUp, FaRoute, FaTrashCan } from "react-icons/fa6";
 import type { Activity, Coords, Party } from "./core/activities.functions";
 import {
-  activityPrice,
   distanceKm,
   formatDistance,
   formatTime,
   googleMapsDirectionsUrl,
-  partyPriceLines,
-  partyPriceLinesTotal,
   setActiveCity,
 } from "./core/activities.functions";
 import { DAYS, DAYS_FULL } from "./core/activities.data";
@@ -84,9 +81,6 @@ function filterSummary(
 // inter-stop distances, and a one-line "fits / doesn't fit" + linearity summary.
 // Pure in `plan` (already scheduled for `day`), so it's rendered once per day.
 // `note` (optional) shows a small caption beside the weekday heading.
-// Compact euro label for the per-member price lines.
-const fmtEuro = (n: number): string => (n === 0 ? "Δωρεάν" : `€${n}`);
-
 export function DayItinerary({
   plan,
   day,
@@ -94,7 +88,6 @@ export function DayItinerary({
   showSeeMore = false,
   showDetails = false,
   fullDayName = false,
-  party,
   onReplace,
   onRemove,
   onAdd,
@@ -266,39 +259,15 @@ export function DayItinerary({
                       </button>
                     </span>
                   ) : null}
-                  {/* Description + per-member cost, inline under the row (#7/#11/#10). */}
-                  {showDetails && !item.lunch && ACTIVITY_BY_NAME.get(item.name)
-                    ? (() => {
-                        const act = ACTIVITY_BY_NAME.get(item.name)!;
-                        const lines = partyPriceLines(act, party);
-                        const naive = partyPriceLinesTotal(act, party);
-                        const total = activityPrice(act, party);
-                        const bundle = total < naive;
-                        return (
-                          <div className="order-4 basis-full pt-0.5">
-                            {act.description ? (
-                              <p className="line-clamp-2 text-xs leading-snug text-zinc-500 dark:text-zinc-400">
-                                {act.description}
-                              </p>
-                            ) : null}
-                            {lines.length > 0 ? (
-                              <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-zinc-500 dark:text-zinc-400">
-                                {lines.map((l) => (
-                                  <span key={l.label}>
-                                    {l.label}
-                                    {l.count > 1 ? ` ×${l.count}` : ""}: {fmtEuro(l.perPerson)}
-                                  </span>
-                                ))}
-                                <span className="font-medium text-zinc-700 dark:text-zinc-200">
-                                  Σύνολο: {fmtEuro(total)}
-                                  {bundle ? " (οικογ. πακέτο)" : ""}
-                                </span>
-                              </div>
-                            ) : null}
-                          </div>
-                        );
-                      })()
-                    : null}
+                  {/* Short description under the row (trip card only). The cost is
+                      intentionally omitted here — it appears only in the PDF export. */}
+                  {showDetails && !item.lunch && ACTIVITY_BY_NAME.get(item.name)?.description ? (
+                    <div className="order-4 basis-full pt-0.5">
+                      <p className="line-clamp-2 text-xs leading-snug text-zinc-500 dark:text-zinc-400">
+                        {ACTIVITY_BY_NAME.get(item.name)!.description}
+                      </p>
+                    </div>
+                  ) : null}
                 </div>
               </li>
               {leg != null ? (
