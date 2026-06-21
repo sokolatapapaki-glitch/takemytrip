@@ -48,16 +48,30 @@ export default function TripSearchHero() {
     let current = window.scrollY; // the smoothed scroll position
     let target = window.scrollY;
 
+    // On touch devices the JS scroll-parallax fights the browser's momentum
+    // scrolling and its collapsing toolbar, so the background visibly judders
+    // and trails the finger. There we PIN the background instead: zero per-frame
+    // movement and no scroll-blur, so the compositor keeps the fixed layer
+    // rock-steady and locked 1:1 to the viewport — perfectly smooth. Desktop
+    // keeps the parallax + blur; reduced-motion users also get the pinned view.
+    const pinBackground =
+      window.matchMedia("(pointer: coarse)").matches ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const bgSpeed = pinBackground ? 0 : 0.3;
+
     const apply = () => {
-      // Background: parallax at 30% scroll speed; the blurred copy fades in
-      // over ~400px of scroll (opacity only — no filter animation).
-      const bgTransform = `translate3d(0, ${-current * 0.3}px, 0) scale(1.05)`;
+      // Background: parallax at 30% scroll speed (pinned at 0 on touch); the
+      // blurred copy fades in over ~400px of scroll (opacity only — no filter
+      // animation), and is disabled while the background is pinned.
+      const bgTransform = `translate3d(0, ${-current * bgSpeed}px, 0) scale(1.05)`;
       if (bgImgRef.current) {
         bgImgRef.current.style.transform = bgTransform;
       }
       if (bgBlurImgRef.current) {
         bgBlurImgRef.current.style.transform = bgTransform;
-        bgBlurImgRef.current.style.opacity = String(Math.min(1, current / 400));
+        bgBlurImgRef.current.style.opacity = pinBackground
+          ? "0"
+          : String(Math.min(1, current / 400));
       }
       // Carousel: 0 at top → 1 after ~70% of a viewport. The centered block
       // drifts up faster than the page, shrinks and fades — "up and behind".
