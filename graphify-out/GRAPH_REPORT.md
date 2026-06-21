@@ -1,16 +1,16 @@
-# Graph Report - ttk_app  (2026-06-13)
+# Graph Report - ttk_app  (2026-06-21)
 
 ## Corpus Check
-- 281 files · ~8,586,525 words
+- 296 files · ~8,178,905 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2666 nodes · 3872 edges · 200 communities (166 shown, 34 thin omitted)
+- 2797 nodes · 4031 edges · 213 communities (176 shown, 37 thin omitted)
 - Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 82 edges (avg confidence: 0.56)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `3b7db1ed`
+- Built from commit: `158e2414`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -206,13 +206,26 @@
 - [[_COMMUNITY_Community 191|Community 191]]
 - [[_COMMUNITY_Community 192|Community 192]]
 - [[_COMMUNITY_Community 193|Community 193]]
+- [[_COMMUNITY_Community 200|Community 200]]
+- [[_COMMUNITY_Community 201|Community 201]]
+- [[_COMMUNITY_Community 202|Community 202]]
+- [[_COMMUNITY_Community 203|Community 203]]
+- [[_COMMUNITY_Community 204|Community 204]]
+- [[_COMMUNITY_Community 205|Community 205]]
+- [[_COMMUNITY_Community 206|Community 206]]
+- [[_COMMUNITY_Community 207|Community 207]]
+- [[_COMMUNITY_Community 208|Community 208]]
+- [[_COMMUNITY_Community 209|Community 209]]
+- [[_COMMUNITY_Community 210|Community 210]]
+- [[_COMMUNITY_Community 211|Community 211]]
+- [[_COMMUNITY_Community 212|Community 212]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `Activity` - 36 edges
 2. `DayAllocator` - 27 edges
 3. `showToast()` - 27 edges
-4. `ItineraryOptimizer` - 23 edges
-5. `buttonStyles` - 21 edges
+4. `buttonStyles` - 23 edges
+5. `ItineraryOptimizer` - 23 edges
 6. `Filter` - 18 edges
 7. `ItineraryScorer` - 17 edges
 8. `compilerOptions` - 16 edges
@@ -220,8 +233,6 @@
 10. `Attraction` - 15 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `MapExperience()` --calls--> `useApp()`  [EXTRACTED]
-  my-nextjs-app/app/map/components/MapExperience.tsx → my-nextjs-app/app/context/AppContext.tsx
 - `ItineraryOptimizer` --uses--> `DayAllocator`  [INFERRED]
   takemytrip/optimizer/engine/optimizer.py → takemytrip/optimizer/engine/allocator.py
 - `ItineraryResult` --uses--> `DayAllocator`  [INFERRED]
@@ -230,11 +241,13 @@
   takemytrip/optimizer/engine/optimizer.py → takemytrip/optimizer/engine/allocator.py
 - `ndarray` --uses--> `DayAllocator`  [INFERRED]
   takemytrip/optimizer/engine/optimizer.py → takemytrip/optimizer/engine/allocator.py
+- `UserSettings` --uses--> `DayAllocator`  [INFERRED]
+  takemytrip/optimizer/engine/optimizer.py → takemytrip/optimizer/engine/allocator.py
 
 ## Import Cycles
 - 1-file cycle: `takemytrip/optimizer/engine/scheduler.py -> takemytrip/optimizer/engine/scheduler.py`
 
-## Communities (200 total, 34 thin omitted)
+## Communities (213 total, 37 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.06
@@ -245,12 +258,12 @@ Cohesion: 0.05
 Nodes (59): allocateDays(), applyWeights(), attractionIntensityScore(), balanceDays(), balancedTargetCap(), BASE_WEIGHTS, BUCKET_AFFINITY, buildDistanceMatrix() (+51 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.06
-Nodes (37): ComboDashboard(), FilterBlock(), formulaText(), n(), ComboMap(), Stop, ACTIVITY_BY_NAME, AddWindow (+29 more)
+Cohesion: 0.13
+Nodes (10): ComboMap(), Stop, ACTIVITY_BY_NAME, AddWindow, COORDS_BY_NAME, ScheduledName(), DAYS, Coords (+2 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.07
-Nodes (43): tripBalanceWeight(), UseAllBreakdown, Arrangement, Best, ComboSchedule, Eval, Candidate, DayEval (+35 more)
+Cohesion: 0.11
+Nodes (29): tripBalanceWeight(), Candidate, DayEval, DPEntry, Leftover, PlannerName, TripDay, TripPlanner (+21 more)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.04
@@ -273,8 +286,8 @@ Cohesion: 0.05
 Nodes (8): buildItineraryPDFContent(), COLOR_PALETTE, exportItineraryToPDF(), MapManager, MarkerCache, state, StateValidator, userProgram
 
 ### Community 9 - "Community 9"
-Cohesion: 0.10
-Nodes (30): metadata, ACT_SORT_LABELS, ActivityListFilters, ActSortKey, DEFAULT_ACT_FILTERS, filterAndSortActivities(), getCityById(), priceMaxFor() (+22 more)
+Cohesion: 0.16
+Nodes (15): metadata, ACT_SORT_LABELS, ActivityListFilters, ActSortKey, DEFAULT_ACT_FILTERS, filterAndSortActivities(), getCityById(), priceMaxFor() (+7 more)
 
 ### Community 10 - "Community 10"
 Cohesion: 0.05
@@ -329,28 +342,28 @@ Cohesion: 0.06
 Nodes (31): 1. Added MapManager Object (lines 27-146), 2. Updated loadStepContent() (line 370), 3. Updated initializeMapInStep() (line 3480), 🚦 Approval Decision, ✅ APPROVE if:, BATCH 1 SUMMARY: MapManager Foundation, 🎁 Benefits, 📊 Changes Overview (+23 more)
 
 ### Community 23 - "Community 23"
-Cohesion: 0.13
-Nodes (18): ActivityList(), AdvancedFiltersModal(), dateLabel(), CheckRow(), dateLabel(), FilterSidebar(), PerDayFilters(), START_HOUR_CHOICES (+10 more)
+Cohesion: 0.15
+Nodes (9): AdvancedFiltersModal(), dateLabel(), CheckRow(), ActivityCombinations(), START_HOUR_CHOICES, RequiredActivities(), DEFAULT_CITY, Selection (+1 more)
 
 ### Community 24 - "Community 24"
 Cohesion: 0.09
-Nodes (21): CLOSED, NumericKey, Restaurant, ROME_CENTER, WebsiteLink, activeParty, activityPrice(), adultPrice() (+13 more)
+Nodes (21): CLOSED, MemberPriceLine, Restaurant, ROME_CENTER, WebsiteLink, activeParty, activityPrice(), adultPrice() (+13 more)
 
 ### Community 25 - "Community 25"
 Cohesion: 0.10
 Nodes (30): addActivityToProgramDay(), addActivityToQuickDay(), applyAIItineraryToPlanner(), applyDayFilter(), clearMapPoints(), deleteSavedItinerary(), deselectAllDays(), getDayColor() (+22 more)
 
 ### Community 26 - "Community 26"
-Cohesion: 0.13
-Nodes (20): metadata, ATHENS, CITY_DESCRIPTIONS, CITY_IMAGES, CITY_SORT_LABELS, cityDescription(), cityImage(), cityPriceTier() (+12 more)
+Cohesion: 0.16
+Nodes (17): metadata, ATHENS, CITY_DESCRIPTIONS, CITY_IMAGES, CITY_SORT_LABELS, cityDescription(), cityImage(), cityPriceTier() (+9 more)
 
 ### Community 27 - "Community 27"
 Cohesion: 0.13
 Nodes (25): activities_functions_1, filters_functions_1, schedule_data_1, schedule_functions_1, assembleTopK(), assembleTrip(), evalMasks(), insertDPEntry() (+17 more)
 
 ### Community 28 - "Community 28"
-Cohesion: 0.18
-Nodes (17): ActivityDetail(), ageRows(), fmtPrice(), ActivityCard(), activityImages(), ActivityResultCard(), ClickedActivityPanel(), HoveredActivityCard() (+9 more)
+Cohesion: 0.16
+Nodes (14): ActivityDetail(), fmtPrice(), ActivityCard(), activityImages(), VIBE_GRADIENT, VIBE_ICONS, AppContext, AppContextValue (+6 more)
 
 ### Community 29 - "Community 29"
 Cohesion: 0.10
@@ -358,7 +371,7 @@ Nodes (15): activities_data_1, activeParty, activityPrice(), adultPrice(), agePr
 
 ### Community 30 - "Community 30"
 Cohesion: 0.09
-Nodes (10): FilterOption, OptionBreakdown, TripIndexProof, normalizedPartyCostIndex(), resolveCurve(), scoreBreakdown, scoreFn(), scoreTripIndex() (+2 more)
+Nodes (10): NumericKey, FilterOption, OptionBreakdown, normalizedPartyCostIndex(), resolveCurve(), scoreBreakdown, scoreFn(), scoreTripIndex() (+2 more)
 
 ### Community 31 - "Community 31"
 Cohesion: 0.09
@@ -369,16 +382,16 @@ Cohesion: 0.09
 Nodes (17): ActivityCore, arbActivityCore, arbAnyInput, arbDays, arbDayWindow, arbFilters, arbLargeInput, arbLargePool (+9 more)
 
 ### Community 33 - "Community 33"
-Cohesion: 0.12
-Nodes (13): CalendarIcon(), IconProps, MapPinIcon(), MinusIcon(), PlusIcon(), SearchIcon(), UserIcon(), UsersIcon() (+5 more)
+Cohesion: 0.13
+Nodes (11): IconProps, MapPinIcon(), MinusIcon(), PlusIcon(), SearchIcon(), UserIcon(), UsersIcon(), XIcon() (+3 more)
 
 ### Community 34 - "Community 34"
-Cohesion: 0.11
-Nodes (13): ActivityCombinations(), geistMono, geistSans, metadata, ConditionalFooter(), FOOTER_NAV, TakeTheKids(), AppContext (+5 more)
+Cohesion: 0.18
+Nodes (7): geistMono, geistSans, metadata, ConditionalFooter(), FOOTER_NAV, TakeTheKids(), AppProvider()
 
 ### Community 35 - "Community 35"
-Cohesion: 0.13
-Nodes (10): DestinationModal(), ModalKey, Typewriter(), homeStyles, PALETTE, DateRange, DestinationSelection, CONFIG (+2 more)
+Cohesion: 0.18
+Nodes (10): NominatimResult, StartPoint, StartPointSearch(), Suggestion, DestinationModal(), LatLng, MapPicker(), pinIcon() (+2 more)
 
 ### Community 36 - "Community 36"
 Cohesion: 0.09
@@ -389,16 +402,16 @@ Cohesion: 0.09
 Nodes (21): 1. Distance Matrix (`engine/distance.py`), 1. Install dependencies, 2. DBSCAN Clustering (`engine/clustering.py`), 2. Start the API server, 3. Day Allocation (`engine/allocator.py`), 3. Open the UI, 4. API docs, 4. Route Optimization (`engine/route_optimizer.py`) (+13 more)
 
 ### Community 38 - "Community 38"
-Cohesion: 0.14
-Nodes (15): cluster_attractions(), Cluster (lat, lon) coordinates into geographic neighborhoods.      Uses Euclid, ItineraryOptimizer, Return coords list with hotel at index 0., Build per-leg travel times, modes, and walking times.          Returns three l, Full pipeline optimizer.      Usage::          optimizer = ItineraryOptimize, ItineraryResult, Test script verifying the two fixes:   1. Geographically close attractions land (+7 more)
+Cohesion: 0.16
+Nodes (12): ItineraryOptimizer, Return coords list with hotel at index 0., Build per-leg travel times, modes, and walking times.          Returns three l, Full pipeline optimizer.      Usage::          optimizer = ItineraryOptimize, DayScheduler, Produces a timed schedule for a single day.      Parameters     ----------, ItineraryResult, optimize_itinerary() (+4 more)
 
 ### Community 39 - "Community 39"
 Cohesion: 0.10
 Nodes (20): 1. scheduler.js (238 lines), 2. data.js (143 lines), 3. combo.js (290 lines), 4. ui.js (587 lines) - **Phase 1**, 5. main.js (Pending), Activity Selection (3), Cost Display (3), Dependencies Graph (+12 more)
 
 ### Community 40 - "Community 40"
-Cohesion: 0.12
-Nodes (12): VIBES, CatalogueActivity, CatalogueRestaurant, CLOSED, ROME_ACTIVITIES, Window, ages(), ALL_DAY (+4 more)
+Cohesion: 0.15
+Nodes (14): GENERATED_ACTIVITIES_BY_DESTINATION, CITY_MAGIC_COMBOS, CITY_PASSES, MagicCombo, CityPass, DestArea, Destination, DESTINATIONS (+6 more)
 
 ### Community 41 - "Community 41"
 Cohesion: 0.10
@@ -413,28 +426,28 @@ Cohesion: 0.10
 Nodes (19): 1. Full-Width Mobile Layout, 2. Remove Homepage Background Wrapper on Mobile, 3. Transparent Desktop Navbar at Top of Page, Acceptance Criteria, Acceptance Criteria, Acceptance Criteria, Do Not Change, Ensure (+11 more)
 
 ### Community 44 - "Community 44"
-Cohesion: 0.22
-Nodes (15): BaseModel, _apply_preference_weights(), Multi-objective scoring engine.  Produces a [0..100] score for a day or full i, DayPlan, HotelLocation, ItineraryResult, OptimizeRequest, PlannedAttraction (+7 more)
+Cohesion: 0.25
+Nodes (17): BaseModel, OpeningHours, Attraction, DayPlan, HotelLocation, ItineraryResult, OpeningHours, PlannedAttraction (+9 more)
 
 ### Community 45 - "Community 45"
-Cohesion: 0.22
-Nodes (9): DEFAULT_EDITS, EditableFilter, targetSliderConfig(), FilterCard(), OptionsSection(), ScoreSection(), EditorActions, makeEditorActions() (+1 more)
+Cohesion: 0.32
+Nodes (10): Curve, Unit, EditableFilter, formatTarget(), targetSliderConfig(), OptionRow(), OptionsSection(), ScoreSection() (+2 more)
 
 ### Community 46 - "Community 46"
 Cohesion: 0.13
 Nodes (18): addDropdownOverlay(), calculateTotalSpent(), closeManualDestinationModal(), createDestinationDropdown(), filterDestinations(), fixDestinationButtons(), removeDropdownOverlay(), resetFilters() (+10 more)
 
 ### Community 47 - "Community 47"
-Cohesion: 0.22
-Nodes (15): CalendarModal(), PRESETS, MakeTripModal(), StartTripSearch(), addDays(), addMonths(), formatShort(), isSameDay() (+7 more)
+Cohesion: 0.11
+Nodes (18): #10 — Κόστος ανά μέλος + πακέτα με έκπτωση (magic combos) + city pass, 12 Issues προς υλοποίηση — Οδηγίες για Claude Code, #12 — Εστιατόρια/καφέ κρύβονται στο modal, #1 — Ονόματα προορισμών εμφανίζονται στα αγγλικά, #2 — Διάρκεια (πλήθος ημερών) + προαιρετικές ημερομηνίες, #3 — Προσωπικό σημείο εκκίνησης (π.χ. ξενοδοχείο), #4 — Κρύψε τελείως το «vibe» από όλες τις σελίδες, #5 — Κρύψε το φίλτρο «Τουριστική προτεραιότητα / Must-see» (+10 more)
 
 ### Community 48 - "Community 48"
-Cohesion: 0.13
-Nodes (7): ACTIVITIES, DEFAULT_FILTERS, PLANNER_COST, SAME, sel, CLOSED_DAY, pickFirst
+Cohesion: 0.12
+Nodes (9): ACTIVITIES, EMPTY_ACTIVITY_META, DEFAULT_FILTERS, Filter, PLANNER_COST, allWeek(), makeActivity(), CLOSED_DAY (+1 more)
 
 ### Community 49 - "Community 49"
-Cohesion: 0.24
-Nodes (14): datetime, _add_minutes(), DayScheduler, _fmt_hhmm(), _opening_window(), _parse_hhmm(), Daily scheduler: converts an ordered route into a timed schedule.  For each at, Produces a timed schedule for a single day.      Parameters     ---------- (+6 more)
+Cohesion: 0.44
+Nodes (7): datetime, _add_minutes(), _fmt_hhmm(), _opening_window(), _parse_hhmm(), Daily scheduler: converts an ordered route into a timed schedule.  For each at, Schedule *ordered_attractions* starting from *self.start_time*.          Retur
 
 ### Community 50 - "Community 50"
 Cohesion: 0.12
@@ -453,8 +466,8 @@ Cohesion: 0.14
 Nodes (13): amsterdam_data_1, barcelona_data_1, berlin_data_1, bucharest_data_1, budapest_data_1, istanbul_data_1, krakow_data_1, lisbon_data_1 (+5 more)
 
 ### Community 56 - "Community 56"
-Cohesion: 0.19
-Nodes (11): GENERATED_ACTIVITIES_BY_DESTINATION, CityPass, DestArea, Destination, DESTINATIONS, InfoBox, InfoBoxLink, Pass (+3 more)
+Cohesion: 0.13
+Nodes (14): BCN_DIR, commonsBySearch(), commonsByTitle(), CREDITS_JSON, CREDITS_MD, CURATED, fetchBuf(), GEN_TS (+6 more)
 
 ### Community 57 - "Community 57"
 Cohesion: 0.16
@@ -481,8 +494,8 @@ Cohesion: 0.14
 Nodes (13): 1. Global State & Variables, 7. Testing Recommendations, 8. Performance Optimization Opportunities, 9. Final Notes, Code Quality Observations, ES Module Refactoring Analysis Report, Estimated Refactoring Effort, Global Constants & Objects (+5 more)
 
 ### Community 63 - "Community 63"
-Cohesion: 0.29
-Nodes (7): DayPlan, ItineraryScorer, Computes per-day and overall scores.      Parameters     ----------     sett, Return a [0..100] score for a single day plan., Compute the overall itinerary score and a breakdown dict.          Returns a d, Return 100 if no cluster is split across non-consecutive days; penalise otherwis, Penalise days that exceed the hour or activity-count caps.
+Cohesion: 0.22
+Nodes (9): DayPlan, _apply_preference_weights(), ItineraryScorer, Multi-objective scoring engine.  Produces a [0..100] score for a day or full i, Computes per-day and overall scores.      Parameters     ----------     sett, Return a [0..100] score for a single day plan., Compute the overall itinerary score and a breakdown dict.          Returns a d, Return 100 if no cluster is split across non-consecutive days; penalise otherwis (+1 more)
 
 ### Community 64 - "Community 64"
 Cohesion: 0.15
@@ -505,8 +518,8 @@ Cohesion: 0.15
 Nodes (13): 5. Critical Observations, Async Function Handling, Circular Dependencies, Duplicate Functions Found, Global State Access, HTML Coupling Concerns, Large Data Processing, Map State Management Issues (+5 more)
 
 ### Community 69 - "Community 69"
-Cohesion: 0.20
-Nodes (5): Updater, getSnapshot(), listeners, load(), setEdits()
+Cohesion: 0.18
+Nodes (6): EditableOption, Updater, getSnapshot(), listeners, load(), setEdits()
 
 ### Community 70 - "Community 70"
 Cohesion: 0.17
@@ -517,8 +530,8 @@ Cohesion: 0.18
 Nodes (9): assertValid(), placedNames(), bigCatalogue_1, filters_data_1, filters_functions_1, node_test_1, schedule_functions_1, strict_1 (+1 more)
 
 ### Community 72 - "Community 72"
-Cohesion: 0.17
-Nodes (8): get_dataset(), list_datasets(), optimize_itinerary(), Travel Itinerary Optimizer – FastAPI application.  Endpoints --------- POST, List available built-in city attraction datasets., Return attractions for a built-in city dataset., Run the full multi-day itinerary optimization pipeline., OptimizeRequest
+Cohesion: 0.22
+Nodes (5): get_dataset(), list_datasets(), Travel Itinerary Optimizer – FastAPI application.  Endpoints --------- POST, List available built-in city attraction datasets., Return attractions for a built-in city dataset.
 
 ### Community 73 - "Community 73"
 Cohesion: 0.21
@@ -545,12 +558,12 @@ Cohesion: 0.17
 Nodes (11): Activity Images (Rome) Implementation Plan, Image-sourcing procedure (P1–P5), Self-Review, Task 1: Create the activity-images map + helper, Task 2: Render the first image on the activity card, Task 3: Drive the detail-modal gallery off the real images, Task 4: Populate Rome images — batch A (activities #1–7), Task 5: Populate Rome images — batch B (activities #8–14) (+3 more)
 
 ### Community 79 - "Community 79"
-Cohesion: 0.25
-Nodes (9): CurveGraph(), pathFor(), TICKS, xOf(), yOf(), ScaleScore, EditableOption, formatTarget() (+1 more)
+Cohesion: 0.29
+Nodes (8): n2(), TripDashboard(), tripFormula(), TripIndexBlock(), UseAllBlock(), TripIndexProof, UseAllBreakdown, LeftoverReason
 
 ### Community 80 - "Community 80"
-Cohesion: 0.20
-Nodes (4): MyTripsExperience(), StripMode, useApp(), metadata
+Cohesion: 0.15
+Nodes (7): ActivityList(), DayItinerary(), MapExperience(), MyTripsExperience(), StripMode, useApp(), metadata
 
 ### Community 81 - "Community 81"
 Cohesion: 0.18
@@ -573,8 +586,8 @@ Cohesion: 0.18
 Nodes (9): SAME, sel, filters_data_1, filters_functions_1, helpers_1, node_test_1, schedule_functions_1, strict_1 (+1 more)
 
 ### Community 86 - "Community 86"
-Cohesion: 0.18
-Nodes (10): 1. Extract reusable components → a dedicated folder, 2. Split large files → sibling subfolder with an index, 3. Tame crowded folders (>6 files) → functional subfolders, 4. Move large literal objects/data → external files + import, Definition of done, Hard rules (do not break), Priorities (in strict order — resolve every conflict in this order), Refactor Code (+2 more)
+Cohesion: 0.12
+Nodes (16): #1 — (Σημείωση) Παγκόσμια αναζήτηση πόλης, #3 — Προσωπικό σημείο εκκίνησης (π.χ. ξενοδοχείο), #8 — Τρόποι & χρόνοι μετακίνησης μεταξύ σημείων, Issues που χρειάζονται API / βιβλιοθήκη — Ανάλυση & οδηγός υλοποίησης, Δωρεάν / πιο φθηνά, Δωρεάν / πιο φθηνά, Επιλογές API, Επιλογές API (αν θες ΠΡΑΓΜΑΤΙΚΟΥΣ χρόνους εντός app) (+8 more)
 
 ### Community 87 - "Community 87"
 Cohesion: 0.18
@@ -585,8 +598,8 @@ Cohesion: 0.18
 Nodes (11): 2. Function Categorization (126 Functions), Application Lifecycle, Combo/Smart Button Functions (for combo.js) - 4 functions, Deprecated/Placeholder Functions - 4 functions, Destination Functions (for destination.js) - 12 functions, Family Management Functions (for family.js) - 5 functions, Hotel/Flight Functions (for booking.js) - 2 functions, Init/Core Functions (for main.js) - 15+ functions (+3 more)
 
 ### Community 89 - "Community 89"
-Cohesion: 0.20
-Nodes (7): CityPass, Coords, DestArea, Destination, InfoBox, InfoBoxLink, Pass
+Cohesion: 0.25
+Nodes (12): Arrangement, Best, Eval, betterArrangement(), eachPermutation(), evaluate(), layout(), linearityOf() (+4 more)
 
 ### Community 90 - "Community 90"
 Cohesion: 0.20
@@ -605,8 +618,8 @@ Cohesion: 0.22
 Nodes (10): addCustomMapPoint(), addCustomPointToMap(), createEnhancedPopup(), createMarkerWithConnectFunction(), formatRestaurantCafe(), geocodeLocation(), resetMarkerAppearance(), resetSelection() (+2 more)
 
 ### Community 94 - "Community 94"
-Cohesion: 0.33
-Nodes (7): MapLayers(), activityIcon(), CITY_PIN_SVG, cityIcon(), escapeHtml(), vibeSvg(), vibeSvgCache
+Cohesion: 0.15
+Nodes (23): ActivityResultCard(), CityLabel(), ClickedActivityPanel(), HoveredActivityCard(), ActivityFilters, ALL_CITIES, bestVibe(), CITY_OF (+15 more)
 
 ### Community 95 - "Community 95"
 Cohesion: 0.28
@@ -633,12 +646,12 @@ Cohesion: 0.33
 Nodes (9): calculateFamilyCost(), clearSelectedActivities(), handleActivityCheckbox(), saveState(), selectDestination(), setupActivitiesStep(), toggleActivitySelection(), updateActivitiesTotal() (+1 more)
 
 ### Community 101 - "Community 101"
-Cohesion: 0.32
-Nodes (5): ACTIVITY_IMAGES, ACTIVITY_IMAGES_MANUAL, COVER_BY_NAME, GENERATED_ACTIVITY_IMAGES, DESTINATION_IMAGES
+Cohesion: 0.18
+Nodes (10): name, private, scripts, build, dev, git, install:app, lint (+2 more)
 
 ### Community 102 - "Community 102"
-Cohesion: 0.25
-Nodes (7): COST_TIERS, COST_UNIT, costOptionsForParty(), HOURS_UNIT, Unit, CEILING_PARAMS, VIBE_FILTER
+Cohesion: 0.29
+Nodes (6): COST_TIERS, COST_UNIT, costOptionsForParty(), HOURS_UNIT, CEILING_PARAMS, VIBE_FILTER
 
 ### Community 103 - "Community 103"
 Cohesion: 0.25
@@ -653,24 +666,24 @@ Cohesion: 0.25
 Nodes (6): filters_data_1, filters_functions_1, helpers_1, node_test_1, schedule_functions_1, strict_1
 
 ### Community 106 - "Community 106"
-Cohesion: 0.25
-Nodes (8): Algorithm Verification, Calculation Accuracy, Combo / Smart Button Verification, Cost Calculation Logic (script.js:3335-3420), Effort Calculation Logic (script.js:1987-2040), Function Analysis, Function Integrity Summary, Performance Notes
+Cohesion: 0.12
+Nodes (17): Algorithm Verification, Berlin Combos (combo-calculator.js:55-56), Calculation Accuracy, Combo Detection Verification, Combo / Smart Button Verification, Cost Calculation Logic (script.js:3335-3420), Effort Calculation Logic (script.js:1987-2040), Function Analysis (+9 more)
 
 ### Community 107 - "Community 107"
 Cohesion: 0.25
 Nodes (8): getActivitiesStepHTML(), getDestinationStepHTML(), getFlightStepHTML(), getHotelStepHTML(), getMapStepHTML(), loadStepContent(), removeCustomPoint(), saveCustomPoints()
 
 ### Community 109 - "Community 109"
-Cohesion: 0.52
-Nodes (5): pathFor(), ScoreCurves(), TICKS, xOf(), yOf()
+Cohesion: 0.22
+Nodes (8): pathFor(), ScoreCurves(), TICKS, xOf(), yOf(), CURVE_BY_NAME, CURVE_NAMES, CURVES
 
 ### Community 110 - "Community 110"
-Cohesion: 0.33
-Nodes (3): EMPTY_ACTIVITY_META, allWeek(), makeActivity()
+Cohesion: 0.12
+Nodes (15): args, CITY_DIR, commonsBySearch(), commonsByTitle(), CREDITS_JSON, CREDITS_MD, CURATED_DIR, fetchBuf() (+7 more)
 
 ### Community 111 - "Community 111"
-Cohesion: 0.29
-Nodes (4): CURVE_BY_NAME, CURVE_NAMES, CURVES, Curve
+Cohesion: 0.12
+Nodes (12): VIBES, CatalogueActivity, CatalogueRestaurant, CLOSED, ROME_ACTIVITIES, Window, ages(), ALL_DAY (+4 more)
 
 ### Community 112 - "Community 112"
 Cohesion: 0.33
@@ -685,24 +698,24 @@ Cohesion: 0.29
 Nodes (6): 1. Remove "Take the Kids" Component from Map Page, 2. Navbar Button Positioning (Map & Cities), 3. Input Interaction Scroll Behavior (Home Page), 4. Navbar Sticky Behavior, 5. City Card Layout Adjustment (See Activities Button), Project Tasks
 
 ### Community 115 - "Community 115"
-Cohesion: 0.29
-Nodes (6): cluster_summary(), order_clusters_by_priority(), Geographic clustering of attractions using DBSCAN.  Each cluster represents a, Summarize each cluster: centroid, total duration, average priority.      Retur, Return cluster IDs sorted by descending average priority score., ndarray
+Cohesion: 0.13
+Nodes (15): cluster_attractions(), cluster_summary(), order_clusters_by_priority(), Geographic clustering of attractions using DBSCAN.  Each cluster represents a, Cluster (lat, lon) coordinates into geographic neighborhoods.      Uses Euclid, Summarize each cluster: centroid, total duration, average priority.      Retur, Return cluster IDs sorted by descending average priority score., ndarray (+7 more)
 
 ### Community 117 - "Community 117"
 Cohesion: 0.29
 Nodes (6): description, display, icons, lang, name, short_name
 
 ### Community 118 - "Community 118"
-Cohesion: 0.29
-Nodes (6): Executive Summary, High Priority, Immediate Action Required, Multi-City Data Verification Report, Next Steps, Optional Improvements
+Cohesion: 0.17
+Nodes (11): Data Quality Ranking, Executive Summary, High Priority, Immediate Action Required, Multi-City Data Verification Report, Next Steps, Optional Improvements, Tier 1 - Perfect (0 issues) (+3 more)
 
 ### Community 119 - "Community 119"
 Cohesion: 0.29
 Nodes (6): Activity Modal — Restaurants / Notes / Related Activities Polish — Implementation Plan, Self-Review, Task 1: Restaurant cards — remove border, add shadow + hover lift, Task 2: Notes bars — happier yellow palette + hover lift, Task 3: Related Activities heading — rename + enlarge, Task 4: Related Activities strip — top padding so hovered cards aren't clipped
 
 ### Community 120 - "Community 120"
-Cohesion: 0.47
-Nodes (3): SLOTS, heroPhotoQueries(), heroPhotoUrls()
+Cohesion: 0.17
+Nodes (9): ACTIVITY_IMAGES, ACTIVITY_IMAGES_MANUAL, COVER_BY_NAME, GENERATED_ACTIVITY_IMAGES, DESTINATION_IMAGES, SLOTS, CITIES, heroPhotoQueries() (+1 more)
 
 ### Community 121 - "Community 121"
 Cohesion: 0.33
@@ -737,8 +750,8 @@ Cohesion: 0.33
 Nodes (3): app, express, puppeteer
 
 ### Community 132 - "Community 132"
-Cohesion: 0.33
-Nodes (6): City-by-City Reports, Duration, Lisbon, Price & Currency, Restaurant Fields, URL Validation
+Cohesion: 0.40
+Nodes (5): Duration, Lisbon, Price & Currency, Restaurant Fields, URL Validation
 
 ### Community 133 - "Community 133"
 Cohesion: 0.33
@@ -757,8 +770,8 @@ Cohesion: 0.33
 Nodes (6): Custom Points, Map Filters (Day-based), Map Functions (for map.js) - 25+ functions, Map Interaction, Map Lifecycle, Map Utilities
 
 ### Community 137 - "Community 137"
-Cohesion: 0.33
-Nodes (5): Done when, Hard rules, Source of truth, Update Combo Proof Dashboard, What to do
+Cohesion: 0.25
+Nodes (7): Change detection ("since the last time I called this skill"), Definition of done, Hard rules, The source-of-truth logic (what the dashboard must MIRROR), Update the "Why this rank" dashboard, What renders the dashboard (the files you EDIT), Workflow
 
 ### Community 138 - "Community 138"
 Cohesion: 0.40
@@ -781,24 +794,24 @@ Cohesion: 0.40
 Nodes (4): activities_functions_1, helpers_1, node_test_1, strict_1
 
 ### Community 143 - "Community 143"
-Cohesion: 0.40
-Nodes (5): Amsterdam, Duration, Price & Currency, Restaurant Fields, URL Validation
+Cohesion: 0.18
+Nodes (11): Amsterdam, Berlin, City-by-City Reports, Duration, Duration, Price & Currency, Price & Currency, Restaurant Fields (+3 more)
 
 ### Community 144 - "Community 144"
-Cohesion: 0.40
-Nodes (5): Berlin, Duration, Price & Currency, Restaurant Fields, URL Validation
+Cohesion: 0.16
+Nodes (13): DayMap(), escapeHtml(), MapStop, pinIcon(), DayMap, DayMapModal(), COORDS_BY_NAME, totalPriceOf() (+5 more)
 
 ### Community 145 - "Community 145"
-Cohesion: 0.40
-Nodes (5): Berlin Combos (combo-calculator.js:55-56), Combo Detection Verification, Generic Combos (combo-calculator.js:57-58), London Combos (combo-calculator.js:51-52), Vienna Combos (combo-calculator.js:53-54)
+Cohesion: 0.14
+Nodes (8): LengthMode, ModalKey, Typewriter(), homeStyles, PALETTE, CONFIG, StatusState, StatusToast()
 
 ### Community 146 - "Community 146"
 Cohesion: 0.40
 Nodes (5): Budapest, Duration, Price & Currency, Restaurant Fields, URL Validation
 
 ### Community 147 - "Community 147"
-Cohesion: 0.40
-Nodes (5): Data Quality Ranking, Tier 1 - Perfect (0 issues), Tier 2 - Excellent (1-2 issues), Tier 3 - Good (3-6 issues), Tier 4 - Needs Attention (19 issues)
+Cohesion: 0.25
+Nodes (4): candidates, OUT, pages, tiles
 
 ### Community 148 - "Community 148"
 Cohesion: 0.40
@@ -861,28 +874,68 @@ Cohesion: 0.50
 Nodes (3): Deploy on Vercel, Getting Started, Learn More
 
 ### Community 166 - "Community 166"
+Cohesion: 0.33
+Nodes (4): meta, OUT, rows, tiles
+
+### Community 200 - "Community 200"
+Cohesion: 0.40
+Nodes (4): BCN, folders, rows, tiles
+
+### Community 201 - "Community 201"
 Cohesion: 0.50
-Nodes (4): Sample Calculations by City, Test Case 1: London - Family of 4, Test Case 2: Berlin - Family of 3, Test Case 3: Vienna - Couple
+Nodes (3): Image sources — Barcelona activities, Unsplash (4) — no attribution legally required, Wikimedia Commons (15) — attribution REQUIRED
+
+### Community 203 - "Community 203"
+Cohesion: 0.22
+Nodes (15): CalendarModal(), PRESETS, MakeTripModal(), StartTripSearch(), addDays(), addMonths(), formatShort(), isSameDay() (+7 more)
+
+### Community 204 - "Community 204"
+Cohesion: 0.21
+Nodes (12): ComboDashboard(), FilterBlock(), formulaText(), n(), CurveGraph(), pathFor(), TICKS, xOf() (+4 more)
+
+### Community 205 - "Community 205"
+Cohesion: 0.24
+Nodes (8): dateLabel(), FilterSidebar(), PerDayFilters(), CalendarIcon(), Coords, DateRange, DestinationSelection, Travelers
+
+### Community 206 - "Community 206"
+Cohesion: 0.20
+Nodes (7): CityPass, Coords, DestArea, Destination, InfoBox, InfoBoxLink, Pass
+
+### Community 207 - "Community 207"
+Cohesion: 0.33
+Nodes (7): MapLayers(), activityIcon(), CITY_PIN_SVG, cityIcon(), escapeHtml(), vibeSvg(), vibeSvgCache
+
+### Community 208 - "Community 208"
+Cohesion: 0.32
+Nodes (6): esc(), printTrip(), Trip, Window, enforceRequired(), freeWindows()
+
+### Community 209 - "Community 209"
+Cohesion: 0.25
+Nodes (3): DEFAULT_EDITS, FilterCard(), makeEditorActions()
+
+### Community 210 - "Community 210"
+Cohesion: 0.40
+Nodes (5): ordinal(), TripAlternatives(), TripPlan(), Party, Area
 
 ## Knowledge Gaps
-- **1085 isolated node(s):** `OpenMenu`, `Section`, `ACTIVITY_IMAGES_MANUAL`, `ACTIVITY_IMAGES`, `COVER_BY_NAME` (+1080 more)
+- **1153 isolated node(s):** `OUT`, `tiles`, `meta`, `rows`, `BCN` (+1148 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **34 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **37 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Activity` connect `Community 23` to `Community 32`, `Community 2`, `Community 34`, `Community 3`, `Community 101`, `Community 40`, `Community 9`, `Community 110`, `Community 60`, `Community 80`, `Community 48`, `Community 30`, `Community 24`, `Community 56`, `Community 28`, `Community 61`, `Community 94`, `Community 95`?**
-  _High betweenness centrality (0.031) - this node is a cross-community bridge._
-- **Why does `GENERATED_ACTIVITIES_BY_DESTINATION` connect `Community 56` to `Community 15`?**
-  _High betweenness centrality (0.010) - this node is a cross-community bridge._
-- **Why does `Filter` connect `Community 23` to `Community 32`, `Community 2`, `Community 3`, `Community 69`, `Community 102`, `Community 110`, `Community 48`, `Community 61`, `Community 30`?**
+- **Why does `Activity` connect `Community 28` to `Community 2`, `Community 3`, `Community 9`, `Community 23`, `Community 24`, `Community 30`, `Community 32`, `Community 40`, `Community 48`, `Community 60`, `Community 61`, `Community 202`, `Community 204`, `Community 205`, `Community 207`, `Community 80`, `Community 208`, `Community 89`, `Community 94`, `Community 95`, `Community 111`, `Community 120`?**
+  _High betweenness centrality (0.023) - this node is a cross-community bridge._
+- **Why does `Filter` connect `Community 48` to `Community 32`, `Community 2`, `Community 3`, `Community 69`, `Community 102`, `Community 204`, `Community 205`, `Community 79`, `Community 144`, `Community 210`, `Community 23`, `Community 89`, `Community 61`, `Community 30`?**
   _High betweenness centrality (0.008) - this node is a cross-community bridge._
+- **Why does `Params` connect `Community 112` to `Community 69`, `Community 102`, `Community 204`, `Community 45`, `Community 109`, `Community 79`, `Community 51`, `Community 30`?**
+  _High betweenness centrality (0.007) - this node is a cross-community bridge._
 - **Are the 6 inferred relationships involving `DayAllocator` (e.g. with `ItineraryOptimizer` and `.run()`) actually correct?**
   _`DayAllocator` has 6 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 15 inferred relationships involving `ItineraryOptimizer` (e.g. with `DayAllocator` and `DayScheduler`) actually correct?**
   _`ItineraryOptimizer` has 15 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `OpenMenu`, `Section`, `ACTIVITY_IMAGES_MANUAL` to the rest of the system?**
-  _1140 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `OUT`, `tiles`, `meta` to the rest of the system?**
+  _1208 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.06067845198279981 - nodes in this community are weakly interconnected._

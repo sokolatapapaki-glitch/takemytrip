@@ -27,55 +27,6 @@
     "/destinations/paris/2-louvre-museum/4.jpg",
     "/destinations/paris/2-louvre-museum/5.jpg"
   ],
-  "Sagrada Família": [
-    "/destinations/barcelona/1-sagrada-familia/1.jpg",
-    "/destinations/barcelona/1-sagrada-familia/2.jpg",
-    "/destinations/barcelona/1-sagrada-familia/3.jpg",
-    "/destinations/barcelona/1-sagrada-familia/4.jpg",
-    "/destinations/barcelona/1-sagrada-familia/5.jpg"
-  ],
-  "Park Güell": [
-    "/destinations/barcelona/2-park-guell/1.jpg",
-    "/destinations/barcelona/2-park-guell/2.jpg",
-    "/destinations/barcelona/2-park-guell/3.jpg",
-    "/destinations/barcelona/2-park-guell/4.jpg",
-    "/destinations/barcelona/2-park-guell/5.jpg"
-  ],
-  "Casa Batlló": [
-    "/destinations/barcelona/3-casa-batllo/1.jpg",
-    "/destinations/barcelona/3-casa-batllo/2.jpg",
-    "/destinations/barcelona/3-casa-batllo/3.jpg",
-    "/destinations/barcelona/3-casa-batllo/4.jpg",
-    "/destinations/barcelona/3-casa-batllo/5.jpg"
-  ],
-  "Casa Milà (La Pedrera)": [
-    "/destinations/barcelona/4-casa-mila-la-pedrera/1.jpg",
-    "/destinations/barcelona/4-casa-mila-la-pedrera/2.jpg",
-    "/destinations/barcelona/4-casa-mila-la-pedrera/3.jpg",
-    "/destinations/barcelona/4-casa-mila-la-pedrera/4.jpg",
-    "/destinations/barcelona/4-casa-mila-la-pedrera/5.jpg"
-  ],
-  "Picasso Museum": [
-    "/destinations/barcelona/5-picasso-museum/1.jpg",
-    "/destinations/barcelona/5-picasso-museum/2.jpg",
-    "/destinations/barcelona/5-picasso-museum/3.jpg",
-    "/destinations/barcelona/5-picasso-museum/4.jpg",
-    "/destinations/barcelona/5-picasso-museum/5.jpg"
-  ],
-  "Camp Nou (Barça Stadium Tour)": [
-    "/destinations/barcelona/9-camp-nou-barca-stadium-tour/1.jpg",
-    "/destinations/barcelona/9-camp-nou-barca-stadium-tour/2.jpg",
-    "/destinations/barcelona/9-camp-nou-barca-stadium-tour/3.jpg",
-    "/destinations/barcelona/9-camp-nou-barca-stadium-tour/4.jpg",
-    "/destinations/barcelona/9-camp-nou-barca-stadium-tour/5.jpg"
-  ],
-  "PortAventura World": [
-    "/destinations/barcelona/13-portaventura-world/1.jpg",
-    "/destinations/barcelona/13-portaventura-world/2.jpg",
-    "/destinations/barcelona/13-portaventura-world/3.jpg",
-    "/destinations/barcelona/13-portaventura-world/4.jpg",
-    "/destinations/barcelona/13-portaventura-world/5.jpg"
-  ],
   "Illuseum Berlin": [
     "/destinations/berlin/1-illuseum-berlin/1.jpg",
     "/destinations/berlin/1-illuseum-berlin/2.jpg",
@@ -204,16 +155,10 @@
     "/destinations/paris/5-montmartre-sacre-c-ur/3.jpg"
   ],
   "Galleria Borghese": [
-    "/destinations/rome/13-galleria-borghese/1.jpg",
-    "/destinations/rome/13-galleria-borghese/2.jpg",
-    "/destinations/rome/13-galleria-borghese/3.jpg",
-    "/destinations/rome/13-galleria-borghese/4.jpg",
-    "/destinations/rome/13-galleria-borghese/5.jpg"
+    "/destinations/rome/13-galleria-borghese/1.jpg"
   ],
   "Castel Sant'Angelo": [
-    "/destinations/rome/18-castel-sant-angelo/1.jpg",
-    "/destinations/rome/18-castel-sant-angelo/2.jpg",
-    "/destinations/rome/18-castel-sant-angelo/3.jpg"
+    "/destinations/rome/18-castel-sant-angelo/1.jpg"
   ],
   "Piazza Navona": [
     "/destinations/rome/21-piazza-navona/1.jpg",
@@ -228,9 +173,6 @@
     "/destinations/paris/4-musee-d-orsay/3.jpg",
     "/destinations/paris/4-musee-d-orsay/4.jpg",
     "/destinations/paris/4-musee-d-orsay/5.jpg"
-  ],
-  "Hospital de Sant Pau": [
-    "/destinations/barcelona/8-hospital-de-sant-pau/1.jpg"
   ],
   "Παλάτι του Κοινοβουλίου (Σπίτι του Λαού)": [
     "/destinations/bucharest/4-act/1.jpg",
@@ -346,26 +288,6 @@
   ],
   "Madame Tussauds Amsterdam": [
     "/destinations/amsterdam/4-madame-tussauds-amsterdam/1.jpg"
-  ],
-  "Gaudí Experience": [
-    "/destinations/barcelona/6-gaudi-experience/1.jpg",
-    "/destinations/barcelona/6-gaudi-experience/2.jpg",
-    "/destinations/barcelona/6-gaudi-experience/3.jpg"
-  ],
-  "Montjuïc Castle (Castell de Montjuïc)": [
-    "/destinations/barcelona/7-montjuic-castle-castell-de-montjuic/1.jpg",
-    "/destinations/barcelona/7-montjuic-castle-castell-de-montjuic/2.jpg",
-    "/destinations/barcelona/7-montjuic-castle-castell-de-montjuic/3.jpg"
-  ],
-  "CosmoCaixa": [
-    "/destinations/barcelona/11-cosmocaixa/1.jpg",
-    "/destinations/barcelona/11-cosmocaixa/2.jpg",
-    "/destinations/barcelona/11-cosmocaixa/3.jpg"
-  ],
-  "Museu Blau (Natural History Museum)": [
-    "/destinations/barcelona/18-museu-blau-natural-history-museum/1.jpg",
-    "/destinations/barcelona/18-museu-blau-natural-history-museum/2.jpg",
-    "/destinations/barcelona/18-museu-blau-natural-history-museum/3.jpg"
   ],
   "ANOHA - Children's World": [
     "/destinations/berlin/7-anoha-children-s-world/1.jpg"
@@ -553,13 +475,6 @@
   ],
   "Pancake Boat (Pannenkoekenboot)": [
     "/destinations/amsterdam/12-pancake-boat-pannenkoekenboot/1.jpg"
-  ],
-  "Tibidabo Amusement Park": [
-    "/destinations/barcelona/12-tibidabo-amusement-park/1.jpg",
-    "/destinations/barcelona/12-tibidabo-amusement-park/2.jpg"
-  ],
-  "Magic Fountain (Font Màgica)": [
-    "/destinations/barcelona/16-magic-fountain-font-magica/1.jpg"
   ],
   "Κρουαζιέρα στον ποταμό Spree": [
     "/destinations/berlin/16-spree/1.jpg"
@@ -854,14 +769,6 @@
   "Vondelpark": [
     "/destinations/amsterdam/8-vondelpark/1.jpg"
   ],
-  "Parc de la Ciutadella": [
-    "/destinations/barcelona/14-parc-de-la-ciutadella/1.jpg",
-    "/destinations/barcelona/14-parc-de-la-ciutadella/2.jpg"
-  ],
-  "Poblenou Beaches": [
-    "/destinations/barcelona/15-poblenou-beaches/1.jpg",
-    "/destinations/barcelona/15-poblenou-beaches/2.jpg"
-  ],
   "Garten der Welt": [
     "/destinations/berlin/13-garten-der-welt/1.jpg"
   ],
@@ -961,8 +868,7 @@
     "/destinations/rome/8-villa-carpegna/2.jpg"
   ],
   "Villa Borghese": [
-    "/destinations/rome/11-villa-borghese/1.jpg",
-    "/destinations/rome/11-villa-borghese/2.jpg"
+    "/destinations/rome/11-villa-borghese/1.jpg"
   ],
   "Bioparco di Roma": [
     "/destinations/rome/12-bioparco-di-roma/1.jpg",
@@ -979,5 +885,62 @@
   "Largo di Torre Argentina": [
     "/destinations/rome/19-largo-di-torre-argentina/1.jpg",
     "/destinations/rome/19-largo-di-torre-argentina/2.jpg"
+  ],
+  "Sagrada Família": [
+    "/destinations/barcelona/1-sagrada-familia/1.jpg"
+  ],
+  "Park Güell": [
+    "/destinations/barcelona/2-park-guell/1.jpg"
+  ],
+  "Casa Batlló": [
+    "/destinations/barcelona/3-casa-batllo/1.jpg"
+  ],
+  "Casa Milà (La Pedrera)": [
+    "/destinations/barcelona/4-casa-mila-la-pedrera/1.jpg"
+  ],
+  "Picasso Museum": [
+    "/destinations/barcelona/5-picasso-museum/1.jpg"
+  ],
+  "Gaudí Experience": [
+    "/destinations/barcelona/6-gaudi-experience/1.jpg"
+  ],
+  "Montjuïc Castle (Castell de Montjuïc)": [
+    "/destinations/barcelona/7-montjuic-castle-castell-de-montjuic/1.jpg"
+  ],
+  "Hospital de Sant Pau": [
+    "/destinations/barcelona/8-hospital-de-sant-pau/1.jpg"
+  ],
+  "Camp Nou (Barça Stadium Tour)": [
+    "/destinations/barcelona/9-camp-nou-barca-stadium-tour/1.jpg"
+  ],
+  "CosmoCaixa": [
+    "/destinations/barcelona/11-cosmocaixa/1.jpg"
+  ],
+  "Tibidabo Amusement Park": [
+    "/destinations/barcelona/12-tibidabo-amusement-park/1.jpg"
+  ],
+  "PortAventura World": [
+    "/destinations/barcelona/13-portaventura-world/1.jpg"
+  ],
+  "Parc de la Ciutadella": [
+    "/destinations/barcelona/14-parc-de-la-ciutadella/1.jpg"
+  ],
+  "Poblenou Beaches": [
+    "/destinations/barcelona/15-poblenou-beaches/1.jpg"
+  ],
+  "Magic Fountain (Font Màgica)": [
+    "/destinations/barcelona/16-magic-fountain-font-magica/1.jpg"
+  ],
+  "Museu Blau (Natural History Museum)": [
+    "/destinations/barcelona/18-museu-blau-natural-history-museum/1.jpg"
+  ],
+  "L'Aquàrium de Barcelona": [
+    "/destinations/barcelona/10-laquarium-de-barcelona/1.jpg"
+  ],
+  "Ciutat Vella / Barri Gòtic Exploration": [
+    "/destinations/barcelona/17-ciutat-vella-barri-gotic/1.jpg"
+  ],
+  "La Casa dels Entremesos - Μουσείο των Γιγάντων": [
+    "/destinations/barcelona/19-la-casa-dels-entremesos/1.jpg"
   ]
 }

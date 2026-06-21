@@ -1,0 +1,250 @@
+[
+  {
+    "name": "Sagrada Família",
+    "path": "/destinations/barcelona/1-sagrada-familia/1.jpg",
+    "credit": {
+      "source": "Wikimedia Commons",
+      "file": "File:Sagrada Familia at night 02.jpg",
+      "photoUrl": "https://commons.wikimedia.org/wiki/File:Sagrada_Familia_at_night_02.jpg",
+      "author": "Maksim Sokolov (maxergon.com)",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "attributionRequired": true
+    }
+  },
+  {
+    "name": "Park Güell",
+    "path": "/destinations/barcelona/2-park-guell/1.jpg",
+    "credit": {
+      "source": "Wikimedia Commons",
+      "file": "File:Park Güell 5 - panoramio.jpg",
+      "photoUrl": "https://commons.wikimedia.org/wiki/File:Park_G%C3%BCell_5_-_panoramio.jpg",
+      "author": "Mickey Løgitmark",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "attributionRequired": true
+    }
+  },
+  {
+    "name": "Casa Batlló",
+    "path": "/destinations/barcelona/3-casa-batllo/1.jpg",
+    "credit": {
+      "source": "Wikimedia Commons",
+      "file": "File:Casa Batlló 01.jpg",
+      "photoUrl": "https://commons.wikimedia.org/wiki/File:Casa_Batll%C3%B3_01.jpg",
+      "author": "Bernard Gagnon",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "attributionRequired": true
+    }
+  },
+  {
+    "name": "Casa Milà (La Pedrera)",
+    "path": "/destinations/barcelona/4-casa-mila-la-pedrera/1.jpg",
+    "credit": {
+      "source": "Unsplash",
+      "license": "Unsplash License",
+      "licenseUrl": "https://unsplash.com/license",
+      "attributionRequired": false,
+      "author": null,
+      "authorUrl": null,
+      "photoUrl": "https://unsplash.com/photos/EUed6ZoHYfg"
+    }
+  },
+  {
+    "name": "Picasso Museum",
+    "path": "/destinations/barcelona/5-picasso-museum/1.jpg",
+    "credit": {
+      "source": "Wikimedia Commons",
+      "file": "File:Museu Picasso Barcelona- queues.jpg",
+      "photoUrl": "https://commons.wikimedia.org/wiki/File:Museu_Picasso_Barcelona-_queues.jpg",
+      "author": "Kippelboy",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "attributionRequired": true
+    }
+  },
+  {
+    "name": "Gaudí Experience",
+    "path": "/destinations/barcelona/6-gaudi-experience/1.jpg",
+    "note": "No free photo of the Gaudí Experience attraction (a 4-D cinema) itself exists; Casa Vicens — Gaudí's first house — is used as a representative, family-friendly Gaudí image. Swap if you obtain a licensed photo of the venue.",
+    "credit": {
+      "source": "Wikimedia Commons",
+      "file": "File:Casa Vicens, Barcelona - panoramio.jpg",
+      "photoUrl": "https://commons.wikimedia.org/wiki/File:Casa_Vicens,_Barcelona_-_panoramio.jpg",
+      "author": "Carlos Cunha",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "attributionRequired": true
+    }
+  },
+  {
+    "name": "Montjuïc Castle (Castell de Montjuïc)",
+    "path": "/destinations/barcelona/7-montjuic-castle-castell-de-montjuic/1.jpg",
+    "credit": {
+      "source": "Wikimedia Commons",
+      "file": "File:Κάστρο Μονζουίκ 3231 - 3233.jpg",
+      "photoUrl": "https://commons.wikimedia.org/wiki/File:%CE%9A%CE%AC%CF%83%CF%84%CF%81%CE%BF_%CE%9C%CE%BF%CE%BD%CE%B6%CE%BF%CF%85%CE%AF%CE%BA_3231_-_3233.jpg",
+      "author": "C messier",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "attributionRequired": true
+    }
+  },
+  {
+    "name": "Hospital de Sant Pau",
+    "path": "/destinations/barcelona/8-hospital-de-sant-pau/1.jpg",
+    "credit": {
+      "source": "Wikimedia Commons",
+      "file": "File:2014- Hospital Sant Pau, Barcelona, Spain ( Ank Kumar ) 02.jpg",
+      "photoUrl": "https://commons.wikimedia.org/wiki/File:2014-_Hospital_Sant_Pau,_Barcelona,_Spain_(_Ank_Kumar_)_02.jpg",
+      "author": "Ank Kumar",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "attributionRequired": true
+    }
+  },
+  {
+    "name": "Camp Nou (Barça Stadium Tour)",
+    "path": "/destinations/barcelona/9-camp-nou-barca-stadium-tour/1.jpg",
+    "credit": {
+      "source": "Wikimedia Commons",
+      "file": "File:Camp Nou aerial (cropped).jpg",
+      "photoUrl": "https://commons.wikimedia.org/wiki/File:Camp_Nou_aerial_(cropped).jpg",
+      "author": "Oh-Barcelona.com from Barcelona, Spain",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "attributionRequired": true
+    }
+  },
+  {
+    "name": "CosmoCaixa",
+    "path": "/destinations/barcelona/11-cosmocaixa/1.jpg",
+    "credit": {
+      "source": "Wikimedia Commons",
+      "file": "File:CosmoCaixa building.jpg",
+      "photoUrl": "https://commons.wikimedia.org/wiki/File:CosmoCaixa_building.jpg",
+      "author": "Jirka Dl",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "attributionRequired": true
+    }
+  },
+  {
+    "name": "Tibidabo Amusement Park",
+    "path": "/destinations/barcelona/12-tibidabo-amusement-park/1.jpg",
+    "credit": {
+      "source": "Unsplash",
+      "license": "Unsplash License",
+      "licenseUrl": "https://unsplash.com/license",
+      "attributionRequired": false,
+      "author": null,
+      "authorUrl": null,
+      "photoUrl": "https://unsplash.com/photos/bV_3QZtlhJo"
+    }
+  },
+  {
+    "name": "PortAventura World",
+    "path": "/destinations/barcelona/13-portaventura-world/1.jpg",
+    "credit": {
+      "source": "Wikimedia Commons",
+      "file": "File:Dragon Khan and Shambhala in 2012.JPG",
+      "photoUrl": "https://commons.wikimedia.org/wiki/File:Dragon_Khan_and_Shambhala_in_2012.JPG",
+      "author": "Sotti",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "attributionRequired": true
+    }
+  },
+  {
+    "name": "Parc de la Ciutadella",
+    "path": "/destinations/barcelona/14-parc-de-la-ciutadella/1.jpg",
+    "credit": {
+      "source": "Unsplash",
+      "license": "Unsplash License",
+      "licenseUrl": "https://unsplash.com/license",
+      "attributionRequired": false,
+      "author": null,
+      "authorUrl": null,
+      "photoUrl": "https://unsplash.com/photos/PdsutDCgemk"
+    }
+  },
+  {
+    "name": "Poblenou Beaches",
+    "path": "/destinations/barcelona/15-poblenou-beaches/1.jpg",
+    "credit": {
+      "source": "Unsplash",
+      "license": "Unsplash License",
+      "licenseUrl": "https://unsplash.com/license",
+      "attributionRequired": false,
+      "author": null,
+      "authorUrl": null,
+      "photoUrl": "https://unsplash.com/photos/0idz9EY2tMM"
+    }
+  },
+  {
+    "name": "Magic Fountain (Font Màgica)",
+    "path": "/destinations/barcelona/16-magic-fountain-font-magica/1.jpg",
+    "credit": {
+      "source": "Wikimedia Commons",
+      "file": "File:Barcelona 133.JPG",
+      "photoUrl": "https://commons.wikimedia.org/wiki/File:Barcelona_133.JPG",
+      "author": "Georges Jansoone (JoJan)",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "attributionRequired": true
+    }
+  },
+  {
+    "name": "Museu Blau (Natural History Museum)",
+    "path": "/destinations/barcelona/18-museu-blau-natural-history-museum/1.jpg",
+    "credit": {
+      "source": "Wikimedia Commons",
+      "file": "File:Barcelona 2006 (2845523526).jpg",
+      "photoUrl": "https://commons.wikimedia.org/wiki/File:Barcelona_2006_(2845523526).jpg",
+      "author": "Niels Broekzitter from Piershil, The Netherlands",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "attributionRequired": true
+    }
+  },
+  {
+    "name": "L'Aquàrium de Barcelona",
+    "path": "/destinations/barcelona/10-laquarium-de-barcelona/1.jpg",
+    "credit": {
+      "source": "Wikimedia Commons",
+      "file": "File:Tunnelaquarium 14-05-2009 15-54-09.JPG",
+      "photoUrl": "https://commons.wikimedia.org/wiki/File:Tunnelaquarium_14-05-2009_15-54-09.JPG",
+      "author": "Paul Hermans",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "attributionRequired": true
+    }
+  },
+  {
+    "name": "Ciutat Vella / Barri Gòtic Exploration",
+    "path": "/destinations/barcelona/17-ciutat-vella-barri-gotic/1.jpg",
+    "credit": {
+      "source": "Wikimedia Commons",
+      "file": "File:PONT del CARRER del BISBE - panoramio.jpg",
+      "photoUrl": "https://commons.wikimedia.org/wiki/File:PONT_del_CARRER_del_BISBE_-_panoramio.jpg",
+      "author": "trolvag",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "attributionRequired": true
+    }
+  },
+  {
+    "name": "La Casa dels Entremesos - Μουσείο των Γιγάντων",
+    "path": "/destinations/barcelona/19-la-casa-dels-entremesos/1.jpg",
+    "credit": {
+      "source": "Wikimedia Commons",
+      "file": "File:Barcelona - Gegants and sardana in El Born 01.jpg",
+      "photoUrl": "https://commons.wikimedia.org/wiki/File:Barcelona_-_Gegants_and_sardana_in_El_Born_01.jpg",
+      "author": "Joe Mabel",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "attributionRequired": true
+    }
+  }
+]

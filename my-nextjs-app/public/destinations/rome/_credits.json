@@ -1,0 +1,41 @@
+[
+  {
+    "name": "Castel Sant'Angelo",
+    "path": "/destinations/rome/18-castel-sant-angelo/1.jpg",
+    "credit": {
+      "source": "Wikimedia Commons",
+      "file": "File:Castel Sant'Angelo, Rome - panoramio.jpg",
+      "photoUrl": "https://commons.wikimedia.org/wiki/File:Castel_Sant%27Angelo,_Rome_-_panoramio.jpg",
+      "author": "Colin W",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "attributionRequired": true
+    }
+  },
+  {
+    "name": "Villa Borghese",
+    "path": "/destinations/rome/11-villa-borghese/1.jpg",
+    "credit": {
+      "source": "Wikimedia Commons",
+      "file": "File:Laghetto and Tempio di Esculapio in Villa Borghese 02.jpg",
+      "photoUrl": "https://commons.wikimedia.org/wiki/File:Laghetto_and_Tempio_di_Esculapio_in_Villa_Borghese_02.jpg",
+      "author": "Krzysztof Golik",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "attributionRequired": true
+    }
+  },
+  {
+    "name": "Galleria Borghese",
+    "path": "/destinations/rome/13-galleria-borghese/1.jpg",
+    "credit": {
+      "source": "Wikimedia Commons",
+      "file": "File:Galleria borghese facade.jpg",
+      "photoUrl": "https://commons.wikimedia.org/wiki/File:Galleria_borghese_facade.jpg",
+      "author": "Alessio Damato",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "attributionRequired": true
+    }
+  }
+]
