@@ -260,6 +260,9 @@ export default function ActivityCombinations() {
   // The activities catalogue + its search box are hidden until the user clicks
   // "Select activities". `activityQuery` filters the shown list.
   const [showActivities, setShowActivities] = useState(false);
+  // First-visit hint pointing at the "Επιλογή δραστηριοτήτων" button (shows on
+  // every plan-page mount until dismissed or the button is used).
+  const [showSelectHint, setShowSelectHint] = useState(true);
   const [activityQuery, setActivityQuery] = useState("");
   // Activities the user has ticked in the catalogue (by name), plus the set
   // "locked in" by Submit. While `submitted` is null the trip is built from the
@@ -476,22 +479,61 @@ export default function ActivityCombinations() {
                 <h2 className="text-xl font-semibold text-zinc-800 dark:text-zinc-100">
                   {city.name}
                 </h2>
-                <button
-                  type="button"
-                  onClick={() => setShowActivities((s) => !s)}
-                  aria-expanded={showActivities}
-                  disabled={city.activities.length === 0}
-                  className={`shrink-0 ${buttonStyles.common} disabled:cursor-not-allowed disabled:text-zinc-300 disabled:hover:bg-transparent`}
-                >
-                  {showActivities ? "Απόκρυψη δραστηριοτήτων" : "Επιλογή δραστηριοτήτων"}
-                </button>
+                <div className="flex shrink-0 items-center gap-3">
+                  {/* The Επιλογή button (relative, so the hint anchors to it).
+                      On tablet the inline Φίλτρα button sits to its right. */}
+                  <div className="relative">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowActivities((s) => !s);
+                        setShowSelectHint(false);
+                      }}
+                      aria-expanded={showActivities}
+                      disabled={city.activities.length === 0}
+                      className={`shrink-0 ${buttonStyles.common} disabled:cursor-not-allowed disabled:text-zinc-300 disabled:hover:bg-transparent`}
+                    >
+                      {showActivities ? "Απόκρυψη δραστηριοτήτων" : "Επιλογή δραστηριοτήτων"}
+                    </button>
+
+                    {/* On-load hint, anchored under the button with an arrow. */}
+                    {showSelectHint && (
+                      <div className="animate-pop-in absolute right-0 top-full z-30 mt-3 w-64 max-w-[calc(100vw-2rem)]">
+                        <div className="absolute -top-1.5 right-8 h-3 w-3 rotate-45 border-l border-t border-orange-200 bg-white dark:border-orange-400/30 dark:bg-zinc-800" />
+                        <div className="relative rounded-xl border border-orange-200 bg-white p-3 pr-7 text-sm text-zinc-600 shadow-lg shadow-orange-900/10 dark:border-orange-400/30 dark:bg-zinc-800 dark:text-zinc-300">
+                          <button
+                            type="button"
+                            onClick={() => setShowSelectHint(false)}
+                            aria-label="Κλείσιμο"
+                            className="absolute right-1.5 top-1 text-zinc-400 transition-colors hover:text-zinc-600 dark:hover:text-zinc-200"
+                          >
+                            ✕
+                          </button>
+                          Επίλεξε δραστηριότητες για να φτιάξεις πρόγραμμα αποκλειστικά με αυτές.
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Tablet-only filters button — sits to the RIGHT of Επιλογή
+                      (mobile keeps the full-width one below; desktop uses the
+                      sidebar). */}
+                  <button
+                    type="button"
+                    onClick={() => setShowMobileFilters(true)}
+                    className={`hidden shrink-0 items-center justify-center gap-2 md:flex lg:hidden ${buttonStyles.secondary}`}
+                  >
+                    <FaSliders className="h-4 w-4" />
+                    Φίλτρα
+                  </button>
+                </div>
               </div>
-              {/* Mobile filters button — always below the header, regardless of
-                whether the activity list is open. */}
+              {/* Mobile-only filters button — full width below the header (tablet
+                shows the inline one above; desktop uses the sidebar). */}
               <button
                 type="button"
                 onClick={() => setShowMobileFilters(true)}
-                className={`flex w-full items-center justify-center gap-2 lg:hidden ${buttonStyles.secondary}`}
+                className={`flex w-full items-center justify-center gap-2 md:hidden ${buttonStyles.secondary}`}
               >
                 <FaSliders className="h-4 w-4" />
                 Φίλτρα
