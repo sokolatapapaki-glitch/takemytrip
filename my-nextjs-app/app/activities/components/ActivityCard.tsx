@@ -76,10 +76,10 @@ export function ActivityCard({
           role="button"
           tabIndex={0}
           style={{ animationDelay: `${Math.min(index * 35, 250)}ms` }}
-          className="animate-card-pop relative flex min-h-24 w-full cursor-pointer items-stretch overflow-hidden rounded-2xl border border-zinc-100 bg-white text-left shadow-sm shadow-orange-900/5 transition duration-200 ease-out hover:-translate-y-0.5 hover:border-orange-200 sm:hidden"
+          className="animate-card-pop relative flex h-24 w-full cursor-pointer items-stretch overflow-hidden rounded-2xl border border-zinc-100 bg-white text-left shadow-sm shadow-orange-900/5 transition duration-200 ease-out hover:-translate-y-0.5 hover:border-orange-200 sm:hidden"
         >
           <div
-            className={`relative flex aspect-square w-24 shrink-0 items-center justify-center self-center overflow-hidden rounded-l-2xl bg-gradient-to-br ${VIBE_GRADIENT[vibe.key]} text-white`}
+            className={`relative flex aspect-square h-full shrink-0 items-center justify-center overflow-hidden rounded-l-2xl bg-gradient-to-br ${VIBE_GRADIENT[vibe.key]} text-white`}
           >
             <VibeIcon className="h-7 w-7 drop-shadow" />
             {activityImages(activity)[0] && (
@@ -112,7 +112,7 @@ export function ActivityCard({
               </label>
             )}
           </div>
-          <div className="flex min-w-0 flex-1 flex-col justify-between p-3">
+          <div className="flex min-w-0 flex-1 flex-col justify-between p-2">
             <div>
               <span className="block truncate text-base font-medium text-zinc-800">
                 {activity.name}
@@ -127,7 +127,7 @@ export function ActivityCard({
                   )}
                 </span>
               ) : (
-                <p className="mt-0.5 line-clamp-2 text-sm text-zinc-400">
+                <p className="mt-0.5 line-clamp-1 text-sm text-zinc-400">
                   {activity.description}
                 </p>
               )}
