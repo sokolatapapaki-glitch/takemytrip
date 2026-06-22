@@ -245,25 +245,17 @@ export default function MyTripsExperience() {
                 </div>
               ) : null}
 
-              {/* "Activities" label above the trip's own activities (hidden in
-                  replace/add mode, where the banner already explains the strip).
-                  mt-2 nudges the strip a little lower for breathing room. */}
-              {!inMode ? (
-                <h3 className="mt-2 text-lg font-semibold text-zinc-800">
-                  Δραστηριότητες
-                </h3>
-              ) : null}
-
-              {/* The activities strip: the trip's own activities, or — in
-                  replace mode — the wiggling candidates. py-3 gives the cards
-                  top room so their hover lift/tilt isn't clipped. */}
-              <div
-                ref={(el) => {
-                  if (el) stripRefs.current.set(t.id, el);
-                  else stripRefs.current.delete(t.id);
-                }}
-                className="flex flex-col gap-4 py-3 sm:flex-row sm:overflow-x-auto"
-              >
+              {/* Activity picker — shown ONLY in replace/add mode. The always-on
+                  list of the trip's own activities was removed (they already
+                  appear inside the Trip card above). */}
+              {inMode && (
+                <div
+                  ref={(el) => {
+                    if (el) stripRefs.current.set(t.id, el);
+                    else stripRefs.current.delete(t.id);
+                  }}
+                  className="flex flex-col gap-4 py-3 sm:flex-row sm:overflow-x-auto"
+                >
                 {inMode && stripActivities.length === 0 ? (
                   <p className="py-6 text-sm text-zinc-500">
                     Καμία άλλη δραστηριότητα δεν χωράει σε αυτό το διάστημα.
@@ -307,7 +299,8 @@ export default function MyTripsExperience() {
                     </div>
                   ))
                 )}
-              </div>
+                </div>
+              )}
             </div>
           );
         })}

@@ -112,6 +112,21 @@ export function AppProvider({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [isModalOpen, closeModal]);
 
+  // The device/browser Back button should just close an open modal, not leave
+  // the page. While the modal is open we push a throwaway history entry; a Back
+  // press pops it and we close the modal. If the modal is closed another way
+  // (X / Esc / backdrop), we consume that entry so Back doesn't become a no-op.
+  useEffect(() => {
+    if (!isModalOpen) return;
+    window.history.pushState({ ttkModal: true }, "");
+    const onPop = () => closeModal();
+    window.addEventListener("popstate", onPop);
+    return () => {
+      window.removeEventListener("popstate", onPop);
+      if (window.history.state?.ttkModal) window.history.back();
+    };
+  }, [isModalOpen, closeModal]);
+
   return (
     <AppContext.Provider
       value={{ theme, toggleTheme, openModal, openActivity, closeModal, isModalOpen }}

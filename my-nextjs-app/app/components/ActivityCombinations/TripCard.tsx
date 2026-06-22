@@ -297,13 +297,16 @@ export function TripCard({
               .join(" · ")}
           </p>
         ) : null}
-        {/* Stars hidden → the actions sit right under the cost. */}
-        {!SHOW_ACTIVITY_STARS && (
-          <div className="mt-2 flex items-center gap-2">{headerButtons}</div>
-        )}
+        {/* Actions sit right under the cost on mobile (so no blank space trails
+            when there's no travellers/per-person line); on desktop they move to
+            the header's right, unless the star rating is hidden, in which case
+            they stay under the cost there too. */}
+        <div className={`mt-2 flex items-center gap-2 ${SHOW_ACTIVITY_STARS ? "sm:hidden" : ""}`}>
+          {headerButtons}
+        </div>
       </div>
       {SHOW_ACTIVITY_STARS && (
-        <div className="flex w-full items-center justify-end gap-2 sm:w-auto sm:flex-row sm:items-center">
+        <div className="hidden w-auto items-center justify-end gap-2 sm:flex sm:items-center">
           {headerButtons}
         </div>
       )}
