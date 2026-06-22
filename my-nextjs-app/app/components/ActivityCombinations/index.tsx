@@ -4,7 +4,7 @@ import { useDeferredValue, useMemo, useState } from "react";
 import { useSearchParams, type ReadonlyURLSearchParams } from "next/navigation";
 import { setActiveCity, setActiveParty, type Activity, type Party } from "./core/activities.functions";
 import { CITIES, DEFAULT_CITY, type City, type Area } from "./core/cities.data";
-import { defaultSelection, Selection } from "./core/filters.functions";
+import { defaultSelection, Selection, type Filter } from "./core/filters.functions";
 import { costOptionsForParty } from "./core/filters.data";
 import { HIDE_ACTIVITY_PRICES } from "@/app/config";
 import { scheduleEndHour } from "./core/schedule.functions";
@@ -50,6 +50,11 @@ function parseStartParams(p: ReadonlyURLSearchParams): {
   // Activity names the trip MUST contain (?include=, repeated) — the activities
   // page's "Make Trip" hand-off. They pre-check the "Must include" filter.
   include: string[];
+  // Pre-selected filter options from ?filters= (filterIndex → chosen option
+  // indexes), applied to every day. Format: groups joined by "_", each
+  // "<filterIdx>-<optIdx>[.<optIdx>…]". E.g. "1-1_2-0" → filter 1 → option 1,
+  // filter 2 → option 0. Out-of-range/invalid entries are ignored downstream.
+  filterSel: Record<number, number[]>;
 } {
   const parseDate = (s: string | null): Date | undefined => {
     const m = s ? /^(\d{4})-(\d{2})-(\d{2})$/.exec(s) : null;
@@ -79,6 +84,21 @@ function parseStartParams(p: ReadonlyURLSearchParams): {
     Number.isFinite(slat) && Number.isFinite(slng)
       ? { name: p.get("sname") || "Σημείο εκκίνησης", coords: { lat: slat, lng: slng } }
       : undefined;
+  // Pre-selected filter options from ?filters= (see the return type above).
+  const filterSel: Record<number, number[]> = {};
+  const rawFilters = p.get("filters");
+  if (rawFilters) {
+    for (const group of rawFilters.split("_")) {
+      const [fi, opts] = group.split("-");
+      const fidx = Number(fi);
+      if (!Number.isInteger(fidx) || fidx < 0) continue;
+      const idxs = (opts ?? "")
+        .split(".")
+        .map((s) => Number(s))
+        .filter((n) => Number.isInteger(n) && n >= 0);
+      if (idxs.length) filterSel[fidx] = idxs;
+    }
+  }
   return {
     cityId: p.get("dest") ?? undefined,
     areaId: p.get("area") ?? undefined,
@@ -88,7 +108,28 @@ function parseStartParams(p: ReadonlyURLSearchParams): {
     days,
     party: { adults, childAges },
     include: p.getAll("include"),
+    filterSel,
   };
+}
+
+// Merge URL-supplied filter selections onto the defaults: start from
+// defaultSelection, then for each requested filter override its chosen option
+// indexes (clamped to that filter's real options; unknown filters ignored). A
+// single-select filter keeps only the first valid index.
+function selectionFromParams(
+  filters: Filter[],
+  sel: Record<number, number[]>
+): Selection {
+  const base = defaultSelection(filters);
+  for (const [k, opts] of Object.entries(sel)) {
+    const fi = Number(k);
+    const f = filters[fi];
+    if (!f) continue;
+    const valid = opts.filter((o) => o >= 0 && o < f.options.length);
+    if (!valid.length) continue;
+    base[fi] = f.multi ? valid : [valid[0]];
+  }
+  return base;
 }
 
 // Shown in the results column while the trip is being recalculated after a filter
@@ -190,7 +231,7 @@ export default function ActivityCombinations() {
   // only the slots the chosen range spans are used. The filter set never changes
   // shape, so selection keys stay valid; stale option indexes are ignored.
   const [selections, setSelections] = useState<Selection[]>(() =>
-    Array.from({ length: MAX_DAYS }, () => defaultSelection(filters))
+    Array.from({ length: MAX_DAYS }, () => selectionFromParams(filters, initial.filterSel))
   );
   const [startHours, setStartHours] = useState<number[]>(() =>
     Array.from({ length: MAX_DAYS }, () => DEFAULT_START_HOUR)
