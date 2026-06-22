@@ -1,7 +1,7 @@
 "use client";
 
-import { Fragment, useState } from "react";
-import { FaArrowsRotate, FaChevronDown, FaChevronUp, FaRoute, FaTrashCan } from "react-icons/fa6";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { FaArrowsRotate, FaChevronDown, FaChevronRight, FaChevronUp, FaEllipsisVertical, FaRoute, FaTrashCan } from "react-icons/fa6";
 import type { Activity, Coords, Party } from "./core/activities.functions";
 import {
   distanceKm,
@@ -80,6 +80,124 @@ function filterSummary(
 // One day's timed itinerary for a combo: a day heading, the ordered slots with
 // inter-stop distances, and a one-line "fits / doesn't fit" + linearity summary.
 // Pure in `plan` (already scheduled for `day`), so it's rendered once per day.
+// Per-activity actions (Replace / Remove / Περισσότερα). Inline on desktop; on
+// mobile they collapse into a kebab (three-dots) dropdown to save room.
+function RowActions({
+  item,
+  day,
+  onReplace,
+  onRemove,
+  onSeeMore,
+}: {
+  item: ScheduledItem;
+  day: number;
+  onReplace?: (item: ScheduledItem, day: number) => void;
+  onRemove?: (item: ScheduledItem, day: number) => void;
+  onSeeMore: () => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
+  }, [open]);
+
+  return (
+    <span className="order-2 ml-auto flex shrink-0 items-center gap-3 sm:order-3">
+      {/* Desktop: the actions inline. */}
+      <span className="hidden items-center gap-3 sm:flex">
+        {onReplace ? (
+          <button
+            type="button"
+            onClick={() => onReplace(item, day)}
+            title="Αντικατάσταση δραστηριότητας"
+            aria-label="Αντικατάσταση δραστηριότητας"
+            className="flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-black/[.05] hover:text-zinc-800 dark:hover:bg-white/[.08] dark:hover:text-zinc-100"
+          >
+            <FaArrowsRotate className="h-4 w-4" />
+          </button>
+        ) : null}
+        {onRemove ? (
+          <button
+            type="button"
+            onClick={() => onRemove(item, day)}
+            title="Αφαίρεση από αυτή την ημέρα"
+            aria-label="Αφαίρεση από αυτή την ημέρα"
+            className="flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-black/[.05] hover:text-red-600 dark:hover:bg-white/[.08] dark:hover:text-red-400"
+          >
+            <FaTrashCan className="h-4 w-4" />
+          </button>
+        ) : null}
+        <button type="button" onClick={onSeeMore} className={buttonStyles.underline}>
+          Περισσότερα
+        </button>
+      </span>
+
+      {/* Mobile: a kebab three-dots menu holding the same actions. */}
+      <div ref={ref} className="relative sm:hidden">
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          aria-haspopup="menu"
+          aria-expanded={open}
+          aria-label="Ενέργειες δραστηριότητας"
+          className="flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-black/[.05] hover:text-zinc-800 dark:hover:bg-white/[.08] dark:hover:text-zinc-100"
+        >
+          <FaEllipsisVertical className="h-4 w-4" />
+        </button>
+        {open ? (
+          <div
+            role="menu"
+            className="absolute right-0 top-full z-30 mt-1 w-44 overflow-hidden rounded-xl border border-zinc-200 bg-white p-1 shadow-lg shadow-orange-900/10 dark:border-zinc-700 dark:bg-zinc-900"
+          >
+            {onReplace ? (
+              <button
+                type="button"
+                role="menuitem"
+                onClick={() => {
+                  onReplace(item, day);
+                  setOpen(false);
+                }}
+                className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-zinc-700 transition-colors hover:bg-orange-50 dark:text-zinc-200 dark:hover:bg-zinc-800"
+              >
+                <FaArrowsRotate className="h-4 w-4 text-zinc-400" /> Αντικατάσταση
+              </button>
+            ) : null}
+            {onRemove ? (
+              <button
+                type="button"
+                role="menuitem"
+                onClick={() => {
+                  onRemove(item, day);
+                  setOpen(false);
+                }}
+                className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-zinc-700 transition-colors hover:bg-red-50 hover:text-red-600 dark:text-zinc-200 dark:hover:bg-zinc-800 dark:hover:text-red-400"
+              >
+                <FaTrashCan className="h-4 w-4 text-zinc-400" /> Αφαίρεση
+              </button>
+            ) : null}
+            <button
+              type="button"
+              role="menuitem"
+              onClick={() => {
+                onSeeMore();
+                setOpen(false);
+              }}
+              className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm text-zinc-700 transition-colors hover:bg-orange-50 dark:text-zinc-200 dark:hover:bg-zinc-800"
+            >
+              <FaChevronRight className="h-3 w-3 text-zinc-400" /> Περισσότερα
+            </button>
+          </div>
+        ) : null}
+      </div>
+    </span>
+  );
+}
+
 // `note` (optional) shows a small caption beside the weekday heading.
 export function DayItinerary({
   plan,
@@ -227,37 +345,13 @@ export function DayItinerary({
                     />
                   </div>
                   {showSeeMore && !item.lunch && ACTIVITY_BY_NAME.has(item.name) ? (
-                    <span className="order-2 ml-auto flex shrink-0 items-center gap-3 sm:order-3">
-                      {onReplace ? (
-                        <button
-                          type="button"
-                          onClick={() => onReplace(item, day)}
-                          title="Αντικατάσταση δραστηριότητας"
-                          aria-label="Αντικατάσταση δραστηριότητας"
-                          className="flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-black/[.05] hover:text-zinc-800 dark:hover:bg-white/[.08] dark:hover:text-zinc-100"
-                        >
-                          <FaArrowsRotate className="h-4 w-4" />
-                        </button>
-                      ) : null}
-                      {onRemove ? (
-                        <button
-                          type="button"
-                          onClick={() => onRemove(item, day)}
-                          title="Αφαίρεση από αυτή την ημέρα"
-                          aria-label="Αφαίρεση από αυτή την ημέρα"
-                          className="flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-black/[.05] hover:text-red-600 dark:hover:bg-white/[.08] dark:hover:text-red-400"
-                        >
-                          <FaTrashCan className="h-4 w-4" />
-                        </button>
-                      ) : null}
-                      <button
-                        type="button"
-                        onClick={() => openActivity(ACTIVITY_BY_NAME.get(item.name)!)}
-                        className={buttonStyles.underline}
-                      >
-                        Δες περισσότερα
-                      </button>
-                    </span>
+                    <RowActions
+                      item={item}
+                      day={day}
+                      onReplace={onReplace}
+                      onRemove={onRemove}
+                      onSeeMore={() => openActivity(ACTIVITY_BY_NAME.get(item.name)!)}
+                    />
                   ) : null}
                   {/* Short description under the row (trip card only). The cost is
                       intentionally omitted here — it appears only in the PDF export. */}

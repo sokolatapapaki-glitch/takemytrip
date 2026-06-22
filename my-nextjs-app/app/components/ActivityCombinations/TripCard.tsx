@@ -4,7 +4,7 @@ import { useState } from "react";
 import { FaChevronDown, FaChevronUp, FaRoute, FaTrashCan } from "react-icons/fa6";
 import { DAYS_FULL } from "./core/activities.data";
 import { activityPrice, partyPriceLines, type Party } from "./core/activities.functions";
-import { HIDE_ACTIVITY_PRICES } from "@/app/config";
+import { HIDE_ACTIVITY_PRICES, SHOW_ACTIVITY_STARS } from "@/app/config";
 import { ALL_ACTIVITIES, CITIES, type Area } from "./core/cities.data";
 import { DESTINATION_IMAGES } from "@/app/cities/components/destinationImages.generated";
 import type { Filter, Selection } from "./core/filters.functions";
@@ -216,12 +216,44 @@ export function TripCard({
     "relative flex shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-orange-400 via-rose-400 to-fuchsia-500 text-white";
   // Common button (see buttonStyles.ts) + the inline-flex layout for its arrow.
   const toggleBtn = `inline-flex items-center gap-1.5 ${buttonStyles.common}`;
+  // The delete + show/hide-activities buttons. When the star rating is hidden
+  // they sit just under the cost (in the info column); otherwise they stay on
+  // the header's right.
+  const headerButtons = (
+    <>
+      {onDelete ? (
+        <button
+          type="button"
+          onClick={onDelete}
+          title="Διαγραφή ταξιδιού"
+          aria-label="Διαγραφή ταξιδιού"
+          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-black/[.05] hover:text-red-600 dark:hover:bg-white/[.08] dark:hover:text-red-400"
+        >
+          <FaTrashCan className="h-4 w-4" />
+        </button>
+      ) : null}
+      <button
+        type="button"
+        onClick={toggleOpen}
+        aria-expanded={open}
+        className={`inline-flex shrink-0 items-center gap-1.5 ${buttonStyles.underline}`}
+      >
+        {open ? "Απόκρυψη" : "Δες δραστηριότητες"}
+        {open ? (
+          <FaChevronUp className="h-3 w-3" />
+        ) : (
+          <FaChevronDown className="h-3 w-3" />
+        )}
+      </button>
+    </>
+  );
+
   // The header looks identical whether the card is open or closed; only the
   // toggle's label/arrow flips. (The divider below it shows only when a body
   // follows, i.e. when open.)
   const header = (
     <header
-      className={`flex flex-wrap items-start gap-4 p-3 sm:flex-nowrap ${open ? "border-b border-black/[.08] bg-white/55" : ""
+      className={`flex flex-wrap items-start gap-4 p-2 sm:flex-nowrap sm:p-3 ${open ? "border-b border-black/[.08] bg-white/55" : ""
         }`}
     >
       {/* Destination cover — a bigger square (height = width); falls back to
@@ -265,33 +297,16 @@ export function TripCard({
               .join(" · ")}
           </p>
         ) : null}
+        {/* Stars hidden → the actions sit right under the cost. */}
+        {!SHOW_ACTIVITY_STARS && (
+          <div className="mt-2 flex items-center gap-2">{headerButtons}</div>
+        )}
       </div>
-      <div className="flex w-full items-center justify-end gap-2 sm:w-auto sm:flex-row sm:items-center">
-        {onDelete ? (
-          <button
-            type="button"
-            onClick={onDelete}
-            title="Διαγραφή ταξιδιού"
-            aria-label="Διαγραφή ταξιδιού"
-            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-black/[.05] hover:text-red-600 dark:hover:bg-white/[.08] dark:hover:text-red-400"
-          >
-            <FaTrashCan className="h-4 w-4" />
-          </button>
-        ) : null}
-        <button
-          type="button"
-          onClick={toggleOpen}
-          aria-expanded={open}
-          className={`inline-flex shrink-0 items-center gap-1.5 ${buttonStyles.underline}`}
-        >
-          {open ? "Απόκρυψη" : "Δες δραστηριότητες"}
-          {open ? (
-            <FaChevronUp className="h-3 w-3" />
-          ) : (
-            <FaChevronDown className="h-3 w-3" />
-          )}
-        </button>
-      </div>
+      {SHOW_ACTIVITY_STARS && (
+        <div className="flex w-full items-center justify-end gap-2 sm:w-auto sm:flex-row sm:items-center">
+          {headerButtons}
+        </div>
+      )}
     </header>
   );
 
@@ -305,7 +320,7 @@ export function TripCard({
     <article className={cardClass}>
       {header}
 
-      <div className="flex flex-col gap-3 p-4">
+      <div className="flex flex-col gap-3 p-3 sm:p-4">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex justify-center md:justify-end gap-3 w-full ">
             {onSave ? (
@@ -336,7 +351,7 @@ export function TripCard({
           {trip.days.map((td, slot) => (
             <div
               key={td.day}
-              className="rounded-2xl border border-white/60 bg-white/70 px-4 py-0"
+              className="rounded-2xl border border-white/60 bg-white/70 px-3 py-0 sm:px-4"
             >
               {td.activities.length === 0 ? (
                 <>

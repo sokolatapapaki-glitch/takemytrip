@@ -262,7 +262,7 @@ export default function MyTripsExperience() {
                   if (el) stripRefs.current.set(t.id, el);
                   else stripRefs.current.delete(t.id);
                 }}
-                className="flex gap-4 overflow-x-auto py-3"
+                className="flex flex-col gap-4 py-3 sm:flex-row sm:overflow-x-auto"
               >
                 {inMode && stripActivities.length === 0 ? (
                   <p className="py-6 text-sm text-zinc-500">
@@ -272,7 +272,7 @@ export default function MyTripsExperience() {
                   stripActivities.map((a, i) => (
                     <div
                       key={a.name}
-                      className={`w-64 shrink-0 ${inMode ? "animate-wiggle" : ""}`}
+                      className={`w-full sm:w-64 sm:shrink-0 ${inMode ? "animate-wiggle" : ""}`}
                       style={inMode ? { animationDelay: `${(i % 5) * 90}ms` } : undefined}
                     >
                       <ActivityCard
