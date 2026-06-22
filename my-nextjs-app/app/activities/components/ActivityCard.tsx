@@ -8,6 +8,7 @@ import { buttonStyles } from "@/app/components/ui/buttonStyles";
 import { Stars } from "@/app/components/ui/Stars";
 import { VIBE_GRADIENT, VIBE_ICONS } from "./vibeStyle";
 import { activityImages } from "./activityImages";
+import { SHOW_ACTIVITY_STARS, HIDE_ACTIVITY_PRICES } from "@/app/config";
 
 // A single activity tile from the Penpot "Activities in list" board: a select
 // checkbox (top-left), a bright vibe-coloured image placeholder, the activity
@@ -116,10 +117,20 @@ export function ActivityCard({
               <span className="block truncate text-base font-medium text-zinc-800">
                 {activity.name}
               </span>
-              <span className="mt-0.5 flex items-center gap-2 text-sm text-zinc-400">
-                <Stars value={stars} />
-                <span>{price === 0 ? "Δωρεάν" : `€${price}`}</span>
-              </span>
+              {/* Stars hidden → show the description here instead (mobile), and
+                  drop the price too. */}
+              {SHOW_ACTIVITY_STARS ? (
+                <span className="mt-0.5 flex items-center gap-2 text-sm text-zinc-400">
+                  <Stars value={stars} />
+                  {!HIDE_ACTIVITY_PRICES && (
+                    <span>{price === 0 ? "Δωρεάν" : `€${price}`}</span>
+                  )}
+                </span>
+              ) : (
+                <p className="mt-0.5 line-clamp-2 text-sm text-zinc-400">
+                  {activity.description}
+                </p>
+              )}
             </div>
             <span className={`mt-1 self-end ${buttonStyles.underline}`}>
               Δες περισσότερα
@@ -227,10 +238,14 @@ export function ActivityCard({
           </>
         )}
         <h3 className="text-lg font-semibold text-zinc-800">{activity.name}</h3>
-        <div className="flex flex-wrap items-center gap-3 text-sm text-zinc-500">
-          <Stars value={stars} />
-          <span>{price === 0 ? "Δωρεάν" : `€${price}`}</span>
-        </div>
+        {(SHOW_ACTIVITY_STARS || !HIDE_ACTIVITY_PRICES) && (
+          <div className="flex flex-wrap items-center gap-3 text-sm text-zinc-500">
+            {SHOW_ACTIVITY_STARS && <Stars value={stars} />}
+            {!HIDE_ACTIVITY_PRICES && (
+              <span>{price === 0 ? "Δωρεάν" : `€${price}`}</span>
+            )}
+          </div>
+        )}
         <p className={descriptionClass}>{activity.description}</p>
 
         {/* See more — opens the activity detail modal (stays a no-op until the

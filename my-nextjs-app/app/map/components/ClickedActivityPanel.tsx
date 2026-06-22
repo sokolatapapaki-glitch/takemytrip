@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { FaStar, FaChevronLeft } from "react-icons/fa6";
 import type { Activity } from "@/app/components/ActivityCombinations/core/activities.functions";
 import { bestVibe, cityOf, iconOf, starsOf } from "./mapData";
+import { SHOW_ACTIVITY_STARS, HIDE_ACTIVITY_PRICES } from "@/app/config";
 
 // The detailed activity card shown below the search input when an activity is
 // clicked (on the map or in the results). Mirrors the "Clicked/searched activity"
@@ -59,10 +60,14 @@ export function ClickedActivityPanel({
       </h3>
 
       <div className="mt-2 flex flex-wrap gap-3 text-sm text-zinc-500">
-        <span className="flex items-center gap-1">
-          <FaStar className="text-yellow-400" /> {starsOf(activity).toFixed(1)}/5
-        </span>
-        <span>{activity.cost === 0 ? "Δωρεάν" : `€${activity.cost}`}</span>
+        {SHOW_ACTIVITY_STARS && (
+          <span className="flex items-center gap-1">
+            <FaStar className="text-yellow-400" /> {starsOf(activity).toFixed(1)}/5
+          </span>
+        )}
+        {!HIDE_ACTIVITY_PRICES && (
+          <span>{activity.cost === 0 ? "Δωρεάν" : `€${activity.cost}`}</span>
+        )}
         <span>{activity.hours}ω</span>
       </div>
 

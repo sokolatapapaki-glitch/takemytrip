@@ -12,6 +12,7 @@ import { VIBES } from "@/app/map/components/mapData";
 import { buttonStyles } from "@/app/components/ui/buttonStyles";
 import { useScrollLock } from "@/app/components/ui/useScrollLock";
 import { StatusToast, type StatusState } from "@/app/components/ui/StatusToast";
+import { HIDE_ACTIVITY_PRICES } from "@/app/config";
 import {
   ACT_SORT_LABELS,
   DEFAULT_ACT_FILTERS,
@@ -195,7 +196,9 @@ export default function ActivitiesExperience() {
               onToggle={() => toggleMenu("sort")}
             >
               <div className="flex flex-col gap-1">
-                {(Object.keys(ACT_SORT_LABELS) as ActSortKey[]).map((k) => (
+                {(Object.keys(ACT_SORT_LABELS) as ActSortKey[])
+                  .filter((k) => !HIDE_ACTIVITY_PRICES || k !== "price")
+                  .map((k) => (
                   <button
                     key={k}
                     type="button"
@@ -312,7 +315,9 @@ export default function ActivitiesExperience() {
                 <div>
                   <p className="text-sm font-medium text-zinc-700">Ταξινόμηση</p>
                   <div className="mt-2 flex flex-col gap-1">
-                    {(Object.keys(ACT_SORT_LABELS) as ActSortKey[]).map((k) => (
+                    {(Object.keys(ACT_SORT_LABELS) as ActSortKey[])
+                  .filter((k) => !HIDE_ACTIVITY_PRICES || k !== "price")
+                  .map((k) => (
                       <button
                         key={k}
                         type="button"

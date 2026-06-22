@@ -4,6 +4,7 @@ import { useState } from "react";
 import { FaChevronDown, FaChevronUp, FaRoute, FaTrashCan } from "react-icons/fa6";
 import { DAYS_FULL } from "./core/activities.data";
 import { activityPrice, partyPriceLines, type Party } from "./core/activities.functions";
+import { HIDE_ACTIVITY_PRICES } from "@/app/config";
 import { ALL_ACTIVITIES, CITIES, type Area } from "./core/cities.data";
 import { DESTINATION_IMAGES } from "@/app/cities/components/destinationImages.generated";
 import type { Filter, Selection } from "./core/filters.functions";
@@ -247,11 +248,13 @@ export function TripCard({
         <h3 className="mt-0.5 truncate text-lg font-semibold text-zinc-800">
           {cityArea}
         </h3>
-        <p className="text-sm text-zinc-500">Συνολική τιμή: €{totalPrice}</p>
+        {!HIDE_ACTIVITY_PRICES && (
+          <p className="text-sm text-zinc-500">Συνολική τιμή: €{totalPrice}</p>
+        )}
         {party ? (
           <p className="text-sm text-zinc-500">Ταξιδιώτες: {travelersLabel(party)}</p>
         ) : null}
-        {party ? (
+        {party && !HIDE_ACTIVITY_PRICES ? (
           <p className="mt-0.5 text-xs text-zinc-500">
             Ανά άτομο:{" "}
             {tripMemberLines(trip, party)
@@ -385,8 +388,9 @@ export function TripCard({
           ))}
         </div>
 
-        {/* Indicative savings: city pass + magic combos (#10). */}
-        {cityPass || applicableCombos.length > 0 ? (
+        {/* Indicative savings: city pass + magic combos (#10). Hidden entirely
+            when prices are off. */}
+        {!HIDE_ACTIVITY_PRICES && (cityPass || applicableCombos.length > 0) ? (
           <div className="rounded-2xl border border-emerald-200/70 bg-emerald-50/60 p-4 dark:border-emerald-400/20 dark:bg-emerald-950/20">
             <div className="flex items-baseline justify-between gap-2">
               <h4 className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">

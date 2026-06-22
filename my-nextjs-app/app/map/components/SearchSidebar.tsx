@@ -14,6 +14,7 @@ import { FilterDropdown } from "./FilterDropdown";
 import { ActivityResultCard } from "./ActivityResultCard";
 import { ClickedActivityPanel } from "./ClickedActivityPanel";
 import { VIBE_UI_ENABLED } from "@/app/config/features";
+import { HIDE_ACTIVITY_PRICES } from "@/app/config";
 
 const DISTANCE_MAX = 10; // km from city centre (slider bound)
 type FilterKey = "price" | "vibe" | "sort" | "distance";
@@ -91,6 +92,7 @@ export function SearchSidebar({
           (see FilterDropdown) so this overflow doesn't clip them. */}
       {resultsOpen && (
         <div className="mt-2 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {!HIDE_ACTIVITY_PRICES && (
           <FilterDropdown
             label="Τιμή"
             active={filters.priceMax != null}
@@ -113,6 +115,7 @@ export function SearchSidebar({
               className="mt-2 w-full accent-orange-500"
             />
           </FilterDropdown>
+          )}
 
           {/* Vibe chip — hidden while the vibe UI is off (#4). The underlying
               filters.vibe state stays (defaults to null = all vibes). */}
@@ -159,7 +162,9 @@ export function SearchSidebar({
             onToggle={() => toggleFilter("sort")}
           >
             <div className="flex flex-col gap-1">
-              {(Object.keys(SORT_LABELS) as SortKey[]).map((k) => (
+              {(Object.keys(SORT_LABELS) as SortKey[])
+                .filter((k) => !HIDE_ACTIVITY_PRICES || k !== "price")
+                .map((k) => (
                 <button
                   key={k}
                   type="button"

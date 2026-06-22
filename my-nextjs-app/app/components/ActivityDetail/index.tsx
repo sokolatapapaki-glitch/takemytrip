@@ -27,7 +27,7 @@ import { activityImages } from "@/app/activities/components/activityImages";
 import { Stars } from "@/app/components/ui/Stars";
 import { buttonStyles } from "@/app/components/ui/buttonStyles";
 import { hoverScrollbar } from "@/app/components/ui/scrollbar";
-import { SINGLE_ACTIVITY_IMAGE } from "@/app/config";
+import { SINGLE_ACTIVITY_IMAGE, SHOW_ACTIVITY_STARS, HIDE_ACTIVITY_PRICES } from "@/app/config";
 
 // How many thumbnail images the gallery shows (placeholders for now).
 const THUMB_COUNT = 5;
@@ -293,10 +293,12 @@ export function ActivityDetail({
             <h2 className="text-2xl font-semibold text-zinc-800 dark:text-zinc-100">
               {current.name}
             </h2>
-            <div className="mt-1 flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400">
-              <Stars value={stars} />
-              <span>{stars.toFixed(1)}/5</span>
-            </div>
+            {SHOW_ACTIVITY_STARS && (
+              <div className="mt-1 flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400">
+                <Stars value={stars} />
+                <span>{stars.toFixed(1)}/5</span>
+              </div>
+            )}
           </div>
 
           {/* Important Info table. */}
@@ -312,6 +314,7 @@ export function ActivityDetail({
                 </span>
               </InfoRow>
 
+              {!HIDE_ACTIVITY_PRICES && (
               <InfoRow
                 label="Τιμή"
                 more={
@@ -341,6 +344,7 @@ export function ActivityDetail({
               >
                 {fmtPrice(adultPrice(current))}
               </InfoRow>
+              )}
 
               <InfoRow
                 label="Ωράριο"

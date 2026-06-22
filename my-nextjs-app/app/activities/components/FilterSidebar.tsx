@@ -8,6 +8,7 @@ import { buttonStyles } from "@/app/components/ui/buttonStyles";
 import type { ActivityListFilters } from "./activitiesData";
 import { VIBE_ICONS } from "./vibeStyle";
 import { VIBE_UI_ENABLED } from "@/app/config/features";
+import { HIDE_ACTIVITY_PRICES } from "@/app/config";
 
 // The left "Filters" panel from the board: a Price slider, a multi-select Vibe
 // picker, and a "Distance from" area dropdown (the reference point for the
@@ -56,26 +57,28 @@ export function FilterSidebar({
         </h2>
       )}
 
-      {/* Price — max-price slider (actual euro cost). */}
-      <div className="mt-5 rounded-3xl">
-        <label className="flex items-center justify-between text-sm font-medium text-zinc-700">
-          <span>Τιμή</span>
-          <span className="text-zinc-500">
-            {filters.priceMax != null ? `≤ €${filters.priceMax}` : "Χωρίς όριο"}
-          </span>
-        </label>
-        <input
-          type="range"
-          min={0}
-          max={priceMax}
-          value={filters.priceMax ?? priceMax}
-          onChange={(e) => {
-            const v = Number(e.target.value);
-            onChange({ priceMax: v >= priceMax ? null : v });
-          }}
-          className="mt-4 w-full accent-emerald-500"
-        />
-      </div>
+      {/* Price — max-price slider (actual euro cost). Hidden when prices are off. */}
+      {!HIDE_ACTIVITY_PRICES && (
+        <div className="mt-5 rounded-3xl">
+          <label className="flex items-center justify-between text-sm font-medium text-zinc-700">
+            <span>Τιμή</span>
+            <span className="text-zinc-500">
+              {filters.priceMax != null ? `≤ €${filters.priceMax}` : "Χωρίς όριο"}
+            </span>
+          </label>
+          <input
+            type="range"
+            min={0}
+            max={priceMax}
+            value={filters.priceMax ?? priceMax}
+            onChange={(e) => {
+              const v = Number(e.target.value);
+              onChange({ priceMax: v >= priceMax ? null : v });
+            }}
+            className="mt-4 w-full accent-emerald-500"
+          />
+        </div>
+      )}
 
       {/* Vibe — multiple select. Hidden while the vibe UI is off (#4); the
           filters.vibes state stays (empty = all vibes). */}

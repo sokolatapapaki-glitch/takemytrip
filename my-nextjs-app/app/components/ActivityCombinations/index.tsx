@@ -6,6 +6,7 @@ import { setActiveCity, setActiveParty, type Activity, type Party } from "./core
 import { CITIES, DEFAULT_CITY, type City, type Area } from "./core/cities.data";
 import { defaultSelection, Selection } from "./core/filters.functions";
 import { costOptionsForParty } from "./core/filters.data";
+import { HIDE_ACTIVITY_PRICES } from "@/app/config";
 import { scheduleEndHour } from "./core/schedule.functions";
 import { toEffective, useFilterEdits } from "./core/filterStore.functions";
 import { addDays, diffDays, mondayIndex, startOfDay } from "./core/calendar.functions";
@@ -175,9 +176,13 @@ export default function ActivityCombinations() {
   const filters = useMemo(() => {
     const base = toEffective(edits);
     const travelers = party.adults + party.childAges.length;
-    return base.map((f) =>
-      f.name === "Κόστος" ? { ...f, options: costOptionsForParty(travelers) } : f
-    );
+    // When prices are hidden, drop the cost filter entirely so cost is neither
+    // shown nor accounted for in scoring.
+    return base
+      .filter((f) => !HIDE_ACTIVITY_PRICES || f.name !== "Κόστος")
+      .map((f) =>
+        f.name === "Κόστος" ? { ...f, options: costOptionsForParty(travelers) } : f
+      );
   }, [edits, party]);
 
   // PER-DAY state. Each day slot (0 = first chosen date, 1 = next, …) has its own

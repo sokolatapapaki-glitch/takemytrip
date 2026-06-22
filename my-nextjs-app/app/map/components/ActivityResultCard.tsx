@@ -4,6 +4,7 @@ import type { Activity } from "@/app/components/ActivityCombinations/core/activi
 import { buttonStyles } from "@/app/components/ui/buttonStyles";
 import { cityOf, iconOf, starsOf } from "./mapData";
 import { activityImages } from "@/app/activities/components/activityImages";
+import { SHOW_ACTIVITY_STARS, HIDE_ACTIVITY_PRICES } from "@/app/config";
 
 // A row in the search-results list: thumbnail + name/city + stars/price. Mirrors
 // the "Activity from search result" card. Clicking it opens the detailed panel.
@@ -60,9 +61,18 @@ export function ActivityResultCard({
             {activity.name}
           </span>
           <span className="flex items-center gap-1 truncate text-sm text-zinc-400">
-            {city ? city.name : "—"} ·{" "}
-            <FaStar className="shrink-0 text-yellow-400" /> {starsOf(activity).toFixed(1)} ·{" "}
-            {activity.cost === 0 ? "Δωρεάν" : `€${activity.cost}`}
+            {city ? city.name : "—"}
+            {SHOW_ACTIVITY_STARS && (
+              <>
+                {" "}·{" "}
+                <FaStar className="shrink-0 text-yellow-400" /> {starsOf(activity).toFixed(1)}
+              </>
+            )}
+            {!HIDE_ACTIVITY_PRICES && (
+              <>
+                {" "}· {activity.cost === 0 ? "Δωρεάν" : `€${activity.cost}`}
+              </>
+            )}
           </span>
         </span>
         <span className={`self-end ${buttonStyles.underline}`}>

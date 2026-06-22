@@ -4,11 +4,14 @@
 import { DAYS } from "./core/activities.data";
 import { activityPrice, formatTime, openingHoursFor } from "./core/activities.functions";
 import type { Trip } from "./core/trip.functions";
+import { HIDE_ACTIVITY_PRICES } from "@/app/config";
 
 const esc = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 export function printTrip(trip: Trip, heading: string): void {
+  // When prices are off, the PDF drops the Κόστος column + the total.
+  const showCost = !HIDE_ACTIVITY_PRICES;
   const totalPrice = trip.days.reduce(
     (sum, d) => sum + d.activities.reduce((s, a) => s + activityPrice(a), 0),
     0
@@ -21,7 +24,7 @@ export function printTrip(trip: Trip, heading: string): void {
       const byName = new Map(td.activities.map((a) => [a.name, a]));
       const rows =
         td.plan.items.length === 0
-          ? `<tr><td class="muted" colspan="4">No activities placed.</td></tr>`
+          ? `<tr><td class="muted" colspan="${showCost ? 4 : 3}">No activities placed.</td></tr>`
           : td.plan.items
               .map((item) => {
                 const act = item.lunch ? undefined : byName.get(item.name);
@@ -34,7 +37,7 @@ export function printTrip(trip: Trip, heading: string): void {
           }</td>
           <td>${esc(item.name)}</td>
           <td class="hours">${hours}</td>
-          <td class="cost">${cost}</td>
+          ${showCost ? `<td class="cost">${cost}</td>` : ""}
         </tr>`;
               })
               .join("");
@@ -42,7 +45,7 @@ export function printTrip(trip: Trip, heading: string): void {
       <section>
         <h2>${DAYS[td.day]}</h2>
         <table>
-          <tr class="head"><td class="time">Ώρα</td><td>Δραστηριότητα</td><td class="hours">Ωράριο</td><td class="cost">Κόστος</td></tr>
+          <tr class="head"><td class="time">Ώρα</td><td>Δραστηριότητα</td><td class="hours">Ωράριο</td>${showCost ? `<td class="cost">Κόστος</td>` : ""}</tr>
           ${rows}
         </table>
       </section>`;
@@ -74,7 +77,7 @@ export function printTrip(trip: Trip, heading: string): void {
 </head>
 <body>
   <h1>${esc(heading)}</h1>
-  <p class="summary">Total price: €${totalPrice} · Total days: ${trip.days.length}</p>
+  <p class="summary">${showCost ? `Total price: €${totalPrice} · ` : ""}Total days: ${trip.days.length}</p>
   ${days}
   <footer>takethekids.info</footer>
 </body>

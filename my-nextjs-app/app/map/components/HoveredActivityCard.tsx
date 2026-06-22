@@ -1,6 +1,7 @@
 import { FaStar } from "react-icons/fa6";
 import type { Activity } from "@/app/components/ActivityCombinations/core/activities.functions";
 import { iconOf, starsOf } from "./mapData";
+import { SHOW_ACTIVITY_STARS, HIDE_ACTIVITY_PRICES } from "@/app/config";
 
 // The small card shown when hovering an activity marker (rendered inside a
 // Leaflet tooltip). Mirrors the "Hovered Activity" group from the Penpot board:
@@ -15,12 +16,20 @@ export function HoveredActivityCard({ activity }: { activity: Activity }) {
       <div className="mt-2 text-sm font-medium leading-tight text-zinc-800">
         {activity.name}
       </div>
-      <div className="mt-1 flex items-center justify-between text-xs text-zinc-500">
-        <span className="flex items-center gap-1">
-          <FaStar className="text-yellow-400" /> {starsOf(activity).toFixed(1)}/5
-        </span>
-        <span>{activity.cost === 0 ? "Δωρεάν" : `€${activity.cost}`}</span>
-      </div>
+      {(SHOW_ACTIVITY_STARS || !HIDE_ACTIVITY_PRICES) && (
+        <div className="mt-1 flex items-center justify-between text-xs text-zinc-500">
+          {SHOW_ACTIVITY_STARS ? (
+            <span className="flex items-center gap-1">
+              <FaStar className="text-yellow-400" /> {starsOf(activity).toFixed(1)}/5
+            </span>
+          ) : (
+            <span />
+          )}
+          {!HIDE_ACTIVITY_PRICES && (
+            <span>{activity.cost === 0 ? "Δωρεάν" : `€${activity.cost}`}</span>
+          )}
+        </div>
+      )}
       <p className="mt-1.5 line-clamp-3 text-xs leading-snug text-zinc-500">
         {activity.description}
       </p>
