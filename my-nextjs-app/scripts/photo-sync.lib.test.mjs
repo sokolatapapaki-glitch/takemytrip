@@ -62,6 +62,25 @@ test("resolveTie returns null when nothing matches", () => {
   assert.equal(resolveTie("Nope", new Map(), []), null);
 });
 
+test("resolveTie is city-scoped — rejects a same-named activity from another city", () => {
+  // "Museum of Illusions" exists in both krakow and warsaw; the map (keyed by
+  // name) only holds the warsaw entry. Resolving for krakow must NOT grab it.
+  const gen = new Map([
+    ["Museum of Illusions", ["/destinations/warsaw/7-museum-of-illusions/1.jpg"]],
+  ]);
+  const cat = [{ name: "Museum of Illusions", cityId: "krakow", folder: "4-museum-of-illusions" }];
+  const r = resolveTie("Museum of Illusions", gen, cat, "krakow");
+  assert.deepEqual(r, { name: "Museum of Illusions", id: "krakow", folder: "4-museum-of-illusions", inMap: false });
+});
+
+test("resolveTie accepts the map entry when its city matches", () => {
+  const gen = new Map([
+    ["Museum of Illusions", ["/destinations/warsaw/7-museum-of-illusions/1.jpg"]],
+  ]);
+  const r = resolveTie("Museum of Illusions", gen, [], "warsaw");
+  assert.deepEqual(r, { name: "Museum of Illusions", id: "warsaw", folder: "7-museum-of-illusions", inMap: true });
+});
+
 test("emitGeneratedText sorts keys and keeps the canonical header", () => {
   const m = new Map([
     ["Zebra", ["/destinations/x/1-z/1.jpg"]],

@@ -10,6 +10,7 @@
     "test:unit": "tsc -p tsconfig.test.json && node --test --test-concurrency=1 dist-test/app/components/ActivityCombinations/core/__tests__/",
     "test:planner": "vitest run --config vitest.config.mts",
     "test:planner:watch": "vitest --config vitest.config.mts",
+    "sync:photos": "node scripts/sync-photo-images.mjs",
     "git": "next build && git add . && git commit -m 'Update' && git push origin updates"
   },
   "dependencies": {

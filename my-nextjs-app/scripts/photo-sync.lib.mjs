@@ -31,16 +31,23 @@ export function pickSourceImage(entries) {
   return entries.filter((e) => IMAGE_RE.test(e)).sort()[0] || null;
 }
 
-export function resolveTie(projName, generatedMap, catalogue) {
+// cityId (optional) scopes matching: activity names are NOT unique across
+// cities (e.g. "Museum of Illusions" is in both krakow and warsaw), and the
+// generated map is keyed by name alone — so a global match could grab the wrong
+// city's folder. When cityId is given, only a map entry whose path is under that
+// city counts; otherwise we fall through to the (already city-scoped) catalogue.
+export function resolveTie(projName, generatedMap, catalogue, cityId) {
   const target = normalizeName(projName);
   for (const [name, paths] of generatedMap) {
     if (normalizeName(name) === target && paths[0]) {
       const fp = folderFromPath(paths[0]);
-      if (fp) return { name, id: fp.id, folder: fp.folder, inMap: true };
+      if (fp && (!cityId || fp.id === cityId)) {
+        return { name, id: fp.id, folder: fp.folder, inMap: true };
+      }
     }
   }
   for (const a of catalogue) {
-    if (normalizeName(a.name) === target) {
+    if (normalizeName(a.name) === target && (!cityId || a.cityId === cityId)) {
       return { name: a.name, id: a.cityId, folder: a.folder, inMap: false };
     }
   }
