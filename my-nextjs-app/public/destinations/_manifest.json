@@ -362,8 +362,7 @@
     "/destinations/krakow/3-underground-rynek-museum/3.jpg"
   ],
   "Museum of Illusions": [
-    "/destinations/warsaw/7-museum-of-illusions/1.jpg",
-    "/destinations/warsaw/7-museum-of-illusions/2.jpg"
+    "/destinations/krakow/4-museum-of-illusions/1.jpg"
   ],
   "Krakow Pinball Museum": [
     "/destinations/krakow/5-krakow-pinball-museum/1.jpg",
@@ -942,5 +941,119 @@
   ],
   "La Casa dels Entremesos - Μουσείο των Γιγάντων": [
     "/destinations/barcelona/19-la-casa-dels-entremesos/1.jpg"
+  ],
+  "Amstelpark": [
+    "/destinations/amsterdam/10-amstelpark/1.jpg"
+  ],
+  "Amsterdamse Bos": [
+    "/destinations/amsterdam/9-amsterdamse-bos/1.jpg"
+  ],
+  "FEZ Berlin": [
+    "/destinations/berlin/14-fez-berlin/1.jpg"
+  ],
+  "MACHmit! Museum for Children": [
+    "/destinations/berlin/9-machmit-museum-for-children/1.jpg"
+  ],
+  "Tiergarten": [
+    "/destinations/berlin/12-tiergarten/1.jpg"
+  ],
+  "Zoologischer Garten + Aquarium Berlin. ": [
+    "/destinations/berlin/11-zoologischer-garten-aquarium-berlin/1.jpg"
+  ],
+  "Daytime Sightseeing Cruise ": [
+    "/destinations/budapest/9-daytime-sightseeing-cruise/1.jpg"
+  ],
+  "Το Τρένο των Παιδιών (Gyermekvasút)": [
+    "/destinations/budapest/23-gyermekvasut/1.jpg"
+  ],
+  "Margaret Island (Margitsziget) - Playgrounds": [
+    "/destinations/budapest/15-margaret-island-margitsziget-playgrounds/1.jpg"
+  ],
+  "Sir Lancelot Knights' Restaurant": [
+    "/destinations/budapest/22-sir-lancelot-knights-restaurant/1.jpg"
+  ],
+  "Αστεροσκοπείο Admiral Vasile Urseanu": [
+    "/destinations/bucharest/12-admiral-vasile-urseanu/1.jpg"
+  ],
+  "Edenland Park": [
+    "/destinations/bucharest/2-edenland-park/1.jpg"
+  ],
+  "Muzeul Micul Paris": [
+    "/destinations/bucharest/13-muzeul-micul-paris/1.jpg"
+  ],
+  "Therme Bucharest (4.5 ώρες)": [
+    "/destinations/bucharest/3-therme-bucharest-4-5/1.jpg"
+  ],
+  "Βασιλική Κινστέρνα": [
+    "/destinations/istanbul/3-act/1.jpg"
+  ],
+  "Κρουαζιέρα στα Πριγκηπονήσια": [
+    "/destinations/istanbul/8-act/1.jpg"
+  ],
+  "Κρουαζιέρα στον Βόσπορο": [
+    "/destinations/istanbul/7-act/1.jpg"
+  ],
+  "Μπλε Τζαμί (Σουλταν Αχμέτ)": [
+    "/destinations/istanbul/2-act/1.jpg"
+  ],
+  "Πατριαρχείο": [
+    "/destinations/istanbul/14-act/1.jpg"
+  ],
+  "Τοπ Καπί (Αυτοκρατορικό Παλάτι)": [
+    "/destinations/istanbul/4-act/1.jpg"
+  ],
+  "IKONO (Διαδραστική & Φωτογραφική Εμπειρία)": [
+    "/destinations/madrid/19-ikono/1.jpg"
+  ],
+  "Museo Naval (Ναυτικό Μουσείο)": [
+    "/destinations/madrid/6-museo-naval/1.jpg"
+  ],
+  "Teleférico de Madrid": [
+    "/destinations/madrid/21-teleferico-de-madrid/1.jpg"
+  ],
+  "Urban Planet Las Rejas ": [
+    "/destinations/madrid/20-urban-planet-las-rejas/1.jpg"
+  ],
+  "Macaron & pâtisserie tasting": [
+    "/destinations/paris/10-macaron-patisserie-tasting/1.jpg"
+  ],
+  "Illusion Art Museum Prague": [
+    "/destinations/prague/4-illusion-art-museum-prague/1.jpg"
+  ],
+  "Ζωολογικός Κήπος (Zoo Praha)": [
+    "/destinations/prague/8-zoo-praha/1.jpg"
+  ],
+  "Κρουαζιέρα στον Μολδάβα": [
+    "/destinations/prague/10-act/1.jpg"
+  ],
+  "Μουσείο LEGO": [
+    "/destinations/prague/3-lego/1.jpg"
+  ],
+  "Μουσείο Αισθήσεων (Sense Museum)": [
+    "/destinations/prague/5-sense-museum/1.jpg"
+  ],
+  "Classic Pass (καλοκαιρινή περίοδος)": [
+    "/destinations/vienna/5-classic-pass/1.jpg"
+  ],
+  "Classic Pass Plus (πλήρες πακέτο)": [
+    "/destinations/vienna/6-classic-pass-plus/1.jpg"
+  ],
+  "Sisi Pass (3 αυτοκρατορικά αξιοθέατα)": [
+    "/destinations/vienna/3-sisi-pass-3/1.jpg"
+  ],
+  "Sisi's Amazing Journey (VR Experience)": [
+    "/destinations/vienna/12-sisi-s-amazing-journey-vr-experience/1.jpg"
+  ],
+  "Zoo + Palm House + Desert House Combo Schönbrunn": [
+    "/destinations/vienna/9-zoo-palm-house-desert-house-combo-schonb/1.jpg"
+  ],
+  "Hangar 646 στο Gocław": [
+    "/destinations/warsaw/20-hangar-646-goc-aw/1.jpg"
+  ],
+  "Majaland Warsaw": [
+    "/destinations/warsaw/19-majaland-warsaw/1.jpg"
+  ],
+  "Smart Kids Planet": [
+    "/destinations/warsaw/2-smart-kids-planet/1.jpg"
   ]
 }
