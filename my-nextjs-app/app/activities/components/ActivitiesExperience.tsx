@@ -12,7 +12,7 @@ import { VIBES } from "@/app/map/components/mapData";
 import { buttonStyles } from "@/app/components/ui/buttonStyles";
 import { useScrollLock } from "@/app/components/ui/useScrollLock";
 import { StatusToast, type StatusState } from "@/app/components/ui/StatusToast";
-import { HIDE_ACTIVITY_PRICES } from "@/app/config";
+import { HIDE_ACTIVITY_PRICES, SHOW_ACTIVITY_STARS, SHOW_ACTIVITY_FILTERS } from "@/app/config";
 import {
   ACT_SORT_LABELS,
   DEFAULT_ACT_FILTERS,
@@ -173,7 +173,7 @@ export default function ActivitiesExperience() {
 
       <div
         ref={rootRef}
-        className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-6 xl:max-w-7xl"
+        className="relative z-10 mx-auto flex w-full max-w-5xl flex-col gap-6"
       >
         <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
           {/* Title row — on mobile/tablet the Make Trip button sits right next to
@@ -188,6 +188,7 @@ export default function ActivitiesExperience() {
           {/* Controls — from lg up: Sorted-by chip; from xl up: Make Trip too.
               On mobile sorting lives in the filter drawer instead. */}
           <div className="hidden items-center justify-end gap-2 lg:flex lg:flex-wrap">
+            {SHOW_ACTIVITY_FILTERS && (
             <FilterDropdown
               label="Ταξινόμηση"
               active={filters.sortBy !== DEFAULT_ACT_FILTERS.sortBy}
@@ -197,7 +198,7 @@ export default function ActivitiesExperience() {
             >
               <div className="flex flex-col gap-1">
                 {(Object.keys(ACT_SORT_LABELS) as ActSortKey[])
-                  .filter((k) => !HIDE_ACTIVITY_PRICES || k !== "price")
+                  .filter((k) => (!HIDE_ACTIVITY_PRICES || k !== "price") && (SHOW_ACTIVITY_STARS || k !== "stars"))
                   .map((k) => (
                   <button
                     key={k}
@@ -216,14 +217,16 @@ export default function ActivitiesExperience() {
                 ))}
               </div>
             </FilterDropdown>
+            )}
 
             <div className="hidden xl:block">{makeTripButton()}</div>
           </div>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-[272px_minmax(0,1fr)]">
+        <div className={`grid gap-6 ${SHOW_ACTIVITY_FILTERS ? "lg:grid-cols-[272px_minmax(0,1fr)]" : ""}`}>
           {/* Left filter sidebar — inline from lg up; below that it moves into the
               slide-in drawer opened by the "Filters" button. */}
+          {SHOW_ACTIVITY_FILTERS && (
           <div className="hidden lg:block">
             <FilterSidebar
               city={city}
@@ -234,6 +237,7 @@ export default function ActivitiesExperience() {
               onToggleVibe={toggleVibe}
             />
           </div>
+          )}
 
           {/* Main column. */}
           <div className="min-w-0">
@@ -250,6 +254,7 @@ export default function ActivitiesExperience() {
             </div>
 
             {/* Filters — opens the right-side drawer (mobile/tablet only). */}
+            {SHOW_ACTIVITY_FILTERS && (
             <button
               type="button"
               onClick={() => setShowFilters(true)}
@@ -258,6 +263,7 @@ export default function ActivitiesExperience() {
               <FaSliders className="h-4 w-4" />
               Φίλτρα
             </button>
+            )}
 
             {/* Activity cards grid. */}
             {results.length === 0 ? (
@@ -316,7 +322,7 @@ export default function ActivitiesExperience() {
                   <p className="text-sm font-medium text-zinc-700">Ταξινόμηση</p>
                   <div className="mt-2 flex flex-col gap-1">
                     {(Object.keys(ACT_SORT_LABELS) as ActSortKey[])
-                  .filter((k) => !HIDE_ACTIVITY_PRICES || k !== "price")
+                  .filter((k) => (!HIDE_ACTIVITY_PRICES || k !== "price") && (SHOW_ACTIVITY_STARS || k !== "stars"))
                   .map((k) => (
                       <button
                         key={k}

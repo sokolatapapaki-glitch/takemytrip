@@ -80,6 +80,17 @@ export default function Footer() {
             </svg>
             Take The Kids
           </a>
+          <span className="text-xs">
+            Η ιστοσελίδα δημιουργήθηκε από τον{" "}
+            <a
+              href="https://www.linkedin.com/in/dimitris-bouloumpasis?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-white"
+            >
+              Δημήτρη Μπουλούμπαση
+            </a>.
+          </span>
         </div>
       </div>
     </footer>

@@ -10,18 +10,18 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/app/activities/components/ActivitiesExperience.tsx": {
-    "mtime": 1782050981.4840798,
-    "ast_hash": "36a22fc9cd4e2b258e872a130aaad518",
+    "mtime": 1782239992.2779918,
+    "ast_hash": "b226ce992032d48fda99a0501e156237",
     "semantic_hash": ""
   },
   "my-nextjs-app/app/activities/components/ActivityCard.tsx": {
-    "mtime": 1782050981.4865308,
-    "ast_hash": "8a8fddafa008698203e615b146b886cb",
+    "mtime": 1782152099.4381607,
+    "ast_hash": "f185c43ea6df7532874f9d280ad68869",
     "semantic_hash": ""
   },
   "my-nextjs-app/app/activities/components/FilterSidebar.tsx": {
-    "mtime": 1782050981.4885378,
-    "ast_hash": "189dfd0c7f65eb085c6f0fbe999a721a",
+    "mtime": 1782151227.8520923,
+    "ast_hash": "62624a483d963761b2d4505f48846d71",
     "semantic_hash": ""
   },
   "my-nextjs-app/app/activities/components/MakeTripModal.tsx": {
@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/app/activities/components/activityImages.generated.ts": {
-    "mtime": 1782054837.0728652,
-    "ast_hash": "3eb1bae314e1b2155c353d84fdeeb62e",
+    "mtime": 1782237169.1148934,
+    "ast_hash": "c8523f20078b5f50ca9f36291e146aff",
     "semantic_hash": ""
   },
   "my-nextjs-app/app/activities/components/activityImages.ts": {
@@ -110,8 +110,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/app/components/ActivityCombinations/ComboResults.tsx": {
-    "mtime": 1782050981.5266495,
-    "ast_hash": "698b38d0dc1de6ac72979afc59af0d6d",
+    "mtime": 1782151227.8593743,
+    "ast_hash": "9aef466297a43869a0cedba86ca36c2e",
     "semantic_hash": ""
   },
   "my-nextjs-app/app/components/ActivityCombinations/CurveGraph.tsx": {
@@ -120,8 +120,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/app/components/ActivityCombinations/DayMap.tsx": {
-    "mtime": 1782050981.5286539,
-    "ast_hash": "2da3a386eb1146a915381a5e795abea3",
+    "mtime": 1782151227.8730843,
+    "ast_hash": "c2f2c14aa577d72aadb2c165f14b1861",
     "semantic_hash": ""
   },
   "my-nextjs-app/app/components/ActivityCombinations/DayMapModal.tsx": {
@@ -150,8 +150,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/app/components/ActivityCombinations/ScheduledName.tsx": {
-    "mtime": 1782050981.5451567,
-    "ast_hash": "0cbc94e1d72f3bb8ac2824d83e3a5673",
+    "mtime": 1782151227.8806012,
+    "ast_hash": "59ed16eee3c8e09469046c2492389ba2",
     "semantic_hash": ""
   },
   "my-nextjs-app/app/components/ActivityCombinations/ScoreCurves.tsx": {
@@ -160,8 +160,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/app/components/ActivityCombinations/TripCard.tsx": {
-    "mtime": 1782050981.552021,
-    "ast_hash": "3de9a95a721011d985bba5aec4868e11",
+    "mtime": 1782151227.8854077,
+    "ast_hash": "9b32133aa05ff6469b4c580cae9bc31a",
     "semantic_hash": ""
   },
   "my-nextjs-app/app/components/ActivityCombinations/TripDashboard.tsx": {
@@ -230,13 +230,13 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/app/components/ActivityCombinations/core/activities.data.ts": {
-    "mtime": 1782050981.5877423,
-    "ast_hash": "f3b380f73b1c2832a90c8418a96c23c7",
+    "mtime": 1782240483.0009508,
+    "ast_hash": "4874d1e5a53d9d050ce5d7fcc0b76ec6",
     "semantic_hash": ""
   },
   "my-nextjs-app/app/components/ActivityCombinations/core/activities.functions.ts": {
-    "mtime": 1782050981.5908175,
-    "ast_hash": "24967d5cb3ddefb79436659abff49b89",
+    "mtime": 1782151227.898569,
+    "ast_hash": "488a01300eb178c681450419949eef64",
     "semantic_hash": ""
   },
   "my-nextjs-app/app/components/ActivityCombinations/core/calendar.functions.ts": {
@@ -245,8 +245,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/app/components/ActivityCombinations/core/cities.data.ts": {
-    "mtime": 1782050981.5918179,
-    "ast_hash": "8bebad6b67990bc3591949fa448a5b25",
+    "mtime": 1782240498.4863908,
+    "ast_hash": "27ae4fb6d8482a58c7ca588df4caca83",
     "semantic_hash": ""
   },
   "my-nextjs-app/app/components/ActivityCombinations/core/curves.data.ts": {
@@ -325,18 +325,18 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/app/components/ActivityCombinations/index.tsx": {
-    "mtime": 1782050981.6138535,
-    "ast_hash": "ab10738db51f1aeca3d2eff29b9bdd69",
+    "mtime": 1782151227.906237,
+    "ast_hash": "424cf722051c408738589c0550393ce3",
     "semantic_hash": ""
   },
   "my-nextjs-app/app/components/ActivityCombinations/tripPrint.ts": {
-    "mtime": 1782050981.6148548,
-    "ast_hash": "3ca86e963dfbf6369de0ac656c7ea04d",
+    "mtime": 1782151227.9112234,
+    "ast_hash": "88f7908069709dfda54b618175bf66f2",
     "semantic_hash": ""
   },
   "my-nextjs-app/app/components/ActivityDetail/index.tsx": {
-    "mtime": 1782050981.617519,
-    "ast_hash": "84997110150d897744c070f13353cf54",
+    "mtime": 1782151227.917385,
+    "ast_hash": "ba3ad2f5ad81955cb220be7cd115d842",
     "semantic_hash": ""
   },
   "my-nextjs-app/app/components/ConditionalFooter.tsx": {
@@ -345,8 +345,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/app/components/Footer.tsx": {
-    "mtime": 1782050981.6221275,
-    "ast_hash": "b5113d0da3aa2e51702e067a8fe7ae9b",
+    "mtime": 1782234743.3075736,
+    "ast_hash": "ae99cad2996f76499f79b25db90cd0dc",
     "semantic_hash": ""
   },
   "my-nextjs-app/app/components/Navbar.tsx": {
@@ -385,13 +385,13 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/app/context/AppContext.tsx": {
-    "mtime": 1782050981.6440473,
-    "ast_hash": "3ba3ee403596cc4fc39f928a28afef05",
+    "mtime": 1782151227.929411,
+    "ast_hash": "9c593464e88b11d0285ae36769b50d46",
     "semantic_hash": ""
   },
   "my-nextjs-app/app/credits/page.tsx": {
-    "mtime": 1782050981.6470525,
-    "ast_hash": "2c531197b7e5da188ca719a6b0c07e7e",
+    "mtime": 1782239771.9731345,
+    "ast_hash": "01d9b756f67ba6ce46021fc9bc836bda",
     "semantic_hash": ""
   },
   "my-nextjs-app/app/filters/editor/FilterCard.tsx": {
@@ -445,8 +445,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/app/map/components/ActivityResultCard.tsx": {
-    "mtime": 1782050981.6585002,
-    "ast_hash": "9da708203c7473f36cba12a62a344a31",
+    "mtime": 1782151227.9353497,
+    "ast_hash": "dd62ed2d637c0fd75314af942ffc5c02",
     "semantic_hash": ""
   },
   "my-nextjs-app/app/map/components/CityLabel.tsx": {
@@ -455,8 +455,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/app/map/components/ClickedActivityPanel.tsx": {
-    "mtime": 1782050981.6635482,
-    "ast_hash": "915625ccf595512fa9c1cd904bdc0df6",
+    "mtime": 1782151227.939984,
+    "ast_hash": "3c1c95dfbc231f8fcc694bd7c3e45dd8",
     "semantic_hash": ""
   },
   "my-nextjs-app/app/map/components/FilterDropdown.tsx": {
@@ -465,8 +465,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/app/map/components/HoveredActivityCard.tsx": {
-    "mtime": 1782050981.668545,
-    "ast_hash": "cc049290c1d0c0ee8c636f6b31305831",
+    "mtime": 1782151227.9457862,
+    "ast_hash": "01f7c4a460d3050cee53394c586038a5",
     "semantic_hash": ""
   },
   "my-nextjs-app/app/map/components/MapExperience.tsx": {
@@ -480,8 +480,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/app/map/components/SearchSidebar.tsx": {
-    "mtime": 1782050981.6759658,
-    "ast_hash": "fbbadaf1a9e48a154f65a660751cff5e",
+    "mtime": 1782151227.9507413,
+    "ast_hash": "4368723d98456a300f5931dc5a286ad1",
     "semantic_hash": ""
   },
   "my-nextjs-app/app/map/components/VibeBar.tsx": {
@@ -505,8 +505,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/app/my-trips/components/MyTripsExperience.tsx": {
-    "mtime": 1782050981.6913624,
-    "ast_hash": "5504c303bac3502da3cfea4a83f3658c",
+    "mtime": 1782151227.955191,
+    "ast_hash": "e051391706617c03f3f5f59271278b84",
     "semantic_hash": ""
   },
   "my-nextjs-app/app/my-trips/page.tsx": {
@@ -605,8 +605,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/data/activities.data.ts": {
-    "mtime": 1782050981.7377982,
-    "ast_hash": "da8adfc283369813d2bb147958853409",
+    "mtime": 1782240462.147452,
+    "ast_hash": "7bbb2930999a65d77c0081db9406829b",
     "semantic_hash": ""
   },
   "my-nextjs-app/data/activities/_helpers.ts": {
@@ -935,8 +935,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/package.json": {
-    "mtime": 1782050981.8802052,
-    "ast_hash": "a185ad0ef67a0b6f286fd8d8274cedec",
+    "mtime": 1782236655.342224,
+    "ast_hash": "9f548bc8fd46c5728f8dd294e260e86f",
     "semantic_hash": ""
   },
   "my-nextjs-app/postcss.config.mjs": {
@@ -945,8 +945,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/_manifest.json": {
-    "mtime": 1782054837.0702837,
-    "ast_hash": "bdd6cd5168be74607e6c137243cd037d",
+    "mtime": 1782237169.1169984,
+    "ast_hash": "cd8409678bf8b908b9e25795e9c07862",
     "semantic_hash": ""
   },
   "my-nextjs-app/scripts/check-dupes.mjs": {
@@ -1440,13 +1440,13 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/amsterdam/12-pancake-boat-pannenkoekenboot/1.jpg": {
-    "mtime": 1782050981.9300418,
-    "ast_hash": "c724cdba884aebe46e87c4d6c9e13c26",
+    "mtime": 1782237163.149,
+    "ast_hash": "9e59a2c194bae7f5b0b704ea46320d14",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/amsterdam/2-rijksmuseum/1.jpg": {
-    "mtime": 1782050981.9354756,
-    "ast_hash": "7abad03f834244fd15e89b601841cbee",
+    "mtime": 1782237163.186,
+    "ast_hash": "334f738cdd6ba4c2b4d4bb42d1a14e8d",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/amsterdam/2-rijksmuseum/2.jpg": {
@@ -1460,8 +1460,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/amsterdam/3-van-gogh-museum/1.jpg": {
-    "mtime": 1782050981.9554658,
-    "ast_hash": "b58aa9df83de90a3f67cc708ef1760d0",
+    "mtime": 1782237163.229,
+    "ast_hash": "0b154560b04be236c1fdd5a87fa65dc0",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/amsterdam/3-van-gogh-museum/2.jpg": {
@@ -1555,8 +1555,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/barcelona/2-park-guell/1.jpg": {
-    "mtime": 1782054822.089811,
-    "ast_hash": "a1225a1e91952bfeb1e2d3ca90337dfa",
+    "mtime": 1782237163.302,
+    "ast_hash": "258ebbb62b668c98ec26c8c67cf13e3b",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/barcelona/3-casa-batllo/1.jpg": {
@@ -1565,13 +1565,13 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/barcelona/4-casa-mila-la-pedrera/1.jpg": {
-    "mtime": 1782054824.3029234,
-    "ast_hash": "4f8b63905e2a4cab1cb81ef9306cb50f",
+    "mtime": 1782237163.266,
+    "ast_hash": "ecdf8fd153042799de9417745c1c3413",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/barcelona/5-picasso-museum/1.jpg": {
-    "mtime": 1782054824.8317938,
-    "ast_hash": "d1489d2a7fbca4e747cebeb65ad26d30",
+    "mtime": 1782237163.35,
+    "ast_hash": "63c75c5b50c9ff794785f5f1decc421b",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/barcelona/6-gaudi-experience/1.jpg": {
@@ -1625,8 +1625,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/berlin/10-zoologischer-garten-berlin/1.jpg": {
-    "mtime": 1782050982.390113,
-    "ast_hash": "e6efb10058e7bd740f0d76d12d933a2d",
+    "mtime": 1782237163.685,
+    "ast_hash": "a16f3d9bcaf05e6c2957c20c2d7bb169",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/berlin/10-zoologischer-garten-berlin/2.jpg": {
@@ -1650,8 +1650,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/berlin/13-garten-der-welt/1.jpg": {
-    "mtime": 1782050982.427199,
-    "ast_hash": "477846a8a7c8856c16f4f9aa26baeed2",
+    "mtime": 1782237163.447,
+    "ast_hash": "6c3da9c872f5848de07507c7b81b8740",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/berlin/15-fernsehturm-vr/1.jpg": {
@@ -1685,8 +1685,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/berlin/17-extavium-potsdam-nano/1.jpg": {
-    "mtime": 1782050982.4693608,
-    "ast_hash": "cfaacfeebf864a3f018d57e2b687ed5b",
+    "mtime": 1782237163.378,
+    "ast_hash": "60e1f997f85a878f661bd9f02863bc32",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/berlin/17-extavium-potsdam-nano/2.jpg": {
@@ -1840,8 +1840,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/berlin/8-labyrinth-kindermuseum/1.jpg": {
-    "mtime": 1782050982.658698,
-    "ast_hash": "929539742f8498253987bff040d578ad",
+    "mtime": 1782237163.49,
+    "ast_hash": "4b91a90200c305e59e7647a9462d08b6",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/berlin/8-labyrinth-kindermuseum/2.jpg": {
@@ -1870,13 +1870,13 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/bucharest/11-romanian-athenaeum-ateneul-roman/1.jpg": {
-    "mtime": 1782050982.6989062,
-    "ast_hash": "f27661c287a5363ccb3f5f0c24264293",
+    "mtime": 1782237164.549,
+    "ast_hash": "22ea085bfd33f965310c2a27b80de289",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/bucharest/14-children-s-town-bucharest-oraselul-copii/1.jpg": {
-    "mtime": 1782050982.7052753,
-    "ast_hash": "51ba6e15d31fc412ef881b950d23e391",
+    "mtime": 1782237164.158,
+    "ast_hash": "41539f2ae8455725440c77da5d839bc7",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/bucharest/15-digital-planetarium/1.jpg": {
@@ -1885,8 +1885,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/bucharest/16-pasajul-victoriei/1.jpg": {
-    "mtime": 1782050982.7192302,
-    "ast_hash": "c522d1d26164e5e75bfca5a6aa194328",
+    "mtime": 1782237164.53,
+    "ast_hash": "2683a330f507738094125aeedb511eee",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/bucharest/16-pasajul-victoriei/2.jpg": {
@@ -1900,8 +1900,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/bucharest/17-pasajul-macca-vilacrosse/1.jpg": {
-    "mtime": 1782050982.7355802,
-    "ast_hash": "0239871824b31cccceef79a792754265",
+    "mtime": 1782237164.48,
+    "ast_hash": "af78699c8cf8a47773210981851d1ff4",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/bucharest/17-pasajul-macca-vilacrosse/2.jpg": {
@@ -1920,13 +1920,13 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/bucharest/19-destiny-park/1.jpg": {
-    "mtime": 1782050982.7555883,
-    "ast_hash": "fb69cadce33a394909eae78c5a773462",
+    "mtime": 1782237164.24,
+    "ast_hash": "80bb2f9e2992e409d8e0e40781c65689",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/bucharest/4-act/1.jpg": {
-    "mtime": 1782050982.7618444,
-    "ast_hash": "c4c6778f29f4cb139f22cb09c3fe19f5",
+    "mtime": 1782237164.694,
+    "ast_hash": "e40a71135926001d5ea0899a33481e28",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/bucharest/4-act/2.jpg": {
@@ -1940,8 +1940,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/bucharest/5-izvor-park/1.jpg": {
-    "mtime": 1782050982.7831366,
-    "ast_hash": "838f917384bc5667ad9a8456d98a27bd",
+    "mtime": 1782237164.386,
+    "ast_hash": "e40a71135926001d5ea0899a33481e28",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/bucharest/5-izvor-park/2.jpg": {
@@ -1950,8 +1950,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/bucharest/6-piata-unirii-symphony-of-water/1.jpg": {
-    "mtime": 1782050982.7925668,
-    "ast_hash": "f9f16eab8162a70517ed4e9394f8230f",
+    "mtime": 1782237164.635,
+    "ast_hash": "c0020a96511d4cd77331986dbce5925c",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/bucharest/6-piata-unirii-symphony-of-water/2.jpg": {
@@ -1965,8 +1965,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/bucharest/7-carturesti-carusel/1.jpg": {
-    "mtime": 1782050982.8166382,
-    "ast_hash": "84769f0075f80a328f730505a22519fa",
+    "mtime": 1782237164.065,
+    "ast_hash": "b4e944a82c4d25af7a352f249b795a9f",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/bucharest/7-carturesti-carusel/2.jpg": {
@@ -1980,8 +1980,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/bucharest/8-lipscani/1.jpg": {
-    "mtime": 1782050982.8430598,
-    "ast_hash": "985a439c2a2ae5d05dcaf9b2b279b524",
+    "mtime": 1782237164.607,
+    "ast_hash": "c03a7e4b9e623fd1b89af060aecfa55f",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/bucharest/8-lipscani/2.jpg": {
@@ -1990,8 +1990,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/bucharest/9-cismigiu/1.jpg": {
-    "mtime": 1782050982.8539066,
-    "ast_hash": "b926555d841778c6bac233151cb4a957",
+    "mtime": 1782237164.206,
+    "ast_hash": "daa74f6f4774ef194a91461cbf5aa103",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/bucharest/9-cismigiu/2.jpg": {
@@ -2140,8 +2140,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/budapest/28-varosliget-nagyjatszoter/1.jpg": {
-    "mtime": 1782050983.0437682,
-    "ast_hash": "091af472de6abf0703ba4fdd9f15d235",
+    "mtime": 1782237163.92,
+    "ast_hash": "160db21516597bc0f08b4a66fe6849b6",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/budapest/28-varosliget-nagyjatszoter/2.jpg": {
@@ -2155,8 +2155,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/budapest/29-gellert-hill/1.jpg": {
-    "mtime": 1782050983.065317,
-    "ast_hash": "a9a0a69042fba4927f7b19279b0ba9ac",
+    "mtime": 1782237163.793,
+    "ast_hash": "449300d0f0d95f873d28f3b47d44f9ba",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/budapest/29-gellert-hill/2.jpg": {
@@ -2275,8 +2275,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/istanbul/1-act/1.jpg": {
-    "mtime": 1782050983.2163613,
-    "ast_hash": "2fab77a1bc40d2e5d5023ec50b2b10d8",
+    "mtime": 1782237164.757,
+    "ast_hash": "d8f7fc861dd7a116e5e7b3221fb16eb8",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/istanbul/1-act/2.jpg": {
@@ -2300,8 +2300,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/istanbul/11-miniaturk/1.jpg": {
-    "mtime": 1782050983.2531867,
-    "ast_hash": "eddf47f69ef149ff640d787314fb93f2",
+    "mtime": 1782237165.103,
+    "ast_hash": "fd56703c5f46a27cd050780f0fb1f9c9",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/istanbul/11-miniaturk/2.jpg": {
@@ -2320,8 +2320,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/istanbul/13-act/1.jpg": {
-    "mtime": 1782050983.2765584,
-    "ast_hash": "626e05c6ac630a5cf360929daa6c3f13",
+    "mtime": 1782237165.053,
+    "ast_hash": "70bd3716abafa79b66c7518ac7ec1f50",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/istanbul/13-act/2.jpg": {
@@ -2330,13 +2330,13 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/istanbul/16-kidzania-istanbul/1.jpg": {
-    "mtime": 1782050983.3046384,
-    "ast_hash": "9111f13b5b8de0068929dabfd0fb9d06",
+    "mtime": 1782237164.738,
+    "ast_hash": "b114cf057a211e1bfdab87c972299462",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/istanbul/5-act/1.jpg": {
-    "mtime": 1782050983.3101442,
-    "ast_hash": "f2f54c8691c0865f5d89431764e76c4b",
+    "mtime": 1782237164.789,
+    "ast_hash": "96b18b173e52daa398243230feb38e95",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/istanbul/5-act/2.jpg": {
@@ -2350,8 +2350,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/istanbul/6-act/1.jpg": {
-    "mtime": 1782050983.3275092,
-    "ast_hash": "5ccfa73db98e8eb1ceb1dde17721df7e",
+    "mtime": 1782237165.142,
+    "ast_hash": "f3ba507e19cb0d77461db4fed36cfcea",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/istanbul/9-istanbul-modern/1.jpg": {
@@ -2410,8 +2410,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/krakow/12-zakopane/1.jpg": {
-    "mtime": 1782050983.3908212,
-    "ast_hash": "3da8e6c7bc711a6665ae442b75b72c8f",
+    "mtime": 1782237165.417,
+    "ast_hash": "3a5893bb646609bcfcd31ef0de6b8c04",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/krakow/12-zakopane/2.jpg": {
@@ -2440,8 +2440,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/krakow/3-underground-rynek-museum/1.jpg": {
-    "mtime": 1782050983.4201097,
-    "ast_hash": "38cd3c2c81987799b73bd461bfa0e6e3",
+    "mtime": 1782237165.312,
+    "ast_hash": "318ac921350f1736d07f2f83c8abc34e",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/krakow/3-underground-rynek-museum/2.jpg": {
@@ -2455,8 +2455,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/krakow/4-museum-of-illusions/1.jpg": {
-    "mtime": 1782050983.43482,
-    "ast_hash": "cd2d0e3e7d0de584f7971189346febad",
+    "mtime": 1782237165.276,
+    "ast_hash": "86953a629c881502b363cf24c0d82153",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/krakow/4-museum-of-illusions/2.jpg": {
@@ -2470,8 +2470,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/krakow/5-krakow-pinball-museum/1.jpg": {
-    "mtime": 1782050983.4586961,
-    "ast_hash": "92cbea904cf75217a6ce6da817914e86",
+    "mtime": 1782237165.246,
+    "ast_hash": "81191a0e85f1206d75ecb5e7a85491ad",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/krakow/5-krakow-pinball-museum/2.jpg": {
@@ -2500,8 +2500,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/krakow/8-aquapark/1.jpg": {
-    "mtime": 1782050983.490337,
-    "ast_hash": "1b49a2455ab74ddf4aa6000424a9f33d",
+    "mtime": 1782237165.189,
+    "ast_hash": "9e03427e2ec500fe2da61f693a0677b3",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/krakow/8-aquapark/2.jpg": {
@@ -2540,8 +2540,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/lisbon/10-palacio-da-pena/1.jpg": {
-    "mtime": 1782050983.527209,
-    "ast_hash": "2cdcd72486d3577fa4874e95a1f32323",
+    "mtime": 1782237165.803,
+    "ast_hash": "30abcb91ab12103396a33253e5bdde04",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/lisbon/10-palacio-da-pena/2.jpg": {
@@ -2555,8 +2555,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/lisbon/2-pavilhao-do-conhecimento/1.jpg": {
-    "mtime": 1782050983.543178,
-    "ast_hash": "0484f815f804aef42be3303b8ea9587a",
+    "mtime": 1782237165.898,
+    "ast_hash": "2612b693d1724758d456ab0c742eaa38",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/lisbon/2-pavilhao-do-conhecimento/2.jpg": {
@@ -2570,8 +2570,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/lisbon/3-act/1.jpg": {
-    "mtime": 1782050983.5561182,
-    "ast_hash": "afd8a48a36bd6cd9bf8e0cc72d423946",
+    "mtime": 1782237166.083,
+    "ast_hash": "9095cd40599311df18ac2a7fc34b32a1",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/lisbon/3-act/2.jpg": {
@@ -2615,8 +2615,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/lisbon/6-museu-da-marioneta/1.jpg": {
-    "mtime": 1782050983.6138568,
-    "ast_hash": "bda916457dccdc86b6119e6aa339a3c3",
+    "mtime": 1782237165.684,
+    "ast_hash": "71ad0a26a0c6900ebee5a5d79e9cb6cf",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/lisbon/6-museu-da-marioneta/2.jpg": {
@@ -2630,8 +2630,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/lisbon/7-act/1.jpg": {
-    "mtime": 1782050983.631084,
-    "ast_hash": "e47595e68dad3634204a99d2c1d56647",
+    "mtime": 1782237165.99,
+    "ast_hash": "4eae2948ecb1b9af6bb4e532c45b5433",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/lisbon/7-act/2.jpg": {
@@ -3115,13 +3115,13 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/madrid/16-santiago-bernabeu-tour-tour/1.jpg": {
-    "mtime": 1782050984.2508235,
-    "ast_hash": "aa06e6e74b79c1513e6ff1e3d3051c3e",
+    "mtime": 1782237166.346,
+    "ast_hash": "cf0eb4dba976d944c3bce4b372382098",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/madrid/17-micropolix/1.jpg": {
-    "mtime": 1782050984.2563813,
-    "ast_hash": "29e9e70c2df5d8b929662cfacd945ae8",
+    "mtime": 1782237166.231,
+    "ast_hash": "dae25fa8d59da85c14e31ed37c06bae6",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/madrid/18-sweet-space/1.jpg": {
@@ -3170,13 +3170,13 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/madrid/5-muncyt-alcobendas/1.jpg": {
-    "mtime": 1782050984.3092754,
-    "ast_hash": "a0ae58f2e8fa9cd2c3701462a026f897",
+    "mtime": 1782237166.182,
+    "ast_hash": "f63798ae0d22d10241ef77323da3408f",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/madrid/7-planetario-de-madrid/1.jpg": {
-    "mtime": 1782050984.3138163,
-    "ast_hash": "7afb408fbc356e5f54280429a714f05a",
+    "mtime": 1782237166.296,
+    "ast_hash": "4496ab7db5ffa184bd03a6d865a98228",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/madrid/7-planetario-de-madrid/2.jpg": {
@@ -3330,8 +3330,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/paris/7-latin-quarter-food-walk/1.jpg": {
-    "mtime": 1782050984.5207987,
-    "ast_hash": "4dc73ec7f7bb891613f917bcf20c7f46",
+    "mtime": 1782237166.478,
+    "ast_hash": "a38fdbdb45ae8569e872af10d4db22cd",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/paris/7-latin-quarter-food-walk/2.jpg": {
@@ -3345,8 +3345,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/paris/8-le-marais-cafe-falafel/1.jpg": {
-    "mtime": 1782050984.5381038,
-    "ast_hash": "b1b9507274beb57372e8747129aa0441",
+    "mtime": 1782237166.522,
+    "ast_hash": "965d377fed2f9288a02b3fdb76f741c9",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/paris/8-le-marais-cafe-falafel/2.jpg": {
@@ -3360,8 +3360,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/paris/9-luxembourg-gardens/1.jpg": {
-    "mtime": 1782050984.5508385,
-    "ast_hash": "cfdb4a084313988af37a98cfd3f82320",
+    "mtime": 1782237166.563,
+    "ast_hash": "0fad33c1d3083371f50adff3de809394",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/paris/9-luxembourg-gardens/2.jpg": {
@@ -3395,8 +3395,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/prague/2-act/1.jpg": {
-    "mtime": 1782050984.5908253,
-    "ast_hash": "cbe5e43283966244c5fd4015cb1f4116",
+    "mtime": 1782237166.72,
+    "ast_hash": "38f55c7f56a92e5300e460b5201bdf69",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/prague/2-act/2.jpg": {
@@ -3410,8 +3410,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/prague/6-act/1.jpg": {
-    "mtime": 1782050984.6082406,
-    "ast_hash": "48750f7e506f41b02930810bd859e1a6",
+    "mtime": 1782237166.809,
+    "ast_hash": "3bfa104048f9184c3cdcdbb6b53dd674",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/prague/6-act/2.jpg": {
@@ -3430,8 +3430,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/prague/9-sea-world-morsky-svet/1.jpg": {
-    "mtime": 1782050984.635051,
-    "ast_hash": "910cb349812b97541174f511c150110f",
+    "mtime": 1782237166.685,
+    "ast_hash": "f39a8495df6fb56d523dba2868118d36",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/prague/cover.jpg": {
@@ -3450,13 +3450,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/rome/11-villa-borghese/1.jpg": {
-    "mtime": 1782050984.657777,
-    "ast_hash": "03960ee2aabac99cd2cd89a119606628",
-    "semantic_hash": ""
-  },
-  "my-nextjs-app/public/destinations/rome/11-villa-borghese/2.jpg": {
-    "mtime": 1782050984.66186,
-    "ast_hash": "b5802ecee5e5827d131a05b6031e4334",
+    "mtime": 1782055520.3385208,
+    "ast_hash": "ac7327d162cdbb5a9840188245b3d910",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/rome/12-bioparco-di-roma/1.jpg": {
@@ -3470,28 +3465,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/rome/13-galleria-borghese/1.jpg": {
-    "mtime": 1782050984.6779838,
+    "mtime": 1782055520.7292242,
     "ast_hash": "6ecb5fa43737f2a6aeaecfc85fd67e4e",
-    "semantic_hash": ""
-  },
-  "my-nextjs-app/public/destinations/rome/13-galleria-borghese/2.jpg": {
-    "mtime": 1782050984.6863866,
-    "ast_hash": "cdd1637ba35c22f7b975f4c287d7c943",
-    "semantic_hash": ""
-  },
-  "my-nextjs-app/public/destinations/rome/13-galleria-borghese/3.jpg": {
-    "mtime": 1782050984.6914225,
-    "ast_hash": "632a2c16cfbe2e9701ff44cb4e4cecb9",
-    "semantic_hash": ""
-  },
-  "my-nextjs-app/public/destinations/rome/13-galleria-borghese/4.jpg": {
-    "mtime": 1782050984.6949704,
-    "ast_hash": "3c100e4aec45fe791b4fb7a2bf448ed5",
-    "semantic_hash": ""
-  },
-  "my-nextjs-app/public/destinations/rome/13-galleria-borghese/5.jpg": {
-    "mtime": 1782050984.7015245,
-    "ast_hash": "7f0ceabacc9d9f3b96bed1e6d4984585",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/rome/14-rome-gladiator-school-gruppo-storico-rom/1.jpg": {
@@ -3555,28 +3530,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/rome/18-castel-sant-angelo/1.jpg": {
-    "mtime": 1782050984.7748857,
-    "ast_hash": "11835ba1131f2f8e76c7bf3e6e20227e",
-    "semantic_hash": ""
-  },
-  "my-nextjs-app/public/destinations/rome/18-castel-sant-angelo/2.jpg": {
-    "mtime": 1782050984.7785726,
-    "ast_hash": "3c6d882c805135928699ac07fe89d62d",
-    "semantic_hash": ""
-  },
-  "my-nextjs-app/public/destinations/rome/18-castel-sant-angelo/3.jpg": {
-    "mtime": 1782050984.7860208,
-    "ast_hash": "86786e3009ea7ffe7ed3e45ac4dcd9d5",
-    "semantic_hash": ""
-  },
-  "my-nextjs-app/public/destinations/rome/18-castel-sant-angelo/4.jpg": {
-    "mtime": 1782050984.788059,
-    "ast_hash": "3c6d882c805135928699ac07fe89d62d",
-    "semantic_hash": ""
-  },
-  "my-nextjs-app/public/destinations/rome/18-castel-sant-angelo/5.jpg": {
-    "mtime": 1782050984.7921057,
-    "ast_hash": "86786e3009ea7ffe7ed3e45ac4dcd9d5",
+    "mtime": 1782055518.4021852,
+    "ast_hash": "f1a90fdc73610de1c797249126702014",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/rome/19-largo-di-torre-argentina/1.jpg": {
@@ -3795,8 +3750,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/rome/9-explora/1.jpg": {
-    "mtime": 1782050985.0427737,
-    "ast_hash": "4d8ea90435d1612dd66cc7d56b8c552a",
+    "mtime": 1782237166.977,
+    "ast_hash": "308663acb744f1a1c53e15c5102cf6b7",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/rome/9-explora/2.jpg": {
@@ -3930,8 +3885,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/vienna/4-winter-pass/1.jpg": {
-    "mtime": 1782050985.1814373,
-    "ast_hash": "daa00b307a91c29f2afa4f1b3d66f518",
+    "mtime": 1782237168.852,
+    "ast_hash": "66212945b41acdbf51fa51963da188fc",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/vienna/4-winter-pass/2.jpg": {
@@ -4040,8 +3995,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/warsaw/3-azienki-park/1.jpg": {
-    "mtime": 1782050985.3254576,
-    "ast_hash": "3d4ebe60abd415a18428dacec0f4044b",
+    "mtime": 1782237169.108,
+    "ast_hash": "3e7cbeb1c662cffb9a7f93c7e253ef4b",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/warsaw/3-azienki-park/2.jpg": {
@@ -4245,8 +4200,8 @@
     "semantic_hash": ""
   },
   "my-nextjs-app/scripts/gen-city-images.mjs": {
-    "mtime": 1782054567.001207,
-    "ast_hash": "75fb971f3c6ab7fb3e3379e672afb517",
+    "mtime": 1782055294.6113951,
+    "ast_hash": "f3426724b3d398bd2ae481aac5e6fbb8",
     "semantic_hash": ""
   },
   "my-nextjs-app/public/destinations/barcelona/10-laquarium-de-barcelona/1.jpg": {
@@ -4262,6 +4217,261 @@
   "my-nextjs-app/public/destinations/barcelona/19-la-casa-dels-entremesos/1.jpg": {
     "mtime": 1782054836.91143,
     "ast_hash": "5326fe0448f99ba18e08c11ce3a3e239",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/app/config.ts": {
+    "mtime": 1782237646.866751,
+    "ast_hash": "7dbe49b3c07ccaa05bcf2c93b6b38b49",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/data/activities/rome.data.ts": {
+    "mtime": 1782240394.1352322,
+    "ast_hash": "d0d41494297b003faa1e311df5a55403",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/rome/_credits.json": {
+    "mtime": 1782055520.8931153,
+    "ast_hash": "ed3bce78f07faa88944243cb6083e2a8",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/scripts/curated/rome.mjs": {
+    "mtime": 1782055587.8947444,
+    "ast_hash": "acf484d1f6cdfb3ae31677a7343fb2b6",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/scripts/list-activities.mjs": {
+    "mtime": 1782055338.6182082,
+    "ast_hash": "bc5a0707c45f1fa582863b7a7de6e3d0",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/scripts/photo-sync.config.mjs": {
+    "mtime": 1782236535.8929746,
+    "ast_hash": "1fef8164ecbbf1f0c6731fd79c9ae62c",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/scripts/photo-sync.lib.mjs": {
+    "mtime": 1782236771.6432066,
+    "ast_hash": "5431c051d9c8844314a727de55f5927a",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/scripts/photo-sync.lib.test.mjs": {
+    "mtime": 1782236753.0084412,
+    "ast_hash": "539ab3bc68ac9ebda40773fa0ec8e5a3",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/scripts/sync-photo-images.mjs": {
+    "mtime": 1782236777.09951,
+    "ast_hash": "850b34051f52467d202973e9336614eb",
+    "semantic_hash": ""
+  },
+  ".claude/skills/city-activity-images/SKILL.md": {
+    "mtime": 1782055416.6704693,
+    "ast_hash": "6c6db368ee359143cf952d117ee3405e",
+    "semantic_hash": ""
+  },
+  ".claude/skills/city-activity-images/references/sourcing-and-legal.md": {
+    "mtime": 1782055446.486653,
+    "ast_hash": "f4d02561a583939432815b439421b8db",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/doc/rome-activity-image-sources.md": {
+    "mtime": 1782055520.895628,
+    "ast_hash": "cd9ac805f7222ff030659571ba8fa09f",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/docs/superpowers/plans/2026-06-23-photo-folder-image-sync.md": {
+    "mtime": 1782235155.559024,
+    "ast_hash": "63f96c1e675e6033665fd5120d4b3307",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/amsterdam/10-amstelpark/1.jpg": {
+    "mtime": 1782237163.068,
+    "ast_hash": "35d9fa46a5d515ce6d6f1c56668695a5",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/amsterdam/9-amsterdamse-bos/1.jpg": {
+    "mtime": 1782237163.125,
+    "ast_hash": "edd9ad0a333225a004f13ce687a4bb69",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/berlin/11-zoologischer-garten-aquarium-berlin/1.jpg": {
+    "mtime": 1782237163.632,
+    "ast_hash": "89090214b4d423e63748e815a6a2a627",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/berlin/12-tiergarten/1.jpg": {
+    "mtime": 1782237163.585,
+    "ast_hash": "4e606a56604fbb7c65fabb0c2ec2c44e",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/berlin/14-fez-berlin/1.jpg": {
+    "mtime": 1782237163.396,
+    "ast_hash": "f21009c4b17a327c63ec9d246cf30740",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/berlin/9-machmit-museum-for-children/1.jpg": {
+    "mtime": 1782237163.515,
+    "ast_hash": "681cdd239e272ee1f09b7c7392f35e3b",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/bucharest/12-admiral-vasile-urseanu/1.jpg": {
+    "mtime": 1782237164.019,
+    "ast_hash": "50c3517ad786f9c61d550ca88232915a",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/bucharest/13-muzeul-micul-paris/1.jpg": {
+    "mtime": 1782237164.449,
+    "ast_hash": "1b87e3bdaece6d80b542de578f975133",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/bucharest/2-edenland-park/1.jpg": {
+    "mtime": 1782237164.329,
+    "ast_hash": "37101bcf836c514a6ede3dde2e492986",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/bucharest/3-therme-bucharest-4-5/1.jpg": {
+    "mtime": 1782237164.577,
+    "ast_hash": "3a40e01f8f6127b6ce82f8488ec575f3",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/budapest/15-margaret-island-margitsziget-playgrounds/1.jpg": {
+    "mtime": 1782237163.892,
+    "ast_hash": "b1e169f607059bca2c2d8071cafafe28",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/budapest/22-sir-lancelot-knights-restaurant/1.jpg": {
+    "mtime": 1782237163.978,
+    "ast_hash": "66fb42a5d5c3ebeee072efebe91114ad",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/budapest/23-gyermekvasut/1.jpg": {
+    "mtime": 1782237163.847,
+    "ast_hash": "463fb395da7040aa3e55206084a20d0b",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/budapest/9-daytime-sightseeing-cruise/1.jpg": {
+    "mtime": 1782237163.737,
+    "ast_hash": "b00bc235e45481351956c5ef60e234a7",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/istanbul/14-act/1.jpg": {
+    "mtime": 1782237165.123,
+    "ast_hash": "ac0dc58c66765998b8d28db7edec6d67",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/istanbul/2-act/1.jpg": {
+    "mtime": 1782237164.94,
+    "ast_hash": "8cd00f562f3efa7582ad3f06ab15ee50",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/istanbul/3-act/1.jpg": {
+    "mtime": 1782237164.816,
+    "ast_hash": "ce223f5370640f52c5ac252bce3ec224",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/istanbul/4-act/1.jpg": {
+    "mtime": 1782237165.155,
+    "ast_hash": "e10f5bc17078c42b6f1bce865db097da",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/istanbul/7-act/1.jpg": {
+    "mtime": 1782237164.917,
+    "ast_hash": "ec3a40554db1d58c4379bff344e82d57",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/istanbul/8-act/1.jpg": {
+    "mtime": 1782237164.875,
+    "ast_hash": "e7997181d6148eb1606e881497a506d4",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/madrid/19-ikono/1.jpg": {
+    "mtime": 1782237166.133,
+    "ast_hash": "0956502fa808ca3c2882e1fa782d6e9a",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/madrid/20-urban-planet-las-rejas/1.jpg": {
+    "mtime": 1782237166.442,
+    "ast_hash": "1dc9418c15c4a465506314f847d63e7e",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/madrid/21-teleferico-de-madrid/1.jpg": {
+    "mtime": 1782237166.404,
+    "ast_hash": "e302fa5018e43358b579e4b8962dff4b",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/madrid/6-museo-naval/1.jpg": {
+    "mtime": 1782237166.275,
+    "ast_hash": "3f9601bd57d5506b0344efa7f49d6d66",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/paris/10-macaron-patisserie-tasting/1.jpg": {
+    "mtime": 1782237166.603,
+    "ast_hash": "4d2c85bc71a31962a160bcccc4f27d52",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/prague/10-act/1.jpg": {
+    "mtime": 1782237166.844,
+    "ast_hash": "16da121b22af277bd34ec21498be97d0",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/prague/3-lego/1.jpg": {
+    "mtime": 1782237166.883,
+    "ast_hash": "7922a30f56e43834d13bf8f9c7437aff",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/prague/4-illusion-art-museum-prague/1.jpg": {
+    "mtime": 1782237166.649,
+    "ast_hash": "0a0b8383594f6c9f6496a20bf51986c2",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/prague/5-sense-museum/1.jpg": {
+    "mtime": 1782237166.929,
+    "ast_hash": "7f8fa16e46fb704b7dc9391c3d12362e",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/prague/8-zoo-praha/1.jpg": {
+    "mtime": 1782237166.767,
+    "ast_hash": "d09f24add0ce17740657d417411f08f1",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/vienna/12-sisi-s-amazing-journey-vr-experience/1.jpg": {
+    "mtime": 1782237168.715,
+    "ast_hash": "b07d6c7cfc05735eecfe0ec7fc7e4da6",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/vienna/3-sisi-pass-3/1.jpg": {
+    "mtime": 1782237167.062,
+    "ast_hash": "824eb55ba6079aca45c13af3aa289e67",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/vienna/5-classic-pass/1.jpg": {
+    "mtime": 1782237167.009,
+    "ast_hash": "bb474411b8f3c26822280182d0aabcc4",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/vienna/6-classic-pass-plus/1.jpg": {
+    "mtime": 1782237167.038,
+    "ast_hash": "bb474411b8f3c26822280182d0aabcc4",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/vienna/9-zoo-palm-house-desert-house-combo-schonb/1.jpg": {
+    "mtime": 1782237168.906,
+    "ast_hash": "d09f24add0ce17740657d417411f08f1",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/warsaw/19-majaland-warsaw/1.jpg": {
+    "mtime": 1782237168.974,
+    "ast_hash": "fb639cad1a55b360590e13e2cfadf00a",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/warsaw/2-smart-kids-planet/1.jpg": {
+    "mtime": 1782237169.038,
+    "ast_hash": "467c9ebeb7671154ff29b28b79007486",
+    "semantic_hash": ""
+  },
+  "my-nextjs-app/public/destinations/warsaw/20-hangar-646-goc-aw/1.jpg": {
+    "mtime": 1782237168.94,
+    "ast_hash": "6b28c9141855e4028024d76105a4d4c4",
     "semantic_hash": ""
   }
 }
