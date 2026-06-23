@@ -6,6 +6,7 @@
 
 import type { Travelers } from "../data/types";
 import { MinusIcon, PlusIcon } from "./icons";
+import { SIMPLE_TRAVELERS } from "@/app/config";
 
 const MAX = 9; // cap per group, booking-style
 const CHILD_AGES = Array.from({ length: 18 }, (_, i) => i); // 0..17
@@ -66,6 +67,25 @@ export function TravelersModal({
     childAges[i] = age;
     onChange({ ...value, childAges });
   };
+
+  // Simple mode: one "number of people" stepper. The count is stored as adults
+  // (children = 0, no ages), so the rest of the app prices everyone as an adult.
+  if (SIMPLE_TRAVELERS) {
+    const setPeople = (n: number) =>
+      onChange({ adults: Math.max(1, n), children: 0, childAges: [] });
+    return (
+      <div className="w-full p-4 sm:w-72">
+        <Stepper
+          label="Άτομα"
+          caption="Συνολικός αριθμός ατόμων"
+          value={value.adults}
+          min={1}
+          onDec={() => setPeople(value.adults - 1)}
+          onInc={() => setPeople(value.adults + 1)}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="w-full p-4 sm:w-72">

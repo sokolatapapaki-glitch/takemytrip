@@ -82,7 +82,7 @@ function parseStartParams(p: ReadonlyURLSearchParams): {
   const slng = parseFloat(p.get("slng") ?? "");
   const startPoint =
     Number.isFinite(slat) && Number.isFinite(slng)
-      ? { name: p.get("sname") || "Σημείο εκκίνησης", coords: { lat: slat, lng: slng } }
+      ? { name: p.get("sname") || "Διαμονή", coords: { lat: slat, lng: slng } }
       : undefined;
   // Pre-selected filter options from ?filters= (see the return type above).
   const filterSel: Record<number, number[]> = {};

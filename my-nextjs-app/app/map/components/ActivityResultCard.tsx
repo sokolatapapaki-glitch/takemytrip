@@ -76,7 +76,7 @@ export function ActivityResultCard({
           </span>
         </span>
         <span className={`self-end ${buttonStyles.underline}`}>
-          δες περισσότερα
+          Δες περισσότερα
         </span>
       </span>
     </button>

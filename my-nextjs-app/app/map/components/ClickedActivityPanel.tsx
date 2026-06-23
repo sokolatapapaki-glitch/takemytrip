@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { FaStar, FaChevronLeft } from "react-icons/fa6";
 import type { Activity } from "@/app/components/ActivityCombinations/core/activities.functions";
 import { bestVibe, cityOf, iconOf, starsOf } from "./mapData";
+import { activityImages } from "@/app/activities/components/activityImages";
 import { SHOW_ACTIVITY_STARS, HIDE_ACTIVITY_PRICES } from "@/app/config";
 
 // The detailed activity card shown below the search input when an activity is
@@ -50,8 +51,20 @@ export function ClickedActivityPanel({
         <FaChevronLeft className="h-5 w-5" />
       </button>
 
-      <div className="flex h-40 items-center justify-center rounded-3xl bg-gradient-to-br from-orange-100 to-emerald-100 text-green-500">
+      <div className="relative flex h-40 items-center justify-center overflow-hidden rounded-3xl bg-gradient-to-br from-orange-100 to-emerald-100 text-green-500">
         <Icon className="h-16 w-16" />
+        {activityImages(activity)[0] && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={activityImages(activity)[0]}
+            alt={activity.name}
+            loading="lazy"
+            onError={(e) => {
+              e.currentTarget.style.display = "none";
+            }}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        )}
       </div>
 
       <h3 className="mt-4 text-lg font-semibold leading-tight text-zinc-900">

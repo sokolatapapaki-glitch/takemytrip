@@ -31,3 +31,11 @@ export const HIDE_ACTIVITY_PRICES = true;
 //   false → both are hidden (kept in the code, just not rendered): no inline
 //           sidebar, no sort chip/button, and no mobile "Φίλτρα" drawer button.
 export const SHOW_ACTIVITY_FILTERS = false;
+
+// SIMPLE_TRAVELERS:
+//   true  → the homepage Travelers modal asks only for a single number of
+//           people (no adults/children split, no per-child ages). That count is
+//           stored as the adult count (children = 0), so everyone is priced as
+//           an adult.
+//   false → the full adults + children + ages picker, exactly like now.
+export const SIMPLE_TRAVELERS = false;

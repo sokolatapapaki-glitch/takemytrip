@@ -16,6 +16,7 @@ import { CalendarModal } from "./CalendarModal";
 import { TravelersModal } from "./TravelersModal";
 import { Typewriter } from "./Typewriter";
 import { StatusToast, type StatusState } from "@/app/components/ui/StatusToast";
+import { SIMPLE_TRAVELERS } from "@/app/config";
 import {
   CalendarIcon,
   MapPinIcon,
@@ -150,6 +151,10 @@ export default function StartTripSearch({
       : `${formatShort(range.start)} — ${formatShort(range.end)}`;
 
   const travelersLabel = useMemo(() => {
+    // Simple mode: just the head-count (stored as adults).
+    if (SIMPLE_TRAVELERS) {
+      return `${travelers.adults} ${travelers.adults === 1 ? "άτομο" : "άτομα"}`;
+    }
     const parts = [
       `${travelers.adults} ${travelers.adults === 1 ? "ενήλικας" : "ενήλικες"}`,
     ];

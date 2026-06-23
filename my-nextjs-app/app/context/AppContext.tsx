@@ -135,7 +135,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
       {isModalOpen && (
         <div
-          className="fixed inset-0 z-50 flex h-screen w-screen items-stretch justify-center bg-black/50 sm:h-full sm:items-center sm:py-8"
+          className="fixed inset-0 z-[120] flex h-full w-full items-stretch justify-center bg-black/50 sm:items-center sm:py-8"
           onPointerDown={(e) => {
             backdropPressed.current = e.target === e.currentTarget;
           }}
