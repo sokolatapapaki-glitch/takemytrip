@@ -87,7 +87,8 @@ export function MakeTripModal({
   // The city centre — the search bias / map centre for the accommodation picker.
   const cityCenter = city.areas[0].coords;
 
-  // Where to stay (Διαμονή) — starts empty; the panel opens by default.
+  // Where to stay (Διαμονή) — OPTIONAL; defaults to the city centre when left
+  // empty (like the homepage). The panel still opens by default.
   const [point, setPoint] = useState<StartPoint | null>(null);
   const [mapOpen, setMapOpen] = useState(false);
   // Trip length — starts empty (no value), days mode first like the homepage.
@@ -150,26 +151,29 @@ export function MakeTripModal({
   // Same hand-off as the homepage search, plus ?only= per selected activity so
   // the planner builds the trip from ONLY those activities.
   function search() {
+    // Διαμονή is OPTIONAL (like the homepage) — only length + travellers are
+    // required. When no accommodation is picked the trip anchors at the centre.
     const missing: string[] = [];
-    if (!point) missing.push("διαμονή");
     if (!hasLength) missing.push(lengthMode === "days" ? "διάρκεια" : "ημερομηνίες");
     if (!travelers || travelers.adults < 1) missing.push("ταξιδιώτες");
     if (missing.length > 0) {
       setFormError(`Συμπλήρωσε: ${missing.join(", ")}.`);
       // Open the first missing input.
-      if (!point) setOpen("stay");
-      else if (!hasLength && lengthMode === "dates") setOpen("length");
+      if (!hasLength && lengthMode === "dates") setOpen("length");
       else if (!travelers || travelers.adults < 1) setOpen("travelers");
       return;
     }
 
+    // Default the start point to the city centre when none was chosen — the
+    // homepage behaviour (the centre's label is the city name).
+    const stay = point ?? { name: city.name, coords: cityCenter };
     const params = new URLSearchParams();
     params.set("dest", city.id);
     // The accommodation point: coords + label (the plan anchors the route here
     // instead of a city area). See parseStartParams.
-    params.set("slat", String(point!.coords.lat));
-    params.set("slng", String(point!.coords.lng));
-    params.set("sname", point!.name);
+    params.set("slat", String(stay.coords.lat));
+    params.set("slng", String(stay.coords.lng));
+    params.set("sname", stay.name);
     if (lengthMode === "days") {
       params.set("days", String(durationDays));
     } else {
@@ -181,8 +185,8 @@ export function MakeTripModal({
       params.set("ages", travelers!.childAges.map((a) => a ?? 0).join(","));
     }
     for (const name of selectedNames) params.append("only", name);
-    closeModal();
     router.push(`/plan?${params.toString()}`);
+    closeModal();
   }
 
   const panelClass = "rounded-2xl border border-black/[.06] bg-white shadow-sm";
@@ -216,7 +220,7 @@ export function MakeTripModal({
         active={open === "stay"}
         icon={<MapPinIcon className="h-5 w-5" />}
         value={point?.name ?? null}
-        placeholder="Διαμονή (πού θα μείνεις)"
+        placeholder="Διαμονή (προαιρετικό · αλλιώς κέντρο)"
         onClick={() => toggle("stay")}
       />
       {open === "stay" ? (

@@ -12,7 +12,7 @@ const FOOTER_NAV = [
   { label: "Πηγές εικόνων", href: "/credits" },
 ] as const;
 
-const CONTACT_EMAIL = "info@takemytrip.gr";
+const CONTACT_EMAIL = "takethekids2@gmail.com";
 
 export default function Footer() {
   const linkClass =
