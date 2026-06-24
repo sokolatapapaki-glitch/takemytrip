@@ -38,4 +38,12 @@ export const SHOW_ACTIVITY_FILTERS = false;
 //           stored as the adult count (children = 0), so everyone is priced as
 //           an adult.
 //   false → the full adults + children + ages picker, exactly like now.
-export const SIMPLE_TRAVELERS = false;
+export const SIMPLE_TRAVELERS = true;
+
+// HIDE_REQUIRED_ACTIVITIES:
+//   true  → the "Επιλέγω δραστηριότητες" section (the multi-select list that
+//           forces chosen activities into the trip) is hidden from the plan-page
+//           filter sidebar (and the advanced per-day filters, which share the
+//           same component). The feature stays in the code, just not rendered.
+//   false → the section shows, exactly like now.
+export const HIDE_REQUIRED_ACTIVITIES = true;

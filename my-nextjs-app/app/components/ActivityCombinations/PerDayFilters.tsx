@@ -6,6 +6,7 @@ import { formatTime, type Activity } from "./core/activities.functions";
 import { Filter, Selection, isTripLevel } from "./core/filters.functions";
 import { RequiredActivities } from "./RequiredActivities";
 import { CheckRow } from "./CheckRow";
+import { HIDE_REQUIRED_ACTIVITIES } from "@/app/config";
 
 // Hours the day can start at (whole hours, 06:00–18:00).
 const START_HOUR_CHOICES = Array.from({ length: 13 }, (_, i) => 6 + i);
@@ -206,11 +207,13 @@ export function PerDayFilters({
       )}
       {!hasCostBudget ? circularBlock : null}
 
-      <RequiredActivities
-        activities={activities}
-        required={required}
-        onToggle={onToggleRequired}
-      />
+      {!HIDE_REQUIRED_ACTIVITIES && (
+        <RequiredActivities
+          activities={activities}
+          required={required}
+          onToggle={onToggleRequired}
+        />
+      )}
     </>
   );
 }
