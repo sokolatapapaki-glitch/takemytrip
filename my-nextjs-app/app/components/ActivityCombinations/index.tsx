@@ -69,10 +69,15 @@ function parseStartParams(p: ReadonlyURLSearchParams): {
   // The party from ?adults=&ages= (ages = comma list of each child's age). Always
   // at least one adult; non-numeric ages are dropped.
   const adults = Math.max(1, Math.floor(Number(p.get("adults"))) || 1);
-  const childAges = (p.get("ages") ?? "")
-    .split(",")
-    .map((s) => Number(s))
-    .filter((n) => Number.isInteger(n) && n >= 0);
+  // An absent/empty ages param means NO children — guard the empty string so it
+  // doesn't split into [""] → [0] and conjure a phantom age-0 child.
+  const agesRaw = p.get("ages") ?? "";
+  const childAges = agesRaw
+    ? agesRaw
+        .split(",")
+        .map((s) => Number(s))
+        .filter((n) => Number.isInteger(n) && n >= 0)
+    : [];
   // Trip length in days from ?days= (free-typed on /start). Clamped to ≥1 and the
   // safety cap; invalid/absent → undefined (fall back to start/end).
   const daysRaw = Math.floor(Number(p.get("days")));

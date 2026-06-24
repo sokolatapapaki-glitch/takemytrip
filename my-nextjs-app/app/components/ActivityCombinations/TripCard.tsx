@@ -4,7 +4,7 @@ import { useState } from "react";
 import { FaChevronDown, FaChevronUp, FaRoute, FaTrashCan } from "react-icons/fa6";
 import { DAYS_FULL } from "./core/activities.data";
 import { activityPrice, partyPriceLines, type Party } from "./core/activities.functions";
-import { HIDE_ACTIVITY_PRICES, SHOW_ACTIVITY_STARS } from "@/app/config";
+import { HIDE_ACTIVITY_PRICES, SHOW_ACTIVITY_STARS, SIMPLE_TRAVELERS, HIDE_TRAVELERS } from "@/app/config";
 import { ALL_ACTIVITIES, CITIES, type Area } from "./core/cities.data";
 import { DESTINATION_IMAGES } from "@/app/cities/components/destinationImages.generated";
 import type { Filter, Selection } from "./core/filters.functions";
@@ -85,6 +85,10 @@ function tripMemberLines(
 // there are none). Singular/plural agree: ενήλικας/ενήλικες, παιδί/παιδιά.
 function travelersLabel(party: Party): string {
   const adults = party.adults;
+  // Simple mode: just the head-count, no adults/children split.
+  if (SIMPLE_TRAVELERS) {
+    return `${adults} ${adults === 1 ? "άτομο" : "άτομα"}`;
+  }
   const kids = party.childAges.length;
   const adultPart = `${adults} ${adults === 1 ? "ενήλικας" : "ενήλικες"}`;
   if (kids === 0) return adultPart;
@@ -286,7 +290,7 @@ export function TripCard({
         {!HIDE_ACTIVITY_PRICES && (
           <p className="text-sm text-zinc-500">Συνολική τιμή: €{totalPrice}</p>
         )}
-        {party ? (
+        {party && !HIDE_TRAVELERS ? (
           <p className="text-sm text-zinc-500">Ταξιδιώτες: {travelersLabel(party)}</p>
         ) : null}
         {party && !HIDE_ACTIVITY_PRICES ? (

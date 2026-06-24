@@ -24,7 +24,7 @@ import { formatShort, isSameDay } from "@/app/start/data/dateUtils";
 import type { DateRange, Travelers } from "@/app/start/data/types";
 import { homeStyles } from "@/app/start/data/palette";
 import { buttonStyles } from "@/app/components/ui/buttonStyles";
-import { SIMPLE_TRAVELERS } from "@/app/config";
+import { SIMPLE_TRAVELERS, HIDE_TRAVELERS } from "@/app/config";
 import {
   CalendarIcon,
   MapPinIcon,
@@ -155,12 +155,12 @@ export function MakeTripModal({
     // required. When no accommodation is picked the trip anchors at the centre.
     const missing: string[] = [];
     if (!hasLength) missing.push(lengthMode === "days" ? "διάρκεια" : "ημερομηνίες");
-    if (!travelers || travelers.adults < 1) missing.push("ταξιδιώτες");
+    if (!HIDE_TRAVELERS && (!travelers || travelers.adults < 1)) missing.push("ταξιδιώτες");
     if (missing.length > 0) {
       setFormError(`Συμπλήρωσε: ${missing.join(", ")}.`);
       // Open the first missing input.
       if (!hasLength && lengthMode === "dates") setOpen("length");
-      else if (!travelers || travelers.adults < 1) setOpen("travelers");
+      else if (!HIDE_TRAVELERS && (!travelers || travelers.adults < 1)) setOpen("travelers");
       return;
     }
 
@@ -180,9 +180,11 @@ export function MakeTripModal({
       params.set("start", toISODate(range.start!));
       if (range.end) params.set("end", toISODate(range.end));
     }
-    params.set("adults", String(travelers!.adults));
-    if (!SIMPLE_TRAVELERS && travelers!.children > 0) {
-      params.set("ages", travelers!.childAges.map((a) => a ?? 0).join(","));
+    // When the travellers input is hidden the party defaults to 2 adults.
+    const pax = travelers ?? { adults: 2, children: 0, childAges: [] };
+    params.set("adults", String(pax.adults));
+    if (!SIMPLE_TRAVELERS && pax.children > 0) {
+      params.set("ages", pax.childAges.map((a) => a ?? 0).join(","));
     }
     for (const name of selectedNames) params.append("only", name);
     // Close without the history.back() (it would cancel the push), then navigate.
@@ -309,14 +311,16 @@ export function MakeTripModal({
       ) : null}
 
       {/* Travellers — starts empty; opening it seeds a default. */}
-      <FieldRow
-        active={open === "travelers"}
-        icon={<UsersIcon className="h-5 w-5" />}
-        value={travelersLabel}
-        placeholder="Ταξιδιώτες"
-        onClick={() => toggle("travelers")}
-      />
-      {open === "travelers" && travelers ? (
+      {!HIDE_TRAVELERS && (
+        <FieldRow
+          active={open === "travelers"}
+          icon={<UsersIcon className="h-5 w-5" />}
+          value={travelersLabel}
+          placeholder="Ταξιδιώτες"
+          onClick={() => toggle("travelers")}
+        />
+      )}
+      {!HIDE_TRAVELERS && open === "travelers" && travelers ? (
         <div className={`${panelClass} flex justify-center`}>
           <TravelersModal
             value={travelers}

@@ -47,3 +47,11 @@ export const SIMPLE_TRAVELERS = true;
 //           same component). The feature stays in the code, just not rendered.
 //   false → the section shows, exactly like now.
 export const HIDE_REQUIRED_ACTIVITIES = true;
+
+// HIDE_TRAVELERS:
+//   true  → the travellers input is hidden completely (the homepage search field
+//           AND the activities-page "Make Trip" modal field), and the
+//           "Ταξιδιώτες: …" line is hidden from the trip card. The party defaults
+//           to 2 adults under the hood so pricing/planning still work.
+//   false → the travellers input and the trip-card line show, exactly like now.
+export const HIDE_TRAVELERS = true;

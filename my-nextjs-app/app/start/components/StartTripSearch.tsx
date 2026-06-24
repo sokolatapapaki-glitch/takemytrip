@@ -16,7 +16,7 @@ import { CalendarModal } from "./CalendarModal";
 import { TravelersModal } from "./TravelersModal";
 import { Typewriter } from "./Typewriter";
 import { StatusToast, type StatusState } from "@/app/components/ui/StatusToast";
-import { SIMPLE_TRAVELERS } from "@/app/config";
+import { SIMPLE_TRAVELERS, HIDE_TRAVELERS } from "@/app/config";
 import {
   CalendarIcon,
   MapPinIcon,
@@ -256,7 +256,11 @@ export default function StartTripSearch({
         className="pointer-events-none absolute -inset-x-8 -inset-y-5 rounded-[2rem] bg-gradient-to-r from-orange-300/30 via-pink-300/25 to-sky-300/25 blur-2xl"
       />
       <div
-        className={`${playEntranceAnimations ? "animate-fade-in-up" : ""} relative grid grid-cols-1 items-center gap-2 sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_auto]`}
+        className={`${playEntranceAnimations ? "animate-fade-in-up" : ""} relative grid grid-cols-1 items-center gap-2 sm:grid-cols-2 ${
+          HIDE_TRAVELERS
+            ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]"
+            : "lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_auto]"
+        }`}
         style={{ animationDelay: "100ms" }}
       >
         <DestField
@@ -330,21 +334,23 @@ export default function StartTripSearch({
           )}
         </TripLengthField>
 
-        <Field
-          active={open === "travelers"}
-          icon={<TravelersIcon multiple={travelerCount > 1} />}
-          placeholder="Ταξιδιώτες"
-          value={travelersLabel}
-          iconDelay={580}
-          playEntranceAnimations={playEntranceAnimations}
-          onClick={() => toggle("travelers")}
-        >
-          {open === "travelers" && (
-            <Dropdown align="right" onClose={() => setOpen(null)}>
-              <TravelersModal value={travelers} onChange={setTravelers} />
-            </Dropdown>
-          )}
-        </Field>
+        {!HIDE_TRAVELERS && (
+          <Field
+            active={open === "travelers"}
+            icon={<TravelersIcon multiple={travelerCount > 1} />}
+            placeholder="Ταξιδιώτες"
+            value={travelersLabel}
+            iconDelay={580}
+            playEntranceAnimations={playEntranceAnimations}
+            onClick={() => toggle("travelers")}
+          >
+            {open === "travelers" && (
+              <Dropdown align="right" onClose={() => setOpen(null)}>
+                <TravelersModal value={travelers} onChange={setTravelers} />
+              </Dropdown>
+            )}
+          </Field>
+        )}
 
         {/* The button itself rides the bar's fade-in-up like every input (no
             separate late pop); only its icon pops, continuing the field icons'
