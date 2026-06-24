@@ -178,8 +178,11 @@ export function TripCard({
   const [justSaved, setJustSaved] = useState(false);
 
   const totalPrice = totalPriceOf(trip);
+  // Show "City – Area", but collapse to just the city when the area name is the
+  // city itself (e.g. the centre area named after the city) so it never reads
+  // like "Rome – Rome".
   const cityArea = cityName
-    ? areaName
+    ? areaName && areaName !== cityName
       ? `${cityName} – ${areaName}`
       : cityName
     : title;

@@ -50,6 +50,10 @@ function parseStartParams(p: ReadonlyURLSearchParams): {
   // Activity names the trip MUST contain (?include=, repeated) — the activities
   // page's "Make Trip" hand-off. They pre-check the "Must include" filter.
   include: string[];
+  // Activity names the trip is built from EXCLUSIVELY (?only=, repeated) — the
+  // activities page's "Make Trip" hand-off. They seed the submitted pool so the
+  // plan uses ONLY these activities (not merely "must include" them).
+  only: string[];
   // Pre-selected filter options from ?filters= (filterIndex → chosen option
   // indexes), applied to every day. Format: groups joined by "_", each
   // "<filterIdx>-<optIdx>[.<optIdx>…]". E.g. "1-1_2-0" → filter 1 → option 1,
@@ -108,6 +112,7 @@ function parseStartParams(p: ReadonlyURLSearchParams): {
     days,
     party: { adults, childAges },
     include: p.getAll("include"),
+    only: p.getAll("only"),
     filterSel,
   };
 }
@@ -313,10 +318,20 @@ export default function ActivityCombinations() {
   // Activities the user has ticked in the catalogue (by name), plus the set
   // "locked in" by Submit. While `submitted` is null the trip is built from the
   // whole catalogue; once submitted, it's built from ONLY the chosen activities.
-  const [selectedActivities, setSelectedActivities] = useState<Set<string>>(
-    () => new Set()
+  // Activities handed from the activities page's "Make Trip" via ?only= — the
+  // trip is built EXCLUSIVELY from these. They pre-tick the catalogue AND seed
+  // `submitted`, so the pool is restricted to them from the first render.
+  const onlyFromParams = useMemo(
+    () =>
+      initial.only.filter((n) => initialCity.activities.some((a) => a.name === n)),
+    [initial.only, initialCity]
   );
-  const [submitted, setSubmitted] = useState<Set<string> | null>(null);
+  const [selectedActivities, setSelectedActivities] = useState<Set<string>>(
+    () => new Set(onlyFromParams)
+  );
+  const [submitted, setSubmitted] = useState<Set<string> | null>(
+    () => (onlyFromParams.length ? new Set(onlyFromParams) : null)
+  );
 
   const toggleSelectedActivity = (a: Activity) =>
     setSelectedActivities((prev) => {

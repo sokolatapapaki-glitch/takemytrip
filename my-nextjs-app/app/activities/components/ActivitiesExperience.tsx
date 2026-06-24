@@ -155,7 +155,7 @@ export default function ActivitiesExperience() {
       onClick={makeTrip}
       className={`${buttonStyles.primary} shrink-0`}
     >
-      Φτιάξε ταξίδι{selected.size > 0 ? ` (${selected.size})` : ""}
+      {selected.size > 0 ? `Δημιουργία ταξιδιού (${selected.size})` : "Φτιάξε ταξίδι"}
     </button>
   );
 
