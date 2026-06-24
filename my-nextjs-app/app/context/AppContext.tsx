@@ -32,6 +32,10 @@ type AppContextValue = {
   // any "See more" trigger anywhere in the app.
   openActivity: (activity: Activity) => void;
   closeModal: () => void;
+  // Closes the modal WITHOUT popping the back-button history entry. Use this when
+  // the close is immediately followed by a navigation (router.push): the normal
+  // closeModal's history.back() would race with — and cancel — that navigation.
+  closeModalForNavigation: () => void;
   isModalOpen: boolean;
 };
 
@@ -51,6 +55,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const backdropPressed = useRef(false);
   // The scrollable modal panel — reset to the top whenever its content changes.
   const panelRef = useRef<HTMLDivElement>(null);
+  // Set while closing a modal to navigate away, so the back-button effect's
+  // cleanup skips its history.back() (which would otherwise cancel the push).
+  const skipHistoryBack = useRef(false);
 
   const isModalOpen = modal !== null;
 
@@ -82,6 +89,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
   );
 
   const closeModal = useCallback(() => {
+    setModal(null);
+  }, []);
+
+  const closeModalForNavigation = useCallback(() => {
+    skipHistoryBack.current = true;
     setModal(null);
   }, []);
 
@@ -123,13 +135,19 @@ export function AppProvider({ children }: { children: ReactNode }) {
     window.addEventListener("popstate", onPop);
     return () => {
       window.removeEventListener("popstate", onPop);
-      if (window.history.state?.ttkModal) window.history.back();
+      // Skip the back-pop when we're closing in order to navigate (the push
+      // already moves history forward; a back() here would cancel it).
+      if (skipHistoryBack.current) {
+        skipHistoryBack.current = false;
+      } else if (window.history.state?.ttkModal) {
+        window.history.back();
+      }
     };
   }, [isModalOpen, closeModal]);
 
   return (
     <AppContext.Provider
-      value={{ theme, toggleTheme, openModal, openActivity, closeModal, isModalOpen }}
+      value={{ theme, toggleTheme, openModal, openActivity, closeModal, closeModalForNavigation, isModalOpen }}
     >
       {children}
 

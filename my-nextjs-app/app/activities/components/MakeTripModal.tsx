@@ -82,7 +82,7 @@ export function MakeTripModal({
   selectedNames: string[];
 }) {
   const router = useRouter();
-  const { closeModal } = useApp();
+  const { closeModalForNavigation } = useApp();
 
   // The city centre — the search bias / map centre for the accommodation picker.
   const cityCenter = city.areas[0].coords;
@@ -185,8 +185,9 @@ export function MakeTripModal({
       params.set("ages", travelers!.childAges.map((a) => a ?? 0).join(","));
     }
     for (const name of selectedNames) params.append("only", name);
+    // Close without the history.back() (it would cancel the push), then navigate.
+    closeModalForNavigation();
     router.push(`/plan?${params.toString()}`);
-    closeModal();
   }
 
   const panelClass = "rounded-2xl border border-black/[.06] bg-white shadow-sm";
