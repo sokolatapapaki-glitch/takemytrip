@@ -557,7 +557,7 @@ export default function ActivityCombinations() {
                       }}
                       aria-expanded={showActivities}
                       disabled={city.activities.length === 0}
-                      className={`shrink-0 ${buttonStyles.common} disabled:cursor-not-allowed disabled:text-zinc-300 disabled:hover:bg-transparent`}
+                      className={`shrink-0 ${buttonStyles.primary} disabled:cursor-not-allowed disabled:opacity-50`}
                     >
                       {showActivities ? "Απόκρυψη δραστηριοτήτων" : "Επιλογή δραστηριοτήτων"}
                     </button>

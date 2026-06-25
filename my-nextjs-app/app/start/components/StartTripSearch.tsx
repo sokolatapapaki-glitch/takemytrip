@@ -258,7 +258,7 @@ export default function StartTripSearch({
       <div
         className={`${playEntranceAnimations ? "animate-fade-in-up" : ""} relative grid grid-cols-1 items-center gap-2 sm:grid-cols-2 ${
           HIDE_TRAVELERS
-            ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]"
+            ? "lg:grid-cols-[minmax(0,19rem)_minmax(0,19rem)_auto] lg:justify-center"
             : "lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_auto]"
         }`}
         style={{ animationDelay: "100ms" }}
