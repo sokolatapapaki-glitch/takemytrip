@@ -18,6 +18,7 @@ import { planTrip } from "./core/trip.functions";
 import { enforceRequired } from "./core/trip.required";
 import { DEFAULT_START_HOUR } from "./core/schedule.data";
 import { buttonStyles } from "@/app/components/ui/buttonStyles";
+import { homeStyles } from "@/app/start/data/palette";
 import { SearchIcon } from "@/app/start/components/icons";
 import { FaSliders, FaCircleInfo } from "react-icons/fa6";
 import { useScrollLock } from "@/app/components/ui/useScrollLock";
@@ -557,7 +558,7 @@ export default function ActivityCombinations() {
                       }}
                       aria-expanded={showActivities}
                       disabled={city.activities.length === 0}
-                      className={`shrink-0 ${buttonStyles.primary} disabled:cursor-not-allowed disabled:opacity-50`}
+                      className={`shrink-0 rounded-xl px-4 py-2 text-sm font-medium ${homeStyles.primaryButton} disabled:cursor-not-allowed disabled:opacity-50`}
                     >
                       {showActivities ? "Απόκρυψη δραστηριοτήτων" : "Επιλογή δραστηριοτήτων"}
                     </button>

@@ -255,6 +255,33 @@ export function TripCard({
     </>
   );
 
+  // Save + Λήψη PDF. On desktop these live in the header (right side); on mobile
+  // they stay in the body, below the header (so they don't crowd the header).
+  const tripActions = (
+    <>
+      {onSave ? (
+        <button
+          type="button"
+          onClick={() => {
+            onSave();
+            setJustSaved(true);
+            setTimeout(() => setJustSaved(false), 2000);
+          }}
+          className={`${buttonStyles.common} whitespace-nowrap`}
+        >
+          {justSaved ? "Αποθηκεύτηκε ✓" : "Αποθήκευση ταξιδιού"}
+        </button>
+      ) : null}
+      <button
+        type="button"
+        onClick={() => printTrip(trip, cityArea)}
+        className={`${buttonStyles.secondary} whitespace-nowrap`}
+      >
+        Λήψη PDF
+      </button>
+    </>
+  );
+
   // The header looks identical whether the card is open or closed; only the
   // toggle's label/arrow flips. (The divider below it shows only when a body
   // follows, i.e. when open.)
@@ -317,6 +344,13 @@ export function TripCard({
           {headerButtons}
         </div>
       )}
+      {/* Desktop: the Save / PDF actions live on the header's right (only when the
+          card is open). On mobile they render in the body instead (see below). */}
+      {open && (
+        <div className="hidden shrink-0 items-center gap-2 self-start sm:flex">
+          {tripActions}
+        </div>
+      )}
     </header>
   );
 
@@ -331,29 +365,10 @@ export function TripCard({
       {header}
 
       <div className="flex flex-col gap-3 p-3 sm:p-4">
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex justify-center md:justify-end gap-3 w-full ">
-            {onSave ? (
-              <button
-                type="button"
-                onClick={() => {
-                  onSave();
-                  setJustSaved(true);
-                  setTimeout(() => setJustSaved(false), 2000);
-                }}
-                className={`${buttonStyles.common} whitespace-nowrap`}
-              >
-                {justSaved ? "Αποθηκεύτηκε ✓" : "Αποθήκευση ταξιδιού"}
-              </button>
-            ) : null}
-            <button
-              type="button"
-              onClick={() => printTrip(trip, cityArea)}
-              className={`${buttonStyles.secondary} whitespace-nowrap`}
-            >
-              Λήψη PDF
-            </button>
-          </div>
+        {/* Mobile only: the Save / PDF actions stay below the header. On desktop
+            they're shown in the header instead (see above). */}
+        <div className="flex justify-center gap-3 sm:hidden">
+          {tripActions}
         </div>
 
         {/* The day-by-day program (timeline reused as-is). */}

@@ -94,11 +94,15 @@ export function FilterSidebar({
 
   return (
     <aside className={wrapperClass}>
-      <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-zinc-800 dark:text-zinc-100">
-          Φίλτρα
-        </h2>
-      </div>
+      {/* In the mobile drawer the panel already has its own "Φίλτρα" header
+          (next to "Έγινε"), so this one is hidden there to avoid the duplicate. */}
+      {!mobile && (
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-zinc-800 dark:text-zinc-100">
+            Φίλτρα
+          </h2>
+        </div>
+      )}
 
       {/* Dates — collapsed by default. "Change dates" reveals the calendar; each
           chosen date's weekday drives that day's opening hours. */}
