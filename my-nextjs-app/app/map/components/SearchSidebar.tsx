@@ -31,6 +31,7 @@ export function SearchSidebar({
   openActivities,
   onToggleActivity,
   onCloseActivity,
+  cityFocused,
 }: {
   filters: ActivityFilters;
   onFiltersChange: (next: ActivityFilters) => void;
@@ -39,6 +40,9 @@ export function SearchSidebar({
   openActivities: Set<string>;
   onToggleActivity: (activity: Activity) => void;
   onCloseActivity: (activityName: string) => void;
+  // True only when the map is zoomed into a specific city — the filter chips
+  // show only then (zoomed out, the results search has no filters).
+  cityFocused: boolean;
 }) {
   const [resultsOpen, setResultsOpen] = useState(false);
   const [openFilter, setOpenFilter] = useState<FilterKey | null>(null);
@@ -90,7 +94,7 @@ export function SearchSidebar({
       {/* Filter chips — only while the results are open; a horizontal row that
           scrolls in x (no visible scrollbar). The popups use fixed positioning
           (see FilterDropdown) so this overflow doesn't clip them. */}
-      {resultsOpen && (
+      {resultsOpen && cityFocused && (
         <div className="mt-2 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {!HIDE_ACTIVITY_PRICES && (
           <FilterDropdown

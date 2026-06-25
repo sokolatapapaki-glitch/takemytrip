@@ -186,7 +186,7 @@ export default function TripSearchHero() {
               className={`${playEntranceAnimations ? "animate-pop-in" : ""} mt-2 text-zinc-100 drop-shadow`}
               style={{ animationDelay: "60ms" }}
             >
-              Διάλεξε προορισμό, ημερομηνίες και ποιοι είναι οι ταξιδιώτες.
+              Διάλεξε προορισμό και διάρκεια! Θα σου οργανωσουμε το ιδανικό πλάνο ταξιδιού!
             </p>
           </header>
 

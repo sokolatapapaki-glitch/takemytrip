@@ -169,6 +169,7 @@ export default function MapExperience() {
             openActivities={openActivities}
             onToggleActivity={toggleOpenActivity}
             onCloseActivity={closeActivity}
+            cityFocused={focusedCityId !== null}
           />
         </div>
 
