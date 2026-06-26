@@ -223,35 +223,40 @@ export function TripCard({
     "relative flex shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-orange-400 via-rose-400 to-fuchsia-500 text-white";
   // Common button (see buttonStyles.ts) + the inline-flex layout for its arrow.
   const toggleBtn = `inline-flex items-center gap-1.5 ${buttonStyles.common}`;
-  // The delete + show/hide-activities buttons. When the star rating is hidden
-  // they sit just under the cost (in the info column); otherwise they stay on
-  // the header's right.
+  // The delete + show/hide-activities buttons. On desktop they sit together
+  // (under the cost, or on the header's right when the star rating shows); on
+  // mobile they're split — delete to the top-right, the toggle to the
+  // bottom-right of the header (see the header markup below).
+  const deleteButton = onDelete ? (
+    <button
+      type="button"
+      onClick={onDelete}
+      title="Διαγραφή ταξιδιού"
+      aria-label="Διαγραφή ταξιδιού"
+      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-black/[.05] hover:text-red-600 dark:hover:bg-white/[.08] dark:hover:text-red-400"
+    >
+      <FaTrashCan className="h-4 w-4" />
+    </button>
+  ) : null;
+  const toggleButton = (
+    <button
+      type="button"
+      onClick={toggleOpen}
+      aria-expanded={open}
+      className={`inline-flex shrink-0 items-center gap-1.5 ${buttonStyles.underline}`}
+    >
+      {open ? "Απόκρυψη" : "Δες δραστηριότητες"}
+      {open ? (
+        <FaChevronUp className="h-3 w-3" />
+      ) : (
+        <FaChevronDown className="h-3 w-3" />
+      )}
+    </button>
+  );
   const headerButtons = (
     <>
-      {onDelete ? (
-        <button
-          type="button"
-          onClick={onDelete}
-          title="Διαγραφή ταξιδιού"
-          aria-label="Διαγραφή ταξιδιού"
-          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-black/[.05] hover:text-red-600 dark:hover:bg-white/[.08] dark:hover:text-red-400"
-        >
-          <FaTrashCan className="h-4 w-4" />
-        </button>
-      ) : null}
-      <button
-        type="button"
-        onClick={toggleOpen}
-        aria-expanded={open}
-        className={`inline-flex shrink-0 items-center gap-1.5 ${buttonStyles.underline}`}
-      >
-        {open ? "Απόκρυψη" : "Δες δραστηριότητες"}
-        {open ? (
-          <FaChevronUp className="h-3 w-3" />
-        ) : (
-          <FaChevronDown className="h-3 w-3" />
-        )}
-      </button>
+      {deleteButton}
+      {toggleButton}
     </>
   );
 
@@ -287,7 +292,7 @@ export function TripCard({
   // follows, i.e. when open.)
   const header = (
     <header
-      className={`flex flex-wrap items-start gap-4 p-2 sm:flex-nowrap sm:p-3 ${open ? "border-b border-black/[.08] bg-white/55" : ""
+      className={`relative flex flex-wrap items-start gap-4 p-2 sm:flex-nowrap sm:p-3 ${open ? "border-b border-black/[.08] bg-white/55" : ""
         }`}
     >
       {/* Destination cover — a bigger square (height = width); falls back to
@@ -307,7 +312,7 @@ export function TripCard({
           />
         )}
       </div>
-      <div className="min-w-0 flex-1">
+      <div className={`min-w-0 flex-1 ${onDelete ? "pr-10 sm:pr-0" : ""}`}>
         <span className="block text-[11px] font-semibold uppercase tracking-wide text-zinc-400">
           {title}
         </span>
@@ -331,11 +336,11 @@ export function TripCard({
               .join(" · ")}
           </p>
         ) : null}
-        {/* Actions sit right under the cost on mobile (so no blank space trails
-            when there's no travellers/per-person line); on desktop they move to
-            the header's right, unless the star rating is hidden, in which case
-            they stay under the cost there too. */}
-        <div className={`mt-2 flex items-center gap-2 ${SHOW_ACTIVITY_STARS ? "sm:hidden" : ""}`}>
+        {/* Desktop only: delete + toggle sit under the cost (or, when the star
+            rating shows, on the header's right via the block below). On mobile
+            they're repositioned to the header's top-right / bottom-right corners
+            (see the mobile-only blocks at the end of the header). */}
+        <div className={`mt-2 hidden items-center gap-2 ${SHOW_ACTIVITY_STARS ? "" : "sm:flex"}`}>
           {headerButtons}
         </div>
       </div>
@@ -351,6 +356,13 @@ export function TripCard({
           {tripActions}
         </div>
       )}
+
+      {/* Mobile only: delete in the top-right corner, the show/hide toggle in
+          the bottom-right corner of the header. */}
+      {onDelete ? (
+        <div className="absolute right-2 top-2 sm:hidden">{deleteButton}</div>
+      ) : null}
+      <div className="absolute bottom-2 right-2 sm:hidden">{toggleButton}</div>
     </header>
   );
 
