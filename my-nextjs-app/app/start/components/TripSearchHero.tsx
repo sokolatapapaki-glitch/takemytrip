@@ -2,11 +2,18 @@
 
 // The trip-search landing hero (homepage `/`, also at `/start`).
 //
-// Background: one full-bleed image behind the trip search.
+// Background: one static full-bleed photo (`/homepage-hero.png`) with a light
+// dark overlay. The image NEVER moves or scales on scroll (that drift used to
+// leak horizontal overflow on mobile) — the only scroll effect is BLUR: a
+// permanently-blurred copy sitting on top fades in via opacity as you scroll
+// down (opacity-only → compositor-cheap, no transform → no x-overflow). The
+// fixed layer is pinned to both edges and clips its own contents, so it can
+// never widen the page.
 
 import StartTripSearch from "./StartTripSearch";
-import { BG_IMAGE_URLS } from "../data/bgImages";
 import { useEffect, useRef, useState } from "react";
+
+const HERO_IMAGE = "/homepage-hero.png";
 
 declare global {
   interface Window {
@@ -15,7 +22,6 @@ declare global {
 }
 
 export default function TripSearchHero() {
-  const heroImage = BG_IMAGE_URLS[0];
   // Decide ONCE, synchronously at mount, whether to play the entrance — so the
   // inputs render in their pre-pop (hidden) state on the very first paint and
   // animate in, instead of flashing fully-visible for a frame and THEN popping.
@@ -25,19 +31,13 @@ export default function TripSearchHero() {
     () => typeof window === "undefined" || !window.__ttkHomeEntrancePlayed
   );
 
-  // All scroll-driven styling (background blur + parallax, hero carousel) is
-  // written straight to the DOM from one rAF loop — NO React state. State-per-
-  // scroll re-rendered the whole hero tree on every wheel tick, which made the
-  // motion step visibly between frames. The loop also eases the value toward
-  // its target (lerp), so even coarse mouse-wheel steps glide smoothly.
-  //
-  // The scroll blur does NOT animate `filter` (re-blurring the full screen every
-  // frame janks badly). Instead a permanently-blurred COPY of the image sits on
-  // top and fades in with scroll — opacity + transform animate on the
-  // compositor, so every frame is cheap.
-  const bgImgRef = useRef<HTMLImageElement>(null);
-  const bgBlurImgRef = useRef<HTMLImageElement>(null);
+  // Scroll-driven styling (the carousel card drift + the background blur fade) is
+  // written straight to the DOM from one rAF loop — NO React state — and eased
+  // toward its target so coarse wheel steps glide smoothly. The background image
+  // POSITION/SCALE is never touched (only the blurred copy's opacity), so nothing
+  // here can move the image or add horizontal overflow.
   const carouselRef = useRef<HTMLDivElement>(null);
+  const bgBlurImgRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     window.__ttkHomeEntrancePlayed = true;
@@ -48,26 +48,14 @@ export default function TripSearchHero() {
     let current = window.scrollY; // the smoothed scroll position
     let target = window.scrollY;
 
-    // Touch devices pin the background POSITION (parallax movement fights mobile
-    // momentum scrolling + the collapsing toolbar → judder). The scroll-BLUR is
-    // kept, though: it's a permanently-blurred copy fading in via opacity only —
-    // compositor-cheap, so it stays smooth even on a pinned background. Only
-    // reduced-motion users opt out of both the movement and the blur.
-    const coarse = window.matchMedia("(pointer: coarse)").matches;
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const bgSpeed = coarse || reducedMotion ? 0 : 0.3;
-    const enableBlur = !reducedMotion;
+    // Reduced-motion users get a fully static background (no blur fade either).
+    const enableBlur = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const apply = () => {
-      // Background: parallax at 30% scroll speed (pinned at 0 on touch); the
-      // blurred copy fades in over ~400px of scroll (opacity only — no filter
-      // animation) so the image blurs as you scroll on every device.
-      const bgTransform = `translate3d(0, ${-current * bgSpeed}px, 0) scale(1.05)`;
-      if (bgImgRef.current) {
-        bgImgRef.current.style.transform = bgTransform;
-      }
+      // Background blur: the permanently-blurred copy fades in over ~400px of
+      // scroll (opacity only — no filter animation, no transform), so the photo
+      // "picks up blur" as you scroll down. Position/scale are never touched.
       if (bgBlurImgRef.current) {
-        bgBlurImgRef.current.style.transform = bgTransform;
         bgBlurImgRef.current.style.opacity = enableBlur
           ? String(Math.min(1, current / 400))
           : "0";
@@ -128,37 +116,36 @@ export default function TripSearchHero() {
     // stacking context that traps the field dropdowns beneath the z-30 Take-the-
     // Kids / Footer sections. Without it, each dropdown's own z-[100] reaches the
     // page's top stacking level and opens in front of everything.
-    <section className="relative flex min-h-screen flex-1 flex-col items-center justify-center bg-zinc-950 px-4 py-24">
-      {/* Fixed background layer: the image scrolls slower than the page
-          (parallax) and "picks up blur" the further down you go — really a
-          permanently-blurred copy fading in on top (animating opacity, not
-          filter, keeps every scroll frame on the compositor → fully smooth).
-          The images are taller than the viewport so the upward drift never
-          reveals an edge. */}
-      <div className="fixed inset-0 z-0 overflow-hidden" aria-hidden>
-        {/* eslint-disable-next-line @next/next/no-img-element -- decorative remote background */}
+    // `overflow-x-clip` (NOT hidden) gives the hero its own horizontal clip so
+    // the scroll size-change effect, the entrance pop overshoot, and the blurred
+    // decorative glow can bleed sideways WITHOUT ever widening the page / adding
+    // mobile horizontal scroll. `clip` leaves vertical overflow visible, so the
+    // field dropdowns (which open downward) are unaffected.
+    <section className="relative flex min-h-screen flex-1 flex-col items-center justify-center overflow-x-clip bg-zinc-950 px-4 py-24">
+      {/* Fixed background layer: ONE static photo (never moves or scales) plus a
+          permanently-blurred copy that fades in on scroll. The container is
+          pinned to BOTH horizontal edges and clips its own contents, and the
+          images use no transform / scale (scale 1, `object-cover`), so nothing
+          here can bleed sideways or add mobile horizontal overflow. */}
+      <div className="fixed inset-x-0 top-0 h-[100lvh] z-0 overflow-hidden max-w-full" aria-hidden>
+        {/* eslint-disable-next-line @next/next/no-img-element -- decorative local background */}
         <img
-          ref={bgImgRef}
-          src={heroImage}
+          src={HERO_IMAGE}
           alt=""
-          referrerPolicy="no-referrer"
-          className="absolute left-0 top-0 h-[140%] w-full object-cover will-change-transform"
-          style={{ transform: "translate3d(0, 0, 0) scale(1.05)" }}
+          className="absolute inset-0 h-full w-full object-cover object-top"
         />
+        {/* Permanently-blurred copy of the same photo — sits on top at opacity 0
+            and fades in as you scroll (driven by the rAF loop above). Opacity
+            only, never transform. */}
         {/* eslint-disable-next-line @next/next/no-img-element -- blurred copy of the same background */}
         <img
           ref={bgBlurImgRef}
-          src={heroImage}
+          src={HERO_IMAGE}
           alt=""
-          referrerPolicy="no-referrer"
-          className="absolute left-0 top-0 h-[140%] w-full object-cover opacity-0 blur-md will-change-[transform,opacity]"
-          style={{ transform: "translate3d(0, 0, 0) scale(1.05)" }}
+          className="absolute inset-0 h-full w-full object-cover object-top opacity-0 blur-md will-change-[opacity]"
         />
-        {/* Scrim is a vertical gradient, not a flat fill: it stays light across
-            the middle so the photo reads at full clarity, and only deepens at the
-            very top/bottom edges where the header text and lower content need
-            contrast. Keeps the high-res image looking crisp and vivid. */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/10 to-black/40" />
+        {/* A little dark overlay so the white search card and text read clearly. */}
+        <div className="absolute inset-0 bg-black/35" />
       </div>
 
       {/* Carousel card: scroll-styled directly via carouselRef (see the rAF loop

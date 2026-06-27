@@ -13,7 +13,7 @@
 // with your own. Add as many as you like; positions are assigned automatically.
 export const BG_IMAGE_URLS: string[] = [
   // Homepage hero background — local image in /public.
-  "/homeImage.jpeg",
+  "/Gemini_Generated_Image_u8eezyu8eezyu8ee (1).png",
   "https://picsum.photos/seed/ttk-2/240/240",
   "https://picsum.photos/seed/ttk-3/240/240",
   "https://picsum.photos/seed/ttk-4/240/240",

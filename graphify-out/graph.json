@@ -230,7 +230,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_activitycard",
-      "community": 9,
+      "community": 94,
       "norm_label": "activitycard.tsx"
     },
     {
@@ -240,7 +240,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "components_activitycard_activitycard",
-      "community": 9,
+      "community": 94,
       "norm_label": "activitycard()"
     },
     {
@@ -270,47 +270,57 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_maketripmodal",
-      "community": 205,
+      "community": 35,
       "norm_label": "maketripmodal.tsx"
     },
     {
       "label": "Section",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/activities/components/MakeTripModal.tsx",
-      "source_location": "L26",
+      "source_location": "L35",
       "_origin": "ast",
       "id": "components_maketripmodal_section",
-      "community": 205,
+      "community": 35,
       "norm_label": "section"
+    },
+    {
+      "label": "LengthMode",
+      "file_type": "code",
+      "source_file": "my-nextjs-app/app/activities/components/MakeTripModal.tsx",
+      "source_location": "L38",
+      "_origin": "ast",
+      "id": "components_maketripmodal_lengthmode",
+      "community": 35,
+      "norm_label": "lengthmode"
     },
     {
       "label": "toISODate()",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/activities/components/MakeTripModal.tsx",
-      "source_location": "L29",
+      "source_location": "L41",
       "_origin": "ast",
       "id": "components_maketripmodal_toisodate",
-      "community": 205,
+      "community": 35,
       "norm_label": "toisodate()"
     },
     {
       "label": "FieldRow()",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/activities/components/MakeTripModal.tsx",
-      "source_location": "L35",
+      "source_location": "L47",
       "_origin": "ast",
       "id": "components_maketripmodal_fieldrow",
-      "community": 205,
+      "community": 35,
       "norm_label": "fieldrow()"
     },
     {
       "label": "MakeTripModal()",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/activities/components/MakeTripModal.tsx",
-      "source_location": "L65",
+      "source_location": "L77",
       "_origin": "ast",
       "id": "components_maketripmodal_maketripmodal",
-      "community": 225,
+      "community": 35,
       "norm_label": "maketripmodal()"
     },
     {
@@ -410,7 +420,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_activityimages_generated",
-      "community": 120,
+      "community": 94,
       "norm_label": "activityimages.generated.ts"
     },
     {
@@ -420,7 +430,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "components_activityimages_generated_generated_activity_images",
-      "community": 120,
+      "community": 94,
       "norm_label": "generated_activity_images"
     },
     {
@@ -430,7 +440,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_activityimages",
-      "community": 120,
+      "community": 94,
       "norm_label": "activityimages.ts"
     },
     {
@@ -440,7 +450,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "components_activityimages_activity_images_manual",
-      "community": 120,
+      "community": 94,
       "norm_label": "activity_images_manual"
     },
     {
@@ -450,7 +460,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "components_activityimages_activity_images",
-      "community": 120,
+      "community": 94,
       "norm_label": "activity_images"
     },
     {
@@ -460,7 +470,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "components_activityimages_cover_by_name",
-      "community": 120,
+      "community": 94,
       "norm_label": "cover_by_name"
     },
     {
@@ -480,7 +490,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_vibestyle",
-      "community": 9,
+      "community": 94,
       "norm_label": "vibestyle.tsx"
     },
     {
@@ -490,7 +500,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "components_vibestyle_vibe_icons",
-      "community": 9,
+      "community": 94,
       "norm_label": "vibe_icons"
     },
     {
@@ -500,7 +510,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "components_vibestyle_vibe_gradient",
-      "community": 9,
+      "community": 94,
       "norm_label": "vibe_gradient"
     },
     {
@@ -540,7 +550,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_citiesexperience",
-      "community": 210,
+      "community": 26,
       "norm_label": "citiesexperience.tsx"
     },
     {
@@ -550,7 +560,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "components_citiesexperience_citiesexperience",
-      "community": 210,
+      "community": 26,
       "norm_label": "citiesexperience()"
     },
     {
@@ -720,7 +730,7 @@
       "source_location": "L111",
       "_origin": "ast",
       "id": "components_citiesdata_filterandsortcities",
-      "community": 210,
+      "community": 26,
       "norm_label": "filterandsortcities()"
     },
     {
@@ -730,7 +740,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_destinationimages_generated",
-      "community": 120,
+      "community": 144,
       "norm_label": "destinationimages.generated.ts"
     },
     {
@@ -740,7 +750,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "components_destinationimages_generated_destination_images",
-      "community": 120,
+      "community": 144,
       "norm_label": "destination_images"
     },
     {
@@ -750,7 +760,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "cities_page",
-      "community": 210,
+      "community": 26,
       "norm_label": "page.tsx"
     },
     {
@@ -760,7 +770,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "cities_page_metadata",
-      "community": 210,
+      "community": 26,
       "norm_label": "metadata"
     },
     {
@@ -770,7 +780,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "cities_page_citiespage",
-      "community": 210,
+      "community": 26,
       "norm_label": "citiespage()"
     },
     {
@@ -780,7 +790,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "activitycombinations_activitylist",
-      "community": 80,
+      "community": 2,
       "norm_label": "activitylist.tsx"
     },
     {
@@ -790,7 +800,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "activitycombinations_activitylist_activitylist",
-      "community": 80,
+      "community": 2,
       "norm_label": "activitylist()"
     },
     {
@@ -890,7 +900,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "activitycombinations_combodashboard",
-      "community": 79,
+      "community": 23,
       "norm_label": "combodashboard.tsx"
     },
     {
@@ -900,7 +910,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "activitycombinations_combodashboard_formulatext",
-      "community": 79,
+      "community": 23,
       "norm_label": "formulatext()"
     },
     {
@@ -910,7 +920,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "activitycombinations_combodashboard_n",
-      "community": 79,
+      "community": 23,
       "norm_label": "n()"
     },
     {
@@ -920,7 +930,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "activitycombinations_combodashboard_filterblock",
-      "community": 79,
+      "community": 23,
       "norm_label": "filterblock()"
     },
     {
@@ -930,7 +940,7 @@
       "source_location": "L106",
       "_origin": "ast",
       "id": "activitycombinations_combodashboard_combodashboard",
-      "community": 79,
+      "community": 23,
       "norm_label": "combodashboard()"
     },
     {
@@ -940,7 +950,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "activitycombinations_combomap",
-      "community": 2,
+      "community": 144,
       "norm_label": "combomap.tsx"
     },
     {
@@ -950,7 +960,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "activitycombinations_combomap_stop",
-      "community": 2,
+      "community": 144,
       "norm_label": "stop"
     },
     {
@@ -960,7 +970,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "activitycombinations_combomap_combomap",
-      "community": 2,
+      "community": 144,
       "norm_label": "combomap()"
     },
     {
@@ -970,7 +980,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "activitycombinations_comboresults",
-      "community": 2,
+      "community": 23,
       "norm_label": "comboresults.tsx"
     },
     {
@@ -980,7 +990,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "activitycombinations_comboresults_coords_by_name",
-      "community": 2,
+      "community": 23,
       "norm_label": "coords_by_name"
     },
     {
@@ -990,7 +1000,7 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "activitycombinations_comboresults_activity_by_name",
-      "community": 2,
+      "community": 23,
       "norm_label": "activity_by_name"
     },
     {
@@ -1000,7 +1010,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "activitycombinations_comboresults_addwindow",
-      "community": 2,
+      "community": 144,
       "norm_label": "addwindow"
     },
     {
@@ -1010,7 +1020,7 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "activitycombinations_comboresults_combokey",
-      "community": 2,
+      "community": 23,
       "norm_label": "combokey()"
     },
     {
@@ -1020,7 +1030,7 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "activitycombinations_comboresults_filtersummary",
-      "community": 2,
+      "community": 23,
       "norm_label": "filtersummary()"
     },
     {
@@ -1030,7 +1040,7 @@
       "source_location": "L85",
       "_origin": "ast",
       "id": "activitycombinations_comboresults_rowactions",
-      "community": 2,
+      "community": 23,
       "norm_label": "rowactions()"
     },
     {
@@ -1040,7 +1050,7 @@
       "source_location": "L202",
       "_origin": "ast",
       "id": "activitycombinations_comboresults_dayitinerary",
-      "community": 80,
+      "community": 2,
       "norm_label": "dayitinerary()"
     },
     {
@@ -1050,7 +1060,7 @@
       "source_location": "L419",
       "_origin": "ast",
       "id": "activitycombinations_comboresults_comboresults",
-      "community": 2,
+      "community": 23,
       "norm_label": "comboresults()"
     },
     {
@@ -1257,7 +1267,7 @@
       "label": "START_HOUR_CHOICES",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/PerDayFilters.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "_origin": "ast",
       "id": "activitycombinations_perdayfilters_start_hour_choices",
       "community": 23,
@@ -1267,7 +1277,7 @@
       "label": "HintTitle()",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/PerDayFilters.tsx",
-      "source_location": "L16",
+      "source_location": "L17",
       "_origin": "ast",
       "id": "activitycombinations_perdayfilters_hinttitle",
       "community": 23,
@@ -1277,7 +1287,7 @@
       "label": "FilterButton()",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/PerDayFilters.tsx",
-      "source_location": "L49",
+      "source_location": "L50",
       "_origin": "ast",
       "id": "activitycombinations_perdayfilters_filterbutton",
       "community": 23,
@@ -1287,7 +1297,7 @@
       "label": "PerDayFilters()",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/PerDayFilters.tsx",
-      "source_location": "L77",
+      "source_location": "L78",
       "_origin": "ast",
       "id": "activitycombinations_perdayfilters_perdayfilters",
       "community": 23,
@@ -1370,7 +1380,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "activitycombinations_scheduledname",
-      "community": 2,
+      "community": 23,
       "norm_label": "scheduledname.tsx"
     },
     {
@@ -1380,7 +1390,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "activitycombinations_scheduledname_scheduledname",
-      "community": 2,
+      "community": 23,
       "norm_label": "scheduledname()"
     },
     {
@@ -1577,7 +1587,7 @@
       "label": "TripCard()",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/TripCard.tsx",
-      "source_location": "L103",
+      "source_location": "L107",
       "_origin": "ast",
       "id": "activitycombinations_tripcard_tripcard",
       "community": 144,
@@ -1590,7 +1600,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "activitycombinations_tripdashboard",
-      "community": 79,
+      "community": 144,
       "norm_label": "tripdashboard.tsx"
     },
     {
@@ -1600,7 +1610,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "activitycombinations_tripdashboard_n2",
-      "community": 79,
+      "community": 144,
       "norm_label": "n2()"
     },
     {
@@ -1610,7 +1620,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "activitycombinations_tripdashboard_tripformula",
-      "community": 79,
+      "community": 144,
       "norm_label": "tripformula()"
     },
     {
@@ -1620,7 +1630,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "activitycombinations_tripdashboard_tripindexblock",
-      "community": 79,
+      "community": 144,
       "norm_label": "tripindexblock()"
     },
     {
@@ -1630,7 +1640,7 @@
       "source_location": "L95",
       "_origin": "ast",
       "id": "activitycombinations_tripdashboard_useallblock",
-      "community": 79,
+      "community": 144,
       "norm_label": "useallblock()"
     },
     {
@@ -1640,7 +1650,7 @@
       "source_location": "L118",
       "_origin": "ast",
       "id": "activitycombinations_tripdashboard_leftovertext",
-      "community": 79,
+      "community": 144,
       "norm_label": "leftovertext()"
     },
     {
@@ -1650,7 +1660,7 @@
       "source_location": "L140",
       "_origin": "ast",
       "id": "activitycombinations_tripdashboard_tripdashboard",
-      "community": 79,
+      "community": 144,
       "norm_label": "tripdashboard()"
     },
     {
@@ -1700,7 +1710,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_tests_activities_test_ts_tests_activities_test",
-      "community": 48,
+      "community": 215,
       "norm_label": "activities.test.ts"
     },
     {
@@ -1800,7 +1810,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_tests_cities_test_ts_tests_cities_test",
-      "community": 202,
+      "community": 9,
       "norm_label": "cities.test.ts"
     },
     {
@@ -1810,7 +1820,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_tests_cities_test_ts_tests_cities_test_withcity",
-      "community": 202,
+      "community": 9,
       "norm_label": "withcity()"
     },
     {
@@ -1860,7 +1870,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "tests_helpers_closed_day",
-      "community": 48,
+      "community": 215,
       "norm_label": "closed_day"
     },
     {
@@ -1920,7 +1930,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_tests_schedule_test_ts_tests_schedule_test",
-      "community": 202,
+      "community": 215,
       "norm_label": "schedule.test.ts"
     },
     {
@@ -1930,7 +1940,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_tests_schedule_test_ts_tests_schedule_test_closedmonday",
-      "community": 202,
+      "community": 215,
       "norm_label": "closedmonday()"
     },
     {
@@ -2110,7 +2120,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_tests_trippriority_test_ts_tests_trippriority_test",
-      "community": 202,
+      "community": 215,
       "norm_label": "trippriority.test.ts"
     },
     {
@@ -2120,7 +2130,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_tests_trippriority_test_ts_tests_trippriority_test_sel",
-      "community": 202,
+      "community": 215,
       "norm_label": "sel"
     },
     {
@@ -2130,7 +2140,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_tests_trippriority_test_ts_tests_trippriority_test_same",
-      "community": 202,
+      "community": 215,
       "norm_label": "same"
     },
     {
@@ -2140,7 +2150,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_tests_trippriority_test_ts_tests_trippriority_test_planoneday",
-      "community": 202,
+      "community": 215,
       "norm_label": "planoneday()"
     },
     {
@@ -2160,7 +2170,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "core_activities_data_days",
-      "community": 2,
+      "community": 23,
       "norm_label": "days"
     },
     {
@@ -2170,7 +2180,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "core_activities_data_days_full",
-      "community": 144,
+      "community": 102,
       "norm_label": "days_full"
     },
     {
@@ -2210,7 +2220,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "core_activities_functions_coords",
-      "community": 2,
+      "community": 144,
       "norm_label": "coords"
     },
     {
@@ -2550,7 +2560,7 @@
       "source_location": "L406",
       "_origin": "ast",
       "id": "core_activities_functions_agebandrows",
-      "community": 28,
+      "community": 94,
       "norm_label": "agebandrows()"
     },
     {
@@ -2680,7 +2690,7 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "core_cities_data_city",
-      "community": 26,
+      "community": 9,
       "norm_label": "city"
     },
     {
@@ -2720,7 +2730,7 @@
       "source_location": "L101",
       "_origin": "ast",
       "id": "core_cities_data_cities",
-      "community": 120,
+      "community": 9,
       "norm_label": "cities"
     },
     {
@@ -2730,7 +2740,7 @@
       "source_location": "L114",
       "_origin": "ast",
       "id": "core_cities_data_all_activities",
-      "community": 144,
+      "community": 9,
       "norm_label": "all_activities"
     },
     {
@@ -3210,7 +3220,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_filters_data_ts_core_filters_data",
-      "community": 102,
+      "community": 28,
       "norm_label": "filters.data.ts"
     },
     {
@@ -3220,7 +3230,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "core_filters_data_hours_unit",
-      "community": 102,
+      "community": 28,
       "norm_label": "hours_unit"
     },
     {
@@ -3230,7 +3240,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "core_filters_data_cost_unit",
-      "community": 102,
+      "community": 28,
       "norm_label": "cost_unit"
     },
     {
@@ -3240,7 +3250,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "core_filters_data_cost_tiers",
-      "community": 102,
+      "community": 28,
       "norm_label": "cost_tiers"
     },
     {
@@ -3250,7 +3260,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "core_filters_data_costoptionsforparty",
-      "community": 102,
+      "community": 28,
       "norm_label": "costoptionsforparty()"
     },
     {
@@ -3260,7 +3270,7 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_filters_data_ts_core_filters_data_ceiling_params",
-      "community": 102,
+      "community": 28,
       "norm_label": "ceiling_params"
     },
     {
@@ -3270,7 +3280,7 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_filters_data_ts_core_filters_data_vibe_filter",
-      "community": 102,
+      "community": 28,
       "norm_label": "vibe_filter"
     },
     {
@@ -3280,7 +3290,7 @@
       "source_location": "L78",
       "_origin": "ast",
       "id": "core_filters_data_default_filters",
-      "community": 202,
+      "community": 215,
       "norm_label": "default_filters"
     },
     {
@@ -3520,7 +3530,7 @@
       "source_location": "L239",
       "_origin": "ast",
       "id": "core_filters_functions_tripindexproof",
-      "community": 79,
+      "community": 144,
       "norm_label": "tripindexproof"
     },
     {
@@ -3540,7 +3550,7 @@
       "source_location": "L281",
       "_origin": "ast",
       "id": "core_filters_functions_useallbreakdown",
-      "community": 79,
+      "community": 144,
       "norm_label": "useallbreakdown"
     },
     {
@@ -3570,7 +3580,7 @@
       "source_location": "L311",
       "_origin": "ast",
       "id": "core_filters_functions_filterbreakdown",
-      "community": 79,
+      "community": 23,
       "norm_label": "filterbreakdown"
     },
     {
@@ -3610,7 +3620,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_schedule_functions_ts_core_schedule_functions",
-      "community": 89,
+      "community": 3,
       "norm_label": "schedule.functions.ts"
     },
     {
@@ -3620,7 +3630,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "core_schedule_functions_scheduleditem",
-      "community": 208,
+      "community": 23,
       "norm_label": "scheduleditem"
     },
     {
@@ -3630,7 +3640,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "core_schedule_functions_comboschedule",
-      "community": 79,
+      "community": 3,
       "norm_label": "comboschedule"
     },
     {
@@ -3640,7 +3650,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_schedule_functions_ts_core_schedule_functions_scheduleendhour",
-      "community": 89,
+      "community": 3,
       "norm_label": "scheduleendhour()"
     },
     {
@@ -3650,7 +3660,7 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_schedule_functions_ts_core_schedule_functions_lunchslot",
-      "community": 89,
+      "community": 3,
       "norm_label": "lunchslot()"
     },
     {
@@ -3660,7 +3670,7 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "core_schedule_functions_eval",
-      "community": 89,
+      "community": 3,
       "norm_label": "eval"
     },
     {
@@ -3670,7 +3680,7 @@
       "source_location": "L99",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_schedule_functions_ts_core_schedule_functions_evaluate",
-      "community": 89,
+      "community": 3,
       "norm_label": "evaluate()"
     },
     {
@@ -3680,7 +3690,7 @@
       "source_location": "L144",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_schedule_functions_ts_core_schedule_functions_routestops",
-      "community": 89,
+      "community": 3,
       "norm_label": "routestops()"
     },
     {
@@ -3690,7 +3700,7 @@
       "source_location": "L163",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_schedule_functions_ts_core_schedule_functions_linearityof",
-      "community": 89,
+      "community": 3,
       "norm_label": "linearityof()"
     },
     {
@@ -3700,7 +3710,7 @@
       "source_location": "L177",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_schedule_functions_ts_core_schedule_functions_layout",
-      "community": 89,
+      "community": 3,
       "norm_label": "layout()"
     },
     {
@@ -3710,7 +3720,7 @@
       "source_location": "L217",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_schedule_functions_ts_core_schedule_functions_eachpermutation",
-      "community": 89,
+      "community": 3,
       "norm_label": "eachpermutation()"
     },
     {
@@ -3720,7 +3730,7 @@
       "source_location": "L239",
       "_origin": "ast",
       "id": "core_schedule_functions_arrangement",
-      "community": 89,
+      "community": 3,
       "norm_label": "arrangement"
     },
     {
@@ -3730,7 +3740,7 @@
       "source_location": "L246",
       "_origin": "ast",
       "id": "core_schedule_functions_best",
-      "community": 89,
+      "community": 3,
       "norm_label": "best"
     },
     {
@@ -3740,7 +3750,7 @@
       "source_location": "L250",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_schedule_functions_ts_core_schedule_functions_lunchrank",
-      "community": 89,
+      "community": 3,
       "norm_label": "lunchrank()"
     },
     {
@@ -3750,7 +3760,7 @@
       "source_location": "L262",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_schedule_functions_ts_core_schedule_functions_betterarrangement",
-      "community": 89,
+      "community": 3,
       "norm_label": "betterarrangement()"
     },
     {
@@ -3760,7 +3770,7 @@
       "source_location": "L285",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_schedule_functions_ts_core_schedule_functions_schedulecombo",
-      "community": 89,
+      "community": 3,
       "norm_label": "schedulecombo()"
     },
     {
@@ -3850,7 +3860,7 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "core_trip_functions_leftoverreason",
-      "community": 79,
+      "community": 144,
       "norm_label": "leftoverreason"
     },
     {
@@ -3870,7 +3880,7 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "core_trip_functions_trip",
-      "community": 208,
+      "community": 144,
       "norm_label": "trip"
     },
     {
@@ -4430,7 +4440,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_trip_required_ts_core_trip_required",
-      "community": 208,
+      "community": 144,
       "norm_label": "trip.required.ts"
     },
     {
@@ -4440,7 +4450,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "core_trip_required_window",
-      "community": 208,
+      "community": 144,
       "norm_label": "window"
     },
     {
@@ -4450,7 +4460,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_trip_required_ts_core_trip_required_freewindows",
-      "community": 208,
+      "community": 144,
       "norm_label": "freewindows()"
     },
     {
@@ -4460,7 +4470,7 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "my_nextjs_app_app_components_activitycombinations_core_trip_required_ts_core_trip_required_enforcerequired",
-      "community": 208,
+      "community": 144,
       "norm_label": "enforcerequired()"
     },
     {
@@ -4617,7 +4627,7 @@
       "label": "parseStartParams()",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/index.tsx",
-      "source_location": "L37",
+      "source_location": "L38",
       "_origin": "ast",
       "id": "activitycombinations_index_parsestartparams",
       "community": 23,
@@ -4627,7 +4637,7 @@
       "label": "selectionFromParams()",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/index.tsx",
-      "source_location": "L119",
+      "source_location": "L130",
       "_origin": "ast",
       "id": "activitycombinations_index_selectionfromparams",
       "community": 23,
@@ -4637,7 +4647,7 @@
       "label": "TripResultsLoading()",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/index.tsx",
-      "source_location": "L137",
+      "source_location": "L148",
       "_origin": "ast",
       "id": "activitycombinations_index_tripresultsloading",
       "community": 23,
@@ -4647,10 +4657,10 @@
       "label": "ActivityCombinations()",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/index.tsx",
-      "source_location": "L171",
+      "source_location": "L182",
       "_origin": "ast",
       "id": "activitycombinations_index_activitycombinations",
-      "community": 210,
+      "community": 2,
       "norm_label": "activitycombinations()"
     },
     {
@@ -4660,7 +4670,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "activitycombinations_tripprint",
-      "community": 208,
+      "community": 144,
       "norm_label": "tripprint.ts"
     },
     {
@@ -4670,7 +4680,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "activitycombinations_tripprint_esc",
-      "community": 208,
+      "community": 144,
       "norm_label": "esc()"
     },
     {
@@ -4680,7 +4690,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "activitycombinations_tripprint_printtrip",
-      "community": 208,
+      "community": 144,
       "norm_label": "printtrip()"
     },
     {
@@ -4690,7 +4700,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "activitydetail_index",
-      "community": 28,
+      "community": 94,
       "norm_label": "index.tsx"
     },
     {
@@ -4700,7 +4710,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "activitydetail_index_fmtprice",
-      "community": 28,
+      "community": 94,
       "norm_label": "fmtprice()"
     },
     {
@@ -4710,7 +4720,7 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "activitydetail_index_familylabel",
-      "community": 28,
+      "community": 94,
       "norm_label": "familylabel()"
     },
     {
@@ -4720,7 +4730,7 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "activitydetail_index_morepopover",
-      "community": 28,
+      "community": 94,
       "norm_label": "morepopover()"
     },
     {
@@ -4730,7 +4740,7 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "activitydetail_index_inforow",
-      "community": 28,
+      "community": 94,
       "norm_label": "inforow()"
     },
     {
@@ -4740,7 +4750,7 @@
       "source_location": "L113",
       "_origin": "ast",
       "id": "activitydetail_index_activitydetail",
-      "community": 28,
+      "community": 94,
       "norm_label": "activitydetail()"
     },
     {
@@ -4800,7 +4810,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_navbar",
-      "community": 23,
+      "community": 34,
       "norm_label": "navbar.tsx"
     },
     {
@@ -4810,7 +4820,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "components_navbar_nav_items",
-      "community": 23,
+      "community": 34,
       "norm_label": "nav_items"
     },
     {
@@ -4820,7 +4830,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "components_navbar_navbar",
-      "community": 23,
+      "community": 34,
       "norm_label": "navbar()"
     },
     {
@@ -4850,7 +4860,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ui_stars",
-      "community": 28,
+      "community": 94,
       "norm_label": "stars.tsx"
     },
     {
@@ -4860,7 +4870,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "ui_stars_stars",
-      "community": 28,
+      "community": 94,
       "norm_label": "stars()"
     },
     {
@@ -4870,7 +4880,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ui_statustoast",
-      "community": 145,
+      "community": 35,
       "norm_label": "statustoast.tsx"
     },
     {
@@ -4880,7 +4890,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "ui_statustoast_statusstate",
-      "community": 145,
+      "community": 35,
       "norm_label": "statusstate"
     },
     {
@@ -4890,7 +4900,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "ui_statustoast_config",
-      "community": 145,
+      "community": 35,
       "norm_label": "config"
     },
     {
@@ -4900,7 +4910,7 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "ui_statustoast_statustoast",
-      "community": 145,
+      "community": 35,
       "norm_label": "statustoast()"
     },
     {
@@ -4930,7 +4940,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ui_scrollbar",
-      "community": 28,
+      "community": 2,
       "norm_label": "scrollbar.ts"
     },
     {
@@ -4940,7 +4950,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "ui_usescrolllock",
-      "community": 210,
+      "community": 2,
       "norm_label": "usescrolllock.ts"
     },
     {
@@ -4950,7 +4960,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "ui_usescrolllock_usescrolllock",
-      "community": 210,
+      "community": 2,
       "norm_label": "usescrolllock()"
     },
     {
@@ -4960,7 +4970,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_config",
-      "community": 9,
+      "community": 94,
       "norm_label": "config.ts"
     },
     {
@@ -4970,7 +4980,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "config_features",
-      "community": 94,
+      "community": 28,
       "norm_label": "features.ts"
     },
     {
@@ -4980,7 +4990,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "context_appcontext",
-      "community": 28,
+      "community": 2,
       "norm_label": "appcontext.tsx"
     },
     {
@@ -4990,7 +5000,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "context_appcontext_theme",
-      "community": 28,
+      "community": 2,
       "norm_label": "theme"
     },
     {
@@ -5000,7 +5010,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "context_appcontext_modalsize",
-      "community": 28,
+      "community": 2,
       "norm_label": "modalsize"
     },
     {
@@ -5010,37 +5020,37 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "context_appcontext_appcontextvalue",
-      "community": 28,
+      "community": 2,
       "norm_label": "appcontextvalue"
     },
     {
       "label": "AppContext",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/context/AppContext.tsx",
-      "source_location": "L38",
+      "source_location": "L42",
       "_origin": "ast",
       "id": "context_appcontext_appcontext",
-      "community": 28,
+      "community": 2,
       "norm_label": "appcontext"
     },
     {
       "label": "AppProvider()",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/context/AppContext.tsx",
-      "source_location": "L40",
+      "source_location": "L44",
       "_origin": "ast",
       "id": "context_appcontext_appprovider",
-      "community": 28,
+      "community": 2,
       "norm_label": "appprovider()"
     },
     {
       "label": "useApp()",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/context/AppContext.tsx",
-      "source_location": "L175",
+      "source_location": "L193",
       "_origin": "ast",
       "id": "context_appcontext_useapp",
-      "community": 80,
+      "community": 2,
       "norm_label": "useapp()"
     },
     {
@@ -5327,7 +5337,7 @@
       "label": "RootLayout()",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/layout.tsx",
-      "source_location": "L24",
+      "source_location": "L30",
       "_origin": "ast",
       "id": "app_layout_rootlayout",
       "community": 34,
@@ -5390,7 +5400,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_citylabel",
-      "community": 26,
+      "community": 9,
       "norm_label": "citylabel.tsx"
     },
     {
@@ -5400,7 +5410,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "components_citylabel_citylabel",
-      "community": 26,
+      "community": 9,
       "norm_label": "citylabel()"
     },
     {
@@ -5417,7 +5427,7 @@
       "label": "ClickedActivityPanel()",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/map/components/ClickedActivityPanel.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "_origin": "ast",
       "id": "components_clickedactivitypanel_clickedactivitypanel",
       "community": 94,
@@ -5430,7 +5440,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_filterdropdown",
-      "community": 210,
+      "community": 26,
       "norm_label": "filterdropdown.tsx"
     },
     {
@@ -5440,7 +5450,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "components_filterdropdown_filterdropdown",
-      "community": 210,
+      "community": 26,
       "norm_label": "filterdropdown()"
     },
     {
@@ -5470,7 +5480,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_mapexperience",
-      "community": 94,
+      "community": 9,
       "norm_label": "mapexperience.tsx"
     },
     {
@@ -5480,7 +5490,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "components_mapexperience_initial_center",
-      "community": 94,
+      "community": 9,
       "norm_label": "initial_center"
     },
     {
@@ -5490,7 +5500,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "components_mapexperience_mapexperience",
-      "community": 94,
+      "community": 2,
       "norm_label": "mapexperience()"
     },
     {
@@ -5540,7 +5550,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "components_searchsidebar_searchsidebar",
-      "community": 94,
+      "community": 9,
       "norm_label": "searchsidebar()"
     },
     {
@@ -5550,7 +5560,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_vibebar",
-      "community": 94,
+      "community": 9,
       "norm_label": "vibebar.tsx"
     },
     {
@@ -5560,7 +5570,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "components_vibebar_vibebar",
-      "community": 94,
+      "community": 9,
       "norm_label": "vibebar()"
     },
     {
@@ -5570,7 +5580,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_mapdata",
-      "community": 94,
+      "community": 9,
       "norm_label": "mapdata.ts"
     },
     {
@@ -5580,7 +5590,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "components_mapdata_vibes",
-      "community": 94,
+      "community": 9,
       "norm_label": "vibes"
     },
     {
@@ -5590,7 +5600,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "components_mapdata_city_of",
-      "community": 94,
+      "community": 9,
       "norm_label": "city_of"
     },
     {
@@ -5640,7 +5650,7 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "components_mapdata_sortkey",
-      "community": 94,
+      "community": 9,
       "norm_label": "sortkey"
     },
     {
@@ -5650,7 +5660,7 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "components_mapdata_sort_labels",
-      "community": 94,
+      "community": 9,
       "norm_label": "sort_labels"
     },
     {
@@ -5660,7 +5670,7 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "components_mapdata_activityfilters",
-      "community": 94,
+      "community": 9,
       "norm_label": "activityfilters"
     },
     {
@@ -5670,7 +5680,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "components_mapdata_default_filters",
-      "community": 94,
+      "community": 9,
       "norm_label": "default_filters"
     },
     {
@@ -5680,7 +5690,7 @@
       "source_location": "L75",
       "_origin": "ast",
       "id": "components_mapdata_distancefromcenter",
-      "community": 94,
+      "community": 9,
       "norm_label": "distancefromcenter()"
     },
     {
@@ -5690,7 +5700,7 @@
       "source_location": "L83",
       "_origin": "ast",
       "id": "components_mapdata_filterandsort",
-      "community": 94,
+      "community": 9,
       "norm_label": "filterandsort()"
     },
     {
@@ -5800,7 +5810,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_mytripsexperience",
-      "community": 80,
+      "community": 2,
       "norm_label": "mytripsexperience.tsx"
     },
     {
@@ -5810,7 +5820,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "components_mytripsexperience_activitiesof",
-      "community": 80,
+      "community": 2,
       "norm_label": "activitiesof()"
     },
     {
@@ -5820,7 +5830,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "components_mytripsexperience_stripmode",
-      "community": 80,
+      "community": 2,
       "norm_label": "stripmode"
     },
     {
@@ -5830,7 +5840,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "components_mytripsexperience_fitsslot",
-      "community": 80,
+      "community": 2,
       "norm_label": "fitsslot()"
     },
     {
@@ -5840,7 +5850,7 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "components_mytripsexperience_fitswindow",
-      "community": 80,
+      "community": 2,
       "norm_label": "fitswindow()"
     },
     {
@@ -5850,7 +5860,7 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "components_mytripsexperience_slotfor",
-      "community": 80,
+      "community": 2,
       "norm_label": "slotfor()"
     },
     {
@@ -5860,7 +5870,7 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "components_mytripsexperience_mytripsexperience",
-      "community": 80,
+      "community": 2,
       "norm_label": "mytripsexperience()"
     },
     {
@@ -5870,7 +5880,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "my_trips_page",
-      "community": 80,
+      "community": 2,
       "norm_label": "page.tsx"
     },
     {
@@ -5880,7 +5890,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "my_trips_page_metadata",
-      "community": 80,
+      "community": 2,
       "norm_label": "metadata"
     },
     {
@@ -5890,7 +5900,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "my_trips_page_mytripspage",
-      "community": 80,
+      "community": 2,
       "norm_label": "mytripspage()"
     },
     {
@@ -5960,7 +5970,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_calendarmodal",
-      "community": 203,
+      "community": 35,
       "norm_label": "calendarmodal.tsx"
     },
     {
@@ -5970,7 +5980,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "components_calendarmodal_presets",
-      "community": 203,
+      "community": 35,
       "norm_label": "presets"
     },
     {
@@ -5980,7 +5990,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "components_calendarmodal_calendarmodal",
-      "community": 203,
+      "community": 35,
       "norm_label": "calendarmodal()"
     },
     {
@@ -6170,97 +6180,97 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_starttripsearch",
-      "community": 145,
+      "community": 35,
       "norm_label": "starttripsearch.tsx"
     },
     {
       "label": "ModalKey",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/start/components/StartTripSearch.tsx",
-      "source_location": "L28",
+      "source_location": "L29",
       "_origin": "ast",
       "id": "components_starttripsearch_modalkey",
-      "community": 145,
+      "community": 35,
       "norm_label": "modalkey"
     },
     {
       "label": "LengthMode",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/start/components/StartTripSearch.tsx",
-      "source_location": "L33",
+      "source_location": "L34",
       "_origin": "ast",
       "id": "components_starttripsearch_lengthmode",
-      "community": 145,
+      "community": 35,
       "norm_label": "lengthmode"
     },
     {
       "label": "toISODate()",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/start/components/StartTripSearch.tsx",
-      "source_location": "L36",
+      "source_location": "L37",
       "_origin": "ast",
       "id": "components_starttripsearch_toisodate",
-      "community": 145,
+      "community": 35,
       "norm_label": "toisodate()"
     },
     {
       "label": "StartTripSearch()",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/start/components/StartTripSearch.tsx",
-      "source_location": "L39",
+      "source_location": "L40",
       "_origin": "ast",
       "id": "components_starttripsearch_starttripsearch",
-      "community": 225,
+      "community": 35,
       "norm_label": "starttripsearch()"
     },
     {
       "label": "Field()",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/start/components/StartTripSearch.tsx",
-      "source_location": "L382",
+      "source_location": "L397",
       "_origin": "ast",
       "id": "components_starttripsearch_field",
-      "community": 145,
+      "community": 35,
       "norm_label": "field()"
     },
     {
       "label": "TripLengthField()",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/start/components/StartTripSearch.tsx",
-      "source_location": "L449",
+      "source_location": "L464",
       "_origin": "ast",
       "id": "components_starttripsearch_triplengthfield",
-      "community": 145,
+      "community": 35,
       "norm_label": "triplengthfield()"
     },
     {
       "label": "DestField()",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/start/components/StartTripSearch.tsx",
-      "source_location": "L548",
+      "source_location": "L563",
       "_origin": "ast",
       "id": "components_starttripsearch_destfield",
-      "community": 145,
+      "community": 35,
       "norm_label": "destfield()"
     },
     {
       "label": "Dropdown()",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/start/components/StartTripSearch.tsx",
-      "source_location": "L651",
+      "source_location": "L666",
       "_origin": "ast",
       "id": "components_starttripsearch_dropdown",
-      "community": 145,
+      "community": 35,
       "norm_label": "dropdown()"
     },
     {
       "label": "TravelersIcon()",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/start/components/StartTripSearch.tsx",
-      "source_location": "L682",
+      "source_location": "L697",
       "_origin": "ast",
       "id": "components_starttripsearch_travelersicon",
-      "community": 145,
+      "community": 35,
       "norm_label": "travelersicon()"
     },
     {
@@ -6270,37 +6280,37 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_travelersmodal",
-      "community": 33,
+      "community": 35,
       "norm_label": "travelersmodal.tsx"
     },
     {
       "label": "CHILD_AGES",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/start/components/TravelersModal.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "_origin": "ast",
       "id": "components_travelersmodal_child_ages",
-      "community": 33,
+      "community": 35,
       "norm_label": "child_ages"
     },
     {
       "label": "Stepper()",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/start/components/TravelersModal.tsx",
-      "source_location": "L13",
+      "source_location": "L14",
       "_origin": "ast",
       "id": "components_travelersmodal_stepper",
-      "community": 33,
+      "community": 35,
       "norm_label": "stepper()"
     },
     {
       "label": "TravelersModal()",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/start/components/TravelersModal.tsx",
-      "source_location": "L49",
+      "source_location": "L50",
       "_origin": "ast",
       "id": "components_travelersmodal_travelersmodal",
-      "community": 33,
+      "community": 35,
       "norm_label": "travelersmodal()"
     },
     {
@@ -6317,7 +6327,7 @@
       "label": "Window",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/start/components/TripSearchHero.tsx",
-      "source_location": "L12",
+      "source_location": "L19",
       "_origin": "ast",
       "id": "components_tripsearchhero_window",
       "community": 57,
@@ -6327,7 +6337,7 @@
       "label": "TripSearchHero()",
       "file_type": "code",
       "source_file": "my-nextjs-app/app/start/components/TripSearchHero.tsx",
-      "source_location": "L17",
+      "source_location": "L24",
       "_origin": "ast",
       "id": "components_tripsearchhero_tripsearchhero",
       "community": 57,
@@ -6340,7 +6350,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_typewriter",
-      "community": 145,
+      "community": 35,
       "norm_label": "typewriter.tsx"
     },
     {
@@ -6350,7 +6360,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "components_typewriter_typewriter",
-      "community": 145,
+      "community": 35,
       "norm_label": "typewriter()"
     },
     {
@@ -6360,7 +6370,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_icons",
-      "community": 33,
+      "community": 35,
       "norm_label": "icons.tsx"
     },
     {
@@ -6370,7 +6380,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "components_icons_iconprops",
-      "community": 33,
+      "community": 35,
       "norm_label": "iconprops"
     },
     {
@@ -6380,7 +6390,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "components_icons_svg",
-      "community": 33,
+      "community": 35,
       "norm_label": "svg()"
     },
     {
@@ -6390,7 +6400,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "components_icons_mappinicon",
-      "community": 205,
+      "community": 35,
       "norm_label": "mappinicon()"
     },
     {
@@ -6400,7 +6410,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "components_icons_calendaricon",
-      "community": 33,
+      "community": 35,
       "norm_label": "calendaricon()"
     },
     {
@@ -6410,7 +6420,7 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "components_icons_usericon",
-      "community": 33,
+      "community": 35,
       "norm_label": "usericon()"
     },
     {
@@ -6420,7 +6430,7 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "components_icons_usersicon",
-      "community": 205,
+      "community": 35,
       "norm_label": "usersicon()"
     },
     {
@@ -6430,7 +6440,7 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "components_icons_searchicon",
-      "community": 210,
+      "community": 26,
       "norm_label": "searchicon()"
     },
     {
@@ -6440,7 +6450,7 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "components_icons_arrowrighticon",
-      "community": 33,
+      "community": 35,
       "norm_label": "arrowrighticon()"
     },
     {
@@ -6450,7 +6460,7 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "components_icons_chevronlefticon",
-      "community": 33,
+      "community": 35,
       "norm_label": "chevronlefticon()"
     },
     {
@@ -6460,7 +6470,7 @@
       "source_location": "L75",
       "_origin": "ast",
       "id": "components_icons_chevronrighticon",
-      "community": 33,
+      "community": 35,
       "norm_label": "chevronrighticon()"
     },
     {
@@ -6470,7 +6480,7 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "components_icons_plusicon",
-      "community": 33,
+      "community": 35,
       "norm_label": "plusicon()"
     },
     {
@@ -6480,7 +6490,7 @@
       "source_location": "L87",
       "_origin": "ast",
       "id": "components_icons_minusicon",
-      "community": 33,
+      "community": 35,
       "norm_label": "minusicon()"
     },
     {
@@ -6490,7 +6500,7 @@
       "source_location": "L93",
       "_origin": "ast",
       "id": "components_icons_xicon",
-      "community": 33,
+      "community": 35,
       "norm_label": "xicon()"
     },
     {
@@ -6520,7 +6530,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "data_dateutils",
-      "community": 203,
+      "community": 35,
       "norm_label": "dateutils.ts"
     },
     {
@@ -6530,7 +6540,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "data_dateutils_months",
-      "community": 203,
+      "community": 35,
       "norm_label": "months"
     },
     {
@@ -6540,7 +6550,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "data_dateutils_months_short",
-      "community": 203,
+      "community": 35,
       "norm_label": "months_short"
     },
     {
@@ -6550,7 +6560,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "data_dateutils_weekdays",
-      "community": 203,
+      "community": 35,
       "norm_label": "weekdays"
     },
     {
@@ -6560,7 +6570,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "data_dateutils_startoftoday",
-      "community": 203,
+      "community": 35,
       "norm_label": "startoftoday()"
     },
     {
@@ -6570,7 +6580,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "data_dateutils_issameday",
-      "community": 225,
+      "community": 35,
       "norm_label": "issameday()"
     },
     {
@@ -6580,7 +6590,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "data_dateutils_adddays",
-      "community": 203,
+      "community": 35,
       "norm_label": "adddays()"
     },
     {
@@ -6590,7 +6600,7 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "data_dateutils_addmonths",
-      "community": 203,
+      "community": 35,
       "norm_label": "addmonths()"
     },
     {
@@ -6600,7 +6610,7 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "data_dateutils_nextdow",
-      "community": 203,
+      "community": 35,
       "norm_label": "nextdow()"
     },
     {
@@ -6610,7 +6620,7 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "data_dateutils_monthlabel",
-      "community": 203,
+      "community": 35,
       "norm_label": "monthlabel()"
     },
     {
@@ -6620,7 +6630,7 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "data_dateutils_formatshort",
-      "community": 225,
+      "community": 35,
       "norm_label": "formatshort()"
     },
     {
@@ -6630,7 +6640,7 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "data_dateutils_monthgrid",
-      "community": 203,
+      "community": 35,
       "norm_label": "monthgrid()"
     },
     {
@@ -6680,7 +6690,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "data_palette",
-      "community": 205,
+      "community": 23,
       "norm_label": "palette.ts"
     },
     {
@@ -6690,7 +6700,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "data_palette_palette",
-      "community": 205,
+      "community": 23,
       "norm_label": "palette"
     },
     {
@@ -6700,7 +6710,7 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "data_palette_homestyles",
-      "community": 205,
+      "community": 23,
       "norm_label": "homestyles"
     },
     {
@@ -6710,7 +6720,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "data_types",
-      "community": 205,
+      "community": 35,
       "norm_label": "types.ts"
     },
     {
@@ -6720,7 +6730,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "data_types_coords",
-      "community": 205,
+      "community": 35,
       "norm_label": "coords"
     },
     {
@@ -6730,7 +6740,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "data_types_destinationselection",
-      "community": 205,
+      "community": 35,
       "norm_label": "destinationselection"
     },
     {
@@ -6740,7 +6750,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "data_types_daterange",
-      "community": 205,
+      "community": 35,
       "norm_label": "daterange"
     },
     {
@@ -6750,7 +6760,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "data_types_travelers",
-      "community": 205,
+      "community": 35,
       "norm_label": "travelers"
     },
     {
@@ -28600,7 +28610,7 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "components_mapdata_all_cities",
-      "community": 94,
+      "community": 9,
       "norm_label": "all_cities"
     }
   ],
@@ -28783,9 +28793,9 @@
       "source_file": "my-nextjs-app/app/activities/components/ActivitiesExperience.tsx",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_activitiesexperience",
-      "target": "app_config",
-      "confidence_score": 1.0
+      "target": "app_config"
     },
     {
       "relation": "imports_from",
@@ -29243,9 +29253,9 @@
       "source_file": "my-nextjs-app/app/activities/components/ActivityCard.tsx",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_activitycard",
-      "target": "app_config",
-      "confidence_score": 1.0
+      "target": "app_config"
     },
     {
       "relation": "contains",
@@ -29484,9 +29494,9 @@
       "source_file": "my-nextjs-app/app/activities/components/FilterSidebar.tsx",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_filtersidebar",
-      "target": "app_config",
-      "confidence_score": 1.0
+      "target": "app_config"
     },
     {
       "relation": "imports_from",
@@ -29624,6 +29634,50 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "my-nextjs-app/app/activities/components/MakeTripModal.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_maketripmodal",
+      "target": "activitycombinations_startpointsearch"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "my-nextjs-app/app/activities/components/MakeTripModal.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_maketripmodal",
+      "target": "activitycombinations_startpointsearch_startpoint"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "my-nextjs-app/app/activities/components/MakeTripModal.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_maketripmodal",
+      "target": "activitycombinations_startpointsearch_startpointsearch"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "my-nextjs-app/app/activities/components/MakeTripModal.tsx",
+      "source_location": "L27",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_maketripmodal",
+      "target": "app_config"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "my-nextjs-app/app/activities/components/MakeTripModal.tsx",
       "source_location": "L14",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -29710,6 +29764,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "my-nextjs-app/app/activities/components/MakeTripModal.tsx",
+      "source_location": "L38",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_maketripmodal",
+      "target": "components_maketripmodal_lengthmode"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "my-nextjs-app/app/activities/components/MakeTripModal.tsx",
       "source_location": "L65",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -29735,6 +29799,28 @@
       "confidence_score": 1.0,
       "source": "components_maketripmodal",
       "target": "components_maketripmodal_toisodate"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "my-nextjs-app/app/activities/components/MakeTripModal.tsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_maketripmodal",
+      "target": "components_mappickermodal"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "my-nextjs-app/app/activities/components/MakeTripModal.tsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_maketripmodal",
+      "target": "components_mappickermodal_mappickermodal"
     },
     {
       "relation": "imports_from",
@@ -29889,6 +29975,28 @@
       "confidence_score": 1.0,
       "source": "components_maketripmodal",
       "target": "data_types_travelers"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "my-nextjs-app/app/activities/components/MakeTripModal.tsx",
+      "source_location": "L26",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_maketripmodal",
+      "target": "ui_buttonstyles"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "my-nextjs-app/app/activities/components/MakeTripModal.tsx",
+      "source_location": "L26",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_maketripmodal",
+      "target": "ui_buttonstyles_buttonstyles"
     },
     {
       "relation": "calls",
@@ -30230,6 +30338,17 @@
       "target": "components_activityimages"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "my-nextjs-app/app/map/components/ClickedActivityPanel.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_clickedactivitypanel",
+      "target": "components_activityimages"
+    },
+    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -30271,6 +30390,28 @@
       "source_location": "L44",
       "weight": 1.0,
       "source": "components_activityresultcard_activityresultcard",
+      "target": "components_activityimages_activityimages"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "my-nextjs-app/app/map/components/ClickedActivityPanel.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_clickedactivitypanel",
+      "target": "components_activityimages_activityimages"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "my-nextjs-app/app/map/components/ClickedActivityPanel.tsx",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "components_clickedactivitypanel_clickedactivitypanel",
       "target": "components_activityimages_activityimages"
     },
     {
@@ -31644,9 +31785,9 @@
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/ComboResults.tsx",
       "source_location": "L85",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "activitycombinations_comboresults",
-      "target": "activitycombinations_comboresults_rowactions",
-      "confidence_score": 1.0
+      "target": "activitycombinations_comboresults_rowactions"
     },
     {
       "relation": "imports_from",
@@ -31710,9 +31851,9 @@
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/ComboResults.tsx",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "activitycombinations_comboresults",
-      "target": "core_activities_data_days_full",
-      "confidence_score": 1.0
+      "target": "core_activities_data_days_full"
     },
     {
       "relation": "imports",
@@ -31743,9 +31884,9 @@
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/ComboResults.tsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "activitycombinations_comboresults",
-      "target": "core_activities_functions_googlemapsdirectionsurl",
-      "confidence_score": 1.0
+      "target": "core_activities_functions_googlemapsdirectionsurl"
     },
     {
       "relation": "imports",
@@ -32077,9 +32218,9 @@
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/DayMap.tsx",
       "source_location": "L51",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "activitycombinations_daymap",
-      "target": "activitycombinations_daymap_diricon",
-      "confidence_score": 1.0
+      "target": "activitycombinations_daymap_diricon"
     },
     {
       "relation": "contains",
@@ -32139,9 +32280,9 @@
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/DayMap.tsx",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "activitycombinations_daymap",
-      "target": "core_activities_functions_googlemapsdirectionsurl",
-      "confidence_score": 1.0
+      "target": "core_activities_functions_googlemapsdirectionsurl"
     },
     {
       "relation": "imports_from",
@@ -32552,6 +32693,17 @@
       "confidence_score": 1.0,
       "source": "activitycombinations_perdayfilters",
       "target": "activitycombinations_requiredactivities_requiredactivities"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "my-nextjs-app/app/components/ActivityCombinations/PerDayFilters.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "activitycombinations_perdayfilters",
+      "target": "app_config"
     },
     {
       "relation": "imports",
@@ -33120,9 +33272,9 @@
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/TripCard.tsx",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "activitycombinations_tripcard",
-      "target": "app_config",
-      "confidence_score": 1.0
+      "target": "app_config"
     },
     {
       "relation": "imports",
@@ -33142,9 +33294,9 @@
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/TripCard.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "activitycombinations_tripcard",
-      "target": "core_activities_data_days_full",
-      "confidence_score": 1.0
+      "target": "core_activities_data_days_full"
     },
     {
       "relation": "imports",
@@ -34117,9 +34269,9 @@
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/core/__tests__/trip.test.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "my_nextjs_app_app_components_activitycombinations_core_tests_trip_test_ts_tests_trip_test",
-      "target": "activities_rome_data_rome_activities",
-      "confidence_score": 1.0
+      "target": "activities_rome_data_rome_activities"
     },
     {
       "relation": "imports",
@@ -34507,9 +34659,9 @@
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/core/activities.data.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "my_nextjs_app_app_components_activitycombinations_core_activities_data_ts_core_activities_data",
-      "target": "activities_rome_data",
-      "confidence_score": 1.0
+      "target": "activities_rome_data"
     },
     {
       "relation": "imports",
@@ -34518,9 +34670,9 @@
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/core/activities.data.ts",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "my_nextjs_app_app_components_activitycombinations_core_activities_data_ts_core_activities_data",
-      "target": "activities_rome_data_closed",
-      "confidence_score": 1.0
+      "target": "activities_rome_data_closed"
     },
     {
       "relation": "imports",
@@ -34529,9 +34681,9 @@
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/core/activities.data.ts",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "my_nextjs_app_app_components_activitycombinations_core_activities_data_ts_core_activities_data",
-      "target": "activities_rome_data_rome_activities",
-      "confidence_score": 1.0
+      "target": "activities_rome_data_rome_activities"
     },
     {
       "relation": "contains",
@@ -34549,9 +34701,9 @@
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/core/activities.data.ts",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "my_nextjs_app_app_components_activitycombinations_core_activities_data_ts_core_activities_data",
-      "target": "core_activities_data_days_full",
-      "confidence_score": 1.0
+      "target": "core_activities_data_days_full"
     },
     {
       "relation": "contains",
@@ -34647,9 +34799,9 @@
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/core/activities.functions.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "my_nextjs_app_app_components_activitycombinations_core_activities_functions_ts_core_activities_functions",
-      "target": "activities_rome_data_closed",
-      "confidence_score": 1.0
+      "target": "activities_rome_data_closed"
     },
     {
       "relation": "imports",
@@ -34658,9 +34810,9 @@
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/core/activities.functions.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "my_nextjs_app_app_components_activitycombinations_core_activities_functions_ts_core_activities_functions",
-      "target": "activities_rome_data_rome_activities",
-      "confidence_score": 1.0
+      "target": "activities_rome_data_rome_activities"
     },
     {
       "relation": "imports",
@@ -34730,9 +34882,9 @@
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/core/activities.functions.ts",
       "source_location": "L193",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "my_nextjs_app_app_components_activitycombinations_core_activities_functions_ts_core_activities_functions",
-      "target": "core_activities_functions_googlemapsdirectionsurl",
-      "confidence_score": 1.0
+      "target": "core_activities_functions_googlemapsdirectionsurl"
     },
     {
       "relation": "contains",
@@ -35593,9 +35745,9 @@
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/core/cities.data.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "my_nextjs_app_app_components_activitycombinations_core_cities_data_ts_core_cities_data",
-      "target": "activities_rome_data",
-      "confidence_score": 1.0
+      "target": "activities_rome_data"
     },
     {
       "relation": "imports",
@@ -35604,9 +35756,9 @@
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/core/cities.data.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "my_nextjs_app_app_components_activitycombinations_core_cities_data_ts_core_cities_data",
-      "target": "activities_rome_data_rome_activities",
-      "confidence_score": 1.0
+      "target": "activities_rome_data_rome_activities"
     },
     {
       "relation": "contains",
@@ -37156,9 +37308,9 @@
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/index.tsx",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "activitycombinations_index",
-      "target": "core_filters_functions_filter",
-      "confidence_score": 1.0
+      "target": "core_filters_functions_filter"
     },
     {
       "relation": "imports",
@@ -38367,9 +38519,9 @@
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/core/trip.planner.test.ts",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "core_trip_planner_test",
-      "target": "activities_rome_data_rome_activities",
-      "confidence_score": 1.0
+      "target": "activities_rome_data_rome_activities"
     },
     {
       "relation": "imports",
@@ -38941,9 +39093,9 @@
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/index.tsx",
       "source_location": "L119",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "activitycombinations_index",
-      "target": "activitycombinations_index_selectionfromparams",
-      "confidence_score": 1.0
+      "target": "activitycombinations_index_selectionfromparams"
     },
     {
       "relation": "contains",
@@ -38962,9 +39114,9 @@
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/index.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "activitycombinations_index",
-      "target": "app_config",
-      "confidence_score": 1.0
+      "target": "app_config"
     },
     {
       "relation": "imports_from",
@@ -38998,6 +39150,28 @@
       "confidence_score": 1.0,
       "source": "activitycombinations_index",
       "target": "core_cities_data_default_city"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "my-nextjs-app/app/components/ActivityCombinations/index.tsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "activitycombinations_index",
+      "target": "data_palette"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "my-nextjs-app/app/components/ActivityCombinations/index.tsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "activitycombinations_index",
+      "target": "data_palette_homestyles"
     },
     {
       "relation": "imports_from",
@@ -39081,9 +39255,9 @@
       "source_file": "my-nextjs-app/app/components/ActivityCombinations/tripPrint.ts",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "activitycombinations_tripprint",
-      "target": "app_config",
-      "confidence_score": 1.0
+      "target": "app_config"
     },
     {
       "relation": "calls",
@@ -39153,9 +39327,9 @@
       "source_file": "my-nextjs-app/app/components/ActivityDetail/index.tsx",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "activitydetail_index",
-      "target": "app_config",
-      "confidence_score": 1.0
+      "target": "app_config"
     },
     {
       "relation": "imports_from",
@@ -39746,9 +39920,9 @@
       "source_file": "my-nextjs-app/app/map/components/ActivityResultCard.tsx",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_activityresultcard",
-      "target": "app_config",
-      "confidence_score": 1.0
+      "target": "app_config"
     },
     {
       "relation": "imports_from",
@@ -39757,9 +39931,9 @@
       "source_file": "my-nextjs-app/app/map/components/ClickedActivityPanel.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_clickedactivitypanel",
-      "target": "app_config",
-      "confidence_score": 1.0
+      "target": "app_config"
     },
     {
       "relation": "imports_from",
@@ -39768,9 +39942,9 @@
       "source_file": "my-nextjs-app/app/map/components/HoveredActivityCard.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_hoveredactivitycard",
-      "target": "app_config",
-      "confidence_score": 1.0
+      "target": "app_config"
     },
     {
       "relation": "imports_from",
@@ -39779,9 +39953,31 @@
       "source_file": "my-nextjs-app/app/map/components/SearchSidebar.tsx",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_searchsidebar",
-      "target": "app_config",
-      "confidence_score": 1.0
+      "target": "app_config"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "my-nextjs-app/app/start/components/StartTripSearch.tsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_starttripsearch",
+      "target": "app_config"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "my-nextjs-app/app/start/components/TravelersModal.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_travelersmodal",
+      "target": "app_config"
     },
     {
       "relation": "imports_from",
@@ -39969,9 +40165,9 @@
       "source_file": "my-nextjs-app/app/credits/page.tsx",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "credits_page",
-      "target": "credits_page_credit",
-      "confidence_score": 1.0
+      "target": "credits_page_credit"
     },
     {
       "relation": "contains",
@@ -41564,6 +41760,17 @@
       "target": "components_tripsearchhero"
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "my-nextjs-app/app/page.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "components_tripsearchhero_tripsearchhero"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "my-nextjs-app/app/plan/page.tsx",
@@ -42578,6 +42785,17 @@
       "target": "components_tripsearchhero"
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "my-nextjs-app/app/start/page.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "start_page",
+      "target": "components_tripsearchhero_tripsearchhero"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "my-nextjs-app/app/start/components/Typewriter.tsx",
@@ -43178,9 +43396,9 @@
       "source_file": "my-nextjs-app/data/activities/rome.data.ts",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "activities_rome_data",
-      "target": "activities_helpers_window",
-      "confidence_score": 1.0
+      "target": "activities_helpers_window"
     },
     {
       "relation": "imports",
@@ -43189,9 +43407,9 @@
       "source_file": "my-nextjs-app/data/activities/rome.data.ts",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "activities_rome_data",
-      "target": "activities_helpers_all_day",
-      "confidence_score": 1.0
+      "target": "activities_helpers_all_day"
     },
     {
       "relation": "imports",
@@ -43332,9 +43550,9 @@
       "source_file": "my-nextjs-app/data/activities/rome.data.ts",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "activities_rome_data",
-      "target": "activities_helpers_catalogueactivity",
-      "confidence_score": 1.0
+      "target": "activities_helpers_catalogueactivity"
     },
     {
       "relation": "imports",
@@ -43759,9 +43977,9 @@
       "source_file": "my-nextjs-app/data/activities/rome.data.ts",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "activities_rome_data",
-      "target": "activities_rome_data_ages",
-      "confidence_score": 1.0
+      "target": "activities_rome_data_ages"
     },
     {
       "relation": "contains",
@@ -43769,9 +43987,9 @@
       "source_file": "my-nextjs-app/data/activities/rome.data.ts",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "activities_rome_data",
-      "target": "activities_rome_data_closed",
-      "confidence_score": 1.0
+      "target": "activities_rome_data_closed"
     },
     {
       "relation": "contains",
@@ -43779,9 +43997,9 @@
       "source_file": "my-nextjs-app/data/activities/rome.data.ts",
       "source_location": "L42",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "activities_rome_data",
-      "target": "activities_rome_data_free",
-      "confidence_score": 1.0
+      "target": "activities_rome_data_free"
     },
     {
       "relation": "contains",
@@ -43789,9 +44007,9 @@
       "source_file": "my-nextjs-app/data/activities/rome.data.ts",
       "source_location": "L44",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "activities_rome_data",
-      "target": "activities_rome_data_rome_activities",
-      "confidence_score": 1.0
+      "target": "activities_rome_data_rome_activities"
     },
     {
       "relation": "contains",
@@ -43799,9 +44017,9 @@
       "source_file": "my-nextjs-app/data/activities/rome.data.ts",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "activities_rome_data",
-      "target": "activities_rome_data_weekdaysthensun",
-      "confidence_score": 1.0
+      "target": "activities_rome_data_weekdaysthensun"
     },
     {
       "relation": "calls",
@@ -43810,9 +44028,9 @@
       "source_file": "my-nextjs-app/data/activities/rome.data.ts",
       "source_location": "L42",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "activities_rome_data_free",
-      "target": "activities_rome_data_ages",
-      "confidence_score": 1.0
+      "target": "activities_rome_data_ages"
     },
     {
       "relation": "contains",
@@ -47003,9 +47221,9 @@
       "source_file": "my-nextjs-app/dist-test/data/activities.data.js",
       "source_location": "L74",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "my_nextjs_app_dist_test_data_activities_data_js_data_activities_data",
-      "target": "data_activities_data_ages",
-      "confidence_score": 1.0
+      "target": "data_activities_data_ages"
     },
     {
       "relation": "contains",
@@ -47013,9 +47231,9 @@
       "source_file": "my-nextjs-app/dist-test/data/activities.data.js",
       "source_location": "L90",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "my_nextjs_app_dist_test_data_activities_data_js_data_activities_data",
-      "target": "data_activities_data_cafe",
-      "confidence_score": 1.0
+      "target": "data_activities_data_cafe"
     },
     {
       "relation": "contains",
@@ -47023,9 +47241,9 @@
       "source_file": "my-nextjs-app/dist-test/data/activities.data.js",
       "source_location": "L89",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "my_nextjs_app_dist_test_data_activities_data_js_data_activities_data",
-      "target": "data_activities_data_food",
-      "confidence_score": 1.0
+      "target": "data_activities_data_food"
     },
     {
       "relation": "contains",
@@ -47033,9 +47251,9 @@
       "source_file": "my-nextjs-app/dist-test/data/activities.data.js",
       "source_location": "L87",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "my_nextjs_app_dist_test_data_activities_data_js_data_activities_data",
-      "target": "data_activities_data_free",
-      "confidence_score": 1.0
+      "target": "data_activities_data_free"
     },
     {
       "relation": "contains",
@@ -47043,9 +47261,9 @@
       "source_file": "my-nextjs-app/dist-test/data/activities.data.js",
       "source_location": "L92",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "my_nextjs_app_dist_test_data_activities_data_js_data_activities_data",
-      "target": "data_activities_data_site",
-      "confidence_score": 1.0
+      "target": "data_activities_data_site"
     },
     {
       "relation": "contains",
@@ -47135,9 +47353,9 @@
       "source_file": "my-nextjs-app/dist-test/data/activities.data.js",
       "source_location": "L87",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "data_activities_data_free",
-      "target": "data_activities_data_ages",
-      "confidence_score": 1.0
+      "target": "data_activities_data_ages"
     },
     {
       "relation": "contains",
@@ -47625,9 +47843,9 @@
       "source_file": "my-nextjs-app/package.json",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "my_nextjs_app_package_scripts",
-      "target": "my_nextjs_app_package_scripts_sync_photos",
-      "confidence_score": 1.0
+      "target": "my_nextjs_app_package_scripts_sync_photos"
     },
     {
       "relation": "contains",
@@ -47925,9 +48143,9 @@
       "source_file": "my-nextjs-app/scripts/curated/rome.mjs",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "curated_rome",
-      "target": "curated_rome_activities",
-      "confidence_score": 1.0
+      "target": "curated_rome_activities"
     },
     {
       "relation": "contains",
@@ -49076,9 +49294,9 @@
       "source_file": "my-nextjs-app/scripts/list-activities.mjs",
       "source_location": "L72",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_list_activities",
-      "target": "scripts_list_activities_activities",
-      "confidence_score": 1.0
+      "target": "scripts_list_activities_activities"
     },
     {
       "relation": "contains",
@@ -49086,9 +49304,9 @@
       "source_file": "my-nextjs-app/scripts/list-activities.mjs",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_list_activities",
-      "target": "scripts_list_activities_args",
-      "confidence_score": 1.0
+      "target": "scripts_list_activities_args"
     },
     {
       "relation": "contains",
@@ -49096,9 +49314,9 @@
       "source_file": "my-nextjs-app/scripts/list-activities.mjs",
       "source_location": "L38",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_list_activities",
-      "target": "scripts_list_activities_entriesfrom",
-      "confidence_score": 1.0
+      "target": "scripts_list_activities_entriesfrom"
     },
     {
       "relation": "contains",
@@ -49106,9 +49324,9 @@
       "source_file": "my-nextjs-app/scripts/list-activities.mjs",
       "source_location": "L49",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_list_activities",
-      "target": "scripts_list_activities_loadactivities",
-      "confidence_score": 1.0
+      "target": "scripts_list_activities_loadactivities"
     },
     {
       "relation": "contains",
@@ -49116,9 +49334,9 @@
       "source_file": "my-nextjs-app/scripts/list-activities.mjs",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_list_activities",
-      "target": "scripts_list_activities_root",
-      "confidence_score": 1.0
+      "target": "scripts_list_activities_root"
     },
     {
       "relation": "contains",
@@ -49126,9 +49344,9 @@
       "source_file": "my-nextjs-app/scripts/list-activities.mjs",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_list_activities",
-      "target": "scripts_list_activities_slugify",
-      "confidence_score": 1.0
+      "target": "scripts_list_activities_slugify"
     },
     {
       "relation": "calls",
@@ -49137,9 +49355,9 @@
       "source_file": "my-nextjs-app/scripts/list-activities.mjs",
       "source_location": "L55",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_list_activities_loadactivities",
-      "target": "scripts_list_activities_entriesfrom",
-      "confidence_score": 1.0
+      "target": "scripts_list_activities_entriesfrom"
     },
     {
       "relation": "contains",
@@ -49147,9 +49365,9 @@
       "source_file": "my-nextjs-app/scripts/photo-sync.config.mjs",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_photo_sync_config",
-      "target": "scripts_photo_sync_config_here",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_config_here"
     },
     {
       "relation": "contains",
@@ -49157,9 +49375,9 @@
       "source_file": "my-nextjs-app/scripts/photo-sync.config.mjs",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_photo_sync_config",
-      "target": "scripts_photo_sync_config_ties",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_config_ties"
     },
     {
       "relation": "imports_from",
@@ -49168,9 +49386,9 @@
       "source_file": "my-nextjs-app/scripts/sync-photo-images.mjs",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_sync_photo_images",
-      "target": "scripts_photo_sync_config",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_config"
     },
     {
       "relation": "imports",
@@ -49179,9 +49397,9 @@
       "source_file": "my-nextjs-app/scripts/sync-photo-images.mjs",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_sync_photo_images",
-      "target": "scripts_photo_sync_config_ties",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_config_ties"
     },
     {
       "relation": "contains",
@@ -49189,9 +49407,9 @@
       "source_file": "my-nextjs-app/scripts/photo-sync.lib.mjs",
       "source_location": "L57",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_photo_sync_lib",
-      "target": "scripts_photo_sync_lib_emitgeneratedtext",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_lib_emitgeneratedtext"
     },
     {
       "relation": "contains",
@@ -49199,9 +49417,9 @@
       "source_file": "my-nextjs-app/scripts/photo-sync.lib.mjs",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_photo_sync_lib",
-      "target": "scripts_photo_sync_lib_folderfrompath",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_lib_folderfrompath"
     },
     {
       "relation": "contains",
@@ -49209,9 +49427,9 @@
       "source_file": "my-nextjs-app/scripts/photo-sync.lib.mjs",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_photo_sync_lib",
-      "target": "scripts_photo_sync_lib_normalizename",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_lib_normalizename"
     },
     {
       "relation": "contains",
@@ -49219,9 +49437,9 @@
       "source_file": "my-nextjs-app/scripts/photo-sync.lib.mjs",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_photo_sync_lib",
-      "target": "scripts_photo_sync_lib_parsegeneratedmap",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_lib_parsegeneratedmap"
     },
     {
       "relation": "contains",
@@ -49229,9 +49447,9 @@
       "source_file": "my-nextjs-app/scripts/photo-sync.lib.mjs",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_photo_sync_lib",
-      "target": "scripts_photo_sync_lib_picksourceimage",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_lib_picksourceimage"
     },
     {
       "relation": "contains",
@@ -49239,9 +49457,9 @@
       "source_file": "my-nextjs-app/scripts/photo-sync.lib.mjs",
       "source_location": "L39",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_photo_sync_lib",
-      "target": "scripts_photo_sync_lib_resolvetie",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_lib_resolvetie"
     },
     {
       "relation": "imports_from",
@@ -49250,9 +49468,9 @@
       "source_file": "my-nextjs-app/scripts/photo-sync.lib.test.mjs",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_photo_sync_lib_test",
-      "target": "scripts_photo_sync_lib",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_lib"
     },
     {
       "relation": "imports_from",
@@ -49261,9 +49479,9 @@
       "source_file": "my-nextjs-app/scripts/sync-photo-images.mjs",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_sync_photo_images",
-      "target": "scripts_photo_sync_lib",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_lib"
     },
     {
       "relation": "calls",
@@ -49272,9 +49490,9 @@
       "source_file": "my-nextjs-app/scripts/photo-sync.lib.mjs",
       "source_location": "L40",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_photo_sync_lib_resolvetie",
-      "target": "scripts_photo_sync_lib_normalizename",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_lib_normalizename"
     },
     {
       "relation": "imports",
@@ -49283,9 +49501,9 @@
       "source_file": "my-nextjs-app/scripts/photo-sync.lib.test.mjs",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_photo_sync_lib_test",
-      "target": "scripts_photo_sync_lib_normalizename",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_lib_normalizename"
     },
     {
       "relation": "imports",
@@ -49294,9 +49512,9 @@
       "source_file": "my-nextjs-app/scripts/photo-sync.lib.test.mjs",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_photo_sync_lib_test",
-      "target": "scripts_photo_sync_lib_parsegeneratedmap",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_lib_parsegeneratedmap"
     },
     {
       "relation": "imports",
@@ -49305,9 +49523,9 @@
       "source_file": "my-nextjs-app/scripts/sync-photo-images.mjs",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_sync_photo_images",
-      "target": "scripts_photo_sync_lib_parsegeneratedmap",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_lib_parsegeneratedmap"
     },
     {
       "relation": "calls",
@@ -49316,9 +49534,9 @@
       "source_file": "my-nextjs-app/scripts/sync-photo-images.mjs",
       "source_location": "L50",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_sync_photo_images_main",
-      "target": "scripts_photo_sync_lib_parsegeneratedmap",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_lib_parsegeneratedmap"
     },
     {
       "relation": "calls",
@@ -49327,9 +49545,9 @@
       "source_file": "my-nextjs-app/scripts/photo-sync.lib.mjs",
       "source_location": "L43",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_photo_sync_lib_resolvetie",
-      "target": "scripts_photo_sync_lib_folderfrompath",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_lib_folderfrompath"
     },
     {
       "relation": "imports",
@@ -49338,9 +49556,9 @@
       "source_file": "my-nextjs-app/scripts/photo-sync.lib.test.mjs",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_photo_sync_lib_test",
-      "target": "scripts_photo_sync_lib_folderfrompath",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_lib_folderfrompath"
     },
     {
       "relation": "imports",
@@ -49349,9 +49567,9 @@
       "source_file": "my-nextjs-app/scripts/photo-sync.lib.test.mjs",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_photo_sync_lib_test",
-      "target": "scripts_photo_sync_lib_picksourceimage",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_lib_picksourceimage"
     },
     {
       "relation": "imports",
@@ -49360,9 +49578,9 @@
       "source_file": "my-nextjs-app/scripts/sync-photo-images.mjs",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_sync_photo_images",
-      "target": "scripts_photo_sync_lib_picksourceimage",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_lib_picksourceimage"
     },
     {
       "relation": "calls",
@@ -49371,9 +49589,9 @@
       "source_file": "my-nextjs-app/scripts/sync-photo-images.mjs",
       "source_location": "L65",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_sync_photo_images_main",
-      "target": "scripts_photo_sync_lib_picksourceimage",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_lib_picksourceimage"
     },
     {
       "relation": "imports",
@@ -49382,9 +49600,9 @@
       "source_file": "my-nextjs-app/scripts/photo-sync.lib.test.mjs",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_photo_sync_lib_test",
-      "target": "scripts_photo_sync_lib_resolvetie",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_lib_resolvetie"
     },
     {
       "relation": "imports",
@@ -49393,9 +49611,9 @@
       "source_file": "my-nextjs-app/scripts/sync-photo-images.mjs",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_sync_photo_images",
-      "target": "scripts_photo_sync_lib_resolvetie",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_lib_resolvetie"
     },
     {
       "relation": "calls",
@@ -49404,9 +49622,9 @@
       "source_file": "my-nextjs-app/scripts/sync-photo-images.mjs",
       "source_location": "L67",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_sync_photo_images_main",
-      "target": "scripts_photo_sync_lib_resolvetie",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_lib_resolvetie"
     },
     {
       "relation": "imports",
@@ -49415,9 +49633,9 @@
       "source_file": "my-nextjs-app/scripts/photo-sync.lib.test.mjs",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_photo_sync_lib_test",
-      "target": "scripts_photo_sync_lib_emitgeneratedtext",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_lib_emitgeneratedtext"
     },
     {
       "relation": "imports",
@@ -49426,9 +49644,9 @@
       "source_file": "my-nextjs-app/scripts/sync-photo-images.mjs",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_sync_photo_images",
-      "target": "scripts_photo_sync_lib_emitgeneratedtext",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_lib_emitgeneratedtext"
     },
     {
       "relation": "calls",
@@ -49437,9 +49655,9 @@
       "source_file": "my-nextjs-app/scripts/sync-photo-images.mjs",
       "source_location": "L91",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_sync_photo_images_main",
-      "target": "scripts_photo_sync_lib_emitgeneratedtext",
-      "confidence_score": 1.0
+      "target": "scripts_photo_sync_lib_emitgeneratedtext"
     },
     {
       "relation": "contains",
@@ -49447,9 +49665,9 @@
       "source_file": "my-nextjs-app/scripts/sync-photo-images.mjs",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_sync_photo_images",
-      "target": "scripts_sync_photo_images_dest",
-      "confidence_score": 1.0
+      "target": "scripts_sync_photo_images_dest"
     },
     {
       "relation": "contains",
@@ -49457,9 +49675,9 @@
       "source_file": "my-nextjs-app/scripts/sync-photo-images.mjs",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_sync_photo_images",
-      "target": "scripts_sync_photo_images_gen_ts",
-      "confidence_score": 1.0
+      "target": "scripts_sync_photo_images_gen_ts"
     },
     {
       "relation": "contains",
@@ -49467,9 +49685,9 @@
       "source_file": "my-nextjs-app/scripts/sync-photo-images.mjs",
       "source_location": "L41",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_sync_photo_images",
-      "target": "scripts_sync_photo_images_loadcatalogue",
-      "confidence_score": 1.0
+      "target": "scripts_sync_photo_images_loadcatalogue"
     },
     {
       "relation": "contains",
@@ -49477,9 +49695,9 @@
       "source_file": "my-nextjs-app/scripts/sync-photo-images.mjs",
       "source_location": "L47",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_sync_photo_images",
-      "target": "scripts_sync_photo_images_main",
-      "confidence_score": 1.0
+      "target": "scripts_sync_photo_images_main"
     },
     {
       "relation": "contains",
@@ -49487,9 +49705,9 @@
       "source_file": "my-nextjs-app/scripts/sync-photo-images.mjs",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_sync_photo_images",
-      "target": "scripts_sync_photo_images_manifest",
-      "confidence_score": 1.0
+      "target": "scripts_sync_photo_images_manifest"
     },
     {
       "relation": "contains",
@@ -49497,9 +49715,9 @@
       "source_file": "my-nextjs-app/scripts/sync-photo-images.mjs",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_sync_photo_images",
-      "target": "scripts_sync_photo_images_parseargs",
-      "confidence_score": 1.0
+      "target": "scripts_sync_photo_images_parseargs"
     },
     {
       "relation": "contains",
@@ -49507,9 +49725,9 @@
       "source_file": "my-nextjs-app/scripts/sync-photo-images.mjs",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_sync_photo_images",
-      "target": "scripts_sync_photo_images_public",
-      "confidence_score": 1.0
+      "target": "scripts_sync_photo_images_public"
     },
     {
       "relation": "contains",
@@ -49517,9 +49735,9 @@
       "source_file": "my-nextjs-app/scripts/sync-photo-images.mjs",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_sync_photo_images",
-      "target": "scripts_sync_photo_images_root",
-      "confidence_score": 1.0
+      "target": "scripts_sync_photo_images_root"
     },
     {
       "relation": "calls",
@@ -49528,9 +49746,9 @@
       "source_file": "my-nextjs-app/scripts/sync-photo-images.mjs",
       "source_location": "L48",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_sync_photo_images_main",
-      "target": "scripts_sync_photo_images_parseargs",
-      "confidence_score": 1.0
+      "target": "scripts_sync_photo_images_parseargs"
     },
     {
       "relation": "calls",
@@ -49539,9 +49757,9 @@
       "source_file": "my-nextjs-app/scripts/sync-photo-images.mjs",
       "source_location": "L49",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_sync_photo_images_main",
-      "target": "scripts_sync_photo_images_loadcatalogue",
-      "confidence_score": 1.0
+      "target": "scripts_sync_photo_images_loadcatalogue"
     },
     {
       "relation": "contains",
@@ -61791,9 +62009,9 @@
       "source_file": ".claude/skills/city-activity-images/SKILL.md",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "city_activity_images_skill",
-      "target": "city_activity_images_skill_city_activity_images",
-      "confidence_score": 1.0
+      "target": "city_activity_images_skill_city_activity_images"
     },
     {
       "relation": "contains",
@@ -61801,9 +62019,9 @@
       "source_file": ".claude/skills/city-activity-images/SKILL.md",
       "source_location": "L126",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "city_activity_images_skill_city_activity_images",
-      "target": "city_activity_images_skill_legal_guardrails_do_not_compromise_these",
-      "confidence_score": 1.0
+      "target": "city_activity_images_skill_legal_guardrails_do_not_compromise_these"
     },
     {
       "relation": "contains",
@@ -61811,9 +62029,9 @@
       "source_file": ".claude/skills/city-activity-images/SKILL.md",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "city_activity_images_skill_city_activity_images",
-      "target": "city_activity_images_skill_the_two_modes",
-      "confidence_score": 1.0
+      "target": "city_activity_images_skill_the_two_modes"
     },
     {
       "relation": "contains",
@@ -61821,9 +62039,9 @@
       "source_file": ".claude/skills/city-activity-images/SKILL.md",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "city_activity_images_skill_city_activity_images",
-      "target": "city_activity_images_skill_workflow",
-      "confidence_score": 1.0
+      "target": "city_activity_images_skill_workflow"
     },
     {
       "relation": "contains",
@@ -61831,9 +62049,9 @@
       "source_file": ".claude/skills/city-activity-images/SKILL.md",
       "source_location": "L41",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "city_activity_images_skill_workflow",
-      "target": "city_activity_images_skill_1_resolve_the_city_id_and_the_target_activities",
-      "confidence_score": 1.0
+      "target": "city_activity_images_skill_1_resolve_the_city_id_and_the_target_activities"
     },
     {
       "relation": "contains",
@@ -61841,9 +62059,9 @@
       "source_file": ".claude/skills/city-activity-images/SKILL.md",
       "source_location": "L58",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "city_activity_images_skill_workflow",
-      "target": "city_activity_images_skill_2_pick_one_accurate_legal_image_per_target_activity",
-      "confidence_score": 1.0
+      "target": "city_activity_images_skill_2_pick_one_accurate_legal_image_per_target_activity"
     },
     {
       "relation": "contains",
@@ -61851,9 +62069,9 @@
       "source_file": ".claude/skills/city-activity-images/SKILL.md",
       "source_location": "L76",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "city_activity_images_skill_workflow",
-      "target": "city_activity_images_skill_3_write_the_curated_data_file",
-      "confidence_score": 1.0
+      "target": "city_activity_images_skill_3_write_the_curated_data_file"
     },
     {
       "relation": "contains",
@@ -61861,9 +62079,9 @@
       "source_file": ".claude/skills/city-activity-images/SKILL.md",
       "source_location": "L100",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "city_activity_images_skill_workflow",
-      "target": "city_activity_images_skill_4_run_the_engine_to_download_wire_everything_up",
-      "confidence_score": 1.0
+      "target": "city_activity_images_skill_4_run_the_engine_to_download_wire_everything_up"
     },
     {
       "relation": "contains",
@@ -61871,9 +62089,9 @@
       "source_file": ".claude/skills/city-activity-images/SKILL.md",
       "source_location": "L116",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "city_activity_images_skill_workflow",
-      "target": "city_activity_images_skill_5_verify_and_report",
-      "confidence_score": 1.0
+      "target": "city_activity_images_skill_5_verify_and_report"
     },
     {
       "relation": "contains",
@@ -61881,9 +62099,9 @@
       "source_file": ".claude/skills/city-activity-images/references/sourcing-and-legal.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "references_sourcing_and_legal",
-      "target": "references_sourcing_and_legal_sourcing_images_legally_finding_the_exact_id_title",
-      "confidence_score": 1.0
+      "target": "references_sourcing_and_legal_sourcing_images_legally_finding_the_exact_id_title"
     },
     {
       "relation": "contains",
@@ -61891,9 +62109,9 @@
       "source_file": ".claude/skills/city-activity-images/references/sourcing-and-legal.md",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "references_sourcing_and_legal_sourcing_images_legally_finding_the_exact_id_title",
-      "target": "references_sourcing_and_legal_source_a_unsplash_preferred_for_landmarks",
-      "confidence_score": 1.0
+      "target": "references_sourcing_and_legal_source_a_unsplash_preferred_for_landmarks"
     },
     {
       "relation": "contains",
@@ -61901,9 +62119,9 @@
       "source_file": ".claude/skills/city-activity-images/references/sourcing-and-legal.md",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "references_sourcing_and_legal_sourcing_images_legally_finding_the_exact_id_title",
-      "target": "references_sourcing_and_legal_source_b_wikimedia_commons_for_what_unsplash_lacks",
-      "confidence_score": 1.0
+      "target": "references_sourcing_and_legal_source_b_wikimedia_commons_for_what_unsplash_lacks"
     },
     {
       "relation": "contains",
@@ -61911,9 +62129,9 @@
       "source_file": ".claude/skills/city-activity-images/references/sourcing-and-legal.md",
       "source_location": "L45",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "references_sourcing_and_legal_sourcing_images_legally_finding_the_exact_id_title",
-      "target": "references_sourcing_and_legal_verifying_accuracy_the_failure_mode_this_skill_prevents",
-      "confidence_score": 1.0
+      "target": "references_sourcing_and_legal_verifying_accuracy_the_failure_mode_this_skill_prevents"
     },
     {
       "relation": "contains",
@@ -61921,9 +62139,9 @@
       "source_file": ".claude/skills/city-activity-images/references/sourcing-and-legal.md",
       "source_location": "L57",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "references_sourcing_and_legal_sourcing_images_legally_finding_the_exact_id_title",
-      "target": "references_sourcing_and_legal_when_no_accurate_free_photo_exists",
-      "confidence_score": 1.0
+      "target": "references_sourcing_and_legal_when_no_accurate_free_photo_exists"
     },
     {
       "relation": "contains",
@@ -63021,9 +63239,9 @@
       "source_file": "my-nextjs-app/doc/rome-activity-image-sources.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "doc_rome_activity_image_sources",
-      "target": "doc_rome_activity_image_sources_image_sources_rome_activities",
-      "confidence_score": 1.0
+      "target": "doc_rome_activity_image_sources_image_sources_rome_activities"
     },
     {
       "relation": "contains",
@@ -63031,9 +63249,9 @@
       "source_file": "my-nextjs-app/doc/rome-activity-image-sources.md",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "doc_rome_activity_image_sources_image_sources_rome_activities",
-      "target": "doc_rome_activity_image_sources_unsplash_0_no_attribution_legally_required",
-      "confidence_score": 1.0
+      "target": "doc_rome_activity_image_sources_unsplash_0_no_attribution_legally_required"
     },
     {
       "relation": "contains",
@@ -63041,9 +63259,9 @@
       "source_file": "my-nextjs-app/doc/rome-activity-image-sources.md",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "doc_rome_activity_image_sources_image_sources_rome_activities",
-      "target": "doc_rome_activity_image_sources_wikimedia_commons_3_attribution_required",
-      "confidence_score": 1.0
+      "target": "doc_rome_activity_image_sources_wikimedia_commons_3_attribution_required"
     },
     {
       "relation": "contains",
@@ -63411,9 +63629,9 @@
       "source_file": "my-nextjs-app/docs/superpowers/plans/2026-06-23-photo-folder-image-sync.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "plans_2026_06_23_photo_folder_image_sync",
-      "target": "plans_2026_06_23_photo_folder_image_sync_photo_folder_image_sync_implementation_plan",
-      "confidence_score": 1.0
+      "target": "plans_2026_06_23_photo_folder_image_sync_photo_folder_image_sync_implementation_plan"
     },
     {
       "relation": "contains",
@@ -63421,9 +63639,9 @@
       "source_file": "my-nextjs-app/docs/superpowers/plans/2026-06-23-photo-folder-image-sync.md",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "plans_2026_06_23_photo_folder_image_sync_photo_folder_image_sync_implementation_plan",
-      "target": "plans_2026_06_23_photo_folder_image_sync_file_structure",
-      "confidence_score": 1.0
+      "target": "plans_2026_06_23_photo_folder_image_sync_file_structure"
     },
     {
       "relation": "contains",
@@ -63431,9 +63649,9 @@
       "source_file": "my-nextjs-app/docs/superpowers/plans/2026-06-23-photo-folder-image-sync.md",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "plans_2026_06_23_photo_folder_image_sync_photo_folder_image_sync_implementation_plan",
-      "target": "plans_2026_06_23_photo_folder_image_sync_global_constraints",
-      "confidence_score": 1.0
+      "target": "plans_2026_06_23_photo_folder_image_sync_global_constraints"
     },
     {
       "relation": "contains",
@@ -63441,9 +63659,9 @@
       "source_file": "my-nextjs-app/docs/superpowers/plans/2026-06-23-photo-folder-image-sync.md",
       "source_location": "L601",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "plans_2026_06_23_photo_folder_image_sync_photo_folder_image_sync_implementation_plan",
-      "target": "plans_2026_06_23_photo_folder_image_sync_self_review",
-      "confidence_score": 1.0
+      "target": "plans_2026_06_23_photo_folder_image_sync_self_review"
     },
     {
       "relation": "contains",
@@ -63451,9 +63669,9 @@
       "source_file": "my-nextjs-app/docs/superpowers/plans/2026-06-23-photo-folder-image-sync.md",
       "source_location": "L32",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "plans_2026_06_23_photo_folder_image_sync_photo_folder_image_sync_implementation_plan",
-      "target": "plans_2026_06_23_photo_folder_image_sync_task_1_tie_config_photo_sync_config_mjs",
-      "confidence_score": 1.0
+      "target": "plans_2026_06_23_photo_folder_image_sync_task_1_tie_config_photo_sync_config_mjs"
     },
     {
       "relation": "contains",
@@ -63461,9 +63679,9 @@
       "source_file": "my-nextjs-app/docs/superpowers/plans/2026-06-23-photo-folder-image-sync.md",
       "source_location": "L206",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "plans_2026_06_23_photo_folder_image_sync_photo_folder_image_sync_implementation_plan",
-      "target": "plans_2026_06_23_photo_folder_image_sync_task_2_pure_helpers_unit_tests_photo_sync_lib_mjs",
-      "confidence_score": 1.0
+      "target": "plans_2026_06_23_photo_folder_image_sync_task_2_pure_helpers_unit_tests_photo_sync_lib_mjs"
     },
     {
       "relation": "contains",
@@ -63471,9 +63689,9 @@
       "source_file": "my-nextjs-app/docs/superpowers/plans/2026-06-23-photo-folder-image-sync.md",
       "source_location": "L390",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "plans_2026_06_23_photo_folder_image_sync_photo_folder_image_sync_implementation_plan",
-      "target": "plans_2026_06_23_photo_folder_image_sync_task_3_the_sync_cli_sync_photo_images_mjs",
-      "confidence_score": 1.0
+      "target": "plans_2026_06_23_photo_folder_image_sync_task_3_the_sync_cli_sync_photo_images_mjs"
     },
     {
       "relation": "contains",
@@ -63481,9 +63699,9 @@
       "source_file": "my-nextjs-app/docs/superpowers/plans/2026-06-23-photo-folder-image-sync.md",
       "source_location": "L547",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "plans_2026_06_23_photo_folder_image_sync_photo_folder_image_sync_implementation_plan",
-      "target": "plans_2026_06_23_photo_folder_image_sync_task_4_run_the_barcelona_example_for_real_and_verify_the_app_is_unchanged",
-      "confidence_score": 1.0
+      "target": "plans_2026_06_23_photo_folder_image_sync_task_4_run_the_barcelona_example_for_real_and_verify_the_app_is_unchanged"
     },
     {
       "relation": "contains",
@@ -71387,5 +71605,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "4261a1fb1ec0cda48619d51e5aadea3e823cf3f0"
+  "built_at_commit": "b670a04c08b221aac664f66643c0b3c1b92e8327"
 }

@@ -250,7 +250,11 @@ export default function StartTripSearch({
   };
 
   return (
-    <div ref={rootRef} className="relative">
+    // `overflow-x-clip` keeps the soft decorative glow below (which spreads
+    // `-inset-x-8` + blur past the bar) and the field entrance pops from bleeding
+    // sideways and adding horizontal scroll on mobile. `clip` leaves vertical
+    // overflow visible so the dropdowns (which open downward) still work.
+    <div ref={rootRef} className="relative overflow-x-clip">
       <div
         aria-hidden
         className="pointer-events-none absolute -inset-x-8 -inset-y-5 rounded-[2rem] bg-gradient-to-r from-orange-300/30 via-pink-300/25 to-sky-300/25 blur-2xl"
