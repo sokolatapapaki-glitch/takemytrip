@@ -19,6 +19,12 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Take My Trip",
   description: "Οργάνωσε το επόμενο οικογενειακό σου ταξίδι.",
+  // Same browser-tab icon as the takemytrip site (referenced by URL, as it is
+  // there) instead of the default Next.js favicon.
+  icons: {
+    icon: "https://cdn-icons-png.flaticon.com/512/2983/2983787.png",
+    apple: "https://cdn-icons-png.flaticon.com/512/2983/2983787.png",
+  },
 };
 
 export default function RootLayout({
