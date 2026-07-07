@@ -32,9 +32,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // The app's content is Greek. `lang="el"` is what makes browsers apply the
+  // Greek casing rule to `text-transform: uppercase` — i.e. DROP the tonos on
+  // all-caps words (ΒΑΡΚΕΛΩΝΗ, not ΒΑΡΚΕΛΏΝΗ), the correct monotonic typography.
+  // This one attribute fixes every uppercased place name across the whole UI.
   return (
     <html
-      lang="en"
+      lang="el"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">

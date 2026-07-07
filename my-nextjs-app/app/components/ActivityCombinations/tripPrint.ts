@@ -53,7 +53,7 @@ export function printTrip(trip: Trip, heading: string): void {
     .join("");
 
   const html = `<!doctype html>
-<html>
+<html lang="el">
 <head>
 <meta charset="utf-8">
 <title>${esc(heading)} — trip</title>
