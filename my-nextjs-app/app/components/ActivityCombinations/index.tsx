@@ -1,6 +1,6 @@
 "use client";
 
-import { useDeferredValue, useMemo, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams, type ReadonlyURLSearchParams } from "next/navigation";
 import { setActiveCity, setActiveParty, type Activity, type Party } from "./core/activities.functions";
 import { CITIES, DEFAULT_CITY, type City, type Area } from "./core/cities.data";
@@ -320,6 +320,37 @@ export default function ActivityCombinations() {
   // First-visit hint pointing at the "Επιλογή δραστηριοτήτων" button (shows on
   // every plan-page mount until dismissed or the button is used).
   const [showSelectHint, setShowSelectHint] = useState(true);
+  // Close that hint when the user clicks anywhere outside it.
+  const selectHintRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!showSelectHint) return;
+    const onDown = (e: MouseEvent) => {
+      if (selectHintRef.current && !selectHintRef.current.contains(e.target as Node)) {
+        setShowSelectHint(false);
+      }
+    };
+    document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
+  }, [showSelectHint]);
+
+  // Remember the destination + trip length for the homepage, so returning there
+  // restores them. The homepage consumes this once, so a fresh visit is not
+  // affected — only a return from the plan page.
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(
+        "ttk:homeReturn",
+        JSON.stringify({
+          destinationId: city.id,
+          pointName: area.id === "custom" ? area.name : city.name,
+          coords: area.coords,
+          days: dayCount,
+        })
+      );
+    } catch {
+      // sessionStorage unavailable (e.g. private mode) — skip silently.
+    }
+  }, [city, area, dayCount]);
   const [activityQuery, setActivityQuery] = useState("");
   // Activities the user has ticked in the catalogue (by name), plus the set
   // "locked in" by Submit. While `submitted` is null the trip is built from the
@@ -565,8 +596,13 @@ export default function ActivityCombinations() {
 
                     {/* On-load hint, anchored under the button with an arrow. */}
                     {showSelectHint && (
-                      <div className="animate-pop-in absolute right-0 top-full z-30 mt-3 w-64 max-w-[calc(100vw-2rem)]">
-                        <div className="absolute -top-1.5 right-8 h-3 w-3 rotate-45 border-l border-t border-orange-200 bg-white dark:border-orange-400/30 dark:bg-zinc-800" />
+                      <div
+                        ref={selectHintRef}
+                        className="animate-pop-in absolute right-0 top-full z-30 mt-2 w-64 max-w-[calc(100vw-2rem)]"
+                      >
+                        {/* Pointer up at the button — same border, fill and shadow
+                            as the alert so it reads as one connected bubble. */}
+                        <div className="absolute -top-1 right-6 h-3 w-3 rotate-45 rounded-tl-sm border-l border-t border-orange-200 bg-white shadow-lg shadow-orange-900/10 dark:border-orange-400/30 dark:bg-zinc-800" />
                         <div className="relative rounded-xl border border-orange-200 bg-white p-3 pr-7 text-sm text-zinc-600 shadow-lg shadow-orange-900/10 dark:border-orange-400/30 dark:bg-zinc-800 dark:text-zinc-300">
                           <button
                             type="button"

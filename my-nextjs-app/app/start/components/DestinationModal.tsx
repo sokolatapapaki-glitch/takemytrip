@@ -136,7 +136,7 @@ export function DestinationModal({
               <FaChevronLeft className="h-4 w-4" />
             </button>
             <p className="text-xs font-semibold uppercase tracking-wide text-zinc-400">
-              Διαμονή στη/στο {active.name}
+              Διαμονή στη/στο {active.name} (προαιρετικό)
             </p>
           </div>
           <StartPointSearch

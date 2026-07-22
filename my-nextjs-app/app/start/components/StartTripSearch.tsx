@@ -77,6 +77,47 @@ export default function StartTripSearch({
   // trigger a fresh key so the toast restarts its timer/animation.
   const [notice, setNotice] = useState<{ id: number; state: StatusState; message: string } | null>(null);
 
+  // Returning from the plan page: it stores the last destination + trip length,
+  // so restore them here to keep those values. Consumed once (removed on read),
+  // so a fresh homepage visit — or arriving from anywhere else — is unaffected.
+  useEffect(() => {
+    let raw: string | null = null;
+    try {
+      raw = sessionStorage.getItem("ttk:homeReturn");
+      if (raw) sessionStorage.removeItem("ttk:homeReturn");
+    } catch {
+      return;
+    }
+    if (!raw) return;
+    try {
+      const data = JSON.parse(raw) as {
+        destinationId?: string;
+        pointName?: string;
+        coords?: { lat: number; lng: number };
+        days?: number;
+      };
+      const d = DESTINATIONS.find((x) => x.id === data.destinationId);
+      // Hydrating from storage on mount must set state in the effect — doing it
+      // during render would cause an SSR/CSR hydration mismatch.
+      /* eslint-disable react-hooks/set-state-in-effect */
+      if (d && data.coords) {
+        setDest({
+          destinationId: d.id,
+          pointName: data.pointName || d.name,
+          coords: data.coords,
+        });
+        setDestTypingDone(true);
+      }
+      if (typeof data.days === "number" && data.days >= 1) {
+        setDurationDays(data.days);
+        setLengthMode("days");
+      }
+      /* eslint-enable react-hooks/set-state-in-effect */
+    } catch {
+      // Malformed payload — ignore.
+    }
+  }, []);
+
   // Close the open modal when clicking anywhere outside the bar. The mobile
   // full-screen pickers are PORTALED to <body> (outside rootRef), so taps
   // inside them must not count as "outside".
