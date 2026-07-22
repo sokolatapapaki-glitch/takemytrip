@@ -54,6 +54,9 @@ export default function StartTripSearch({
   // free text the user types, which filters the destination dropdown.
   const [destTypingDone, setDestTypingDone] = useState(!playEntranceAnimations);
   const [destQuery, setDestQuery] = useState("");
+  // Whether the destination dropdown is on its accommodation (address) step —
+  // drives the mobile "pin to top of screen" positioning for the hotel picker.
+  const [destAddressStep, setDestAddressStep] = useState(false);
   const [range, setRange] = useState<DateRange>({ start: null, end: null });
   // Trip length in days — the PRIMARY way to set how long the trip is (#2). Free
   // typing, no upper limit enforced here (the planner caps it). Dates are now
@@ -255,9 +258,11 @@ export default function StartTripSearch({
     // sideways and adding horizontal scroll on mobile. `clip` leaves vertical
     // overflow visible so the dropdowns (which open downward) still work.
     <div ref={rootRef} className="relative overflow-x-clip">
+      {/* Soft decorative glow behind the bar — desktop only; on mobile it read
+          as an unwanted shadow around the search block, so it's hidden there. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -inset-x-8 -inset-y-5 rounded-[2rem] bg-gradient-to-r from-orange-300/30 via-pink-300/25 to-sky-300/25 blur-2xl"
+        className="pointer-events-none absolute -inset-x-8 -inset-y-5 hidden rounded-[2rem] bg-gradient-to-r from-orange-300/30 via-pink-300/25 to-sky-300/25 blur-2xl sm:block"
       />
       <div
         className={`${playEntranceAnimations ? "animate-fade-in-up" : ""} relative grid grid-cols-1 items-center gap-2 sm:grid-cols-2 ${
@@ -289,10 +294,18 @@ export default function StartTripSearch({
           }
         >
           {open === "dest" && (
-            <Dropdown align="left" onClose={() => setOpen(null)}>
+            <Dropdown
+              align="left"
+              mobileTop={destAddressStep}
+              onClose={() => {
+                setOpen(null);
+                setDestAddressStep(false);
+              }}
+            >
               <DestinationModal
                 value={dest}
                 query={destQuery}
+                onStepChange={(step) => setDestAddressStep(step === "address")}
                 onChooseDestination={(destinationId) => {
                   const d = DESTINATIONS.find((x) => x.id === destinationId);
                   if (!d) return;
@@ -309,6 +322,7 @@ export default function StartTripSearch({
                   });
                   setDestQuery("");
                   setOpen(null);
+                  setDestAddressStep(false);
                 }}
               />
             </Dropdown>
@@ -666,10 +680,15 @@ function DestField({
 function Dropdown({
   align,
   onClose,
+  mobileTop = false,
   children,
 }: {
   align: "left" | "center" | "right";
   onClose?: () => void;
+  // Mobile only: pin the panel near the TOP of the screen (with a little
+  // padding) instead of anchoring it below the field. Used for the destination
+  // field's accommodation step, whose taller content is clipped below the input.
+  mobileTop?: boolean;
   children: React.ReactNode;
 }) {
   const desktopPos =
@@ -678,12 +697,18 @@ function Dropdown({
       : align === "right"
         ? "sm:right-0"
         : "sm:left-1/2 sm:-translate-x-1/2";
+  // Mobile positioning: below the field by default, or pinned near the top of
+  // the screen when mobileTop. Desktop always anchors below the field (the sm:
+  // classes restore the absolute/anchored layout regardless).
+  const mobilePos = mobileTop
+    ? "fixed inset-x-2 top-2 mx-auto max-h-[calc(100vh-1rem)] max-w-[calc(100vw-1rem)]"
+    : "absolute inset-x-0 top-full mx-auto max-h-[calc(100vh-6rem)] max-w-[calc(100vw-1rem)]";
   return (
     <>
       {/* Mobile-only transparent backdrop; tap anywhere to close. */}
       <div className="fixed inset-0 z-[90] bg-transparent sm:hidden" onClick={onClose} />
       <div
-        className={`animate-pop-in z-[100] origin-top rounded-2xl border border-zinc-200 bg-white shadow-2xl shadow-orange-900/10 absolute inset-x-0 top-full mx-auto max-h-[calc(100vh-6rem)] max-w-[calc(100vw-1rem)] overflow-y-auto overflow-x-hidden sm:inset-x-auto sm:top-full sm:mx-0 sm:mt-2 sm:max-h-none sm:max-w-none sm:overflow-hidden ${desktopPos}`}
+        className={`animate-dropdown-pop z-[100] origin-top rounded-2xl border border-zinc-200 bg-white shadow-2xl shadow-orange-900/10 ${mobilePos} overflow-y-auto overflow-x-hidden sm:absolute sm:inset-x-auto sm:top-full sm:mx-0 sm:mt-2 sm:max-h-none sm:max-w-none sm:overflow-hidden ${desktopPos}`}
       >
         {children}
       </div>

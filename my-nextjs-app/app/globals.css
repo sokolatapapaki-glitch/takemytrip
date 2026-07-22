@@ -65,6 +65,30 @@ body {
   animation: pop-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
+/* Flat fade-in (no scale). */
+@keyframes pop-in-flat {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* The search dropdowns: a flat fade-in on mobile (no scale, so the pop doesn't
+   momentarily clip their edges) and the bouncy scale-pop on desktop (unchanged). */
+.animate-dropdown-pop {
+  opacity: 0;
+  animation: pop-in-flat 0.2s ease-out both;
+}
+
+@media (min-width: 640px) {
+  .animate-dropdown-pop {
+    animation: pop-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+}
+
 /* Quick fade + small rise — used for the bar so it stays a stable container
    that the icons can visibly pop into (a scaling bar would mask their pop). */
 @keyframes fade-in-up {
@@ -391,6 +415,7 @@ body {
 @media (prefers-reduced-motion: reduce) {
 
   .animate-pop-in,
+  .animate-dropdown-pop,
   .animate-fade-in-up,
   .animate-icon-pop,
   .animate-marker-pop,

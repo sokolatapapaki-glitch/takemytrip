@@ -9,7 +9,7 @@
 //      to the list. Picking a suggestion finalises the point; leaving it (or
 //      going back / closing) keeps the city centre.
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DESTINATIONS } from "../data/destinations";
 import type { DestinationSelection } from "../data/types";
 import { FaChevronLeft, FaChevronRight, FaMapLocationDot } from "react-icons/fa6";
@@ -30,6 +30,7 @@ export function DestinationModal({
   value,
   onChooseDestination,
   onChoosePoint,
+  onStepChange,
   query = "",
 }: {
   value: DestinationSelection | null;
@@ -38,12 +39,20 @@ export function DestinationModal({
   onChooseDestination: (destinationId: string) => void;
   // Suggestion picked in the address search: finalise the start point + close.
   onChoosePoint: (destinationId: string, point: StartPoint) => void;
+  // Fires when the step changes (and on mount) so the parent can react — e.g.
+  // repositioning the dropdown for the taller address/hotel step on mobile.
+  onStepChange?: (step: "list" | "address") => void;
   // Optional free-text filter from the writable destination input on the
   // homepage. Matches destination name, country, or English aliases.
   query?: string;
 }) {
   // The modal always opens on the LIST; clicking a destination moves to ADDRESS.
   const [step, setStep] = useState<"list" | "address">("list");
+  // Report the current step to the parent whenever it changes (and on mount), so
+  // it can reposition the dropdown for the taller address step on mobile.
+  useEffect(() => {
+    onStepChange?.(step);
+  }, [step, onStepChange]);
   const [activeId, setActiveId] = useState<string | null>(value?.destinationId ?? null);
   // Bumped on every "back" so the list replays its slide-in-from-left each time
   // (a changing key remounts the pane). 0 on first open → no slide (the
