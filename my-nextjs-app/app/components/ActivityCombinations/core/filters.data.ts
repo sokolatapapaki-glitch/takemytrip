@@ -148,7 +148,7 @@ export const DEFAULT_FILTERS: Filter[] = [
     // if a day gets fuller (lower leave-out sensitivity); weight 0 = off.
     // DEFAULT 0 so behaviour is unchanged until you tune it on the editor page.
     name: "Χρήση όλων των δραστηριοτήτων",
-    weight: 5,
+    weight: 10,
     scoreName: "Asymmetric linear",
     params: { under: 0, over: 1 },
     hint: "Ανέβασε το βάρος για να μένουν έξω λιγότερες δραστηριότητες",
@@ -167,7 +167,7 @@ export const DEFAULT_FILTERS: Filter[] = [
     // so it never makes the planner drop activities. Only the WEIGHT is used (the
     // curve/options are inert); weight 0 = off. Tune the weight in the editor.
     name: "Ισορροπία ημερών",
-    weight: 2,
+    weight: 10,
     scoreName: "Linear (symmetric)",
     params: { slope: 1 },
     hint: "Ανέβασε το βάρος για πιο ίσο αριθμό δραστηριοτήτων ανά ημέρα",
