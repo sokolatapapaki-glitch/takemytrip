@@ -86,8 +86,8 @@ export const DEFAULT_FILTERS: Filter[] = [
     unit: HOURS_UNIT,
     value: normalizedSumIndex("hours"),
     format: (combo) => `${sumOf("hours")(combo)}ω`,
-    // Default to the 9h option (index 2 of the array below).
-    defaultOption: 2,
+    // Default to the 12h option (index 3 of the array below).
+    defaultOption: 3,
     // Targets are stored in HOURS (the unit); converted to index when scoring.
     // Capped at 15h — the most a single day can realistically hold.
     options: [3, 6, 9, 12].map((h) => ({

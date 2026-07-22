@@ -3,7 +3,7 @@
 // -----------------------------------------------------------------------------
 // Defaults + the lunch-slot window. The scheduling logic lives in
 // schedule.functions.
-export const DEFAULT_START_HOUR = 12; // default: plans begin at 12:00 (noon)
+export const DEFAULT_START_HOUR = 10; // default: plans begin at 10:00
 export const DEFAULT_DAY = 0; // default: Monday (index 0 in DAYS)
 
 export const LUNCH_HOURS = 3; // length of the generic lunch break
