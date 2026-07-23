@@ -96,7 +96,8 @@ const numMap = (o) => {
 function emitActivity(a, cityLoc, use) {
   const preset = PRESET[normCat(a.category)] || DEFAULT;
   const durRaw = Number(a.duration_hours);
-  const hours = Number.isFinite(durRaw) && durRaw > 0 ? durRaw : preset.h;
+  // Minimum activity duration is 1 hour — anything shorter is rounded up to 1h.
+  const hours = Math.max(1, Number.isFinite(durRaw) && durRaw > 0 ? durRaw : preset.h);
   const priority = a.top ? Math.max(preset.p, 9) : preset.p;
   const loc = a.location && Number.isFinite(Number(a.location.lat)) ? a.location : cityLoc;
   const ages = numMap(a.prices);

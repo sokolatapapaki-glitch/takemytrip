@@ -189,7 +189,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
     id: 12,
     name: "Budapest Eye",
     description: "Ρόδα με πανοραμική θέα του Βουδαπέστης και του Δούναβη. Κατάλληλο για κάθε ηλικία",
-    hours: 0.5, cost: 12, coords: { lat: 47.497, lng: 19.051 },
+    hours: 1, cost: 12, coords: { lat: 47.497, lng: 19.051 },
     program: everyDay(at(9, 18)),
     cultural: 5, foodie: 0, adventurous: 4, relaxing: 4, priority: 5,
     prices: { ages: {"0":0,"1":0,"2":0,"3":0,"4":0,"5":0,"6":8,"7":8,"8":8,"9":8,"10":8,"11":8,"12":8,"13":8,"14":8,"15":12,"16":12,"17":12,"18":12,"19":12,"adult":12}, family: {} },
