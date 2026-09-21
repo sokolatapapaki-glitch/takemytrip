@@ -108,6 +108,9 @@ export function DestinationModal({
                   type="button"
                   // Click — NOT hover — advances to the address step.
                   onClick={() => goToAddress(d.id)}
+                  // Stable hook for the reel generator (see reels/README.md).
+                  data-reel="destination-option"
+                  data-reel-id={d.id}
                   className={`group/row flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left transition-colors hover:bg-orange-50 ${
                     selected ? "ring-1 ring-orange-300" : ""
                   }`}

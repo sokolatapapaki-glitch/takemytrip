@@ -1,0 +1,95 @@
+/* ---------------------------------------------------------------------------
+   Caption overlay — typography and slot geometry
+   ---------------------------------------------------------------------------
+   This page is screenshotted with omitBackground, so everything outside a glyph
+   must stay transparent: no background colour anywhere, including on <html>.
+
+   Nothing here animates. Every transition is computed per frame in JS and
+   written as an inline style, so a frame is a pure function of its state and
+   two renders of the same reel are byte-identical.                            */
+
+@font-face {
+  /* Bundled, not system-resolved: a headless container has no guaranteed
+     Greek-capable font, and a silent tofu fallback would ruin a whole batch. */
+  font-family: "ReelSans";
+  src: url("./fonts/NotoSans-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  overflow: hidden;
+}
+
+#stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  font-family: "ReelSans", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  color: #ffffff;
+  /* The stroke sits OUTSIDE the glyph rather than eating into it — without
+     paint-order the stroke is drawn over the fill and thins the letterform. */
+  paint-order: stroke fill;
+  -webkit-text-stroke: 9px #000000;
+  letter-spacing: 0.01em;
+  /* A soft black glow under the stroke. The app's surfaces run from a dark hero
+     photo to a white filter drawer; the stroke alone holds on both, but the
+     glow lifts the text off busy artwork. Deliberately NOT a full-width scrim —
+     one of those greys out the very UI the reel is showing. */
+  text-shadow: 0 0 26px rgba(0, 0, 0, 0.55), 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+/* --- top title: static for the whole reel, deliberately lighter than the
+       captions so it never competes with the line being narrated ------------ */
+#title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* Safe area: platform chrome (profile name, follow button) crowds the top. */
+  top: 190px;
+  padding: 0 90px;
+  font-size: 54px;
+  line-height: 1.16;
+  -webkit-text-stroke-width: 7px;
+}
+
+/* --- caption stack: two visible slots, bottom centre --------------------- */
+#captions {
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* Slot A's baseline block. Slot B sits SLOT_GAP below it; both are placed by
+     JS, which is why this is only the anchor.
+
+     Low enough to stay out of the band the cursor works in (the filter drawer's
+     option list sits around 70–80% of frame height), high enough to clear the
+     platforms' own bottom chrome. */
+  bottom: 300px;
+  padding: 0 70px;
+  height: 0;
+}
+
+.cap {
+  position: absolute;
+  left: 70px;
+  right: 70px;
+  bottom: 0;
+  font-size: 76px;
+  line-height: 1.1;
+  transform-origin: 50% 100%;
+  will-change: transform, opacity;
+}

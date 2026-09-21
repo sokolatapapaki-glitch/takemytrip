@@ -7,16 +7,26 @@ export function CheckRow({
   active,
   onClick,
   children,
+  reelKey,
+  reelFilter,
+  reelOption,
 }: {
   active: boolean;
   onClick: () => void;
   children: React.ReactNode;
+  // Inert hooks for the reel generator — see FilterButton (PerDayFilters.tsx).
+  reelKey?: string;
+  reelFilter?: string;
+  reelOption?: string;
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
       aria-pressed={active}
+      data-reel={reelKey}
+      data-reel-filter={reelFilter}
+      data-reel-option={reelOption}
       className="flex w-full items-center gap-2.5 rounded-lg px-2 py-1.5 text-left text-sm text-zinc-700 transition-colors hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-800"
     >
       <span

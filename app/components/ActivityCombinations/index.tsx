@@ -608,6 +608,8 @@ export default function ActivityCombinations() {
                             type="button"
                             onClick={() => setShowSelectHint(false)}
                             aria-label="Κλείσιμο"
+                            // Stable hook for the reel generator (reels/README.md).
+                            data-reel="close-hint"
                             className="absolute right-1.5 top-1 text-zinc-400 transition-colors hover:text-zinc-600 dark:hover:text-zinc-200"
                           >
                             ✕
@@ -624,6 +626,7 @@ export default function ActivityCombinations() {
                   <button
                     type="button"
                     onClick={() => setShowMobileFilters(true)}
+                    data-reel="open-filters"
                     className={`hidden shrink-0 items-center justify-center gap-2 md:flex lg:hidden ${buttonStyles.secondary}`}
                   >
                     <FaSliders className="h-4 w-4" />
@@ -636,6 +639,7 @@ export default function ActivityCombinations() {
               <button
                 type="button"
                 onClick={() => setShowMobileFilters(true)}
+                data-reel="open-filters"
                 className={`flex w-full items-center justify-center gap-2 md:hidden ${buttonStyles.secondary}`}
               >
                 <FaSliders className="h-4 w-4" />
@@ -781,6 +785,7 @@ export default function ActivityCombinations() {
               <button
                 type="button"
                 onClick={() => setShowMobileFilters(false)}
+                data-reel="close-filters"
                 className={buttonStyles.underline}
               >
                 Έγινε

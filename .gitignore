@@ -42,3 +42,7 @@ next-env.d.ts
 
 # unit-test build output (tsconfig.test.json -> node --test)
 /dist-test
+
+# reels — generated MP4s, frame caches and the fetched Greek font
+/reels/out
+/reels/overlay/fonts

@@ -51,15 +51,27 @@ export function FilterButton({
   active,
   onClick,
   children,
+  reelKey,
+  reelFilter,
+  reelOption,
 }: {
   active: boolean;
   onClick: () => void;
   children: React.ReactNode;
+  // Inert hooks for the reel generator (reels/README.md): `reelKey` is the
+  // stable "filter-<filterIndex>-<optionIndex>" address, the other two carry
+  // the human names so a failing reel says WHICH control it could not find.
+  reelKey?: string;
+  reelFilter?: string;
+  reelOption?: string;
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
+      data-reel={reelKey}
+      data-reel-filter={reelFilter}
+      data-reel-option={reelOption}
       className={`w-full rounded-lg border px-3 py-2 text-left text-sm transition-colors ${active
         ? "border-blue-600 bg-blue-50 text-blue-700 dark:border-blue-400 dark:bg-blue-950/50 dark:text-blue-300"
         : "border-black/[.08] text-zinc-700 hover:bg-zinc-50 dark:border-white/[.145] dark:text-zinc-300 dark:hover:bg-zinc-800"
@@ -107,7 +119,7 @@ export function PerDayFilters({
   // below the "Cost budget" filter group (see the map below).
   const circularBlock = (
     <div className="flex flex-col gap-2">
-      <label className="flex cursor-pointer items-start gap-2.5">
+      <label className="flex cursor-pointer items-start gap-2.5" data-reel="circular">
         <input
           type="checkbox"
           checked={circular}
@@ -145,6 +157,7 @@ export function PerDayFilters({
         <select
           value={startHour}
           onChange={(e) => onStartHourChange(Number(e.target.value))}
+          data-reel="start-hour"
           className="w-full rounded-lg border border-black/[.08] bg-white px-3 py-2 text-sm text-zinc-700 dark:border-white/[.145] dark:bg-zinc-900 dark:text-zinc-300"
         >
           {START_HOUR_CHOICES.map((h) => (
@@ -174,11 +187,17 @@ export function PerDayFilters({
                   const active = (selection[fi] ?? []).includes(i);
                   // The Vibe filter reads as a multi-select tick list (CheckRow);
                   // all other groups keep the bordered FilterButton.
+                  // Reel address: indices, not Greek copy, so a caption tweak
+                  // can never move a hook (reels/README.md).
+                  const reelKey = `filter-${fi}-${i}`;
                   return filter.name === "Vibe" ? (
                     <CheckRow
                       key={opt.name}
                       active={active}
                       onClick={() => onChoose(fi, i)}
+                      reelKey={reelKey}
+                      reelFilter={filter.name}
+                      reelOption={opt.name}
                     >
                       {opt.name}
                     </CheckRow>
@@ -187,6 +206,9 @@ export function PerDayFilters({
                       key={opt.name}
                       active={active}
                       onClick={() => onChoose(fi, i)}
+                      reelKey={reelKey}
+                      reelFilter={filter.name}
+                      reelOption={opt.name}
                     >
                       {opt.name}
                     </FilterButton>

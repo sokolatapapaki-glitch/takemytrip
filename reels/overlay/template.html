@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="el">
+  <head>
+    <meta charset="utf-8" />
+    <title>Reel overlay</title>
+    <link rel="stylesheet" href="./overlay.css" />
+  </head>
+  <body>
+    <div id="stage">
+      <div id="title"></div>
+      <div id="captions"></div>
+    </div>
+
+    <script>
+      // ---------------------------------------------------------------------
+      // The caption stack, as a pure function of (which caption is current,
+      // how far into its transition we are).
+      //
+      // Only ever two captions are visible: the current one and the one before
+      // it. Nothing upcoming is shown — a reel is not a table of contents.
+      //
+      //   slot A (upper)  current   100% size, opacity 1
+      //   slot B (lower)  previous  ~72% size, opacity ~0.45
+      //
+      // On a change (progress 0 → 1) three things move at once: the new line
+      // rises into A, the outgoing current slides A → B while shrinking, and
+      // the outgoing previous slides out below B and fades away.
+      // ---------------------------------------------------------------------
+
+      const SLOT_GAP = 116;   // px between slot A and slot B
+      const RISE = 58;        // px a new caption travels up into slot A
+      const PREV_SCALE = 0.72;
+      const PREV_OPACITY = 0.45;
+
+      const titleEl = document.getElementById("title");
+      const capsEl = document.getElementById("captions");
+
+      const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+      const mix = (a, b, t) => a + (b - a) * t;
+
+      /** One caption layer, placed entirely from numbers. */
+      function layer(text, y, scale, opacity) {
+        if (!text || opacity <= 0.002) return "";
+        const el = document.createElement("div");
+        el.className = "cap";
+        el.textContent = text;
+        el.style.transform = `translateY(${y}px) scale(${scale})`;
+        el.style.opacity = String(opacity);
+        capsEl.appendChild(el);
+        return el;
+      }
+
+      window.__reelOverlay = {
+        /**
+         * @param {{title: string, items: string[], index: number, progress: number}} s
+         *   `items` is every caption in order; `index` is the current one;
+         *   `progress` is 0–1 through the transition INTO that caption
+         *   (1 = settled).
+         */
+        render(s) {
+          titleEl.textContent = s.title ?? "";
+          capsEl.textContent = "";
+
+          const p = easeOut(Math.max(0, Math.min(1, s.progress)));
+          const cur = s.items[s.index];
+          const prev = s.items[s.index - 1];
+          const older = s.items[s.index - 2];
+
+          // Oldest first, so the newest paints on top.
+          // Outgoing previous: slot B → out the bottom, fading to nothing.
+          layer(
+            older,
+            mix(SLOT_GAP, SLOT_GAP + RISE, p),
+            PREV_SCALE,
+            mix(PREV_OPACITY, 0, p)
+          );
+          // Outgoing current: slot A → slot B, shrinking and dimming.
+          layer(
+            prev,
+            mix(0, SLOT_GAP, p),
+            mix(1, PREV_SCALE, p),
+            mix(1, PREV_OPACITY, p)
+          );
+          // New current: rises into slot A.
+          layer(cur, mix(RISE, 0, p), 1, p);
+        },
+
+        /**
+         * Pull the font in and confirm it can actually draw Greek.
+         *
+         * `document.fonts.ready` alone is not enough: a @font-face nothing has
+         * painted yet is never fetched, so it reports "ready" while the family
+         * is still unresolved. And a font that loads but lacks Greek does not
+         * throw — it silently renders tofu, which would only be noticed after a
+         * whole batch had been encoded.
+         *
+         * Tofu boxes are all one width, so a real Greek string (whose glyphs
+         * have different advances) measures differently from the same number of
+         * notdef characters. Identical widths mean tofu.
+         */
+        async ensureFont() {
+          try {
+            await document.fonts.load('700 76px "ReelSans"');
+            await document.fonts.ready;
+          } catch {
+            return false;
+          }
+          if (!document.fonts.check('700 76px "ReelSans"')) return false;
+          const c = document.createElement("canvas").getContext("2d");
+          c.font = '700 76px "ReelSans"';
+          const greek = c.measureText("ΑΝΑΖΗΤΗΣΗ").width;
+          const tofu = c.measureText("\uFFFE".repeat(9)).width;
+          return greek > 0 && Math.abs(greek - tofu) > 1;
+        },
+      };
+    </script>
+  </body>
+</html>

@@ -1,7 +1,9 @@
 # Social Media Reels — Implementation Plan
 
-Branch: `social-media` (renamed from `mediaPosts`, based on `updates` @ `6b33d3d`)
-Status: **plan only — nothing implemented yet**
+Branch: `claude/social-reels-implementation-tt51s2` (from `mediaPosts`)
+Status: **implemented** — see `reels/README.md` for the shipped system. This
+file is kept as the design record; §13 below lists where the build deviated
+from the plan and why.
 
 Automated generation of 5–20s vertical reels that show, on a mobile-sized
 screen, how a user creates a trip: a synthetic mouse moves, clicks real UI, and
@@ -262,11 +264,11 @@ silently re-encode other pixel formats.
 
 ## 10. Phases
 
-- [ ] **P0 — Hooks.** Add `data-reel` attributes; confirm the real mobile filter flow.
-- [ ] **P1 — Capture.** Playwright driver, cursor overlay, deterministic frame loop. Output: silent app-only MP4, no captions, no zoom.
-- [ ] **P2 — Overlay.** Caption stack + title page, alpha frame rendering, composite in ffmpeg. Output: **v1 reel (no zoom)**.
-- [ ] **P3 — Camera.** Zoom keyframes, cursor tracking, crop math. Output: **v2 reel (zoom on filters)**.
-- [ ] **P4 — Polish.** Reel CLI, README, a second flow to prove reusability.
+- [x] **P0 — Hooks.** `data-reel` attributes added; the real mobile filter flow confirmed against the running app (it goes through the drawer, not the sidebar — see §13.3).
+- [x] **P1 — Capture.** `reels/capture.ts`: Playwright driver, cursor overlay, deterministic frame loop.
+- [x] **P2 — Overlay.** `reels/overlay/`: caption stack + title, alpha frames, ffmpeg composite. Output: **v1 `create-trip`**.
+- [x] **P3 — Camera.** `reels/camera.ts`: zoom keyframes, damped cursor tracking, crop math. Output: **v2 `create-trip-zoom`**.
+- [x] **P4 — Polish.** `npm run reel`, `reels/README.md`. The second *flow* is not built: v2 reuses v1's steps by import, which proves the camera is reusable but not the step vocabulary. Left as the next obvious piece of work.
 
 ## 11. Decisions already made
 
@@ -277,7 +279,62 @@ silently re-encode other pixel formats.
 
 ## 12. Still open
 
-1. Which three filters, exactly, and their on-screen labels.
-2. Destination for the demo trip — a fixed city (e.g. Ρώμη) keeps reels reproducible.
-3. Whether reels need background music (changes the ffmpeg audio stage; currently silent).
-4. Total target duration for this first reel — the step list above lands around 12–14s.
+All four were settled during the build; change any of them in one line.
+
+1. **Which three filters** → the three lower options of **Χρόνος** (έως 3ω / 6ω /
+   9ω), because that is the only option group the plan page still shows — see
+   §13.3. Addressed by index (`filterHook(1, 0..2)`), never by label.
+2. **Destination** → **Ρώμη**, fixed. It has the fullest activity catalogue, so
+   the itinerary the reel produces is dense rather than thin. Combined with the
+   pinned `REEL_EPOCH` clock, the reel is reproducible.
+3. **Music** → still silent. Adding it is a new ffmpeg input, not a change to
+   any existing pass.
+4. **Duration** → ~16s, inside the 5–20s goal. The 12–14s estimate was for the
+   7-step sketch above; the shipped flow is 15 steps, because typing the
+   destination, dismissing the picker and opening/closing the filter drawer are
+   all beats the sketch had not yet accounted for. Retune from `DEFAULTS` in
+   `reels/config.ts`.
+
+---
+
+## 13. Where the build deviated from this plan
+
+Each of these was forced by the running app, not chosen for convenience.
+
+1. **CSS viewport is 432×768, not 1080×1920.** 1080 *real* pixels is the output
+   width; 1080 *CSS* pixels is a desktop layout — at that width Tailwind's
+   `lg:` breakpoints fire and the plan page renders its desktop sidebar, not
+   the phone flow the reel is about. 432×768 is a phone at exactly 9:16, and
+   `deviceScaleFactor: 5` lands back on the planned 2160×3840 source.
+
+2. **Reels render against `next build` + `next start`, not `next dev`.** In dev,
+   React StrictMode's double-invoked effects stop the homepage typewriter ever
+   finishing, so `destTypingDone` never fires and the destination field never
+   becomes the writable input the flow types into. The dev server's HMR socket
+   also injects its own timers. `--dev` opts back in.
+
+3. **The mobile filter flow does go through the drawer** (§7's open item), so
+   the flow has an extra "open filters" click and a "Έγινε" to close. And the
+   drawer shows only ONE option group: `Κόστος` is hidden while
+   `HIDE_ACTIVITY_PRICES` is on, leaving `Χρόνος` plus a `<select>` and a
+   checkbox. Hence §12.1.
+
+4. **Per-frame ffmpeg for the camera.** ffmpeg cannot vary a crop rectangle
+   across a batch without an expression hundreds of branches deep, and
+   `zoompan` rounds its offsets to integers and jitters. So a camera reel
+   crops each frame in its own small ffmpeg run (8 at a time) and then encodes
+   once. A reel with no camera still takes the single-pass path.
+
+5. **Scrims were added to the caption layer.** The app's surfaces run from a
+   dark hero photo to a white filter drawer; a black stroke alone is not enough
+   for white text on white. They are painted in PASS B, so the camera cannot
+   scale them either.
+
+6. **The Greek font is fetched, not committed** (`npm run reel:font`). It is
+   545 KB of binary; PASS B refuses to render without it, and the guard checks
+   real glyph coverage rather than just "a family resolved".
+
+7. **Two extra hooks** beyond §7's table: `hero-title` (the homepage `<h1>`, a
+   natural "tap outside" target for dismissing the destination picker, which
+   stays open on its optional accommodation step) and `close-hint` (the plan
+   page's on-load hint, which otherwise covers the Φίλτρα button).

@@ -417,6 +417,8 @@ export default function StartTripSearch({
         <button
           type="button"
           onClick={handleSearch}
+          // Stable hook for the reel generator (see reels/README.md) — inert.
+          data-reel="search"
           aria-disabled={!canSearch}
           title={canSearch ? undefined : "Αναζήτηση"}
           className={`group flex w-full shrink-0 cursor-pointer items-center justify-center gap-2 rounded-xl px-6 py-3 font-medium lg:w-auto ${homeStyles.primaryButton}`}
@@ -577,6 +579,7 @@ function TripLengthField({
               onDaysChange(Number.isFinite(n) && n >= 1 ? n : null);
             }}
             placeholder="Διάρκεια (μέρες)"
+            data-reel="days"
             size={1}
             className={`w-full min-w-0 flex-1 bg-transparent text-sm text-zinc-800 outline-none placeholder:text-zinc-400 [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none ${showClear ? "pr-6" : ""
               }`}
@@ -652,7 +655,9 @@ function DestField({
   }, [value]);
 
   return (
-    <div className="group relative min-w-0 flex-1">
+    // `data-reel` marks the whole field so the reel generator can aim at it
+    // regardless of which of the three faces below is showing.
+    <div className="group relative min-w-0 flex-1" data-reel="destination">
       <div
         className={`flex w-full items-center gap-3 rounded-xl border border-zinc-300 px-4 py-3 transition-colors ${active ? homeStyles.fieldActive : homeStyles.fieldIdle
           }`}
@@ -685,6 +690,7 @@ function DestField({
             onChange={(e) => onQueryChange(e.target.value)}
             onFocus={onOpen}
             placeholder="Αναζήτησε προορισμό"
+            data-reel="destination-input"
             size={1}
             className={`w-full min-w-0 flex-1 bg-transparent text-sm text-zinc-800 outline-none placeholder:text-zinc-400 ${onClear ? "pr-6" : ""
               }`}

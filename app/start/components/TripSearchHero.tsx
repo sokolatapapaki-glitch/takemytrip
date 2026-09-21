@@ -166,7 +166,12 @@ export default function TripSearchHero() {
           <header className="mb-8 text-center">
             {/* Title is intentionally static (no entrance animation) — only the
               search inputs animate in. */}
-            <h1 className="text-3xl font-semibold tracking-tight text-white drop-shadow-lg sm:text-4xl">
+            <h1
+              // Inert hook for the reel generator: a natural "tap outside" target
+              // for dismissing an open search dropdown (reels/README.md).
+              data-reel="hero-title"
+              className="text-3xl font-semibold tracking-tight text-white drop-shadow-lg sm:text-4xl"
+            >
               Οργανώσε το ταξίδι σου
             </h1>
             <p
