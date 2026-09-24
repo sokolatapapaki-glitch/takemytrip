@@ -1,7 +1,8 @@
 # Reel Closing — Plan Preview + Globe Outro
 
 Branch: `claude/travel-plan-globe-animation-ssjz6j`
-Status: **plan** — nothing built yet.
+Status: **implemented** — see `reels/README.md` §The ending for the shipped
+system. §10 lists where the build deviated from this plan.
 Scope: **reels only.** No user-visible change to the app. The one app-side
 addition (§3) is inert unless a reel fires it.
 
@@ -256,15 +257,15 @@ listener, so no Next API is expected to be involved.
 
 ## 8. Phases
 
-- [ ] **P0 — Title removal.** Optional `title`, overlay conditional, both reels
+- [x] **P0 — Title removal.** Optional `title`, overlay conditional, both reels
       render without it.
-- [ ] **P1 — Preview.** `ReelPlanPreview` + `preview` step; verify one/two-column
+- [x] **P1 — Preview.** `ReelPlanPreview` + `preview` step; verify one/two-column
       fit and the day-boundary split on the Ρώμη 3-day plan (screenshot).
-- [ ] **P2 — Outro scene.** Static background + particles + globe + text in
+- [x] **P2 — Outro scene.** Static background + particles + globe + text in
       `reels/outro/`, previewed as single PNGs at chosen `t`s.
-- [ ] **P3 — Motion.** Rotation, plane arc + dotted trail, word pops, tagline,
+- [x] **P3 — Motion.** Rotation, plane arc + dotted trail, word pops, tagline,
       the slide over the last PASS A frame.
-- [ ] **P4 — Pipeline.** PASS D wired into `render.ts` / `compose.ts`; render both
+- [x] **P4 — Pipeline.** PASS D wired into `render.ts` / `compose.ts`; render both
       reels end to end; README.
 
 ## 9. Open questions
@@ -281,3 +282,25 @@ listener, so no Next API is expected to be involved.
    orange-500 accent (tail/wings) to tie in with the trail?
 5. **Music / sound.** Still silent — want a whoosh on the slide or a pop on
    each headline word? (Adds an audio stage to `compose.ts`.)
+
+Defaults taken for the build (each is a one-line change): heading shown
+(city · days · dates); soft blue ocean with green-500 land; white plane with
+an orange outline; still silent; length left at ~24 s.
+
+## 10. Where the build deviated
+
+1. **No `world.json` committed.** `scene.ts` reads `world-atlas/land-110m.json`
+   straight from `node_modules` and converts it with `topojson-client` at
+   render time — no generated file to keep in sync.
+2. **The globe is computed in Node, not in the page.** `scene.ts` runs
+   `d3-geo` and hands the page ready SVG path strings per frame; the page is
+   loaded from `file://`, where ES-module imports from `node_modules` are
+   blocked. This also keeps the page a pure "write what you are given".
+3. **The preview is portalled to `<body>`.** Rendered in place it sat in a
+   parent stacking context under the sticky navbar, whatever its z-index.
+4. **The outro is appended in the same ffmpeg graph** (`concat` filter) as
+   the main part, rather than encoded separately and joined — one encode, no
+   seam.
+5. **`server.ts` now stops the whole process group.** It used to kill only the
+   `npx` wrapper, leaving `next-server` on the port; the next render then
+   "reused" it and captured a stale build.

@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="el">
+  <head>
+    <meta charset="utf-8" />
+    <title>Reel outro</title>
+    <link rel="stylesheet" href="./outro.css" />
+  </head>
+  <body>
+    <div id="stage">
+      <!-- the scene, bottom to top -->
+      <svg id="particles" width="1080" height="1920" viewBox="0 0 1080 1920"></svg>
+
+      <div id="headline"></div>
+
+      <svg id="globe" width="1080" height="1920" viewBox="0 0 1080 1920">
+        <defs>
+          <radialGradient id="ocean" cx="38%" cy="32%" r="75%">
+            <stop offset="0%" stop-color="#9fd4f2" />
+            <stop offset="100%" stop-color="#4f9fd4" />
+          </radialGradient>
+          <radialGradient id="shine" cx="34%" cy="28%" r="60%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.28" />
+            <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <ellipse id="globe-shadow" />
+        <circle id="globe-ocean" fill="url(#ocean)" />
+        <path id="globe-graticule" />
+        <path id="globe-land" />
+        <circle id="globe-shine" fill="url(#shine)" />
+        <circle id="globe-limb" />
+        <g id="trail"></g>
+        <g id="plane">
+          <!-- Material "flight" glyph, nose up; rotated to the path tangent. -->
+          <path
+            transform="translate(-12 -12)"
+            d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"
+          />
+        </g>
+      </svg>
+
+      <div id="tagline"></div>
+
+      <!-- the plan preview, sliding up and away over the scene -->
+      <img id="preview" alt="" />
+    </div>
+
+    <script>
+      // Pure DOM writes: every value comes from scene.ts, per frame.
+      const NS = "http://www.w3.org/2000/svg";
+      const $ = (id) => document.getElementById(id);
+      let words = [];
+
+      function circle(el, cx, cy, r) {
+        el.setAttribute("cx", cx);
+        el.setAttribute("cy", cy);
+        el.setAttribute("r", r);
+      }
+
+      window.__reelOutro = {
+        async init(s) {
+          const g = s.globe;
+          for (const id of ["globe-ocean", "globe-shine", "globe-limb"]) circle($(id), g.cx, g.cy, g.r);
+          const sh = $("globe-shadow");
+          sh.setAttribute("cx", g.cx);
+          sh.setAttribute("cy", g.cy + g.r + 46);
+          sh.setAttribute("rx", g.r * 0.8);
+          sh.setAttribute("ry", 26);
+
+          $("particles").innerHTML = s.particles
+            .map(
+              (p) =>
+                `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${p.r.toFixed(2)}" fill="${p.color}" fill-opacity="${p.opacity.toFixed(3)}"/>`
+            )
+            .join("");
+
+          const h = $("headline");
+          h.textContent = "";
+          words = s.headline.map((w) => {
+            const el = document.createElement("span");
+            el.className = "word";
+            el.textContent = w;
+            h.appendChild(el);
+            return el;
+          });
+          $("tagline").textContent = s.tagline;
+
+          const img = $("preview");
+          img.src = s.previewUrl;
+          await img.decode();
+        },
+
+        render(f) {
+          $("preview").style.transform = `translateY(${f.slideY}px)`;
+          $("preview").style.display = f.slideY <= -1920 ? "none" : "";
+          $("particles").style.transform = `translateY(${f.particlesDy}px)`;
+
+          $("globe-land").setAttribute("d", f.land);
+          $("globe-graticule").setAttribute("d", f.graticule);
+
+          $("trail").innerHTML = f.trail
+            .map(
+              (d) =>
+                `<circle cx="${d.x.toFixed(1)}" cy="${d.y.toFixed(1)}" r="7" fill-opacity="${d.opacity.toFixed(3)}"/>`
+            )
+            .join("");
+
+          const plane = $("plane");
+          if (f.plane) {
+            const p = f.plane;
+            // The glyph points up; the path angle is measured from +x.
+            plane.setAttribute(
+              "transform",
+              `translate(${p.x.toFixed(2)} ${p.y.toFixed(2)}) rotate(${(p.angle + 90).toFixed(2)}) scale(${(4.2 * p.scale).toFixed(3)})`
+            );
+            plane.style.opacity = String(p.opacity);
+          } else {
+            plane.style.opacity = "0";
+          }
+
+          words.forEach((el, i) => {
+            const w = f.words[i];
+            el.style.transform = `scale(${w.scale})`;
+            el.style.opacity = String(w.opacity);
+          });
+          const t = $("tagline");
+          t.style.opacity = String(f.tagline.opacity);
+          t.style.transform = `translateY(${f.tagline.dy}px)`;
+        },
+
+        /** Same guard as the caption overlay, plus Latin for the headline. */
+        async ensureFont() {
+          try {
+            await document.fonts.load('700 76px "ReelSans"');
+            await document.fonts.ready;
+          } catch {
+            return false;
+          }
+          if (!document.fonts.check('700 76px "ReelSans"')) return false;
+          const c = document.createElement("canvas").getContext("2d");
+          c.font = '700 76px "ReelSans"';
+          const tofu = c.measureText("￾".repeat(9)).width;
+          const greek = c.measureText("ΟΡΓΑΝΩΣΕ!").width;
+          const latin = c.measureText("TAKEMYTRP").width;
+          return greek > 0 && Math.abs(greek - tofu) > 1 && Math.abs(latin - tofu) > 1;
+        },
+      };
+    </script>
+  </body>
+</html>

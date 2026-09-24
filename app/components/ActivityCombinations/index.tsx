@@ -14,6 +14,7 @@ import { FilterSidebar } from "./FilterSidebar";
 import { ActivityList } from "./ActivityList";
 import { AdvancedFiltersModal } from "./AdvancedFiltersModal";
 import { TripPlan } from "./TripPlan";
+import { ReelPlanPreview } from "./ReelPlanPreview";
 import { planTrip } from "./core/trip.functions";
 import { enforceRequired } from "./core/trip.required";
 import { DEFAULT_START_HOUR } from "./core/schedule.data";
@@ -767,6 +768,13 @@ export default function ActivityCombinations() {
                     filters={filters}
                   />
                 )}
+                {/* Inert for users: only the reel generator opens it. */}
+                <ReelPlanPreview
+                  trip={trip}
+                  cityName={city.name}
+                  dateLabel={tripDateLabel}
+                  dates={dates}
+                />
               </div>
             </div>
           </div>

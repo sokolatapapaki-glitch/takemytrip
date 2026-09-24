@@ -1,0 +1,129 @@
+/* ---------------------------------------------------------------------------
+   Outro scene — layout and type
+   ---------------------------------------------------------------------------
+   Opaque (unlike the caption overlay): this page IS the picture for the last
+   seconds of the reel. Nothing here animates; scene.ts computes every frame
+   and template.html writes it as inline styles/attributes.                    */
+
+@font-face {
+  /* The same bundled Noto Sans Bold the captions use (npm run reel:font). */
+  font-family: "ReelSans";
+  src: url("../overlay/fonts/NotoSans-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 1080px;
+  height: 1920px;
+  overflow: hidden;
+}
+
+#stage {
+  position: relative;
+  width: 1080px;
+  height: 1920px;
+  overflow: hidden;
+  /* Light orange / sand. */
+  background: linear-gradient(180deg, #f6dfc0 0%, #efcfa4 55%, #e6bd8b 100%);
+  font-family: "ReelSans", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  color: #ffffff;
+}
+
+#particles,
+#globe {
+  position: absolute;
+  inset: 0;
+}
+
+/* --- globe ------------------------------------------------------------------ */
+#globe-shadow {
+  fill: #7a4a1c;
+  fill-opacity: 0.16;
+  filter: blur(10px);
+}
+#globe-graticule {
+  fill: none;
+  stroke: #ffffff;
+  stroke-opacity: 0.22;
+  stroke-width: 1.2;
+}
+#globe-land {
+  fill: #22c55e; /* green-500 */
+  stroke: #15803d;
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}
+#globe-limb {
+  fill: none;
+  stroke: #1e5f8c;
+  stroke-width: 5;
+}
+
+/* --- plane + trail ---------------------------------------------------------- */
+#trail circle {
+  fill: #f97316; /* orange-500 */
+}
+#plane path {
+  fill: #ffffff;
+  stroke: #c2410c; /* orange-700 outline ties it to the trail */
+  stroke-width: 0.9;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 1.2px 1px rgba(0, 0, 0, 0.35));
+}
+
+/* --- text: bold, white, all caps, black shadow ------------------------------- */
+#headline,
+#tagline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-shadow:
+    0 6px 0 #000000,
+    0 0 3px #000000,
+    0 14px 30px rgba(0, 0, 0, 0.45);
+}
+
+#headline {
+  top: 300px;
+  display: flex;
+  justify-content: center;
+  gap: 34px;
+  font-size: 132px;
+  line-height: 1;
+  letter-spacing: 0.01em;
+}
+.word {
+  display: inline-block;
+  transform-origin: 50% 70%;
+}
+
+#tagline {
+  top: 1470px;
+  padding: 0 90px;
+  font-size: 66px;
+  line-height: 1.18;
+  /* Two even lines rather than a lone "ΚΛΙΚ!" on the second. */
+  text-wrap: balance;
+}
+
+/* --- the plan preview, sliding away ------------------------------------------ */
+#preview {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1080px;
+  height: 1920px;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.35);
+}

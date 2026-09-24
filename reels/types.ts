@@ -56,7 +56,14 @@ export type Step =
   /** Hold the frame for `ms`, optionally changing the caption. */
   | { kind: "wait"; ms: number; caption?: Caption }
   /** Let the UI breathe. Same as `wait` but can never change the caption. */
-  | { kind: "hold"; ms: number };
+  | { kind: "hold"; ms: number }
+  /**
+   * The ending's "here is your plan" beat: opens the app's reel-only clean plan
+   * view (ReelPlanPreview, via a `reel:preview` event), hides the cursor, fades
+   * the captions out, and holds for `holdMs` (default 3000). Should be the last
+   * step — the outro slides this exact frame away.
+   */
+  | { kind: "preview"; holdMs?: number };
 
 /**
  * A camera move. Keyframes are attached to STEP INDEXES, not timestamps, so
@@ -110,11 +117,29 @@ export type CaptureSettings = {
   frameQuality?: number;
 };
 
+/**
+ * The closing scene (PASS D): the last captured frame slides up and away,
+ * revealing a rotating globe with a plane, the headline and the tagline.
+ * Every timing defaults from OUTRO_DEFAULTS in config.ts.
+ */
+export type Outro = {
+  /** One entry per word; each pops in on its own. */
+  headline: string[];
+  /** The longer, smaller line under the globe. */
+  tagline: string;
+  /** Preview slide-up length. */
+  slideMs?: number;
+  /** Plane flight, left limb → right limb. */
+  flightMs?: number;
+  /** Hold on the finished frame. */
+  endHoldMs?: number;
+};
+
 export type Reel = {
   /** Also the output filename: reels/out/<name>.mp4. */
   name: string;
-  /** 4–8 Greek words, pinned to the top of the frame for the whole reel. */
-  title: string;
+  /** Optional: 4–8 Greek words, pinned to the top of the frame for the whole reel. */
+  title?: string;
   /** Output size. 1080×1920 for Instagram/TikTok. */
   viewport: { width: number; height: number };
   fps: number;
@@ -122,6 +147,8 @@ export type Reel = {
   /** Omitted → a static, full-frame camera. */
   camera?: CameraKeyframe[];
   capture?: CaptureSettings;
+  /** Omitted → the reel ends where its steps end. */
+  outro?: Outro;
 };
 
 // --- What capture.ts hands to the later passes --------------------------------
@@ -129,7 +156,7 @@ export type Reel = {
 /** Per-frame state recorded during PASS A, consumed by PASS B and PASS C. */
 export type Timeline = {
   name: string;
-  title: string;
+  title?: string;
   fps: number;
   width: number;
   height: number;
@@ -143,7 +170,7 @@ export type Timeline = {
   frameCount: number;
   /** The frame index each step starts on — camera keyframes resolve through this. */
   stepFrames: number[];
-  /** Caption changes: the frame each new caption takes over on. */
+  /** Caption changes: the frame each new caption takes over on. Empty text = clear. */
   captionEvents: { frame: number; text: string }[];
   /** Cursor position per frame, in CSS pixels. */
   cursor: { x: number; y: number }[];

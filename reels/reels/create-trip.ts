@@ -10,8 +10,8 @@
 // pinned clock in config.ts that makes this reel reproducible: the same source
 // renders the same video tomorrow.
 
-import { click, destinationHook, filterHook, goto, hold, hook, type } from "../actions.js";
-import type { Reel, Step } from "../types.js";
+import { click, destinationHook, filterHook, goto, hook, preview, type } from "../actions.js";
+import type { Outro, Reel, Step } from "../types.js";
 
 // "Χρόνος" (the day's time budget) is filter 1 in DEFAULT_FILTERS; its options
 // are 3ω / 6ω / 9ω / 12ω. "Κόστος" is filter 2 but is hidden while
@@ -47,7 +47,9 @@ export const CREATE_TRIP_STEPS: Step[] = [
   click(filterHook(TIME_FILTER, 2), "ΤΡΙΤΟ ΦΙΛΤΡΟ"),
 
   click(hook("close-filters"), "ΤΟ ΤΑΞΙΔΙ ΣΟΥ ΕΙΝΑΙ ΕΤΟΙΜΟ", { holdMs: 1500 }),
-  hold(600),
+
+  // --- the ending: the whole plan, clean and static, then the outro ---
+  preview(),
 ];
 
 /** Index of the first filter click — where v2's camera pushes in. */
@@ -57,14 +59,21 @@ export const FIRST_FILTER_STEP = CREATE_TRIP_STEPS.findIndex(
 /** Index of the step after the last filter click — where v2 pulls back out. */
 export const AFTER_FILTERS_STEP = FIRST_FILTER_STEP + 3;
 
-export const TITLE = "ΦΤΙΑΞΕ ΤΟ ΤΑΞΙΔΙ ΣΟΥ ΣΕ ΔΕΥΤΕΡΟΛΕΠΤΑ";
+/**
+ * The closing scene both reels share: the preview slides up to reveal the
+ * globe, the plane and the brand line.
+ */
+export const OUTRO: Outro = {
+  headline: ["TAKE", "MY", "TRIP"],
+  tagline: "ΟΡΓΑΝΩΣΕ ΤΟ ΤΑΞΙΔΙ ΜΕ 3 ΚΛΙΚ!",
+};
 
 export const createTrip: Reel = {
   name: "create-trip",
-  title: TITLE,
   viewport: { width: 1080, height: 1920 },
   fps: 30,
   steps: CREATE_TRIP_STEPS,
+  outro: OUTRO,
 };
 
 export default createTrip;

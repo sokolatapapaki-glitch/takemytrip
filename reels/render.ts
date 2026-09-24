@@ -8,9 +8,9 @@
 //   npm run reel -- create-trip --reuse-frames  (recomposite a cached capture)
 //   npm run reel -- --all
 //
-// The three passes are separable on purpose: tweaking a caption or a camera
-// move re-runs PASS B and C against the cached PASS A frames, which is seconds
-// instead of a minute.
+// The passes are separable on purpose: tweaking a caption, a camera move or
+// the outro re-runs PASS B–D against the cached PASS A frames, which is
+// seconds instead of a minute.
 
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -20,6 +20,7 @@ import { capture } from "./capture.js";
 import { compose } from "./compose.js";
 import { OUT_DIR } from "./config.js";
 import { renderCaptions } from "./overlay/render.js";
+import { renderOutro } from "./outro/render.js";
 import { startServer } from "./server.js";
 import type { Reel, Timeline } from "./types.js";
 
@@ -85,17 +86,26 @@ async function main(): Promise<void> {
       console.log("  · PASS B  captions");
       await renderCaptions(timeline, workDir);
 
+      let outroDir: string | null = null;
+      if (reel.outro) {
+        console.log("  · PASS D  outro");
+        const o = await renderOutro(timeline, reel.outro, workDir);
+        outroDir = o.dir;
+        console.log(`    ${o.frameCount} frames (${(o.frameCount / timeline.fps).toFixed(1)}s)`);
+      }
+
       console.log("  · PASS C  composite");
       const crops = resolveCamera(timeline, reel.camera);
       if (crops) {
         const zooms = crops.map((c) => timeline.sourceWidth / c.w);
         console.log(`    camera: ${Math.min(...zooms).toFixed(2)}×–${Math.max(...zooms).toFixed(2)}×`);
       }
-      const out = await compose(timeline, workDir, crops);
+      const out = await compose(timeline, workDir, crops, outroDir);
 
       if (!flags.has("--keep-frames")) {
         await fs.rm(path.join(workDir, "captions"), { recursive: true, force: true });
         await fs.rm(path.join(workDir, "camera"), { recursive: true, force: true });
+        await fs.rm(path.join(workDir, "outro"), { recursive: true, force: true });
       }
 
       const { size } = await fs.stat(out);

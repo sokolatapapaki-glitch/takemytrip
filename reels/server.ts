@@ -48,10 +48,13 @@ export async function startServer(opts: {
     : ["next", "start", "-p", String(SERVER_PORT)];
   console.log(`  · ${args.join(" ")}`);
 
+  // Its own process group: `npx` forks `next-server` as a grandchild, and
+  // killing only the npx wrapper leaves that running on the port — where the
+  // next render would "reuse" it and silently capture a stale build.
   const child = spawn("npx", args, {
     cwd: REPO_ROOT,
     stdio: ["ignore", "ignore", "inherit"],
-    detached: false,
+    detached: true,
   });
 
   const deadline = Date.now() + 90_000;
@@ -61,7 +64,7 @@ export async function startServer(opts: {
     }
     if (await isUp()) break;
     if (Date.now() > deadline) {
-      child.kill("SIGKILL");
+      await end(child);
       throw new Error(`reel server did not come up on ${SERVER_ORIGIN} within 90s.`);
     }
     await sleep(500);
@@ -87,10 +90,18 @@ function once(cmd: string, args: string[]): Promise<void> {
 function end(child: ChildProcess): Promise<void> {
   return new Promise((resolve) => {
     if (child.exitCode !== null) return resolve();
+    // Signal the whole group (negative pid), not just the npx wrapper.
+    const kill = (sig: NodeJS.Signals) => {
+      try {
+        if (child.pid) process.kill(-child.pid, sig);
+      } catch {
+        child.kill(sig);
+      }
+    };
     child.once("close", () => resolve());
-    child.kill("SIGTERM");
+    kill("SIGTERM");
     setTimeout(() => {
-      if (child.exitCode === null) child.kill("SIGKILL");
+      if (child.exitCode === null) kill("SIGKILL");
       resolve();
     }, 5000);
   });

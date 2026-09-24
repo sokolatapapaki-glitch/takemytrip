@@ -69,3 +69,6 @@ export const wait = (ms: number, text?: string, holdMs?: number): Step => ({
 
 /** Let the UI breathe — never changes the caption. */
 export const hold = (ms: number): Step => ({ kind: "hold", ms });
+
+/** Open the clean plan preview and hold it — the ending's first beat. */
+export const preview = (holdMs?: number): Step => ({ kind: "preview", holdMs });

@@ -2,7 +2,9 @@
 
 Automated 1080×1920 / 30fps vertical reels that show, on a phone-sized screen,
 how someone actually creates a trip in this app. A synthetic cursor moves,
-clicks the **real** UI, and Greek captions narrate each action.
+clicks the **real** UI, and Greek captions narrate each action. Each reel ends
+on a clean preview of the whole plan, which slides away to reveal a globe outro
+(see [The ending](#the-ending)).
 
 ```bash
 npm run reel:font                    # once — fetches the bundled Greek font
@@ -16,8 +18,8 @@ npm run reel -- --all
 | `--all` | render every reel |
 | `--no-build` | skip `next build` (the app is already built) |
 | `--dev` | render against `next dev` instead of a production build — see [The app under the camera](#the-app-under-the-camera) |
-| `--reuse-frames` | skip PASS A and recomposite the cached capture. Seconds instead of a minute — use it while tuning captions or a camera move |
-| `--keep-frames` | keep the intermediate caption/camera frames for inspection |
+| `--reuse-frames` | skip PASS A and recomposite the cached capture. Seconds instead of a minute — use it while tuning captions, a camera move or the outro |
+| `--keep-frames` | keep the intermediate caption/camera/outro frames for inspection |
 
 `npm run reel:check` typechecks the toolchain (it is excluded from the Next
 build, so `next build` never sees it).
@@ -26,9 +28,9 @@ build, so `next build` never sees it).
 
 ## Pipeline
 
-Three passes. The split exists for exactly one reason: **the camera zoom must
-not scale the captions.** If the captions were burned into the app capture,
-zooming would blow them up too.
+Three passes, plus a fourth for the ending. The A/B/C split exists for exactly
+one reason: **the camera zoom must not scale the captions.** If the captions
+were burned into the app capture, zooming would blow them up too.
 
 ```
 PASS A — capture        Playwright drives the real app in a 432×768 CSS
@@ -40,9 +42,13 @@ PASS B — overlay        A standalone transparent-background page renders the
   overlay/render.ts     caption stack + title, screenshotted per frame with
                         alpha (omitBackground), at 1080×1920.
 
+PASS D — outro          A standalone opaque page renders the closing scene
+  outro/render.ts       (the last app frame sliding away over a globe), one
+                        1080×1920 PNG per frame. Only when the reel has `outro`.
+
 PASS C — composite      ffmpeg applies the camera (crop from the 2× source →
-  compose.ts            1080×1920), overlays the caption frames, and encodes
-                        H.264 yuv420p.
+  compose.ts            1080×1920), overlays the caption frames, appends the
+                        outro frames, and encodes H.264 yuv420p — one encode.
 ```
 
 ### Why capture at 2×
@@ -104,20 +110,20 @@ A reel is a typed TS file in `reels/reels/`. Captions and camera moves attach to
 steps, so the timeline is *derived* rather than hand-synced.
 
 ```ts
-import { click, goto, hold, hook, type } from "../actions.js";
+import { click, goto, hook, preview, type } from "../actions.js";
 import type { Reel } from "../types.js";
 
 export default {
   name: "my-reel",
-  title: "ΤΟ ΤΙΤΛΟΣ ΜΟΥ",
   viewport: { width: 1080, height: 1920 },
   fps: 30,
   steps: [
     goto("/", "ΑΡΧΙΚΗ ΣΕΛΙΔΑ"),
     type(hook("destination-input"), "Ρώμη", "ΔΙΑΛΕΞΕ ΠΡΟΟΡΙΣΜΟ"),
     click(hook("search"), "ΑΝΑΖΗΤΗΣΗ"),
-    hold(600),
+    preview(),                      // optional: end on the clean plan
   ],
+  outro: { headline: ["TAKE", "MY", "TRIP"], tagline: "ΟΡΓΑΝΩΣΕ ΤΟ ΤΑΞΙΔΙ ΜΕ 3 ΚΛΙΚ!" },
 } satisfies Reel;
 ```
 
@@ -150,6 +156,7 @@ find one **fails loudly** rather than rendering a plausible-looking wrong video.
 | `filter-<f>-<o>` | one filter option | `app/components/ActivityCombinations/PerDayFilters.tsx` |
 | `start-hour` | the day's start-time select | `app/components/ActivityCombinations/PerDayFilters.tsx` |
 | `circular` | the circular-trip toggle | `app/components/ActivityCombinations/PerDayFilters.tsx` |
+| `plan-preview` | the reel-only clean plan (opened by `preview()`) | `app/components/ActivityCombinations/ReelPlanPreview.tsx` |
 
 Filter options are addressed **by index** (`filterHook(1, 2)` → `filter-1-2`),
 not by their Greek labels, so renaming an option can never move a hook. The
@@ -207,8 +214,9 @@ Rendered in PASS B on a transparent page, so the camera never scales them.
 Nothing in `overlay/` animates: every transition is computed per frame in JS and
 written as an inline style, so a frame is a pure function of its state.
 
-- **Title** — 4–8 Greek words, pinned to the top with safe-area padding, static
-  for the whole reel, deliberately smaller than the captions.
+- **Title** — optional (`Reel.title`), and the shipped reels have none. When
+  set: 4–8 Greek words, pinned to the top with safe-area padding, static for
+  the whole reel, deliberately smaller than the captions.
 - **Caption stack** — bottom centre, two visible slots: the current line at full
   size, the previous one below it at ~72% and ~45% opacity. On a change the new
   line rises into slot A, the outgoing current slides A→B while shrinking, and
@@ -217,10 +225,8 @@ written as an inline style, so a frame is a pure function of its state.
   `paint-order: stroke fill`, so the stroke sits outside the glyph instead of
   eating into it. Greek uppercase drops accents (ΑΝΑΖΗΤΗΣΗ, not ΑΝΑΖΉΤΗΣΗ), so
   `text-transform: uppercase` is correct here with no manual stripping.
-- **Scrims** — soft dark gradients top and bottom. The app's surfaces run from a
-  dark hero photo to a white filter drawer, and white-on-white needs more than a
-  stroke. They live in the caption layer, so the camera cannot scale them
-  either.
+- **Clear** — an empty caption fades both visible lines out in place. The
+  `preview()` step emits one, so the ending is text-free until the outro.
 
 Most frames are visually identical to the one before (a caption only moves
 during its 350ms transition), so PASS B renders one screenshot per distinct
@@ -241,6 +247,46 @@ notdef characters means the glyphs are missing.
 
 ---
 
+## The ending
+
+Two beats, driven by `preview()` as the last step plus `Reel.outro`.
+
+**1. The plan preview** (PASS A, real app pixels). `preview()` dispatches a
+`reel:preview` event; `ReelPlanPreview` — mounted on the plan page, inert for
+real users because nothing else fires that event — portals a white full-screen
+layer over everything and shows only the plan: city, dates, and each day's
+timed items. No filters, buttons, map or prices. The cursor parks off frame,
+the captions clear, and the frame holds for 3 s (`previewHoldMs`).
+
+It fits itself to the phone: one column when the plan is short enough;
+otherwise two columns, split between **whole days** (days 1..k left, k+1..n
+right, k chosen to balance the columns); if the taller column still
+overflows, the layer scales down (it logs an error below 0.7×).
+
+**2. The outro** (PASS D, `reels/outro/`). The last captured frame — the
+preview — slides up and out of frame over 700 ms, revealing a scene that was
+already underneath it:
+
+- light sand-orange background with a faint, seeded particle pattern;
+- a flat 2D globe (`d3-geo` orthographic, `world-atlas` 110m land, land in
+  green-500), turning half a rotation during the flight and landing with
+  Rome centred, then slowing for the hold;
+- a white airplane flying an arc across the front of the globe, left limb to
+  right limb, emerging from behind at the start and dipping behind at the end,
+  dropping an orange-500 dotted trail that stays as the route;
+- **TAKE MY TRIP** above the globe, each word popping in on its own;
+- **ΟΡΓΑΝΩΣΕ ΤΟ ΤΑΞΙΔΙ ΜΕ 3 ΚΛΙΚ!** below it, smaller, rising in after.
+
+All text is bold white uppercase with a black shadow, in the bundled Noto Sans
+(the font guard checks Latin as well as Greek here).
+
+As with the captions, nothing in `outro/` animates on its own: `scene.ts`
+computes every frame from `t` in Node — globe paths, plane pose, trail dots,
+text state — and the page just writes it in. Timings are `OUTRO_DEFAULTS` in
+`config.ts`; per-reel overrides go on `Reel.outro`. The ending adds ~7.7 s.
+
+---
+
 ## Output
 
 `-c:v libx264 -pix_fmt yuv420p -crf 18 -preset slow -r 30 +faststart`.
@@ -250,7 +296,7 @@ music is a new ffmpeg stage rather than a change to any of this.
 
 `reels/out/` is gitignored — MP4s and frame caches never get committed.
 `reels/out/.frames/<name>/` holds the PASS A capture and `timeline.json`, which
-is what `--reuse-frames` reads.
+is what `--reuse-frames` reads (PASS D reads its preview frame from there too).
 
 A ~16s reel is ~480 frames; capture runs at roughly 6–8 frames/second, so PASS A
 is about a minute, and PASS B + C together are well under that.

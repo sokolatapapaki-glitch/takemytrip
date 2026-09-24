@@ -256,6 +256,24 @@ export async function capture(reel: Reel, workDir: string): Promise<CaptureResul
         case "hold":
           await holdFor(step.ms);
           break;
+
+        case "preview": {
+          // Captions fade out: an empty caption is the overlay's "clear".
+          timeline.captionEvents.push({ frame: timeline.frameCount, text: "" });
+          // The cursor has nothing left to point at — park it off frame.
+          cursor = { x: cssWidth / 2, y: cssHeight + 200 };
+          await page.evaluate(() => window.dispatchEvent(new Event("reel:preview")));
+          const opened = await page.evaluate(
+            () => !!document.querySelector('[data-reel="plan-preview"]')
+          );
+          if (!opened) {
+            throw new Error(
+              'reel: the plan preview did not open — is ReelPlanPreview mounted on this page?'
+            );
+          }
+          await holdFor(step.holdMs ?? DEFAULTS.previewHoldMs);
+          break;
+        }
       }
 
       if (caption) {

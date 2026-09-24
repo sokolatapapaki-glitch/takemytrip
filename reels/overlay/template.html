@@ -52,19 +52,29 @@
 
       window.__reelOverlay = {
         /**
-         * @param {{title: string, items: string[], index: number, progress: number}} s
+         * @param {{title?: string, items: string[], index: number, progress: number}} s
          *   `items` is every caption in order; `index` is the current one;
          *   `progress` is 0–1 through the transition INTO that caption
          *   (1 = settled).
          */
         render(s) {
+          // The title is optional; the reels ship without one.
           titleEl.textContent = s.title ?? "";
+          titleEl.style.display = s.title ? "" : "none";
           capsEl.textContent = "";
 
           const p = easeOut(Math.max(0, Math.min(1, s.progress)));
           const cur = s.items[s.index];
           const prev = s.items[s.index - 1];
           const older = s.items[s.index - 2];
+
+          // An empty caption is a CLEAR: both visible lines fade out in place,
+          // nothing rises in. The ending's preview uses it.
+          if (cur === "") {
+            layer(older, SLOT_GAP, PREV_SCALE, mix(PREV_OPACITY, 0, p));
+            layer(prev, 0, 1, 1 - p);
+            return;
+          }
 
           // Oldest first, so the newest paints on top.
           // Outgoing previous: slot B → out the bottom, fading to nothing.

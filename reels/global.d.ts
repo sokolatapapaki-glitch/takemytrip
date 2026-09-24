@@ -21,12 +21,19 @@ declare global {
     /** The overlay page's per-frame renderer (PASS B). */
     __reelOverlay?: {
       render(state: {
-        title: string;
+        title?: string;
         items: string[];
         index: number;
         progress: number;
       }): void;
       /** Loads the bundled Greek font; false if it is missing or cannot draw Greek. */
+      ensureFont(): Promise<boolean>;
+    };
+    /** The outro scene's per-frame renderer (PASS D). */
+    __reelOutro?: {
+      /** One-off scene setup: preview image, particles, text. */
+      init(setup: import("./outro/scene.js").OutroSetup): Promise<void>;
+      render(state: import("./outro/scene.js").OutroFrame): void;
       ensureFont(): Promise<boolean>;
     };
   }

@@ -29,6 +29,23 @@ export const DEFAULTS = {
   clickPulseMs: 380,
   /** Smooth-scroll duration when a target is off screen. */
   scrollMs: 360,
+  /** How long the clean plan preview stays on screen, static. */
+  previewHoldMs: 3000,
+} as const;
+
+/** Closing-scene timings, in ms — see Outro in types.ts. */
+export const OUTRO_DEFAULTS = {
+  slideMs: 700,
+  flightMs: 3000,
+  endHoldMs: 1000,
+  /** Headline words start popping this far into the slide. */
+  headlineStartMs: 520,
+  /** Gap between one word's pop and the next. */
+  wordStaggerMs: 150,
+  /** One word's pop length. */
+  wordPopMs: 320,
+  /** Tagline rise-in length, after the last word lands. */
+  taglineMs: 420,
 } as const;
 
 /** Capture defaults — see CaptureSettings in types.ts for what each means. */

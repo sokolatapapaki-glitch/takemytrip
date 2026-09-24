@@ -14,12 +14,11 @@ import {
   AFTER_FILTERS_STEP,
   CREATE_TRIP_STEPS,
   FIRST_FILTER_STEP,
-  TITLE,
+  OUTRO,
 } from "./create-trip.js";
 
 export const createTripZoom: Reel = {
   name: "create-trip-zoom",
-  title: TITLE,
   viewport: { width: 1080, height: 1920 },
   fps: 30,
   steps: CREATE_TRIP_STEPS,
@@ -45,6 +44,7 @@ export const createTripZoom: Reel = {
     // …and back out for the finish.
     { at: AFTER_FILTERS_STEP, scale: 1.0, target: "cursor", durationMs: 450, easing: "easeInOut" },
   ],
+  outro: OUTRO,
 };
 
 export default createTripZoom;

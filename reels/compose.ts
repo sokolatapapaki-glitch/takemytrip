@@ -2,7 +2,8 @@
 // PASS C — composite
 // -----------------------------------------------------------------------------
 // Applies the camera (a crop of the 2× capture, scaled down to the output size),
-// overlays the caption frames, and encodes H.264.
+// overlays the caption frames, appends the outro frames (PASS D) when the reel
+// has one, and encodes H.264.
 //
 // Two paths, because the cheap one covers most reels:
 //
@@ -28,7 +29,8 @@ const FFMPEG = ffmpegPath as unknown as string;
 export async function compose(
   timeline: Timeline,
   workDir: string,
-  crops: CropRect[] | null
+  crops: CropRect[] | null,
+  outroDir: string | null = null
 ): Promise<string> {
   const { width, height, fps, frameExt } = timeline;
   const appDir = path.join(workDir, "app");
@@ -48,14 +50,24 @@ export async function compose(
     pictureFilter = "null";
   }
 
+  // Main part: picture + captions. With an outro, its opaque frames are
+  // concatenated straight after, in the same graph — one encode, no seam.
+  const main = `[0:v]${pictureFilter},format=rgba[bg];[bg][1:v]overlay=0:0:format=auto,format=yuv420p,setsar=1`;
+  const graph = outroDir
+    ? `${main}[main];[2:v]format=yuv420p,setsar=1[outro];[main][outro]concat=n=2:v=1:a=0[v]`
+    : `${main}[v]`;
+
   await run(FFMPEG, [
     "-y",
     "-framerate", String(fps),
     "-i", path.join(pictureDir, `%05d.${pictureExt}`),
     "-framerate", String(fps),
     "-i", path.join(capDir, "%05d.png"),
+    ...(outroDir
+      ? ["-framerate", String(fps), "-i", path.join(outroDir, "%05d.png")]
+      : []),
     "-filter_complex",
-    `[0:v]${pictureFilter},format=rgba[bg];[bg][1:v]overlay=0:0:format=auto,format=yuv420p[v]`,
+    graph,
     "-map", "[v]",
     ...ENCODE_ARGS,
     "-r", String(fps),
