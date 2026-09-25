@@ -9,9 +9,15 @@
 //   0 ─ slide ──────┐ the last app frame slides up, the scene is already under it
 //        headline   │ TAKE · MY · TRIP pop in one at a time, as the slide lands
 //        tagline    │ rises in after the last word
-//        flight ────┤ plane: left limb → front of the globe → behind the right limb,
-//                   │ while the globe turns half a rotation; orange dotted trail
+//        flight ────┤ plane: out from behind the left limb, across the face, back
+//                   │ behind the right one; orange dotted trail, occluded with it
 //   end hold ───────┘ the finished frame, globe still turning (slower)
+//
+// The flight is a satellite ORBIT: a real circle in 3D, at altitude above the
+// surface, fixed to the CAMERA and not to the sphere — the earth turns
+// underneath and the orbit is unaffected. Depth is what makes it read as 3D: a
+// point is dropped only where the globe actually eclipses it, so the route
+// swings wide past the limb, crosses the face, and is swallowed at the back.
 
 import fs from "node:fs";
 import { createRequire } from "node:module";
@@ -25,11 +31,10 @@ import { OUTRO_DEFAULTS } from "../config.js";
 export type OutroSetup = {
   width: number;
   height: number;
-  /** file:// URL of the frame the outro slides away (the plan preview). */
+  /** file:// URL of the frame the outro slides away (the reel's last frame). */
   previewUrl: string;
   headline: string[];
   tagline: string;
-  particles: { x: number; y: number; r: number; color: string; opacity: number }[];
   globe: { cx: number; cy: number; r: number };
 };
 
@@ -37,10 +42,33 @@ export type OutroSetup = {
 export type OutroFrame = {
   /** Preview's translateY, px (0 = in place, −height = gone). */
   slideY: number;
-  particlesDy: number;
   land: string;
   graticule: string;
-  plane: { x: number; y: number; angle: number; scale: number; opacity: number } | null;
+  plane: {
+    x: number;
+    y: number;
+    angle: number;
+    scale: number;
+    opacity: number;
+    /**
+     * How much of the 3D velocity lies in the screen plane: the real
+     * foreshortening. The page squashes the side silhouette along its own
+     * length by this, which is what turns a flat shape into a solid one.
+     *
+     * It never reaches 0 on this orbit — at the limbs it bottoms out at
+     * cos(tilt) — because that is where the orbit's velocity still has a
+     * cos(tilt) share across the frame. A steeper tilt would take the plane
+     * closer to dead end-on, at the cost of flattening the on-screen arc.
+     */
+    squashX: number;
+    /**
+     * Which silhouette to show: 1 = full side profile, 0 = the end-on one.
+     * Normalised over `squashX`'s ACTUAL range for this tilt, so the cross-fade
+     * uses all of itself instead of the top half — and the two opacities sum to
+     * 1, so the pair never goes translucent mid-turn.
+     */
+    sideMix: number;
+  } | null;
   trail: { x: number; y: number; opacity: number }[];
   words: { scale: number; opacity: number }[];
   tagline: { opacity: number; dy: number };
@@ -56,10 +84,33 @@ const LAND_ON_LON = 12.5;
 /** After the flight the globe keeps turning, at this fraction of flight speed. */
 const HOLD_SPIN = 0.3;
 
-/** The plane's arc: an ellipse over the front of the globe, slightly tilted. */
-const ARC = { a: GLOBE.r * 1.16, b: GLOBE.r * 0.66, lift: 40, tiltDeg: -8 };
-const TRAIL_SPACING = 30; // px between trail dots
-const TRAIL_GAP = 46; // px of clear air between the plane and the newest dot
+/**
+ * The flight: a satellite ORBIT — a real circle in 3D, at altitude, fixed to the
+ * CAMERA rather than to the sphere. The globe turns underneath and the orbit
+ * does not care.
+ *
+ * Because it sits above the surface, "behind the globe" is not simply the far
+ * half of the circle. A point is hidden only when it is both behind (z < 0) AND
+ * inside the globe's silhouette; behind but out past the limb, it is in open
+ * space and you see it. That is exactly how a satellite reads: it swings wide
+ * round the sides, passes over the face, and is eclipsed at the back.
+ *
+ *   radius    1.08× the globe — just enough daylight under it to read as an
+ *             orbit rather than a line drawn on the surface.
+ *   tilt      how steeply the orbit leans out of the screen plane. It has to be
+ *             steep enough that the orbit's narrowest on-screen point falls
+ *             INSIDE the disc, or nothing is ever eclipsed: that needs
+ *             cos(tilt) < 1/radius, i.e. above ~32°. 62° gives a deep eclipse.
+ *   start     where the orbit begins, in degrees. 90° is the middle of the
+ *             eclipse, so the plane is already hidden when the flight starts —
+ *             you never catch it appearing from nowhere.
+ *   sweep     360° — one full revolution, ending back in the eclipse.
+ */
+const FLIGHT = { radius: 1.08, tiltDeg: 62, startDeg: 90, sweepDeg: 360 };
+/** Degrees of arc between trail dots. */
+const TRAIL_SPACING_DEG = 3;
+/** Degrees of clear air between the plane's nose and the newest dot. */
+const TRAIL_GAP_DEG = 8;
 
 // --- easing -------------------------------------------------------------------
 
@@ -104,7 +155,6 @@ export function outroSetup(outro: Outro, previewUrl: string): OutroSetup {
     previewUrl,
     headline: outro.headline,
     tagline: outro.tagline,
-    particles: particles(1080, 1920),
     globe: GLOBE,
   };
 }
@@ -112,7 +162,6 @@ export function outroSetup(outro: Outro, previewUrl: string): OutroSetup {
 /** A frame-by-frame renderer for one outro. */
 export function outroScene(outro: Outro): (tMs: number) => OutroFrame {
   const T = outroTimings(outro);
-  const total = outroDuration(outro);
   const flightStart = T.slideMs;
   const flightEnd = T.slideMs + T.flightMs;
   const spin = 180 / T.flightMs; // deg per ms — half a turn over the flight
@@ -126,17 +175,37 @@ export function outroScene(outro: Outro): (tMs: number) => OutroFrame {
     .precision(0.4);
   const path = geoPath(projection);
 
-  const arc = arcSampler();
+  /** λ at time t. Minus the longitude sitting at the centre of the frame. */
+  const lambdaAt = (t: number): number => {
+    const lambdaEnd = -LAND_ON_LON;
+    return t <= flightEnd
+      ? lambdaEnd + spin * (t - flightEnd)
+      : lambdaEnd + spin * HOLD_SPIN * (t - flightEnd);
+  };
+
+  // The flight, in camera space. θ is degrees around the circle: 180° is the
+  // left limb, 270° the top of the arc dead in front, 360° the right limb.
+  // Outside (180, 360) the point is on the far side and the globe hides it.
+  const R = GLOBE.r * FLIGHT.radius;
+  const cosTilt = Math.cos(FLIGHT.tiltDeg * D2R);
+  const sinTilt = Math.sin(FLIGHT.tiltDeg * D2R);
+  const at = (deg: number) => {
+    const a = deg * D2R;
+    const x = GLOBE.cx + R * Math.cos(a);
+    const y = GLOBE.cy + R * Math.sin(a) * cosTilt;
+    /** Toward the camera. Positive = the near side of the orbit. */
+    const z = -R * Math.sin(a) * sinTilt;
+    // Eclipsed: behind the globe AND within its silhouette. Behind but outside
+    // the limb is open space — a satellite there is perfectly visible.
+    const eclipsed = z <= 0 && Math.hypot(x - GLOBE.cx, y - GLOBE.cy) < GLOBE.r;
+    return { x, y, z, eclipsed };
+  };
+  const thetaFrom = FLIGHT.startDeg;
+  const thetaTo = FLIGHT.startDeg + FLIGHT.sweepDeg;
+  const thetaAt = (u: number) => mix(thetaFrom, thetaTo, u);
 
   return (t: number): OutroFrame => {
-    // Rotation: linear through the flight so Rome is centred as the plane
-    // lands, then slowing for the hold. λ is minus the centred longitude.
-    const lambdaEnd = -LAND_ON_LON;
-    const lambda =
-      t <= flightEnd
-        ? lambdaEnd + spin * (t - flightEnd)
-        : lambdaEnd + spin * HOLD_SPIN * (t - flightEnd);
-    projection.rotate([lambda, TILT]);
+    projection.rotate([lambdaAt(t), TILT]);
 
     // Plane: near-constant speed with a soft start and landing.
     const x = clamp01((t - flightStart) / T.flightMs);
@@ -144,28 +213,49 @@ export function outroScene(outro: Outro): (tMs: number) => OutroFrame {
     let plane: OutroFrame["plane"] = null;
     const trail: OutroFrame["trail"] = [];
     if (t >= flightStart) {
-      const p = arc.at(u);
-      const ahead = arc.at(Math.min(1, u + 0.004));
-      const behind = arc.at(Math.max(0, u - 0.004));
-      const angle = (Math.atan2(ahead.y - behind.y, ahead.x - behind.x) * 180) / Math.PI;
-      // Emerges from behind the left limb, dips back behind the right one:
-      // small and faint at both ends, full size across the face.
-      const edge = Math.min(clamp01(u / 0.1), clamp01((1 - u) / 0.12));
-      if (u < 1) {
-        plane = {
-          x: p.x,
-          y: p.y,
-          angle,
-          scale: mix(0.55, 1, easeOut(edge)),
-          opacity: easeOut(edge),
-        };
-      }
-      const head = arc.lengthAt(u) - TRAIL_GAP * edge;
-      for (let s = 0; s <= head; s += TRAIL_SPACING) {
-        const q = arc.atLength(s);
+      const head = thetaAt(u);
+
+      // The trail: every dot already flown that is not eclipsed. No fade at the
+      // limb — the globe does the hiding now, which is the whole point, and a
+      // fade would only blur the edge it is meant to sell.
+      for (let a = thetaFrom; a <= head - TRAIL_GAP_DEG; a += TRAIL_SPACING_DEG) {
+        const q = at(a);
+        if (q.eclipsed) continue;
         // Newest dots full strength; the route behind fades a little.
-        const age = head > 0 ? 1 - s / head : 0;
+        const age = clamp01((head - a) / Math.max(1, head - thetaFrom));
         trail.push({ x: q.x, y: q.y, opacity: mix(1, 0.55, age) });
+      }
+
+      const here = at(head);
+      if (u < 1 && !here.eclipsed) {
+        const ahead = at(head + 1.2);
+        const behind = at(head - 1.2);
+        // Velocity in 3D. Its screen part gives the heading; how much of the
+        // whole vector that screen part accounts for gives us how side-on the
+        // plane is — the thing that makes two flat sprites read as one solid
+        // object turning. Straight across the frame: full profile. Pointing at
+        // the camera: end-on, and the profile view foreshortens to nothing.
+        const vx = ahead.x - behind.x;
+        const vy = ahead.y - behind.y;
+        const vz = ahead.z - behind.z;
+        const angle = (Math.atan2(vy, vx) * 180) / Math.PI;
+        const squashX = Math.hypot(vx, vy) / (Math.hypot(vx, vy, vz) || 1);
+        // cosTilt is the floor squashX can reach, so rescale from there.
+        const sideMix = clamp01((squashX - cosTilt) / (1 - cosTilt));
+        // Smaller the further away it is: perspective, not a fade-out. z runs
+        // ±R·sin(tilt) and is NEGATIVE for the half of the orbit that swings
+        // behind, which is visible out past the limb — so this maps the whole
+        // range to 0–1 rather than treating the far side as zero.
+        const depth = clamp01((here.z / (R * sinTilt) + 1) / 2);
+        plane = {
+          x: here.x,
+          y: here.y,
+          angle,
+          scale: mix(0.62, 1, depth),
+          opacity: 1,
+          squashX,
+          sideMix,
+        };
       }
     }
 
@@ -179,7 +269,6 @@ export function outroScene(outro: Outro): (tMs: number) => OutroFrame {
 
     return {
       slideY: -1920 * easeInOut(clamp01(t / T.slideMs)),
-      particlesDy: -24 * (t / total),
       land: path(land) ?? "",
       graticule: path(graticule) ?? "",
       plane,
@@ -200,69 +289,4 @@ function loadLand() {
   return feature(topo, topo.objects.land);
 }
 
-/** The plane's path, sampled once so dots can be placed by arc length. */
-function arcSampler() {
-  const N = 1200;
-  const tilt = (ARC.tiltDeg * Math.PI) / 180;
-  const raw = (u: number) => {
-    const th = Math.PI * (1 - u); // π (left) → 0 (right), over the top
-    const x = ARC.a * Math.cos(th);
-    const y = -ARC.b * Math.sin(th) - ARC.lift * Math.sin(th);
-    return {
-      x: GLOBE.cx + x * Math.cos(tilt) - y * Math.sin(tilt),
-      y: GLOBE.cy + x * Math.sin(tilt) + y * Math.cos(tilt),
-    };
-  };
-  const pts = Array.from({ length: N + 1 }, (_, i) => raw(i / N));
-  const cum = [0];
-  for (let i = 1; i <= N; i++) {
-    cum.push(cum[i - 1] + Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y));
-  }
-  return {
-    at: raw,
-    lengthAt: (u: number) => {
-      const f = clamp01(u) * N;
-      const i = Math.floor(f);
-      return i >= N ? cum[N] : mix(cum[i], cum[i + 1], f - i);
-    },
-    atLength: (s: number) => {
-      let lo = 0;
-      let hi = N;
-      while (hi - lo > 1) {
-        const mid = (lo + hi) >> 1;
-        if (cum[mid] < s) lo = mid;
-        else hi = mid;
-      }
-      const span = cum[hi] - cum[lo] || 1;
-      return raw((lo + (s - cum[lo]) / span) / N);
-    },
-  };
-}
-
-/** Faint particles on a jittered grid — a pattern, not noise. Seeded. */
-function particles(width: number, height: number): OutroSetup["particles"] {
-  let seed = 0x7a4e3;
-  const rand = () => {
-    seed = (seed * 1664525 + 1013904223) >>> 0;
-    return seed / 2 ** 32;
-  };
-  const out: OutroSetup["particles"] = [];
-  const cols = 9;
-  const rows = 17;
-  const cw = width / cols;
-  const ch = (height + 60) / rows;
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      // Every other row is offset half a cell, like a woven pattern.
-      const ox = r % 2 ? cw / 2 : 0;
-      out.push({
-        x: c * cw + ox + (rand() - 0.5) * cw * 0.5,
-        y: r * ch + (rand() - 0.5) * ch * 0.5,
-        r: 2 + rand() * 3.5,
-        color: rand() < 0.55 ? "#ffffff" : "#8a5a2b",
-        opacity: 0.1 + rand() * 0.14,
-      });
-    }
-  }
-  return out;
-}
+const D2R = Math.PI / 180;

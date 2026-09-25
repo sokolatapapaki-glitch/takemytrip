@@ -14,7 +14,7 @@ export const OUT_DIR = path.join(REELS_DIR, "out");
 /** Step timing defaults, in ms. A reel overrides these per step when it wants. */
 export const DEFAULTS = {
   /** Cursor travel time between targets. */
-  moveMs: 400,
+  moveMs: 600,
   /** Frames held after a click so the UI's reaction lands on screen. */
   settleMs: 420,
   /** Frames held after a navigation. */
@@ -31,12 +31,15 @@ export const DEFAULTS = {
   scrollMs: 360,
   /** How long the clean plan preview stays on screen, static. */
   previewHoldMs: 3000,
+  /** How long a `finish` step holds the cleared frame before the outro. */
+  finishHoldMs: 900,
 } as const;
 
 /** Closing-scene timings, in ms — see Outro in types.ts. */
 export const OUTRO_DEFAULTS = {
   slideMs: 700,
-  flightMs: 3000,
+  /** One full orbit. Unhurried — a satellite does not dart. */
+  flightMs: 5200,
   endHoldMs: 1000,
   /** Headline words start popping this far into the slide. */
   headlineStartMs: 520,

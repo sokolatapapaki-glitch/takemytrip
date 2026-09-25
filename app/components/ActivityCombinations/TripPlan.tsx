@@ -155,6 +155,7 @@ export function TripPlan({
         circulars={circulars}
         area={area}
         filters={filters}
+        reelKey="trip-plan"
       />
       <TripAlternatives
         key={tripKey}

@@ -61,6 +61,20 @@ export const type = (
   caption: caption(captionText, opts.holdMs),
 });
 
+/** Slowly scroll through `target` until its bottom edge reaches the frame's. */
+export const scroll = (
+  target: string,
+  durationMs: number,
+  text?: string,
+  opts: { easing?: "easeInOut" | "linear"; holdMs?: number } = {}
+): Step => ({
+  kind: "scroll",
+  target,
+  durationMs,
+  easing: opts.easing,
+  caption: caption(text, opts.holdMs),
+});
+
 export const wait = (ms: number, text?: string, holdMs?: number): Step => ({
   kind: "wait",
   ms,
@@ -72,3 +86,6 @@ export const hold = (ms: number): Step => ({ kind: "hold", ms });
 
 /** Open the clean plan preview and hold it — the ending's first beat. */
 export const preview = (holdMs?: number): Step => ({ kind: "preview", holdMs });
+
+/** Clear the captions and park the cursor, leaving the app where it is. */
+export const finish = (holdMs?: number): Step => ({ kind: "finish", holdMs });

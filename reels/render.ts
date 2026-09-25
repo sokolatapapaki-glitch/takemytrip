@@ -26,10 +26,12 @@ import type { Reel, Timeline } from "./types.js";
 
 import createTrip from "./reels/create-trip.js";
 import createTripZoom from "./reels/create-trip-zoom.js";
+import londonTrip from "./reels/london-trip.js";
 
 const REELS: Record<string, Reel> = {
   [createTrip.name]: createTrip,
   [createTripZoom.name]: createTripZoom,
+  [londonTrip.name]: londonTrip,
 };
 
 async function main(): Promise<void> {

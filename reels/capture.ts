@@ -252,6 +252,45 @@ export async function capture(reel: Reel, workDir: string): Promise<CaptureResul
           break;
         }
 
+        case "scroll": {
+          await preloadImages(page, step.target);
+          const plan = await page.evaluate((sel) => {
+            const el = window.__reel.visible(sel);
+            if (!el) return null;
+            const r = el.getBoundingClientRect();
+            const sc = window.__reel.scroller(sel);
+            const start = window.__reel.scrollTop(sel);
+            const max = sc
+              ? sc.scrollHeight - sc.clientHeight
+              : document.documentElement.scrollHeight - window.innerHeight;
+            // Land the target's bottom edge just inside the frame. Lifting it
+            // clear of the caption stack instead would scroll whatever follows
+            // the target — on the plan page, the black site footer — into the
+            // bottom of the shot, which reads far worse than a last row that
+            // sits behind the (stroked, legible) captions.
+            const clearance = window.innerHeight * 0.03;
+            const end = start + r.bottom - (window.innerHeight - clearance);
+            return { start, end: Math.max(0, Math.min(max, end)) };
+          }, step.target);
+          if (!plan) {
+            throw new Error(
+              `reel: no visible element matches "${step.target}" to scroll through — ` +
+                `see reels/README.md §Hooks.`
+            );
+          }
+          const n = Math.max(1, Math.round(step.durationMs / frameMs));
+          const ease = step.easing === "linear" ? (t: number) => t : easeInOut;
+          for (let i = 1; i <= n; i++) {
+            const top = plan.start + (plan.end - plan.start) * ease(i / n);
+            await page.evaluate((a) => window.__reel.scrollTo(a.sel, a.top), {
+              sel: step.target,
+              top,
+            });
+            await shoot();
+          }
+          break;
+        }
+
         case "wait":
         case "hold":
           await holdFor(step.ms);
@@ -272,6 +311,15 @@ export async function capture(reel: Reel, workDir: string): Promise<CaptureResul
             );
           }
           await holdFor(step.holdMs ?? DEFAULTS.previewHoldMs);
+          break;
+        }
+
+        case "finish": {
+          // Same two clears as `preview`, without opening anything: the frame
+          // the outro slides away is whatever the previous step left on screen.
+          timeline.captionEvents.push({ frame: timeline.frameCount, text: "" });
+          cursor = { x: cssWidth / 2, y: cssHeight + 200 };
+          await holdFor(step.holdMs ?? DEFAULTS.finishHoldMs);
           break;
         }
       }
@@ -344,6 +392,38 @@ async function resolveTarget(
   const centre = await page.evaluate((sel) => window.__reel.centre(sel), selector);
   if (!centre) throw new Error(`reel: "${selector}" vanished while scrolling to it.`);
   return centre;
+}
+
+/**
+ * Load every image inside `selector` before a showcase scroll. They are
+ * `loading="lazy"`, so otherwise each one would start fetching only as it
+ * scrolls into view and pop in on camera.
+ *
+ * The wait runs on Node's real clock: inside the page, timers are faked by
+ * page.clock and only advance when the frame loop says so, so an in-page
+ * timeout would never fire.
+ */
+async function preloadImages(page: Page, selector: string, timeoutMs = 8000): Promise<void> {
+  await page.evaluate((sel) => {
+    const el = window.__reel.visible(sel);
+    el?.querySelectorAll("img").forEach((img) => {
+      img.loading = "eager";
+    });
+  }, selector);
+
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    const pending = await page.evaluate((sel) => {
+      const el = window.__reel.visible(sel);
+      if (!el) return 0;
+      return [...el.querySelectorAll("img")].filter((img) => !img.complete).length;
+    }, selector);
+    if (pending === 0) return;
+    await new Promise((r) => setTimeout(r, 100));
+  }
+  // Not fatal: a missing image already has its own fallback in the app. The
+  // reel still renders; the frames will just show that fallback.
+  console.warn(`reel: images inside ${selector} still loading after ${timeoutMs}ms — continuing.`);
 }
 
 /**

@@ -31,7 +31,7 @@ declare global {
     };
     /** The outro scene's per-frame renderer (PASS D). */
     __reelOutro?: {
-      /** One-off scene setup: preview image, particles, text. */
+      /** One-off scene setup: preview image, globe geometry, text. */
       init(setup: import("./outro/scene.js").OutroSetup): Promise<void>;
       render(state: import("./outro/scene.js").OutroFrame): void;
       ensureFont(): Promise<boolean>;

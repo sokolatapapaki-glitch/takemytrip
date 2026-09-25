@@ -36,13 +36,13 @@ export const createTripZoom: Reel = {
       at: FIRST_FILTER_STEP,
       scale: 1.55,
       target: "cursor",
-      durationMs: 450,
+      durationMs: 800,
       easing: "easeInOut",
       follow: "y",
       anchorX: 0.12,
     },
     // …and back out for the finish.
-    { at: AFTER_FILTERS_STEP, scale: 1.0, target: "cursor", durationMs: 450, easing: "easeInOut" },
+    { at: AFTER_FILTERS_STEP, scale: 1.0, target: "cursor", durationMs: 800, easing: "easeInOut" },
   ],
   outro: OUTRO,
 };

@@ -127,6 +127,7 @@ export function TripCard({
   circulars,
   area,
   filters,
+  reelKey,
 }: {
   trip: Trip;
   title: string;
@@ -165,6 +166,8 @@ export function TripCard({
   circulars?: boolean[];
   area?: Area;
   filters?: Filter[];
+  // Inert hook for the reel generator — see FilterButton (PerDayFilters.tsx).
+  reelKey?: string;
 }) {
   const [openState, setOpenState] = useState(defaultOpen);
   const open = controlledOpen ?? openState;
@@ -368,12 +371,16 @@ export function TripCard({
 
   // -- Closed (compact) — just the shared header. ----------------------------
   if (!open) {
-    return <article className={cardClass}>{header}</article>;
+    return (
+      <article className={cardClass} data-reel={reelKey}>
+        {header}
+      </article>
+    );
   }
 
   // -- Open (expanded) -------------------------------------------------------
   return (
-    <article className={cardClass}>
+    <article className={cardClass} data-reel={reelKey}>
       {header}
 
       <div className="flex flex-col gap-3 p-3 sm:p-4">

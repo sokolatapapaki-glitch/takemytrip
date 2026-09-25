@@ -32,11 +32,48 @@
       const PREV_SCALE = 0.72;
       const PREV_OPACITY = 0.45;
 
+      const FONT_PX = 76;     // the size a caption is set at when it fits
+      const MIN_FONT_PX = 44; // below this, legibility on a phone goes first
+
       const titleEl = document.getElementById("title");
       const capsEl = document.getElementById("captions");
 
       const easeOut = (t) => 1 - Math.pow(1 - t, 3);
       const mix = (a, b, t) => a + (b - a) * t;
+
+      /**
+       * How big this caption can be set and still fit on ONE row.
+       *
+       * Measured with canvas rather than by laying the text out and reading
+       * scrollWidth back: a DOM measurement would have to happen after the
+       * element is in the document, which forces a reflow per layer per frame —
+       * three of those, ~1000 frames a reel. The canvas has the same font, so
+       * the widths agree, and the result is cached because the same handful of
+       * captions are re-measured on every single frame.
+       */
+      const CAP_INSET = 70;      // .cap's left/right, from overlay.css
+      const LETTER_SPACING = 0.01; // #stage's letter-spacing, in em
+      const STROKE_PX = 9;       // -webkit-text-stroke, half of it each side
+
+      const fitCache = new Map();
+      const measurer = document.createElement("canvas").getContext("2d");
+      function fitFontPx(text) {
+        let px = fitCache.get(text);
+        if (px !== undefined) return px;
+
+        // #stage uppercases in CSS, so measure what will actually be drawn.
+        const shown = text.toUpperCase();
+        const avail = window.innerWidth - CAP_INSET * 2 - STROKE_PX * 2;
+        measurer.font = `700 ${FONT_PX}px "ReelSans"`;
+        // Width at FONT_PX, per px of font size. Letter-spacing scales with the
+        // font too, so it belongs in the same ratio; the stroke does not, which
+        // is why it came off `avail` above instead.
+        const perPx =
+          measurer.measureText(shown).width / FONT_PX + LETTER_SPACING * shown.length;
+        px = Math.min(FONT_PX, Math.max(MIN_FONT_PX, Math.floor(avail / perPx)));
+        fitCache.set(text, px);
+        return px;
+      }
 
       /** One caption layer, placed entirely from numbers. */
       function layer(text, y, scale, opacity) {
@@ -44,6 +81,7 @@
         const el = document.createElement("div");
         el.className = "cap";
         el.textContent = text;
+        el.style.fontSize = `${fitFontPx(text)}px`;
         el.style.transform = `translateY(${y}px) scale(${scale})`;
         el.style.opacity = String(opacity);
         capsEl.appendChild(el);

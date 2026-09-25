@@ -92,4 +92,8 @@ body {
   line-height: 1.1;
   transform-origin: 50% 100%;
   will-change: transform, opacity;
+  /* Always a single row — template.html shrinks the type until it fits rather
+     than letting a long caption wrap onto a second line. Two-line captions
+     pushed the stack around and changed the reel's rhythm mid-sentence. */
+  white-space: nowrap;
 }

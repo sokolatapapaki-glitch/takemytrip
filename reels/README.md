@@ -10,6 +10,7 @@ on a clean preview of the whole plan, which slides away to reveal a globe outro
 npm run reel:font                    # once — fetches the bundled Greek font
 npm run reel -- create-trip          # → reels/out/create-trip.mp4
 npm run reel -- create-trip-zoom     # the same flow, with a camera move
+npm run reel -- london-trip          # 4 days in Λονδίνο, zooms + a scroll through the plan
 npm run reel -- --all
 ```
 
@@ -121,7 +122,8 @@ export default {
     goto("/", "ΑΡΧΙΚΗ ΣΕΛΙΔΑ"),
     type(hook("destination-input"), "Ρώμη", "ΔΙΑΛΕΞΕ ΠΡΟΟΡΙΣΜΟ"),
     click(hook("search"), "ΑΝΑΖΗΤΗΣΗ"),
-    preview(),                      // optional: end on the clean plan
+    scroll(hook("trip-plan"), 9000, "ΔΕΣ ΟΛΟ ΤΟ ΠΡΟΓΡΑΜΜΑ"),
+    finish(),                       // clear the captions and cursor for the outro
   ],
   outro: { headline: ["TAKE", "MY", "TRIP"], tagline: "ΟΡΓΑΝΩΣΕ ΤΟ ΤΑΞΙΔΙ ΜΕ 3 ΚΛΙΚ!" },
 } satisfies Reel;
@@ -156,6 +158,7 @@ find one **fails loudly** rather than rendering a plausible-looking wrong video.
 | `filter-<f>-<o>` | one filter option | `app/components/ActivityCombinations/PerDayFilters.tsx` |
 | `start-hour` | the day's start-time select | `app/components/ActivityCombinations/PerDayFilters.tsx` |
 | `circular` | the circular-trip toggle | `app/components/ActivityCombinations/PerDayFilters.tsx` |
+| `trip-plan` | the main (best) trip card — **not** the alternatives below it | `app/components/ActivityCombinations/TripPlan.tsx` → `TripCard` `reelKey` |
 | `plan-preview` | the reel-only clean plan (opened by `preview()`) | `app/components/ActivityCombinations/ReelPlanPreview.tsx` |
 
 Filter options are addressed **by index** (`filterHook(1, 2)` → `filter-1-2`),
@@ -178,6 +181,30 @@ and watching the itinerary re-plan, rather than as three unrelated toggles.
 When more groups come back, `filterHook(f, o)` addresses them with no other
 change.
 
+### Scrolling through a result
+
+```ts
+scroll(hook("trip-plan"), 5000, "ΔΕΣ ΟΛΟ ΤΟ ΠΡΟΓΡΑΜΜΑ")
+```
+
+A showcase pan, distinct from the automatic scroll a `click` does to bring an
+off-screen target into view. It starts wherever the page is and eases until the
+target's bottom edge sits **just inside the frame**. The cursor rests while the
+page moves under it.
+
+It deliberately does not lift the target clear of the caption stack. That was
+tried first: on the plan page it scrolled the black site footer — email, links
+— into the bottom quarter of the shot, which reads far worse than a last row
+sitting behind the stroked captions.
+
+`durationMs` is fixed rather than derived from the target's height, so a trip
+that gains a day re-paces the scroll but never changes the reel's length.
+
+Before the first scrolled frame, every `<img>` inside the target is switched to
+eager loading and awaited on Node's real clock (the page's own timers are faked
+by `page.clock`, so an in-page timeout would never fire). Without this, lazy
+images would start fetching only as they scroll into shot and pop in on camera.
+
 ---
 
 ## The camera
@@ -195,6 +222,15 @@ through an exponential follow (`CAMERA_FOLLOW`); without the damping a 1.8×
 zoom twitches on every pixel of cursor movement, which is far more distracting
 on video than a lazy camera. The crop is clamped to the frame, so the camera
 can never show the void past the edge of the app.
+
+**Keep `follow` and `anchorX` the same on a zoom-out.** With `follow: "y"` the
+crop's x comes from `anchorX`; with the default `"both"` it comes from the
+cursor. A pull-back keyframe that switches between them changes the rule on its
+very first frame — while the crop is still zoomed-in and narrow — so the picture
+jumps sideways before it starts widening. `london-trip` spreads one shared
+framing object over each zoom-in/zoom-out pair for exactly this reason. Two
+*different* pairs may use different framings: they only meet at 1×, where the
+crop is the full frame width and the anchor has nothing to move.
 
 `camera.ts` resolves this to one crop rectangle per frame. `compose.ts` then
 takes one of two paths:
@@ -226,7 +262,8 @@ written as an inline style, so a frame is a pure function of its state.
   eating into it. Greek uppercase drops accents (ΑΝΑΖΗΤΗΣΗ, not ΑΝΑΖΉΤΗΣΗ), so
   `text-transform: uppercase` is correct here with no manual stripping.
 - **Clear** — an empty caption fades both visible lines out in place. The
-  `preview()` step emits one, so the ending is text-free until the outro.
+  `finish()` and `preview()` steps both emit one, so the ending is text-free
+  until the outro.
 
 Most frames are visually identical to the one before (a caption only moves
 during its 350ms transition), so PASS B renders one screenshot per distinct
@@ -249,7 +286,14 @@ notdef characters means the glyphs are missing.
 
 ## The ending
 
-Two beats, driven by `preview()` as the last step plus `Reel.outro`.
+Two beats: a slow `scroll` through the finished plan, then `Reel.outro`. All
+three reels end this way — `scroll(hook("trip-plan"), 9000, …)` followed by
+`finish()`, which clears the captions and parks the cursor so the frame the
+outro slides away is clean.
+
+`preview()` below is the alternative ending, kept and working but **not
+currently used by any reel**: swap it in for the scroll to end on the static
+clean plan instead of a pan through it.
 
 **1. The plan preview** (PASS A, real app pixels). `preview()` dispatches a
 `reel:preview` event; `ReelPlanPreview` — mounted on the plan page, inert for
@@ -263,17 +307,21 @@ otherwise two columns, split between **whole days** (days 1..k left, k+1..n
 right, k chosen to balance the columns); if the taller column still
 overflows, the layer scales down (it logs an error below 0.7×).
 
-**2. The outro** (PASS D, `reels/outro/`). The last captured frame — the
-preview — slides up and out of frame over 700 ms, revealing a scene that was
-already underneath it:
+**2. The outro** (PASS D, `reels/outro/`). The last captured frame — the end of
+the closing scroll — slides up and out of frame over 700 ms, revealing a scene
+that was already underneath it:
 
-- light sand-orange background with a faint, seeded particle pattern;
-- a flat 2D globe (`d3-geo` orthographic, `world-atlas` 110m land, land in
-  green-500), turning half a rotation during the flight and landing with
+- a plain light sand-orange gradient background;
+- a globe (`d3-geo` orthographic, `world-atlas` 110m land, land in green-500,
+  white graticule), turning half a rotation during the flight and landing with
   Rome centred, then slowing for the hold;
-- a white airplane flying an arc across the front of the globe, left limb to
-  right limb, emerging from behind at the start and dipping behind at the end,
-  dropping an orange-500 dotted trail that stays as the route;
+- a white airplane in a **satellite orbit** — a real circle in 3D at 1.18× the
+  globe's radius, fixed to the camera rather than to the sphere, so the earth
+  turns underneath it and the orbit is unaffected. It is hidden only where the
+  globe actually eclipses it (behind **and** inside the silhouette), so it
+  swings wide past the limb through open space, crosses the face, and is
+  swallowed at the back. Its orange-500 dotted trail is occluded by the same
+  test;
 - **TAKE MY TRIP** above the globe, each word popping in on its own;
 - **ΟΡΓΑΝΩΣΕ ΤΟ ΤΑΞΙΔΙ ΜΕ 3 ΚΛΙΚ!** below it, smaller, rising in after.
 

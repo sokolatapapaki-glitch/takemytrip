@@ -53,6 +53,23 @@ export type Step =
       settleMs?: number;
       caption?: Caption;
     }
+  /**
+   * Slowly scroll through `target` — a showcase pan, not a jump to a click
+   * target. Starts from wherever the page is and ends with the target's bottom
+   * edge at the bottom of the frame, so the whole of it has passed by. The
+   * cursor stays put, the way a thumb rests while the page moves under it.
+   *
+   * `durationMs` is the scroll itself, fixed rather than derived from the
+   * target's height, so the reel's length never changes when the content does.
+   */
+  | {
+      kind: "scroll";
+      target: string;
+      durationMs: number;
+      /** Default "easeInOut": starts and lands gently. */
+      easing?: "easeInOut" | "linear";
+      caption?: Caption;
+    }
   /** Hold the frame for `ms`, optionally changing the caption. */
   | { kind: "wait"; ms: number; caption?: Caption }
   /** Let the UI breathe. Same as `wait` but can never change the caption. */
@@ -63,7 +80,17 @@ export type Step =
    * the captions out, and holds for `holdMs` (default 3000). Should be the last
    * step — the outro slides this exact frame away.
    */
-  | { kind: "preview"; holdMs?: number };
+  | { kind: "preview"; holdMs?: number }
+  /**
+   * `preview` without the preview: clears the captions, parks the cursor off
+   * frame and holds for `holdMs` (default 900), leaving the app exactly where
+   * the previous step left it.
+   *
+   * What it is for: a reel that ends on its own last frame — a showcase
+   * `scroll`, say — rather than on the clean plan view. Without it the outro
+   * would slide away a frame with a stale caption and a cursor still on it.
+   */
+  | { kind: "finish"; holdMs?: number };
 
 /**
  * A camera move. Keyframes are attached to STEP INDEXES, not timestamps, so
