@@ -74,12 +74,17 @@ body {
 #trail circle {
   fill: #f97316; /* orange-500 */
 }
-#plane path {
-  fill: #ffffff;
-  stroke: #c2410c; /* orange-700 outline ties it to the trail */
-  stroke-width: 0.9;
+/* The airliner (see template.html / plane.ts). Fills and edge colours come
+   per polygon from the shading; only the outline pass is styled here. */
+#plane-outline polygon {
+  fill: #7c2d12; /* orange-900, PLANE_OUTLINE in plane.ts */
+  stroke: #7c2d12;
+}
+#plane polygon {
   stroke-linejoin: round;
-  filter: drop-shadow(0 1.2px 1px rgba(0, 0, 0, 0.35));
+}
+#plane {
+  filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.3));
 }
 
 /* --- text: bold, white, all caps, black shadow ------------------------------- */

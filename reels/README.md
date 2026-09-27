@@ -315,13 +315,23 @@ that was already underneath it:
 - a globe (`d3-geo` orthographic, `world-atlas` 110m land, land in green-500,
   white graticule), turning half a rotation during the flight and landing with
   Rome centred, then slowing for the hold;
-- a white airplane in a **satellite orbit** — a real circle in 3D at 1.18× the
+- a cartoon airliner in a **satellite orbit** — a real circle in 3D at 1.08× the
   globe's radius, fixed to the camera rather than to the sphere, so the earth
   turns underneath it and the orbit is unaffected. It is hidden only where the
-  globe actually eclipses it (behind **and** inside the silhouette), so it
-  swings wide past the limb through open space, crosses the face, and is
-  swallowed at the back. Its orange-500 dotted trail is occluded by the same
-  test;
+  globe actually eclipses it (behind **and** inside the silhouette), so it swings
+  wide past the limb through open space, crosses the face, and is swallowed at
+  the back. Its orange-500 dotted trail is occluded by the same test;
+- the plane itself is a **low-poly 3D model** (`reels/outro/plane.ts`, ~100
+  polygons: fuselage tube, both wings, fin, tailplane, engines, windshield and
+  cabin-window decals), projected through the plane's body axes each frame,
+  back-face culled and painted far-to-near. It is shaded in three flat toon
+  steps and drawn twice — once fattened in orange-900, which only shows round
+  the silhouette — so it reads as 2D cartoon art that genuinely turns: nose-on
+  out of the left limb, full left-side profile across the face, tail-first into
+  the eclipse. Its "up" is the orbit's normal rather than the radial, so it
+  stays upright on screen instead of showing its roof as it passes in front.
+  `tiltDeg` sets both how high the arc rides (projected half-height is
+  `radius·cos(tilt)`) and how far the orbit leans in depth;
 - **TAKE MY TRIP** above the globe, each word popping in on its own;
 - **ΟΡΓΑΝΩΣΕ ΤΟ ΤΑΞΙΔΙ ΜΕ 3 ΚΛΙΚ!** below it, smaller, rising in after.
 

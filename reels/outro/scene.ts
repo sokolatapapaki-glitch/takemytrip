@@ -26,6 +26,7 @@ import { feature } from "topojson-client";
 import type { Topology, GeometryCollection } from "topojson-specification";
 import type { Outro } from "../types.js";
 import { OUTRO_DEFAULTS } from "../config.js";
+import { drawPlane, type PlanePoly } from "./plane.js";
 
 /** Handed to the page once, before the first frame. */
 export type OutroSetup = {
@@ -47,27 +48,17 @@ export type OutroFrame = {
   plane: {
     x: number;
     y: number;
-    angle: number;
     scale: number;
     opacity: number;
     /**
-     * How much of the 3D velocity lies in the screen plane: the real
-     * foreshortening. The page squashes the side silhouette along its own
-     * length by this, which is what turns a flat shape into a solid one.
-     *
-     * It never reaches 0 on this orbit — at the limbs it bottoms out at
-     * cos(tilt) — because that is where the orbit's velocity still has a
-     * cos(tilt) share across the frame. A steeper tilt would take the plane
-     * closer to dead end-on, at the cost of flattening the on-screen arc.
+     * The plane's visible faces, far to near, already in screen px — see
+     * plane.ts. The page paints them twice: once fattened in the outline colour
+     * (which only shows at the silhouette), then for real on top.
      */
-    squashX: number;
-    /**
-     * Which silhouette to show: 1 = full side profile, 0 = the end-on one.
-     * Normalised over `squashX`'s ACTUAL range for this tilt, so the cross-fade
-     * uses all of itself instead of the top half — and the two opacities sum to
-     * 1, so the pair never goes translucent mid-turn.
-     */
-    sideMix: number;
+    polys: PlanePoly[];
+    /** Silhouette outline and inner-edge widths, px — they scale with the plane. */
+    outlineW: number;
+    edgeW: number;
   } | null;
   trail: { x: number; y: number; opacity: number }[];
   words: { scale: number; opacity: number }[];
@@ -97,16 +88,30 @@ const HOLD_SPIN = 0.3;
  *
  *   radius    1.08× the globe — just enough daylight under it to read as an
  *             orbit rather than a line drawn on the surface.
- *   tilt      how steeply the orbit leans out of the screen plane. It has to be
- *             steep enough that the orbit's narrowest on-screen point falls
- *             INSIDE the disc, or nothing is ever eclipsed: that needs
- *             cos(tilt) < 1/radius, i.e. above ~32°. 62° gives a deep eclipse.
+ *   tilt      how steeply the orbit leans out of the screen plane, and the one
+ *             number that decides how the plane is SEEN. Steep, and it spends
+ *             most of the orbit pointed at the camera, so the honest view is
+ *             end-on and the side profile barely gets a look in. Shallow, and it
+ *             travels across the frame nearly all the way round, which is what
+ *             shows off the profile. The floor is set by the eclipse: the orbit's
+ *             narrowest on-screen point has to fall inside the disc, needing
+ *             cos(tilt) < 1/radius — above ~22°.
+ *
+ *             It is also, for a CIRCULAR orbit, the same number as how high the
+ *             arc rides on screen: the projected half-height is exactly
+ *             radius·cos(tilt). So a flatter pass nearer the middle of the globe
+ *             and a steeper lean in depth are one knob, not two. 71° keeps the
+ *             plane close to the horizontal through the middle of the disc; the
+ *             cost is that the fuselage foreshortens to a third of its length at
+ *             the limbs, where the plane is nearly pointed at the camera.
  *   start     where the orbit begins, in degrees. 90° is the middle of the
  *             eclipse, so the plane is already hidden when the flight starts —
  *             you never catch it appearing from nowhere.
  *   sweep     360° — one full revolution, ending back in the eclipse.
  */
-const FLIGHT = { radius: 1.08, tiltDeg: 62, startDeg: 90, sweepDeg: 360 };
+const FLIGHT = { radius: 1.08, tiltDeg: 71, startDeg: 90, sweepDeg: 360 };
+/** Pixels per model unit at full size. The model is ~23 units nose to tail. */
+const PLANE_UNIT_PX = 4.2;
 /** Degrees of arc between trail dots. */
 const TRAIL_SPACING_DEG = 3;
 /** Degrees of clear air between the plane's nose and the newest dot. */
@@ -203,6 +208,12 @@ export function outroScene(outro: Outro): (tMs: number) => OutroFrame {
   const thetaFrom = FLIGHT.startDeg;
   const thetaTo = FLIGHT.startDeg + FLIGHT.sweepDeg;
   const thetaAt = (u: number) => mix(thetaFrom, thetaTo, u);
+  /**
+   * The orbit's normal, pointing up the screen. The orbit is spanned by
+   * (1, 0, 0) and (0, cos·tilt, −sin·tilt), so its normal is (0, sin, cos);
+   * negated so y is negative, i.e. up the page.
+   */
+  const orbitUp = { x: 0, y: -sinTilt, z: -cosTilt };
 
   return (t: number): OutroFrame => {
     projection.rotate([lambdaAt(t), TILT]);
@@ -230,31 +241,44 @@ export function outroScene(outro: Outro): (tMs: number) => OutroFrame {
       if (u < 1 && !here.eclipsed) {
         const ahead = at(head + 1.2);
         const behind = at(head - 1.2);
-        // Velocity in 3D. Its screen part gives the heading; how much of the
-        // whole vector that screen part accounts for gives us how side-on the
-        // plane is — the thing that makes two flat sprites read as one solid
-        // object turning. Straight across the frame: full profile. Pointing at
-        // the camera: end-on, and the profile view foreshortens to nothing.
-        const vx = ahead.x - behind.x;
-        const vy = ahead.y - behind.y;
-        const vz = ahead.z - behind.z;
-        const angle = (Math.atan2(vy, vx) * 180) / Math.PI;
-        const squashX = Math.hypot(vx, vy) / (Math.hypot(vx, vy, vz) || 1);
-        // cosTilt is the floor squashX can reach, so rescale from there.
-        const sideMix = clamp01((squashX - cosTilt) / (1 - cosTilt));
+
+        // The plane's body axes, in screen space (x right, y DOWN, z toward
+        // the camera).
+        //
+        //   up    the ORBIT'S NORMAL, turned to point up the screen — not the
+        //         radial "away from the globe". Radial is the physically level
+        //         attitude, but on an orbit this close to edge-on it points
+        //         nearly straight at the camera as the plane passes in front, so
+        //         you would be looking down on its roof. Up-the-screen keeps it
+        //         upright: the classic plane-circling-a-globe, in profile.
+        //   fwd   along the orbit.
+        //   port  the left wing. The cross product is NEGATED from the
+        //         textbook one because this screen frame is left-handed; this
+        //         way round, the port side is the one facing the camera as the
+        //         plane crosses the face.
+        const up = orbitUp;
+        const fwd = unit(ahead.x - behind.x, ahead.y - behind.y, ahead.z - behind.z);
+        const port = unit(
+          up.y * fwd.z - up.z * fwd.y,
+          up.z * fwd.x - up.x * fwd.z,
+          up.x * fwd.y - up.y * fwd.x
+        );
+
         // Smaller the further away it is: perspective, not a fade-out. z runs
         // ±R·sin(tilt) and is NEGATIVE for the half of the orbit that swings
         // behind, which is visible out past the limb — so this maps the whole
         // range to 0–1 rather than treating the far side as zero.
         const depth = clamp01((here.z / (R * sinTilt) + 1) / 2);
+        const scale = mix(0.62, 1, depth);
+        const unitPx = PLANE_UNIT_PX * scale;
         plane = {
           x: here.x,
           y: here.y,
-          angle,
-          scale: mix(0.62, 1, depth),
+          scale,
           opacity: 1,
-          squashX,
-          sideMix,
+          polys: drawPlane(fwd, up, port, here.x, here.y, unitPx),
+          outlineW: 0.55 * unitPx,
+          edgeW: 0.12 * unitPx,
         };
       }
     }
@@ -290,3 +314,9 @@ function loadLand() {
 }
 
 const D2R = Math.PI / 180;
+
+/** A unit 3-vector. Zero length falls back to +x rather than NaN. */
+const unit = (x: number, y: number, z: number) => {
+  const m = Math.hypot(x, y, z);
+  return m ? { x: x / m, y: y / m, z: z / m } : { x: 1, y: 0, z: 0 };
+};
