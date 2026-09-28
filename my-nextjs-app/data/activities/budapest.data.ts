@@ -1,16 +1,17 @@
 /* eslint-disable */
 // -----------------------------------------------------------------------------
 // AUTO-GENERATED from takemytrip/data/budapest.json by scripts/gen-activities.mjs.
-// Do not edit by hand — re-run the generator. Metadata (prices, family prices,
-// restaurant/cafe, website, notes, tags, id, description, best_time, emoji) is
-// copied verbatim from the JSON; the engine fields (program/hours/vibes/priority)
-// are synthesized from each activity's `category`.
+// Do not edit by hand — edit the JSON (or use the editor) and re-run the
+// generator. Metadata is copied verbatim from the JSON; the engine fields
+// (program/vibes/priority) come from the JSON's opening_hours/vibes/priority when
+// set, otherwise they are synthesized from each activity's `category`.
 // -----------------------------------------------------------------------------
 import { everyDay, at, ALL_DAY, food, cafe, site, type CatalogueActivity } from "./_helpers";
 
 export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   {
     id: 1,
+    ref: "budapest:1",
     name: "Buda Castle (εξωτερικά)",
     description: "Ιστορικό κάστρο της Βούδας με πανοραμική θέα του Βουδαπέστης και του Δούναβη. Η επίσκεψη στους εξωτερικούς χώρους (αυλές, πλατείες, θέα) είναι ΔΩΡΕΑΝ.",
     hours: 1.5, cost: 0, coords: { lat: 47.496, lng: 19.0396 },
@@ -27,6 +28,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 2,
+    ref: "budapest:2",
     name: "Royal Palace Experience Tour (Μουσείο)",
     description: "Πλήρης ξενάγηση στα εσωτερικά του Βασιλικού Παλατιού, με εκθέσεις τέχνης και ιστορίας. ⚠️ Δεν επιτρέπονται παιδιά 0-11 ετών.",
     hours: 2, cost: 18, coords: { lat: 47.4965, lng: 19.0398 },
@@ -43,6 +45,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 3,
+    ref: "budapest:3",
     name: "Labyrinth of Buda Castle (Υπόγειος Λαβύρινθος)",
     description: "Υπόγειος λαβύρινθος κάτω από το Κάστρο της Βούδας, με ιστορικές εκθέσεις και ατμόσφαιρα μυστηρίου.Προτείνεται για παιδιά 8 ετών και άνω, και εφόσον δεν υπάρχει θέμα κλειστοφοβίας.",
     hours: 1.5, cost: 14, coords: { lat: 47.4962, lng: 19.0395 },
@@ -59,6 +62,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 4,
+    ref: "budapest:4",
     name: "Hungarian Parliament",
     description: "Μνημείο UNESCO . Παιδιά 0-5 ετών: δωρεάν, 6-14: 8€, 15+: 16€",
     hours: 2, cost: 16, coords: { lat: 47.5072, lng: 19.0457 },
@@ -75,6 +79,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 5,
+    ref: "budapest:5",
     name: "Vajdahunyad Castle & Museum of Hungarian Agriculture",
     description: "Κάστρο με αρχιτεκτονικά στυλ (Ρομανικό, Γοτθικό, Μπαρόκ). Φιλοξενεί το Μουσείο Αγροτικής Ζωής.Η επίσκεψη στους εξωτερικούς χώρους του κάστρου είναι καλή για όλες τις ηλικίες. Το εσωτερικό μουσείο τυπικά “δουλεύει” καλύτερα για παιδιά από ~6 ετών και άνω",
     hours: 2.5, cost: 5, coords: { lat: 47.5153, lng: 19.0831 },
@@ -91,6 +96,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 6,
+    ref: "budapest:6",
     name: "House of Terror Museum",
     description: "Διαδραστικό μουσείο για τις δύο δικτατορίες στην Ουγγαρία (φασιστική και κομμουνιστική περίοδο).Προτείνεται για παιδιά άνω των 14 ετών λόγω της σκληρότητας των εικόνων.",
     hours: 2.5, cost: 12, coords: { lat: 47.5075, lng: 19.0657 },
@@ -107,6 +113,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 7,
+    ref: "budapest:7",
     name: "Palace of Wonders (Csodák Palotája)",
     description: "Παιδικό διαδραστικό μουσείο επιστήμης και τεχνολογίας.Προτείνεται από 3 ετών και άνω, ενώ θα περάσουν καλά και οι έφηβοι αλλά και οι ενήλικες!",
     hours: 3, cost: 10, coords: { lat: 47.585785, lng: 19.048947 },
@@ -123,6 +130,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 8,
+    ref: "budapest:8",
     name: "Museum of Illusions Budapest",
     description: "Οπτικές ψευδαισθήσεις, διαδραστικά εκθέματα και παζλ για όλη την οικογένεια.Κατάλληλο για κάθε ηλικία.",
     hours: 1.5, cost: 14, coords: { lat: 47.502, lng: 19.055 },
@@ -139,6 +147,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 9,
+    ref: "budapest:9",
     name: "Daytime Sightseeing Cruise ",
     description: "Γρήγορη και οικονομική βόλτα στον Δούναβη (~1 ώρα). Χωρίς φαγητό/ποτό.",
     hours: 1, cost: 12, coords: { lat: 47.4989, lng: 19.0437 },
@@ -155,6 +164,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 10,
+    ref: "budapest:10",
     name: "Evening / Sunset Cocktail Cruise ",
     description: "Κρουαζιέρα με ποτό/ποτά, νυχτερινή θέα της πόλης, ρομαντική ατμόσφαιρα.",
     hours: 1.5, cost: 28, coords: { lat: 47.4989, lng: 19.0437 },
@@ -171,6 +181,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 11,
+    ref: "budapest:11",
     name: "Széchenyi Thermal Bath",
     description: "Θερμά λουτρά σε νεο-μπαρόκ κτήριο, ιστορικό και θεραπευτικό.",
     hours: 3, cost: 22, coords: { lat: 47.5186, lng: 19.0816 },
@@ -187,6 +198,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 12,
+    ref: "budapest:12",
     name: "Budapest Eye",
     description: "Ρόδα με πανοραμική θέα του Βουδαπέστης και του Δούναβη. Κατάλληλο για κάθε ηλικία",
     hours: 1, cost: 12, coords: { lat: 47.497, lng: 19.051 },
@@ -203,6 +215,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 13,
+    ref: "budapest:13",
     name: "Budapest Zoo & Botanical Garden",
     description: "Ζωολογικός κήπος με ζώα και φυτά, εκπαιδευτικές δραστηριότητες για παιδιά. Κατάλληλη δραστηριότητα για κάθε ηλικία.",
     hours: 4, cost: 14, coords: { lat: 47.5189, lng: 19.0778 },
@@ -219,6 +232,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 14,
+    ref: "budapest:14",
     name: "MAGIC2 - Θεματικό Εστιατόριο με Μάγους",
     description: "Ξεχωριστή εμπειρία: θεματικό εστιατόριο με ζωντανές παραστάσεις μάγων. Κατάλληλο για κάθε ηλικία.",
     hours: 2.5, cost: 15, coords: { lat: 47.5025, lng: 19.0592 },
@@ -235,6 +249,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 15,
+    ref: "budapest:15",
     name: "Margaret Island (Margitsziget) - Playgrounds",
     description: "Νησί στο Δούναβη με 4 μεγάλες παιδικές χαρές, συντριβάνι, μίνι zoo, ενοικιαζόμενα ποδήλατα.",
     hours: 3, cost: 0, coords: { lat: 47.526, lng: 19.049 },
@@ -251,6 +266,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 16,
+    ref: "budapest:16",
     name: "Fisherman's Bastion (Halászbástya)",
     description: "Το πιο διάσημο σημείο για φωτογραφίες με πανοραμική θέα στον Δούναβη και το Κοινοβούλιο. Οι κάτω ταράτσες είναι δωρεάν, οι πάνω πύργοι έχουν εισιτήριο.είναι από τα πιο φιλικά αξιοθέατα της Βουδαπέστης για καρότσι, αν αποφύγετε τους πύργους και μείνετε στις εξωτερικές διαδρομές.",
     hours: 1, cost: 4, coords: { lat: 47.5022, lng: 19.0348 },
@@ -267,6 +283,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 17,
+    ref: "budapest:17",
     name: "City Park Ice Rink (Városligeti Műjégpálya)",
     description: "Ένα από τα παλαιότερα και ομορφότερα ανοιχτά παγοδρόμια της Ευρώπης, με φόντο το κάστρο Vajdahunyad. Λειτουργεί μόνο τον χειμώνα.",
     hours: 2, cost: 8.5, coords: { lat: 47.5148, lng: 19.0785 },
@@ -283,6 +300,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 22,
+    ref: "budapest:22",
     name: "Sir Lancelot Knights' Restaurant",
     description: "Ένα μεσαιωνικό θεματικό εστιατόριο που σε μεταφέρει στην εποχή των ιπποτών. Μεγάλα ξύλινα τραπέζια, τεράστιες μερίδες και ζωντανά μεσαιωνικά σόου δημιουργούν μια αξέχαστη ατμόσφαιρα.",
     hours: 2, cost: 30, coords: { lat: 47.5097, lng: 19.0578 },
@@ -299,6 +317,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 23,
+    ref: "budapest:23",
     name: "Το Τρένο των Παιδιών (Gyermekvasút)",
     description: "Στους λόφους της Βούδας, τα παιδιά 10-14 ετών κάνουν τα πάντα (εισιτήρια, σήματα). Είναι μοναδική εμπειρία ενώ η διαδρομή στο δάσος είναι πανέμορφη. Κατάλληλο για κάθε ηλικία. Η καλύτερη στάση για να κατεβείτε είναι η Normafa, γιατί εκεί θα βρείτε μια μεγάλη, παιδική χαρά μέσα στη φύση, με ξύλινα παιχνίδια.",
     hours: 2, cost: 5, coords: { lat: 47.5098, lng: 18.9817 },
@@ -315,6 +334,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 24,
+    ref: "budapest:24",
     name: "Κυνήγι Θησαυρού με τα αγαλματάκια Kolodko",
     description: "Αντί για βαρετές ξεναγήσεις, ψάξτε τα δεκάδες μικροσκοπικά χάλκινα γλυπτά (όπως ο Kermit ή ο Mr. Bean) κρυμμένα σε όλη την πόλη.",
     hours: 2, cost: 0, coords: { lat: 47.4979, lng: 19.0402 },
@@ -331,6 +351,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 25,
+    ref: "budapest:25",
     name: "Μουσείο Pinball (Flippermúzeum)",
     description: "Κατάλληλο από 5-6 ετών και πάνω. Ο απόλυτος προορισμός για παιδιά και γονείς αν ο καιρός είναι κακός. Με ένα εισιτήριο παίζετε απεριόριστα σε πάνω από 130 φλίπερ.",
     hours: 2, cost: 14.5, coords: { lat: 47.4764, lng: 19.0573 },
@@ -347,6 +368,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 26,
+    ref: "budapest:26",
     name: "MINIPOLISZ",
     description: "Μια διαδραστική «πόλη» σε μικρογραφία, σχεδιασμένη αποκλειστικά για παιδιά ώστε να μπουν σε ρόλους ενηλίκων, δοκιμάζοντας επαγγέλματα σε πραγματικές συνθήκες. Κατάλληλο για ηλικίες 3–12 ετών",
     hours: 2, cost: 5.5, coords: { lat: 47.5709, lng: 19.0847 },
@@ -363,6 +385,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 27,
+    ref: "budapest:27",
     name: "Palatinus (Νησί της Μαργαρίτας)",
     description: "Έχει τα πάντα, από πισίνες με κύματα και τσουλήθρες μέχρι ειδικές παιδικές πισίνες με κανονικό (όχι ιαματικό) νερό. Είναι ανοιχτό όλο τον χρόνο, με εσωτερικούς και εξωτερικούς χώρους.",
     hours: 4, cost: 9.5, coords: { lat: 47.5294, lng: 19.0448 },
@@ -379,6 +402,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 28,
+    ref: "budapest:28",
     name: "Η Μεγάλη Παιδική Χαρά στο Városliget (Nagyjátszótér)",
     description: "Είναι ίσως η πιο εντυπωσιακή παιδική χαρά στην Ευρώπη. Το κεντρικό της στοιχείο είναι ένα τεράστιο αναρριχητικό πλαίσιο σε σχήμα αερόστατου (εμπνευσμένο από έναν διάσημο ουγγρικό πίνακα).",
     hours: 2, cost: 0, coords: { lat: 47.5143, lng: 19.0802 },
@@ -395,6 +419,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 29,
+    ref: "budapest:29",
     name: "Παιδική Χαρά με τις Τσουλήθρες (Gellért Hill)",
     description: "Βρίσκεται στον λόφο Gellért και φημίζεται για τις πολλές και διαφορετικού μήκους τσουλήθρες της.",
     hours: 1.5, cost: 0, coords: { lat: 47.4864, lng: 19.0407 },
@@ -411,6 +436,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 30,
+    ref: "budapest:30",
     name: "RUMINI PLAYGROUND",
     description: "Μια θεματική παιδική χαρά βασισμένη στις περιπέτειες του ποντικού Rumini (δημοφιλής ήρωας στην Ουγγαρία).",
     hours: 1.5, cost: 0, coords: { lat: 47.4988, lng: 19.0534 },
@@ -427,6 +453,7 @@ export const BUDAPEST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 31,
+    ref: "budapest:31",
     name: "Cerka-firka (Gellért Hill)",
     description: "Μια από τις πιο πρωτότυπες παιδικές χαρές, καθώς όλα τα παιχνίδια (αναρριχητικά, κούνιες) μοιάζουν με γιγάντια χρωματιστά μολύβια και ξύστρες. Τι θα βρείτε: Εκτός από τα «μολύβια», υπάρχουν κρυφά τραμπολίνα και μια πολύ ιδιαίτερη αμμοδόχος.",
     hours: 1.5, cost: 0, coords: { lat: 47.4862, lng: 19.0415 },

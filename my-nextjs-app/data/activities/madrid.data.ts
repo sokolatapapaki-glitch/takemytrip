@@ -1,16 +1,17 @@
 /* eslint-disable */
 // -----------------------------------------------------------------------------
 // AUTO-GENERATED from takemytrip/data/madrid.json by scripts/gen-activities.mjs.
-// Do not edit by hand — re-run the generator. Metadata (prices, family prices,
-// restaurant/cafe, website, notes, tags, id, description, best_time, emoji) is
-// copied verbatim from the JSON; the engine fields (program/hours/vibes/priority)
-// are synthesized from each activity's `category`.
+// Do not edit by hand — edit the JSON (or use the editor) and re-run the
+// generator. Metadata is copied verbatim from the JSON; the engine fields
+// (program/vibes/priority) come from the JSON's opening_hours/vibes/priority when
+// set, otherwise they are synthesized from each activity's `category`.
 // -----------------------------------------------------------------------------
 import { everyDay, at, ALL_DAY, food, cafe, site, type CatalogueActivity } from "./_helpers";
 
 export const MADRID_ACTIVITIES: CatalogueActivity[] = [
   {
     id: 1,
+    ref: "madrid:1",
     name: "Parque del Retiro",
     description: "Ο κύριος πνεύμονας πρασίνου στο κέντρο της Μαδρίτης, περιλαμβάνει εμβληματικά σημεία όπως η μεγάλη λίμνη για βαρκάδα, το Κρυστάλλινο Παλάτι και το Μνημείο του Αλφόνσου ΙΒ'. Η πρόσβαση είναι πολύ εύκολη μέσω των σταθμών μετρό Retiro, Ibiza και Atocha. Διαθέτει έντεκα διαφορετικές παιδικές χαρές διασκορπισμένες σε όλη την έκτασή του, οι οποίες είναι κατάλληλες για διάφορες ηλικίες και περιλαμβάνουν από παραδοσιακές κούνιες μέχρι πιο σύγχρονες κατασκευές αναρρίχησης",
     hours: 2.5, cost: 0, coords: { lat: 40.415, lng: -3.6834 },
@@ -27,6 +28,7 @@ export const MADRID_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 2,
+    ref: "madrid:2",
     name: "Casa de Campo",
     description: "Το τεράστιο αστικό πάρκο όπου βρίσκονται το Zoo, το Λούνα Παρκ και το Teleférico. Ιδανικό για ποδηλασία, πικνίκ και πεζοπορία. Κατάλληλο για κάθε ηλικία",
     hours: 4, cost: 0, coords: { lat: 40.4242, lng: -3.7587 },
@@ -43,6 +45,7 @@ export const MADRID_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 3,
+    ref: "madrid:3",
     name: "Madrid Río",
     description: "Xιλιόμετρα διαδρομών για περπάτημα, ποδηλασία και τρέξιμο, ενώ διαθέτει πολυάριθμες παιδικές χαρές με ιδιαίτερη σχεδίαση, γήπεδα άθλησης και την περίφημη αστική παραλία με πίδακες νερού για τις ζεστές ημέρες. Το πάρκο συνδέει ιστορικά μνημεία όπως τη γέφυρα Segovia και τη γέφυρα Toledo με μοντέρνες κατασκευές όπως η εμβληματική Arganzuela Footbridge",
     hours: 2, cost: 0, coords: { lat: 40.398, lng: -3.72 },
@@ -59,6 +62,7 @@ export const MADRID_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 4,
+    ref: "madrid:4",
     name: "Templo de Debod",
     description: "Αρχαίος αιγυπτιακός ναός που μεταφέρθηκε στη Μαδρίτη. Υπέροχος χώρος για το ηλιοβασίλεμα.Κατάλληλο για κάθε ηλικία - στο εσωτερικό το καρότσι ίσως είναι δύσκολο και τα παιδιά ίσως βαρεθούν. Αξίζει για τον εξωτερικό του χώρο και την ομόρφη θέα στο ηλιοβασίλεμα",
     hours: 1, cost: 0, coords: { lat: 40.4238, lng: -3.7185 },
@@ -75,6 +79,7 @@ export const MADRID_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 5,
+    ref: "madrid:5",
     name: "MUNCYT Alcobendas (Μουσείο Επιστήμης & Τεχνολογίας)",
     description: "Πολύ διαδραστικό και εκπαιδευτικό, ιδανικό για οικογένειες με παιδιά. Καταλληλότερο για άνω των 5 ετών",
     hours: 2.5, cost: 0, coords: { lat: 40.5423, lng: -3.6385 },
@@ -91,6 +96,7 @@ export const MADRID_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 6,
+    ref: "madrid:6",
     name: "Museo Naval (Ναυτικό Μουσείο)",
     description: "Σπουδαία συλλογή με ναυτικούς χάρτες, μακέτες πλοίων και ιστορικά αντικείμενα. Κοντά στο κέντρο.Ιδανικό για ηλικίες 6-14 ετών",
     hours: 2, cost: 0, coords: { lat: 40.4176, lng: -3.692 },
@@ -107,6 +113,7 @@ export const MADRID_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 7,
+    ref: "madrid:7",
     name: "Planetario de Madrid (Πλανητάριο)",
     description: "Πολύ οικονομικό για προβολές σχετικές με το διάστημα.Κατάλληλο απο 3 ετών και πάνω",
     hours: 1.5, cost: 3.6, coords: { lat: 40.3927, lng: -3.6853 },
@@ -123,6 +130,7 @@ export const MADRID_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 8,
+    ref: "madrid:8",
     name: "Museo Nacional de Ciencias Naturales - Μουσείο Φυσικών Επιστημών",
     description: "Περιλαμβάνει εκθέσεις με δεινόσαυρους και διάφορα οικοσυστήματα.Ιδανικά από 6-7 ετών και πάνω, κατάλληλο όμως και από 3 ετών",
     hours: 2.5, cost: 7, coords: { lat: 40.4405, lng: -3.6902 },
@@ -139,6 +147,7 @@ export const MADRID_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 9,
+    ref: "madrid:9",
     name: "Museo de Cera (Μουσείο κέρινων ομοιομάτων)",
     description: "Με κέρινα αγάλματα διάσημων προσωπικοτήτων.Ιδανικό για άνω των 6-7 ετών, ίσως κάποια αγάλματα τρομάξουν τα πολύ μικρά",
     hours: 2, cost: 19, coords: { lat: 40.4201, lng: -3.6964 },
@@ -155,6 +164,7 @@ export const MADRID_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 10,
+    ref: "madrid:10",
     name: "Zoo Aquarium de Madrid",
     description: "Το Zoo Aquarium de Madrid είναι ένας από τους παλαιότερους και πληρέστερους ζωολογικούς κήπους στον κόσμο, καθώς συνδυάζει στον ίδιο χώρο παραδοσιακό πάρκο ζώων, ενυδρείο, δελφινάριο και έκθεση πτηνών. Κατάλληλο για κάθε ηλικία",
     hours: 4, cost: 19.8, coords: { lat: 40.4062, lng: -3.7584 },
@@ -171,6 +181,7 @@ export const MADRID_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 11,
+    ref: "madrid:11",
     name: "Faunia",
     description: "Το Faunia είναι ένα μεγάλο βοτανικό πάρκο και ζωολογικός κήπος στη Μαδρίτη, το οποίο χωρίζεται σε διάφορα οικοσυστήματα, όπως η ζούγκλα, οι πόλοι και τα δάση, επιτρέποντάς σας να δείτε ζώα στο φυσικό τους περιβάλλον. Είναι ιδιαίτερα γνωστό για το οικοσύστημα των πιγκουίνων, το οποίο θεωρείται ένα από τα μεγαλύτερα στην Ευρώπη, καθώς και για τη νυχτερινή περιοχή όπου μπορείτε να παρατηρήσετε ζώα που δραστηριοποιούνται στο σκοτάδι.",
     hours: 4, cost: 16.9, coords: { lat: 40.3742, lng: -3.6026 },
@@ -187,6 +198,7 @@ export const MADRID_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 12,
+    ref: "madrid:12",
     name: "Atlantis Aquarium (Ενυδρείο)",
     description: "Ενυδρείο στο εμπορικό Xanadu.Κατάλληλο για κάθε ηλικία",
     hours: 2, cost: 9.9, coords: { lat: 40.299534, lng: -3.923605 },
@@ -203,6 +215,7 @@ export const MADRID_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 13,
+    ref: "madrid:13",
     name: "Parque de Atracciones (Λούνα Παρκ)",
     description: "Το Parque de Atracciones είναι το ιστορικό λούνα παρκ της Μαδρίτης μέσα στο πάρκο Casa de Campo, με πάνω από 30 αξιοθέατα για όλες τις ηλικίες, από έντονα τρενάκια μέχρι παιδική ζώνη Nickelodeon Land, και είναι εύκολα προσβάσιμο με το μετρό (στάση Batán, Γραμμή 10). Χρησιμοποιεί δυναμική τιμολόγηση (η τιμή αλλάζει ανά ημέρα).Κατάλληλο από 2 ετών και πάνω - υπάρχει ειδική ζώνη για τα μικρά",
     hours: 5, cost: 42, coords: { lat: 40.424, lng: -3.7572 },
@@ -219,6 +232,7 @@ export const MADRID_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 14,
+    ref: "madrid:14",
     name: "Parque Warner Madrid",
     description: "Θεματικό πάρκο με χαρακτήρες Warner Bros. Βρίσκεται εκτός πόλης (~25χλμ).Κατάλληλο απο 3 ετών και πάνω, υπάρχει ειδική ζώνη για τα μικρά. Ανοιχτό από Μάρτιο έως αρχές Ιανουαρίου",
     hours: 6, cost: 32.9, coords: { lat: 40.2311, lng: -3.5931 },
@@ -235,6 +249,7 @@ export const MADRID_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 15,
+    ref: "madrid:15",
     name: "Safari Madrid (Aldea del Fresno)",
     description: "Σαφάρι με ζώα.Μπαίνεις με το δικό σου αυτοκίνητο σε μεγάλες περιφραγμένες εκτάσεις όπου κυκλοφορούν ελεύθερα ζώα. (50χλμ από Μαδρίτη).",
     hours: 3, cost: 22.9, coords: { lat: 40.3089, lng: -4.254 },
@@ -251,6 +266,7 @@ export const MADRID_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 16,
+    ref: "madrid:16",
     name: "Santiago Bernabéu Tour (Tour Γηπέδου Ρεάλ Μαδρίτης)",
     description: "Το τουρ στο Μπερναμπέου είναι μια διαδρομή που εστιάζει κυρίως στο πλούσιο μουσείο με τα 15 Champions League, τις Χρυσές Μπάλες και την ιστορία της Ρεάλ. Περιλαμβάνει πέρασμα από τις κερκίδες για φωτογραφίες, επίσκεψη στα αποδυτήρια και το τούνελ των παικτών, ενώ καταλήγει στο μεγάλο κατάστημα της ομάδας. Είναι μια εμπειρία προσανατολισμένη στον εντυπωσιασμό μέσω οθονών και τροπαίων, που διαρκεί περίπου μιάμιση ώρα ανάλογα.",
     hours: 2, cost: 45, coords: { lat: 40.453, lng: -3.6883 },
@@ -267,6 +283,7 @@ export const MADRID_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 17,
+    ref: "madrid:17",
     name: "Micropolix (Παιδική Πόλη Επαγγελμάτων)",
     description: "Το Micropolix είναι μια στεγασμένη πόλη των παιδιών 12.000 τ.μ. στο San Sebastián de los Reyes, όπου παιδιά 4-14 ετών κάνουν παιχνίδια ρόλων σε επαγγέλματα, κερδίζουν το τοπικό νόμισμα Eurix και μαθαίνουν για την κοινωνική ζωή.",
     hours: 4, cost: 16, coords: { lat: 40.4735, lng: -3.6128 },
@@ -283,6 +300,7 @@ export const MADRID_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 18,
+    ref: "madrid:18",
     name: "Sweet Space (Παιδικός Χώρος με Γλυκά Θέματα)",
     description: "Χώρος με θέμα τα γλυκά και διαδραστικές εμπειρίες.10 θεματικά δωμάτια,  πισίνες με μπαλάκια,  τσουλήθρες και, φυσικά, γλυκά που προσφέρονται σε κάθε σταθμό. Ιδανικό από 3 ετών και πάνω",
     hours: 2, cost: 15, coords: { lat: 40.4255, lng: -3.7035 },
@@ -299,6 +317,7 @@ export const MADRID_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 19,
+    ref: "madrid:19",
     name: "IKONO (Διαδραστική & Φωτογραφική Εμπειρία)",
     description: "Διαδραστική εμπειρία 10 περίπου δωματίων που συνδυάζει την τέχνη με τις αισθήσεις, προσφέροντας εντυπωσιακά σκηνικά για παιχνίδι και φωτογραφίες.Ιδανικό από 5 ετών και πάνω.",
     hours: 1.5, cost: 17.9, coords: { lat: 40.418, lng: -3.702 },
@@ -315,6 +334,7 @@ export const MADRID_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 20,
+    ref: "madrid:20",
     name: "Urban Planet Las Rejas ",
     description: "Ένα σύγχρονο δίκτυο κλειστών πάρκων με τραμπολίνο. Κατάλληλο για άνω των 5 ετών",
     hours: 1.5, cost: 12, coords: { lat: 40.38, lng: -3.625 },
@@ -331,6 +351,7 @@ export const MADRID_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 21,
+    ref: "madrid:21",
     name: "Teleférico de Madrid",
     description: "Τελεφερίκ με θέα την πόλη. ⚠️ ΠΡΟΣΩΡΙΝΑ ΚΛΕΙΣΤΟ - ενημερωθείτε από το επίσημο site. Κατάλληλο για κάθε ηλικία",
     hours: 1, cost: 6, coords: { lat: 40.4245, lng: -3.721 },

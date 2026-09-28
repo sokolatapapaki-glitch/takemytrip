@@ -1,16 +1,17 @@
 /* eslint-disable */
 // -----------------------------------------------------------------------------
 // AUTO-GENERATED from takemytrip/data/berlin.json by scripts/gen-activities.mjs.
-// Do not edit by hand — re-run the generator. Metadata (prices, family prices,
-// restaurant/cafe, website, notes, tags, id, description, best_time, emoji) is
-// copied verbatim from the JSON; the engine fields (program/hours/vibes/priority)
-// are synthesized from each activity's `category`.
+// Do not edit by hand — edit the JSON (or use the editor) and re-run the
+// generator. Metadata is copied verbatim from the JSON; the engine fields
+// (program/vibes/priority) come from the JSON's opening_hours/vibes/priority when
+// set, otherwise they are synthesized from each activity's `category`.
 // -----------------------------------------------------------------------------
 import { everyDay, at, ALL_DAY, food, cafe, site, type CatalogueActivity } from "./_helpers";
 
 export const BERLIN_ACTIVITIES: CatalogueActivity[] = [
   {
     id: 1,
+    ref: "berlin:1",
     name: "Illuseum Berlin",
     description: "Ένας κόσμος γεμάτος ψευδαισθήσεις, οπτικά φαινόμενα και διαδραστικές εμπειρίες για μικρούς και μεγάλους. Ιδανικό από 4-5 ετών",
     hours: 1.5, cost: 16, coords: { lat: 52.5206, lng: 13.3878 },
@@ -27,6 +28,7 @@ export const BERLIN_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 2,
+    ref: "berlin:2",
     name: "Deutsches Technikmuseum",
     description: "Μουσείο τεχνολογίας με τρένα, αεροπλάνα, πλοία και Spectrum για παιδιά. Από 0 ετών μπορεί να ενθουσιάσει τα μικρά! ",
     hours: 3, cost: 12, coords: { lat: 52.4986, lng: 13.3779 },
@@ -43,6 +45,7 @@ export const BERLIN_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 3,
+    ref: "berlin:3",
     name: "DDR Museum",
     description: "Διαδραστικό μουσείο για την καθημερινή ζωή στην Ανατολική Γερμανία (DDR). Είναι διαδραστικό και καλεί τα μικρότερα παιδιά να το δοκιμάσουν",
     hours: 2, cost: 13.5, coords: { lat: 52.5194, lng: 13.4025 },
@@ -59,6 +62,7 @@ export const BERLIN_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 4,
+    ref: "berlin:4",
     name: "Museum für Naturkunde (Μουσείο Φυσικής Ιστορίας).",
     description: "Ο ψηλότερος σκελετός δεινοσαύρου και μεγάλη συλλογή ζώων και ορυκτών.Κατάλληλο από πολύ μικρά, αν έχουν ενδιαφέρον για δεινοσαύρους",
     hours: 2.5, cost: 11, coords: { lat: 52.5302, lng: 13.3793 },
@@ -75,6 +79,7 @@ export const BERLIN_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 5,
+    ref: "berlin:5",
     name: "LEGOLAND Discovery Centre Berlin",
     description: "Κέντρο διασκέδασης με LEGO, μίνι Βερολίνο, 4D cinema και παιχνίδια. Αναφέρεται ως καταλληλότερο για ηλικίες 3-16 ετών, αν και πιο μικρά ή μεγάλα μπορούν να περάσουν καλά",
     hours: 3, cost: 19.5, coords: { lat: 52.5096, lng: 13.3737 },
@@ -91,6 +96,7 @@ export const BERLIN_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 6,
+    ref: "berlin:6",
     name: "Madame Tussauds Berlin",
     description: "Κέρινα ομοιώματα διασημοτήτων και ιστορικών προσώπων. Θα αρέσει ιδιαίτερα σε παιδιά που αναγνωρίζουν διασημότητες. ",
     hours: 2, cost: 23.5, coords: { lat: 52.5175, lng: 13.3812 },
@@ -107,6 +113,7 @@ export const BERLIN_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 7,
+    ref: "berlin:7",
     name: "ANOHA - Children's World",
     description: "Διαδραστικός παιδικός κόσμος στο Εβραϊκό Μουσείο Βερολίνου. Κιβωτός με φιγούρες και σταθμούς παιχνιδιού. Ιδανικό για παιδιά 3-12 ετών, μπορούν όμως με βοήθεια και πιο μικρά. ",
     hours: 1.5, cost: 3, coords: { lat: 52.5024, lng: 13.3952 },
@@ -123,6 +130,7 @@ export const BERLIN_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 8,
+    ref: "berlin:8",
     name: "Labyrinth Kindermuseum",
     description: "Βρίσκεται σε ένα παλιό αμαξοστάσιο και είναι σχεδιασμένο αποκλειστικά για να τρέχουν, να σκαρφαλώνουν και να εξερευνούν τα παιδιά ελεύθερα. Κάθε χρόνο αλλάζει θεματική ενότητα (π.χ. περιβάλλον, δικαιώματα, φαντασία), μετατρέποντας σοβαρά ζητήματα σε ένα τεράστιο, διαδραστικό σκηνικό παιχνιδιού. Ιδανικό για ηλικίες από 3-11 ετών",
     hours: 2, cost: 7, coords: { lat: 52.5432, lng: 13.4221 },
@@ -139,6 +147,7 @@ export const BERLIN_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 9,
+    ref: "berlin:9",
     name: "MACHmit! Museum for Children",
     description: "Μουσείο για παιδιά με εργαστήρια, παιχνίδια και δραστηριότητες κίνησης. Εδώ υπάρχει ένας μοναδικός συνδυασμός κίνησης και δημιουργικότητας. Το highlight είναι ο τεράστιος ξύλινος λαβύρινθος αναρρίχησης για τα μεγαλύτερα παιδιά . Υπάρχει λαβύρινθος με καθρέφτες και διαδραστικά εργαστήρια χειροτεχνίας και εκμάθησης (πχ τυπογραφικό εργαστήριο, εργαστήριο κατασκευής σαπουνιού κλπ). Ιδανικό για 2-12 ετών .",
     hours: 2, cost: 9, coords: { lat: 52.5401, lng: 13.4178 },
@@ -155,6 +164,7 @@ export const BERLIN_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 10,
+    ref: "berlin:10",
     name: "Zoologischer Garten Berlin",
     description: "Ο παλαιότερος ζωολογικός κήπος της Γερμανίας με μεγάλη ποικιλία ζώων. Ιδανικό για κάθε ηλικία",
     hours: 4, cost: 15.5, coords: { lat: 52.5075, lng: 13.3375 },
@@ -171,6 +181,7 @@ export const BERLIN_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 11,
+    ref: "berlin:11",
     name: "Zoologischer Garten + Aquarium Berlin. ",
     description: "Συνδυαστικό εισιτήριο ζωολογικού κήπου και ενυδρείου.Ιδανική δραστηριότητα για κάθε ηλικία.",
     hours: 5, cost: 23.5, coords: { lat: 52.5075, lng: 13.3375 },
@@ -187,6 +198,7 @@ export const BERLIN_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 12,
+    ref: "berlin:12",
     name: "Tiergarten",
     description: "Το τεράστιο κεντρικό πάρκο του Βερολίνου. Ιδανικό για κάθε ηλικία.",
     hours: 2, cost: 0, coords: { lat: 52.5145, lng: 13.3501 },
@@ -203,6 +215,7 @@ export const BERLIN_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 13,
+    ref: "berlin:13",
     name: "Garten der Welt",
     description: "Εντυπωσιακό πάρκο με θεματικούς κήπους (Ιαπωνικό, Κορεάτικο, Μπαλινέζικο, Ιταλικό Αναγεννησιακό κ.α) και τελεφερίκ. Ιδανικό για κάθε ηλικία.",
     hours: 3, cost: 9, coords: { lat: 52.5408, lng: 13.5775 },
@@ -219,6 +232,7 @@ export const BERLIN_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 14,
+    ref: "berlin:14",
     name: "FEZ Berlin",
     description: "Μεγάλο κέντρο αναψυχής για παιδιά με εργαστήρια, θέατρο,  παιδικό μουσείο, εσωτερικά παιχνίδια. Ιδανικό από 3 ετών και πάνω αλλά με εσωτερικό παιδότοπο και για μικρά απο΄0 ετών!",
     hours: 4, cost: 5, coords: { lat: 52.4456, lng: 13.5364 },
@@ -235,6 +249,7 @@ export const BERLIN_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 15,
+    ref: "berlin:15",
     name: "Fernsehturm + VR",
     description: "Eμβληματική θέα 360° του Βερολίνου από τα 203 μέτρα, αλλά η εμπειρία απογειώνεται με το Berlin’s Odyssey, μια VR προβολή 15 λεπτών που σας ταξιδεύει στην ιστορία της πόλης μέσω της εικονικής πραγματικότητας (για παιδιά άνω τν 6 ετών). Αν θέλετε να συνδυάσετε φαγητό, το περιστρεφόμενο εστιατόριο Sphere απαιτεί κράτηση εβδομάδες πριν, αλλά είναι μια μαγική εμπειρία καθώς η πόλη γυρίζει γύρω από το τραπέζι σας.",
     hours: 1.5, cost: 36.5, coords: { lat: 52.5208, lng: 13.4094 },
@@ -251,6 +266,7 @@ export const BERLIN_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 16,
+    ref: "berlin:16",
     name: "Κρουαζιέρα στον ποταμό Spree",
     description: "Χαλαρωτικός τρόπος να δείτε τα αξιοθέατα της πόλης.Κατάλληλη για κάθε ηλικία",
     hours: 2, cost: 22, coords: { lat: 52.5163, lng: 13.4025 },
@@ -267,6 +283,7 @@ export const BERLIN_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 17,
+    ref: "berlin:17",
     name: "Extavium Potsdam (nano)",
     description: "Ένα εργαστήριο επιστήμης όπου τα παιδιά δεν βλέπουν απλώς εκθέματα, αλλά γίνονται οι ίδιοι επιστήμονες μέσα από 130 διαδραστικά πειράματα. Iδανικό για να πιάσουν στα χέρια τους από τεχνητό χιόνι μέχρι να δημιουργήσουν σκιές που παγώνουν στον τοίχο. Μην χάσετε τα mini-workshops όπου τα παιδιά φτιάχνουν δικά τους μείγματα. Ιδανικό για παιδιά 4–12 ετών.",
     hours: 2.5, cost: 14, coords: { lat: 52.4009, lng: 13.0592 },
@@ -283,6 +300,7 @@ export const BERLIN_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 18,
+    ref: "berlin:18",
     name: "Computerspielemuseum",
     description: "O απόλυτος διαδραστικός παιδότοπος, όπου η ιστορία των video games ζωντανεύει μέσα από δεκάδες αυθεντικές κονσόλες και arcade μηχανήματα . Κατάλληλο για κάθε ηλικία, με πιο έντονο όμως ενδιαφέρον από λίγο μεγαλύτερα παιδιά. ",
     hours: 2, cost: 11, coords: { lat: 52.5111, lng: 13.4478 },

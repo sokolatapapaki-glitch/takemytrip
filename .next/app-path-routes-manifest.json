@@ -1,0 +1,13 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/activities/page": "/activities",
+  "/cities/page": "/cities",
+  "/credits/page": "/credits",
+  "/filters/page": "/filters",
+  "/map/page": "/map",
+  "/my-trips/page": "/my-trips",
+  "/page": "/",
+  "/plan/page": "/plan",
+  "/start/page": "/start"
+}

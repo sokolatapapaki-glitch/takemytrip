@@ -1,0 +1,13 @@
+{
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/activities/page": "app/activities/page.js",
+  "/cities/page": "app/cities/page.js",
+  "/credits/page": "app/credits/page.js",
+  "/filters/page": "app/filters/page.js",
+  "/map/page": "app/map/page.js",
+  "/my-trips/page": "app/my-trips/page.js",
+  "/page": "app/page.js",
+  "/plan/page": "app/plan/page.js",
+  "/start/page": "app/start/page.js"
+}

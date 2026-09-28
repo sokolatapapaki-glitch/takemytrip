@@ -1,16 +1,17 @@
 /* eslint-disable */
 // -----------------------------------------------------------------------------
 // AUTO-GENERATED from takemytrip/data/barcelona.json by scripts/gen-activities.mjs.
-// Do not edit by hand — re-run the generator. Metadata (prices, family prices,
-// restaurant/cafe, website, notes, tags, id, description, best_time, emoji) is
-// copied verbatim from the JSON; the engine fields (program/hours/vibes/priority)
-// are synthesized from each activity's `category`.
+// Do not edit by hand — edit the JSON (or use the editor) and re-run the
+// generator. Metadata is copied verbatim from the JSON; the engine fields
+// (program/vibes/priority) come from the JSON's opening_hours/vibes/priority when
+// set, otherwise they are synthesized from each activity's `category`.
 // -----------------------------------------------------------------------------
 import { everyDay, at, ALL_DAY, food, cafe, site, type CatalogueActivity } from "./_helpers";
 
 export const BARCELONA_ACTIVITIES: CatalogueActivity[] = [
   {
     id: 1,
+    ref: "barcelona:1",
     name: "Sagrada Família",
     description: "Ένας μοναδικός ναός από τον Gaudí, υπό κατασκευή εδώ και πάνω από 140 χρόνια. Με κολόνες που μοιάζουν με δέντρα και προσόψεις γεμάτες λεπτομέρειες. Είναι ένα έργο τέχνης παγκόσμιας κληρονομιάς.",
     hours: 2, cost: 30, coords: { lat: 41.4036, lng: 2.1744 },
@@ -27,6 +28,7 @@ export const BARCELONA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 2,
+    ref: "barcelona:2",
     name: "Park Güell",
     description: "Ένα από τα πιο εντυπωσιακά έργα του Antoni Gaudí, ένα δημόσιο πάρκο που μοιάζει με σκηνικό παραμυθιού. Στον λόφο El Carmel, αυτό το πάρκο είναι διάσημο για τη χρήση της τεχνικής trencadís, όπου πολύχρωμα σπασμένα πλακάκια σχηματίζουν μοναδικά μωσαϊκά, με πιο γνωστά τη σαλαμάνδρα στην είσοδο και το τεράστιο κυματιστό παγκάκι στην κεντρική πλατεία. Επιπλέον έχει μια από τις πιο όμορφες πανοραμικές θέες της Βαρκελώνης μέχρι τη θάλασσα.",
     hours: 2, cost: 18, coords: { lat: 41.4145, lng: 2.1527 },
@@ -43,6 +45,7 @@ export const BARCELONA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 3,
+    ref: "barcelona:3",
     name: "Casa Batlló",
     description: "Ένα από τα πιο ευφάνταστα δημιουργήματα του Gaudí . Η πρόσοψή του είναι καλυμμένη με χρωματιστά μωσαϊκά που θυμίζουν τα λέπια ενός δράκου, τα μπαλκόνια μοιάζουν με μάσκες ή οστά, ενώ μέσα δεν υπάρχουν ευθείες ενώ στην ταράτσα έχει πολύχρωμες καμινάδες που αναπαριστούν μια μάχη.",
     hours: 1.5, cost: 33, coords: { lat: 41.3916, lng: 2.165 },
@@ -59,6 +62,7 @@ export const BARCELONA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 4,
+    ref: "barcelona:4",
     name: "Casa Milà (La Pedrera)",
     description: "Από τα πιο πρωτοποριακά έργα του  Gaudí, με κυματιστή πέτρινη πρόσοψή και περίτεχνα σιδερένια κάγκελα. Μοιάζει με ζωντανό οργανισμό φτιαγμένο σε βράχο,κολώνες και αψίδες που επιτρέπουν να φωτίζεται από φυσικό φως. Στην ταράτσα οι καμινάδες και οι αεραγωγοί έχουν μεταμορφωθεί σε γλυπτά που θυμίζουν πολεμιστές.",
     hours: 1.5, cost: 29, coords: { lat: 41.3954, lng: 2.1619 },
@@ -75,6 +79,7 @@ export const BARCELONA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 5,
+    ref: "barcelona:5",
     name: "Picasso Museum",
     description: "Η συλλογή του περιλαμβάνει πάνω από 4.000 έργα, εστιάζοντας κυρίως στην περίοδο που ο Πικάσο ζούσε στη Βαρκελώνη.",
     hours: 2, cost: 19, coords: { lat: 41.3847, lng: 2.1814 },
@@ -91,6 +96,7 @@ export const BARCELONA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 6,
+    ref: "barcelona:6",
     name: "Gaudí Experience",
     description: "Ένας διαδραστικός χώρος που χρησιμοποιεί την τεχνολογία για να φέρει όλους μας πιο κοντά στον κόσμο του μεγάλου αρχιτέκτονα. Το κύριο χαρακτηριστικό του είναι μια προβολή 4D με κινούμενα καθίσματα και ειδικά εφέ, η οποία εξηγεί με παραστατικό τρόπο πώς τα στοιχεία της φύσης μεταμορφώθηκαν στα εμβληματικά κτίρια που βλέπουμε σήμερα στην πόλη.",
     hours: 1, cost: 9, coords: { lat: 41.4138, lng: 2.1524 },
@@ -107,6 +113,7 @@ export const BARCELONA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 7,
+    ref: "barcelona:7",
     name: "Montjuïc Castle (Castell de Montjuïc)",
     description: "Το Κάστρο του Montjuïc είναι ένα παλιό φρούριο στην κορυφή του λόφου που βρίσκεται εκεί για αιώνες, έχοντας περάσει από περιόδους πολέμων και χρήσης ως φυλακή. Σήμερα, η κύρια αξία του είναι η εκπληκτική θέα που χαρίζει, αφού από τα τείχη του μπορείτε να δείτε όλη τη Βαρκελώνη και το λιμάνι να απλώνονται μπροστά σας. Είναι ένας χώρος με επιβλητική αρχιτεκτονική, μεγάλα κανόνια και όμορφους κήπους στην τάφρο του",
     hours: 2, cost: 15, coords: { lat: 41.3638, lng: 2.1659 },
@@ -123,6 +130,7 @@ export const BARCELONA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 8,
+    ref: "barcelona:8",
     name: "Hospital de Sant Pau",
     description: "Το μεγαλύτερο συγκρότημα μοντερνιστικής αρχιτεκτονικής στον κόσμο και μνημείο της UNESCO. Σχεδιάστηκε από τον Lluís Domènech i Montaner ως μια πόλη-νοσοκομείο με ολάνθιστους κήπους και πολύχρωμα μωσαϊκά, βασισμένο στην πρωτοποριακή ιδέα ότι η ομορφιά και το φως βοηθούν στη θεραπεία των ασθενών. Σήμερα, μπορείτε να περιηγηθείτε στα εντυπωσιακά του κτίρια και να δείτε από κοντά πώς η υψηλή τέχνη συνδυάστηκε με την ιατρική φροντίδα σε έναν χώρο που λειτούργησε ως νοσοκομείο για έναν αιώνα.",
     hours: 1.5, cost: 22, coords: { lat: 41.4134, lng: 2.1735 },
@@ -139,6 +147,7 @@ export const BARCELONA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 9,
+    ref: "barcelona:9",
     name: "Camp Nou (Barça Stadium Tour)",
     description: "Το Camp Nou Experience είναι η απόλυτη στάση για κάθε φίλο του ποδοσφαίρου, μια πλήρης περιήγηση στις εγκαταστάσεις της Μπαρτσελόνα. ΠΡΟΣΟΧΗ: γίνονται εργασίες ανακαίνισης, ενημερωθείτε από το επίσημο site.",
     hours: 2, cost: 33, coords: { lat: 41.3809, lng: 2.1228 },
@@ -155,6 +164,7 @@ export const BARCELONA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 10,
+    ref: "barcelona:10",
     name: "L'Aquàrium de Barcelona",
     description: "Το σημαντικότερο θαλάσσιο πάρκο της Μεσογείου, με πάνω από 11.000 ζώα .Ένα τεράστιο Ωκεανοφυλάκιο,  ένας γυάλινός διάδρομος 80 μέτρων επιτρέπει στους επισκέπτες να περπατήσουν κυριολεκτικά ανάμεσα σε καρχαρίες, σαλάχια και άλλα μεγάλα ψάρια που κολυμπούν ακριβώς πάνω από το κεφάλι τους. ",
     hours: 2, cost: 34, coords: { lat: 41.3762, lng: 2.1842 },
@@ -171,6 +181,7 @@ export const BARCELONA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 11,
+    ref: "barcelona:11",
     name: "CosmoCaixa",
     description: "Ένα από τα πιο συναρπαστικά διαδραστικά μουσεία επιστημών στην Ευρώπη,   σε ένα εντυπωσιακό κτίριο.  Στις τεράστιες εγκαταστάσεις του,θα δείτε το Πλημμυρισμένο Δάσος (ένα ζωντανό οικοσύστημα του Αμαζονίου με δέντρα, ζώα και βροχή), την Αίθουσα του Σύμπαντος και το εντυπωσιακό Πλανητάριο, συμμετέχοντας σε εκατοντάδες πειράματα. ",
     hours: 3, cost: 8, coords: { lat: 41.4119, lng: 2.1317 },
@@ -187,6 +198,7 @@ export const BARCELONA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 12,
+    ref: "barcelona:12",
     name: "Tibidabo Amusement Park",
     description: "Ένα από τα πιο ιστορικά και γοητευτικά λούνα παρκ στον κόσμο, καθώς λειτουργεί από το 1901. Συνδυάζει με μοναδικό τρόπο την κλασική ατμόσφαιρα των παλιών παιχνιδιών, με σύγχρονες εγκαταστάσεις.  Η τοποθεσία του μέσα στο φυσικό περιβάλλον και την υπέροχη θέα το κάνουν μοναδική απόδραση από τον θόρυβο της πόλης.Κατάλληλο απο 2 ετών (πολλά παιχνίδια για μικρά παιδιά) μέχρι και ενήλικες. ",
     hours: 4, cost: 39, coords: { lat: 41.4219, lng: 2.1185 },
@@ -203,6 +215,7 @@ export const BARCELONA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 13,
+    ref: "barcelona:13",
     name: "PortAventura World",
     description: "Βρίσκεται κοντά στην Ταραγόνα και περίπου μία ώρα από τη Βαρκελώνη, και είναι ένα από τα μεγαλύτερα θεματικά θέρετρα της Ευρώπης (έχει και υδάτινο πάρκο ,το Caribe Aquatic Park). Εκεί θα βρείτε μερικά από τα πιο ψηλά και γρήγορα τρενάκια στον κόσμο αλλά και ειδικά διαμορφωμένες περιοχές για μικρότερα παιδιά. ",
     hours: 8, cost: 70, coords: { lat: 41.0864, lng: 1.1556 },
@@ -219,6 +232,7 @@ export const BARCELONA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 14,
+    ref: "barcelona:14",
     name: "Parc de la Ciutadella",
     description: "Το πιο γνωστό πάρκο της Βαρκελώνης, ακριβώς δίπλα στην παλιά πόλη. Με μια πανέμορφη λίμνη για βαρκάδα, ένα τεράστιο σιντριβάνι που μοιάζει με καταρράκτη,  το Κοινοβούλιο της Καταλονίας και ζωολογικό κήπο. Είναι πολύ κοντά στην Αψίδα του Θριάμβου και στη θάλασσα, οπότε βολεύει να τα συνδυάσετε. ",
     hours: 2, cost: 0, coords: { lat: 41.3875, lng: 2.1868 },
@@ -235,6 +249,7 @@ export const BARCELONA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 15,
+    ref: "barcelona:15",
     name: "Poblenou Beaches",
     description: "Οι παραλίες του Poblenou, όπως η Bogatell και η Nova Icaria είναι πλατιές, έχουν λιγότερη φασαρία από την Barceloneta, υπέροχες παιδικές χαρές και είναι οι αγαπημένες των Ισπανών. Όλη αυτή η παραλιακή διαδρομή συνδέεται με έναν μεγάλο πεζόδρομο που είναι οτι πρέπει για ποδήλατο ή περπάτημα με θέα τη θάλασσα.",
     hours: 3, cost: 0, coords: { lat: 41.3797, lng: 2.1927 },
@@ -251,6 +266,7 @@ export const BARCELONA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 16,
+    ref: "barcelona:16",
     name: "Magic Fountain (Font Màgica)",
     description: "Στους πρόποδες του λόφου Montjuïc, ακριβώς κάτω από το Εθνικό Μουσείο Τέχνης της Καταλονίας, είναι ένα από τα πιο εντυπωσιακά θεάματα της Βαρκελώνης. Ένας συνδυασμός από νερό, φώτα και μουσική με πανέμορφες χορογραφίες. Η πρόσβαση είναι πολύ εύκολη από την Plaça d'Espanya και η εμπειρία είναι μοναδική, αρκεί να ελέγξετε από πριν τις ώρες λειτουργίας γιατί αλλάζουν ανάλογα με την εποχή ή τους περιορισμούς νερού.",
     hours: 1, cost: 0, coords: { lat: 41.3713, lng: 2.1517 },
@@ -267,6 +283,7 @@ export const BARCELONA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 17,
+    ref: "barcelona:17",
     name: "Ciutat Vella / Barri Gòtic Exploration",
     description: "Η παλιά πόλη της Βαρκελώνης με το Barri Gòtic να αποτελεί το πιο ατμοσφαιρικό της κομμάτι. Εκεί θα βρείτε τον επιβλητικό Καθεδρικό Ναό, κρυμμένες πλατείες όπως την Plaça Sant Felip Neri,ιστορικά κτίρια, αλλά και ζωή,  μικρά μαγαζάκια, μπαρ για τάπας και καλλιτέχνες του δρόμου. ",
     hours: 2.5, cost: 0, coords: { lat: 41.3829, lng: 2.1775 },
@@ -283,6 +300,7 @@ export const BARCELONA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 18,
+    ref: "barcelona:18",
     name: "Museu Blau (Natural History Museum)",
     description: " Μέσα από τη μόνιμη έκθεση Planet Life, θα ανακαλύψετε την ιστορία της Γης και την εξέλιξη της ζωής με τη βοήθεια εντυπωσιακών απολιθωμάτων, πετρωμάτων και ζώων, ενώ ο ειδικά διαμορφωμένος χώρος Science Nest επιτρέπει στα παιδιά κάτω των 6 ετών να εξερευνήσουν τη φύση μέσα από το παιχνίδι και τις αισθήσεις τους. Είναι ένας διαδραστικός χώρος που συνδυάζει τη γνώση με την ψυχαγωγία.",
     hours: 2.5, cost: 6, coords: { lat: 41.3708, lng: 2.1978 },
@@ -299,6 +317,7 @@ export const BARCELONA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 19,
+    ref: "barcelona:19",
     name: "La Casa dels Entremesos - Μουσείο των Γιγάντων",
     description: "Οι  τεράστιες παραδοσιακές φιγούρες της Βαρκελώνης, οι Gegants, οι οποίοι αποτελούν αναπόσπαστο κομμάτι των τοπικών γιορτών. Επιβλητικοί γίγαντες, δράκοι και τα άλλα μυθικά πλάσματα που χρησιμοποιούνται στις παρελάσεις. Η είσοδος είναι  δωρεάν και προτείνταια ακόμη και για 2-3 ετών. , ",
     hours: 1, cost: 0, coords: { lat: 41.3832, lng: 2.1751 },

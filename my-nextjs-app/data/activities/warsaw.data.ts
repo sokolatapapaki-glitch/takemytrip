@@ -1,16 +1,17 @@
 /* eslint-disable */
 // -----------------------------------------------------------------------------
 // AUTO-GENERATED from takemytrip/data/warsaw.json by scripts/gen-activities.mjs.
-// Do not edit by hand — re-run the generator. Metadata (prices, family prices,
-// restaurant/cafe, website, notes, tags, id, description, best_time, emoji) is
-// copied verbatim from the JSON; the engine fields (program/hours/vibes/priority)
-// are synthesized from each activity's `category`.
+// Do not edit by hand — edit the JSON (or use the editor) and re-run the
+// generator. Metadata is copied verbatim from the JSON; the engine fields
+// (program/vibes/priority) come from the JSON's opening_hours/vibes/priority when
+// set, otherwise they are synthesized from each activity's `category`.
 // -----------------------------------------------------------------------------
 import { everyDay, at, ALL_DAY, food, cafe, site, type CatalogueActivity } from "./_helpers";
 
 export const WARSAW_ACTIVITIES: CatalogueActivity[] = [
   {
     id: 1,
+    ref: "warsaw:1",
     name: "Copernicus Science Centre",
     description: "Κορυφαίος διαδραστικός χώρος όπου η επιστήμη γίνεται παιχνίδι μέσα από εκατοντάδες πειράματα.  Αν και το κέντρο απευθύνεται σε όλους, η ιδανική ηλικία είναι από 5-6 ετών και πάνω.",
     hours: 3, cost: 11.7, coords: { lat: 52.2419, lng: 21.0283 },
@@ -27,6 +28,7 @@ export const WARSAW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 2,
+    ref: "warsaw:2",
     name: "Smart Kids Planet",
     description: "Καλύπτει όλο το ηλικιακό φάσμα, διαθέτει από απόλυτα ασφαλείς και μαλακές ζώνες αισθητηριακού παιχνιδιού για νήπια κάτω των 4 ετών, μέχρι σύνθετους διαδραστικούς σταθμούς ψηφιακής δημιουργίας, οικολογίας και μηχανικής για τα παιδιά έως 12 ετών.",
     hours: 3, cost: 3.5, coords: { lat: 52.2323, lng: 20.9908 },
@@ -43,6 +45,7 @@ export const WARSAW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 3,
+    ref: "warsaw:3",
     name: "Łazienki Park",
     description: "Το μεγαλύτερο και ομορφότερο πάρκο της Βαρσοβίας, ένας ιστορικός χώρος που με κλασική αρχιτεκτονική, όπως το εμβληματικό Παλάτι στο Νησί, με καταπράσινους κήπους, μια υπέροχη παιδική χαρά, λίμνες και ελεύθερα παγώνια, σκιουράκια και αλεπούδες. Tο καλοκαίρι φιλοξενεί τις περίφημες δωρεάν συναυλίες Σοπέν.",
     hours: 2, cost: 0, coords: { lat: 52.2149, lng: 21.0353 },
@@ -59,6 +62,7 @@ export const WARSAW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 4,
+    ref: "warsaw:4",
     name: "Warsaw Zoo",
     description: "Ένας ιστορικός και καταπράσινος χώρος στις όχθες του ποταμού Βιστούλα, με πάνω από 12.000 ζώα από 500 είδη. Είναι παγκοσμίως γνωστός όχι μόνο για την ποικιλία των ζώων του αλλά και για τη συγκινητική ιστορία της Βίλας Ζαμπίνσκι, όπου οι ιδιοκτήτες του κήπου έσωσαν εκατοντάδες Εβραίους κατά τη διάρκεια του Β' Παγκοσμίου Πολέμου.",
     hours: 3, cost: 0, coords: { lat: 52.2559, lng: 21.0439 },
@@ -75,6 +79,7 @@ export const WARSAW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 5,
+    ref: "warsaw:5",
     name: "Old Town",
     description: "Το ιστορικό κέντρο και η ψυχή της πόλης. Αν και ισοπεδώθηκε σχεδόν ολοκληρωτικά κατά τον Β' Παγκόσμιο Πόλεμο, ανακατασκευάστηκε με τέτοια ακρίβεια που σήμερα αποτελεί Μνημείο Παγκόσμιας Κληρονομιάς της UNESCO.",
     hours: 2, cost: 0, coords: { lat: 52.2497, lng: 21.0122 },
@@ -91,6 +96,7 @@ export const WARSAW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 6,
+    ref: "warsaw:6",
     name: "Castle Square",
     description: "Η καρδιά της ιστορικής Βαρσοβίας και το κύριο σημείο εισόδου στην Παλιά Πόλη, Μνημείο Παγκόσμιας Κληρονομιάς της UNESCO. Στο κέντρο της  η εμβληματική Στήλη του Σιγισμούνδου, το παλαιότερο μνημείο της πόλης, ενώ η ανατολική πλευρά της οριοθετείται από το επιβλητικό Βασιλικό Κάστρο, την ιστορική έδρα των Πολωνών μοναρχών. Παρά την ολοκληρωτική καταστροφή της κατά τον Β' Παγκόσμιο Πόλεμο, η πλατεία ανακατασκευάστηκε με απόλυτη πιστότητα.",
     hours: 1, cost: 0, coords: { lat: 52.2477, lng: 21.0139 },
@@ -107,6 +113,7 @@ export const WARSAW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 7,
+    ref: "warsaw:7",
     name: "Museum of Illusions",
     description: "Ένας διαδραστικός χώρος που προκαλεί τις αισθήσεις και τη λογική, μια διασκεδαστική εμπειρία για όλες τις ηλικίες μέσα από οπτικές απάτες, καθρέφτες και δωμάτια που στρεβλώνουν την πραγματικότητα.",
     hours: 1.5, cost: 9.8, coords: { lat: 52.2497, lng: 21.012 },
@@ -123,6 +130,7 @@ export const WARSAW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 8,
+    ref: "warsaw:8",
     name: "Railway Museum (Stacja Muzeum)",
     description: "Βρίσκεται στον παλιό σιδηροδρομικό σταθμό και έχει πάνω από 50 ιστορικές ατμομηχανές και βαγόνια σε εξωτερικό χώρο, καθώς κα0ι μακέτες στο εσωτερικό. Είναι ιδανικό για παιδιά 3 έως 12 ετών που θέλουν να δουν από κοντά τεράστια τρένα, αλλά και για ενήλικες που αγαπούν τη βιομηχανική ιστορία. Κάθε Δευτέρα η είσοδος είναι δωρεάν",
     hours: 1.5, cost: 5.85, coords: { lat: 52.2217, lng: 21.0025 },
@@ -139,6 +147,7 @@ export const WARSAW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 9,
+    ref: "warsaw:9",
     name: "Vistula River Cruise",
     description: "Μια κρουαζιέρα στον ποταμό Βιστούλα δίνει την καλύτερη πανοραμική θέα της Βαρσοβίας, επιτρέποντάς σας να δείτε την αντίθεση ανάμεσα στην ιστορική Παλιά Πόλη και τους μοντέρνους ουρανοξύστες από το νερό. Τα πλοιάρια ξεκινούν συνήθως από τις όχθες κοντά στο Επιστημονικό Κέντρο Κοπέρνικος και η διαδρομή διαρκεί περίπου 45-60 λεπτά, περνώντας κάτω από τις γέφυρες της πόλης και δίπλα από τις αμμουδερές παραλίες του ποταμού. ",
     hours: 1, cost: 18, coords: { lat: 52.242372, lng: 21.0296 },
@@ -155,6 +164,7 @@ export const WARSAW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 10,
+    ref: "warsaw:10",
     name: "Palace of Culture and Science – Observation Deck",
     description: "Χτίστηκε το 1955 ως δώρο της Σοβιετικής Ένωσης προς την Πολωνία. Αν και ξεκίνησε ως σύμβολο πολιτικής επιβολής, σήμερα είναι ένας ζωντανός πολιτιστικός κόμβος. Είναι δημοφιλής προορισμός χάρη στην ταράτσα του 30ού ορόφου,για την καλύτερη θέα σε όλη τη Βαρσοβία",
     hours: 1, cost: 7, coords: { lat: 52.2317, lng: 21.0061 },
@@ -171,6 +181,7 @@ export const WARSAW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 11,
+    ref: "warsaw:11",
     name: "Suntago Waterpark",
     description: "Το μεγαλύτερο στεγασμένο υδάτινο πάρκο της Ευρώπης, μια τροπική απόδραση για όλο το χρόνο με δεκάδες νεροτσουλήθρες, ιαματικές πηγές, πισίνες με κύματα και έναν εντυπωσιακό κήπο με φοίνικες.",
     hours: 5, cost: 0, coords: { lat: 52.1, lng: 20.8167 },
@@ -187,6 +198,7 @@ export const WARSAW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 12,
+    ref: "warsaw:12",
     name: "Museum of Dollhouses, Games and Toys",
     description: "Ένας μαγευτικός προορισμός με μια μοναδική συλλογή από εκατοντάδες ιστορικά κουκλόσπιτα, σχολεία, καταστήματα και νοσοκομεία σε μικρογραφία. Κατάλληλο για μικρά παιδιά",
     hours: 1.5, cost: 9.8, coords: { lat: 52.2512, lng: 21.0122 },
@@ -203,6 +215,7 @@ export const WARSAW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 13,
+    ref: "warsaw:13",
     name: "Muzeum Fabryka Czekolady E.Wedel",
     description: "Ένας απόλυτα διαδραστικός και γευστικός προορισμός, για να μάθετε όλα τα μυστικά της σοκολάτας μέσα από όλες τις αισθήσεις, ιδανικός για παιδιά από 4 ετών και άνω αλλά και για ενήλικες που αγαπούν τις γλυκές εμπειρίες.",
     hours: 1.5, cost: 16, coords: { lat: 52.2435, lng: 21.059 },
@@ -219,6 +232,7 @@ export const WARSAW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 14,
+    ref: "warsaw:14",
     name: "Saxon Garden",
     description: "Το παλαιότερο δημόσιο πάρκο της Βαρσοβίας, ένας πανέμορφος χώρος από τον 18ο αιώνα που φιλοξενεί το Μνημείο του Άγνωστου Στρατιώτη, εντυπωσιακά σιντριβάνια, κλασικά αγάλματα, και παιδική χαρά.",
     hours: 1, cost: 0, coords: { lat: 52.2422, lng: 21.0056 },
@@ -235,6 +249,7 @@ export const WARSAW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 16,
+    ref: "warsaw:16",
     name: "Royal Castle",
     description: "Ένα εμβληματικό σύμβολο της πολωνικής ιστορίας και αρχιτεκτονικής, το οποίο ανακατασκευάστηκε με εντυπωσιακή λεπτομέρεια μετά την καταστροφή του στον Β' Παγκόσμιο Πόλεμο. Σήμερα λειτουργεί ως μουσείο, φιλοξενώντας τα βασιλικά διαμερίσματα, πολύτιμες συλλογές έργων τέχνης και την αίθουσα του θρόνου",
     hours: 2, cost: 14, coords: { lat: 52.2477, lng: 21.0142 },
@@ -251,6 +266,7 @@ export const WARSAW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 18,
+    ref: "warsaw:18",
     name: "Multimedia Fountain Park",
     description: "'Ενα από τα πιο δημοφιλή αξιοθέατα της Βαρσοβίας, με εντυπωσιακά θεάματα που συνδυάζουν νερό, φως, ήχο και λέιζερ. Βρίσκεται ανάμεσα στην Παλιά Πόλη και τον ποταμό Βιστούλα, ιδανικό μέρος για βραδυνή βόλτα. Προσοχή λειτουργεί Παρασκευές και Σάββατα από Μάιο έως Σεπτέμβριο και κατά την διάρκεια των γιορτών , Δεκέμβριο με Φεβρουάριο αλλά και εκτάκτως. Ενημερωθείτε από το επίσημο site.",
     hours: 1, cost: 0, coords: { lat: 52.2408, lng: 21.0253 },
@@ -267,6 +283,7 @@ export const WARSAW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 19,
+    ref: "warsaw:19",
     name: "Majaland Warsaw",
     description: "Το Majaland Warsaw είναι ένα υπερσύγχρονο θεματικό πάρκο διασκέδασης που ζωντανεύει τον κόσμο της Μάγιας της Μέλισσας, των Super Wings και των Βίκινγκς μέσα από εντυπωσιακά διαδραστικά παιχνίδια, roller coasters και παραμυθένια σκηνικά. Έχει έναν τεράστιο εσωτερικό κλιματιζόμενο χώρο αλλά και εξωτερικές εγκαταστάσεις με υδάτινες ζώνες, καθιστώντας το έναν ιδανικό προορισμό για κάθε εποχή του χρόνου. Είναι κατάλληλο για παιδιά από 2 ετών έως και 10-12 ετών.",
     hours: 4, cost: 27, coords: { lat: 52.1493, lng: 21.2583 },
@@ -283,6 +300,7 @@ export const WARSAW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 20,
+    ref: "warsaw:20",
     name: "Hangar 646 στο Gocław",
     description: "Ο πιο δημοφιλής πολυχώρος με τραμπολίνο στη Βαρσοβία, ένας συνδυασμός αθλητισμού και ψυχαγωγίας μέσα από δεκάδες τραμπολίνο, διαδρομές εμποδίων τύπου Ninja Warrior, τοίχους αναρρίχησης και μεγάλες λακκούβες με σφουγγάρια για ασφαλή άλματα.",
     hours: 1, cost: 9, coords: { lat: 52.2215, lng: 21.0827 },
@@ -299,6 +317,7 @@ export const WARSAW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 21,
+    ref: "warsaw:21",
     name: "Papugarnia Carmen (Parrot House)",
     description: "Ενας μοναδικός διαδραστικός χώρος όπου μπορείτε να έρθετε σε άμεση επαφή με περισσότερους από 100 παπαγάλους από 30 διαφορετικά είδη. Σε αντίθεση με έναν παραδοσιακό ζωολογικό κήπο, τα πουλιά πετούν ελεύθερα σε μια μεγάλη αίθουσα χωρίς κλουβιά, επιτρέποντάς σας να τα ταΐσετε, να τα αγγίξετε και να βγάλετε φωτογραφίες μαζί τους καθώς συχνά κάθονται στους ώμους ή στα χέρια των επισκεπτών. Είναι ένας προορισμός που απευθύνεται σε όλες τις ηλικίες, καθώς δεν υπάρχει κάτω όριο ηλικίας για την είσοδο",
     hours: 1, cost: 10.2, coords: { lat: 52.1959, lng: 20.9258 },

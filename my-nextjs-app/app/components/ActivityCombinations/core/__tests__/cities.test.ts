@@ -19,8 +19,12 @@ function withCity<T>(city: typeof ROME, fn: () => T): T {
   }
 }
 
-test("Paris has 10 activities and a centre distinct from Rome", () => {
-  assert.equal(PARIS.activities.length, 10);
+test("Paris has its 22 JSON activities and a centre distinct from Rome", () => {
+  assert.equal(PARIS.activities.length, 22);
+  // Carried over from the old hand-curated Paris: the Louvre is shut on Tuesdays.
+  const louvre = PARIS.activities.find((a) => a.name === "Μουσείο του Λούβρου");
+  assert.ok(louvre, "Louvre present");
+  assert.deepEqual(louvre!.program[1], { open: 0, close: 0 });
   assert.notDeepEqual(PARIS.center, ROME.center);
   assert.ok(CITIES.includes(PARIS) && CITIES.includes(ROME));
   // ALL_ACTIVITIES is the flat union of every city's catalogue.
@@ -50,8 +54,8 @@ test("every destination's centre equals its first area, with at least one area",
 });
 
 test("every destination carries a non-empty activity catalogue", () => {
-  // Rome/Paris are curated; the other cities come from the generated catalogues
-  // in data/activities/ — so every selectable destination now has activities.
+  // Every city — Rome and Paris included — comes from the generated catalogues
+  // in data/activities/, so every selectable destination has activities.
   for (const c of CITIES) {
     assert.ok(c.activities.length > 0, `${c.name} should have activities`);
   }

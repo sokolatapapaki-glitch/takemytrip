@@ -106,10 +106,13 @@ export type Activity = {
   // Optional (foodie activities only): if true, this activity can stand in for
   // the midday lunch break when it's open during the 1–4 PM slot.
   is_lunch?: boolean;
-  // --- takemytrip-aligned metadata (null/empty on the hand-authored Rome/Paris
-  // catalogues for now; the planner doesn't read these — they're display data).
-  // Opening hours stay in `program`; there is no openHour/closeHour field.
+  // --- takemytrip-aligned metadata (copied from takemytrip/data/<city>.json by
+  // scripts/gen-activities.mjs; the planner doesn't read these — they're display
+  // data). Opening hours stay in `program`; there is no openHour/closeHour field.
   id: number | null;
+  // Stable key "<cityId>:<id>" (ids repeat across cities). Editor images are
+  // looked up by it. Optional so hand-made test activities stay valid.
+  ref?: string;
   prices: PriceTable | null;
   websites: WebsiteLink[];
   googleMapUrl: string | null;

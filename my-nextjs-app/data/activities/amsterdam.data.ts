@@ -1,16 +1,17 @@
 /* eslint-disable */
 // -----------------------------------------------------------------------------
 // AUTO-GENERATED from takemytrip/data/amsterdam.json by scripts/gen-activities.mjs.
-// Do not edit by hand — re-run the generator. Metadata (prices, family prices,
-// restaurant/cafe, website, notes, tags, id, description, best_time, emoji) is
-// copied verbatim from the JSON; the engine fields (program/hours/vibes/priority)
-// are synthesized from each activity's `category`.
+// Do not edit by hand — edit the JSON (or use the editor) and re-run the
+// generator. Metadata is copied verbatim from the JSON; the engine fields
+// (program/vibes/priority) come from the JSON's opening_hours/vibes/priority when
+// set, otherwise they are synthesized from each activity's `category`.
 // -----------------------------------------------------------------------------
 import { everyDay, at, ALL_DAY, food, cafe, site, type CatalogueActivity } from "./_helpers";
 
 export const AMSTERDAM_ACTIVITIES: CatalogueActivity[] = [
   {
     id: 1,
+    ref: "amsterdam:1",
     name: "NEMO Science Museum",
     description: "Το κορυφαίο διαδραστικό μουσείο επιστημών. Μην ξεχάσετε την ταράτσα με  θέα και τα παιχνίδια νερού.",
     hours: 3, cost: 21.5, coords: { lat: 52.3744, lng: 4.9122 },
@@ -27,6 +28,7 @@ export const AMSTERDAM_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 2,
+    ref: "amsterdam:2",
     name: "Rijksmuseum",
     description: "Κλασική τέχνη με ειδικά προγράμματα και 'κυνήγι θησαυρού' για παιδιά.",
     hours: 2.5, cost: 25, coords: { lat: 52.3598, lng: 4.8852 },
@@ -43,6 +45,7 @@ export const AMSTERDAM_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 3,
+    ref: "amsterdam:3",
     name: "Van Gogh Museum",
     description: "Ειδικές οικογενειακές ξεναγήσεις για να γνωρίσουν οι μικροί επισκέπτες τον μεγάλο ζωγράφο.",
     hours: 2, cost: 24, coords: { lat: 52.3584, lng: 4.8811 },
@@ -59,6 +62,7 @@ export const AMSTERDAM_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 4,
+    ref: "amsterdam:4",
     name: "Madame Tussauds Amsterdam",
     description: "Το διάσημο μουσείο κέρινων ομοιωμάτων στην πλατεία Dam.",
     hours: 1.5, cost: 27, coords: { lat: 52.3731, lng: 4.8925 },
@@ -75,6 +79,7 @@ export const AMSTERDAM_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 5,
+    ref: "amsterdam:5",
     name: "WONDR Experience",
     description: "Μια 'Instagrammable' παιδική χαρά με πισίνες από marshmallows και δωμάτια γεμάτα χρώμα.",
     hours: 1.5, cost: 27, coords: { lat: 52.3886, lng: 4.8689 },
@@ -91,6 +96,7 @@ export const AMSTERDAM_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 6,
+    ref: "amsterdam:6",
     name: "This is Holland",
     description: "Μια 5D πτήση πάνω από τα αξιοθέατα της Ολλανδίας που συναρπάζει τα παιδιά.",
     hours: 1, cost: 24, coords: { lat: 52.3758, lng: 4.8979 },
@@ -107,6 +113,7 @@ export const AMSTERDAM_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 7,
+    ref: "amsterdam:7",
     name: "Artis Royal Zoo & Planetarium",
     description: "Ένας ιστορικός ζωολογικός κήπος που περιλαμβάνει ενυδρείο και πλανητάριο.",
     hours: 4, cost: 29.5, coords: { lat: 52.3661, lng: 4.9145 },
@@ -123,6 +130,7 @@ export const AMSTERDAM_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 8,
+    ref: "amsterdam:8",
     name: "Vondelpark",
     description: "Το κεντρικό πάρκο της πόλης με πολλές παιδικές χαρές και το φιλικό προς παιδιά καφέ 'Grote Melkhuis'.",
     hours: 2, cost: 0, coords: { lat: 52.3586, lng: 4.8681 },
@@ -139,6 +147,7 @@ export const AMSTERDAM_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 9,
+    ref: "amsterdam:9",
     name: "Amsterdamse Bos",
     description: "Ένα τεράστιο δάσος στις παρυφές της πόλης με λίμνες, κανό, φάρμα με κατσίκες και πάρκο αναρρίχησης.",
     hours: 3, cost: 0, coords: { lat: 52.3161, lng: 4.8319 },
@@ -155,6 +164,7 @@ export const AMSTERDAM_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 10,
+    ref: "amsterdam:10",
     name: "Amstelpark",
     description: "Ιδανικό για το μικρό του τρενάκι, το μίνι γκολφ και τον λαβύρινθο.",
     hours: 2.5, cost: 0, coords: { lat: 52.3325, lng: 4.8883 },
@@ -171,6 +181,7 @@ export const AMSTERDAM_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 11,
+    ref: "amsterdam:11",
     name: "Canal Cruise (Απλή Ξενάγηση)",
     description: "Κρουαζιέρα στα κανάλια του Άμστερνταμ.",
     hours: 1, cost: 15.5, coords: { lat: 52.3676, lng: 4.9041 },
@@ -187,6 +198,7 @@ export const AMSTERDAM_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 12,
+    ref: "amsterdam:12",
     name: "Pancake Boat (Pannenkoekenboot)",
     description: "Κρουαζιέρα με απεριόριστες τηγανίτες κατά τη διάρκεια της βόλτας.",
     hours: 1.5, cost: 26, coords: { lat: 52.3756, lng: 4.9039 },

@@ -2,15 +2,17 @@
 // Activity data (vibe list, day labels) + catalogue re-exports
 // -----------------------------------------------------------------------------
 // The activity CATALOGUE literals and the small builders that construct them live
-// in the project-root `data` folder, which imports nothing — it's pure data: the
-// curated Rome catalogue (+ its CLOSED constant) in data/activities/rome.data.ts,
-// Paris in data/activities.data.ts. This module keeps the lightweight reference
-// constants (day labels, the vibe list) and RE-EXPORTS the Rome catalogue + CLOSED
-// under their historical names WITH the planner's types applied, so every existing
+// in the project-root `data` folder, which imports nothing — it's pure data,
+// generated from takemytrip/data/<city>.json by scripts/gen-activities.mjs (the
+// CLOSED constant lives in the generated data/activities/_helpers.ts). This module
+// keeps the lightweight reference constants (day labels, the vibe list) and
+// RE-EXPORTS the Rome catalogue + CLOSED under their historical names WITH the
+// planner's types applied, so every existing
 // `import { ACTIVITIES, CLOSED } from "./activities.data"` keeps resolving here
 // unchanged. Types and helper functions live in activities.functions.
 import type { Activity, DayHours, VibeKey } from "./activities.functions";
-import { ROME_ACTIVITIES, CLOSED as RAW_CLOSED } from "../../../../data/activities/rome.data";
+import { ROME_ACTIVITIES } from "../../../../data/activities/rome.data";
+import { CLOSED as RAW_CLOSED } from "../../../../data/activities/_helpers";
 
 // Re-export the data-folder catalogue + "closed that day" constant, typed.
 export const CLOSED: DayHours = RAW_CLOSED;

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { EDITOR_IMAGE_CREDITS } from "@/data/activities/_images";
 
 export const metadata: Metadata = {
   title: "Πηγές εικόνων",
@@ -15,6 +16,10 @@ export const metadata: Metadata = {
 // that were later replaced by the local Photos-repo sync (Park Güell, Picasso
 // Museum) are intentionally NOT listed, since the displayed image is no longer
 // the credited Commons work. Keep in sync with those _credits.json files.
+//
+// Images added in the editor app carry their own credit in the city JSON; the
+// generator (scripts/gen-activities.mjs) collects the ones that need attribution
+// into EDITOR_IMAGE_CREDITS, which is listed after the hand-kept entries below.
 type Credit = {
   subject: string;
   author: string;
@@ -152,6 +157,9 @@ const CC_CREDITS: Credit[] = [
   },
 ];
 
+// Hand-kept credits first, then the ones generated from editor images.
+const ALL_CREDITS: Credit[] = [...CC_CREDITS, ...EDITOR_IMAGE_CREDITS];
+
 export default function CreditsPage() {
   return (
     <section className="relative flex-1 bg-gradient-to-br from-orange-50 via-white to-emerald-50 px-4 py-10 sm:px-8">
@@ -170,9 +178,9 @@ export default function CreditsPage() {
           Φωτογραφίες Creative Commons (απαιτείται αναφορά)
         </h2>
         <ul className="mt-3 flex flex-col gap-3">
-          {CC_CREDITS.map((c) => (
+          {ALL_CREDITS.map((c) => (
             <li
-              key={c.sourceUrl}
+              key={`${c.subject}|${c.sourceUrl}`}
               className="rounded-2xl border border-white/60 bg-white/80 p-4 text-sm shadow-lg shadow-orange-900/5"
             >
               <p className="font-medium text-zinc-800">{c.subject}</p>

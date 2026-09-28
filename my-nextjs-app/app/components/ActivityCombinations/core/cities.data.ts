@@ -2,19 +2,15 @@
 // Cities (the planner's view of the shared destinations + their activities)
 // -----------------------------------------------------------------------------
 // Joins the shared destination list (./destinations.data → data/destinations.data)
-// with each destination's activity catalogue. Rome and Paris use the hand-curated
-// catalogues (Rome in data/activities/rome.data.ts, Paris in data/activities.data.ts);
-// the other 13 cities use the catalogues generated from takemytrip JSON in
+// with each destination's activity catalogue. Every city — Rome and Paris
+// included — uses the catalogue generated from takemytrip/data/<city>.json in
 // data/activities/<city>.data.ts (aggregated by data/activities/index.ts — see
-// scripts/gen-activities.mjs). Any destination not found in either is scaffolded
-// with an empty list.
+// scripts/gen-activities.mjs). Any destination without one is scaffolded with an
+// empty list.
 //
-// To regenerate the JSON-derived catalogues: `node scripts/gen-activities.mjs`.
-// Curated Rome/Paris are listed explicitly below so they win over any generated
-// entry of the same id.
+// To regenerate the catalogues: `node scripts/gen-activities.mjs` (the editor app
+// runs it on every save).
 import type { Activity } from "./activities.functions";
-import { ROME_ACTIVITIES } from "../../../../data/activities/rome.data";
-import { PARIS_ACTIVITIES } from "../../../../data/activities.data";
 import { GENERATED_ACTIVITIES_BY_DESTINATION } from "../../../../data/activities/index";
 import { DESTINATIONS, type Destination, type DestArea, type CityPass } from "./destinations.data";
 
@@ -79,21 +75,19 @@ const CITY_MAGIC_COMBOS: Record<string, MagicCombo[]> = {
   paris: [
     {
       name: "Μουσεία του Παρισιού",
-      activityNames: ["Louvre Museum", "Musée d'Orsay"],
+      // Matched by exact name against paris.json (names are unique).
+      activityNames: ["Μουσείο του Λούβρου", "Μουσείο Orsay"],
       discountPercent: 12,
       description: "Συνδυαστικό για Λούβρο και Μουσείο ντ' Ορσέ.",
     },
   ],
 };
 
-// Activity catalogues by destination id: the generated catalogues for the 13
-// JSON-derived cities, with curated Rome/Paris layered on top. Destinations not
-// present in either are scaffolded (empty) — selectable, with working area
-// anchors, but no combos yet.
+// Activity catalogues by destination id, all generated from the JSON.
+// Destinations without one are scaffolded (empty) — selectable, with working
+// area anchors, but no combos yet.
 const ACTIVITIES_BY_DESTINATION: Record<string, Activity[]> = {
   ...GENERATED_ACTIVITIES_BY_DESTINATION,
-  rome: ROME_ACTIVITIES,
-  paris: PARIS_ACTIVITIES,
 };
 
 // The planner's destinations: the shared list, each with its activity catalogue

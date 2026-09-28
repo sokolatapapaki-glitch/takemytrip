@@ -1,16 +1,17 @@
 /* eslint-disable */
 // -----------------------------------------------------------------------------
 // AUTO-GENERATED from takemytrip/data/istanbul.json by scripts/gen-activities.mjs.
-// Do not edit by hand — re-run the generator. Metadata (prices, family prices,
-// restaurant/cafe, website, notes, tags, id, description, best_time, emoji) is
-// copied verbatim from the JSON; the engine fields (program/hours/vibes/priority)
-// are synthesized from each activity's `category`.
+// Do not edit by hand — edit the JSON (or use the editor) and re-run the
+// generator. Metadata is copied verbatim from the JSON; the engine fields
+// (program/vibes/priority) come from the JSON's opening_hours/vibes/priority when
+// set, otherwise they are synthesized from each activity's `category`.
 // -----------------------------------------------------------------------------
 import { everyDay, at, ALL_DAY, food, cafe, site, type CatalogueActivity } from "./_helpers";
 
 export const ISTANBUL_ACTIVITIES: CatalogueActivity[] = [
   {
     id: 1,
+    ref: "istanbul:1",
     name: "Αγία Σοφία",
     description: "Η ιστορική εκκλησία που έχει μετατραπεί επίσημα σε τζαμί. Χώρος λατρείας, οπωσδήποτε καλυμμένο σώμα και κεφάλι, βγάζετε παπούτσια πριν την είσοδο.",
     hours: 1.5, cost: 30, coords: { lat: 41.0086, lng: 28.9802 },
@@ -27,6 +28,7 @@ export const ISTANBUL_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 2,
+    ref: "istanbul:2",
     name: "Μπλε Τζαμί (Σουλταν Αχμέτ)",
     description: "Το πιο διάσημο τζαμί με τα εντυπωσιακά βιτρό σαν να μπαίνει μπλε φως από τα παράθυρα. Χώρος λατρείας (καλυμμένο σώμα και κεφάλι, βγάζετε παπούτσια πριν την είσοδο). Χρειάζεται ησυχία, μικρά παιδιά ίσως δυσκολευτούν",
     hours: 1, cost: 0, coords: { lat: 41.0054, lng: 28.9768 },
@@ -43,6 +45,7 @@ export const ISTANBUL_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 3,
+    ref: "istanbul:3",
     name: "Βασιλική Κινστέρνα",
     description: "Υπόγεια δεξαμενή που τροφοδοτούσε με νερό όλη την Πόλη. Εντυπωσιακό μέρος, υπέροχη ακουστική. Ιδανικό για άνω των 7 ετών",
     hours: 1, cost: 30, coords: { lat: 41.0083, lng: 28.9775 },
@@ -59,6 +62,7 @@ export const ISTANBUL_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 4,
+    ref: "istanbul:4",
     name: "Τοπ Καπί (Αυτοκρατορικό Παλάτι)",
     description: "Ήταν η έδρα των Οθωμανών Σουλτάνων για 400+ χρόνια. Must: Χαρέμι, Θησαυροφυλάκιο με διαμάντι 86 καρατίων, Ιερά Κειμήλια (ράβδος Μωυσή, σπαθί Δαβίδ), Θέα από Τέταρτη Αυλή. Ανεκτό για παιδιά από 6 -7 ετών και πάνω. .",
     hours: 3, cost: 60, coords: { lat: 41.0116, lng: 28.9834 },
@@ -75,6 +79,7 @@ export const ISTANBUL_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 5,
+    ref: "istanbul:5",
     name: "Αρχαιολογικό Μουσείο Κωνσταντινούπολης",
     description: "Όλη η ιστορία της Κωνσταντινούπολης και της Τουρκίας σε ένα μέρος. Είναι συνδυασμός 3 μουσείων (Istanbul Archaeology Museum, Museum of the Ancient Orient, Tiled Kiosk Museum - έχει στην αυλή εκθέματα για παιδιά-.",
     hours: 2.5, cost: 20, coords: { lat: 41.0112, lng: 28.9819 },
@@ -91,6 +96,7 @@ export const ISTANBUL_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 6,
+    ref: "istanbul:6",
     name: "Πύργος του Γαλατά",
     description: "Πύργος που δεσπόζει κοντά στη γέφυρα του Γαλατά, υπέροχη θέα από ψηλά. Προσοχή στην απότομη σκάλα. Δεν προτείνεται για παιδιά κάτω των 6-7 ετών.",
     hours: 1, cost: 30, coords: { lat: 41.0255, lng: 28.9742 },
@@ -107,6 +113,7 @@ export const ISTANBUL_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 7,
+    ref: "istanbul:7",
     name: "Κρουαζιέρα στον Βόσπορο",
     description: "Αν θέλει κανείς να θαυμάσει τα εντυπωσιακά και τρομερά πλούσια σπίτια που είναι χτισμένα στα παράλια του Βοσπόρου τότε πρέπει να κάνει αυτήν την κρουαζιέρα.",
     hours: 3, cost: 18, coords: { lat: 41.018535, lng: 28.97073 },
@@ -123,6 +130,7 @@ export const ISTANBUL_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 8,
+    ref: "istanbul:8",
     name: "Κρουαζιέρα στα Πριγκηπονήσια",
     description: "Με το καραβάκι της γραμμής, γυρνάτε από νησάκι σε νησάκι και κατεβαίνετε στην Πρίγκηπο όπου δεν κυκλοφορούν αμάξια.Τα περισσότερα αναχωρούν από το λιμάνι Kabataş,η πινέζα στον χάρτη αναφέρεται σε αυτό",
     hours: 4, cost: 7, coords: { lat: 41.0334, lng: 28.9926 },
@@ -139,6 +147,7 @@ export const ISTANBUL_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 9,
+    ref: "istanbul:9",
     name: "Μουσείο Σύγχρονης Τέχνης (Istanbul Modern)",
     description: "Εντυπωσιακοί πίνακες και αισθητική σε έναν φουτουριστικό χώρο. Αν σας αρέσει η μοντέρνα τέχνη μην το χάσετε, πολλοί πάνε επίσης μόνο για το εστιατόριο και τη θέα.",
     hours: 2, cost: 15, coords: { lat: 41.0292, lng: 28.9748 },
@@ -155,6 +164,7 @@ export const ISTANBUL_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 10,
+    ref: "istanbul:10",
     name: "Ενυδρείο Κωνσταντινούπολης (Istanbul Aquarium)",
     description: "Θεωρείται ένα από τα καλύτερα θεματικά ενυδρεία στον κόσμο Υπάρχουν κι άλλα μικρότερα, βεβαιωθείτε ότι θα πάτε στο σωστό. Είναι λίγο έξω από την πόλη. Ιδανικό για κάθε ηλικία",
     hours: 2.5, cost: 24, coords: { lat: 40.9784, lng: 28.8211 },
@@ -171,6 +181,7 @@ export const ISTANBUL_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 11,
+    ref: "istanbul:11",
     name: "Πάρκο Μινιατούρων (Miniatürk)",
     description: "Όμορφος χώρος και με μία ωραία παιδική χαρά, γυρνάς γύρω γύρω βλέποντας μινιατούρες από όλα τα εμβληματικά κτίρια και τις περιοχές της Τουρκίας. Επίσκεψη μόνο με καλό καιρό, είναι όλο υπαίθριο.",
     hours: 2, cost: 19, coords: { lat: 41.0642, lng: 28.9408 },
@@ -187,6 +198,7 @@ export const ISTANBUL_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 12,
+    ref: "istanbul:12",
     name: "Vialand (Θεματικό Πάρκ)",
     description: "Ένα μεγάλο λούνα παρκ με τρενάκια, εστίαση, καφέ.Κατάλληλο από 3 ετών και πάνω. Προσοχή, λειτουργεί από Μάρτιο έως Οκτώβριο και κλείνει κατά τους χειμερινούς μήνες",
     hours: 5, cost: 51, coords: { lat: 41.0825, lng: 28.9247 },
@@ -203,6 +215,7 @@ export const ISTANBUL_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 13,
+    ref: "istanbul:13",
     name: "Πάρκο Γκιουλχανέ",
     description: "Η φύση σε όλο της το μεγαλείο. Δίπλα στο Τοπ Καπί.Έχει παιδικές χαρές και πολύ πράσινο",
     hours: 1, cost: 0, coords: { lat: 41.0128, lng: 28.9811 },
@@ -219,6 +232,7 @@ export const ISTANBUL_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 14,
+    ref: "istanbul:14",
     name: "Πατριαρχείο",
     description: "Είναι το πνευματικό κέντρο της Ορθόδοξης Εκκλησίας. θα δείτε τον Πατριαρχικό Θρόνο, ιερά κειμήλια Αγίων και τη Στήλη της Φραγκελώσεως. Συνδυάστε με βόλτα στα στενά του Φαναρίου και Μπαλάτ με χρωματιστά σπίτια και τη Μεγάλη του Γένους Σχολή.",
     hours: 1, cost: 0, coords: { lat: 41.0284, lng: 28.9511 },
@@ -235,6 +249,7 @@ export const ISTANBUL_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 16,
+    ref: "istanbul:16",
     name: "KidZania Istanbul",
     description: "Διαδραστικό θεματικό πάρκο όπου τα παιδιά παίζουν ρόλους σε επαγγέλματα μέσα σε μία μικρή πόλη. Κατάλληλο απο 3 ετών και ιδανικό από 6-7 ετών και πάνω",
     hours: 4, cost: 28.5, coords: { lat: 41.00198, lng: 29.05508 },

@@ -1,16 +1,17 @@
 /* eslint-disable */
 // -----------------------------------------------------------------------------
 // AUTO-GENERATED from takemytrip/data/krakow.json by scripts/gen-activities.mjs.
-// Do not edit by hand — re-run the generator. Metadata (prices, family prices,
-// restaurant/cafe, website, notes, tags, id, description, best_time, emoji) is
-// copied verbatim from the JSON; the engine fields (program/hours/vibes/priority)
-// are synthesized from each activity's `category`.
+// Do not edit by hand — edit the JSON (or use the editor) and re-run the
+// generator. Metadata is copied verbatim from the JSON; the engine fields
+// (program/vibes/priority) come from the JSON's opening_hours/vibes/priority when
+// set, otherwise they are synthesized from each activity's `category`.
 // -----------------------------------------------------------------------------
 import { everyDay, at, ALL_DAY, food, cafe, site, type CatalogueActivity } from "./_helpers";
 
 export const KRAKOW_ACTIVITIES: CatalogueActivity[] = [
   {
     id: 1,
+    ref: "krakow:1",
     name: "Wawel Castle",
     description: "Το ιστορικό και πνευματικό κέντρο της Πολωνίας, όπου για αιώνες στέφονταν και θάβονταν οι Πολωνοί βασιλιάδες.Είναι ένα εντυπωσιακό οχυρό με σήμα κατατεθέν τον Δράκο του Wawel που βγάζει αληθινή φωτιά στην είσοδο της σπηλιάς του",
     hours: 2, cost: 12, coords: { lat: 50.054, lng: 19.9356 },
@@ -27,6 +28,7 @@ export const KRAKOW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 2,
+    ref: "krakow:2",
     name: "Wieliczka Salt Mine",
     description: "Πρόκειται για μια εντυπωσιακή υπόγεια πόλη εξ ολοκλήρου από αλάτι, που φτάνει σε βάθος έως και 327 μέτρα.Θα εκπλαγείτε από τους δαιδαλώδεις διαδρόμους, τις γαλαζοπράσινες λίμνες και, κυρίως, από το Παρεκκλήσι της Αγίας Κίνγκα, έναν τεράστιο καθεδρικό ναό όπου τα πάντα —από τα ανάγλυφα στους τοίχους μέχρι τους πολυελαίους— είναι φτιαγμένα από κρυστάλλους αλατιού. Είναι ένα μνημείο της UNESCO που συνδυάζει την εξόρυξη με την υψηλή τέχνη.",
     hours: 3.5, cost: 34, coords: { lat: 49.9833, lng: 20.0553 },
@@ -43,6 +45,7 @@ export const KRAKOW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 3,
+    ref: "krakow:3",
     name: "Underground Rynek Museum",
     description: "Ακριβώς κάτω από την κεντρική πλατεία της πόλης,  αποκαλύφθηκε κατά τις ανασκαφές του 2005. Εκεί θα περπατήσετε σε μεσαιωνικούς δρόμους, παλιά τείχη και εμπορικούς πάγκους του 13ου αιώνα, όλα διατηρημένα στην αρχική τους θέση. Είναι διαδραστικό, με ολογράμματα, οθόνες αφής και ηχητικά εφέ. Ιδανικό από 5-6 ετών και πάνω. ",
     hours: 1.5, cost: 10, coords: { lat: 50.0617, lng: 19.9372 },
@@ -59,6 +62,7 @@ export const KRAKOW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 4,
+    ref: "krakow:4",
     name: "Museum of Illusions",
     description: "Φαντάσου έναν χώρο όπου οι νόμοι της φυσικής μοιάζουν να καταρρέουν και τα μάτια σου σε ξεγελούν σε κάθε βήμα. Είναι ένας απόλυτα διαδραστικός προορισμός όπου μπορείς να περπατήσεις στους τοίχους, να δεις το σώμα σου να μικραίνει ή να μεγαλώνει μέσα σε δευτερόλεπτα και να χαθείς σε δωμάτια γεμάτα καθρέφτες και ολογράμματα.",
     hours: 1.5, cost: 14, coords: { lat: 50.0614, lng: 19.9372 },
@@ -75,6 +79,7 @@ export const KRAKOW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 5,
+    ref: "krakow:5",
     name: "Krakow Pinball Museum",
     description: "Σε ένα ιστορικό κελάρι του 15ου αιώνα, πολύ κοντά στο κάστρο Wawel αυτός ο χώρος έχει πάνω από 60 αναπαλαιωμένα φλιπεράκια (από τη δεκαετία του '50 μέχρι σήμερα) και περίπου 35 arcade παιχνίδια (όπως Pac-Man και Mortal Kombat), τα οποία μπορείτε να παίξετε απεριόριστα με το εισιτήριο εισόδου.",
     hours: 2, cost: 16.5, coords: { lat: 50.06, lng: 19.9369 },
@@ -91,6 +96,7 @@ export const KRAKOW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 7,
+    ref: "krakow:7",
     name: "Auschwitz",
     description: "Είναι ο πιο συγκλονιστικός τόπος μνήμης στον κόσμο, χωρισμένος σε δύο μέρη: το Άουσβιτς Ι με τους πέτρινους στρατώνες και τα προσωπικά αντικείμενα των θυμάτων, και το αχανές Μπίρκεναου με τις ράγες του τρένου και τα ερείπια των κρεματορίων",
     hours: 5, cost: 35, coords: { lat: 50.0271, lng: 19.2036 },
@@ -107,6 +113,7 @@ export const KRAKOW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 8,
+    ref: "krakow:8",
     name: "Aquapark",
     description: "Ένα από τα μεγαλύτερα στην Πολωνία. Έχει extreme και φυσιολογικές νερτσουλήθρες αλλά και μεγάλα Jacuzzi, πισίνα με κύματα, ποτάμι που σε παρασύρει και υδρομασάζ.",
     hours: 4, cost: 25, coords: { lat: 50.0897, lng: 19.9742 },
@@ -123,6 +130,7 @@ export const KRAKOW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 9,
+    ref: "krakow:9",
     name: "Go Jump",
     description: "Τεράστιες εκτάσεις με τραμπολίνο, αερόσακοι για άλματα (giant airbags), γήπεδα dodgeball, μπασκέτες για καρφώματα και ειδικές διαδρομές τύπου Ninja Warrior.",
     hours: 2, cost: 28, coords: { lat: 50.0776, lng: 19.945 },
@@ -139,6 +147,7 @@ export const KRAKOW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 10,
+    ref: "krakow:10",
     name: "Jordan Park",
     description: "'Ενας  παράδεισος για δραστηριότητες στην πόλη. Έχει παιδικές χαρές χωρισμένες ανά ηλικία, γήπεδα μπάσκετ, ποδοσφαίρου, βόλεϊ, πίστα για skateboard, ακόμα και τοίχο αναρρίχησης.",
     hours: 2, cost: 0, coords: { lat: 50.0583, lng: 19.9283 },
@@ -155,6 +164,7 @@ export const KRAKOW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 11,
+    ref: "krakow:11",
     name: "Stanislaw Lems Garden",
     description: "Με πάνω από 100 διαδραστικές εγκαταστάσεις που εξηγούν νόμους της φυσικής, της οπτικής και της ακουστικής. Μπορείτε να πειραματιστείτε με τεράστια κάτοπτρα, ηχητικά τηλέφωνα, λαβύρινθους και μηχανές που δημιουργούν δίνες.",
     hours: 2.5, cost: 5, coords: { lat: 50.0703, lng: 19.9985 },
@@ -171,6 +181,7 @@ export const KRAKOW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 12,
+    ref: "krakow:12",
     name: "Zakopane",
     description: "Η χειμερινή πρωτεύουσα της Πολωνίας. Άγρια φύση &  πολύ ιδιαίτερη τοπική κουλτούρα. Ανεβείτε με το τελεφερίκ  στο Gubalowka για υπέροχη θέα των Τάτρα και κατεβείτε με την τσουλήθρα βαρύτητας. Μην ξεχάσετε να δοκιμάσετε Oscypek (καπνιστό τυρί). Μην παραλείψετε μια εκδρομή στην Morski Oko την πιο διάσημη λίμνη των Τάτρα και μια επίσκεψη στα θερμά λουτρά της περιοχής (π.χ. Chochołowskie Termy που είναι τα μεγαλύτερα)",
     hours: 6, cost: 0, coords: { lat: 49.2992, lng: 19.9496 },
@@ -187,6 +198,7 @@ export const KRAKOW_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 13,
+    ref: "krakow:13",
     name: "Energylandia",
     description: "Η Energylandia είναι το μεγαλύτερο λούνα παρκ της Πολωνίας (και ένα από τα μεγαλύτερα στην Ευρώπη) και βρίσκεται στο Zator, περίπου μια ώρα από την Κρακοβία.",
     hours: 7, cost: 45, coords: { lat: 49.9797, lng: 19.1978 },

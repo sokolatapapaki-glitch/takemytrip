@@ -1,16 +1,17 @@
 /* eslint-disable */
 // -----------------------------------------------------------------------------
 // AUTO-GENERATED from takemytrip/data/lisbon.json by scripts/gen-activities.mjs.
-// Do not edit by hand — re-run the generator. Metadata (prices, family prices,
-// restaurant/cafe, website, notes, tags, id, description, best_time, emoji) is
-// copied verbatim from the JSON; the engine fields (program/hours/vibes/priority)
-// are synthesized from each activity's `category`.
+// Do not edit by hand — edit the JSON (or use the editor) and re-run the
+// generator. Metadata is copied verbatim from the JSON; the engine fields
+// (program/vibes/priority) come from the JSON's opening_hours/vibes/priority when
+// set, otherwise they are synthesized from each activity's `category`.
 // -----------------------------------------------------------------------------
 import { everyDay, at, ALL_DAY, food, cafe, site, type CatalogueActivity } from "./_helpers";
 
 export const LISBON_ACTIVITIES: CatalogueActivity[] = [
   {
     id: 1,
+    ref: "lisbon:1",
     name: "Oceanário de Lisboa",
     description: "Ένα από τα μεγαλύτερα ενυδρεία στην Ευρώπη με χιλιάδες ψάρια και θαλάσσια είδη.",
     hours: 3, cost: 19, coords: { lat: 38.7633, lng: -9.0937 },
@@ -27,6 +28,7 @@ export const LISBON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 2,
+    ref: "lisbon:2",
     name: "Pavilhão do Conhecimento",
     description: "Διαδραστικό μουσείο επιστήμης ιδανικό για παιδιά και εφήβους (3-16 ετών).Είναι ο παράδεισος για όποιον θέλει να πειραματιστεί, με απίθανα εκθέματα όπως το να κάνεις ποδήλατο πάνω σε ένα σχοινί στον αέρα ή να μπαίνεις μέσα σε τεράστιες σαπουνόφουσκες.",
     hours: 2.5, cost: 9, coords: { lat: 38.7625, lng: -9.095 },
@@ -43,6 +45,7 @@ export const LISBON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 3,
+    ref: "lisbon:3",
     name: "Πύργος του Μπελέμ",
     description: "Μνημείο της UNESCO και το πιο αναγνωρίσιμο ορόσημο της Λισαβόνας, εντυπωσιάζοντας με τη «δαντελωτή» αρχιτεκτονική του που μοιάζει με κάστρο μέσα στο νερό.Το εσωτερικό του είναι δύσκολο με παιδιά κάτω των 5-6 ετών λόγω στενών σκαλιών.",
     hours: 1, cost: 8, coords: { lat: 38.6916, lng: -9.216 },
@@ -59,6 +62,7 @@ export const LISBON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 4,
+    ref: "lisbon:4",
     name: "Μοναστήρι των Ιερονομιτών",
     description: "Μνημείο UNESCO με εκπληκτική αρχιτεκτονική και ιστορία. Κατάλληλο για παιδιά από 3 ετών αν και ίσως κουραστούν. Θα εκτιμηθεί περισσότερο από ηλικίες άνω των 6-7 ετών",
     hours: 1.5, cost: 10, coords: { lat: 38.6978, lng: -9.2067 },
@@ -75,6 +79,7 @@ export const LISBON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 5,
+    ref: "lisbon:5",
     name: "Κάστρο του Αγίου Γεωργίου",
     description: "Μεσαιωνικό κάστρο με πανοραμική θέα της Λισαβόνας.Δύσκολο για καρότσι. Ιδανική ηλικία άνω των 5 ετών",
     hours: 2, cost: 10, coords: { lat: 38.7139, lng: -9.1335 },
@@ -91,6 +96,7 @@ export const LISBON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 6,
+    ref: "lisbon:6",
     name: "Museu da Marioneta",
     description: "Το Museu da Marioneta είναι ένας μικρός θησαυρός μέσα σε ένα παλιό μοναστήρι, όπου ο κόσμος της κούκλας ζωντανεύει με έναν τρόπο μαγικό. Θα δεις από παραδοσιακές μαριονέτες της Πορτογαλίας μέχρι εντυπωσιακές φιγούρες από την Ασία και την Αφρική, ενώ το καλύτερο είναι ότι μπορείς να δεις από κοντά πώς φτιάχνονται και πώς κινούνται.",
     hours: 1.5, cost: 5, coords: { lat: 38.707917, lng: -9.156117 },
@@ -107,6 +113,7 @@ export const LISBON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 7,
+    ref: "lisbon:7",
     name: "Μνημείο των Ανακαλύψεων",
     description: "Εντυπωσιακό μνημείο αφιερωμένο στους Πορτογάλους εξερευνητές με πανοραμική θέα της Λισαβόνας.",
     hours: 1, cost: 10, coords: { lat: 38.693596, lng: -9.205712 },
@@ -123,6 +130,7 @@ export const LISBON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 8,
+    ref: "lisbon:8",
     name: "Cascais",
     description: "Το Cascais είναι το παραθαλάσσιο στολίδι της Λισαβόνας, μόλις 40 λεπτά με το τρένο. Είναι ένα παλιό ψαροχώρι που έγινε το καλοκαιρινό καταφύγιο των βασιλιάδων. Μην χάσετε το Πάρκο Marechal Carmona με την απίθανη παιδική χαρά τις πάπιες και τα παγώνια.",
     hours: 6, cost: 0, coords: { lat: 38.6979, lng: -9.4215 },
@@ -139,6 +147,7 @@ export const LISBON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 9,
+    ref: "lisbon:9",
     name: "Quinta da Regaleira (Sintra)",
     description: "Ένα ιδιωτικό κτήμα με παλάτι, πύργους, υπόγεια σπήλαια, κρυφά μονοπάτια και πηγάδια.Πολύ περισσότερο διαδραστικό για παιδιά από το Palácio da Pena.Το Initiation Well είναι must — ένα σπηλαιώδες πηγάδι με σπειροειδή σκάλα που μοιάζει με σκηνικό από παραμύθι ή ταινία. όχι κατάλληλο για καροτσάκια ή πολύ μικρά παιδιά, χρειάζεται επίβλεψη σε σήραγγες..",
     hours: 2.5, cost: 20, coords: { lat: 38.7911, lng: -9.391 },
@@ -155,6 +164,7 @@ export const LISBON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 10,
+    ref: "lisbon:10",
     name: "Palácio da Pena",
     description: "Το πιο διάσημο παλάτι της Sintra, χρωματιστό, στο υψηλότερο σημείο της περιοχής.Μοιάζει με παραμυθένιο κάστρο. Υπάρχει λεωφορείο Shuttle Bus από το πάρκινγκ ή το σιδηροδρομικό σταθμό προς την είσοδο για να αποφύγετε την ανηφόρα με τα παιδιά. Προτείνεται να ξεκινήσετε από αυτό το παλάτι την επισκεψή σας, και μετά να κατεβείτει προς το Quinta da Regaleira. Ιδανικά από 5 ετών και πάνω, μη φιλικό για καρότσι",
     hours: 3, cost: 13, coords: { lat: 38.786, lng: -9.3877 },

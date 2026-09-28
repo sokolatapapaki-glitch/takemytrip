@@ -1,0 +1,1523 @@
+{
+  "takenAt": "2026-09-28T10:46:59.870Z",
+  "source": {
+    "rome": "data/activities/rome.data.ts (curated)",
+    "paris": "data/activities.data.ts (curated)"
+  },
+  "rome": [
+    {
+      "id": 1,
+      "name": "Castello Orsini-Odescalchi (Bracciano)",
+      "hours": 2,
+      "cost": 10,
+      "program": [
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        }
+      ],
+      "cultural": 8,
+      "foodie": 0,
+      "adventurous": 4,
+      "relaxing": 3,
+      "priority": 5,
+      "is_lunch": false
+    },
+    {
+      "id": 26,
+      "name": "Santa Severa Castle",
+      "hours": 2,
+      "cost": 8,
+      "program": [
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        }
+      ],
+      "cultural": 8,
+      "foodie": 0,
+      "adventurous": 4,
+      "relaxing": 3,
+      "priority": 5,
+      "is_lunch": false
+    },
+    {
+      "id": 2,
+      "name": "Welcome to Rome",
+      "hours": 1.5,
+      "cost": 16,
+      "program": [
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        }
+      ],
+      "cultural": 7,
+      "foodie": 0,
+      "adventurous": 2,
+      "relaxing": 4,
+      "priority": 5,
+      "is_lunch": false
+    },
+    {
+      "id": 3,
+      "name": "Λόφος Gianicolo (Teatrino di Pulcinella)",
+      "hours": 1,
+      "cost": 0,
+      "program": [
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        }
+      ],
+      "cultural": 4,
+      "foodie": 0,
+      "adventurous": 4,
+      "relaxing": 7,
+      "priority": 5,
+      "is_lunch": false
+    },
+    {
+      "id": 4,
+      "name": "Parco degli Acquedotti",
+      "hours": 2,
+      "cost": 0,
+      "program": [
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        }
+      ],
+      "cultural": 3,
+      "foodie": 0,
+      "adventurous": 5,
+      "relaxing": 8,
+      "priority": 4,
+      "is_lunch": false
+    },
+    {
+      "id": 5,
+      "name": "Museo Leonardo Da Vinci",
+      "hours": 2,
+      "cost": 14,
+      "program": [
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        }
+      ],
+      "cultural": 6,
+      "foodie": 0,
+      "adventurous": 5,
+      "relaxing": 4,
+      "priority": 5,
+      "is_lunch": false
+    },
+    {
+      "id": 6,
+      "name": "Quartiere Coppedè",
+      "hours": 1,
+      "cost": 0,
+      "program": [
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        }
+      ],
+      "cultural": 6,
+      "foodie": 1,
+      "adventurous": 3,
+      "relaxing": 6,
+      "priority": 4,
+      "is_lunch": false
+    },
+    {
+      "id": 7,
+      "name": "Η Τρύπα της Κλειδαριάς (Aventine Keyhole)",
+      "hours": 1,
+      "cost": 0,
+      "program": [
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        }
+      ],
+      "cultural": 6,
+      "foodie": 0,
+      "adventurous": 3,
+      "relaxing": 5,
+      "priority": 4,
+      "is_lunch": false
+    },
+    {
+      "id": 8,
+      "name": "Villa Carpegna",
+      "hours": 2,
+      "cost": 0,
+      "program": [
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        }
+      ],
+      "cultural": 3,
+      "foodie": 0,
+      "adventurous": 5,
+      "relaxing": 8,
+      "priority": 4,
+      "is_lunch": false
+    },
+    {
+      "id": 9,
+      "name": "Explora",
+      "hours": 2,
+      "cost": 11,
+      "program": [
+        {
+          "open": 10,
+          "close": 18
+        },
+        {
+          "open": 10,
+          "close": 18
+        },
+        {
+          "open": 10,
+          "close": 18
+        },
+        {
+          "open": 10,
+          "close": 18
+        },
+        {
+          "open": 10,
+          "close": 18
+        },
+        {
+          "open": 10,
+          "close": 18
+        },
+        {
+          "open": 10,
+          "close": 18
+        }
+      ],
+      "cultural": 4,
+      "foodie": 0,
+      "adventurous": 6,
+      "relaxing": 5,
+      "priority": 5,
+      "is_lunch": false
+    },
+    {
+      "id": 10,
+      "name": "Museo delle Illusioni (Μουσείο Ψευδαισθήσεων)",
+      "hours": 1.5,
+      "cost": 21,
+      "program": [
+        {
+          "open": 10,
+          "close": 19
+        },
+        {
+          "open": 10,
+          "close": 19
+        },
+        {
+          "open": 10,
+          "close": 19
+        },
+        {
+          "open": 10,
+          "close": 19
+        },
+        {
+          "open": 10,
+          "close": 19
+        },
+        {
+          "open": 10,
+          "close": 19
+        },
+        {
+          "open": 10,
+          "close": 19
+        }
+      ],
+      "cultural": 4,
+      "foodie": 0,
+      "adventurous": 7,
+      "relaxing": 5,
+      "priority": 5,
+      "is_lunch": false
+    },
+    {
+      "id": 11,
+      "name": "Villa Borghese",
+      "hours": 2,
+      "cost": 0,
+      "program": [
+        {
+          "open": 0,
+          "close": 0
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        }
+      ],
+      "cultural": 2,
+      "foodie": 1,
+      "adventurous": 8,
+      "relaxing": 6,
+      "priority": 4,
+      "is_lunch": false
+    },
+    {
+      "id": 12,
+      "name": "Bioparco di Roma",
+      "hours": 3,
+      "cost": 22,
+      "program": [
+        {
+          "open": 9.5,
+          "close": 18
+        },
+        {
+          "open": 9.5,
+          "close": 18
+        },
+        {
+          "open": 9.5,
+          "close": 18
+        },
+        {
+          "open": 9.5,
+          "close": 18
+        },
+        {
+          "open": 9.5,
+          "close": 18
+        },
+        {
+          "open": 9.5,
+          "close": 18
+        },
+        {
+          "open": 9.5,
+          "close": 18
+        }
+      ],
+      "cultural": 3,
+      "foodie": 1,
+      "adventurous": 6,
+      "relaxing": 5,
+      "priority": 4,
+      "is_lunch": false
+    },
+    {
+      "id": 13,
+      "name": "Galleria Borghese",
+      "hours": 2,
+      "cost": 15,
+      "program": [
+        {
+          "open": 0,
+          "close": 0
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        }
+      ],
+      "cultural": 10,
+      "foodie": 0,
+      "adventurous": 1,
+      "relaxing": 3,
+      "priority": 8,
+      "is_lunch": false
+    },
+    {
+      "id": 14,
+      "name": "Rome Gladiator School - Gruppo Storico Romano",
+      "hours": 2,
+      "cost": 55,
+      "program": [
+        {
+          "open": 10,
+          "close": 17
+        },
+        {
+          "open": 10,
+          "close": 17
+        },
+        {
+          "open": 10,
+          "close": 17
+        },
+        {
+          "open": 10,
+          "close": 17
+        },
+        {
+          "open": 10,
+          "close": 17
+        },
+        {
+          "open": 10,
+          "close": 17
+        },
+        {
+          "open": 10,
+          "close": 17
+        }
+      ],
+      "cultural": 6,
+      "foodie": 0,
+      "adventurous": 8,
+      "relaxing": 2,
+      "priority": 5,
+      "is_lunch": false
+    },
+    {
+      "id": 15,
+      "name": "Cinecittà World",
+      "hours": 5,
+      "cost": 29,
+      "program": [
+        {
+          "open": 11,
+          "close": 19
+        },
+        {
+          "open": 11,
+          "close": 19
+        },
+        {
+          "open": 11,
+          "close": 19
+        },
+        {
+          "open": 11,
+          "close": 19
+        },
+        {
+          "open": 11,
+          "close": 19
+        },
+        {
+          "open": 11,
+          "close": 19
+        },
+        {
+          "open": 11,
+          "close": 19
+        }
+      ],
+      "cultural": 1,
+      "foodie": 1,
+      "adventurous": 9,
+      "relaxing": 4,
+      "priority": 4,
+      "is_lunch": false
+    },
+    {
+      "id": 16,
+      "name": "Luneur Park",
+      "hours": 3,
+      "cost": 0,
+      "program": [
+        {
+          "open": 10,
+          "close": 19
+        },
+        {
+          "open": 10,
+          "close": 19
+        },
+        {
+          "open": 10,
+          "close": 19
+        },
+        {
+          "open": 10,
+          "close": 19
+        },
+        {
+          "open": 10,
+          "close": 19
+        },
+        {
+          "open": 10,
+          "close": 19
+        },
+        {
+          "open": 10,
+          "close": 19
+        }
+      ],
+      "cultural": 1,
+      "foodie": 1,
+      "adventurous": 7,
+      "relaxing": 5,
+      "priority": 3,
+      "is_lunch": false
+    },
+    {
+      "id": 17,
+      "name": "Κολοσσαίο & Ρωμαϊκή Αγορά",
+      "hours": 3,
+      "cost": 18,
+      "program": [
+        {
+          "open": 8.5,
+          "close": 19
+        },
+        {
+          "open": 8.5,
+          "close": 19
+        },
+        {
+          "open": 8.5,
+          "close": 19
+        },
+        {
+          "open": 8.5,
+          "close": 19
+        },
+        {
+          "open": 8.5,
+          "close": 19
+        },
+        {
+          "open": 8.5,
+          "close": 19
+        },
+        {
+          "open": 8.5,
+          "close": 19
+        }
+      ],
+      "cultural": 9,
+      "foodie": 0,
+      "adventurous": 4,
+      "relaxing": 2,
+      "priority": 10,
+      "is_lunch": false
+    },
+    {
+      "id": 18,
+      "name": "Castel Sant'Angelo",
+      "hours": 2,
+      "cost": 16,
+      "program": [
+        {
+          "open": 0,
+          "close": 0
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        }
+      ],
+      "cultural": 8,
+      "foodie": 0,
+      "adventurous": 4,
+      "relaxing": 2,
+      "priority": 8,
+      "is_lunch": false
+    },
+    {
+      "id": 19,
+      "name": "Largo di Torre Argentina",
+      "hours": 1,
+      "cost": 0,
+      "program": [
+        {
+          "open": 12,
+          "close": 18
+        },
+        {
+          "open": 12,
+          "close": 18
+        },
+        {
+          "open": 12,
+          "close": 18
+        },
+        {
+          "open": 12,
+          "close": 18
+        },
+        {
+          "open": 12,
+          "close": 18
+        },
+        {
+          "open": 12,
+          "close": 18
+        },
+        {
+          "open": 12,
+          "close": 18
+        }
+      ],
+      "cultural": 5,
+      "foodie": 0,
+      "adventurous": 2,
+      "relaxing": 7,
+      "priority": 3,
+      "is_lunch": false
+    },
+    {
+      "id": 20,
+      "name": "Πάνθεον",
+      "hours": 1,
+      "cost": 5,
+      "program": [
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 19
+        },
+        {
+          "open": 9,
+          "close": 18
+        }
+      ],
+      "cultural": 8,
+      "foodie": 0,
+      "adventurous": 1,
+      "relaxing": 4,
+      "priority": 9,
+      "is_lunch": false
+    },
+    {
+      "id": 21,
+      "name": "Piazza Navona",
+      "hours": 1,
+      "cost": 0,
+      "program": [
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        }
+      ],
+      "cultural": 6,
+      "foodie": 1,
+      "adventurous": 1,
+      "relaxing": 6,
+      "priority": 8,
+      "is_lunch": false
+    },
+    {
+      "id": 22,
+      "name": "Fontana di Trevi",
+      "hours": 1,
+      "cost": 2,
+      "program": [
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        }
+      ],
+      "cultural": 5,
+      "foodie": 0,
+      "adventurous": 1,
+      "relaxing": 4,
+      "priority": 9,
+      "is_lunch": false
+    },
+    {
+      "id": 23,
+      "name": "San Giovanni in Laterano",
+      "hours": 1,
+      "cost": 0,
+      "program": [
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        }
+      ],
+      "cultural": 9,
+      "foodie": 0,
+      "adventurous": 1,
+      "relaxing": 4,
+      "priority": 6,
+      "is_lunch": false
+    },
+    {
+      "id": 24,
+      "name": "Βατικανό",
+      "hours": 2,
+      "cost": 0,
+      "program": [
+        {
+          "open": 7,
+          "close": 19
+        },
+        {
+          "open": 7,
+          "close": 19
+        },
+        {
+          "open": 7,
+          "close": 19
+        },
+        {
+          "open": 7,
+          "close": 19
+        },
+        {
+          "open": 7,
+          "close": 19
+        },
+        {
+          "open": 7,
+          "close": 19
+        },
+        {
+          "open": 7,
+          "close": 19
+        }
+      ],
+      "cultural": 8,
+      "foodie": 0,
+      "adventurous": 3,
+      "relaxing": 3,
+      "priority": 9,
+      "is_lunch": false
+    },
+    {
+      "id": 25,
+      "name": "Μουσεία Βατικανού και Καπέλα Σιστίνα",
+      "hours": 4,
+      "cost": 20,
+      "program": [
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 0,
+          "close": 0
+        }
+      ],
+      "cultural": 10,
+      "foodie": 0,
+      "adventurous": 2,
+      "relaxing": 1,
+      "priority": 10,
+      "is_lunch": false
+    }
+  ],
+  "paris": [
+    {
+      "id": null,
+      "name": "Eiffel Tower",
+      "hours": 2.5,
+      "cost": 28,
+      "program": [
+        {
+          "open": 9.5,
+          "close": 23
+        },
+        {
+          "open": 9.5,
+          "close": 23
+        },
+        {
+          "open": 9.5,
+          "close": 23
+        },
+        {
+          "open": 9.5,
+          "close": 23
+        },
+        {
+          "open": 9.5,
+          "close": 23
+        },
+        {
+          "open": 9.5,
+          "close": 23
+        },
+        {
+          "open": 9.5,
+          "close": 23
+        }
+      ],
+      "cultural": 7,
+      "foodie": 0,
+      "adventurous": 6,
+      "relaxing": 3,
+      "priority": 10,
+      "is_lunch": false
+    },
+    {
+      "id": null,
+      "name": "Louvre Museum",
+      "hours": 4,
+      "cost": 17,
+      "program": [
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 0,
+          "close": 0
+        },
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        },
+        {
+          "open": 9,
+          "close": 18
+        }
+      ],
+      "cultural": 10,
+      "foodie": 0,
+      "adventurous": 1,
+      "relaxing": 2,
+      "priority": 10,
+      "is_lunch": false
+    },
+    {
+      "id": null,
+      "name": "Notre-Dame & Île de la Cité",
+      "hours": 1.5,
+      "cost": 0,
+      "program": [
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        }
+      ],
+      "cultural": 9,
+      "foodie": 0,
+      "adventurous": 2,
+      "relaxing": 4,
+      "priority": 9,
+      "is_lunch": false
+    },
+    {
+      "id": null,
+      "name": "Musée d'Orsay",
+      "hours": 3,
+      "cost": 16,
+      "program": [
+        {
+          "open": 0,
+          "close": 0
+        },
+        {
+          "open": 9.5,
+          "close": 18
+        },
+        {
+          "open": 9.5,
+          "close": 18
+        },
+        {
+          "open": 9.5,
+          "close": 18
+        },
+        {
+          "open": 9.5,
+          "close": 18
+        },
+        {
+          "open": 9.5,
+          "close": 18
+        },
+        {
+          "open": 9.5,
+          "close": 18
+        }
+      ],
+      "cultural": 10,
+      "foodie": 0,
+      "adventurous": 1,
+      "relaxing": 3,
+      "priority": 8,
+      "is_lunch": false
+    },
+    {
+      "id": null,
+      "name": "Montmartre & Sacré-Cœur",
+      "hours": 2,
+      "cost": 0,
+      "program": [
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        },
+        {
+          "open": 0,
+          "close": 24
+        }
+      ],
+      "cultural": 7,
+      "foodie": 2,
+      "adventurous": 4,
+      "relaxing": 6,
+      "priority": 9,
+      "is_lunch": false
+    },
+    {
+      "id": null,
+      "name": "Sainte-Chapelle",
+      "hours": 1,
+      "cost": 11,
+      "program": [
+        {
+          "open": 9,
+          "close": 17
+        },
+        {
+          "open": 9,
+          "close": 17
+        },
+        {
+          "open": 9,
+          "close": 17
+        },
+        {
+          "open": 9,
+          "close": 17
+        },
+        {
+          "open": 9,
+          "close": 17
+        },
+        {
+          "open": 9,
+          "close": 17
+        },
+        {
+          "open": 9,
+          "close": 17
+        }
+      ],
+      "cultural": 8,
+      "foodie": 0,
+      "adventurous": 1,
+      "relaxing": 4,
+      "priority": 7,
+      "is_lunch": false
+    },
+    {
+      "id": null,
+      "name": "Latin Quarter food walk",
+      "hours": 2,
+      "cost": 38,
+      "program": [
+        {
+          "open": 11,
+          "close": 15
+        },
+        {
+          "open": 11,
+          "close": 15
+        },
+        {
+          "open": 11,
+          "close": 15
+        },
+        {
+          "open": 11,
+          "close": 15
+        },
+        {
+          "open": 11,
+          "close": 15
+        },
+        {
+          "open": 11,
+          "close": 15
+        },
+        {
+          "open": 0,
+          "close": 0
+        }
+      ],
+      "cultural": 4,
+      "foodie": 9,
+      "adventurous": 3,
+      "relaxing": 5,
+      "priority": 5,
+      "is_lunch": true
+    },
+    {
+      "id": null,
+      "name": "Le Marais café & falafel",
+      "hours": 2,
+      "cost": 25,
+      "program": [
+        {
+          "open": 11,
+          "close": 16
+        },
+        {
+          "open": 11,
+          "close": 16
+        },
+        {
+          "open": 11,
+          "close": 16
+        },
+        {
+          "open": 11,
+          "close": 16
+        },
+        {
+          "open": 11,
+          "close": 16
+        },
+        {
+          "open": 11,
+          "close": 16
+        },
+        {
+          "open": 11,
+          "close": 16
+        }
+      ],
+      "cultural": 3,
+      "foodie": 9,
+      "adventurous": 2,
+      "relaxing": 5,
+      "priority": 5,
+      "is_lunch": true
+    },
+    {
+      "id": null,
+      "name": "Luxembourg Gardens",
+      "hours": 1.5,
+      "cost": 0,
+      "program": [
+        {
+          "open": 8,
+          "close": 18
+        },
+        {
+          "open": 8,
+          "close": 18
+        },
+        {
+          "open": 8,
+          "close": 18
+        },
+        {
+          "open": 8,
+          "close": 18
+        },
+        {
+          "open": 8,
+          "close": 18
+        },
+        {
+          "open": 8,
+          "close": 18
+        },
+        {
+          "open": 8,
+          "close": 18
+        }
+      ],
+      "cultural": 3,
+      "foodie": 0,
+      "adventurous": 2,
+      "relaxing": 9,
+      "priority": 6,
+      "is_lunch": false
+    },
+    {
+      "id": null,
+      "name": "Macaron & pâtisserie tasting",
+      "hours": 1,
+      "cost": 22,
+      "program": [
+        {
+          "open": 10,
+          "close": 19
+        },
+        {
+          "open": 10,
+          "close": 19
+        },
+        {
+          "open": 10,
+          "close": 19
+        },
+        {
+          "open": 10,
+          "close": 19
+        },
+        {
+          "open": 10,
+          "close": 19
+        },
+        {
+          "open": 10,
+          "close": 19
+        },
+        {
+          "open": 10,
+          "close": 19
+        }
+      ],
+      "cultural": 2,
+      "foodie": 9,
+      "adventurous": 1,
+      "relaxing": 7,
+      "priority": 5,
+      "is_lunch": true
+    }
+  ]
+}

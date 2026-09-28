@@ -1,16 +1,17 @@
 /* eslint-disable */
 // -----------------------------------------------------------------------------
 // AUTO-GENERATED from takemytrip/data/bucharest.json by scripts/gen-activities.mjs.
-// Do not edit by hand — re-run the generator. Metadata (prices, family prices,
-// restaurant/cafe, website, notes, tags, id, description, best_time, emoji) is
-// copied verbatim from the JSON; the engine fields (program/hours/vibes/priority)
-// are synthesized from each activity's `category`.
+// Do not edit by hand — edit the JSON (or use the editor) and re-run the
+// generator. Metadata is copied verbatim from the JSON; the engine fields
+// (program/vibes/priority) come from the JSON's opening_hours/vibes/priority when
+// set, otherwise they are synthesized from each activity's `category`.
 // -----------------------------------------------------------------------------
 import { everyDay, at, ALL_DAY, food, cafe, site, type CatalogueActivity } from "./_helpers";
 
 export const BUCHAREST_ACTIVITIES: CatalogueActivity[] = [
   {
     id: 1,
+    ref: "bucharest:1",
     name: "Village Museum (Muzeul Satului)",
     description: "Στο Μουσείο του Χωριού, τα παιδιά περιηγούνται ανακαλύπτοντας αυθεντικά αγροτόσπιτα, νερόμυλους και ξύλινες εκκλησίες που μεταφέρθηκαν αυτούσια από κάθε γωνιά της Ρουμανίας. Είναι μια τεράστια έκταση δίπλα στη λίμνη όπου μπορούν να δουν πώς ήταν η ζωή πριν την τεχνολογία και να θαυμάσουν την παραδοσιακή αρχιτεκτονική που μοιάζει με σκηνικό από παλιά ιστορία.",
     hours: 2.5, cost: 7.85, coords: { lat: 44.4726, lng: 26.0764 },
@@ -27,6 +28,7 @@ export const BUCHAREST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 2,
+    ref: "bucharest:2",
     name: "Edenland Park",
     description: "Σκαρφάλωμα σε γέφυρες από σχοινί, zipline ανάμεσα στα δέντρα, τοίχος αναρρίχησης, μίνι γκολφ, βόλτα με πόνυ. Μια έκρηξη αδρεναλίνης, ιδανική για παιδιά άνω των 4 ετών. Υπάρχουν δεντρόσπιτα για να κοιμηθείτε το βράδυ και εστιατόριο εντός του πάρκου.",
     hours: 4, cost: 5, coords: { lat: 44.5891, lng: 25.8752 },
@@ -43,6 +45,7 @@ export const BUCHAREST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 3,
+    ref: "bucharest:3",
     name: "Therme Bucharest (4.5 ώρες)",
     description: "Βρίσκεται σε πολύ κοντινή απόσταση από το αεροδρόμιο Otopeni. Για τις οικογένειες με παιδιά, ο προορισμός είναι η ζώνη Galaxy, ένας ειδικά διαμορφωμένος χώρος με πολλές εντυπωσιακές νεροτσουλήθρες και πισίνα με κύματα. ",
     hours: 4.5, cost: 20, coords: { lat: 44.5225, lng: 26.1127 },
@@ -59,6 +62,7 @@ export const BUCHAREST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 4,
+    ref: "bucharest:4",
     name: "Παλάτι του Κοινοβουλίου (Σπίτι του Λαού)",
     description: "Το Σπίτι του Λαού είναι ένα κτίριο-γίγαντας,  με ατελείωτους διαδρόμους, αίθουσες χορού και κρυστάλλινους πολυελαίους.  Η ιστορία για το πώς χτίστηκε αυτό το βουνό από μάρμαρο είναι εντυπωσιακή. Μην παραλείψετε την ξενάγηση, αξίζει και για τα παιδιά. Είναι απαραίτητο να κάνετε κράτηση και πρέπει οπωσδήποτε να έχετε μαζί σας ταυτότητα ή διαβατήριο για την είσοδο.",
     hours: 2, cost: 17, coords: { lat: 44.4275, lng: 26.0877 },
@@ -75,6 +79,7 @@ export const BUCHAREST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 5,
+    ref: "bucharest:5",
     name: "Izvor Park (παιδική χαρά)",
     description: "Είναι ένας ανοιχτός χώρος με γρασίδι, με μια μεγάλη παιδική χαρά που είναι αρκετά δημοφιλής, καθώς και μονοπάτια για ποδήλατο ή πατίνια και την καλύτερη πανοραμική θέα προς το Παλάτι του Λαού, καθιστώντας το αγαπημένο σημείο για φωτογραφίες.",
     hours: 1.5, cost: 0, coords: { lat: 44.4305, lng: 26.0838 },
@@ -91,6 +96,7 @@ export const BUCHAREST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 6,
+    ref: "bucharest:6",
     name: "Σιντριβάνια της Piata Unirii (Symphony of Water)",
     description: "Εντυπωσιακό σιντριβάνι με φωτισμό και μουσική στην πλατεία Unirii. Προσοχή είναι προσωρινά κλειστά λόγω ανακαίνισης",
     hours: 1, cost: 0, coords: { lat: 44.4268, lng: 26.1025 },
@@ -107,6 +113,7 @@ export const BUCHAREST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 7,
+    ref: "bucharest:7",
     name: "Carturesti Carusel",
     description: "Ένα από τα πιο όμορφα βιβλιοπωλεία στον κόσμο, σε ανακαινισμένο ιστορικό κτίριο.",
     hours: 1, cost: 0, coords: { lat: 44.4318, lng: 26.0996 },
@@ -123,6 +130,7 @@ export const BUCHAREST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 8,
+    ref: "bucharest:8",
     name: "Παλιά Πόλη Lipscani",
     description: "Η ιστορική συνοικία του Βουκουρεστίου με πεζόδρομους, καφέ και ζωντανή ατμόσφαιρα.",
     hours: 2, cost: 0, coords: { lat: 44.4313, lng: 26.0988 },
@@ -139,6 +147,7 @@ export const BUCHAREST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 9,
+    ref: "bucharest:9",
     name: "Κήπος Cișmigiu",
     description: "Ο Κήπος Cișmigiu είναι το παλαιότερο και πιο ατμοσφαιρικό πάρκο στο κέντρο του Βουκουρεστίου, σχεδιασμένο σε αγγλικό στιλ με πανέμορφα μονοπάτια, γέφυρες και μια κεντρική λίμνη.",
     hours: 1.5, cost: 0, coords: { lat: 44.4375, lng: 26.0896 },
@@ -155,6 +164,7 @@ export const BUCHAREST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 10,
+    ref: "bucharest:10",
     name: "Μουσείο Φυσικής Ιστορίας Grigore Antipa",
     description: "Ένα από τα σημαντικότερα μουσεία φυσικής ιστορίας στη Νοτιοανατολική Ευρώπη.Ένας επίγειος παράδεισος για παιδιά, καθώς στεγάζει από εντυπωσιακούς σκελετούς δεινοσαύρων και μαμούθ μέχρι πιστές αναπαραστάσεις άγριων ζώων από όλο τον πλανήτη",
     hours: 2, cost: 6.5, coords: { lat: 44.453, lng: 26.0785 },
@@ -171,6 +181,7 @@ export const BUCHAREST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 11,
+    ref: "bucharest:11",
     name: "Romanian Athenaeum (Ateneul Român)",
     description: "Είναι το πιο εμβληματικό κτίριο του Βουκουρεστίου και σύμβολο του ρουμανικού πολιτισμού. Αξίζει να μπείτε για να δείτε την εντυπωσιακή αίθουσα συναυλιών και τον θόλο. Το κεντρικό στοιχείο είναι η τεράστια τοιχογραφία ύψους 3 μέτρων και μήκους 75 μέτρων, η οποία απεικονίζει 25 σημαντικά επεισόδια από την ιστορία της Ρουμανίας.",
     hours: 1, cost: 3, coords: { lat: 44.4413, lng: 26.0972 },
@@ -187,6 +198,7 @@ export const BUCHAREST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 12,
+    ref: "bucharest:12",
     name: "Αστεροσκοπείο Admiral Vasile Urseanu",
     description: "Εδώ τα παιδιά γίνονται αστροναύτες σε ένα κτίριο που μοιάζει με καράβι, εξερευνώντας το ηλιακό μας σύστημα μέσα από διαδραστικά εκθέματα και παλιά αστρονομικά όργανα. Με τη βοήθεια του τηλεσκοπίου μπορούν να δουν τη Σελήνη και τους πλανήτες.",
     hours: 1.5, cost: 4, coords: { lat: 44.439, lng: 26.089 },
@@ -203,6 +215,7 @@ export const BUCHAREST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 13,
+    ref: "bucharest:13",
     name: "Muzeul Micul Paris",
     description: "Εδώ τα παιδιά κάνουν ένα ταξίδι στον χρόνο, ανακαλύπτοντας πώς ζούσαν οι άνθρωποι πριν από εκατό χρόνια μέσα από δωμάτια που μοιάζουν με σκηνικά ταινίας. Το πιο διασκεδαστικό κομμάτι είναι η ευκαιρία να μεταμφιεστούν με εντυπωσιακά ρούχα και αξεσουάρ της εποχής, δημιουργώντας μια δική τους ιστορία μέσα στο παλιό Βουκουρέστι και βγάζοντας μοναδικές φωτογραφίες που θυμίζουν παλιές καρτ ποστάλ.",
     hours: 1.5, cost: 5, coords: { lat: 44.431, lng: 26.097 },
@@ -219,6 +232,7 @@ export const BUCHAREST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 14,
+    ref: "bucharest:14",
     name: "Children's Town Bucharest – Orășelul Copiilor (Parcul Tineretului)",
     description: ": Είναι ένα κλασικό λούνα παρκ. Διαθέτει από παραδοσιακά καρουζέλ και συγκρουόμενα αυτοκινητάκια μέχρι ρόδα (Ferris wheel), τραμπολίνο και μικρά τρενάκια.",
     hours: 2.5, cost: 0, coords: { lat: 44.4076, lng: 26.1044 },
@@ -235,6 +249,7 @@ export const BUCHAREST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 15,
+    ref: "bucharest:15",
     name: "Digital Planetarium",
     description: "Στο Ψηφιακό Πλανητάριο, τα παιδιά βλέπουν την οροφή να μεταμορφώνεται σε έναν απέραντο έναστρο ουρανό. Είναι σαν να επιβιβάζονται σε ένα διαστημόπλοιο που τα ταξιδεύει ανάμεσα σε πλανήτες, κομήτες και γαλαξίες, μια μαγική εμπειρία 360 μοιρών. Ιδανικό από 5 ετών και πάνω. ",
     hours: 1.5, cost: 12, coords: { lat: 44.423, lng: 26.094 },
@@ -251,6 +266,7 @@ export const BUCHAREST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 16,
+    ref: "bucharest:16",
     name: "Pasajul Victoriei",
     description: "Ιστορική στοά στο κέντρο του Βουκουρεστίου με εντυπωσιακή αρχιτεκτονική.",
     hours: 1, cost: 0, coords: { lat: 44.441, lng: 26.096 },
@@ -267,6 +283,7 @@ export const BUCHAREST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 17,
+    ref: "bucharest:17",
     name: "Pasajul Macca-Vilacrosse",
     description: "Στο πέρασμα Macca-Vilacrosse, τα παιδιά ανακαλύπτουν έναν χρυσό δρόμο, όπου η γυάλινη οροφή κάνει τα πάντα να λάμπουν κάτω από το φως. Είναι ένας μαγικός διάδρομος γεμάτος χρώματα και όμορφα κτίρια.",
     hours: 1, cost: 0, coords: { lat: 44.4335, lng: 26.0975 },
@@ -283,6 +300,7 @@ export const BUCHAREST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 18,
+    ref: "bucharest:18",
     name: "Museum of Senses",
     description: "Διαδραστικό μουσείο αισθήσεων με οπτικές ψευδαισθήσεις και εκπλήξεις. Ιδανικό από 5 ετών και πάνω.",
     hours: 1.5, cost: 11, coords: { lat: 44.4308, lng: 26.0525 },
@@ -299,6 +317,7 @@ export const BUCHAREST_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 19,
+    ref: "bucharest:19",
     name: "Destiny Park",
     description: "Το Destiny Park είναι μια πρότυπη πόλη εκπαιδευτικού παιχνιδιού όπου τα παιδιά ηλικίας 4 έως 14 ετών αναλαμβάνουν ρόλους ενηλίκων, δοκιμάζοντας διαφορετικά επαγγέλματα.Για τα πολύ μικρά παιδιά κάτω των 4 ετών, υπάρχει ειδικά διαμορφωμένος χώρος με κατάλληλα παιχνίδια ",
     hours: 3.5, cost: 13, coords: { lat: 44.4942, lng: 26.0786 },

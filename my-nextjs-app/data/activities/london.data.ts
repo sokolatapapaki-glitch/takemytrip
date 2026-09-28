@@ -1,16 +1,17 @@
 /* eslint-disable */
 // -----------------------------------------------------------------------------
 // AUTO-GENERATED from takemytrip/data/london.json by scripts/gen-activities.mjs.
-// Do not edit by hand — re-run the generator. Metadata (prices, family prices,
-// restaurant/cafe, website, notes, tags, id, description, best_time, emoji) is
-// copied verbatim from the JSON; the engine fields (program/hours/vibes/priority)
-// are synthesized from each activity's `category`.
+// Do not edit by hand — edit the JSON (or use the editor) and re-run the
+// generator. Metadata is copied verbatim from the JSON; the engine fields
+// (program/vibes/priority) come from the JSON's opening_hours/vibes/priority when
+// set, otherwise they are synthesized from each activity's `category`.
 // -----------------------------------------------------------------------------
 import { everyDay, at, ALL_DAY, food, cafe, site, type CatalogueActivity } from "./_helpers";
 
 export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   {
     id: 1,
+    ref: "london:1",
     name: "London Eye",
     description: "Η γιγαντιαία ρόδα με πανοραμική θέα του Λονδίνου.Κατάλληλη για κάθε ηλικία",
     hours: 1, cost: 37, coords: { lat: 51.5033, lng: -0.1195 },
@@ -27,6 +28,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 2,
+    ref: "london:2",
     name: "Tower of London",
     description: "Ιστορικό κάστρο-φρούριο με τα εντυπωσιακά **Κοσμήματα του Στέμματος** και συναρπαστικές ιστορίες για φυλακισμένους και βασιλείς. Ιδανικά για ηλικίες 7+,  προσφέρει μια μοναδική εμπειρία ζωντανής ιστορίας μέσα από τις ξεναγήσεις των Beefeaters.",
     hours: 3, cost: 41, coords: { lat: 51.5081, lng: -0.0759 },
@@ -43,6 +45,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 3,
+    ref: "london:3",
     name: "Natural History Museum",
     description: "Δωρεάν μουσείο με δεινόσαυρους και φυσική ιστορία, κατάλληλο για κάθε ηλικία",
     hours: 2.5, cost: 0, coords: { lat: 51.4967, lng: -0.1764 },
@@ -59,6 +62,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 4,
+    ref: "london:4",
     name: "Warner Bros. Harry Potter Studio Tour",
     description: "Περιήγηση στα κινηματογραφικά στούντιο του Harry Potter.",
     hours: 3.5, cost: 63, coords: { lat: 51.69, lng: -0.4187 },
@@ -75,6 +79,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 5,
+    ref: "london:5",
     name: "ZSL London Zoo",
     description: "Ένας από τους παλαιότερους και ιστορικότερους ζωολογικούς κήπους  μέσα στο πανέμορφο Regetn's Park.",
     hours: 4, cost: 32, coords: { lat: 51.5353, lng: -0.1534 },
@@ -91,6 +96,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 6,
+    ref: "london:6",
     name: "Royal Observatory Greenwich",
     description: "Το σημείο όπου ορίστηκε ο παγκόσμιος χρόνος (GMT) και ο Πρώτος Μεσημβρινός. Ιδανικό για κάθε ηλικία, με διαδραστικά εκθέματα και πλανητάριο και μια από τις καλύτερες παιδικές χαρές του Λονδίνου. Συνδυάζεται άψογα με το Ναυτικό Μουσείο",
     hours: 2, cost: 16, coords: { lat: 51.4769, lng: -0.0005 },
@@ -107,6 +113,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 7,
+    ref: "london:7",
     name: "Postal Museum + Mail Rail",
     description: "Ένα από τα πιο πρωτότυπα μουσεία του Λονδίνου, με κορυφαία εμπειρία τη βόλτα με το Mail Rail, ένα μικροσκοπικό υπόγειο τρένο που διασχίζει τις παλιές σήραγγες μεταφοράς αλληλογραφίας.Ιδανικό για 1-12 ετών.",
     hours: 2, cost: 21, coords: { lat: 51.5291, lng: -0.1213 },
@@ -123,6 +130,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 8,
+    ref: "london:8",
     name: "Horniman Museum – Ενυδρείο",
     description: "Ενυδρείο στο Horniman Museum με τέλειο μέγεθος για παιδιά που κουράζονται εύκολα. Συνδυάζεται με το Animal Walk που είναι δωρεάν και έχει αλπακά, κατσίκες και πρόβατα.Ιδανικό και για πολύ μικρά παιδιά",
     hours: 1.5, cost: 6, coords: { lat: 51.4403, lng: -0.0618 },
@@ -139,6 +147,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 9,
+    ref: "london:9",
     name: "Science Museum",
     description: "Τεράστιος χώρος με ιστορικά αντικείμενα (ατμομηχανή, κάψουλα Apollo 10, ), χώρο για πειράματα και το IMAX Cinema, μια τεράστια οθόνη με εντυπωσιακές προβολές.",
     hours: 3, cost: 0, coords: { lat: 51.4975, lng: -0.1747 },
@@ -155,6 +164,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 10,
+    ref: "london:10",
     name: "British Museum",
     description: "Επιβλητικό μουσείο για ταξίδι στους πολιτισμούς όλης της γης μέσα από την τέχνη και την αρχαιολογία.Ιδανικό από 6 ετών και πάνω",
     hours: 4, cost: 0, coords: { lat: 51.5194, lng: -0.1269 },
@@ -171,6 +181,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 11,
+    ref: "london:11",
     name: "Tate Modern",
     description: "Το κορυφαίο μουσείο μοντέρνας τέχνης με εντυπωσιακά έργα όπως Πικάσο, Νταλί, την τεράστια αίθουσα Turbine Hall για υπερμεγέθη εκθέματα και πανοραμική θέα στον Τάμεση.Ιδανικό για εφήβους και παιδιά 5-12 ετών.",
     hours: 2.5, cost: 0, coords: { lat: 51.5076, lng: -0.0994 },
@@ -187,6 +198,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 12,
+    ref: "london:12",
     name: "Museum of London Docklands",
     description: "'Ενα εξαιρετικό μουσείο για την ιστορία του  Τάμεση και των αποβαθρών του Λονδίνου, σε μια παλιά αποθήκη 200 ετών.Ιδανικό από 0 ετών λόγω του Mudlarks, έναν υπέροχο διαδραστικό χώρο για τα πολύ μικρά παιδιά.",
     hours: 2, cost: 0, coords: { lat: 51.5071, lng: -0.0236 },
@@ -203,6 +215,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 13,
+    ref: "london:13",
     name: "Regent's Park",
     description: "Ένα από τα πιο όμορφα Βασιλικά Πάρκα του Λονδίνου. Ξεχωρίζει για τα Queen Mary’s Gardens με 12.000 τριαντάφυλλα και για το London Zoo, τον παλαιότερο επιστημονικό ζωολογικό κήπο στον κόσμο.",
     hours: 1.5, cost: 0, coords: { lat: 51.5311, lng: -0.1566 },
@@ -219,6 +232,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 14,
+    ref: "london:14",
     name: "Sky Garden",
     description: "Δωρεάν κήπος σε ουρανοξύστη με πανοραμική θέα (απαιτείται κράτηση).",
     hours: 1, cost: 0, coords: { lat: 51.5115, lng: -0.0841 },
@@ -235,6 +249,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 15,
+    ref: "london:15",
     name: "Borough Market",
     description: "Η πιο διάσημη και ιστορική αγορά τροφίμων του Λονδίνου. Έχει τεράστια ποικιλία από φρέσκα προϊόντα από όλο τον κόσμο, αλλά και εξαιρετικό street food.",
     hours: 1.5, cost: 0, coords: { lat: 51.5056, lng: -0.0912 },
@@ -251,6 +266,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 17,
+    ref: "london:17",
     name: "Richmond Park",
     description: "Το μεγαλύτερο Βασιλικό Πάρκο του Λονδίνου, γνωστό για τα ελεύθερα ελάφια.",
     hours: 2.5, cost: 0, coords: { lat: 51.4498, lng: -0.2802 },
@@ -267,6 +283,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 18,
+    ref: "london:18",
     name: "Kyoto Garden (Holland Park)",
     description: "Ένα από τα πιο κρυμμένα διαμάντια, ένας παραδοσιακός ιαπωνικός κήπος  Είναι σχεδόν βέβαιο ότι θα συναντήσετε παγώνια .",
     hours: 1, cost: 0, coords: { lat: 51.5017, lng: -0.2045 },
@@ -283,6 +300,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 19,
+    ref: "london:19",
     name: "St Dunstan in the East",
     description: "Τα ερείπια της εκκλησίας που βομβαρδίστηκε έχουν καταληφθεί από αναρριχητικά φυτά και το σκηνικό μοιάζει από ταινία  Harry Potter. Ιδανική στάση μετά το Tower of London ή το Sky Garden. ",
     hours: 1, cost: 0, coords: { lat: 51.5106, lng: -0.0806 },
@@ -299,6 +317,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 20,
+    ref: "london:20",
     name: "Little Venice",
     description: "Γραφική περιοχή όπου συναντούνται δύο κανάλια, γεμάτη με πλοιάρια και καφέ.",
     hours: 1, cost: 0, coords: { lat: 51.5232, lng: -0.1837 },
@@ -315,6 +334,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 21,
+    ref: "london:21",
     name: "Mudchute Park & Farm",
     description: "Ένα κοινοτικό πάρκο και αγρόκτημα με πάνω από 100 ζώα, συμπεριλαμβανομένων σπάνιων φυλών, αλόγων, πόνι, προβάτων και γουρουνιών. Ιδανικό για κάθε ηλικία. ",
     hours: 2, cost: 0, coords: { lat: 51.4911, lng: -0.0114 },
@@ -331,6 +351,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 22,
+    ref: "london:22",
     name: "Coram's Fields",
     description: "Παιδικές χαρές, φάρμες και παιχνίδια στο νερό..Ένας τεράστιος χώρος προσβάσιμος μόνο σε ενήλικες που συνοδεύουν παιδιά. Μόλις 10 λεπτά περπάτημα απο το Βρετανικό Μουσείο",
     hours: 1.5, cost: 0, coords: { lat: 51.5244, lng: -0.1203 },
@@ -347,6 +368,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 23,
+    ref: "london:23",
     name: "Camden Market",
     description: "Αγορά με άπειρα πρατήρια ρούχων, παράξενα αντικείμενα και street food.Μπορείτε από το Little Venice να φτάσετε στο Camden Market με κρουαζιέρα ",
     hours: 2.5, cost: 0, coords: { lat: 51.5419, lng: -0.1468 },
@@ -363,6 +385,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 24,
+    ref: "london:24",
     name: "Chinatown",
     description: "Πολύχρωμες πύλες, κρεμαστά φανάρια και εκατοντάδες εστιατόρια για αυθεντικές γεύσεις από την Ασία.",
     hours: 1, cost: 0, coords: { lat: 51.5113, lng: -0.1304 },
@@ -379,6 +402,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 25,
+    ref: "london:25",
     name: "God's Own Junkyard",
     description: "Mια τεράστια συλλογή από neon επιγραφές, vintage πινακίδες, ντίσκο μπάλες και κινηματογραφικά σκηνικά. Kατάλληλο για κάθε ηλικία. Προσοχή, ανοιχτό μόνο Παρ.-Σάβ.-Κυρ.  ",
     hours: 1, cost: 0, coords: { lat: 51.585, lng: -0.0047 },
@@ -395,6 +419,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 26,
+    ref: "london:26",
     name: "Diana Memorial Playground",
     description: "Μεγάλος, μαγικός χώρος παιχνιδιών με πειρατικό πλοίο ως κεντρικό στοιχείο, αφιερωμένος στη πριγκίπισσα Νταϊάνα. Προσωρινά κλειστά, ενημερωθείτε απο την ιστοσελίδα",
     hours: 1.5, cost: 0, coords: { lat: 51.5094, lng: -0.1874 },
@@ -411,6 +436,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 27,
+    ref: "london:27",
     name: "Hamleys Toy Store",
     description: "Το παλαιότερο και μεγαλύτερο (7οροφο) παιχνιδάδικο του κόσμου.Σε κάθε γωνιά υπάρχουν υπάλληλοι που παίζουν με τα παιχνίδια, πετούν drones, φτιάχνουν τεράστιες σαπουνόφουσκες ή δείχνουν μαγικά κόλπα.",
     hours: 1, cost: 0, coords: { lat: 51.5147, lng: -0.1405 },
@@ -427,6 +453,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 28,
+    ref: "london:28",
     name: "Horniman Museum (Main Collections)",
     description: "Μουσείο με εκθέσεις φυσικής ιστορίας, ανθρωπολογίας και μουσικών οργάνων και υπέροχους κήπους.Ιδανικό για παιδιά από 0 ετών, με πολλά διαδραστικά και στο ύψος τους εκθέματα.",
     hours: 2, cost: 0, coords: { lat: 51.4403, lng: -0.0618 },
@@ -443,6 +470,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 29,
+    ref: "london:29",
     name: "Madame Tussauds London",
     description: "Μουσείο κέρινων αγαλμάτων με 150+ διασημότητες και διαδραστικές ζώνες.",
     hours: 2, cost: 40, coords: { lat: 51.5231, lng: -0.1544 },
@@ -459,6 +487,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 30,
+    ref: "london:30",
     name: "SEA LIFE London Aquarium",
     description: "Ενυδρείο στο South Bank με πάνω από 500 είδη θαλάσσιας ζωής. Κατάλληλο για όλες τις ηλικίες",
     hours: 1.5, cost: 30, coords: { lat: 51.5023, lng: -0.1192 },
@@ -475,6 +504,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 31,
+    ref: "london:31",
     name: "Shrek's Adventure London",
     description: "Διαδραστική περιπέτεια. Ξεκινά με μια εντυπωσιακή βόλτα σε ένα ιπτάμενο λεωφορείο 4D με οδηγό τον Γάιδαρο. Ιδανικό για ηλικίες 6-12, κατάλληλο απο 3 και πάνω. ",
     hours: 1.5, cost: 32, coords: { lat: 51.5029, lng: -0.1193 },
@@ -491,6 +521,7 @@ export const LONDON_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 32,
+    ref: "london:32",
     name: "National Maritime Museum",
     description: "Το μεγαλύτερο ναυτικό μουσείο του κόσμου, με εντυπωσιακά εκθέματα για πλοία, εξερευνητές και τον ωκεανό. Δωρεάν είσοδος για όλες τις ηλικίες. Συνδυάζεται άψογα με το Βασιλικό Αστεροσκοπείο του Γκρίνουιτς.",
     hours: 2, cost: 0, coords: { lat: 51.4809, lng: -0.0054 },

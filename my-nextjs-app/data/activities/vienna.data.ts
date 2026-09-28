@@ -1,16 +1,17 @@
 /* eslint-disable */
 // -----------------------------------------------------------------------------
 // AUTO-GENERATED from takemytrip/data/vienna.json by scripts/gen-activities.mjs.
-// Do not edit by hand — re-run the generator. Metadata (prices, family prices,
-// restaurant/cafe, website, notes, tags, id, description, best_time, emoji) is
-// copied verbatim from the JSON; the engine fields (program/hours/vibes/priority)
-// are synthesized from each activity's `category`.
+// Do not edit by hand — edit the JSON (or use the editor) and re-run the
+// generator. Metadata is copied verbatim from the JSON; the engine fields
+// (program/vibes/priority) come from the JSON's opening_hours/vibes/priority when
+// set, otherwise they are synthesized from each activity's `category`.
 // -----------------------------------------------------------------------------
 import { everyDay, at, food, cafe, site, type CatalogueActivity } from "./_helpers";
 
 export const VIENNA_ACTIVITIES: CatalogueActivity[] = [
   {
     id: 1,
+    ref: "vienna:1",
     name: "Palace Ticket - Schönbrunn Palace",
     description: "Βασικό εισιτήριο για τα κρατικά/ιδιωτικά διαμερίσματα του διασημου ανακτόρου των Αψβούργων. Με audio-guide.",
     hours: 2.5, cost: 38, coords: { lat: 48.1845, lng: 16.3122 },
@@ -27,6 +28,7 @@ export const VIENNA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 2,
+    ref: "vienna:2",
     name: "State Apartments",
     description: "Σύντομη ξενάγηση στα διαμερίσματα του διάσημου ανακτόρου των Αψβούργων ",
     hours: 1.5, cost: 28, coords: { lat: 48.1846, lng: 16.3123 },
@@ -43,6 +45,7 @@ export const VIENNA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 3,
+    ref: "vienna:3",
     name: "Sisi Pass (3 αυτοκρατορικά αξιοθέατα)",
     description: "Schönbrunn Palace + Sisi Museum (Hofburg) + Vienna Furniture Museum.",
     hours: 6, cost: 57, coords: { lat: 48.2058, lng: 16.3698 },
@@ -59,6 +62,7 @@ export const VIENNA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 4,
+    ref: "vienna:4",
     name: "Winter Pass (χειμερινή περίοδος)",
     description: "Palace Ticket + Zoo + Desert House + Palm House Schönbrunn. Ισχύει Νοέμβριο με Μάρτιο.",
     hours: 5, cost: 69, coords: { lat: 48.1847, lng: 16.3124 },
@@ -75,6 +79,7 @@ export const VIENNA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 5,
+    ref: "vienna:5",
     name: "Classic Pass (καλοκαιρινή περίοδος)",
     description: "Palace Ticket + Privy Garden + Maze & Labyrinth + Orangery Garden + Gloriette terrace.Καλύπτει μεγάλο μέρος του Schönbrunn.",
     hours: 4, cost: 40, coords: { lat: 48.1848, lng: 16.3125 },
@@ -91,6 +96,7 @@ export const VIENNA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 6,
+    ref: "vienna:6",
     name: "Classic Pass Plus (πλήρες πακέτο)",
     description: "Classic Pass + Zoo + Desert House + Palm House - σχεδόν όλο το Schönbrunn.",
     hours: 6, cost: 76, coords: { lat: 48.1849, lng: 16.3126 },
@@ -107,6 +113,7 @@ export const VIENNA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 7,
+    ref: "vienna:7",
     name: "Children's Museum (Kindermuseum)",
     description: "Διαδραστικό μουσείο για παιδιά 3-12 ετών. Τα παιδιά μπορούν να ντυθούν με βασιλικά ρούχα, να παίξουν με παλιά παιχνίδια και να μάθουν για το πρωτόκολλο του παλατιού",
     hours: 1.5, cost: 12, coords: { lat: 48.185, lng: 16.3127 },
@@ -123,6 +130,7 @@ export const VIENNA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 8,
+    ref: "vienna:8",
     name: "Zoo Vienna - Family Block Ticket",
     description: "5 εισιτήρια (2 adults + 3 children/adolescents) - ισχύει 1 χρόνο.",
     hours: 3, cost: 19.2, coords: { lat: 48.18, lng: 16.3028 },
@@ -139,6 +147,7 @@ export const VIENNA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 9,
+    ref: "vienna:9",
     name: "Zoo + Palm House + Desert House Combo Schönbrunn",
     description: "Συνδυαστικό εισιτήριο για μία επίσκεψη σε κάθε αξιοθέατο.",
     hours: 4, cost: 36, coords: { lat: 48.1801, lng: 16.3029 },
@@ -155,6 +164,7 @@ export const VIENNA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 10,
+    ref: "vienna:10",
     name: "Haus des Meeres (Aqua Terra Zoo)",
     description: "Ενυδρείο και μικρός ζωολογικός κήπος στο κέντρο της Βιέννης.",
     hours: 2.5, cost: 22.9, coords: { lat: 48.205, lng: 16.3575 },
@@ -171,6 +181,7 @@ export const VIENNA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 11,
+    ref: "vienna:11",
     name: "Time Travel Vienna",
     description: "Διαδραστικό ταξίδι 2000 χρόνων της ιστορίας της Βιέννης με 5D εμπειρία. Ιδανικό για παιδιά άνω των 5-6 ετών. Οι μικρότερες ηλικίες ίσως τρομάξουν ελαφρώς με τα εφέ (κίνηση, σκοτάδι, θόρυβοι) στο σινεμά 5D.",
     hours: 1.5, cost: 22, coords: { lat: 48.2084, lng: 16.3731 },
@@ -187,6 +198,7 @@ export const VIENNA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 12,
+    ref: "vienna:12",
     name: "Sisi's Amazing Journey (VR Experience)",
     description: "VR εμπειρία για τη ζωή της αυτοκράτειρας Σίσσι, ταξίδι πάνω σε βάρκα μαζί της! Κατάλληλο για όλες τις ηλικίες αρκεί να μπορούν να φορέσουν την μάσκα 5D.",
     hours: 1, cost: 14, coords: { lat: 48.2058, lng: 16.3698 },
@@ -203,6 +215,7 @@ export const VIENNA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 13,
+    ref: "vienna:13",
     name: "House of Music (Haus der Musik)",
     description: "Διαδραστικό μουσείο μουσικής για όλες τις ηλικίες.",
     hours: 2, cost: 22, coords: { lat: 48.2032, lng: 16.3738 },
@@ -219,6 +232,7 @@ export const VIENNA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 14,
+    ref: "vienna:14",
     name: "Museum der Illusionen (Μουσείο Ψευδαισθήσεων)",
     description: "Ένα μουσείο γεμάτο οπτικές ψευδαισθήσεις και διαδραστικά εκθέματα. Κατάλληλο για όλες τις ηλικίες",
     hours: 1.5, cost: 14, coords: { lat: 48.2095, lng: 16.3702 },
@@ -235,6 +249,7 @@ export const VIENNA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 15,
+    ref: "vienna:15",
     name: "Vienna State Opera Tour",
     description: "Ξενάγηση στο ιστορικό και εμβληματκό κτήριο της όπερας με την υπέροχη σκάλα και τα πολυτελή φουαγιέ. Θα μάθετε επίσης και μυστικά για το πώς στήνεται μια παράσταση.",
     hours: 1, cost: 15, coords: { lat: 48.2034, lng: 16.3692 },
@@ -251,6 +266,7 @@ export const VIENNA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 16,
+    ref: "vienna:16",
     name: "Belvedere Palace",
     description: "Είναι ένα εντυπωσιακό μπαρόκ συγκρότημα με δύο παλάτια (Άνω και Κάτω Μπελβεντέρε) που συνδέονται με πανέμορφους κήπους. Σήμερα λειτουργεί ως μουσείο τέχνης και φιλοξενεί τον διάσημο πίνακα Το Φιλί του Γκούσταβ Κλιμτ.",
     hours: 2.5, cost: 29, coords: { lat: 48.191, lng: 16.3805 },
@@ -267,6 +283,7 @@ export const VIENNA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 17,
+    ref: "vienna:17",
     name: "Donauturm (Danube Tower)",
     description: "Πανοραμική θέα της Βιέννης από τον πύργο του Δούναβη.",
     hours: 1, cost: 12, coords: { lat: 48.2389, lng: 16.4103 },
@@ -283,6 +300,7 @@ export const VIENNA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 18,
+    ref: "vienna:18",
     name: "Mozarthaus Vienna",
     description: "Είναι το αυθεντικό διαμέρισμα όπου έζησε ο Μότσαρτ.Αξίζει για παιδιά άνω των 6 ετών κυρίως χάρη στην εξαιρετική παιδική ακουστική ξενάγηση, αν και είναι λιγότερο διαδραστικό σε σχέση με άλλα μουσικά μουσεία της Βιέννης.",
     hours: 1.5, cost: 14, coords: { lat: 48.2086, lng: 16.3735 },
@@ -299,6 +317,7 @@ export const VIENNA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 19,
+    ref: "vienna:19",
     name: "St. Stephen's Cathedral Crypt",
     description: "Μια υπόγεια διαδρομή που αποκαλύπτει τους τάφους των Αψβούργων και ομαδικούς χώρους ταφής από την εποχή της πανούκλας. Είναι μια ατμοσφαιρική αλλά σκοτεινή εμπειρία στην καρδιά της Βιέννης.Ηλικία: Κατάλληλο για 12+ ετών.",
     hours: 1, cost: 5, coords: { lat: 48.2085, lng: 16.373 },
@@ -315,6 +334,7 @@ export const VIENNA_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 20,
+    ref: "vienna:20",
     name: "Spanish Riding School",
     description: "Προπόνηση των διάσημων ίππων Lipizzaner. ⚠️ <strong>Ηλικιακοί περιορισμοί:</strong> Παιδιά κάτω 3 ετών: ΑΔΥΝΑΤΗ ΕΙΣΟΔΟΣ | 3-5 ετών: Μόνο σε family performances",
     hours: 1.5, cost: 16, coords: { lat: 48.2068, lng: 16.3675 },

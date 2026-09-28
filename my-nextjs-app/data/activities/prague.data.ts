@@ -1,16 +1,17 @@
 /* eslint-disable */
 // -----------------------------------------------------------------------------
 // AUTO-GENERATED from takemytrip/data/prague.json by scripts/gen-activities.mjs.
-// Do not edit by hand — re-run the generator. Metadata (prices, family prices,
-// restaurant/cafe, website, notes, tags, id, description, best_time, emoji) is
-// copied verbatim from the JSON; the engine fields (program/hours/vibes/priority)
-// are synthesized from each activity's `category`.
+// Do not edit by hand — edit the JSON (or use the editor) and re-run the
+// generator. Metadata is copied verbatim from the JSON; the engine fields
+// (program/vibes/priority) come from the JSON's opening_hours/vibes/priority when
+// set, otherwise they are synthesized from each activity's `category`.
 // -----------------------------------------------------------------------------
 import { everyDay, at, ALL_DAY, food, cafe, site, type CatalogueActivity } from "./_helpers";
 
 export const PRAGUE_ACTIVITIES: CatalogueActivity[] = [
   {
     id: 1,
+    ref: "prague:1",
     name: "Πλατεία Παλιάς Πόλης & Αστρονομικό Ρολόι",
     description: "Η Πλατεία της Παλιάς Πόλης είναι η ιστορική καρδιά της Πράγας. Εκεί είναι το Αστρονομικό Ρολόι ένα από τα παλαιότερα λειτουργικά ρολόγια στον κόσμο.",
     hours: 1.5, cost: 0, coords: { lat: 50.0875, lng: 14.4213 },
@@ -27,6 +28,7 @@ export const PRAGUE_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 2,
+    ref: "prague:2",
     name: "Γέφυρα του Καρόλου",
     description: "Εμβληματική γέφυρα με υπέροχα αγάλματα, θέα, μουσικούς, και δύο πύργους στις άκρες της - σήματα κατατεθέν της Πράγας.",
     hours: 1.5, cost: 0, coords: { lat: 50.0865, lng: 14.4114 },
@@ -43,6 +45,7 @@ export const PRAGUE_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 3,
+    ref: "prague:3",
     name: "Μουσείο LEGO",
     description: "Η μεγαλύτερη έκθεση LEGO στον κόσμο.",
     hours: 2.5, cost: 13.5, coords: { lat: 50.0833, lng: 14.4167 },
@@ -59,6 +62,7 @@ export const PRAGUE_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 4,
+    ref: "prague:4",
     name: "Illusion Art Museum Prague",
     description: "Το πρώτο μουσείο στην Τσεχία αφιερωμένο στις οπτικές ψευδαισθήσεις και το trick-art, για μια άκρως διαδραστική εμπειρία για όλες τις ηλικίες.",
     hours: 1.5, cost: 14.5, coords: { lat: 50.0878, lng: 14.4205 },
@@ -75,6 +79,7 @@ export const PRAGUE_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 5,
+    ref: "prague:5",
     name: "Μουσείο Αισθήσεων (Sense Museum)",
     description: "Διαδραστικό μουσείο για τις πέντε αισθήσεις, φουτουριστικό υπερθέαμα.",
     hours: 1.5, cost: 14.5, coords: { lat: 50.087, lng: 14.4198 },
@@ -91,6 +96,7 @@ export const PRAGUE_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 6,
+    ref: "prague:6",
     name: "Κάστρο της Πράγας",
     description: "Το Κάστρο της Πράγας είναι το μεγαλύτερο συγκρότημα κάστρων στον κόσμο.",
     hours: 3.5, cost: 18.5, coords: { lat: 50.0911, lng: 14.4015 },
@@ -107,6 +113,7 @@ export const PRAGUE_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 7,
+    ref: "prague:7",
     name: "Μουσείο Παιχνιδιών",
     description: "Βρίσκεται μέσα στο Κάστρο της Πράγας και είναι ένας χώρος γεμάτος παλιά παιχνίδια, τρενάκια και μια τεράστια συλλογή Barbie. Ιδανικά από παιδιά από 5 ετών και πάνω καθώς τα πολύ μικρά παιδάκια ίσως βαρεθούν γιατί δεν μπορούν να αγγίξουν.",
     hours: 1.5, cost: 7.5, coords: { lat: 50.0913, lng: 14.4018 },
@@ -123,6 +130,7 @@ export const PRAGUE_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 8,
+    ref: "prague:8",
     name: "Ζωολογικός Κήπος (Zoo Praha)",
     description: "Θεωρείται ένας από τους καλύτερους στον κόσμο.",
     hours: 4, cost: 12.5, coords: { lat: 50.1167, lng: 14.4058 },
@@ -139,6 +147,7 @@ export const PRAGUE_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 9,
+    ref: "prague:9",
     name: "Sea World (Mořský svět)",
     description: "Ενυδρείο με θαλάσσια ζώα.",
     hours: 1.5, cost: 12, coords: { lat: 50.1078, lng: 14.4378 },
@@ -155,6 +164,7 @@ export const PRAGUE_ACTIVITIES: CatalogueActivity[] = [
   },
   {
     id: 10,
+    ref: "prague:10",
     name: "Κρουαζιέρα στον Μολδάβα",
     description: "Υπέροχη εμπειρία για ξεκούραση, χαλάρωση και ταυτόχρονα θέαση πανέμορφων μνημείων.",
     hours: 1.5, cost: 15, coords: { lat: 50.0889, lng: 14.4075 },
